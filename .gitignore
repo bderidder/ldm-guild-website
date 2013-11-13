@@ -9,4 +9,5 @@
 /target/
 /nb-configuration.xml
 /faces-config.NavData
-/src/main/setup/
+**/glassfish-resources.xml
+
