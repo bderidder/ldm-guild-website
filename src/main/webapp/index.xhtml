@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/default.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:define name="title">La Danse Macabre</ui:define>
+
+    <ui:define name="body">
+
+        <h:form>
+
+            <h:commandLink action="#{testJPABean.testJPAButtonClicked}">
+                Do JPA Test
+            </h:commandLink>
+
+            <ul>
+                <li><h:outputLink value="events.xhtml">Events</h:outputLink></li>
+                <li><h:outputLink value="signUps.xhtml">My sign ups</h:outputLink></li>
+            </ul>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
