@@ -11,9 +11,17 @@
         <p>Sign up for event</p>
 
         <ul>
+            <li><b>Guest</b>. A guest cannot see this page, a redirect to 'index.xhtml' will be done.</li>
+            <li><b>Member</b>. Any member can see this page. If a member is already signed up, only the current sign up can be seen.</li>
+        </ul>
+
+        <p>Actions</p>
+
+        <ul>
             <li><h:outputLink value="index.xhtml">Home</h:outputLink></li>
             <li><h:outputLink value="events.xhtml">Events</h:outputLink></li>
             <li><h:outputLink value="signUps.xhtml">My sign ups</h:outputLink></li>
+            <li>Sign up</li>
         </ul>
 
     </ui:define>

@@ -8,18 +8,17 @@
 
     <ui:define name="body">
 
-        <h:form>
+        <ul>
+            <li><b>Guest</b>. A guest can see this page but the action 'My sign ups' is not available.</li>
+            <li><b>Member</b>. Any member can see this page and perform every action.</li>
+        </ul>
 
-            <h:commandLink action="#{testJPABean.testJPAButtonClicked}">
-                Do JPA Test
-            </h:commandLink>
+        <p>Actions</p>
 
-            <ul>
-                <li><h:outputLink value="events.xhtml">Events</h:outputLink></li>
-                <li><h:outputLink value="signUps.xhtml">My sign ups</h:outputLink></li>
-            </ul>
-
-        </h:form>
+        <ul>
+            <li><h:outputLink value="events.xhtml">Events</h:outputLink></li>
+            <li><h:outputLink value="signUps.xhtml">My sign ups</h:outputLink></li>
+        </ul>
 
     </ui:define>
 
