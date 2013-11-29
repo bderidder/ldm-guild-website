@@ -1,5 +1,8 @@
 package ladanse.website.servlet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
@@ -9,6 +12,8 @@ import java.io.IOException;
 
 @WebFilter
 public class PhpBBAuthenticationFilter implements Filter {
+
+    static private Logger logger = LogManager.getLogger(PhpBBAuthenticationFilter.class.getName());
 
     private static String PHPBB3_COOKIE_K = "phpbb3_iouhm_k";
     private static String PHPBB3_COOKIE_SID = "phpbb3_iouhm_sid";
@@ -24,7 +29,7 @@ public class PhpBBAuthenticationFilter implements Filter {
 
         for(Cookie cookie : cookies)
         {
-            System.err.println("COOKIE " + cookie.getName() + " " + cookie.getValue());
+            logger.debug("COOKIE " + cookie.getName() + " " + cookie.getValue());
         }
 
         chain.doFilter(request, response);
