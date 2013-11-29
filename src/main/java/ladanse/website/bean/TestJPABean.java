@@ -10,11 +10,7 @@ import org.apache.logging.log4j.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
-import javax.sql.DataSource;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
@@ -22,54 +18,60 @@ import java.util.Set;
 
 @Named
 @RequestScoped
-public class TestJPABean {
+public class TestJPABean
+{
 
-    static private Logger logger = LogManager.getLogger(TestJPABean.class.getName());
+   static private Logger logger = LogManager.getLogger(TestJPABean.class.getName());
 
-    @Inject
-    private JpaSessionBean jpaSessionBean;
+   @Inject
+   private JpaSessionBean jpaSessionBean;
 
-    public void testJPAButtonClicked() {
+   public void testJPAButtonClicked()
+   {
 
-        System.out.println("Old System.out");
+	 System.out.println("Old System.out");
 
-        logger.entry();
-        logger.info("testJPAButtonClicked()");
+	 logger.entry();
+	 logger.info("testJPAButtonClicked()");
 
-        try {
-            EntityManager entityManager = jpaSessionBean.getEntityManager();
+	 try
+	 {
+	    EntityManager entityManager = jpaSessionBean.getEntityManager();
 
-            if (entityManager == null) {
-                logger.info("EntityManager was null");
+	    if (entityManager == null)
+	    {
+		  logger.info("EntityManager was null");
 
-                return;
-            }
+		  return;
+	    }
 
-            entityManager.getTransaction().begin();
+	    entityManager.getTransaction().begin();
 
-            Random rnd = new Random();
+	    Random rnd = new Random();
 
-            Account account = new Account();
-            account.setId(Math.abs(rnd.nextLong()));
+	    Account account = new Account();
+	    account.setId(Math.abs(rnd.nextLong()));
 
-            Event event = new Event(account);
+	    Event event = new Event(account);
 
-            event.setName("ToT Gear Up");
-            event.setInviteTime(new Date());
-            event.setStartTime(new Date());
+	    event.setName("ToT Gear Up");
+	    event.setInviteTime(new Date());
+	    event.setStartTime(new Date());
 
-            Set<RoleType> roleTypes = new HashSet<>();
-            roleTypes.add(RoleType.Healer);
-            roleTypes.add(RoleType.Tank);
+	    Set<RoleType> roleTypes = new HashSet<>();
+	    roleTypes.add(RoleType.Healer);
+	    roleTypes.add(RoleType.Tank);
 
-            event.signUp(account, SignUpType.WillCome, roleTypes);
+	    event.signUp(account, SignUpType.WillCome, roleTypes);
 
-            entityManager.persist(account);
-            entityManager.persist(event);
+	    entityManager.persist(account);
+	    entityManager.persist(event);
 
-            entityManager.getTransaction().commit();
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-    }
+	    entityManager.getTransaction().commit();
+	 }
+	 catch (Throwable t)
+	 {
+	    t.printStackTrace();
+	 }
+   }
 }
