@@ -9,5 +9,5 @@
 /target/
 /nb-configuration.xml
 /faces-config.NavData
-**/glassfish-resources.xml
-
+src/main/webapp/WEB-INF/glassfish-resources.xml
+src/main/resources/log4j2.xml
