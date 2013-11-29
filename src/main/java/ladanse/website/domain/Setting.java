@@ -3,13 +3,13 @@ package ladanse.website.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "UserSetting")
-public class UserSetting
+@Table(name = "Setting")
+public class Setting
 {
    private Long id;
    private String key;
    private String value;
-   private Account user;
+   private Account account;
 
    @Id
    @Column(name = "id")
@@ -49,14 +49,14 @@ public class UserSetting
    }
 
    @ManyToOne
-   @JoinColumn(name = "user", nullable = false)
-   public Account getUser()
+   @JoinColumn(name = "account", nullable = false)
+   public Account getAccount()
    {
-	 return user;
+	 return account;
    }
 
-   public void setUser(Account user)
+   public void setAccount(Account account)
    {
-	 this.user = user;
+	 this.account = account;
    }
 }
