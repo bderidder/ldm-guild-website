@@ -4,6 +4,8 @@ import ladanse.website.domain.Account;
 import ladanse.website.domain.Event;
 import ladanse.website.domain.master.RoleType;
 import ladanse.website.domain.master.SignUpType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -22,16 +24,23 @@ import java.util.Set;
 @RequestScoped
 public class TestJPABean {
 
+    static private Logger logger = LogManager.getLogger(TestJPABean.class.getName());
+
     @Inject
     private JpaSessionBean jpaSessionBean;
 
     public void testJPAButtonClicked() {
 
+        System.out.println("Old System.out");
+
+        logger.entry();
+        logger.info("testJPAButtonClicked()");
+
         try {
             EntityManager entityManager = jpaSessionBean.getEntityManager();
 
             if (entityManager == null) {
-                System.err.println("EntityManager was null");
+                logger.info("EntityManager was null");
 
                 return;
             }
