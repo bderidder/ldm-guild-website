@@ -20,7 +20,6 @@ import java.util.Set;
 @RequestScoped
 public class TestJPABean
 {
-
    static private Logger logger = LogManager.getLogger(TestJPABean.class.getName());
 
    @Inject
