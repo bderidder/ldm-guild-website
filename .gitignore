@@ -1,13 +1,4 @@
-*.class
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.iml
-.idea
-/target/
-/nb-configuration.xml
-/faces-config.NavData
-src/main/webapp/WEB-INF/glassfish-resources.xml
-src/main/resources/log4j2.xml
+app/config/parameters.yml
+app/cache
+app/logs
+*~
