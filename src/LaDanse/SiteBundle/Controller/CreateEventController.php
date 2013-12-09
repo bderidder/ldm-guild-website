@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+
 /**
  * @Route("/Events/Create")
 */
@@ -21,5 +23,6 @@ class CreateEventController extends Controller
      */
     public function indexAction(Request $request)
     {
+		$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
     }
 }
