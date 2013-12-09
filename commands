@@ -6,3 +6,6 @@ php app/console doctrine:generate:entities LaDanse/DomainBundle/Entity
 
 # Run PHP 5.4 server
 php app/console server:run
+
+# Create symlinks to assets
+php app/console assets:install web --symlink
