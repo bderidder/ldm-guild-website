@@ -3,3 +3,7 @@ app/cache/*
 app/logs/*
 web/bundles/*
 *~
+
+*.sublime-project
+
+*.sublime-workspace
