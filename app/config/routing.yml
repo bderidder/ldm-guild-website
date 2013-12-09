@@ -7,3 +7,7 @@ la_danse_domain:
     type:     annotation
     prefix:   /
 
+la_danse_site:
+    resource: "@LaDanseSiteBundle/Resources/config/routing.yml"
+    prefix:	  /
+    
