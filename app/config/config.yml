@@ -67,3 +67,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+services:
+  LaDanse.ContainerInjector:
+    class: LaDanse\CommonBundle\Helper\ContainerInjector
+    arguments: ['@service_container']
