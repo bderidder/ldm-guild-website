@@ -1,0 +1,41 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}La Danse - Index{% endblock %}
+
+{% block body %}
+
+    <ul>
+        <li><b>Guest</b>. A guest can see this page.</li>
+        <li><b>Member</b>. Any member can see this page and perform every action.</li>
+    </ul>
+
+    <h2>Recently added events</h2>
+
+    <p>Events that have been added in the last 7 days and haven't passed yet. On selection of an event, for which
+       the user hasn't signed up yet, the user navigates to a
+       sign up page: <a href="{{ path('createSignUpIndex') }}">Sign Up</a>. Guests can only see the events, they
+       cannot sign up.</p>
+
+    <h2>My sign ups</h2>
+
+    <p>Guests cannot see this section at all. If the user is not a guest, a list of sign ups is shown. On
+       selection of a sign up, the user navigates to a  page with more detail:
+       <a href="{{ path('viewSignUpsIndex') }}">Sign Ups</a>.</p>
+
+    <h2>Other actions on this page</h2>
+
+    <ul>
+        <li>Guest
+            <ul>
+                There are no additional actions for a guest user.
+            </ul>
+        </li>
+        <li>Authenticated user
+            <ul>
+                <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
+                <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>
+            </ul>
+        </li>
+    </ul>
+
+{% endblock %}

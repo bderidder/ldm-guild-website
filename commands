@@ -1,0 +1,8 @@
+# Create/Update database schema
+php app/console doctrine:schema:update --dump-sql --force
+
+# Create/Update getter and setters
+php app/console doctrine:generate:entities LaDanse/DomainBundle/Entity
+
+# Run PHP 5.4 server
+php app/console server:run

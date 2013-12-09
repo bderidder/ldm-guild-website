@@ -1,0 +1,22 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}My sign ups - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+    <h2>List sign ups</h2>
+
+    <ul>
+        <li><b>Guest</b>. A guest cannot see this page, a redirect to 'index.xhtml' will be done.</li>
+        <li><b>Member</b>. Any member can see this page and perform any action.</li>
+    </ul>
+
+    <h2>Actions</h2>
+
+    <ul>
+        <li><a href="{{ path('_welcome') }}">Home</a></li>
+        <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
+        <li><a href="{{ path('viewSignUpsIndex') }}">Cancel Sign Up</a></li>
+    </ul>
+
+{% endblock %}

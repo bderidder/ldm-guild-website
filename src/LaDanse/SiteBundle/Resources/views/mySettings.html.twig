@@ -1,0 +1,24 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}My Settings - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+    <h2>My Settings</h2>
+
+    <ul>
+        <li><b>Guest</b>. A guest cannot see this page, when visited a redirect to index.xhtml is done.</li>
+        <li><b>Member</b>. Any member can see this page and update his/her own settings.</li>
+    </ul>
+
+    <h2>Actions</h2>
+
+    <ul>
+        <li><a href="{{ path('_welcome') }}">Home</a></li>
+        <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
+        <li><a href="{{ path('viewSignUpsIndex') }}">Sign Ups</a></li>
+        <li><a href="{{ path('_welcome') }}">Save</a></li>
+        <li><a href="{{ path('_welcome') }}">Cancel</a></li>
+    </ul>
+
+{% endblock %}

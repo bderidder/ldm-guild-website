@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}La Danse - Welcome{% endblock %}</title>
+
+        <link href="{{ asset('/bundles/ladansesite/css/metro-bootstrap.css') }}" type="text/css" rel="stylesheet" />
+
+        <style type="text/css">
+        	DIV.BodyContent {
+        		width: 1000px;
+        		margin: auto;     
+        		margin-top: 50px;   		
+        	}
+        </style>
+
+    </head>
+    <body class="metro">
+    	<div class="BodyContent">
+    		{% block body %}{% endblock %}
+    	</div>
+    </body>
+</html>

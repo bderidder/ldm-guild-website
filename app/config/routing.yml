@@ -1,0 +1,5 @@
+la_danse_domain:
+    resource: "@LaDanseDomainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

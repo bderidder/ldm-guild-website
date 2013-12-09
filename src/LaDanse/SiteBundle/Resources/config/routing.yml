@@ -1,0 +1,38 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: LaDanseSiteBundle:Welcome:index }
+
+ViewEventsRouting:
+    resource: "@LaDanseSiteBundle/Controller/ViewEventsController.php"
+    type:     annotation
+    prefix:   /
+
+CreateEventRouting:
+    resource: "@LaDanseSiteBundle/Controller/CreateEventController.php"
+    type:     annotation
+    prefix:   /
+
+EditEventRouting:
+    resource: "@LaDanseSiteBundle/Controller/EditEventController.php"
+    type:     annotation
+    prefix:   /
+
+ViewSignUpsRouting:
+    resource: "@LaDanseSiteBundle/Controller/ViewSignUpsController.php"
+    type:     annotation
+    prefix:   /
+
+ViewSignUpRouting:
+    resource: "@LaDanseSiteBundle/Controller/ViewSignUpController.php"
+    type:     annotation
+    prefix:   /
+
+CreateSignUpRouting:
+    resource: "@LaDanseSiteBundle/Controller/CreateSignUpController.php"
+    type:     annotation
+    prefix:   /
+
+MySettingsRouting:
+    resource: "@LaDanseSiteBundle/Controller/MySettingsController.php"
+    type:     annotation
+    prefix:   /
