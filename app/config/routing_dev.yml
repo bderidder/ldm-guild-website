@@ -12,7 +12,4 @@ _configurator:
 
 _main:
     resource: routing.yml
-
-# LaDanseSiteBundle routes (to be removed)
-_ladanse_site:
-    resource: "@LaDanseSiteBundle/Resources/config/routing.yml"
+    
