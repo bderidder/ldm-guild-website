@@ -17,7 +17,7 @@ class ViewSignUpsController extends Controller
 {
 	/**
      * @Route("/", name="viewSignUpsIndex")
-     * @Template("LaDanseSiteBundle::viewSignups.html.twig")
+     * @Template("LaDanseSiteBundle::viewSignUps.html.twig")
      */
     public function indexAction(Request $request)
     {
