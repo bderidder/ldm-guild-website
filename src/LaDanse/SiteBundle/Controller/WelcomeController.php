@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
-class WelcomeController extends Controller
+class WelcomeController extends LaDanseController
 {
     public function indexAction(Request $request)
     {
