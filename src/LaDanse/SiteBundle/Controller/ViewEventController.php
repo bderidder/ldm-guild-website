@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 /**
- * @Route("/Events/{id}")
+ * @Route("/Event/{id}")
 */
 class ViewEventController extends LaDanseController
 {
