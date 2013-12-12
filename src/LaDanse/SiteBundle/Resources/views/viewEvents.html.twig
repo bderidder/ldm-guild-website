@@ -11,6 +11,12 @@
         <li><b>Member</b>. Any member can see this page and perform any actions. The action 'Edit event' or 'Delete event' is only available if the visitor is the organiser of that event.</li>
     </ul>
 
+    <ul>
+        {% for item in events %}
+                <li><a href="{{ path('viewEventIndex', {'id': item.id}) }}">{{ item.name }}</a></li>
+        {% endfor %}
+    </ul>
+
     <h2>Actions</h2>
 
     <ul>
