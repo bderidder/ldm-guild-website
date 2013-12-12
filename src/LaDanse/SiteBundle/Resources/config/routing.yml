@@ -7,6 +7,11 @@ ViewEventsRouting:
     type:     annotation
     prefix:   /
 
+ViewEventRouting:
+    resource: "@LaDanseSiteBundle/Controller/ViewEventController.php"
+    type:     annotation
+    prefix:   /
+
 CreateEventRouting:
     resource: "@LaDanseSiteBundle/Controller/CreateEventController.php"
     type:     annotation
