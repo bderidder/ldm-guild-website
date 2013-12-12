@@ -1,0 +1,28 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}Event - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+    <h2>View event</h2>
+
+    <ul>
+        <li><b>Guest</b>. A guest can see this page but the actions 'Sign Up' and 'Cancel sign up' are not available.</li>
+        <li><b>Member</b>. Any member can see this page and perform any actions. The action 'Edit event' or 'Delete event' is only available if the visitor is the organiser of that event.</li>
+    </ul>
+
+    <p>{{ event.name }}</p>
+    <p>{{ event.startTime|date("m/d/Y H:i") }}</p>
+
+    <h2>Actions</h2>
+
+    <ul>
+        <li><a href="{{ path('_welcome') }}">Home</a></li>
+        <li><a href="{{ path('createSignUpIndex') }}">Sign up</a></li>
+        <li><a href="{{ path('viewSignUpsIndex') }}">Cancel Sign Up</a></li>
+        <li><a href="{{ path('createEventIndex') }}">Create event</a></li>
+        <li><a href="{{ path('editEventIndex') }}">Edit event</a></li>
+        <li><a href="{{ path('viewSignUpsIndex') }}">Delete event</a></li>
+    </ul>
+
+{% endblock %}
