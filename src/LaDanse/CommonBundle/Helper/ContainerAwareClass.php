@@ -27,4 +27,9 @@ class ContainerAwareClass
 	{
 		return $this->getContainer()->get('doctrine');
 	}
+
+	protected function getLogger()
+	{
+		return $this->getContainer()->get('logger');
+	}
 }

@@ -2,7 +2,6 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -10,12 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
 /**
  * @Route("/Events/Create")
 */
-class CreateEventController extends Controller
+class CreateEventController extends LaDanseController
 {
 	/**
      * @Route("/", name="createEventIndex")
@@ -23,6 +23,8 @@ class CreateEventController extends Controller
      */
     public function indexAction(Request $request)
     {
+    	$this->getLogger()->error('This is an info message');
+
 		$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
     }
 }
