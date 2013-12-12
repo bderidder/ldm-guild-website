@@ -12,18 +12,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 /**
- * @Route("/Events")
+ * @Route("/Events/{id}")
 */
-class ViewEventsController extends LaDanseController
+class ViewEventController extends LaDanseController
 {
 	/**
-     * @Route("/", name="viewEventsIndex")
-     * @Template("LaDanseSiteBundle::viewEvents.html.twig")
+     * @Route("/", name="viewEventIndex")
+     * @Template("LaDanseSiteBundle::viewEvent.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $id)
     {
-    	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
+    	$event = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->find($id);
 
-    	return array('events' => $events);
+    	return array('event' => $event);
     }
 }
