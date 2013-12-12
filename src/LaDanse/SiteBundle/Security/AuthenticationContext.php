@@ -20,16 +20,16 @@ class AuthenticationContext extends ContainerAwareClass
 	{
 		parent::__construct($ci);
 
-		$account = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Account')->find(1);
+		$this->account = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Account')->find(1);
     }
 
     public function isAuthenticated()
     {
-    	return !is_null($account);
+    	return !is_null($this->account);
     }
 
     public function getAccount()
     {
-    	return $account;
+    	return $this->account;
     }
 }
