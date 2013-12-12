@@ -22,5 +22,8 @@ class ViewEventsController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+    	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
+
+    	return array('events' => $events);
     }
 }
