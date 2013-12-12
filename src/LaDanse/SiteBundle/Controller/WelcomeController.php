@@ -5,6 +5,8 @@ namespace LaDanse\SiteBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use LaDanse\CommonBundle\Helper\LaDanseController;
+
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
 class WelcomeController extends LaDanseController
