@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 /**
- * @Route("/Events/Edit")
+ * @Route("/Event/{id}/Edit")
 */
 class EditEventController extends LaDanseController
 {
@@ -20,7 +20,7 @@ class EditEventController extends LaDanseController
      * @Route("/", name="editEventIndex")
      * @Template("LaDanseSiteBundle::editEvent.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $id)
     {
     }
 }
