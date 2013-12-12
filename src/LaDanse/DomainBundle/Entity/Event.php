@@ -4,6 +4,8 @@ namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="Event")
@@ -36,6 +38,11 @@ class Event
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $startTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $endTime;
 
     /**
      * @ORM\OneToMany(targetEntity="SignUp", mappedBy="eventId")
@@ -209,5 +216,28 @@ class Event
     public function getOrganiser()
     {
         return $this->organiser;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param \DateTime $endTime
+     * @return Event
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
     }
 }
