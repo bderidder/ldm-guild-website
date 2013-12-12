@@ -21,7 +21,7 @@
         <li><a href="{{ path('createSignUpIndex') }}">Sign up</a></li>
         <li><a href="{{ path('viewSignUpsIndex') }}">Cancel Sign Up</a></li>
         <li><a href="{{ path('createEventIndex') }}">Create event</a></li>
-        <li><a href="{{ path('editEventIndex') }}">Edit event</a></li>
+        <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
         <li><a href="{{ path('viewSignUpsIndex') }}">Delete event</a></li>
     </ul>
 
