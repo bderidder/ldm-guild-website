@@ -51,7 +51,7 @@ class Event
     protected $lastModifiedTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="eventId")
+     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="event")
      */
     protected $signUps;
 
