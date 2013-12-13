@@ -16,11 +16,12 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
+
 use LaDanse\SiteBundle\Form\Model\NewEventFormModel;
 use LaDanse\SiteBundle\Form\Type\NewEventFormType;
 
 /**
- * @Route("/Events/Create")
+ * @Route("/events/create")
 */
 class CreateEventController extends LaDanseController
 {
@@ -59,17 +60,24 @@ class CreateEventController extends LaDanseController
 
     private function persistEvent(AuthenticationContext $authContext, NewEventFormModel $formModel)
     {
-    	$event = new Event();
-    	$event->setOrganiser($authContext->getAccount());
-    	$event->setName($formModel->getName());
-    	$event->setDescription($formModel->getDescription());
-    	$event->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()));
-    	$event->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()));
-    	$event->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()));
+    	$event = $this->modelToEntity($authContext->getAccount(), $formModel);
 
-    	$em = $this->getDoctrine()->getManager();
+    	$em = $this->getDoctrine()->getEntityManager();
     	$em->persist($event);
     	$em->flush();
+    }
+
+    private function modelToEntity($organiser, NewEventFormModel $formModel)
+    {
+        $event = new Event();
+        $event->setOrganiser($organiser);
+        $event->setName($formModel->getName());
+        $event->setDescription($formModel->getDescription());
+        $event->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()));
+        $event->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()));
+        $event->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()));
+
+        return $event;
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)
