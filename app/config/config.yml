@@ -28,6 +28,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        auth: "@LaDanse.AuthenticationService"
 
 # Assetic Configuration
 assetic:
@@ -71,4 +73,11 @@ swiftmailer:
 services:
   LaDanse.ContainerInjector:
     class: LaDanse\CommonBundle\Helper\ContainerInjector
+    arguments: ['@service_container']
+  LaDanse.AuthenticationService:
+    class: LaDanse\SiteBundle\Security\AuthenticationService
+    arguments: ['@service_container']
+  LaDanse.AuthenticationContext:
+    class: LaDanse\SiteBundle\Security\AuthenticationContext
+    scope: request
     arguments: ['@service_container']
