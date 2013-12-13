@@ -11,8 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+
 /**
- * @Route("/Events")
+ * @Route("/events")
 */
 class ViewEventsController extends LaDanseController
 {
@@ -22,8 +24,10 @@ class ViewEventsController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+    	$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+
     	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
 
-    	return array('events' => $events);
+    	return array('events' => $events, 'auth' => $authContext);
     }
 }
