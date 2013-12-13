@@ -6,11 +6,6 @@
 
         <h2>Create event</h2>
 
-        <ul>
-            <li><b>Guest</b>. A guest cannot see this page, when visited a redirect to index.xhtml is done.</li>
-            <li><b>Member</b>. Any member can see this page and create an event.</li>
-        </ul>
-
         {{ form(form) }}
 
         <h2>Actions</h2>
@@ -18,8 +13,6 @@
         <ul>
             <li><a href="{{ path('_welcome') }}">Home</a></li>
             <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
-            <li><a href="{{ path('viewEventsIndex') }}">Save</a></li>
-            <li><a href="{{ path('viewEventsIndex') }}">Cancel</a></li>
         </ul>
 
 {% endblock %}

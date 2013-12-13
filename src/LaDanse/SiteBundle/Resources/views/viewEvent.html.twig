@@ -6,11 +6,6 @@
 
     <h2>{{ event.name }} on {{ event.startTime|date("d/m") }}</h2>
 
-    <ul>
-        <li><b>Guest</b>. A guest can see this page but the actions 'Sign Up' and 'Cancel sign up' are not available.</li>
-        <li><b>Member</b>. Any member can see this page and perform any actions. The action 'Edit event' or 'Delete event' is only available if the visitor is the organiser of that event.</li>
-    </ul>
-
     <p>{{ event.name }}</p>
     <p>{{ event.startTime|date("d/m/Y H:i") }}</p>
 
@@ -20,7 +15,7 @@
         <li><a href="{{ path('_welcome') }}">Home</a></li>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
         <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
-        {% if auth.id == event.organiser.id %}
+        {% if auth.currentContext.id == event.organiser.id %}
         <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
         <li><a href="{{ path('deleteEventIndex', {'id': event.id}) }}">Delete event</a></li>
         {% endif %}
