@@ -11,13 +11,13 @@
             <li><b>Member</b>. A member can only see this page if he/she is the organiser, otherwise a redirect to events.xhtml is done.</li>
         </ul>
 
+        {{ form(form) }}
+
         <h2>Actions</h2>
 
         <ul>
             <li><a href="{{ path('_welcome') }}">Home</a></li>
             <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
-            <li><a href="{{ path('viewEventsIndex') }}">Save</a></li>
-            <li><a href="{{ path('viewEventsIndex') }}">Cancel</a></li>
         </ul>
 
 {% endblock %}
