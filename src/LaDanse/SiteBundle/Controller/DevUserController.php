@@ -21,18 +21,29 @@ use LaDanse\SiteBundle\Form\Model\NewEventFormModel;
 use LaDanse\SiteBundle\Form\Type\NewEventFormType;
 
 /**
- * @Route("/switchuser")
+ * @Route("/devuser")
 */
-class SwitchUserController extends LaDanseController
+class DevUserController extends LaDanseController
 {
 	/**
-     * @Route("/{id}", name="switchuser")
+     * @Route("/login/{id}", name="loginuser")
      * @Template("LaDanseSiteBundle::index.html.twig")
      */
-    public function indexAction(Request $request, $id)
+    public function login(Request $request, $id)
     {
-		$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+		$authContext = $this->getAuthenticationService()->getCurrentContext();
 
-    	$authContext->switchUser($request, $id);
+    	$authContext->login($id);
+    }
+
+    /**
+     * @Route("/logout", name="logoutuser")
+     * @Template("LaDanseSiteBundle::index.html.twig")
+     */
+    public function logout(Request $request)
+    {
+		$authContext = $this->getAuthenticationService()->getCurrentContext();
+
+    	$authContext->logout();
     }
 }
