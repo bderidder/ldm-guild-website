@@ -21,9 +21,9 @@
 
     <ul>
         <li><a href="{{ path('_welcome') }}">Home</a></li>
-        <li><a href="{{ path('createSignUpIndex') }}">Sign up</a></li>
-        <li><a href="{{ path('viewSignUpsIndex') }}">Cancel Sign Up</a></li>
+        {% if auth.authenticated %}
         <li><a href="{{ path('createEventIndex') }}">Create event</a></li>
+        {% endif %}
     </ul>
 
 {% endblock %}
