@@ -27,7 +27,7 @@ class DevUserController extends LaDanseController
 {
 	/**
      * @Route("/login/{id}", name="loginuser")
-     * @Template("LaDanseSiteBundle::index.html.twig")
+     * @Template("LaDanseSiteBundle::welcome.html.twig")
      */
     public function login(Request $request, $id)
     {
@@ -38,7 +38,7 @@ class DevUserController extends LaDanseController
 
     /**
      * @Route("/logout", name="logoutuser")
-     * @Template("LaDanseSiteBundle::index.html.twig")
+     * @Template("LaDanseSiteBundle::welcome.html.twig")
      */
     public function logout(Request $request)
     {
