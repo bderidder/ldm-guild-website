@@ -21,7 +21,7 @@ class SignUp
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="signUps")
      * @ORM\JoinColumn(name="eventId", referencedColumnName="id", nullable=false)
      */
     protected $event;
