@@ -10,6 +10,11 @@ _configurator:
     resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
     prefix:   /_configurator
 
+SwitchUserRouting:
+    resource: "@LaDanseSiteBundle/Controller/SwitchUserController.php"
+    type:     annotation
+    prefix:   /
+
 _main:
     resource: routing.yml
     
