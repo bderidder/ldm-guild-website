@@ -10,4 +10,9 @@ class LaDanseController extends Controller
 	{
 		return $this->get('logger');
 	}
+
+	protected function getAuthenticationService()
+	{
+		return $this->get('LaDanse.AuthenticationService');
+	}
 }
