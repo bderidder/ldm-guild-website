@@ -34,7 +34,7 @@ class EditEventController extends LaDanseController
      */
     public function indexAction(Request $request, $id)
     {
-    	$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$em = $this->getDoctrine()->getEntityManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);

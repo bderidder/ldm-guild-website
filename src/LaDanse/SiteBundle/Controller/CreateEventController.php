@@ -31,7 +31,7 @@ class CreateEventController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
-		$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$formModel = new NewEventFormModel();
     	$formModel->setName('A name');

@@ -24,10 +24,10 @@ class ViewEventsController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
-    	$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
 
-    	return array('events' => $events, 'auth' => $authContext);
+    	return array('events' => $events);
     }
 }

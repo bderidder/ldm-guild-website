@@ -25,7 +25,7 @@ class ViewEventController extends LaDanseController
      */
     public function indexAction(Request $request, $id)
     {
-        $authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$em = $this->getDoctrine();
     	$repository = $em->getRepository(self::EVENT_REPOSITORY);
@@ -38,7 +38,7 @@ class ViewEventController extends LaDanseController
         else
         {
             return $this->render('LaDanseSiteBundle::viewEvent.html.twig',
-                array('event' => $event, 'auth' => $authContext)
+                array('event' => $event)
             );
         }
     }
