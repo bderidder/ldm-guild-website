@@ -41,3 +41,4 @@ MySettingsRouting:
     resource: "@LaDanseSiteBundle/Controller/MySettingsController.php"
     type:     annotation
     prefix:   /
+    
