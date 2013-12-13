@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 /**
- * @Route("/SignUps")
+ * @Route("/signups")
 */
 class ViewSignUpsController extends LaDanseController
 {

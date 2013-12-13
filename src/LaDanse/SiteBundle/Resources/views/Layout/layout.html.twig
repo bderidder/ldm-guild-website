@@ -17,6 +17,13 @@
     </head>
     <body class="metro">
     	<div class="BodyContent">
+
+            {% if auth.currentContext.authenticated %}
+                <p>Logged in with {{ auth.currentContext.account.id }}</p>
+            {% else %}
+                <p>Not logged in</p>
+            {% endif %}
+
     		{% block body %}{% endblock %}
     	</div>
     </body>

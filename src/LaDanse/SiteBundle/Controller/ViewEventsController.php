@@ -11,8 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+
 /**
- * @Route("/Events")
+ * @Route("/events")
 */
 class ViewEventsController extends LaDanseController
 {
@@ -22,6 +24,8 @@ class ViewEventsController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
+
     	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
 
     	return array('events' => $events);

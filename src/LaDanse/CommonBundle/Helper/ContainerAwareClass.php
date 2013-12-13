@@ -2,20 +2,22 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+
 use LaDanse\CommonBundle\Helper\ContainerInjector;
 
 class ContainerAwareClass
 {
-	private $containerInjector;
+	private $container;
 
-	public function __construct(ContainerInjector $containerInjector)
+	public function __construct(Container $container)
 	{
-    	$this->containerInjector = $containerInjector;
+    	$this->container = $container;
 	}
 
 	protected function getContainer()
 	{
-		return $this->containerInjector->getContainer();
+		return $this->container;
 	}
 
 	protected function get(string $id)

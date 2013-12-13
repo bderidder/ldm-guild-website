@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="Event")
+ * @ORM\HasLifecycleCallbacks
  */
 class Event
 {
@@ -45,7 +46,12 @@ class Event
     protected $endTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="eventId")
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $lastModifiedTime;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="event")
      */
     protected $signUps;
 
@@ -58,6 +64,14 @@ class Event
     public function __construct()
     {
         $this->signUps = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function doPrePersist()
+    {
+        $this->lastModifiedTime = new \DateTime('now');
     }
 
     /**
@@ -239,5 +253,28 @@ class Event
     public function getEndTime()
     {
         return $this->endTime;
+    }
+
+    /**
+     * Set lastModifiedTime
+     *
+     * @param \DateTime $lastModifiedTime
+     * @return Event
+     */
+    public function setLastModifiedTime($lastModifiedTime)
+    {
+        $this->lastModifiedTime = $lastModifiedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get lastModifiedTime
+     *
+     * @return \DateTime 
+     */
+    public function getLastModifiedTime()
+    {
+        return $this->lastModifiedTime;
     }
 }

@@ -13,8 +13,8 @@ class WelcomeController extends LaDanseController
 {
     public function indexAction(Request $request)
     {
-    	$authContext = new AuthenticationContext($this->get('LaDanse.ContainerInjector'), $request);
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        return $this->render('LaDanseSiteBundle::index.html.twig');
+        return $this->render('LaDanseSiteBundle::welcome.html.twig');
     }
 }

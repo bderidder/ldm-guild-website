@@ -4,11 +4,6 @@
 
 {% block body %}
 
-    <ul>
-        <li><b>Guest</b>. A guest can see this page.</li>
-        <li><b>Member</b>. Any member can see this page and perform every action.</li>
-    </ul>
-
     <h2>Recently added events</h2>
 
     <p>Events that have been added in the last 7 days and haven't passed yet. On selection of an event, for which
@@ -24,19 +19,11 @@
 
     <h2>Other actions on this page</h2>
 
+    
     <ul>
-        <li>Guest
-            <ul>
-                There are no additional actions for a guest user.
-            </ul>
-        </li>
-        <li>Authenticated user
-            <ul>
-                <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
-                <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>
-                <li><a href="{{ path('viewSignUpsIndex') }}">My sign ups</a></li>
-            </ul>
-        </li>
+        <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
+        <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>
+        <li><a href="{{ path('viewSignUpsIndex') }}">My sign ups</a></li>
     </ul>
 
 {% endblock %}
