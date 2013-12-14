@@ -22,8 +22,10 @@
     
     <ul>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
+        {% if auth.currentContext.authenticated %}
         <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>
         <li><a href="{{ path('viewSignUpsIndex') }}">My sign ups</a></li>
+        {% endif %}
     </ul>
 
 {% endblock %}

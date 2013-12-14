@@ -14,10 +14,12 @@
     <ul>
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
-        <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
-        {% if auth.currentContext.id == event.organiser.id %}
-        <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
-        <li><a href="{{ path('deleteEventIndex', {'id': event.id}) }}">Delete event</a></li>
+        {% if auth.currentContext.authenticated %}
+            <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
+            {% if auth.currentContext.id == event.organiser.id %}
+                <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
+                <li><a href="{{ path('deleteEventIndex', {'id': event.id}) }}">Delete event</a></li>
+            {% endif %}
         {% endif %}
     </ul>
 
