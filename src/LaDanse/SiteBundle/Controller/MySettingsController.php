@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+
 /**
  * @Route("/mysettings")
 */
@@ -22,5 +24,11 @@ class MySettingsController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
+
+    	if (!$authContext->isAuthenticated())
+    	{
+    		return $this->redirect($this->generateUrl('welcomeIndex'));
+    	}
     }
 }

@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use \DateTime;
 
-class NewEventFormModel
+class EventFormModel
 {
 	private $name;
 	private $description;
