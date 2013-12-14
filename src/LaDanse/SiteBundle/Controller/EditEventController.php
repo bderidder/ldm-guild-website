@@ -18,8 +18,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
-use LaDanse\SiteBundle\Form\Model\NewEventFormModel;
-use LaDanse\SiteBundle\Form\Type\NewEventFormType;
+use LaDanse\SiteBundle\Form\Model\EventFormModel;
+use LaDanse\SiteBundle\Form\Type\EventFormType;
 
 /**
  * @Route("/event/{id}/edit")
@@ -57,7 +57,7 @@ class EditEventController extends LaDanseController
         
         $formModel = $this->entityToModel($event);
 
-        $form = $this->createForm(new NewEventFormType(), $formModel);
+        $form = $this->createForm(new EventFormType(), $formModel);
 
         if ($request->getMethod() == 'POST')
         {
@@ -81,7 +81,7 @@ class EditEventController extends LaDanseController
 
     private function entityToModel(Event $event)
     {
-    	$formModel = new NewEventFormModel();
+    	$formModel = new EventFormModel();
     	$formModel->setName($event->getName());
     	$formModel->setDescription($event->getDescription());
     	$formModel->setDate($event->getStartTime());
@@ -92,7 +92,7 @@ class EditEventController extends LaDanseController
     	return $formModel;
     }
 
-    private function modelToEntity(NewEventFormModel $formModel, Event $event)
+    private function modelToEntity(EventFormModel $formModel, Event $event)
     {
         $event->setName($formModel->getName());
         $event->setDescription($formModel->getDescription());

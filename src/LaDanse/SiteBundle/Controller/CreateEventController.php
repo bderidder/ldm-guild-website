@@ -17,8 +17,8 @@ use LaDanse\DomainBundle\Entity\Event;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
-use LaDanse\SiteBundle\Form\Model\NewEventFormModel;
-use LaDanse\SiteBundle\Form\Type\NewEventFormType;
+use LaDanse\SiteBundle\Form\Model\EventFormModel;
+use LaDanse\SiteBundle\Form\Type\EventFormType;
 
 /**
  * @Route("/events/create")
@@ -38,7 +38,7 @@ class CreateEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-    	$formModel = new NewEventFormModel();
+    	$formModel = new EventFormModel();
     	$formModel->setName('A name');
     	$formModel->setDescription('A description');
     	$formModel->setDate(new DateTime('tomorrow'));
@@ -46,7 +46,7 @@ class CreateEventController extends LaDanseController
     	$formModel->setStartTime(new DateTime('19:30'));
     	$formModel->setEndTime(new DateTime('22:00'));
 
-    	$form = $this->createForm(new NewEventFormType(), $formModel);
+    	$form = $this->createForm(new EventFormType(), $formModel);
 
     	$form->handleRequest($request);
 
@@ -63,7 +63,7 @@ class CreateEventController extends LaDanseController
 		}	
     }
 
-    private function persistEvent(AuthenticationContext $authContext, NewEventFormModel $formModel)
+    private function persistEvent(AuthenticationContext $authContext, EventFormModel $formModel)
     {
     	$event = $this->modelToEntity($authContext->getAccount(), $formModel);
 
@@ -72,7 +72,7 @@ class CreateEventController extends LaDanseController
     	$em->flush();
     }
 
-    private function modelToEntity($organiser, NewEventFormModel $formModel)
+    private function modelToEntity($organiser, EventFormModel $formModel)
     {
         $event = new Event();
         $event->setOrganiser($organiser);
