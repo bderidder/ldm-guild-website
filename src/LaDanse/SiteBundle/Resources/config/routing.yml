@@ -1,6 +1,7 @@
-_welcome:
-    pattern:  /
-    defaults: { _controller: LaDanseSiteBundle:Welcome:index }
+WelcomeRouting:
+    resource: "@LaDanseSiteBundle/Controller/WelcomeController.php"
+    type:     annotation
+    prefix:   /
 
 ViewEventsRouting:
     resource: "@LaDanseSiteBundle/Controller/ViewEventsController.php"

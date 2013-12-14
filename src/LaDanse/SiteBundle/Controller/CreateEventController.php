@@ -33,6 +33,11 @@ class CreateEventController extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+
     	$formModel = new NewEventFormModel();
     	$formModel->setName('A name');
     	$formModel->setDescription('A description');

@@ -12,7 +12,7 @@
     <h2>Actions</h2>
 
     <ul>
-        <li><a href="{{ path('_welcome') }}">Home</a></li>
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
         <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
         {% if auth.currentContext.id == event.organiser.id %}

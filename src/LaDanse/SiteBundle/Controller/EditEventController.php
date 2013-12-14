@@ -36,6 +36,11 @@ class EditEventController extends LaDanseController
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->redirect($this->generateUrl('eventsIndex'));
+        }
+
     	$em = $this->getDoctrine()->getEntityManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
     	$event = $repository->find($id);

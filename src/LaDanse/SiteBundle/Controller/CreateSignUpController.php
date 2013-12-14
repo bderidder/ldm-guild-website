@@ -22,5 +22,11 @@ class CreateSignUpController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+    	$authContext = $this->getAuthenticationService()->getCurrentContext();
+
+    	if (!$authContext->isAuthenticated())
+    	{
+    		return $this->redirect($this->generateUrl('eventsIndex'));
+    	}
     }
 }
