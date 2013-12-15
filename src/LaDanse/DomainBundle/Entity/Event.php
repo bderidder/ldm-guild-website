@@ -51,7 +51,7 @@ class Event
     protected $lastModifiedTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="SignUp", mappedBy="event", cascade={"persist", "remove"})
      */
     protected $signUps;
 
