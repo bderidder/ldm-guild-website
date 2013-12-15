@@ -37,7 +37,7 @@ class EventSignUpsModel extends ContainerAwareClass
 
         foreach($signUps as &$signUp)
         {
-            if ($signUp->getAccount()->getId() === $account->getId())
+            if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
             {
                 $this->currentUserSignedUp = true; 
             }
