@@ -20,7 +20,7 @@ class ForRole
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=15, nullable=false)
      */
     protected $role;
 
