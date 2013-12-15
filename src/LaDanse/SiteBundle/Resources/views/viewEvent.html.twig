@@ -6,8 +6,18 @@
 
     <h2>{{ event.name }} on {{ event.startTime|date("d/m") }}</h2>
 
-    <p>{{ event.name }}</p>
-    <p>{{ event.startTime|date("d/m/Y H:i") }}</p>
+    <p>This event is organised by {{ event.organiser.name }} ({{ event.organiser.id }}).</p>
+
+    <p>{{ event.description }}</p>
+    <p>Invite time: {{ event.inviteTime|date("H:i") }}</p>
+    <p>Start time: {{ event.startTime|date("H:i") }}</p>
+    <p>End time: {{ event.endTime|date("H:i") }}</p>
+
+    {% if event.signUps.signUpCount == 0 %}
+        <p>Nobody signed up yet for this event.</p>
+    {% else %}
+        <p>Sign up count: {{ event.signUps.signUpCount }}</p>
+    {% endif %}
 
     <h2>Actions</h2>
 
@@ -15,8 +25,12 @@
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
         {% if auth.currentContext.authenticated %}
-            <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
-            {% if auth.currentContext.id == event.organiser.id %}
+            {% if event.signUps.currentUserSignedUp %}
+                <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
+            {% else %}
+                <li><a href="{{ path('createSignUpIndex', {'id': event.id}) }}">Sign up</a></li>
+            {% endif %}
+            {% if event.editable %}
                 <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
                 <li><a href="{{ path('deleteEventIndex', {'id': event.id}) }}">Delete event</a></li>
             {% endif %}
