@@ -21,7 +21,7 @@ class EventModel extends ContainerAwareClass
     protected $endTime;
     protected $lastModifiedTime;
     protected $signUpsModel;
-    protected $editable;
+    protected $isOrganiser;
 
     public function __construct(ContainerInjector $injector, Event $event)
     {
@@ -92,23 +92,25 @@ class EventModel extends ContainerAwareClass
         return $this->currentUserSignedUp;
     }
 
-    public function getEditable()
+    public function isOrganiser()
     {
-        return $this->editable;
+        return $this->isOrganiser;
     }
-
 
     private function calculateEditable(Event $event)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        if ($authContext->getAccount()->getId() === $event->getOrganiser()->getId())
+        $this->isOrganiser = false;
+
+        if ($authContext->isAuthenticated() 
+            && ($authContext->getAccount()->getId() === $event->getOrganiser()->getId()))
         {
-            $this->editable = true;
+            $this->isOrganiser = true;
         }
         else
         {
-            $this->editable = false;   
+            $this->isOrganiser = false;   
         }
     }
 }
