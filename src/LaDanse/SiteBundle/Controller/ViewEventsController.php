@@ -13,6 +13,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
+use LaDanse\SiteBundle\Model\EventModel;
+
 /**
  * @Route("/events")
 */
@@ -26,8 +28,22 @@ class ViewEventsController extends LaDanseController
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
-    	$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        
+        $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :now ORDER BY e.inviteTime ASC');
+        $query->setParameter('now', new \DateTime('now'));
+        
+        $events = $query->getResult();
 
-    	return array('events' => $events);
+    	//$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
+
+        $eventModels = array();
+
+        foreach($events as $event)
+        {
+            $eventModels[] = new EventModel($this->getContainerInjector(), $event);
+        }
+
+    	return array('events' => $eventModels);
     }
 }
