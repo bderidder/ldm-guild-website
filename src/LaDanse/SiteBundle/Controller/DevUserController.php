@@ -27,23 +27,25 @@ class DevUserController extends LaDanseController
 {
 	/**
      * @Route("/login/{id}", name="loginuser")
-     * @Template("LaDanseSiteBundle::welcome.html.twig")
      */
     public function login(Request $request, $id)
     {
 		$authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$authContext->login($id);
+
+        return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 
     /**
      * @Route("/logout", name="logoutuser")
-     * @Template("LaDanseSiteBundle::welcome.html.twig")
      */
     public function logout(Request $request)
     {
 		$authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$authContext->logout();
+
+        return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 }
