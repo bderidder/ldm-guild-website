@@ -6,7 +6,7 @@
 
     <h2>{{ event.name }} on {{ event.startTime|date("d/m") }}</h2>
 
-    <p>This event is organised by {{ event.organiser.name }} ({{ event.organiser.id }}).</p>
+    <p>This event is organised by {{ event.organiser.id }}.</p>
 
     <p>{{ event.description }}</p>
     <p>Invite time: {{ event.inviteTime|date("H:i") }}</p>
