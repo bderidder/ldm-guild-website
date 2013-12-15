@@ -15,4 +15,9 @@ class LaDanseController extends Controller
 	{
 		return $this->get('LaDanse.AuthenticationService');
 	}
+
+	protected function getContainerInjector()
+	{
+		return $this->get('LaDanse.ContainerInjector');
+	}
 }
