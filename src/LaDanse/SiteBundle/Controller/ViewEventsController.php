@@ -35,8 +35,6 @@ class ViewEventsController extends LaDanseController
         
         $events = $query->getResult();
 
-    	//$events = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Event')->findAll();
-
         $eventModels = array();
 
         foreach($events as $event)
@@ -44,6 +42,17 @@ class ViewEventsController extends LaDanseController
             $eventModels[] = new EventModel($this->getContainerInjector(), $event);
         }
 
-    	return array('events' => $eventModels);
+        if ($authContext->isAuthenticated())
+        {
+            return $this->render('LaDanseSiteBundle::viewEvents.html.twig',
+                    array('events' => $eventModels)
+                );
+        }
+        else
+        {
+            return $this->render('LaDanseSiteBundle::viewEventsGuest.html.twig',
+                    array('events' => $eventModels)
+                );
+        }
     }
 }
