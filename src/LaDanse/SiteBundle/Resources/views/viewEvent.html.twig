@@ -29,6 +29,7 @@
                 <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
             {% else %}
                 <li><a href="{{ path('createSignUpIndex', {'id': event.id}) }}">Sign up</a></li>
+                <li><a href="{{ path('createAbsenceIndex', {'id': event.id}) }}">Inform absence</a></li>
             {% endif %}
             {% if event.isOrganiser %}
                 <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
