@@ -20,12 +20,12 @@ class ForRole
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=15, nullable=false)
      */
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SignUp")
+     * @ORM\ManyToOne(targetEntity="SignUp", inversedBy="roles")
      * @ORM\JoinColumn(name="signUpId", referencedColumnName="id", nullable=false)
      */
     protected $signUp;

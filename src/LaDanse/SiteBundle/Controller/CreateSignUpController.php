@@ -19,6 +19,7 @@ use LaDanse\SiteBundle\Form\Type\SignUpFormType;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\DomainBundle\Entity\SignUpType;
 
 /**
  * @Route("/event/{id}/signup")
@@ -28,7 +29,7 @@ class CreateSignUpController extends LaDanseController
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
-     * @Route("/", name="createSignUpIndex")
+     * @Route("/create", name="createSignUpIndex")
      * @Template("LaDanseSiteBundle::createSignUp.html.twig")
      */
     public function indexAction(Request $request, $id)
@@ -37,7 +38,7 @@ class CreateSignUpController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-    		return $this->redirect($this->generateUrl('eventsIndex'));
+    		return $this->redirect($this->generateUrl('viewEventsIndex'));
     	}
 
         $em = $this->getDoctrine();
@@ -62,7 +63,7 @@ class CreateSignUpController extends LaDanseController
 
         if ($form->isValid())
         {
-            $this->persistSignUp($authContext, $id);
+            $this->persistSignUp($authContext, $id, $formModel);
 
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         }
@@ -72,7 +73,44 @@ class CreateSignUpController extends LaDanseController
         }
     }
 
-    private function persistSignUp(AuthenticationContext $authContext, $eventId)
+    /**
+     * @Route("/createabsence", name="createAbsenceIndex")
+     */
+    public function createAbsenceAction(Request $request, $id)
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->redirect($this->generateUrl('viewEventsIndex'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        $event = $repository->find($id);
+
+        if (null === $event)
+        {
+            return $this->redirect($this->generateUrl('viewEventsIndex'));
+        } 
+
+        if ($this->isCurrentUserSigned($event))
+        {
+            return $this->redirect($this->generateUrl('viewEventsIndex'));
+        }
+
+        $signUp = new SignUp();
+        $signUp->setEvent($event);
+        $signUp->setType(SignUpType::ABSENCE);
+        $signUp->setAccount($authContext->getAccount());
+
+        $em->persist($signUp);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('viewEventsIndex'));
+    }
+
+    private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
@@ -81,8 +119,19 @@ class CreateSignUpController extends LaDanseController
 
         $signUp = new SignUp();
         $signUp->setEvent($event);
+        $signUp->setType($formModel->getType());
         $signUp->setAccount($authContext->getAccount());
 
+        foreach($formModel->getRoles() as $strForRole)
+        {
+            $forRole = new ForRole();
+        
+            $forRole->setSignUp($signUp);
+            $forRole->setRole($strForRole);
+
+            $em->persist($forRole);
+        }
+        
         $em->persist($signUp);
         $em->flush();
     }
