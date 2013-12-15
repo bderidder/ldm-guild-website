@@ -20,7 +20,7 @@ class ContainerAwareClass
 		return $this->container;
 	}
 
-	protected function get(string $id)
+	protected function get($id)
 	{
 		return $this->getContainer()->get($id);
 	}
@@ -33,5 +33,10 @@ class ContainerAwareClass
 	protected function getLogger()
 	{
 		return $this->getContainer()->get('logger');
+	}
+
+	protected function getAuthenticationService()
+	{
+		return $this->get('LaDanse.AuthenticationService');
 	}
 }
