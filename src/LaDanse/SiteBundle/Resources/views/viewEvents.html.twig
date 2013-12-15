@@ -19,11 +19,20 @@
                 <td>{{ event.inviteTime|date("d/m") }} at {{ event.inviteTime|date("H:i") }}</td>
                 <td>
                     {% if event.signUps.signUpCount == 0 %}
-                        there are no sign ups yet.
+                        there are no sign ups yet
                     {% elseif event.signUps.signUpCount == 1 %}
-                        1 person signed up.
+                        1 person signed up
                     {% else %}
-                        {{ event.signUps.signUpCount }} persons signed up.
+                        {{ event.signUps.signUpCount }} persons signed up
+                    {% endif %}
+                </td>
+                <td>
+                    {% if event.signUps.absentCount == 0 %}
+                        no people informed us they can't come
+                    {% elseif event.signUps.absentCount == 1 %}
+                        1 person notified he or she can't come
+                    {% else %}
+                        {{ event.signUps.absentCount }} persons notified they can't come
                     {% endif %}
                 </td>
             </tr>
