@@ -50,7 +50,7 @@ class CreateSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         } 
 
-        if ($this->isCurrentUserSigned($event))
+        if ($this->getCurrentUserSignUp($event))
         {
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         }       
@@ -94,7 +94,7 @@ class CreateSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         } 
 
-        if ($this->isCurrentUserSigned($event))
+        if ($this->getCurrentUserSignUp($event))
         {
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         }
@@ -136,8 +136,28 @@ class CreateSignUpController extends LaDanseController
         $em->flush();
     }
 
-    private function isCurrentUserSigned($event)
+    private function getCurrentUserSignUp($event)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
 
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $query = $em->createQuery('SELECT s ' .
+                                  'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
+                                  'WHERE s.event = :event AND s.account = :account');
+        $query->setParameter('account', $account->getId());
+        $query->setParameter('event', $event->getId());
+
+        $signUps = $query->getResult();
+
+        if (count($signUps) === 0)
+        {
+            return NULL;
+        }
+        else
+        {
+            return $signUps[0];
+        }
     }
 }
