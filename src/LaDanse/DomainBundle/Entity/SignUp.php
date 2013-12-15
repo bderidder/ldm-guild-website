@@ -35,6 +35,11 @@ class SignUp
     protected $account;
 
     /**
+     * @ORM\Column(type="string", length=15, nullable=false)
+     */
+    protected $type;
+
+    /**
      * @ORM\OneToMany(targetEntity="ForRole", mappedBy="signUp", cascade={"persist", "remove"})
      */
     protected $roles;
@@ -131,5 +136,28 @@ class SignUp
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return SignUp
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
