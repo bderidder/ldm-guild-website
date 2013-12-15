@@ -6,6 +6,7 @@ use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
 
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\SignUpType;
 
 use LaDanse\SiteBundle\Model\AccountModel;
 
@@ -14,8 +15,10 @@ class EventSignUpsModel extends ContainerAwareClass
     const SIGNUP_REPOSITORY = 'LaDanseDomainBundle:SignUp';
 
     protected $eventId;
-    protected $signUps;
-    protected $signupCount;
+    protected $signUps;    
+    protected $willComeCount;
+    protected $mightComeCount;
+    protected $absentCount;
     protected $organiser;
     protected $currentUserSignedUp;
 
@@ -31,7 +34,9 @@ class EventSignUpsModel extends ContainerAwareClass
 
         $signUps = $event->getSignUps();
 
-        $this->signupCount = count($signUps);
+        $this->willComeCount = 0;
+        $this->mightComeCount = 0;
+        $this->absentCount = 0;
 
         $this->currentUserSignedUp = false;
 
@@ -40,6 +45,19 @@ class EventSignUpsModel extends ContainerAwareClass
             if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
             {
                 $this->currentUserSignedUp = true; 
+            }
+
+            switch($signUp->getType())
+            {
+                case SignUpType::WILLCOME:
+                    $this->willComeCount = $this->willComeCount + 1;
+                    break;
+                case SignUpType::MIGHTCOME:
+                    $this->mightComeCount = $this->mightComeCount + 1;
+                    break;
+                case SignUpType::ABSENCE:
+                    $this->absentCount = $this->absentCount + 1;
+                    break;   
             }
         }
     }
@@ -59,9 +77,24 @@ class EventSignUpsModel extends ContainerAwareClass
         return $this->editable;
     }
 
+    public function getWillComeCount()
+    {
+        return $this->willComeCount;
+    }
+
+    public function getMightComeCount()
+    {
+        return $this->mightComeCount;
+    }
+
+    public function getAbsentCount()
+    {
+        return $this->absentCount;
+    }
+
     public function getSignUpCount()
     {
-        return $this->signupCount;
+        return $this->getWillComeCount() + $this->getMightComeCount();
     }
 }
 
