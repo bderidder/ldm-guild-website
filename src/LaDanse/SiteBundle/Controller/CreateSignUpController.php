@@ -50,7 +50,7 @@ class CreateSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         } 
 
-        if ($this->isCurrentUserSigned($event))
+        if ($this->getCurrentUserSignUp($event))
         {
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         }       
@@ -94,7 +94,7 @@ class CreateSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         } 
 
-        if ($this->isCurrentUserSigned($event))
+        if ($this->getCurrentUserSignUp($event))
         {
             return $this->redirect($this->generateUrl('viewEventsIndex'));
         }
@@ -105,6 +105,35 @@ class CreateSignUpController extends LaDanseController
         $signUp->setAccount($authContext->getAccount());
 
         $em->persist($signUp);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('viewEventsIndex'));
+    }
+
+    /**
+     * @Route("/remove", name="removeSignUpIndex")
+     */
+    public function removeSignUpAction(Request $request, $id)
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->redirect($this->generateUrl('viewEventsIndex'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        $event = $repository->find($id);
+
+        if (null === $event)
+        {
+            return $this->redirect($this->generateUrl('viewEventsIndex'));
+        } 
+
+        $signUp = $this->getCurrentUserSignUp($event);
+
+        $em->remove($signUp);
         $em->flush();
 
         return $this->redirect($this->generateUrl('viewEventsIndex'));
@@ -136,8 +165,28 @@ class CreateSignUpController extends LaDanseController
         $em->flush();
     }
 
-    private function isCurrentUserSigned($event)
+    private function getCurrentUserSignUp($event)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
 
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $query = $em->createQuery('SELECT s ' .
+                                  'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
+                                  'WHERE s.event = :event AND s.account = :account');
+        $query->setParameter('account', $account->getId());
+        $query->setParameter('event', $event->getId());
+
+        $signUps = $query->getResult();
+
+        if (count($signUps) === 0)
+        {
+            return NULL;
+        }
+        else
+        {
+            return $signUps[0];
+        }
     }
 }
