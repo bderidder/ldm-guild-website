@@ -25,7 +25,7 @@ class ForRole
     protected $role;
 
     /**
-     * @ORM\ManyToOne(targetEntity="SignUp")
+     * @ORM\ManyToOne(targetEntity="SignUp", inversedBy="roles")
      * @ORM\JoinColumn(name="signUpId", referencedColumnName="id", nullable=false)
      */
     protected $signUp;
