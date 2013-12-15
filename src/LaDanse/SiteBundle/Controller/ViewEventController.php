@@ -13,6 +13,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
+use LaDanse\SiteBundle\Model\EventModel;
+
 /**
  * @Route("/event/{id}")
 */
@@ -38,7 +40,7 @@ class ViewEventController extends LaDanseController
         else
         {
             return $this->render('LaDanseSiteBundle::viewEvent.html.twig',
-                array('event' => $event)
+                array('event' => new EventModel($this->getContainerInjector(), $event))
             );
         }
     }
