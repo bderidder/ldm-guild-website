@@ -27,6 +27,7 @@
         {% if auth.currentContext.authenticated %}
             {% if event.signUps.currentUserSignedUp %}
                 <li><a href="{{ path('viewSignUpIndex') }}">View my sign up</a></li>
+                <li><a href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove my sign up</a></li>
             {% else %}
                 <li><a href="{{ path('createSignUpIndex', {'id': event.id}) }}">Sign up</a></li>
                 <li><a href="{{ path('createAbsenceIndex', {'id': event.id}) }}">Inform absence</a></li>
