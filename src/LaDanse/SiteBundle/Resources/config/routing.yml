@@ -3,11 +3,6 @@ WelcomeRouting:
     type:     annotation
     prefix:   /
 
-ViewEventsRouting:
-    resource: "@LaDanseSiteBundle/Controller/ViewEventsController.php"
-    type:     annotation
-    prefix:   /
-
 ViewEventRouting:
     resource: "@LaDanseSiteBundle/Controller/ViewEventController.php"
     type:     annotation
@@ -20,11 +15,6 @@ CreateEventRouting:
 
 EditEventRouting:
     resource: "@LaDanseSiteBundle/Controller/EditEventController.php"
-    type:     annotation
-    prefix:   /
-
-ViewSignUpRouting:
-    resource: "@LaDanseSiteBundle/Controller/ViewSignUpController.php"
     type:     annotation
     prefix:   /
 
