@@ -4,21 +4,16 @@
 
 {% block body %}
 
-    <h2>Recently created or modified events</h2>
+    <h2>Events</h2>
 
-    <p>Events that have been added in the last N days and haven't passed yet.</p>
-
-    <h2>My sign ups</h2>
-
-    <p>A list of signups for the next N days.</p>
+    {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
     <h2>Other actions on this page</h2>
     
     <ul>
         <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
         {% if auth.currentContext.authenticated %}
-            <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>
-            <li><a href="{{ path('viewSignUpsIndex') }}">My sign ups</a></li>       
+            <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>     
         {% endif %}
     </ul>
 
