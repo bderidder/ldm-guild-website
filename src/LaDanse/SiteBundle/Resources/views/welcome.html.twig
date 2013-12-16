@@ -4,16 +4,16 @@
 
 {% block body %}
 
-    <h2>Events</h2>
+    <h1>Events</h1>
 
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
     <h2>Other actions on this page</h2>
     
     <ul>
-        <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
         {% if auth.currentContext.authenticated %}
-            <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li>     
+            <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li> 
+            <li><a href="{{ path('createEventIndex') }}">Create event</a></li>    
         {% endif %}
     </ul>
 

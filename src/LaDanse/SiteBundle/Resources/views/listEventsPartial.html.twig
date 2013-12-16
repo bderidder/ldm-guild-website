@@ -1,36 +1,42 @@
-    <table cellpadding=5>
+    <table cellpadding="5" border="0">
+        <tr>
+            <td><!-- sign up column --></td>            
+            <td><!-- date column --></td>
+            <td><!-- name column --></td>
+            <td class="center-td">Signed</td>
+            <td class="center-td">Absent</td>
+            <td class="center-td">Invite Time</td>
+            <td class="center-td">Start Time</td>
+            <td class="center-td">End Time</td>
+            <td class="center-td">Organiser</td>
+        </tr>
     {% for event in events %}
         <tr>
-            <td>
-                {% if event.isOrganiser %}
-                O
+            <td class="center-td">
+                {% if event.signUps.currentUserComes %}
+                    <img src="{{ asset('bundles/ladansesite/images/check_mark.gif') }}" width="16" />
+                {% elseif event.signUps.currentUserAbsent %}
+                    <img src="{{ asset('bundles/ladansesite/images/cancel.gif') }}" width="16" />
                 {% endif %}
             </td>
-            <td><a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></td>
-            <td>{{ event.inviteTime|date("d/m") }} at {{ event.inviteTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
             <td>
-                {% if event.signUps.currentUserSignedUp %}
-                X
+                <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+            </td>
+            <td class="center-td">
+                {% if event.signUps.signUpCount != 0 %}
+                    {{ event.signUps.signUpCount }}
                 {% endif %}
             </td>
-            <td>
-                {% if event.signUps.signUpCount == 0 %}
-                    there are no sign ups yet
-                {% elseif event.signUps.signUpCount == 1 %}
-                    1 person signed up
-                {% else %}
-                    {{ event.signUps.signUpCount }} persons signed up
+            <td class="center-td">
+                {% if event.signUps.absentCount != 0 %}
+                    {{ event.signUps.absentCount }}
                 {% endif %}
             </td>
-            <td>
-                {% if event.signUps.absentCount == 0 %}
-                    no people informed us they can't come
-                {% elseif event.signUps.absentCount == 1 %}
-                    1 person notified he or she can't come
-                {% else %}
-                    {{ event.signUps.absentCount }} persons notified they can't come
-                {% endif %}
-            </td>
+            <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.startTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.endTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.organiser.id }}</td>
         </tr>
     {% endfor %}
     </table>

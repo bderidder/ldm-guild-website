@@ -35,7 +35,7 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         else
         {
@@ -57,7 +57,7 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         else
         {
@@ -65,7 +65,7 @@ class ViewEventController extends LaDanseController
 
     	   $em->flush();
 
-    	   return $this->redirect($this->generateUrl('viewEventsIndex'));
+    	   return $this->redirect($this->generateUrl('welcomeIndex'));
         }
     }
 }

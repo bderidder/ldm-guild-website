@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h2>Sign up for {{ event.name }} on {{ event.startTime|date("d/m") }}</h2>
+    <h1>Sign up for {{ event.name }} on {{ event.startTime|date("d/m") }}</h1>
 
     {{ form(form) }}
 
@@ -13,7 +13,6 @@
     <ul>
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li><a href="{{ path('viewEventIndex', {'id': event.id}) }}">Event</a></li>
-        <li><a href="{{ path('viewEventsIndex') }}">Events</a></li>
     </ul>
 
 {% endblock %}

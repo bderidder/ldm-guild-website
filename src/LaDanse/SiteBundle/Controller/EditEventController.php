@@ -38,7 +38,7 @@ class EditEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            return $this->redirect($this->generateUrl('eventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
     	$em = $this->getDoctrine()->getEntityManager();
@@ -47,12 +47,12 @@ class EditEventController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
-        	return $this->redirect($this->generateUrl('viewEventsIndex'));
+        	return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         
         $formModel = $this->entityToModel($event);
@@ -69,7 +69,7 @@ class EditEventController extends LaDanseController
 
         		$em->flush();
 
-        		return $this->redirect($this->generateUrl('viewEventsIndex'));
+        		return $this->redirect($this->generateUrl('welcomeIndex'));
         	}
     	}
     	else

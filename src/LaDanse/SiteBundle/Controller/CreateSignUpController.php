@@ -38,7 +38,7 @@ class CreateSignUpController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-    		return $this->redirect($this->generateUrl('viewEventsIndex'));
+    		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
 
         $em = $this->getDoctrine();
@@ -47,12 +47,12 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }       
 
         $formModel = new SignUpFormModel();
@@ -65,7 +65,7 @@ class CreateSignUpController extends LaDanseController
         {
             $this->persistSignUp($authContext, $id, $formModel);
 
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
         }
         else
         {
@@ -82,7 +82,7 @@ class CreateSignUpController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -91,12 +91,12 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
         $signUp = new SignUp();
@@ -107,7 +107,7 @@ class CreateSignUpController extends LaDanseController
         $em->persist($signUp);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('viewEventsIndex'));
+        return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 
     /**
@@ -119,7 +119,7 @@ class CreateSignUpController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -128,7 +128,7 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('viewEventsIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
         $signUp = $this->getCurrentUserSignUp($event);
@@ -136,7 +136,7 @@ class CreateSignUpController extends LaDanseController
         $em->remove($signUp);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('viewEventsIndex'));
+        return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 
     private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)

@@ -54,7 +54,7 @@ class CreateEventController extends LaDanseController
     	{
 			$this->persistEvent($authContext, $formModel);
 
-    		return $this->redirect($this->generateUrl('viewEventsIndex'));
+    		return $this->redirect($this->generateUrl('welcomeIndex'));
 		}
 		else
 		{
