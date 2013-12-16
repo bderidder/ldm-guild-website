@@ -1,0 +1,17 @@
+        <table cellpadding=5 border=1>
+        {% for event in events %}
+            <tr>
+                <td><a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></td>
+                <td>{{ event.inviteTime|date("d/m") }} at {{ event.inviteTime|date("H:i") }}</td>
+                <td>
+                    {% if event.signUps.signUpCount == 0 %}
+                        there are no sign ups yet.
+                    {% elseif event.signUps.signUpCount == 1 %}
+                        1 person signed up.
+                    {% else %}
+                        {{ event.signUps.signUpCount }} persons signed.
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
