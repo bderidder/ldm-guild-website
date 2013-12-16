@@ -20,7 +20,8 @@ class EventSignUpsModel extends ContainerAwareClass
     protected $mightComeCount;
     protected $absentCount;
     protected $organiser;
-    protected $currentUserSignedUp;
+    protected $currentUserComes;
+    protected $currentUserAbsent;
 
     public function __construct(ContainerInjector $injector, Event $event)
     {
@@ -38,25 +39,39 @@ class EventSignUpsModel extends ContainerAwareClass
         $this->mightComeCount = 0;
         $this->absentCount = 0;
 
-        $this->currentUserSignedUp = false;
+        $this->currentUserComes = false;
+        $this->currentUserAbsent = false;
 
         foreach($signUps as &$signUp)
         {
-            if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
-            {
-                $this->currentUserSignedUp = true; 
-            }
-
             switch($signUp->getType())
             {
                 case SignUpType::WILLCOME:
                     $this->willComeCount = $this->willComeCount + 1;
+
+                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+                    {
+                        $this->currentUserComes = true;
+                    }
+
                     break;
                 case SignUpType::MIGHTCOME:
                     $this->mightComeCount = $this->mightComeCount + 1;
+
+                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+                    {
+                        $this->currentUserComes = true;
+                    }
+
                     break;
                 case SignUpType::ABSENCE:
                     $this->absentCount = $this->absentCount + 1;
+
+                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+                    {
+                        $this->currentUserAbsent = true;
+                    }
+
                     break;   
             }
         }
@@ -69,7 +84,17 @@ class EventSignUpsModel extends ContainerAwareClass
 
     public function getCurrentUserSignedUp()
     {
-        return $this->currentUserSignedUp;
+        return $this->getCurrentUserComes() || $this->getCurrentUserAbsent();
+    }
+
+    public function getCurrentUserComes()
+    {
+        return $this->currentUserComes;
+    }
+
+    public function getCurrentUserAbsent()
+    {
+        return $this->currentUserAbsent;
     }
 
     public function getEditable()
@@ -97,22 +122,3 @@ class EventSignUpsModel extends ContainerAwareClass
         return $this->getWillComeCount() + $this->getMightComeCount();
     }
 }
-
-        /*
-        $em = $this->getDoctrine()->getManager();
-        
-        $query = $em->createQuery('SELECT s FROM LaDanse\DomainBundle\Entity\SignUp s WHERE s.event = :event AND s.account = :account');
-        $query->setParameter('account', $account->getId());
-        $query->setParameter('event', $this->getId());
-        
-        $signUps = $query->getResult();
-
-        if(!is_null($signUps) && is_array($signUps) && count($signUps) > 0)
-        {
-            $this->currentUserSignedUp = true;   
-        }
-        else
-        {
-            $this->currentUserSignedUp = false;
-        }
-        */
