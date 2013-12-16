@@ -23,11 +23,6 @@ EditEventRouting:
     type:     annotation
     prefix:   /
 
-ViewSignUpsRouting:
-    resource: "@LaDanseSiteBundle/Controller/ViewSignUpsController.php"
-    type:     annotation
-    prefix:   /
-
 ViewSignUpRouting:
     resource: "@LaDanseSiteBundle/Controller/ViewSignUpController.php"
     type:     annotation
