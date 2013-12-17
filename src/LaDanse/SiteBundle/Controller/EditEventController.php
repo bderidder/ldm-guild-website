@@ -38,20 +38,28 @@ class EditEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
     	$event = $repository->find($id);
 
         if (null === $event)
         {
+            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
+                array("event" => $id));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user is not the organiser of the event in indexAction', 
+                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+
         	return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         
@@ -66,6 +74,8 @@ class EditEventController extends LaDanseController
         	if ($form->isValid())
         	{
         		$this->modelToEntity($formModel, $event);
+
+                $this->getLogger()->info(__CLASS__ . ' persisting changes to event indexAction');
 
         		$em->flush();
 

@@ -31,6 +31,8 @@ class ViewEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
@@ -40,6 +42,9 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
+            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
+                array("event" => $id));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         else
@@ -62,11 +67,17 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
+            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in deleteAction', 
+                array("event" => $id));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
         else
         {
     	   $em->remove($event);
+
+           $this->getLogger()->warn(__CLASS__ . ' removing event in deleteAction', 
+                array("event" => $id));
 
     	   $em->flush();
 
