@@ -38,6 +38,8 @@ class CreateSignUpController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
 
@@ -47,11 +49,16 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
+            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user is already subscribed to this event in indexAction', 
+                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }       
 
@@ -82,6 +89,8 @@ class CreateSignUpController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
@@ -91,11 +100,16 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
+            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction', 
+                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
@@ -103,6 +117,8 @@ class CreateSignUpController extends LaDanseController
         $signUp->setEvent($event);
         $signUp->setType(SignUpType::ABSENCE);
         $signUp->setAccount($authContext->getAccount());
+
+        $this->getLogger()->info(__CLASS__ . ' persisting new sign up in createAbsenceAction');
 
         $em->persist($signUp);
         $em->flush();
@@ -161,6 +177,8 @@ class CreateSignUpController extends LaDanseController
             $em->persist($forRole);
         }
         
+        $this->getLogger()->info(__CLASS__ . ' persisting new sign up');
+
         $em->persist($signUp);
         $em->flush();
     }

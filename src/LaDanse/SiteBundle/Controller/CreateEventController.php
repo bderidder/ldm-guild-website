@@ -25,7 +25,7 @@ use LaDanse\SiteBundle\Form\Type\EventFormType;
 */
 class CreateEventController extends LaDanseController
 {
-	/**
+    /**
      * @Route("/", name="createEventIndex")
      * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
@@ -35,7 +35,7 @@ class CreateEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated');
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

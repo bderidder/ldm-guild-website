@@ -17,7 +17,7 @@ class AccountModel extends ContainerAwareClass
         parent::__construct($injector->getContainer());
     
         $this->id = $account->getId();
-        $this->name = "Letodas";
+        $this->name = '';
     }
 
     public function setId($id)
