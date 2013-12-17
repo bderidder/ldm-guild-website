@@ -141,7 +141,7 @@ class CreateSignUpController extends LaDanseController
 
     private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
         $event = $repository->find($eventId);
@@ -170,7 +170,7 @@ class CreateSignUpController extends LaDanseController
         $authContext = $this->getAuthenticationService()->getCurrentContext();
         $account = $authContext->getAccount();
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery('SELECT s ' .
                                   'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 

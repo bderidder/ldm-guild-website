@@ -41,7 +41,7 @@ class EditEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
     	$event = $repository->find($id);
 

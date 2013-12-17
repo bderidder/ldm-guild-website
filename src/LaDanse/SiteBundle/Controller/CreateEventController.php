@@ -35,6 +35,8 @@ class CreateEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated');
+
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
@@ -67,7 +69,9 @@ class CreateEventController extends LaDanseController
     {
     	$event = $this->modelToEntity($authContext->getAccount(), $formModel);
 
-    	$em = $this->getDoctrine()->getEntityManager();
+        $this->getLogger()->info(__CLASS__ . ' persisting event');
+
+    	$em = $this->getDoctrine()->getManager();
     	$em->persist($event);
     	$em->flush();
     }
