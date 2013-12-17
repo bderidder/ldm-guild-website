@@ -42,7 +42,7 @@
     {% if event.signUps.willComeCount != 0 %}
         <table border=0 cellpadding=3>
             <tr>
-                <td><!-- name --></td>
+                <td>Name</td>
                 <td class="center-td">Tank</td>
                 <td class="center-td">Healer</td>
                 <td class="center-td">Damage</td>
@@ -75,11 +75,34 @@
     <h3>Queued Sign Ups <small>({{ event.signUps.mightComeCount }})</small></h3>
 
     {% if event.signUps.mightComeCount != 0 %}
-        <ul>
-        {% for signUp in event.signUps.mightComeSignUps %}
-            <li>A sign up</li>
-        {% endfor %}
-        </ul>
+        <table border=0 cellpadding=3>
+            <tr>
+                <td>Name</td>
+                <td class="center-td">Tank</td>
+                <td class="center-td">Healer</td>
+                <td class="center-td">Damage</td>
+                <td><!-- remove --></td>
+            </tr>
+            {% for signUp in event.signUps.mightComeSignUps %}
+                <tr>
+                    <td>{{ signUp.account.id }}</td>
+                    <td class="center-td">
+                        {% if signUp.signedAsTank %}X{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsHealer %}X{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsDamage %}X{% endif %}
+                    </td>
+                    <td>
+                        {% if signUp.currentUser %}
+                            <a href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}    
         <p>There are no queued sign ups</p>
     {% endif %}
@@ -87,9 +110,9 @@
     <h3>Absent <small>({{ event.signUps.absentCount }})</small></h3>
 
     {% if event.signUps.absentCount != 0 %}
-        <ul>
+        The following persons informed us of their absence: 
         {% for signUp in event.signUps.absentSignUps %}
-            <li>A sign up</li>
+            {{ signUp.account.id }} 
         {% endfor %}
         </ul>
     {% else %}    
