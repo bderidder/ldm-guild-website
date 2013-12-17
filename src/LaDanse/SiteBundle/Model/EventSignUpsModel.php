@@ -20,8 +20,10 @@ class EventSignUpsModel extends ContainerAwareClass
     protected $mightComeCount;
     protected $absentCount;
     protected $organiser;
-    protected $currentUserComes;
-    protected $currentUserAbsent;
+    protected $currentUserSigned;
+    protected $mightComeSignUps = array();
+    protected $willComeSignUps = array();
+    protected $absentSignUps = array();
 
     public function __construct(ContainerInjector $injector, Event $event)
     {
@@ -35,43 +37,27 @@ class EventSignUpsModel extends ContainerAwareClass
 
         $signUps = $event->getSignUps();
 
-        $this->willComeCount = 0;
-        $this->mightComeCount = 0;
-        $this->absentCount = 0;
-
-        $this->currentUserComes = false;
-        $this->currentUserAbsent = false;
+        $this->currentUserSigned = false;
 
         foreach($signUps as &$signUp)
         {
+            $signUpModel = new SignUpModel($injector, $signUp);
+
+            if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+            {
+                $this->currentUserSigned = true;
+            }
+
             switch($signUp->getType())
             {
                 case SignUpType::WILLCOME:
-                    $this->willComeCount = $this->willComeCount + 1;
-
-                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
-                    {
-                        $this->currentUserComes = true;
-                    }
-
+                    $this->willComeSignUps[] = $signUpModel;
                     break;
                 case SignUpType::MIGHTCOME:
-                    $this->mightComeCount = $this->mightComeCount + 1;
-
-                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
-                    {
-                        $this->currentUserComes = true;
-                    }
-
+                    $this->mightComeSignUps[] = $signUpModel;
                     break;
                 case SignUpType::ABSENCE:
-                    $this->absentCount = $this->absentCount + 1;
-
-                    if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
-                    {
-                        $this->currentUserAbsent = true;
-                    }
-
+                    $this->absentSignUps[] = $signUpModel;
                     break;   
             }
         }
@@ -82,39 +68,73 @@ class EventSignUpsModel extends ContainerAwareClass
         return $this->id;
     }
 
-    public function getCurrentUserSignedUp()
-    {
-        return $this->getCurrentUserComes() || $this->getCurrentUserAbsent();
-    }
-
     public function getCurrentUserComes()
     {
-        return $this->currentUserComes;
+        foreach($this->getWillComeSignUps() as $signUpModel)
+        {
+            if ($signUpModel->isCurrentUser())
+            {
+                return true;
+            }
+        }
+
+        foreach($this->getMightComeSignUps() as $signUpModel)
+        {
+            if ($signUpModel->isCurrentUser())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getCurrentUserAbsent()
     {
-        return $this->currentUserAbsent;
+        foreach($this->getAbsentSignUps() as $signUpModel)
+        {
+            if ($signUpModel->isCurrentUser())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public function getEditable()
+    public function getCurrentUserSignedUp()
     {
-        return $this->editable;
+        return $this->currentUserSigned;
+    }
+
+    public function getWillComeSignUps()
+    {
+        return $this->willComeSignUps;
+    }
+
+    public function getMightComeSignUps()
+    {
+        return $this->mightComeSignUps;
+    }
+
+    public function getAbsentSignUps()
+    {
+        return $this->absentSignUps;
     }
 
     public function getWillComeCount()
     {
-        return $this->willComeCount;
+        return count($this->willComeSignUps);
     }
 
     public function getMightComeCount()
     {
-        return $this->mightComeCount;
+        return count($this->mightComeSignUps);
     }
 
     public function getAbsentCount()
     {
-        return $this->absentCount;
+        return count($this->absentSignUps);
     }
 
     public function getSignUpCount()

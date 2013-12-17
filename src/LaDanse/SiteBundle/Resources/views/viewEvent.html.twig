@@ -4,19 +4,96 @@
 
 {% block body %}
 
-    <h1>{{ event.name }} on {{ event.startTime|date("d/m") }}</h1>
-
-    <p>This event is organised by {{ event.organiser.id }}.</p>
+    <h1>{{ event.name }}</h1>
 
     <p>{{ event.description }}</p>
-    <p>Invite time: {{ event.inviteTime|date("H:i") }}</p>
-    <p>Start time: {{ event.startTime|date("H:i") }}</p>
-    <p>End time: {{ event.endTime|date("H:i") }}</p>
 
-    {% if event.signUps.signUpCount == 0 %}
-        <p>Nobody signed up yet for this event.</p>
-    {% else %}
-        <p>Sign up count: {{ event.signUps.signUpCount }}</p>
+    <table cellpadding="5">
+        <tr>
+            <td class="center-td">Organiser</td>
+            <td class="center-td">Date</td>
+            <td class="center-td">Invite Time</td>
+            <td class="center-td">Start Time</td>
+            <td class="center-td">End Time</td>
+            <td class="center-td">Sign Ups</td>
+            <td class="center-td">Absences</td>
+        </tr>
+        <tr>
+            <td class="center-td">{{ event.organiser.id }}</td>
+            <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
+            <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.startTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.endTime|date("H:i") }}</td>
+            <td class="center-td">
+                {% if event.signUps.signUpCount != 0 %}
+                    {{ event.signUps.signUpCount }}
+                {% endif %}
+            </td>
+            <td class="center-td">
+                {% if event.signUps.absentCount != 0 %}
+                    {{ event.signUps.absentCount }}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <h3>Sign Ups <small>({{ event.signUps.willComeCount }})</small></h3>
+
+    {% if event.signUps.willComeCount != 0 %}
+        <table border=0 cellpadding=3>
+            <tr>
+                <td><!-- name --></td>
+                <td class="center-td">Tank</td>
+                <td class="center-td">Healer</td>
+                <td class="center-td">Damage</td>
+                <td><!-- remove --></td>
+            </tr>
+            {% for signUp in event.signUps.willComeSignUps %}
+                <tr>
+                    <td>{{ signUp.account.id }}</td>
+                    <td class="center-td">
+                        {% if signUp.signedAsTank %}X{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsHealer %}X{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsDamage %}X{% endif %}
+                    </td>
+                    <td>
+                        {% if signUp.currentUser %}
+                            <a href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}    
+        <p>There are no sign ups</p>
+    {% endif %}
+
+    <h3>Queued Sign Ups <small>({{ event.signUps.mightComeCount }})</small></h3>
+
+    {% if event.signUps.mightComeCount != 0 %}
+        <ul>
+        {% for signUp in event.signUps.mightComeSignUps %}
+            <li>A sign up</li>
+        {% endfor %}
+        </ul>
+    {% else %}    
+        <p>There are no queued sign ups</p>
+    {% endif %}
+
+    <h3>Absent <small>({{ event.signUps.absentCount }})</small></h3>
+
+    {% if event.signUps.absentCount != 0 %}
+        <ul>
+        {% for signUp in event.signUps.absentSignUps %}
+            <li>A sign up</li>
+        {% endfor %}
+        </ul>
+    {% else %}    
+        <p>There are no absences</p>
     {% endif %}
 
     <h2>Actions</h2>
