@@ -3,9 +3,7 @@
             <tr>
                 <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
                 <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
-                <td>
-                    <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
-                </td>
+                <td>{{ event.name }}</td>
             </tr>
         {% endfor %}
         </table>

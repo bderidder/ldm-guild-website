@@ -29,6 +29,11 @@ class ViewEventController extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+
     	$em = $this->getDoctrine();
     	$repository = $em->getRepository(self::EVENT_REPOSITORY);
     	$event = $repository->find($id);
