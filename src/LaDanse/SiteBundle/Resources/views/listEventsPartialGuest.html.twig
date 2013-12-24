@@ -1,4 +1,12 @@
-        <table cellpadding=5 border=0>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Date</th>            
+        <th>Invite Time</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
         {% for event in events %}
             <tr>
                 <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
@@ -6,4 +14,5 @@
                 <td>{{ event.name }}</td>
             </tr>
         {% endfor %}
-        </table>
+    </tbody>
+</table>
