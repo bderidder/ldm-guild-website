@@ -110,11 +110,22 @@
     <h3>Absent <small>({{ event.signUps.absentCount }})</small></h3>
 
     {% if event.signUps.absentCount != 0 %}
-        The following persons informed us of their absence: 
-        {% for signUp in event.signUps.absentSignUps %}
-            {{ signUp.account.id }} 
-        {% endfor %}
-        </ul>
+        <table border=0 cellpadding=3>
+            <tr>
+                <td>Name</td>
+                <td><!-- remove --></td>
+            </tr>
+            {% for signUp in event.signUps.absentSignUps %}
+                <tr>
+                    <td>{{ signUp.account.id }}</td>
+                    <td>
+                        {% if signUp.currentUser %}
+                            <a href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}    
         <p>There are no absences</p>
     {% endif %}
