@@ -27,7 +27,7 @@ class EventFormType extends AbstractType
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(['show_legend' => false]);
+        $resolver->setDefaults(array('show_legend' => false));
     }
 
 	public function getName()
