@@ -64,7 +64,7 @@ class CreateSignUpController extends LaDanseController
 
         $formModel = new SignUpFormModel();
 
-        $form = $this->createForm(new SignUpFormType(), $formModel);
+        $form = $this->createForm(new SignUpFormType(), $formModel, array('attr' => array('class' => 'form-horizontal')));
 
         $form->handleRequest($request);
 

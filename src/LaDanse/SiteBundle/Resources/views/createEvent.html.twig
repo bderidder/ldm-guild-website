@@ -6,52 +6,7 @@
 
         <h1>Create event</h1>
 
-        {{ form_start(form) }}
-    		{{ form_errors(form) }}
-
-    		<div>
-        		<p>{{ form_label(form.name) }}</p>
-        		{{ form_errors(form.name) }}
-        		{{ form_widget(form.name) }}
-    		</div>
-
-    		<div>
-        		{{ form_label(form.description) }}
-        		{{ form_errors(form.description) }}
-        		{{ form_widget(form.description) }}
-    		</div>
-
-    		<div>
-        		{{ form_label(form.date) }}
-        		{{ form_errors(form.date) }}
-        		{{ form_widget(form.date) }}
-    		</div>
-
-    		<div>
-        		{{ form_label(form.inviteTime) }}
-        		{{ form_errors(form.inviteTime) }}
-        		{{ form_widget(form.inviteTime) }}
-    		</div>
-
-    		<div>
-        		{{ form_label(form.startTime) }}
-        		{{ form_errors(form.startTime) }}
-        		{{ form_widget(form.startTime) }}
-    		</div>
-
-    		<div>
-        		{{ form_label(form.endTime) }}
-        		{{ form_errors(form.endTime) }}
-        		{{ form_widget(form.endTime) }}
-    		</div>
-
-    		<br/>
-
-    		<div>
-        		{{ form_widget(form.save) }}
-    		</div>
-
-		{{ form_end(form) }}
+        {{ form(form) }}
 
         <h2>Actions</h2>
 
