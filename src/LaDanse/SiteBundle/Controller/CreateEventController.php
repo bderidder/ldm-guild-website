@@ -4,19 +4,16 @@ namespace LaDanse\SiteBundle\Controller;
 
 use \DateTime;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Symfony\Component\HttpFoundation\Request;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\DomainBundle\Entity\Event;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
-
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 
@@ -48,7 +45,7 @@ class CreateEventController extends LaDanseController
     	$formModel->setStartTime(new DateTime('19:30'));
     	$formModel->setEndTime(new DateTime('22:00'));
 
-    	$form = $this->createForm(new EventFormType(), $formModel);
+    	$form = $this->createForm(new EventFormType(), $formModel, array('attr' => array('class' => 'form-horizontal')));
 
     	$form->handleRequest($request);
 
