@@ -7,3 +7,5 @@ web/bundles/*
 *.sublime-project
 
 *.sublime-workspace
+
+composer.lock
