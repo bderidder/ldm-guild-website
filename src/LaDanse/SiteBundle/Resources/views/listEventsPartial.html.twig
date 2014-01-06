@@ -1,42 +1,46 @@
-    <table cellpadding="5" border="0">
-        <tr>
-            <td><!-- sign up column --></td>            
-            <td><!-- date column --></td>
-            <td><!-- name column --></td>
-            <td class="center-td">Signed</td>
-            <td class="center-td">Absent</td>
-            <td class="center-td">Invite Time</td>
-            <td class="center-td">Start Time</td>
-            <td class="center-td">End Time</td>
-            <td class="center-td">Organiser</td>
-        </tr>
+<table class="table">
+    <thead>
+    <tr>
+        <th><!-- sign up column --></th>            
+        <th><!-- date column --></th>
+        <th><!-- name column --></th>
+        <th class="center-td">Signed</th>
+        <th class="center-td">Absent</th>
+        <th class="center-td">Invite Time</th>
+        <th class="center-td">Start Time</th>
+        <th class="center-td">End Time</th>
+        <th class="center-td">Organiser</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for event in events %}
-        <tr>
-            <td class="center-td">
-                {% if event.signUps.currentUserComes %}
-                    <img src="{{ asset('bundles/ladansesite/images/check_mark.gif') }}" width="16" />
-                {% elseif event.signUps.currentUserAbsent %}
-                    <img src="{{ asset('bundles/ladansesite/images/cancel.gif') }}" width="16" />
-                {% endif %}
-            </td>
-            <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
-            <td>
-                <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
-            </td>
-            <td class="center-td">
-                {% if event.signUps.signUpCount != 0 %}
-                    {{ event.signUps.signUpCount }}
-                {% endif %}
-            </td>
-            <td class="center-td">
-                {% if event.signUps.absentCount != 0 %}
-                    {{ event.signUps.absentCount }}
-                {% endif %}
-            </td>
-            <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
-            <td class="center-td">{{ event.startTime|date("H:i") }}</td>
-            <td class="center-td">{{ event.endTime|date("H:i") }}</td>
-            <td class="center-td">{{ event.organiser.id }}</td>
-        </tr>
+    <tr>
+        <td class="center-td">
+            {% if event.signUps.currentUserComes %}
+                <img src="{{ asset('bundles/ladansesite/images/check_mark.gif') }}" width="16" />
+            {% elseif event.signUps.currentUserAbsent %}
+                <img src="{{ asset('bundles/ladansesite/images/cancel.gif') }}" width="16" />
+            {% endif %}
+        </td>
+        <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
+        <td>
+            <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+        </td>
+        <td class="center-td">
+            {% if event.signUps.signUpCount != 0 %}
+                {{ event.signUps.signUpCount }}
+            {% endif %}
+        </td>
+        <td class="center-td">
+            {% if event.signUps.absentCount != 0 %}
+                {{ event.signUps.absentCount }}
+            {% endif %}
+        </td>
+        <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
+        <td class="center-td">{{ event.startTime|date("H:i") }}</td>
+        <td class="center-td">{{ event.endTime|date("H:i") }}</td>
+        <td class="center-td">{{ event.organiser.id }}</td>
+    </tr>
+    </tbody>
     {% endfor %}
-    </table>
+</table>

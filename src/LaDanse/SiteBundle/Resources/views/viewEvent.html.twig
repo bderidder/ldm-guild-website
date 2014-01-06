@@ -8,16 +8,18 @@
 
     <p>{{ event.description }}</p>
 
-    <table cellpadding="5">
+    <table class="table">
+        <thead>
         <tr>
-            <td class="center-td">Organiser</td>
-            <td class="center-td">Date</td>
-            <td class="center-td">Invite Time</td>
-            <td class="center-td">Start Time</td>
-            <td class="center-td">End Time</td>
-            <td class="center-td">Sign Ups</td>
-            <td class="center-td">Absences</td>
+            <th class="center-td">Organiser</th>
+            <th class="center-td">Date</th>
+            <th class="center-td">Invite Time</th>
+            <th class="center-td">Start Time</th>
+            <th class="center-td">End Time</th>
+            <th class="center-td">Sign Ups</th>
+            <th class="center-td">Absences</th>
         </tr>
+    </thead>
         <tr>
             <td class="center-td">{{ event.organiser.id }}</td>
             <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
@@ -40,13 +42,14 @@
     <h3>Sign Ups <small>({{ event.signUps.willComeCount }})</small></h3>
 
     {% if event.signUps.willComeCount != 0 %}
-        <table border=0 cellpadding=3>
+    <div style="width: 400px">
+        <table class="table table-condensed">
             <tr>
-                <td>Name</td>
-                <td class="center-td">Tank</td>
-                <td class="center-td">Healer</td>
-                <td class="center-td">Damage</td>
-                <td><!-- remove --></td>
+                <th>Name</th>
+                <th class="center-td">Tank</th>
+                <th class="center-td">Healer</th>
+                <th class="center-td">Damage</th>
+                <th><!-- remove --></th>
             </tr>
             {% for signUp in event.signUps.willComeSignUps %}
                 <tr>
@@ -68,6 +71,7 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
     {% else %}    
         <p>There are no sign ups</p>
     {% endif %}
@@ -75,13 +79,14 @@
     <h3>Queued Sign Ups <small>({{ event.signUps.mightComeCount }})</small></h3>
 
     {% if event.signUps.mightComeCount != 0 %}
-        <table border=0 cellpadding=3>
+        <div style="width: 400px">
+        <table class="table table-condensed">
             <tr>
-                <td>Name</td>
-                <td class="center-td">Tank</td>
-                <td class="center-td">Healer</td>
-                <td class="center-td">Damage</td>
-                <td><!-- remove --></td>
+                <th>Name</th>
+                <th class="center-td">Tank</th>
+                <th class="center-td">Healer</th>
+                <th class="center-td">Damage</th>
+                <th><!-- remove --></th>
             </tr>
             {% for signUp in event.signUps.mightComeSignUps %}
                 <tr>
@@ -103,6 +108,7 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
     {% else %}    
         <p>There are no queued sign ups</p>
     {% endif %}
@@ -110,10 +116,11 @@
     <h3>Absent <small>({{ event.signUps.absentCount }})</small></h3>
 
     {% if event.signUps.absentCount != 0 %}
-        <table border=0 cellpadding=3>
+    <div style="width: 400px">
+        <table class="table table-condensed">
             <tr>
-                <td>Name</td>
-                <td><!-- remove --></td>
+                <th>Name</th>
+                <th><!-- remove --></th>
             </tr>
             {% for signUp in event.signUps.absentSignUps %}
                 <tr>
@@ -126,6 +133,7 @@
                 </tr>
             {% endfor %}
         </table>
+    </div>
     {% else %}    
         <p>There are no absences</p>
     {% endif %}
