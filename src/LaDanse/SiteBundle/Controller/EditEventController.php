@@ -79,6 +79,8 @@ class EditEventController extends LaDanseController
 
         		$em->flush();
 
+                $this->addToast('Event updated');
+
         		return $this->redirect($this->generateUrl('welcomeIndex'));
         	}
     	}

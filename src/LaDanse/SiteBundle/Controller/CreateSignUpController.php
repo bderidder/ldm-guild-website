@@ -72,6 +72,8 @@ class CreateSignUpController extends LaDanseController
         {
             $this->persistSignUp($authContext, $id, $formModel);
 
+            $this->addToast('Signed up');
+
             return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
         }
         else
@@ -123,6 +125,8 @@ class CreateSignUpController extends LaDanseController
         $em->persist($signUp);
         $em->flush();
 
+        $this->addToast('Absence saved');
+
         return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 
@@ -151,6 +155,8 @@ class CreateSignUpController extends LaDanseController
 
         $em->remove($signUp);
         $em->flush();
+
+        $this->addToast('Sign up removed');
 
         return $this->redirect($this->generateUrl('welcomeIndex'));
     }
