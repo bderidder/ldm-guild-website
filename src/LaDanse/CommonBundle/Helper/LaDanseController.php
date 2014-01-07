@@ -20,4 +20,11 @@ class LaDanseController extends Controller
 	{
 		return $this->get('LaDanse.ContainerInjector');
 	}
+
+	protected function addToast($message)
+	{
+		$toastService = $this->container->get('CoderSpotting.ToastMessage');
+
+        $toastService->addToast($message);
+	}
 }
