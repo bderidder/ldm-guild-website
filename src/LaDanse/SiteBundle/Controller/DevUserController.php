@@ -34,6 +34,8 @@ class DevUserController extends LaDanseController
 
     	$authContext->login($id);
 
+        $this->addToast('Logged in as ' . $id);
+
         return $this->redirect($this->generateUrl('welcomeIndex'));
     }
 
@@ -45,6 +47,8 @@ class DevUserController extends LaDanseController
 		$authContext = $this->getAuthenticationService()->getCurrentContext();
 
     	$authContext->logout();
+
+        $this->addToast('Logged out');
 
         return $this->redirect($this->generateUrl('welcomeIndex'));
     }

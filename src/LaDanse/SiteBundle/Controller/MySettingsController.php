@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
+use LaDanse\SiteBundle\Form\Model\SettingsFormModel;
+use LaDanse\SiteBundle\Form\Type\SettingsFormType;
 
 /**
  * @Route("/mysettings")
@@ -32,5 +34,26 @@ class MySettingsController extends LaDanseController
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
+
+        $formModel = new SettingsFormModel();
+        $formModel->setCreateEventMail(FALSE)
+                  ->setChangeEventMail(FALSE)
+                  ->setCancelEventMail(FALSE);
+
+        $form = $this->createForm(new SettingsFormType(), $formModel, array('attr' => array('class' => 'form-horizontal')));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid())
+        {
+            $this->addToast('Settings saved');
+
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+        else
+        {
+            return $this->render('LaDanseSiteBundle::mySettings.html.twig',
+                    array('form' => $form->createView()));
+        }   
     }
 }

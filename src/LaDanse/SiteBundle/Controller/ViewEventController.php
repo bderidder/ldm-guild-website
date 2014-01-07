@@ -81,6 +81,8 @@ class ViewEventController extends LaDanseController
 
     	   $em->flush();
 
+           $this->addToast('Event removed');
+
     	   return $this->redirect($this->generateUrl('welcomeIndex'));
         }
     }
