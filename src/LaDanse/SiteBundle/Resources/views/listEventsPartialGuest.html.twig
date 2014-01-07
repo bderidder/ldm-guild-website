@@ -1,17 +1,17 @@
 <table class="table">
     <thead>
     <tr>
+        <th></th>
         <th>Date</th>            
         <th>Invite Time</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
         {% for event in events %}
             <tr>
+                <td>{{ event.name }}</td>
                 <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
                 <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
-                <td>{{ event.name }}</td>
             </tr>
         {% endfor %}
     </tbody>
