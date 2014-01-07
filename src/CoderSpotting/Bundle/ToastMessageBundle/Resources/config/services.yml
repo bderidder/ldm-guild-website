@@ -1,0 +1,13 @@
+parameters:
+    ToastMessageService.class: CoderSpotting\Bundle\ToastMessageBundle\Service\ToastMessageService
+    TwigToastMessage.class: CoderSpotting\Bundle\ToastMessageBundle\Twig\TwigToastExtension
+
+services:
+    CoderSpotting.ToastMessage:
+        class: "%ToastMessageService.class%"
+        arguments: ['@service_container']
+    CoderSpotting.TwigToastMessage:
+        class: "%TwigToastMessage.class%"
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
