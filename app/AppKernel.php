@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\CommonBundle\LaDanseCommonBundle(),
-
+            new CoderSpotting\Bundle\ToastMessageBundle\CoderSpottingToastMessageBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
