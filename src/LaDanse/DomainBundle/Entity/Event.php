@@ -179,10 +179,10 @@ class Event
     /**
      * Add signUps
      *
-     * @param \LaDanse\DomainBundle\Entity\SignUp $signUps
+     * @param SignUp $signUps
      * @return Event
      */
-    public function addSignUp(\LaDanse\DomainBundle\Entity\SignUp $signUps)
+    public function addSignUp(SignUp $signUps)
     {
         $this->signUps[] = $signUps;
 
@@ -192,9 +192,9 @@ class Event
     /**
      * Remove signUps
      *
-     * @param \LaDanse\DomainBundle\Entity\SignUp $signUps
+     * @param SignUp $signUps
      */
-    public function removeSignUp(\LaDanse\DomainBundle\Entity\SignUp $signUps)
+    public function removeSignUp(SignUp $signUps)
     {
         $this->signUps->removeElement($signUps);
     }
@@ -212,10 +212,10 @@ class Event
     /**
      * Set organiser
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $organiser
+     * @param Account $organiser
      * @return Event
      */
-    public function setOrganiser(\LaDanse\DomainBundle\Entity\Account $organiser = null)
+    public function setOrganiser(Account $organiser = null)
     {
         $this->organiser = $organiser;
 
@@ -225,7 +225,7 @@ class Event
     /**
      * Get organiser
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getOrganiser()
     {
