@@ -19,6 +19,7 @@ class AuthenticationService extends ContainerAwareClass
 		parent::__construct($container);
     }
 
+    /* @return \LaDanse\SiteBundle\Security\AuthenticationContext */
     public function getCurrentContext()
     {
         return $this->getContainer()->get('LaDanse.AuthenticationContext');
