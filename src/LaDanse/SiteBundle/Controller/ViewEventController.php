@@ -2,16 +2,9 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 
 use LaDanse\SiteBundle\Model\EventModel;
 
@@ -25,7 +18,7 @@ class ViewEventController extends LaDanseController
 	/**
      * @Route("/view", name="viewEventIndex")
      */
-    public function indexAction(Request $request, $id)
+    public function indexAction($id)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -36,8 +29,11 @@ class ViewEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
+        /* @var $repository \Doctrine\ORM\EntityRepository */
     	$em = $this->getDoctrine();
     	$repository = $em->getRepository(self::EVENT_REPOSITORY);
+
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
     	$event = $repository->find($id);
 
         if (null === $event)
@@ -58,11 +54,12 @@ class ViewEventController extends LaDanseController
     /**
      * @Route("/delete", name="deleteEventIndex")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
     	$em = $this->getDoctrine()->getManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
 
+        /* @var $repository \Doctrine\ORM\EntityRepository */
     	$event = $repository->find($id);
 
         if (null === $event)
