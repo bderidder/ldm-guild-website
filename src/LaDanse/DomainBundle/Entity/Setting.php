@@ -92,10 +92,10 @@ class Setting
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return Setting
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -105,7 +105,7 @@ class Setting
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {

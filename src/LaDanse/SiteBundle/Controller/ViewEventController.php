@@ -29,10 +29,9 @@ class ViewEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
+        $em = $this->getDoctrine();
         /* @var $repository \Doctrine\ORM\EntityRepository */
-    	$em = $this->getDoctrine();
-    	$repository = $em->getRepository(self::EVENT_REPOSITORY);
-
+        $repository = $em->getRepository(self::EVENT_REPOSITORY);
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
     	$event = $repository->find($id);
 

@@ -9,11 +9,9 @@ use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\DomainBundle\Entity\Role;
 
-use LaDanse\SiteBundle\Model\AccountModel;
-
 class SignUpModel extends ContainerAwareClass
 {
-    protected $signupType;
+    protected $signUpType;
     protected $signedAsTank = false;
     protected $signedAsHealer = false;
     protected $signedAsDamage = false;
@@ -34,10 +32,11 @@ class SignUpModel extends ContainerAwareClass
 
         $this->account = new AccountModel($injector, $signUp->getAccount());
 
-        $this->signupType = $signUp->getType();
+        $this->signUpType = $signUp->getType();
 
         $forRoles = $signUp->getRoles();
 
+        /* @var $forRole \LaDanse\DomainBundle\Entity\ForRole */
         foreach($forRoles as &$forRole)
         {
             switch($forRole->getRole())
@@ -55,46 +54,73 @@ class SignUpModel extends ContainerAwareClass
         }
     }
 
+    /**
+     * @return bool
+     */
     public function isCurrentUser()
     {
         return $this->currentUser;
     }
 
+    /**
+     * @return bool
+     */
     public function getCurrentUserSignedUp()
     {
-        return $this->getCurrentUserComes() || $this->getCurrentUserAbsent();
+        return $this->getWillCome() || $this->getMightCome() || $this->getAbsent();
     }
 
+    /**
+     * @return bool
+     */
     public function getWillCome()
     {
         return ($this->signUpType === SignupType::WILLCOME);
     }
 
+    /**
+     * @return bool
+     */
     public function getMightCome()
     {
         return ($this->signUpType === SignupType::MIGHTCOME);
     }
 
+    /**
+     * @return bool
+     */
     public function getAbsent()
     {
         return ($this->signUpType === SignupType::ABSENCE);
     }
 
+    /**
+     * @return bool
+     */
     public function getSignedAsTank()
     {
         return $this->signedAsTank;
     }
 
+    /**
+     * @return bool
+     */
     public function getSignedAsHealer()
     {
         return $this->signedAsHealer;
     }
 
+    /**
+     * @return bool
+     */
     public function getSignedAsDamage()
     {
         return $this->signedAsDamage;
     }
 
+    /**
+     * @return AccountModel
+     */
     public function getAccount()
     {
         return $this->account;

@@ -2,23 +2,9 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use \DateTime;
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\DomainBundle\Entity\Event;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
-
-use LaDanse\SiteBundle\Form\Model\NewEventFormModel;
-use LaDanse\SiteBundle\Form\Type\NewEventFormType;
 
 /**
  * @Route("/devuser")
@@ -28,7 +14,7 @@ class DevUserController extends LaDanseController
 	/**
      * @Route("/login/{id}", name="loginuser")
      */
-    public function login(Request $request, $id)
+    public function login($id)
     {
 		$authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -42,7 +28,7 @@ class DevUserController extends LaDanseController
     /**
      * @Route("/logout", name="logoutuser")
      */
-    public function logout(Request $request)
+    public function logout()
     {
 		$authContext = $this->getAuthenticationService()->getCurrentContext();
 

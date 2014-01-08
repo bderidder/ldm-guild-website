@@ -4,19 +4,14 @@ namespace LaDanse\SiteBundle\Controller;
 
 use \DateTime;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
@@ -44,7 +39,9 @@ class EditEventController extends LaDanseController
         }
 
     	$em = $this->getDoctrine()->getManager();
+        /* @var $repository \Doctrine\ORM\EntityRepository */
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
     	$event = $repository->find($id);
 
         if (null === $event)
@@ -89,6 +86,8 @@ class EditEventController extends LaDanseController
         	return $this->render('LaDanseSiteBundle::editEvent.html.twig',
 						array('form' => $form->createView()));	
     	}
+
+        return '';
     }
 
     private function entityToModel(Event $event)

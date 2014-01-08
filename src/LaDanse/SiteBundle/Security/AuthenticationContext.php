@@ -3,55 +3,62 @@
 namespace LaDanse\SiteBundle\Security;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-
-use Doctrine\Bundle\DoctrineBundle\Registry;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 
-use LaDanse\DomainBundle\Entity\Account;
-
 class AuthenticationContext extends ContainerAwareClass
 {
+    const ACCOUNT_REPOSITORY = 'LaDanseDomainBundle:Account';
+    const CONTEXT_SESSION_KEY = 'LaDanseAuthenticationContextId';
+
+    /**
+     * @var \LaDanse\DomainBundle\Entity\Account
+     */
 	private $account = NULL;
 
 	public function __construct(Container $container)
 	{
 		parent::__construct($container);
 
-        $id = $this->getSession()->get('LaDanseAuthenticationContextId');
+        $id = $this->getSession()->get(self::CONTEXT_SESSION_KEY);
 
         if (!is_null($id))
         {
-            $this->account = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Account')->find($id);
+            $this->account = $this->getDoctrine()->getRepository(self::ACCOUNT_REPOSITORY)->find($id);
         }
     }
 
     public function login($id)
     {
-        $this->account = $this->getDoctrine()->getRepository('LaDanseDomainBundle:Account')->find($id);
+        $this->account = $this->getDoctrine()->getRepository(self::ACCOUNT_REPOSITORY)->find($id);
 
-        $this->getSession()->set('LaDanseAuthenticationContextId', $id);
+        $this->getSession()->set(self::CONTEXT_SESSION_KEY, $id);
     }
 
     public function logout()
     {
         $this->account = NULL;
 
-        $this->getSession()->set('LaDanseAuthenticationContextId', NULL);           
+        $this->getSession()->set(self::CONTEXT_SESSION_KEY, NULL);
     }
 
+    /**
+     * @return bool
+     */
     public function isAuthenticated()
     {
     	return !is_null($this->account);
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         if ($this->isAuthenticated())
         {
-            return $this->account->getId();
+            return $this->getAccount()->getId();
         }
         else
         {
@@ -59,14 +66,22 @@ class AuthenticationContext extends ContainerAwareClass
         }
     }
 
+    /**
+     * @return \LaDanse\DomainBundle\Entity\Account
+     */
     public function getAccount()
     {
     	return $this->account;
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Session
+     */
     private function getSession()
     {
         $requestStack = $this->getContainer()->get('request_stack');
+
+        /* @var \Symfony\Component\HttpFoundation\Request $request */
         $request = $requestStack->getCurrentRequest();
 
         if (!$request->hasSession())

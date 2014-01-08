@@ -32,7 +32,10 @@ class SignUpFormType extends AbstractType
 		        ->add('save', 'submit');
 	}
 
-	public function getName()
+    /**
+     * @return string
+     */
+    public function getName()
 	{
 		return 'SignUpForm';
 	}

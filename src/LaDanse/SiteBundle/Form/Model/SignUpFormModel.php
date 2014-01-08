@@ -10,8 +10,8 @@ class SignUpFormModel
 	/**
      * Set roles
      *
-     * @param string $roles
-     * @return string
+     * @param array $roles
+     * @return SignUpFormModel
      */
     public function setRoles($roles)
     {
@@ -34,7 +34,7 @@ class SignUpFormModel
      * Set type
      *
      * @param string $type
-     * @return string
+     * @return SignUpFormModel
      */
     public function setType($type)
     {

@@ -2,8 +2,6 @@
 
 namespace LaDanse\DomainBundle\Entity;
 
-use LaDanse\DomainBundle\Entity\SignUp;
-
 class SignUpType
 {
     const WILLCOME      = "WillCome";
