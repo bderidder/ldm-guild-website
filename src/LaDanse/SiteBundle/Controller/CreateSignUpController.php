@@ -2,11 +2,9 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
@@ -18,8 +16,8 @@ use LaDanse\SiteBundle\Form\Type\SignUpFormType;
 
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\ForRole;
-use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\DomainBundle\Entity\Event;
 
 /**
  * @Route("/event/{id}/signup")
@@ -44,7 +42,10 @@ class CreateSignUpController extends LaDanseController
     	}
 
         $em = $this->getDoctrine();
+        /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
+
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($id);
 
         if (null === $event)
@@ -85,7 +86,7 @@ class CreateSignUpController extends LaDanseController
     /**
      * @Route("/createabsence", name="createAbsenceIndex")
      */
-    public function createAbsenceAction(Request $request, $id)
+    public function createAbsenceAction($id)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -97,7 +98,9 @@ class CreateSignUpController extends LaDanseController
         }
 
         $em = $this->getDoctrine()->getManager();
+        /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($id);
 
         if (null === $event)
@@ -133,7 +136,7 @@ class CreateSignUpController extends LaDanseController
     /**
      * @Route("/remove", name="removeSignUpIndex")
      */
-    public function removeSignUpAction(Request $request, $id)
+    public function removeSignUpAction($id)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -143,7 +146,9 @@ class CreateSignUpController extends LaDanseController
         }
 
         $em = $this->getDoctrine()->getManager();
+        /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($id);
 
         if (null === $event)
@@ -165,7 +170,9 @@ class CreateSignUpController extends LaDanseController
     {
         $em = $this->getDoctrine()->getManager();
 
+        /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($eventId);
 
         $signUp = new SignUp();
@@ -189,13 +196,14 @@ class CreateSignUpController extends LaDanseController
         $em->flush();
     }
 
-    private function getCurrentUserSignUp($event)
+    private function getCurrentUserSignUp(Event $event)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
         $account = $authContext->getAccount();
 
         $em = $this->getDoctrine()->getManager();
 
+        /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery('SELECT s ' .
                                   'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
                                   'WHERE s.event = :event AND s.account = :account');

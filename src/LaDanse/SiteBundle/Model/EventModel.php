@@ -7,8 +7,6 @@ use LaDanse\CommonBundle\Helper\ContainerInjector;
 
 use LaDanse\DomainBundle\Entity\Event;
 
-use LaDanse\SiteBundle\Model\AccountModel;
-
 class EventModel extends ContainerAwareClass
 {
     const SIGNUP_REPOSITORY = 'LaDanseDomainBundle:SignUp';
@@ -42,56 +40,81 @@ class EventModel extends ContainerAwareClass
         $this->calculateEditable($event);
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getInviteTime()
     {
         return $this->inviteTime;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getStartTime()
     {
         return $this->startTime;
     }
 
+    /**
+     * @return AccountModel
+     */
     public function getOrganiser()
     {
         return $this->organiser;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getEndTime()
     {
         return $this->endTime;
     }
 
+    /**
+     * @return EventSignUpsModel
+     */
     public function getSignUps()
     {
         return $this->signUpsModel;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getLastModifiedTime()
     {
         return $this->lastModifiedTime;
     }
 
-    public function getCurrentUserSignedUp()
-    {
-        return $this->currentUserSignedUp;
-    }
-
+    /**
+     * @return bool
+     */
     public function isOrganiser()
     {
         return $this->isOrganiser;
@@ -101,16 +124,16 @@ class EventModel extends ContainerAwareClass
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        $this->isOrganiser = false;
+        $this->isOrganiser = FALSE;
 
         if ($authContext->isAuthenticated() 
             && ($authContext->getAccount()->getId() === $event->getOrganiser()->getId()))
         {
-            $this->isOrganiser = true;
+            $this->isOrganiser = TRUE;
         }
         else
         {
-            $this->isOrganiser = false;   
+            $this->isOrganiser = FALSE;
         }
     }
 }

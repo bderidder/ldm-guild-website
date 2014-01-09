@@ -50,7 +50,7 @@ class ToastMessageService extends ContainerAware
 	{
 		$session = $this->container->get('session');
 
-		$toasts = $session->remove('CoderSpotting_ToastMessages');
+		$session->remove('CoderSpotting_ToastMessages');
 
 		return $this;
 	}

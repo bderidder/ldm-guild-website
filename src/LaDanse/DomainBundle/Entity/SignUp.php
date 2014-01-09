@@ -6,9 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\Account;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="SignUp")
@@ -62,10 +59,10 @@ class SignUp
     /**
      * Set event
      *
-     * @param \LaDanse\DomainBundle\Entity\Event $event
+     * @param Event $event
      * @return SignUp
      */
-    public function setEvent(\LaDanse\DomainBundle\Entity\Event $event = null)
+    public function setEvent(Event $event = null)
     {
         $this->event = $event;
 
@@ -75,7 +72,7 @@ class SignUp
     /**
      * Get event
      *
-     * @return \LaDanse\DomainBundle\Entity\Event 
+     * @return Event
      */
     public function getEvent()
     {
@@ -85,10 +82,10 @@ class SignUp
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return SignUp
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -98,7 +95,7 @@ class SignUp
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {
@@ -108,10 +105,10 @@ class SignUp
     /**
      * Add roles
      *
-     * @param \LaDanse\DomainBundle\Entity\ForRole $roles
+     * @param ForRole $roles
      * @return SignUp
      */
-    public function addRole(\LaDanse\DomainBundle\Entity\ForRole $roles)
+    public function addRole(ForRole $roles)
     {
         $this->roles[] = $roles;
 
@@ -121,9 +118,9 @@ class SignUp
     /**
      * Remove roles
      *
-     * @param \LaDanse\DomainBundle\Entity\ForRole $roles
+     * @param ForRole $roles
      */
-    public function removeRole(\LaDanse\DomainBundle\Entity\ForRole $roles)
+    public function removeRole(ForRole $roles)
     {
         $this->roles->removeElement($roles);
     }

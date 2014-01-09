@@ -4,8 +4,6 @@ namespace LaDanse\CommonBundle\Helper;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
-
 class ContainerAwareClass
 {
 	private $container;
@@ -15,27 +13,43 @@ class ContainerAwareClass
     	$this->container = $container;
 	}
 
-	protected function getContainer()
+    /**
+     * @return Container
+     */
+    protected function getContainer()
 	{
 		return $this->container;
 	}
 
-	protected function get($id)
+    /**
+     * @param $id
+     * @return object
+     */
+    protected function get($id)
 	{
 		return $this->getContainer()->get($id);
 	}
 
-	protected function getDoctrine()
+    /**
+     * @return object
+     */
+    protected function getDoctrine()
 	{
 		return $this->getContainer()->get('doctrine');
 	}
 
-	protected function getLogger()
+    /**
+     * @return object
+     */
+    protected function getLogger()
 	{
 		return $this->getContainer()->get('logger');
 	}
 
-	protected function getAuthenticationService()
+    /**
+     * @return \LaDanse\SiteBundle\Security\AuthenticationService
+     */
+    protected function getAuthenticationService()
 	{
 		return $this->get('LaDanse.AuthenticationService');
 	}

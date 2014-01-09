@@ -30,7 +30,10 @@ class SettingsFormType extends AbstractType
         $resolver->setDefaults(array('show_legend' => false));
     }
 
-	public function getName()
+    /**
+     * @return string
+     */
+    public function getName()
 	{
 		return 'EditSettings';
 	}

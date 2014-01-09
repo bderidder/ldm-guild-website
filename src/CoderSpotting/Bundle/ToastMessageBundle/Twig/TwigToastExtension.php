@@ -29,7 +29,7 @@ class TwigToastExtension extends \Twig_Extension
         $toasts = $toastService->getToasts();
 
         if (!isset($toasts))
-            return;
+            return '';
 
         $html = '';
 

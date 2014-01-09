@@ -40,7 +40,7 @@ class EventFormModel
      * Set description
      *
      * @param string $description
-     * @return NewEventFormModel
+     * @return EventFormModel
      */
     public function setDescription($description)
     {
@@ -63,7 +63,7 @@ class EventFormModel
      * Set date
      *
      * @param DateTime $date
-     * @return NewEventFormModel
+     * @return EventFormModel
      */
     public function setDate(DateTime $date)
     {
@@ -86,7 +86,7 @@ class EventFormModel
      * Set invite time
      *
      * @param DateTime $inviteTime
-     * @return NewEventFormModel
+     * @return EventFormModel
      */
     public function setInviteTime(DateTime $inviteTime)
     {
@@ -109,7 +109,7 @@ class EventFormModel
      * Set start time
      *
      * @param DateTime $startTime
-     * @return NewEventFormModel
+     * @return EventFormModel
      */
     public function setStartTime(DateTime $startTime)
     {
@@ -132,7 +132,7 @@ class EventFormModel
      * Set end time
      *
      * @param DateTime $endTime
-     * @return NewEventFormModel
+     * @return EventFormModel
      */
     public function setEndTime(DateTime $endTime)
     {

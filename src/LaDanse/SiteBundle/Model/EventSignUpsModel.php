@@ -8,8 +8,6 @@ use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
 
-use LaDanse\SiteBundle\Model\AccountModel;
-
 class EventSignUpsModel extends ContainerAwareClass
 {
     const SIGNUP_REPOSITORY = 'LaDanseDomainBundle:SignUp';
@@ -39,6 +37,7 @@ class EventSignUpsModel extends ContainerAwareClass
 
         $this->currentUserSigned = false;
 
+        /* @var $signUp \LaDanse\DomainBundle\Entity\SignUp */
         foreach($signUps as &$signUp)
         {
             $signUpModel = new SignUpModel($injector, $signUp);
@@ -65,11 +64,12 @@ class EventSignUpsModel extends ContainerAwareClass
 
     public function getId()
     {
-        return $this->id;
+        return $this->eventId;
     }
 
     public function getCurrentUserComes()
     {
+        /* @var $signUpModel \LaDanse\SiteBundle\Model\SignUpModel */
         foreach($this->getWillComeSignUps() as $signUpModel)
         {
             if ($signUpModel->isCurrentUser())
@@ -78,6 +78,7 @@ class EventSignUpsModel extends ContainerAwareClass
             }
         }
 
+        /* @var $signUpModel \LaDanse\SiteBundle\Model\SignUpModel */
         foreach($this->getMightComeSignUps() as $signUpModel)
         {
             if ($signUpModel->isCurrentUser())
@@ -91,6 +92,7 @@ class EventSignUpsModel extends ContainerAwareClass
 
     public function getCurrentUserAbsent()
     {
+        /* @var $signUpModel \LaDanse\SiteBundle\Model\SignUpModel */
         foreach($this->getAbsentSignUps() as $signUpModel)
         {
             if ($signUpModel->isCurrentUser())

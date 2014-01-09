@@ -4,8 +4,6 @@ namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use LaDanse\DomainBundle\Entity\SignUp;
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="ForRole")
@@ -66,10 +64,10 @@ class ForRole
     /**
      * Set signUp
      *
-     * @param \LaDanse\DomainBundle\Entity\SignUp $signUp
+     * @param SignUp $signUp
      * @return ForRole
      */
-    public function setSignUp(\LaDanse\DomainBundle\Entity\SignUp $signUp = null)
+    public function setSignUp(SignUp $signUp = null)
     {
         $this->signUp = $signUp;
 
@@ -79,7 +77,7 @@ class ForRole
     /**
      * Get signUp
      *
-     * @return \LaDanse\DomainBundle\Entity\SignUp 
+     * @return SignUp
      */
     public function getSignUp()
     {

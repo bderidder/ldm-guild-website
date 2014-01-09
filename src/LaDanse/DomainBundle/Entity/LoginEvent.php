@@ -4,7 +4,6 @@ namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use LaDanse\DomainBundle\Entity\Account;
 
 /**
  * @ORM\Entity
@@ -66,10 +65,10 @@ class LoginEvent
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return LoginEvent
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
 
@@ -79,7 +78,7 @@ class LoginEvent
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {

@@ -2,23 +2,19 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 
 use LaDanse\SiteBundle\Model\EventModel;
 
 class ListEventsPartialController extends LaDanseController
 {
-    public function listAction(Request $request)
+    public function listAction()
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
         $em = $this->getDoctrine()->getManager();
-        
+
+        /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :now ORDER BY e.inviteTime ASC');
         $query->setParameter('now', new \DateTime('now'));
         

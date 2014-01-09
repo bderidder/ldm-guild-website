@@ -11,14 +11,20 @@ class LaDanseController extends Controller
 		return $this->get('logger');
 	}
 
+    /**
+     * @return \LaDanse\SiteBundle\Security\AuthenticationService
+     */
 	protected function getAuthenticationService()
 	{
 		return $this->get('LaDanse.AuthenticationService');
 	}
 
+    /**
+     * @return \LaDanse\CommonBundle\Helper\ContainerInjector
+     */
 	protected function getContainerInjector()
 	{
-		return $this->get('LaDanse.ContainerInjector');
+        return $this->get('LaDanse.ContainerInjector');
 	}
 
 	protected function addToast($message)

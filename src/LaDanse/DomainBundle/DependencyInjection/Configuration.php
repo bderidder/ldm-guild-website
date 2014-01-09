@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('la_danse_domain');
+        //$rootNode = $treeBuilder->root('la_danse_domain');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
