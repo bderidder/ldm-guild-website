@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        //$treeBuilder = new TreeBuilder();
+        $treeBuilder = new TreeBuilder();
         //$rootNode = $treeBuilder->root('coder_spotting_toast_message');
 
         // Here you should define the parameters that are allowed to
