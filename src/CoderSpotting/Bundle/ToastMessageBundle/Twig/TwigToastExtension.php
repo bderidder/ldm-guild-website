@@ -4,8 +4,6 @@ namespace CoderSpotting\Bundle\ToastMessageBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Symfony\Component\HttpFoundation\Session\Session;
-
 class TwigToastExtension extends \Twig_Extension
 {
 	private $container;
@@ -18,7 +16,7 @@ class TwigToastExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('toasts', array($this, 'toastsFunction'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('renderToasts', array($this, 'toastsFunction'), array('is_safe' => array('html'))),
         );
     }
 
@@ -31,12 +29,7 @@ class TwigToastExtension extends \Twig_Extension
         if (!isset($toasts))
             return '';
 
-        $html = '';
-
-        foreach($toasts as $toastMessage)
-        {
-            $html .= "$().toastmessage('showNoticeToast', '" . $toastMessage . "');";
-        }
+        $html = $this->renderToastScript($toasts);
 
         $toastService->resetToasts();
 
@@ -46,5 +39,13 @@ class TwigToastExtension extends \Twig_Extension
     public function getName()
     {
         return 'CoderSpotting_ToastMessage_Extension';
+    }
+
+    private function renderToastScript($toasts)
+    {
+        $templating = $this->container->get('templating');
+
+        return $templating->render('CoderSpottingToastMessageBundle::javascript.html.twig',
+            array('toasts' => $toasts));
     }
 }

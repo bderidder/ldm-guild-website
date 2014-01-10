@@ -1,0 +1,8 @@
+<script type="application/javascript">
+    $( document ).ready(function()
+    {
+    {% for toast in toasts %}
+        $().toastmessage('showNoticeToast', '{{ toast }}');
+    {% endfor %}
+    });
+</script>
