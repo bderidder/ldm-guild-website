@@ -16,6 +16,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 
+use LaDanse\SiteBundle\Model\EventModel;
+
 /**
  * @Route("/event/{id}/edit")
 */
@@ -55,7 +57,7 @@ class EditEventController extends LaDanseController
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
             $this->getLogger()->warn(__CLASS__ . ' the user is not the organiser of the event in indexAction', 
-                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+                array('event' => new EventModel($this->getContainerInjector(), $event), 'user' => $authContext->getAccount()->getId()));
 
         	return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -84,7 +86,7 @@ class EditEventController extends LaDanseController
     	else
     	{
         	return $this->render('LaDanseSiteBundle::editEvent.html.twig',
-						array('form' => $form->createView()));	
+						array('event' => new EventModel($this->getContainerInjector(), $event), 'form' => $form->createView()));	
     	}
 
         return '';
