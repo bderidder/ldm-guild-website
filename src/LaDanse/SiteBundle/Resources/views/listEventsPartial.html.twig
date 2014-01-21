@@ -17,9 +17,11 @@
     <tr>
         <td class="center-td">
             {% if event.signUps.currentUserComes %}
-                <img src="{{ asset('bundles/ladansesite/images/check_mark.gif') }}" width="16" />
+                <i class="fa fa-check fa-1x text-success"></i>
             {% elseif event.signUps.currentUserAbsent %}
-                <img src="{{ asset('bundles/ladansesite/images/cancel.gif') }}" width="16" />
+                <i class="fa fa-ban fa-1x text-danger"></i>
+            {% else %}
+                <i class="fa fa-question fa-1x text-muted"></i>
             {% endif %}
         </td>
         <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
