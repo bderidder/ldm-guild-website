@@ -74,6 +74,11 @@ mopa_bootstrap:
         show_child_legend: false # default is true
         error_type: block # or inline which is default
 
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: LaDanse\DomainBundle\Entity\Account
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
