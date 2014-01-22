@@ -36,7 +36,7 @@
         </tr>
     </thead>
         <tr>
-            <td class="center-td">{{ event.organiser.id }}</td>
+            <td class="center-td">{{ event.organiser.name }}</td>
             <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
             <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
             <td class="center-td">{{ event.startTime|date("H:i") }}</td>
@@ -54,9 +54,9 @@
         </tr>
     </table>
 
-    <h3>Sign Ups <small>({{ event.signUps.willComeCount }})</small></h3>
+    <h3>Sign Ups</h3>
 
-    {% if event.signUps.willComeCount != 0 %}    
+    {% if (event.signUps.willComeCount != 0) or (event.signUps.mightComeCount != 0) or (event.signUps.absentCount != 0) %}    
     <table class="table table-condensed" style="width: auto;">
         <tr>
             <th>Name</th>
@@ -67,15 +67,53 @@
         </tr>
         {% for signUp in event.signUps.willComeSignUps %}
             <tr>
-                <td>{{ signUp.account.id }}</td>
+                <td>{{ signUp.account.name }}</td>
                 <td class="center-td">
-                    {% if signUp.signedAsTank %}X{% endif %}
+                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsHealer %}X{% endif %}
+                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsDamage %}X{% endif %}
+                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                </td>
+                <td>
+                    {% if signUp.currentUser %}
+                        <a id="removeWillComeSignUp" href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        {% for signUp in event.signUps.mightComeSignUps %}
+            <tr>
+                <td>{{ signUp.account.name }}</td>
+                <td class="center-td">
+                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                </td>
+                <td class="center-td">
+                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                </td>
+                <td class="center-td">
+                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                </td>
+                <td>
+                    {% if signUp.currentUser %}
+                        <a id="removeWillComeSignUp" href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        {% for signUp in event.signUps.absentSignUps %}
+            <tr>
+                <td>{{ signUp.account.name }}</td>
+                <td class="center-td">
+                    <i class="fa fa-ban fa-1x text-danger"></i>
+                </td>
+                <td class="center-td">
+                    <i class="fa fa-ban fa-1x text-danger"></i>
+                </td>
+                <td class="center-td">
+                    <i class="fa fa-ban fa-1x text-danger"></i>
                 </td>
                 <td>
                     {% if signUp.currentUser %}
@@ -87,64 +125,6 @@
     </table>
     {% else %}    
         <p>There are no sign ups</p>
-    {% endif %}
-
-    <h3>Queued Sign Ups <small>({{ event.signUps.mightComeCount }})</small></h3>
-
-    {% if event.signUps.mightComeCount != 0 %}
-    <table class="table table-condensed" style="width: auto;">
-        <tr>
-            <th>Name</th>
-            <th class="center-td">Tank</th>
-            <th class="center-td">Healer</th>
-            <th class="center-td">Damage</th>
-            <th><!-- remove --></th>
-        </tr>
-        {% for signUp in event.signUps.mightComeSignUps %}
-            <tr>
-                <td>{{ signUp.account.id }}</td>
-                <td class="center-td">
-                    {% if signUp.signedAsTank %}X{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsHealer %}X{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsDamage %}X{% endif %}
-                </td>
-                <td>
-                    {% if signUp.currentUser %}
-                        <a id="removeWillComeSignUp" href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% else %}    
-        <p>There are no queued sign ups</p>
-    {% endif %}
-
-    <h3>Absent <small>({{ event.signUps.absentCount }})</small></h3>
-
-    {% if event.signUps.absentCount != 0 %}
-    <table class="table table-condensed" style="width: auto;">
-        <tr>
-            <th>Name</th>
-            <th><!-- remove --></th>
-        </tr>
-        {% for signUp in event.signUps.absentSignUps %}
-            <tr>
-                <td>{{ signUp.account.id }}</td>
-                <td>
-                    {% if signUp.currentUser %}
-                        <a id="removeWillComeSignUp" href="{{ path('removeSignUpIndex', {'id': event.id}) }}">Remove</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% else %}    
-        <p>There are no absences</p>
     {% endif %}
 
     <h2>Actions</h2>
