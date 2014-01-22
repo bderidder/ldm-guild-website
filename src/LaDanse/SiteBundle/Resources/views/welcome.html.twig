@@ -8,7 +8,7 @@
 
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
-    <h2>Other actions on this page</h2>
+    <h4>Other actions on this page</h4>
     
     <ul>
         {% if auth.currentContext.authenticated %}
@@ -20,9 +20,7 @@
     {% if app.environment == 'dev' %}
         <p>Development only:</p>
         <ul>
-            <li><a href="{{ path('loginuser', {'id': 1}) }}">Log in as 1</a></li>
-            <li><a href="{{ path('loginuser', {'id': 2}) }}">Log in as 2</a></li>
-            <li><a href="{{ path('logoutuser') }}">Log out</a></li>
+            <li><a href="{{ path('fos_user_registration_register') }}">Register a new user</a></li>
         </ul>
     {% endif %} 
 
