@@ -17,7 +17,7 @@ class AccountModel extends ContainerAwareClass
         parent::__construct($injector->getContainer());
     
         $this->id = $account->getId();
-        $this->name = '';
+        $this->name = $account->getUsername();
     }
 
     /**
