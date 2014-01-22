@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\CommonBundle\LaDanseCommonBundle(),

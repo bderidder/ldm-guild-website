@@ -9,46 +9,21 @@ use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 
 class AuthenticationContext extends ContainerAwareClass
 {
-    const ACCOUNT_REPOSITORY = 'LaDanseDomainBundle:Account';
-    const CONTEXT_SESSION_KEY = 'LaDanseAuthenticationContextId';
-
-    /**
-     * @var \LaDanse\DomainBundle\Entity\Account
-     */
-	private $account = NULL;
-
-	public function __construct(Container $container)
+    public function __construct(Container $container)
 	{
 		parent::__construct($container);
-
-        $id = $this->getSession()->get(self::CONTEXT_SESSION_KEY);
-
-        if (!is_null($id))
-        {
-            $this->account = $this->getDoctrine()->getRepository(self::ACCOUNT_REPOSITORY)->find($id);
-        }
     }
 
-    public function login($id)
-    {
-        $this->account = $this->getDoctrine()->getRepository(self::ACCOUNT_REPOSITORY)->find($id);
-
-        $this->getSession()->set(self::CONTEXT_SESSION_KEY, $id);
-    }
-
-    public function logout()
-    {
-        $this->account = NULL;
-
-        $this->getSession()->set(self::CONTEXT_SESSION_KEY, NULL);
-    }
+    // $user = $this->get('security.context')->getToken()->getUser();
+        // false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')
+        // IS_AUTHENTICATED_FULLY
 
     /**
      * @return bool
      */
     public function isAuthenticated()
     {
-    	return !is_null($this->account);
+    	return (true === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY'));
     }
 
     /**
@@ -58,7 +33,7 @@ class AuthenticationContext extends ContainerAwareClass
     {
         if ($this->isAuthenticated())
         {
-            return $this->getAccount()->getId();
+            return $this->get('security.context')->getToken()->getUser()->getId();
         }
         else
         {
@@ -71,29 +46,6 @@ class AuthenticationContext extends ContainerAwareClass
      */
     public function getAccount()
     {
-    	return $this->account;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Session\Session
-     */
-    private function getSession()
-    {
-        $requestStack = $this->getContainer()->get('request_stack');
-
-        /* @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = $requestStack->getCurrentRequest();
-
-        if (!$request->hasSession())
-        {
-            $session = new Session();
-            $request->setSession($session);
-
-            return $session;
-        }
-        else
-        {
-            return $request->getSession();
-        }
+    	return $this->get('security.context')->getToken()->getUser();
     }
 }
