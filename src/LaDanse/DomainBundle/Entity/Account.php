@@ -2,13 +2,15 @@
 
 namespace LaDanse\DomainBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Account")
  */
-class Account
+class Account extends BaseUser
 {
     /**
      * @ORM\Column(type="integer")
@@ -16,6 +18,11 @@ class Account
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Get id
