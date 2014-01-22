@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Security;
 
 use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 
@@ -13,10 +12,6 @@ class AuthenticationContext extends ContainerAwareClass
 	{
 		parent::__construct($container);
     }
-
-    // $user = $this->get('security.context')->getToken()->getUser();
-        // false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')
-        // IS_AUTHENTICATED_FULLY
 
     /**
      * @return bool
