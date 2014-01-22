@@ -42,7 +42,7 @@ class EventSignUpsModel extends ContainerAwareClass
         {
             $signUpModel = new SignUpModel($injector, $signUp);
 
-            if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+            if ($authContext->isAuthenticated() && ($signUp->getAccount()->getId() === $account->getId()))
             {
                 $this->currentUserSigned = true;
             }

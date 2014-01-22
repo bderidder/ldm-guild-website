@@ -25,7 +25,7 @@ class SignUpModel extends ContainerAwareClass
         $authContext = $this->getAuthenticationService()->getCurrentContext();
         $account = $authContext->getAccount();
 
-        if (!is_null($account) && ($signUp->getAccount()->getId() === $account->getId()))
+        if ($authContext->isAuthenticated() && ($signUp->getAccount()->getId() === $account->getId()))
         {
             $this->currentUser = true;
         }
