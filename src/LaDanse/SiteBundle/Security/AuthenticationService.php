@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Security;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 
