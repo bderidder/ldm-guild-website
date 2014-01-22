@@ -27,7 +27,7 @@ class ToastMessageService extends ContainerAware
 
 		$session->set('CoderSpotting_ToastMessages', $toasts);
 
-		$session->save();
+		//$session->save();
 
 		return $this;
 	}
