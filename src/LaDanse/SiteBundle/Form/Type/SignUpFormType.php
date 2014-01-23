@@ -2,6 +2,8 @@
 
 namespace LaDanse\SiteBundle\Form\Type;
 
+use Symfony\Component\Validator\Constraints;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -17,7 +19,6 @@ class SignUpFormType extends AbstractType
     					Role::TANK   => 'Tank',
     					Role::HEALER => 'Healer',
     					Role::DPS    => 'DPS'),
-    				'required'  => true,
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
@@ -25,7 +26,6 @@ class SignUpFormType extends AbstractType
     				'choices'   => array(
     					SignUpType::WILLCOME  => 'Will come',
     					SignUpType::MIGHTCOME => 'Might come'),
-    				'required'  => true,
     				'expanded'	=> true,
     				'multiple'	=> false
 				))
