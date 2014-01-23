@@ -1,48 +1,52 @@
-<table class="table"  style="width: auto;">
-    <thead>
-    <tr>
-        <th><!-- sign up column --></th>            
-        <th><!-- date column --></th>
-        <th><!-- name column --></th>
-        <th class="center-td">Signed</th>
-        <th class="center-td">Absent</th>
-        <th class="center-td">Invite Time</th>
-        <th class="center-td">Start Time</th>
-        <th class="center-td">End Time</th>
-        <th class="center-td">Organiser</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for event in events %}
-    <tr>
-        <td class="center-td">
-            {% if event.signUps.currentUserComes %}
-                <i class="fa fa-check fa-1x text-success"></i>
-            {% elseif event.signUps.currentUserAbsent %}
-                <i class="fa fa-ban fa-1x text-danger"></i>
-            {% else %}
-                <i class="fa fa-question fa-1x text-muted"></i>
-            {% endif %}
-        </td>
-        <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
-        <td>
-            <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
-        </td>
-        <td class="center-td">
-            {% if event.signUps.signUpCount != 0 %}
-                {{ event.signUps.signUpCount }}
-            {% endif %}
-        </td>
-        <td class="center-td">
-            {% if event.signUps.absentCount != 0 %}
-                {{ event.signUps.absentCount }}
-            {% endif %}
-        </td>
-        <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
-        <td class="center-td">{{ event.startTime|date("H:i") }}</td>
-        <td class="center-td">{{ event.endTime|date("H:i") }}</td>
-        <td class="center-td">{{ event.organiser.name }}</td>
-    </tr>
-    </tbody>
-    {% endfor %}
-</table>
+{% if events|length == 0 %}
+    <p>There are no events scheduled, why not <a href="{{ path('createEventIndex') }}">create a new event</a>?</p>
+{% else %}
+    <table class="table"  style="width: auto;">
+        <thead>
+        <tr>
+            <th><!-- sign up column --></th>            
+            <th><!-- date column --></th>
+            <th><!-- name column --></th>
+            <th class="center-td"># Signed</th>
+            <th class="center-td"># Absent</th>
+            <th class="center-td">Invite Time</th>
+            <th class="center-td">Start Time</th>
+            <th class="center-td">End Time</th>
+            <th class="center-td">Organiser</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+        <tr>
+            <td class="center-td">
+                {% if event.signUps.currentUserComes %}
+                    <i class="fa fa-check fa-1x text-success"></i>
+                {% elseif event.signUps.currentUserAbsent %}
+                    <i class="fa fa-ban fa-1x text-danger"></i>
+                {% else %}
+                    <i class="fa fa-question fa-1x text-muted"></i>
+                {% endif %}
+            </td>
+            <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
+            <td>
+                <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+            </td>
+            <td class="center-td">
+                {% if event.signUps.signUpCount != 0 %}
+                    {{ event.signUps.signUpCount }}
+                {% endif %}
+            </td>
+            <td class="center-td">
+                {% if event.signUps.absentCount != 0 %}
+                    {{ event.signUps.absentCount }}
+                {% endif %}
+            </td>
+            <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.startTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.endTime|date("H:i") }}</td>
+            <td class="center-td">{{ event.organiser.name }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+{% endif %}

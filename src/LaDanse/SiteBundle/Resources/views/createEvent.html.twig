@@ -4,14 +4,21 @@
 
 {% block body %}
 
-        <h1>Create event</h1>
+	<script type="application/javascript">
+    	$( document ).ready(function()
+    	{
+    		$('.date').datepicker({ dateFormat: 'D dd-mm-yy' })
+        });
+	</script>
 
-        {{ form(form) }}
+    <h1>Create event</h1>
 
-        <h2>Actions</h2>
+    {{ form(form) }}
 
-        <ul>
-            <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        </ul>
+    <h2>Actions</h2>
+
+    <ul>
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+    </ul>
 
 {% endblock %}

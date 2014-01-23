@@ -15,7 +15,9 @@ class EventFormType extends AbstractType
                 	))
 		        ->add('description', 'textarea')
 		        ->add('date', 'date', array(
-		        	'widget' => 'single_text'))
+		        	'widget' => 'single_text',
+		        	'format' => 'EEE dd-MM-yyyy',
+					'attr' => array('class' => 'date')))
 		        ->add('inviteTime', 'time', array(
 		        	'widget' => 'single_text'))
 		        ->add('startTime', 'time', array(

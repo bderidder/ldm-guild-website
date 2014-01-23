@@ -38,8 +38,8 @@ class CreateEventController extends LaDanseController
         }
 
     	$formModel = new EventFormModel();
-    	$formModel->setName('A name');
-    	$formModel->setDescription('A description');
+    	$formModel->setName('');
+    	$formModel->setDescription('');
     	$formModel->setDate(new DateTime('tomorrow'));
     	$formModel->setInviteTime(new DateTime('19:15'));
     	$formModel->setStartTime(new DateTime('19:30'));
