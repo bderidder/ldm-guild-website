@@ -2,6 +2,11 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\DomainBundle\Entity\SignUpType;
+
 class SignUpFormModel
 {
 	private $roles;
@@ -22,6 +27,8 @@ class SignUpFormModel
 
     /**
      * Get roles
+     *
+     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 1, max = 3)
      *
      * @return array 
      */
@@ -45,6 +52,9 @@ class SignUpFormModel
 
     /**
      * Get type
+     *
+     * @Assert\NotBlank(message = "You must select one choice")
+     * @Assert\Choice(choices = {SignUpType::WILLCOME, SignUpType::MIGHTCOME}, multiple = false)
      *
      * @return string 
      */

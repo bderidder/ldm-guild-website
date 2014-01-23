@@ -2,6 +2,8 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use \DateTime;
 
 class EventFormModel
@@ -29,6 +31,8 @@ class EventFormModel
     /**
      * Get name
      *
+     * @Assert\NotBlank()
+     *
      * @return string 
      */
     public function getName()
@@ -51,6 +55,8 @@ class EventFormModel
 
     /**
      * Get description
+     *
+     * @Assert\NotBlank()
      *
      * @return string 
      */
@@ -75,6 +81,8 @@ class EventFormModel
 	/**
      * Get date
      *
+     * @Assert\Date()
+     *
      * @return DateTime 
      */
     public function getDate()
@@ -97,6 +105,8 @@ class EventFormModel
 
     /**
      * Get invite time
+     *
+     * @Assert\Time()
      *
      * @return DateTime 
      */
@@ -121,6 +131,8 @@ class EventFormModel
     /**
      * Get start time
      *
+     * @Assert\Time()
+     *
      * @return DateTime 
      */
     public function getStartTime()
@@ -143,6 +155,8 @@ class EventFormModel
 
     /**
      * Get end time
+     *
+     * @Assert\Time()
      *
      * @return DateTime 
      */
