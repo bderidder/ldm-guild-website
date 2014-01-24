@@ -5,7 +5,7 @@
         <title>{% block title %}La Danse - Welcome{% endblock %}</title>
 
         {% stylesheets filter='cssrewrite'
-            'bundles/mopabootstrap/less/mopabootstrapbundle.less'
+            'bundles/ladansebootstrap/less/themes/slate/custom-bootstrap.less'
             'bundles/coderspottingtoastmessage/css/*'
         %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -23,7 +23,7 @@
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-        <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css"
+        <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
             rel="stylesheet">
 
         {{ renderToasts() }}
@@ -31,37 +31,31 @@
         <!-- The styles below are temporary -->
 
         <style type="text/css">
+            .wow-bg-image {
+                background: url('{{ asset('bundles/ladansesite/images/background.jpg') }}') no-repeat center center fixed;
+                background-size: 100% auto;
+            }
+
         	DIV.BodyContent {
         		width: 1000px;
-                margin: 50px auto auto;
-            }
-
-            a,
-            a:link,
-            a:active,
-            a:visited,
-            a:hover {
-                color: blue;
-            }
-
-            table {
-                border-collapse: collapse;
-            }
-
-            th, td {
-                margin: 0;
-                border: 0 solid black;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                margin: 100px auto auto;
+                height: 1000px;
             }
 
             td.center-td {
                 text-align: center;
             }
 
+
         </style>
 
     </head>
-    <body class="metro">
-    	<div class="BodyContent">
+    <body class="wow-bg-image">
+    	<div class="BodyContent bg-color-container">
 
             {% if auth.currentContext.authenticated %}
                 <p>Logged in with {{ auth.currentContext.account.username }} 
