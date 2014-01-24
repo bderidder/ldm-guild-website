@@ -37,6 +37,7 @@ assetic:
     use_controller: false
     bundles:
         - LaDanseSiteBundle
+        - LaDanseBootstrapBundle
         - CoderSpottingToastMessageBundle
     #java: /usr/bin/java
     filters:
