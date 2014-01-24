@@ -1,3 +1,7 @@
+la_danse_bootstrap:
+    resource: "@LaDanseBootstrapBundle/Resources/config/routing.yml"
+    prefix:   /
+
 la_danse_site:
     resource: "@LaDanseSiteBundle/Resources/config/routing.yml"
     prefix:	  /
