@@ -8,20 +8,15 @@
 
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
+    {% if auth.currentContext.authenticated %}
+
     <h4>Other actions on this page</h4>
     
     <ul>
-        {% if auth.currentContext.authenticated %}
-            <li><a href="{{ path('mySettingsIndex') }}">My settings</a></li> 
-            <li><a href="{{ path('createEventIndex') }}">Create event</a></li>    
-        {% endif %}
+        <!-- li><a href="{{ path('mySettingsIndex') }}">My settings</a></li --> 
+        <li><a href="{{ path('createEventIndex') }}">Create event</a></li>    
     </ul>
 
-    {% if app.environment == 'dev' %}
-        <p>Development only:</p>
-        <ul>
-            <li><a href="{{ path('fos_user_registration_register') }}">Register a new user</a></li>
-        </ul>
-    {% endif %} 
+    {% endif %}
 
 {% endblock %}
