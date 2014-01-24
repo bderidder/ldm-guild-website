@@ -1,0 +1,48 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Log in - La Danse Macabre{% endblock %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error|trans }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
+
+	<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+	<fieldset>
+		<div class="form-group">
+			<label for="username" class="control-label col-lg-3 required">{{ 'security.login.username'|trans }}</label>
+			<div class="col-lg-9">
+				<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="password" class="control-label col-lg-3 required">{{ 'security.login.password'|trans }}</label>
+			<div class="col-lg-9">
+				<input type="password" id="password" name="_password" required="required" />
+			</div>
+		</div>
+		<div class="form-group">
+			<i class="control-label col-lg-3 required"></i>
+			<div class="col-lg-9">
+				<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+				<label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+			</div>
+		</div>
+
+		<button type="submit" id="_submit" name="_submit" class="btn">
+			{{ 'security.login.submit'|trans }}</button>
+        </button>
+
+    	</fieldset>
+</form>
+
+<br />
+
+<a href="{{ path('fos_user_registration_register') }}">register a new user</a>
+
+{% endblock fos_user_content %}
