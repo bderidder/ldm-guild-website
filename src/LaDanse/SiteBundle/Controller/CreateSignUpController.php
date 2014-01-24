@@ -163,7 +163,7 @@ class CreateSignUpController extends LaDanseController
 
         $this->addToast('Sign up removed');
 
-        return $this->redirect($this->generateUrl('welcomeIndex'));
+        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
     }
 
     private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)
