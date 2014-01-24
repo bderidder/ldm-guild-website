@@ -18,7 +18,7 @@ class SignUpFormType extends AbstractType
     				'choices'   => array(
     					Role::TANK   => 'Tank',
     					Role::HEALER => 'Healer',
-    					Role::DPS    => 'DPS'),
+    					Role::DPS    => 'Damage'),
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
