@@ -1,0 +1,35 @@
+<table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
+<thead>
+    <tr>
+        <th>monday</th>            
+        <th>tuesday</th>
+        <th>wednesday</th>
+        <th>thursday</th>
+        <th>friday</th>
+        <th>saturday</th>
+        <th>sunday</th>
+    </tr>
+</thead>
+<tbody>
+    {% for calendarDay in calendarDays %}
+        {% if loop.index0%7 == 0 %}<tr>{% endif %}
+        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}active{% endif %}">
+            <div class="calendar-cell">
+            <p class="warning">{{ calendarDay.date|date('d') }}</p>
+            {% for event in calendarDay.events %}
+                <p><small>
+                    {% if event.signUps.currentUserComes %}
+                    <i class="fa fa-check fa-1x text-success"></i>
+                {% elseif event.signUps.currentUserAbsent %}
+                    <i class="fa fa-ban fa-1x text-danger"></i>
+                {% else %}
+                    <i class="fa fa-question fa-1x text-muted"></i>
+                {% endif %}
+                    {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
+            {% endfor %}
+            </div>
+        </td>
+        {% if loop.index0%7 == 6 %}</tr>{% endif %}
+    {% endfor %}
+</tbody>
+</table>
