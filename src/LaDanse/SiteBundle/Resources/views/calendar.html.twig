@@ -1,0 +1,22 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}La Danse - Calendar{% endblock %}
+
+{% block body %}
+
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Calendar</li>
+    </ol>
+
+    <h1>Raids</h1>
+
+    <p><a href="{{ path('welcomeIndex') }}">Click here if you prefer a list view</a></p>
+
+    {{ render(controller('LaDanseSiteBundle:Calendar:indexPartial')) }}
+
+    {% if auth.currentContext.authenticated %}
+    	<p>Couldn't find the raid you where looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
+    {% endif %}
+
+{% endblock %}
