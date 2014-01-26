@@ -5,7 +5,7 @@
         <title>{% block title %}La Danse - Welcome{% endblock %}</title>
 
         {% stylesheets filter='cssrewrite'
-            'bundles/ladansebootstrap/less/themes/slate/custom-bootstrap.less'
+            'bundles/ladansebootstrap/less/themes/cyborg/custom-bootstrap.less'
             'bundles/coderspottingtoastmessage/css/*'
         %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -28,33 +28,77 @@
 
         {{ renderToasts() }}
 
+        <script type="application/javascript">
+
+            var img_array = [
+                    // "{{ asset('bundles/ladansesite/images/background-1.jpg') }}",
+                    "{{ asset('bundles/ladansesite/images/background-2.jpg') }}",
+                    "{{ asset('bundles/ladansesite/images/background-3.jpg') }}",
+                    "{{ asset('bundles/ladansesite/images/background-4.jpg') }}"];
+
+            var index = 0;
+            var interval = 10000;
+
+            $(document).ready(function ()
+            {
+                var index = Math.floor((Math.random()*3)+1);
+
+                var imgUrl = img_array[index++ % img_array.length];
+                $('body').css('backgroundImage', 'url(' + imgUrl + ')');
+
+                setTimeout(function ()
+                {
+                    var imgUrl = img_array[index++ % img_array.length];
+                    $('body').css('backgroundImage', 'url(' + imgUrl + ')');
+
+                    setTimeout(arguments.callee, interval);
+                }, interval);
+            });
+        </script>
+
         <!-- The styles below are temporary -->
 
         <style type="text/css">
-            .wow-bg-image {
-                background: url('{{ asset('bundles/ladansesite/images/background.jpg') }}') no-repeat center center fixed;
-                background-size: 100% auto;
+            .wow-bg-image
+            {
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;  
+                background-size: 100% auto;               
+
+                transition-property: backgroundImage;
+                transition-duration: 2s;
+                transition-timing-function: ease-in-out;
+                transition-delay: 2s;
+
+                -webkit-transition: backgroundImage 2s 3s ease-in-out;
+                -moz-transition: backgroundImage 2s 3s ease-in-out;
+                -o-transition: backgroundImage 2s 3s ease-in-out;         
             }
 
         	DIV.BodyContent {
-        		width: 1000px;
+        		width: 900px;
                 padding-left: 30px;
                 padding-right: 30px;
                 padding-top: 20px;
                 padding-bottom: 20px;
                 margin: 100px auto auto;
+                margin-top: 200px;
                 height: 1000px;
+
+                -moz-border-radius: 15px;
+                border-radius: 15px;
             }
 
             td.center-td {
                 text-align: center;
             }
 
-
         </style>
 
     </head>
     <body class="wow-bg-image">
+        
     	<div class="BodyContent bg-color-container">
 
             {% if auth.currentContext.authenticated %}
@@ -67,5 +111,6 @@
 
     		{% block body %}{% endblock %}
     	</div>
+        
     </body>
 </html>
