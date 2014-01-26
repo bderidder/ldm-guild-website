@@ -27,4 +27,8 @@ MySettingsRouting:
     resource: "@LaDanseSiteBundle/Controller/MySettingsController.php"
     type:     annotation
     prefix:   /
-    
+
+CalendarRouting:
+    resource: "@LaDanseSiteBundle/Controller/CalendarController.php"
+    type:     annotation
+    prefix:   /
