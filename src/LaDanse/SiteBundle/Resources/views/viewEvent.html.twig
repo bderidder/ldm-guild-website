@@ -134,12 +134,13 @@
             </tr>
         {% endfor %}
     </table>
-    {% else %}    
-        <p>There are no sign ups, <a href="{{ path('createSignUpIndex', {'id': event.id}) }}">why not be the first</a>?</p>
-    {% endif %}
 
     {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
         <p>You seemed to have forgotten to sign up for this event! Please <a href="{{ path('createSignUpIndex', {'id': event.id}) }}">sign up</a> or inform us of your <a href="{{ path('createAbsenceIndex', {'id': event.id}) }}">absence</a>.</p>
+    {% endif %}
+    
+    {% else %}    
+        <p>There are no sign ups, <a href="{{ path('createSignUpIndex', {'id': event.id}) }}">why not be the first</a>?</p>
     {% endif %}
 
     {% if event.isOrganiser and auth.currentContext.authenticated %}
