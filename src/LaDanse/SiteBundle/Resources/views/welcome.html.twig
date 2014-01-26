@@ -5,17 +5,17 @@
 {% block body %}
 
 	<ol class="breadcrumb">
-		<li class="active">Home</li>
-	</ol>
+        <li class="active">Home</li>
+    </ol>
 
-    <h1>Events</h1>
+    <h1>Raids</h1>
+
+    <p><a href="{{ path('calendarIndex') }}">Click here if you prefer the calendar view</a></p>
 
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
     {% if auth.currentContext.authenticated %}
-
-    <p>Couldn't find the raid you where looking for? <a href="{{ path('createEventIndex') }}">Why not create it yourself!</a></p>
-
+    	<p>Couldn't find the raid you where looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
     {% endif %}
 
 {% endblock %}
