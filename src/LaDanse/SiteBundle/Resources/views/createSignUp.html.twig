@@ -4,15 +4,14 @@
 
 {% block body %}
 
-    <h1>Sign up for {{ event.name }} on {{ event.startTime|date("d/m") }}</h1>
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li><a href="{{ path('viewEventIndex', {'id': event.id}) }}">Event '{{ event.name }}'</a></li>
+        <li class="active">Sign Up</li>
+    </ol>
+
+    <h1>Sign up for '{{ event.name }}' on {{ event.startTime|date("D d/m") }}</h1>
 
     {{ form(form) }}
-
-    <h2>Actions</h2>
-
-    <ul>
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('viewEventIndex', {'id': event.id}) }}">Event</a></li>
-    </ul>
 
 {% endblock %}

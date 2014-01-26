@@ -4,16 +4,16 @@
 
 {% block body %}
 
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">My Settings</li>
+    </ol>
+
     <h1>My Settings</h1>
 
     <p>The site will never send any unsolicited mails. Please indicate below when you do want to receive emails.</p>
 
     {{ form(form) }}
 
-    <h2>Actions</h2>
-
-    <ul>
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-    </ul>
 
 {% endblock %}
