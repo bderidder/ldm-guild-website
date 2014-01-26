@@ -4,18 +4,17 @@
 
 {% block body %}
 
+	<ol class="breadcrumb">
+		<li class="active">Home</li>
+	</ol>
+
     <h1>Events</h1>
 
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
     {% if auth.currentContext.authenticated %}
 
-    <h4>Other actions on this page</h4>
-    
-    <ul>
-        <!-- li><a href="{{ path('mySettingsIndex') }}">My settings</a></li --> 
-        <li><a href="{{ path('createEventIndex') }}">Create event</a></li>    
-    </ul>
+    <p>Couldn't find the raid you where looking for? <a href="{{ path('createEventIndex') }}">Why not create it yourself!</a></p>
 
     {% endif %}
 

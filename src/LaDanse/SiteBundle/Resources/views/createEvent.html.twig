@@ -11,14 +11,13 @@
         });
 	</script>
 
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Create Event</li>
+    </ol>
+
     <h1>Create event</h1>
 
     {{ form(form) }}
-
-    <h2>Actions</h2>
-
-    <ul>
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-    </ul>
 
 {% endblock %}

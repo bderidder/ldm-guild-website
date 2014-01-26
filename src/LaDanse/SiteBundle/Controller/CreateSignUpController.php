@@ -130,7 +130,7 @@ class CreateSignUpController extends LaDanseController
 
         $this->addToast('Absence saved');
 
-        return $this->redirect($this->generateUrl('welcomeIndex'));
+        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
     }
 
     /**

@@ -19,6 +19,11 @@
          });
     </script>
 
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Event '{{ event.name }}'</li>
+    </ol>
+
     <h1>{{ event.name }}</h1>
 
     <p>{{ event.description }}</p>
@@ -133,20 +138,12 @@
         <p>There are no sign ups, <a href="{{ path('createSignUpIndex', {'id': event.id}) }}">why not be the first</a>?</p>
     {% endif %}
 
-    <h2>Actions</h2>
+    {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
+        <p>You seemed to have forgotten to sign up for this event! Please <a href="{{ path('createSignUpIndex', {'id': event.id}) }}">sign up</a> or inform us of your <a href="{{ path('createAbsenceIndex', {'id': event.id}) }}">absence</a>.</p>
+    {% endif %}
 
-    <ul>
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>        
-        {% if auth.currentContext.authenticated %}
-            {% if not event.signUps.currentUserSignedUp %}
-                <li><a href="{{ path('createSignUpIndex', {'id': event.id}) }}">Sign up</a></li>
-                <li><a href="{{ path('createAbsenceIndex', {'id': event.id}) }}">Inform absence</a></li>
-            {% endif %}
-            {% if event.isOrganiser %}
-                <li><a href="{{ path('editEventIndex', {'id': event.id}) }}">Edit event</a></li>
-                <li><a  id="removeEvent" href="{{ path('deleteEventIndex', {'id': event.id}) }}">Delete event</a></li>
-            {% endif %}
-        {% endif %}
-    </ul>
+    {% if event.isOrganiser and auth.currentContext.authenticated %}
+        <p>As an organiser you can <a href="{{ path('editEventIndex', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('deleteEventIndex', {'id': event.id}) }}">delete</a> it.</p> 
+    {% endif %}
     
 {% endblock %}
