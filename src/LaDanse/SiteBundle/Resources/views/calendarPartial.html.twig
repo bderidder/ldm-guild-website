@@ -29,7 +29,11 @@
                     {% else %}
                         <i class="fa fa-question fa-1x text-muted"></i>
                     {% endif %}
+                    {% if event.inThePast %}
+                        {{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
+                    {% else %}
                         {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
+                    {% endif %}
                 {% endfor %}
             </div>
         </td>

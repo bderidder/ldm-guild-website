@@ -115,6 +115,16 @@ class EventModel extends ContainerAwareClass
     /**
      * @return bool
      */
+    public function getInThePast()
+    {
+        $now = new \DateTime('now');
+
+        return $now > $this->inviteTime;
+    }
+
+    /**
+     * @return bool
+     */
     public function isOrganiser()
     {
         return $this->isOrganiser;
