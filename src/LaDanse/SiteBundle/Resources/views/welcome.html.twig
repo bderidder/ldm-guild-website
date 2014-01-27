@@ -15,7 +15,7 @@
     {{ render(controller('LaDanseSiteBundle:ListEventsPartial:list')) }}
 
     {% if auth.currentContext.authenticated %}
-    	<p>Couldn't find the raid you where looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
+    	<p>Couldn't find the raid you were looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
     {% endif %}
 
 {% endblock %}

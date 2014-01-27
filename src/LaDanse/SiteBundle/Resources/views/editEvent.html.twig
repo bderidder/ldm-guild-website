@@ -1,13 +1,13 @@
 {% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
 
-{% block title %}Edit event - La Danse Macabre{% endblock %}
+{% block title %}Edit raid - La Danse Macabre{% endblock %}
 
 {% block body %}
 
 	<script type="application/javascript">
     	$( document ).ready(function()
     	{
-    		$('.date').datepicker({ dateFormat: 'D dd-mm-yy' })
+    		$('.date').datepicker({ dateFormat: 'D dd-mm-yy', firstDay: 1 })
         });
 	</script>
 
@@ -17,7 +17,7 @@
         <li class="active">Edit</li>
     </ol>
 
-    <h1>Edit event</h1>
+    <h1>Edit raid</h1>
 
     {{ form(form) }}
 

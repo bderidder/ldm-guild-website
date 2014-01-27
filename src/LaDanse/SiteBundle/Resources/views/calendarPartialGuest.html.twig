@@ -13,7 +13,7 @@
 <tbody>
     {% for calendarDay in calendarDays %}
         {% if loop.index0%7 == 0 %}<tr>{% endif %}
-        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}current-day{% endif %}">
+        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}active{% endif %}">
             <div class="calendar-cell">
                 {% if calendarDay.showMonth %}
                     <p class="warning">{{ calendarDay.date|date('M d') }}</p>
@@ -21,15 +21,7 @@
                     <p class="warning">{{ calendarDay.date|date('d') }}</p>
                 {% endif %}
                 {% for event in calendarDay.events %}
-                    <p><small>
-                        {% if event.signUps.currentUserComes %}
-                        <i class="fa fa-check fa-1x text-success"></i>
-                    {% elseif event.signUps.currentUserAbsent %}
-                        <i class="fa fa-ban fa-1x text-danger"></i>
-                    {% else %}
-                        <i class="fa fa-question fa-1x text-muted"></i>
-                    {% endif %}
-                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
+                    <p><small>{{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
                 {% endfor %}
             </div>
         </td>
