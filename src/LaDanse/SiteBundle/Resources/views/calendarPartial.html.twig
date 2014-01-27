@@ -13,20 +13,24 @@
 <tbody>
     {% for calendarDay in calendarDays %}
         {% if loop.index0%7 == 0 %}<tr>{% endif %}
-        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}active{% endif %}">
+        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}current-day{% endif %}">
             <div class="calendar-cell">
-            <p class="warning">{{ calendarDay.date|date('d') }}</p>
-            {% for event in calendarDay.events %}
-                <p><small>
-                    {% if event.signUps.currentUserComes %}
-                    <i class="fa fa-check fa-1x text-success"></i>
-                {% elseif event.signUps.currentUserAbsent %}
-                    <i class="fa fa-ban fa-1x text-danger"></i>
+                {% if calendarDay.showMonth %}
+                    <p class="warning">{{ calendarDay.date|date('M d') }}</p>
                 {% else %}
-                    <i class="fa fa-question fa-1x text-muted"></i>
+                    <p class="warning">{{ calendarDay.date|date('d') }}</p>
                 {% endif %}
-                    {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
-            {% endfor %}
+                {% for event in calendarDay.events %}
+                    <p><small>
+                        {% if event.signUps.currentUserComes %}
+                        <i class="fa fa-check fa-1x text-success"></i>
+                    {% elseif event.signUps.currentUserAbsent %}
+                        <i class="fa fa-ban fa-1x text-danger"></i>
+                    {% else %}
+                        <i class="fa fa-question fa-1x text-muted"></i>
+                    {% endif %}
+                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
+                {% endfor %}
             </div>
         </td>
         {% if loop.index0%7 == 6 %}</tr>{% endif %}
