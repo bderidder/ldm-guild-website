@@ -98,9 +98,12 @@ class CalendarController extends LaDanseController
     {
         $em = $this->getDoctrine()->getManager();
 
+        $startTime = new \DateTime('now');
+        $startTime = $startTime->sub(new \DateInterval("P10D"));
+
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :start ORDER BY e.inviteTime ASC');
-        $query->setParameter('start', (new \DateTime('now'))->sub(new \DateInterval("P10D")));
+        $query->setParameter('start', $startTime);
         
         $events = $query->getResult();
 
