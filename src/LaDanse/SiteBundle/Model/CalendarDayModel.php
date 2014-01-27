@@ -11,6 +11,7 @@ class CalendarDayModel extends ContainerAwareClass
 {
     protected $date;
     protected $events;
+    protected $showMonth;
 
     public function __construct(ContainerInjector $injector, \DateTime $date)
     {
@@ -18,6 +19,7 @@ class CalendarDayModel extends ContainerAwareClass
 
         $this->date = $date;
         $this->events = array();
+        $this->showMonth = false;
     }
 
     /**
@@ -31,6 +33,16 @@ class CalendarDayModel extends ContainerAwareClass
     public function addEvent(EventModel $event)
     {
         $this->events[] = $event;
+    }
+
+    public function setShowMonth($showMonth)
+    {
+        $this->showMonth = $showMonth;
+    }
+
+    public function getShowMonth()
+    {
+        return $this->showMonth;
     }
 
     public function getEvents()
