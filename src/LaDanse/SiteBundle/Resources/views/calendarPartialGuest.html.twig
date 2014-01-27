@@ -1,0 +1,31 @@
+<table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
+<thead>
+    <tr>
+        <th>monday</th>            
+        <th>tuesday</th>
+        <th>wednesday</th>
+        <th>thursday</th>
+        <th>friday</th>
+        <th>saturday</th>
+        <th>sunday</th>
+    </tr>
+</thead>
+<tbody>
+    {% for calendarDay in calendarDays %}
+        {% if loop.index0%7 == 0 %}<tr>{% endif %}
+        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}active{% endif %}">
+            <div class="calendar-cell">
+                {% if calendarDay.showMonth %}
+                    <p class="warning">{{ calendarDay.date|date('M d') }}</p>
+                {% else %}
+                    <p class="warning">{{ calendarDay.date|date('d') }}</p>
+                {% endif %}
+                {% for event in calendarDay.events %}
+                    <p><small>{{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
+                {% endfor %}
+            </div>
+        </td>
+        {% if loop.index0%7 == 6 %}</tr>{% endif %}
+    {% endfor %}
+</tbody>
+</table>
