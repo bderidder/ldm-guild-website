@@ -2,3 +2,13 @@
 {
     min-height: 100px;
 }
+
+.today-calendar-cell
+{
+	background-color: DarkSlateGray;
+}
+
+.table-striped tbody tr:nth-child(odd) td.today-calendar-cell
+{
+	background-color: DarkSlateGray;
+}

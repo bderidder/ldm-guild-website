@@ -4,6 +4,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}La Danse - Welcome{% endblock %}</title>
 
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+        <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
+            rel="stylesheet">
+
         {% stylesheets filter='cssrewrite'
             'bundles/ladansebootstrap/less/themes/cyborg/custom-bootstrap.less'
             'bundles/coderspottingtoastmessage/css/*'
@@ -21,11 +26,6 @@
 
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
-
-        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
-        <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
-            rel="stylesheet">
 
         {{ renderToasts() }}
 
@@ -115,11 +115,6 @@
                 top: 0px;
                 height: 35px;
                 padding: 5px;
-            }
-
-            .current-day
-            {
-                background-color: DarkSlateGray;
             }
 
         </style>
