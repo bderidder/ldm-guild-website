@@ -16,7 +16,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 
-use LaDanse\SiteBundle\Model\EventModel;
+use LaDanse\SiteBundle\Model\EventModel,
+    LaDanse\SiteBundle\Model\ErrorModel;
 
 /**
  * @Route("/event/{id}/edit")
@@ -64,13 +65,16 @@ class EditEventController extends LaDanseController
         
         $formModel = $this->entityToModel($event);
 
-        $form = $this->createForm(new EventFormType(), $formModel, array('attr' => array('class' => 'form-horizontal')));
+        $form = $this->createForm(new EventFormType(), $formModel, 
+            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')
         {
         	$form->handleRequest($request);
 
-        	if ($form->isValid())
+            $errors = new ErrorModel();
+
+        	if ($form->isValid() & $formModel->isValid($errors))
         	{
         		$this->modelToEntity($formModel, $event);
 
@@ -82,14 +86,19 @@ class EditEventController extends LaDanseController
 
         		return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
         	}
+            else
+            {
+                return $this->render('LaDanseSiteBundle::editEvent.html.twig',
+                        array('event' => new EventModel($this->getContainerInjector(), $event), 
+                              'form' => $form->createView(),
+                              'errors' => $errors));    
+            }
     	}
     	else
     	{
         	return $this->render('LaDanseSiteBundle::editEvent.html.twig',
 						array('event' => new EventModel($this->getContainerInjector(), $event), 'form' => $form->createView()));	
     	}
-
-        return '';
     }
 
     private function entityToModel(Event $event)
