@@ -46,16 +46,6 @@
 
                 var imgUrl = img_array[index++ % img_array.length];
                 $('body').css('backgroundImage', 'url(' + imgUrl + ')');
-
-                /*
-                setTimeout(function ()
-                {
-                    var imgUrl = img_array[index++ % img_array.length];
-                    $('body').css('backgroundImage', 'url(' + imgUrl + ')');
-
-                    setTimeout(arguments.callee, interval);
-                }, interval);
-                */
             });
         </script>
 
@@ -66,23 +56,16 @@
             html, body
             {
                 height: 100%;
+
             }
 
             .wow-bg-image
             {
+                background-color: black;
                 background-repeat: no-repeat;
                 background-attachment: fixed;
-                background-position: center;  
-                background-size: 100% auto;               
-
-                transition-property: backgroundImage;
-                transition-duration: 2s;
-                transition-timing-function: ease-in-out;
-                transition-delay: 2s;
-
-                -webkit-transition: backgroundImage 2s 3s ease-in-out;
-                -moz-transition: backgroundImage 2s 3s ease-in-out;
-                -o-transition: backgroundImage 2s 3s ease-in-out;         
+                background-position: top;  
+                background-size: 100% auto;   
             }
 
         	DIV.BodyContent
@@ -99,8 +82,10 @@
                 height: auto !important /*min-height hack*/
                 height: 100%;           /*min-height hack*/
 
-                -moz-border-radius: 15px;
-                border-radius: 15px;
+                -moz-border-top-left-radius: 15px;
+                border-top-left-radius: 15px;
+                -moz-border-top-right-radius: 15px;
+                border-top-right-radius: 15px;
             }
 
             td.center-td
@@ -111,17 +96,24 @@
             #ProfileContainer
             {
                 position: absolute;
-                left: 800px;
+                right: 150px;
                 top: 0px;
                 height: 35px;
                 padding: 5px;
+                padding-left: 15px;
+                padding-right: 15px;
+
+                -moz-border-bottom-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                -moz-border-bottom-right-radius: 10px;
+                border-bottom-right-radius: 10px;
             }
 
         </style>
 
     </head>
     <body class="wow-bg-image">
-        
+
         <div id="ProfileContainer" class="bg-color-container">
             {% if auth.currentContext.authenticated %}
                 <p>Logged in with {{ auth.currentContext.account.username }} 
