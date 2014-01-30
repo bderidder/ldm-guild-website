@@ -17,6 +17,8 @@ use LaDanse\SiteBundle\Security\AuthenticationContext;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 
+use LaDanse\SiteBundle\Model\ErrorModel;
+
 /**
  * @Route("/events/create")
 */
@@ -45,23 +47,34 @@ class CreateEventController extends LaDanseController
     	$formModel->setStartTime(new DateTime('19:30'));
     	$formModel->setEndTime(new DateTime('22:00'));
 
-    	$form = $this->createForm(new EventFormType(), $formModel, array('attr' => array('class' => 'form-horizontal')));
+    	$form = $this->createForm(new EventFormType(), $formModel, 
+            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
-    	$form->handleRequest($request);
+        if ($request->getMethod() == 'POST')
+        {
+    	   $form->handleRequest($request);
 
-    	if ($form->isValid())
-    	{
-			$this->persistEvent($authContext, $formModel);
+            $errors = new ErrorModel();
 
-            $this->addToast('New event created');
+        	if ($form->isValid() & $formModel->isValid($errors))
+        	{
+    			$this->persistEvent($authContext, $formModel);
 
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-		}
-		else
-		{
-			return $this->render('LaDanseSiteBundle::createEvent.html.twig',
-					array('form' => $form->createView()));
-		}	
+                $this->addToast('New event created');
+
+        		return $this->redirect($this->generateUrl('welcomeIndex'));
+    		}
+    		else
+    		{
+    			return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+    					array('form' => $form->createView(), 'errors' => $errors));
+    		}
+        }
+        else
+        {
+            return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+                        array('form' => $form->createView()));
+        }	
     }
 
     private function persistEvent(AuthenticationContext $authContext, EventFormModel $formModel)

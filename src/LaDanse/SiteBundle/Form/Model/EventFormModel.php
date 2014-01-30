@@ -4,10 +4,14 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use LaDanse\SiteBundle\Model\ErrorModel;
+
 use \DateTime;
 
 class EventFormModel
 {
+    const COMPARE_DATE_FORMAT = "Y-m-d H:i";
+
 	private $name;
 	private $description;
 	private $date;
@@ -96,7 +100,7 @@ class EventFormModel
      * @param DateTime $inviteTime
      * @return EventFormModel
      */
-    public function setInviteTime(DateTime $inviteTime)
+    public function setInviteTime($inviteTime)
     {
     	$this->inviteTime = $inviteTime;
 
@@ -107,6 +111,7 @@ class EventFormModel
      * Get invite time
      *
      * @Assert\Time()
+     * @Assert\NotBlank()
      *
      * @return DateTime 
      */
@@ -121,7 +126,7 @@ class EventFormModel
      * @param DateTime $startTime
      * @return EventFormModel
      */
-    public function setStartTime(DateTime $startTime)
+    public function setStartTime($startTime)
     {
     	$this->startTime = $startTime;
 
@@ -146,7 +151,7 @@ class EventFormModel
      * @param DateTime $endTime
      * @return EventFormModel
      */
-    public function setEndTime(DateTime $endTime)
+    public function setEndTime($endTime)
     {
     	$this->endTime = $endTime;
 
@@ -163,5 +168,47 @@ class EventFormModel
     public function getEndTime()
     {
     	return $this->endTime;
+    }
+
+    public function isValid(ErrorModel $errorModel)
+    {
+        $now = new \DateTime();
+        $inviteDateTime = $this->createDateTime($this->date, $this->inviteTime);
+
+        $errors = true;
+
+        if ($inviteDateTime->format(EventFormModel::COMPARE_DATE_FORMAT) 
+            < $now->format(EventFormModel::COMPARE_DATE_FORMAT))
+        {
+            $errorModel->addError('The raid cannot be scheduled in the past');
+
+            $errors = false;
+        }
+
+        if ($this->inviteTime > $this->startTime)
+        {
+            $errorModel->addError('Invite time cannot be past start time');
+
+            $errors = false;
+        }
+
+        if ($this->startTime > $this->endTime)
+        {
+            $errorModel->addError('Start time cannot be past end time');
+
+            $errors = false;
+        }
+
+        return $errors;
+    }
+
+    private function createDateTime(DateTime $datePart, DateTime $timePart)
+    {
+        $resultDate = new DateTime();
+
+        $resultDate->setDate($datePart->format('Y'), $datePart->format('m'), $datePart->format('d'));
+        $resultDate->setTime($timePart->format('H'), $timePart->format('i'), $timePart->format('s'));
+
+        return $resultDate;
     }
 }
