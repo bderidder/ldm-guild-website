@@ -17,6 +17,8 @@ use LaDanse\SiteBundle\Model\EventModel,
 */
 class CalendarController extends LaDanseController
 {
+    const COMPARE_DATE_FORMAT = "Y-m-d";
+
     /**
      * @Route("/", name="calendarIndex")
      * @Template("LaDanseSiteBundle::calendar.html.twig")
@@ -42,6 +44,7 @@ class CalendarController extends LaDanseController
 
         $currentDate = clone $startDate;
 
+        // we show 28 days, that is 4 weeks
         for($i = 0; $i < 28; $i++)
         {
             $date = clone $currentDate;
@@ -61,11 +64,13 @@ class CalendarController extends LaDanseController
                 $currentEvent = $events[$eventIndex];
                 $inviteTime = $currentEvent->getInviteTime();
 
-                if (($date->format("Y-m-d") < $inviteTime->format("Y-m-d")))
+                if (($date->format(CalendarController::COMPARE_DATE_FORMAT) 
+                    < $inviteTime->format(CalendarController::COMPARE_DATE_FORMAT)))
                 {
                     break;
                 }
-                elseif ($date->format("Y-m-d") == $inviteTime->format("Y-m-d"))
+                elseif ($date->format(CalendarController::COMPARE_DATE_FORMAT) 
+                    == $inviteTime->format(CalendarController::COMPARE_DATE_FORMAT))
                 {
                     $calendarDateModel->addEvent($currentEvent);
 

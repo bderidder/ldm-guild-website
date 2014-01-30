@@ -5,10 +5,10 @@
 
 .today-calendar-cell
 {
-	background-color: DarkSlateGray;
+	background-color: #162f30;
 }
 
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
 {
-	background-color: DarkSlateGray;
+	background-color: #162f30;
 }
