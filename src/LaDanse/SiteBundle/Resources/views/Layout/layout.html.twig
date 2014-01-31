@@ -20,7 +20,8 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
-        {% javascripts '@CoderSpottingToastMessageBundle/Resources/public/js/*' %}
+        {% javascripts '@CoderSpottingToastMessageBundle/Resources/public/js/*'
+                       '@LaDanseBootstrapBundle/Resources/public/js/*' %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -126,10 +127,17 @@
                 <div id="profile-container" class="bg-color-container" style="float: right;">
                     <span style="text-align: center;">
                     {% if auth.currentContext.authenticated %}
-                        <p>Logged in with {{ auth.currentContext.account.username }} 
-                            | <a href="{{ path('fos_user_profile_show') }}">profile</a>
-                            | <a href="{{ path('fos_user_security_logout') }}">log out</a>
-                            | <a href="{{ path('createFeedbackIndex') }}"><i class="fa fa-envelope"></i> feedback</a></p>
+                            <div class="btn-group" style="text-align: left">
+                                <span data-toggle="dropdown" style="cursor: pointer;">
+                                     <i class="fa fa-user"></i> Logged in with {{ auth.currentContext.account.username }} 
+                                    <span class="caret"></span>
+                                </span>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('fos_user_profile_show') }}">View profile</a></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+                                </ul>
+                            </div>
+                            | <a href="{{ path('createFeedbackIndex') }}"><i class="fa fa-envelope"></i> feedback</a>
                     {% else %}
                         <p>Not logged in | <a href="{{ path('fos_user_security_login') }}">log in</a></p>
                     {% endif %}
