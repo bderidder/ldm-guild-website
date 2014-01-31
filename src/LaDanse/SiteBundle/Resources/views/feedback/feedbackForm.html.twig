@@ -1,0 +1,27 @@
+{% extends 'LaDanseSiteBundle:Layout:layout.html.twig' %}
+
+{% block title %}Feedback - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Feedback</li>
+    </ol>
+
+    <h1>Feedback</h1>
+
+    <p>Have you experienced an error, saw something that didn't behave as it should have
+       or do you have a good idea for improvements? Use the form below to contact the maintainers of this site.</p>
+
+    <p>If you are reporting a bug, try to be as detailed as possible in your description below. At a minimum list
+       the steps you took to arrive at the bug.</p> 
+
+    <p>We thank you for your feedback. It's important to us as it will enable us to improve this site.</p>
+
+    {% include 'LaDanseSiteBundle::formErrorsPartial.html.twig' %}
+
+    {{ form(form) }}
+
+{% endblock %}
