@@ -1,14 +1,47 @@
 .calendar-cell
 {
-    min-height: 100px;
+    position: relative;
+}
+
+.calendar-cell-container
+{
+	min-height: 100px;
 }
 
 .today-calendar-cell
 {
-	background-color: #162f30;
+	/*background-color: #162f30;*/
+	background-color: rgb(200, 200, 200);
 }
-
+	
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
 {
-	background-color: #162f30;
+	/*background-color: #162f30;*/
+	background-color: rgb(200, 200, 200);
+}
+
+.calendar-cell:hover
+{
+}
+
+.table-striped tbody tr:nth-child(odd) td.calendar-cell:hover
+{
+}
+
+.hover-me-container
+{
+	display: none;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+.hover-me
+{
+	text-align: center;
+}
+
+.calendar-cell:hover .hover-me-container
+{
+	display: block;
 }
