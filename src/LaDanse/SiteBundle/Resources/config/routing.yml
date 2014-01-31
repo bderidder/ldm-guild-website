@@ -32,3 +32,8 @@ CalendarRouting:
     resource: "@LaDanseSiteBundle/Controller/CalendarController.php"
     type:     annotation
     prefix:   /
+
+FeedbackRouting:
+    resource: "@LaDanseSiteBundle/Controller/FeedbackController.php"
+    type:     annotation
+    prefix:   /
