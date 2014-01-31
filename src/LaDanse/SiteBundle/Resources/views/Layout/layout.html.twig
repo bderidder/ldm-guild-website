@@ -128,7 +128,8 @@
                     {% if auth.currentContext.authenticated %}
                         <p>Logged in with {{ auth.currentContext.account.username }} 
                             | <a href="{{ path('fos_user_profile_show') }}">profile</a>
-                            | <a href="{{ path('fos_user_security_logout') }}">log out</a></p>
+                            | <a href="{{ path('fos_user_security_logout') }}">log out</a>
+                            | <a href="{{ path('createFeedbackIndex') }}"><i class="fa fa-envelope"></i> feedback</a></p>
                     {% else %}
                         <p>Not logged in | <a href="{{ path('fos_user_security_login') }}">log in</a></p>
                     {% endif %}
