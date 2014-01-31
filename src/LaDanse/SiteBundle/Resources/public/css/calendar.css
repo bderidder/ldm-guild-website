@@ -1,11 +1,20 @@
 .calendar-cell
 {
     position: relative;
+    /*border: solid red 1px;*/
 }
 
 .calendar-cell-container
 {
+	position: relative;
 	min-height: 100px;
+	/*border: solid green 1px;*/
+}
+
+.event-container
+{
+	/*padding-left: 1em;
+    text-indent: -1em;*/
 }
 
 .today-calendar-cell
@@ -20,20 +29,16 @@
 	background-color: rgb(200, 200, 200);
 }
 
-.calendar-cell:hover
-{
-}
-
-.table-striped tbody tr:nth-child(odd) td.calendar-cell:hover
-{
-}
-
 .hover-me-container
 {
 	display: none;
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	/*background-color: DarkOrange;
+	border: solid rgb(175, 175, 175) 1px;
+	-moz-border-radius: 5px;
+    border-radius: 5px;*/
 }
 
 .hover-me

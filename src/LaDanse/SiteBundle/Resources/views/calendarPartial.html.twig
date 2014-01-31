@@ -16,12 +16,12 @@
         <td class="calendar-cell {% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}today-calendar-cell{% endif %}">
             <div class="calendar-cell-container">
                 {% if calendarDay.showMonth %}
-                    <p class="warning">{{ calendarDay.date|date('M d') }}</p>
+                    <p>{{ calendarDay.date|date('M d') }}</p>
                 {% else %}
-                    <p class="warning">{{ calendarDay.date|date('d') }}</p>
+                    <p>{{ calendarDay.date|date('d') }}</p>
                 {% endif %}
                 {% for event in calendarDay.events %}
-                    <p><small>
+                    <div class="event-container"><small>
                         {% if event.signUps.currentUserComes %}
                         <i class="fa fa-check fa-1x text-success"></i>
                     {% elseif event.signUps.currentUserAbsent %}
@@ -32,13 +32,19 @@
                     {% if event.inThePast %}
                         {{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
                     {% else %}
-                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
+                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+                    </small></div>
                     {% endif %}
                 {% endfor %}
                 {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
-                <div class="hover-me-container">
-                    <div class="hover-me"><small><a href="{{ path('createEventIndex', {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a></small></div>
-                </div>
+                    <div class="hover-me-container">
+                        <div class="hover-me">
+                            <small>
+                            <a href="{{ path('createEventIndex', 
+                                             {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a>
+                            </small>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </td>
