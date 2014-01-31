@@ -13,8 +13,8 @@
 <tbody>
     {% for calendarDay in calendarDays %}
         {% if loop.index0%7 == 0 %}<tr>{% endif %}
-        <td class="{% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}today-calendar-cell{% endif %}">
-            <div class="calendar-cell">
+        <td class="calendar-cell {% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}today-calendar-cell{% endif %}">
+            <div class="calendar-cell-container">
                 {% if calendarDay.showMonth %}
                     <p class="warning">{{ calendarDay.date|date('M d') }}</p>
                 {% else %}
@@ -35,6 +35,11 @@
                         {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a></small></p>
                     {% endif %}
                 {% endfor %}
+                {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
+                <div class="hover-me-container">
+                    <div class="hover-me"><small><a href="{{ path('createEventIndex', {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a></small></div>
+                </div>
+                {% endif %}
             </div>
         </td>
         {% if loop.index0%7 == 6 %}</tr>{% endif %}
