@@ -10,7 +10,7 @@
             rel="stylesheet">
 
         {% stylesheets filter='cssrewrite'
-            'bundles/ladansebootstrap/less/themes/cyborg/custom-bootstrap.less'
+            'bundles/ladansebootstrap/less/themes/spacelab/custom-bootstrap.less'
             'bundles/coderspottingtoastmessage/css/*'
             'bundles/ladansesite/css/*'
         %}
@@ -32,10 +32,9 @@
         <script type="application/javascript">
 
             var img_array = [
-                    //"{{ asset('bundles/ladansesite/images/background-1.jpg') }}",
-                    "{{ asset('bundles/ladansesite/images/background-2.jpg') }}",
-                    "{{ asset('bundles/ladansesite/images/background-3.jpg') }}",
-                    "{{ asset('bundles/ladansesite/images/background-4.jpg') }}"];
+                    "{{ asset('bundles/ladansesite/images/background-1.jpg') }}",
+                    "{{ asset('bundles/ladansesite/images/background-1.jpg') }}",
+                    ];
 
             var index = 0;
             var interval = 10000;
@@ -45,7 +44,7 @@
                 var index = Math.floor((Math.random()*img_array.length)+1);
 
                 var imgUrl = img_array[index++ % img_array.length];
-                $('body').css('backgroundImage', 'url(' + imgUrl + ')');
+                //$('body').css('backgroundImage', 'url(' + imgUrl + ')');
             });
         </script>
 
@@ -56,31 +55,35 @@
             html, body
             {
                 height: 100%;
-
             }
 
             .wow-bg-image
             {
-                background-color: black;
+                /*background-color: black;*/
                 background-repeat: no-repeat;
                 background-attachment: fixed;
                 background-position: top;  
                 background-size: 100% auto;   
             }
 
-        	DIV.BodyContent
+            .main-centered-container
             {
-        		width: 960px;
+                width: 960px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        	#body-container
+            {
                 padding-left: 30px;
                 padding-right: 30px;
                 padding-top: 20px;
                 padding-bottom: 20px;
-                margin: 100px auto auto;
-                margin-top: 100px;
                 
+                margin-top: 100px;
                 min-height: 100%;
-                height: auto !important /*min-height hack*/
-                height: 100%;           /*min-height hack*/
+                height: auto !important; /*min-height hack*/
+                height: 100%;            /*min-height hack*/
 
                 -moz-border-top-left-radius: 15px;
                 border-top-left-radius: 15px;
@@ -93,12 +96,16 @@
                 text-align: center;
             }
 
-            #ProfileContainer
+            #header-container
             {
                 position: absolute;
-                right: 150px;
                 top: 0px;
-                height: 35px;
+                width: 100%;
+            }
+
+            #profile-container
+            {
+                /*width: 300px;*/
                 padding: 5px;
                 padding-left: 15px;
                 padding-right: 15px;
@@ -114,17 +121,23 @@
     </head>
     <body class="wow-bg-image">
 
-        <div id="ProfileContainer" class="bg-color-container">
-            {% if auth.currentContext.authenticated %}
-                <p>Logged in with {{ auth.currentContext.account.username }} 
-                    | <a href="{{ path('fos_user_profile_show') }}">profile</a>
-                    | <a href="{{ path('fos_user_security_logout') }}">log out</a></p>
-            {% else %}
-                <p>Not logged in | <a href="{{ path('fos_user_security_login') }}">log in</a></p>
-            {% endif %}
+        <div id="header-container">
+            <div class="main-centered-container">
+                <div id="profile-container" class="bg-color-container" style="float: right;">
+                    <span style="text-align: center;">
+                    {% if auth.currentContext.authenticated %}
+                        <p>Logged in with {{ auth.currentContext.account.username }} 
+                            | <a href="{{ path('fos_user_profile_show') }}">profile</a>
+                            | <a href="{{ path('fos_user_security_logout') }}">log out</a></p>
+                    {% else %}
+                        <p>Not logged in | <a href="{{ path('fos_user_security_login') }}">log in</a></p>
+                    {% endif %}
+                    </span>
+                </div>
+            </div>
         </div>
 
-    	<div class="BodyContent bg-color-container">
+    	<div id="body-container" class="bg-color-container main-centered-container">
     		{% block body %}{% endblock %}
     	</div>
         
