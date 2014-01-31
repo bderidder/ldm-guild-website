@@ -25,10 +25,10 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 class CreateEventController extends LaDanseController
 {
     /**
-     * @Route("/", name="createEventIndex")
+     * @Route("/{onDate}", name="createEventIndex")
      * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $onDate = NULL)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -39,10 +39,21 @@ class CreateEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
+        if ($onDate === NULL)
+        {
+            $eventDate = new DateTime('tomorrow');
+        }
+        else
+        {
+            $eventDate = DateTime::createFromFormat("Ymd", $onDate);
+
+            if ($eventDate === FALSE) $eventDate = new DateTime('tomorrow');
+        }
+
     	$formModel = new EventFormModel();
     	$formModel->setName('');
     	$formModel->setDescription('');
-    	$formModel->setDate(new DateTime('tomorrow'));
+    	$formModel->setDate($eventDate);
     	$formModel->setInviteTime(new DateTime('19:15'));
     	$formModel->setStartTime(new DateTime('19:30'));
     	$formModel->setEndTime(new DateTime('22:00'));
@@ -56,7 +67,7 @@ class CreateEventController extends LaDanseController
 
             $errors = new ErrorModel();
 
-        	if ($form->isValid() & $formModel->isValid($errors))
+        	if ($form->isValid() && $formModel->isValid($errors))
         	{
     			$this->persistEvent($authContext, $formModel);
 

@@ -74,7 +74,7 @@ class EditEventController extends LaDanseController
 
             $errors = new ErrorModel();
 
-        	if ($form->isValid() & $formModel->isValid($errors))
+        	if ($form->isValid() && $formModel->isValid($errors))
         	{
         		$this->modelToEntity($formModel, $event);
 

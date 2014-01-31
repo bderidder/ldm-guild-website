@@ -1,5 +1,10 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Registration</li>
+    </ol>
+
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }}
 	method="POST" class="fos_user_registration_register form-horizontal">
 	

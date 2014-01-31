@@ -86,6 +86,7 @@ class EventFormModel
      * Get date
      *
      * @Assert\Date()
+     * @Assert\NotBlank()
      *
      * @return DateTime 
      */
@@ -137,6 +138,7 @@ class EventFormModel
      * Get start time
      *
      * @Assert\Time()
+     * @Assert\NotBlank()
      *
      * @return DateTime 
      */
@@ -162,6 +164,7 @@ class EventFormModel
      * Get end time
      *
      * @Assert\Time()
+     * @Assert\NotBlank()
      *
      * @return DateTime 
      */
