@@ -12,10 +12,6 @@
 
     <p><a href="{{ path('eventListIndex') }}">Click here if you prefer a list view</a></p>
 
-    {% if auth.currentContext.authenticated %}
-    	<p>Can't find the raid you were looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
-    {% endif %}
-
     {{ render(controller('LaDanseSiteBundle:Calendar:indexPartial')) }}
 
 {% endblock %}
