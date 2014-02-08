@@ -2,13 +2,29 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Model\EventModel;
 
-class ListEventsPartialController extends LaDanseController
+/**
+ * @Route("/events")
+*/
+class EventListController extends LaDanseController
 {
-    public function listAction()
+    /**
+     * @Route("/", name="eventListIndex")
+     * @Template("LaDanseSiteBundle::eventList.html.twig")
+     */
+    public function indexAction(Request $request)
+    {
+    }
+
+    public function indexPartialAction()
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
