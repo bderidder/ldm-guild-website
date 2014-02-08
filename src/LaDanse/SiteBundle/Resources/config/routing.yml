@@ -28,6 +28,11 @@ MySettingsRouting:
     type:     annotation
     prefix:   /
 
+EventListRouting:
+    resource: "@LaDanseSiteBundle/Controller/EventListController.php"
+    type:     annotation
+    prefix:   /
+
 CalendarRouting:
     resource: "@LaDanseSiteBundle/Controller/CalendarController.php"
     type:     annotation
