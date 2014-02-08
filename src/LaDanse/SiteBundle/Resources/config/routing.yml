@@ -1,44 +1,4 @@
-WelcomeRouting:
-    resource: "@LaDanseSiteBundle/Controller/WelcomeController.php"
-    type:     annotation
-    prefix:   /
-
-ViewEventRouting:
-    resource: "@LaDanseSiteBundle/Controller/ViewEventController.php"
-    type:     annotation
-    prefix:   /
-
-CreateEventRouting:
-    resource: "@LaDanseSiteBundle/Controller/CreateEventController.php"
-    type:     annotation
-    prefix:   /
-
-EditEventRouting:
-    resource: "@LaDanseSiteBundle/Controller/EditEventController.php"
-    type:     annotation
-    prefix:   /
-
-CreateSignUpRouting:
-    resource: "@LaDanseSiteBundle/Controller/CreateSignUpController.php"
-    type:     annotation
-    prefix:   /
-
-MySettingsRouting:
-    resource: "@LaDanseSiteBundle/Controller/MySettingsController.php"
-    type:     annotation
-    prefix:   /
-
-EventListRouting:
-    resource: "@LaDanseSiteBundle/Controller/EventListController.php"
-    type:     annotation
-    prefix:   /
-
-CalendarRouting:
-    resource: "@LaDanseSiteBundle/Controller/CalendarController.php"
-    type:     annotation
-    prefix:   /
-
-FeedbackRouting:
-    resource: "@LaDanseSiteBundle/Controller/FeedbackController.php"
+LaDanseSiteRouting:
+    resource: "@LaDanseSiteBundle/Controller/"
     type:     annotation
     prefix:   /
