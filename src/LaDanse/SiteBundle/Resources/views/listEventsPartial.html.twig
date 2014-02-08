@@ -1,6 +1,11 @@
 {% if events|length == 0 %}
     <p>There are no events scheduled, why not <a href="{{ path('createEventIndex') }}">create a new event</a>?</p>
 {% else %}
+
+    {% if auth.currentContext.authenticated %}
+        <p>Can't find the raid you were looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
+    {% endif %}
+
     <table class="table"  style="width: auto;">
         <thead>
         <tr>

@@ -1,3 +1,7 @@
+{% if auth.currentContext.authenticated %}
+    <p>Can't find the raid you were looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
+{% endif %}
+
 <table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
 <thead>
     <tr>
