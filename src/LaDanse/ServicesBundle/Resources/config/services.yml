@@ -1,0 +1,7 @@
+parameters:
+    GuildCharacterService.class: LaDanse\ServicesBundle\Service\GuildCharacterService
+
+services:
+    LaDanse.GuildCharacterService:
+        class: "%GuildCharacterService.class%"
+        arguments: ['@service_container']
