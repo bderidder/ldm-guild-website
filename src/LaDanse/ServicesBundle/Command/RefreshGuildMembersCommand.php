@@ -117,7 +117,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 // the character isn't in the guild any more, end it
                 $this->info($input, $output, "Character is not in the guild anymore " . $dbName);
 
-                $this->endCharacter($dbCharacters[$dbIndex]->id);
+                $this->endCharacter($dbNames[$dbIndex]->id);
 
                 $dbIndex++;
             }
@@ -141,7 +141,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
             $this->info($input, $output, "Character is not in the guild anymore " . $dbName);
 
-            $this->endCharacter($dbCharacters[$dbIndex]->id);
+            $this->endCharacter($dbNames[$dbIndex]->id);
 
             $dbIndex++;
         }
