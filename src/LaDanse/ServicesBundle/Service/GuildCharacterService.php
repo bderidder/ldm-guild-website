@@ -128,6 +128,48 @@ class GuildCharacterService extends LaDanseService
         $character->setEndTime(new \DateTime());
 
         $em->flush();
+
+        $this->endClaimsForCharacter($character);
+    }
+
+    public function getActiveClaimsForAccount($accountId, \DateTime $onDateTime = NULL)
+    {
+
+    }
+
+    public function getActiveClaimsForCharacter($characterId, \DateTime $onDateTime = NULL)
+    {
+
+    }
+
+    public function endClaimsForCharacter($character)
+    {
+        $onDateTime = new \DateTime();
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            'SELECT ' .
+            '    cc ' .
+            'FROM ' .
+            '    LaDanse\DomainBundle\Entity\Claim cc ' .
+            'WHERE ' .
+            '    cc.endTime IS NULL ' .
+            '    AND ' .
+            '    cc.character = :character'  
+        );
+
+        $query->setParameter('character', $character);
+
+        $claims = $query->getResult();
+
+        foreach($claims as $claim)
+        {
+            $claim->setEndTime($onDateTime);
+        }
+
+        $em->flush();
     }
 
     public function importCharacter($name)
