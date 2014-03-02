@@ -16,6 +16,8 @@ composer.phar
 web/css/*
 web/js/*
 
+TestCommand.php
+
 ## generic files to ignore
 *~
 *.lock
