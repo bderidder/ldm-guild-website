@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\CommonBundle\LaDanseCommonBundle(),
+            new LaDanse\ServicesBundle\LaDanseServicesBundle(),
             new CoderSpotting\Bundle\ToastMessageBundle\CoderSpottingToastMessageBundle(),
             new LaDanse\BootstrapBundle\LaDanseBootstrapBundle(),
         );
