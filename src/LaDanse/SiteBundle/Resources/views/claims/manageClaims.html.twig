@@ -17,28 +17,37 @@
       <li>Change roles</li>
     </ul>
 
-    {{ render(controller('LaDanseSiteBundle:ManageClaims:viewClaimsPartial')) }}
+    {{ render(controller('LaDanseSiteBundle:Claims/ManageClaims:viewClaimsPartial')) }}
 
-<div class="modal" id="addClaimModel">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form action="{{ path('manageClaims') }}" method="post" {{ form_enctype(form) }}>
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Claim Character</h4>
-      </div>
-      <div class="modal-body">
-        {% include 'LaDanseSiteBundle::formErrorsPartial.html.twig' %}
+    <script type="application/javascript">
+      $( document ).ready(function()
+      {
+        {% if errors is defined %}
+        $("#addClaimModel").modal();
+        {% endif %}
+      });
+    </script>
 
-        {{ form_widget(form) }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <input type="submit" value="Claim" class="btn btn-primary" />
-      </div>
-      </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal" id="addClaimModel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="{{ path('manageClaims') }}" method="post" {{ form_enctype(form) }}>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Claim Character</h4>
+            </div>
+            <div class="modal-body">
+              {% include 'LaDanseSiteBundle::formErrorsPartial.html.twig' %}
+
+              {{ form_widget(form) }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <input type="submit" value="Claim" class="btn btn-primary" />
+            </div>
+          </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 {% endblock %}
