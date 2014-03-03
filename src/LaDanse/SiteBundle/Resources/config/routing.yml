@@ -1,4 +1,7 @@
 LaDanseSiteRouting:
-    resource: "@LaDanseSiteBundle/Controller/"
+    resource: "@LaDanseSiteBundle/Controller"
     type:     annotation
-    prefix:   /
+
+ClaimsRouting:
+    resource: "@LaDanseSiteBundle/Controller/Claims"
+    type:     annotation
