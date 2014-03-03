@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Setting
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Setting';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ForRole
 {
+    const REPOSITORY = 'LaDanseDomainBundle:ForRole';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

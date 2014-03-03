@@ -13,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Event
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Event';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

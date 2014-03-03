@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Claim
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Claim';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

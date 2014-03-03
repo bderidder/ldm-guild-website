@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class LoginEvent
 {
+    const REPOSITORY = 'LaDanseDomainBundle:LoginEvent';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
