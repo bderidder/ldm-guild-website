@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Claims;
 
 use \DateTime;
 
@@ -52,7 +52,7 @@ class ManageClaimsController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors))
             {
-                //$this->persistEvent($authContext, $formModel);
+                $this->createClaim($accountId, $formModel);
 
                 $this->addToast('Character claimed');
 
@@ -111,4 +111,9 @@ class ManageClaimsController extends LaDanseController
     public function updateClaimAction($accountId, $claimId)
     {
     }
+
+    public function createClaim($accountId, $formModel)
+    {
+        $this->getClaimsService()->createClaim($accountId, $formModel->getCharacter(), false, true, false);    
+    }    
 }
