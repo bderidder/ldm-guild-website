@@ -7,7 +7,11 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\DomainBundle\Entity\Character;
+use LaDanse\DomainBundle\Entity\Character,
+    LaDanse\DomainBundle\Entity\Claim,
+    LaDanse\DomainBundle\Entity\PlaysRole,
+    LaDanse\DomainBundle\Entity\Role,
+    LaDanse\DomainBundle\Entity\Account;
 
 class GuildCharacterService extends LaDanseService
 {
@@ -142,6 +146,60 @@ class GuildCharacterService extends LaDanseService
     public function getActiveClaimsForCharacter($character, \DateTime $onDateTime = NULL)
     {
 
+    }
+
+    public function createClaim($accountId, $characterId, $playsTank, $playsHealer, $playsDPS)
+    {
+        $onDateTime = new \DateTime();
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $characterRepo = $em->getRepository(Character::REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Character */
+        $character = $characterRepo->find($characterId);
+
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $accountRepo = $em->getRepository(Account::REPOSITORY);
+        /* @var $event \LaDanse\DomainBundle\Entity\Character */
+        $account = $accountRepo->find($accountId);
+
+        $claim = new Claim();
+        $claim->setCharacter($character)
+              ->setAccount($account)
+              ->setFromTime($onDateTime);
+
+        if ($playsTank)
+        {
+            $playsRole = new PlaysRole();
+            $playsRole->setRole(Role::TANK)
+                      ->setClaim($claim)
+                      ->setFromTime($onDateTime);
+            $em->persist($playsRole);
+        }
+        
+        if ($playsHealer)
+        {
+            $playsRole = new PlaysRole();
+            $playsRole->setRole(Role::HEALER)
+                      ->setClaim($claim)
+                      ->setFromTime($onDateTime);
+            $em->persist($playsRole);
+        }
+
+        if ($playsDPS)
+        {
+            $playsRole = new PlaysRole();
+            $playsRole->setRole(Role::DPS)
+                      ->setClaim($claim)
+                      ->setFromTime($onDateTime);
+            $em->persist($playsRole);
+        }
+
+        $this->getLogger()->info(__CLASS__ . ' persisting new claim');
+
+        $em->persist($claim);
+        $em->flush();
     }
 
     public function endClaimsForCharacter($character)
