@@ -1,0 +1,10 @@
+{% if claimModel.claims|length == 0 %}
+	<p>You haven't claimed any characters yet.</p>
+{% else %}
+	<p>Below you can find the list of characters you currently have a claim over.</p>
+    <ul>
+    {% for claim in claimModel.claims %}
+    	<li>{{ claim.name }}</li>
+    {% endfor %}
+	</ul>
+{% endif %}

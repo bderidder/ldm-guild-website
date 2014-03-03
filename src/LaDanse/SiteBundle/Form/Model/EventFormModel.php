@@ -178,31 +178,31 @@ class EventFormModel
         $now = new \DateTime();
         $inviteDateTime = $this->createDateTime($this->date, $this->inviteTime);
 
-        $errors = true;
+        $isValid = true;
 
         if ($inviteDateTime->format(EventFormModel::COMPARE_DATE_FORMAT) 
             < $now->format(EventFormModel::COMPARE_DATE_FORMAT))
         {
             $errorModel->addError('The raid cannot be scheduled in the past');
 
-            $errors = false;
+            $isValid = false;
         }
 
         if ($this->inviteTime > $this->startTime)
         {
             $errorModel->addError('Invite time cannot be past start time');
 
-            $errors = false;
+            $isValid = false;
         }
 
         if ($this->startTime > $this->endTime)
         {
             $errorModel->addError('Start time cannot be past end time');
 
-            $errors = false;
+            $isValid = false;
         }
 
-        return $errors;
+        return $isValid;
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)

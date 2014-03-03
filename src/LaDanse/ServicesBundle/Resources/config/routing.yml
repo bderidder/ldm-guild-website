@@ -1,0 +1,3 @@
+la_danse_common_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: LaDanseCommonBundle:Default:index }

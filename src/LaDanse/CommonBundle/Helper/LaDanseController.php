@@ -19,6 +19,14 @@ class LaDanseController extends Controller
 		return $this->get('LaDanse.AuthenticationService');
 	}
 
+	/**
+     * @return \LaDanse\ServicesBundle\Service\ClaimsService
+     */
+	protected function getClaimsService()
+	{
+		return $this->get('LaDanse.GuildCharacterService');
+	}
+
     /**
      * @return \LaDanse\CommonBundle\Helper\ContainerInjector
      */
