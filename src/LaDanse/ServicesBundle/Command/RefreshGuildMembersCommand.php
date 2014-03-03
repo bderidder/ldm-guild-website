@@ -22,7 +22,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ladanse:refreshGuildMember')
+            ->setName('ladanse:refreshGuildMembers')
             ->setDescription('Refresh guild members from the armory')
             ->addOption(self::DIAG_OPTION, null, InputOption::VALUE_NONE, 'Print diagnostic messages')
             // the option "verbose" is by default present on commands

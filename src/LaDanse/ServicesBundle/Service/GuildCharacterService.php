@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
+use LaDanse\DomainBundle\Entity\Character;
+
 class GuildCharacterService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.GuildCharacterService';
@@ -132,12 +134,12 @@ class GuildCharacterService extends LaDanseService
         $this->endClaimsForCharacter($character);
     }
 
-    public function getActiveClaimsForAccount($accountId, \DateTime $onDateTime = NULL)
+    public function getActiveClaimsForAccount($account, \DateTime $onDateTime = NULL)
     {
 
     }
 
-    public function getActiveClaimsForCharacter($characterId, \DateTime $onDateTime = NULL)
+    public function getActiveClaimsForCharacter($character, \DateTime $onDateTime = NULL)
     {
 
     }
