@@ -34,9 +34,9 @@
                         <i class="fa fa-question fa-1x text-muted"></i>
                     {% endif %}
                     {% if event.inThePast %}
-                        {{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
+                        {{ event.inviteTime|date("H:i") }} {{ event.name }} ({{ event.signUps.willComeCount }})
                     {% else %}
-                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a> ({{ event.signUps.willComeCount }}/{{ event.signUps.mightComeCount }})
                     </small></div>
                     {% endif %}
                 {% endfor %}
