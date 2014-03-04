@@ -8,17 +8,14 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Model\EventModel;
 
-/**
- * @Route("/{id}")
-*/
 class ViewEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
-     * @Route("/view", name="viewEventIndex")
+     * @Route("/{id}", name="viewEvent")
      */
-    public function indexAction($id)
+    public function viewAction($id)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 

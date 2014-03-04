@@ -19,16 +19,13 @@ use LaDanse\SiteBundle\Form\Type\EventFormType;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-/**
- * @Route("/create")
-*/
 class CreateEventController extends LaDanseController
 {
     /**
-     * @Route("/{onDate}", name="createEventIndex")
+     * @Route("/create/{onDate}", name="createEvent")
      * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
-    public function indexAction(Request $request, $onDate = NULL)
+    public function createAction(Request $request, $onDate = NULL)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 

@@ -8,17 +8,14 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Model\EventModel;
 
-/**
- * @Route("/{id}")
-*/
 class RemoveEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
     /**
-     * @Route("/delete", name="deleteEventIndex")
+     * @Route("/{id}/remove", name="removeEvent")
      */
-    public function deleteAction($id)
+    public function removeAction($id)
     {
     	$em = $this->getDoctrine()->getManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);

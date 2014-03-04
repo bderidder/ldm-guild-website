@@ -18,12 +18,12 @@ use LaDanse\SiteBundle\Form\Type\NewClaimFormType;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-class ManageClaimsController extends LaDanseController
+class CreateClaimController extends LaDanseController
 {
     /**
-     * @Route("/manage", name="manageClaims")
+     * @Route("/create", name="createClaim")
      */
-    public function manageClaimsAction(Request $request)
+    public function createAction(Request $request)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -53,60 +53,19 @@ class ManageClaimsController extends LaDanseController
 
                 $this->addToast('Character claimed');
 
-                return $this->redirect($this->generateUrl('manageClaims'));
+                return $this->redirect($this->generateUrl('viewClaims'));
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:claims:manageClaims.html.twig',
+                return $this->render('LaDanseSiteBundle:claims:createClaim.html.twig',
                         array('form' => $form->createView(), 'errors' => $errors));
             }
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:claims:manageClaims.html.twig',
+            return $this->render('LaDanseSiteBundle:claims:createClaim.html.twig',
                         array('form' => $form->createView()));
         }   
-    }
-
-    /*
-     * A partial view, not directly viewable
-     */
-    public function viewClaimsPartialAction()
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $accountId = $authContext->getAccount()->getId();
-
-        $claimModel = (object)array(
-            "accountId" => $accountId,
-            "claims"    => $this->getClaimsService()->getClaims($accountId)
-        );
-
-        return $this->render('LaDanseSiteBundle:claims:viewClaimsPartial.html.twig', 
-            array('claimModel' => $claimModel));    
-    }
-
-    /**
-     * @Route("/rest/{accountId}/{claimId}", name="removeClaim")
-     * @Method({"GET"})
-     */
-    public function removeClaimAction($accountId, $claimId)
-    {
-    }
-
-    /**
-     * @Route("/rest/{accountId}/{claimId}", name="updateClaim")
-     * @Method({"POST"})
-     */
-    public function updateClaimAction($accountId, $claimId)
-    {
     }
 
     public function createClaim($accountId, $formModel)

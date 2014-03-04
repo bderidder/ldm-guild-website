@@ -35,9 +35,8 @@ class NewClaimFormType extends AbstractType
 		        ->add('character', 'choice', array(
                     'choices' => $this->getUnclaimedChoices(),
                     'expanded'  => false,
-                    'multiple'  => false));
-
-        $this->getUnclaimedChoices();
+                    'multiple'  => false))
+                ->add('save', 'submit');
 	}
 
     /**

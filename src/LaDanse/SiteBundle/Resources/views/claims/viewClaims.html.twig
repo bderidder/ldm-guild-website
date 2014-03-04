@@ -1,0 +1,31 @@
+{% extends 'LaDanseSiteBundle:layout:layout.html.twig' %}
+
+{% block title %}Characters - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Characters</li>
+    </ol>
+
+    <h1>Characters</h1>
+
+    {% if claimModel.claims|length == 0 %}
+		<p>You haven't claimed any characters yet.</p>
+	{% else %}
+		<p>Below you can find the list of characters you currently have a claim over.</p>
+	    <ul>
+	    {% for claim in claimModel.claims %}
+	    	<li>{{ claim.name }}</li>
+	    {% endfor %}
+		</ul>
+	{% endif %}
+
+    <ul>
+      <li><a href="{{ path('createClaim') }}">Add a character</a></li>
+      <li>Remove a character</li>
+      <li>Change roles</li>
+    </ul>
+
+{% endblock %}

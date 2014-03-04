@@ -27,9 +27,9 @@ class RemoveSignUpController extends LaDanseController
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
     /**
-     * @Route("/remove", name="removeSignUpIndex")
+     * @Route("/remove", name="removeSignUp")
      */
-    public function removeSignUpAction($id)
+    public function removeAction($id)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
