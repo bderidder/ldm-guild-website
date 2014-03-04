@@ -21,9 +21,9 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 class EditClaimController extends LaDanseController
 {
     /**
-     * @Route("/edit/{accountId}/{claimId}", name="editClaim")
+     * @Route("/{claimId}/edit", name="editClaim")
      */
-    public function editAction($accountId, $claimId)
+    public function editAction($claimId)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 

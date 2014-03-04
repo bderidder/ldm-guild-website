@@ -21,9 +21,9 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 class RemoveClaimController extends LaDanseController
 {
     /**
-     * @Route("/{accountId}/{claimId}/remove", name="removeClaim")
+     * @Route("/{claimId}/remove", name="removeClaim")
      */
-    public function removeAction($accountId, $claimId)
+    public function removeAction($claimId)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
