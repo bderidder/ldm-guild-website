@@ -4,12 +4,16 @@ namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="CharacterClaim")
  */
 class Claim
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Claim';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

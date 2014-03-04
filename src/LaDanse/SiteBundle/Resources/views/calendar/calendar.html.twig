@@ -11,8 +11,8 @@
 
     <h1>Raids</h1>
 
-    <p><a href="{{ path('calendarIndex') }}">Click here if you prefer the calendar view</a></p>
+    <!--a href="{{ path('createEventIndex') }}" class="btn btn-primary active" role="button">Create Raid</a -->
 
-    {{ render(controller('LaDanseSiteBundle:EventList:indexPartial')) }}
+    {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial')) }}
 
 {% endblock %}

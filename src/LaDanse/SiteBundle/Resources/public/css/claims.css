@@ -1,0 +1,10 @@
+
+.claimEditRemoveLinks
+{
+	display: none;
+}
+
+.claimRow:hover .claimEditRemoveLinks
+{
+	display: block;
+}

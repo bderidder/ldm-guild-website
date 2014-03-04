@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Account extends BaseUser
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Account';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

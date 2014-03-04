@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,9 +12,6 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Model\EventModel,
     LaDanse\SiteBundle\Model\CalendarDayModel;
 
-/**
- * @Route("/calendar")
-*/
 class CalendarController extends LaDanseController
 {
     const COMPARE_DATE_FORMAT = "Y-m-d";
@@ -87,13 +84,13 @@ class CalendarController extends LaDanseController
 
         if ($authContext->isAuthenticated())
         {
-            return $this->render('LaDanseSiteBundle::calendarPartial.html.twig',
+            return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
                     array('calendarDays' => $calendarDates)
                 );
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::calendarPartialGuest.html.twig',
+            return $this->render('LaDanseSiteBundle:calendar:calendarPartialGuest.html.twig',
                     array('calendarDays' => $calendarDates)
                 );
         }

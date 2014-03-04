@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use \DateTime;
 
@@ -19,16 +19,13 @@ use LaDanse\SiteBundle\Form\Type\EventFormType;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-/**
- * @Route("/events/create")
-*/
 class CreateEventController extends LaDanseController
 {
     /**
-     * @Route("/{onDate}", name="createEventIndex")
+     * @Route("/create/{onDate}", name="createEvent")
      * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
-    public function indexAction(Request $request, $onDate = NULL)
+    public function createAction(Request $request, $onDate = NULL)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -77,13 +74,13 @@ class CreateEventController extends LaDanseController
     		}
     		else
     		{
-    			return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+    			return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
     					array('form' => $form->createView(), 'errors' => $errors));
     		}
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+            return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
                         array('form' => $form->createView()));
         }	
     }

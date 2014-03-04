@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use \DateTime;
 
@@ -19,18 +19,15 @@ use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\EventModel,
     LaDanse\SiteBundle\Model\ErrorModel;
 
-/**
- * @Route("/event/{id}/edit")
-*/
 class EditEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
-     * @Route("/", name="editEventIndex")
-     * @Template("LaDanseSiteBundle::editEvent.html.twig")
+     * @Route("/{id}/edit", name="editEvent")
+     * @Template("LaDanseSiteBundle:events:editEvent.html.twig")
      */
-    public function indexAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -88,7 +85,7 @@ class EditEventController extends LaDanseController
         	}
             else
             {
-                return $this->render('LaDanseSiteBundle::editEvent.html.twig',
+                return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
                         array('event' => new EventModel($this->getContainerInjector(), $event), 
                               'form' => $form->createView(),
                               'errors' => $errors));    
@@ -96,7 +93,7 @@ class EditEventController extends LaDanseController
     	}
     	else
     	{
-        	return $this->render('LaDanseSiteBundle::editEvent.html.twig',
+        	return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
 						array('event' => new EventModel($this->getContainerInjector(), $event), 'form' => $form->createView()));	
     	}
     }

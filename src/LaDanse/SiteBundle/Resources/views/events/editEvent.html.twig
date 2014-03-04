@@ -13,13 +13,13 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('viewEventIndex', {'id': event.id}) }}">Event '{{ event.name }}'</a></li>
+        <li><a href="{{ path('viewEvent', {'id': event.id}) }}">Event '{{ event.name }}'</a></li>
         <li class="active">Edit</li>
     </ol>
 
     <h1>Edit raid</h1>
 
-    {% include 'LaDanseSiteBundle::formErrorsPartial.html.twig' %}
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
     {{ form(form) }}
 

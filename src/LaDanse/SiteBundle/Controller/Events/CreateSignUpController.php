@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,17 +20,17 @@ use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\DomainBundle\Entity\Event;
 
 /**
- * @Route("/event/{id}/signup")
+ * @Route("/{id}/signup")
 */
 class CreateSignUpController extends LaDanseController
 {
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
-     * @Route("/create", name="createSignUpIndex")
-     * @Template("LaDanseSiteBundle::createSignUp.html.twig")
+     * @Route("/create", name="createSignUp")
+     * @Template("LaDanseSiteBundle:events:createSignUp.html.twig")
      */
-    public function indexAction(Request $request, $id)
+    public function createAction(Request $request, $id)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -76,7 +76,7 @@ class CreateSignUpController extends LaDanseController
 
             $this->addToast('Signed up');
 
-            return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
         else
         {
@@ -85,7 +85,7 @@ class CreateSignUpController extends LaDanseController
     }
 
     /**
-     * @Route("/createabsence", name="createAbsenceIndex")
+     * @Route("/createabsence", name="createAbsence")
      */
     public function createAbsenceAction($id)
     {
@@ -131,40 +131,7 @@ class CreateSignUpController extends LaDanseController
 
         $this->addToast('Absence saved');
 
-        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
-    }
-
-    /**
-     * @Route("/remove", name="removeSignUpIndex")
-     */
-    public function removeSignUpAction($id)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
-
-        if (null === $event)
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        } 
-
-        $signUp = $this->getCurrentUserSignUp($event);
-
-        $em->remove($signUp);
-        $em->flush();
-
-        $this->addToast('Sign up removed');
-
-        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
+        return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
     }
 
     private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)

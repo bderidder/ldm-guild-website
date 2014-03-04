@@ -13,7 +13,7 @@ use LaDanse\DomainBundle\Entity\Role;
 
 use LaDanse\ServicesBundle\Service\GuildCharacterService;
 
-class NewClaimFormType extends AbstractType
+class CreateClaimFormType extends AbstractType
 {
     protected $container;
 
@@ -35,9 +35,8 @@ class NewClaimFormType extends AbstractType
 		        ->add('character', 'choice', array(
                     'choices' => $this->getUnclaimedChoices(),
                     'expanded'  => false,
-                    'multiple'  => false));
-
-        $this->getUnclaimedChoices();
+                    'multiple'  => false))
+                ->add('save', 'submit');
 	}
 
     /**

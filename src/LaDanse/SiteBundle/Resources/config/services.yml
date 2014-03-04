@@ -1,9 +1,0 @@
-parameters:
-    UnclaimedCharChoiceType.class: LaDanse\SiteBundle\Form\Type\UnclaimedCharChoiceType
-
-services:
-    LaDanse.UnclaimedCharChoiceType:
-        class: "%UnclaimedCharChoiceType.class%"
-        arguments: ['@service_container']
-        tags:
-            - { name: form.type, alias: unclaimed_char_choice }

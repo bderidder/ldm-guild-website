@@ -1,5 +1,5 @@
 {% if auth.currentContext.authenticated %}
-    <p>Can't find the raid you were looking for? <a href="{{ path('createEventIndex') }}">Why not create a raid yourself!</a></p>
+    <p>Can't find the raid you were looking for? <a href="{{ path('createEvent') }}">Why not create a raid yourself!</a></p>
 {% endif %}
 
 <table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
@@ -34,9 +34,9 @@
                         <i class="fa fa-question fa-1x text-muted"></i>
                     {% endif %}
                     {% if event.inThePast %}
-                        {{ event.inviteTime|date("H:i") }} {{ event.name }}</small></p>
+                        {{ event.inviteTime|date("H:i") }} {{ event.name }} ({{ event.signUps.willComeCount }})
                     {% else %}
-                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEventIndex', {'id': event.id}) }}">{{ event.name }}</a>
+                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEvent', {'id': event.id}) }}">{{ event.name }}</a> ({{ event.signUps.willComeCount }}/{{ event.signUps.mightComeCount }})
                     </small></div>
                     {% endif %}
                 {% endfor %}
@@ -44,7 +44,7 @@
                     <div class="hover-me-container">
                         <div class="hover-me">
                             <small>
-                            <a href="{{ path('createEventIndex', 
+                            <a href="{{ path('createEvent', 
                                              {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a>
                             </small>
                         </div>

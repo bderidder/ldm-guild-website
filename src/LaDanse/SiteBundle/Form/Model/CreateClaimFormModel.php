@@ -8,7 +8,7 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 
 use LaDanse\DomainBundle\Entity\Role;
 
-class NewClaimFormModel
+class CreateClaimFormModel
 {
 	private $character;
     private $roles;

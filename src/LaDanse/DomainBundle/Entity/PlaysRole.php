@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class PlaysRole
 {
+    const REPOSITORY = 'LaDanseDomainBundle:PlaysRole';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Character
 {
+    const REPOSITORY = 'LaDanseDomainBundle:Character';
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
