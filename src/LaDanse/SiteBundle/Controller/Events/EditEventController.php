@@ -25,7 +25,7 @@ class EditEventController extends LaDanseController
 
 	/**
      * @Route("/{id}/edit", name="editEvent")
-     * @Template("LaDanseSiteBundle::editEvent.html.twig")
+     * @Template("LaDanseSiteBundle:events:editEvent.html.twig")
      */
     public function editAction(Request $request, $id)
     {
@@ -85,7 +85,7 @@ class EditEventController extends LaDanseController
         	}
             else
             {
-                return $this->render('LaDanseSiteBundle::editEvent.html.twig',
+                return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
                         array('event' => new EventModel($this->getContainerInjector(), $event), 
                               'form' => $form->createView(),
                               'errors' => $errors));    
@@ -93,7 +93,7 @@ class EditEventController extends LaDanseController
     	}
     	else
     	{
-        	return $this->render('LaDanseSiteBundle::editEvent.html.twig',
+        	return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
 						array('event' => new EventModel($this->getContainerInjector(), $event), 'form' => $form->createView()));	
     	}
     }

@@ -41,7 +41,7 @@ class ViewEventController extends LaDanseController
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::viewEvent.html.twig',
+            return $this->render('LaDanseSiteBundle:events:viewEvent.html.twig',
                 array('event' => new EventModel($this->getContainerInjector(), $event))
             );
         }

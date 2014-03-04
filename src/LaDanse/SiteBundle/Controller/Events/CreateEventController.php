@@ -74,13 +74,13 @@ class CreateEventController extends LaDanseController
     		}
     		else
     		{
-    			return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+    			return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
     					array('form' => $form->createView(), 'errors' => $errors));
     		}
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::createEvent.html.twig',
+            return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
                         array('form' => $form->createView()));
         }	
     }

@@ -28,7 +28,7 @@ class CreateSignUpController extends LaDanseController
 
 	/**
      * @Route("/create", name="createSignUp")
-     * @Template("LaDanseSiteBundle::createSignUp.html.twig")
+     * @Template("LaDanseSiteBundle:events:createSignUp.html.twig")
      */
     public function createAction(Request $request, $id)
     {

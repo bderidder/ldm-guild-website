@@ -16,7 +16,7 @@ class MySettingsController extends LaDanseController
 {
 	/**
      * @Route("/", name="mySettingsIndex")
-     * @Template("LaDanseSiteBundle::mySettings.html.twig")
+     * @Template("LaDanseSiteBundle:settings:mySettings.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -46,7 +46,7 @@ class MySettingsController extends LaDanseController
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::mySettings.html.twig',
+            return $this->render('LaDanseSiteBundle:settings:mySettings.html.twig',
                     array('form' => $form->createView()));
         }   
     }

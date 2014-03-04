@@ -84,13 +84,13 @@ class CalendarController extends LaDanseController
 
         if ($authContext->isAuthenticated())
         {
-            return $this->render('LaDanseSiteBundle::calendarPartial.html.twig',
+            return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
                     array('calendarDays' => $calendarDates)
                 );
         }
         else
         {
-            return $this->render('LaDanseSiteBundle::calendarPartialGuest.html.twig',
+            return $this->render('LaDanseSiteBundle:calendar:calendarPartialGuest.html.twig',
                     array('calendarDays' => $calendarDates)
                 );
         }
