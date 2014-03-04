@@ -56,7 +56,7 @@ class RemoveSignUpController extends LaDanseController
 
         $this->addToast('Sign up removed');
 
-        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
+        return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
     }
 
     private function getCurrentUserSignUp(Event $event)
