@@ -134,39 +134,6 @@ class CreateSignUpController extends LaDanseController
         return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
     }
 
-    /**
-     * @Route("/remove", name="removeSignUpIndex")
-     */
-    public function removeSignUpAction($id)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
-
-        if (null === $event)
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        } 
-
-        $signUp = $this->getCurrentUserSignUp($event);
-
-        $em->remove($signUp);
-        $em->flush();
-
-        $this->addToast('Sign up removed');
-
-        return $this->redirect($this->generateUrl('viewEventIndex', array('id' => $id)));
-    }
-
     private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)
     {
         $em = $this->getDoctrine()->getManager();
