@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Settings;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,9 +12,6 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\SettingsFormModel;
 use LaDanse\SiteBundle\Form\Type\SettingsFormType;
 
-/**
- * @Route("/mysettings")
-*/
 class MySettingsController extends LaDanseController
 {
 	/**

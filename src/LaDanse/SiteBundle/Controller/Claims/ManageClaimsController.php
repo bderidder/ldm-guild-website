@@ -18,9 +18,6 @@ use LaDanse\SiteBundle\Form\Type\NewClaimFormType;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-/**
- * @Route("/claims")
-*/
 class ManageClaimsController extends LaDanseController
 {
     /**

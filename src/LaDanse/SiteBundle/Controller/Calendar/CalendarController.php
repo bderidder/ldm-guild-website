@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,9 +12,6 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Model\EventModel,
     LaDanse\SiteBundle\Model\CalendarDayModel;
 
-/**
- * @Route("/calendar")
-*/
 class CalendarController extends LaDanseController
 {
     const COMPARE_DATE_FORMAT = "Y-m-d";

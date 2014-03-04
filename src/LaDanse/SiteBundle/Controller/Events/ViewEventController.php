@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -9,7 +9,7 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Model\EventModel;
 
 /**
- * @Route("/event/{id}")
+ * @Route("/{id}")
 */
 class ViewEventController extends LaDanseController
 {

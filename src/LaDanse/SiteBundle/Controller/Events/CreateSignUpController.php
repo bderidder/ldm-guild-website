@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +20,7 @@ use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\DomainBundle\Entity\Event;
 
 /**
- * @Route("/event/{id}/signup")
+ * @Route("/{id}/signup")
 */
 class CreateSignUpController extends LaDanseController
 {

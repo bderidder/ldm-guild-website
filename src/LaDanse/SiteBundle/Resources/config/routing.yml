@@ -1,7 +1,24 @@
 LaDanseSiteRouting:
     resource: "@LaDanseSiteBundle/Controller"
     type:     annotation
+    prefix:   /
+
+CalendarRouting:
+    resource: "@LaDanseSiteBundle/Controller/Calendar"
+    type:     annotation
+    prefix:   /calendar
+
+EventsRouting:
+    resource: "@LaDanseSiteBundle/Controller/Events"
+    type:     annotation
+    prefix:   /events
+
+SettingsRouting:
+    resource: "@LaDanseSiteBundle/Controller/Settings"
+    type:     annotation
+    prefix:   /settings
 
 ClaimsRouting:
     resource: "@LaDanseSiteBundle/Controller/Claims"
     type:     annotation
+    prefix:   /claims

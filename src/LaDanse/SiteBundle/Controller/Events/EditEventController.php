@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Events;
 
 use \DateTime;
 
@@ -20,7 +20,7 @@ use LaDanse\SiteBundle\Model\EventModel,
     LaDanse\SiteBundle\Model\ErrorModel;
 
 /**
- * @Route("/event/{id}/edit")
+ * @Route("/{id}/edit")
 */
 class EditEventController extends LaDanseController
 {
