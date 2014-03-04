@@ -13,8 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
-use LaDanse\SiteBundle\Form\Model\NewClaimFormModel;
-use LaDanse\SiteBundle\Form\Type\NewClaimFormType;
+use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
+use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
@@ -36,9 +36,9 @@ class CreateClaimController extends LaDanseController
 
         $accountId = $authContext->getAccount()->getId();
 
-        $formModel = new NewClaimFormModel();
+        $formModel = new CreateClaimFormModel();
 
-        $form = $this->createForm(new NewClaimFormType($this->getContainerInjector()), $formModel, 
+        $form = $this->createForm(new CreateClaimFormType($this->getContainerInjector()), $formModel, 
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

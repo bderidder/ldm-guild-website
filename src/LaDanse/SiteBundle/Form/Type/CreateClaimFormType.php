@@ -13,7 +13,7 @@ use LaDanse\DomainBundle\Entity\Role;
 
 use LaDanse\ServicesBundle\Service\GuildCharacterService;
 
-class NewClaimFormType extends AbstractType
+class CreateClaimFormType extends AbstractType
 {
     protected $container;
 
