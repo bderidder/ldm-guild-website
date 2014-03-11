@@ -1,0 +1,7 @@
+SELECT gc
+FROM LaDanse\DomainBundle\Entity\Character gc
+WHERE
+	(gc.fromTime <= :onDateTime)
+	AND
+	(gc.endTime IS NULL OR gc.endTime >= :onDateTime)
+ORDER BY gc.name ASC

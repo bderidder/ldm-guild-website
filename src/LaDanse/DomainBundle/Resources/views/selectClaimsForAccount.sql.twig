@@ -1,0 +1,24 @@
+SELECT c, ch, r
+FROM LaDanse\DomainBundle\Entity\Claim c
+	JOIN c.character ch
+	JOIN c.roles r
+WHERE
+		c.account = :accountId 
+	AND
+	(
+		(ch.fromTime <= :onDateTime)
+		AND 
+		(ch.endTime >= :onDateTime OR ch.endTime IS NULL)
+	)
+	AND
+	(
+		(c.fromTime <= :onDateTime)
+		AND 
+		(c.endTime >= :onDateTime OR c.endTime IS NULL)
+	)
+	AND
+	(
+		(r.fromTime <= :onDateTime)
+		AND
+		(r.endTime >= :onDateTime OR r.endTime IS NULL)
+	)

@@ -34,10 +34,7 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT c, ch ' .
-            'FROM LaDanse\DomainBundle\Entity\Claim c JOIN c.character ch ' .
-            'WHERE c.account = :accountId ' .
-            'AND (c.fromTime <= :onDateTime AND (c.endTime >= :onDateTime OR c.endTime IS NULL))');
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig'));
         $query->setParameter('accountId', $accountId);
         $query->setParameter('onDateTime', $onDateTime);
         
@@ -72,14 +69,7 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT ' .
-            '    gc ' .
-            'FROM ' .
-            '    LaDanse\DomainBundle\Entity\Character gc ' .
-            'WHERE ' .
-            '    (gc.fromTime <= :onDateTime AND (gc.endTime IS NULL OR gc.endTime >= :onDateTime)) ' .
-            'ORDER BY gc.name ASC'
-        );
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectCharactersForAccount.sql.twig'));
 
         $query->setParameter('onDateTime', $onDateTime);
 
@@ -100,26 +90,7 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT ' .
-            '    gc ' .
-            'FROM ' .
-            '    LaDanse\DomainBundle\Entity\Character gc ' .
-            'WHERE ' .
-            '    (gc.fromTime <= :onDateTime AND (gc.endTime IS NULL OR gc.endTime >= :onDateTime)) ' .
-            '    AND gc NOT IN ' .
-            '    ( ' .
-            '        SELECT' .
-            '            gc2 ' .
-            '        FROM ' .
-            '            LaDanse\DomainBundle\Entity\Claim cc JOIN cc.character gc2 ' .
-            '        WHERE ' .
-            '            (gc2.fromTime <= :onDateTime AND (gc2.endTime IS NULL OR gc2.endTime >= :onDateTime)) ' .
-            '           AND ' .
-            '            (cc.fromTime <= :onDateTime AND (cc.endTime IS NULL OR cc.endTime >= :onDateTime)) '.
-            '    )' .
-            'ORDER BY gc.name ASC'
-        );
-
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectUnclaimedCharacters.sql.twig'));
         $query->setParameter('onDateTime', $onDateTime);
 
         $characters = $query->getResult();
@@ -201,15 +172,7 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            'SELECT ' .
-            '    cc ' .
-            'FROM ' .
-            '    LaDanse\DomainBundle\Entity\Claim cc ' .
-            'WHERE ' .
-            '    cc.endTime IS NULL ' .
-            '    AND ' .
-            '    cc.character = :character'  
-        );
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaimsForCharacter.sql.twig'));
 
         $query->setParameter('character', $character);
 

@@ -1,0 +1,6 @@
+SELECT cc
+FROM LaDanse\DomainBundle\Entity\Claim cc
+WHERE
+	cc.endTime IS NULL
+	AND
+	cc.character = :character
