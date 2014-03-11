@@ -1,0 +1,24 @@
+SELECT gc
+FROM LaDanse\DomainBundle\Entity\Character gc
+WHERE
+	(gc.fromTime <= :onDateTime)
+	AND
+	(gc.endTime IS NULL OR gc.endTime >= :onDateTime)
+	AND gc NOT IN
+		(
+			SELECT gc2
+			FROM LaDanse\DomainBundle\Entity\Claim cc JOIN cc.character gc2
+			WHERE
+				(
+					(gc2.fromTime <= :onDateTime)
+					AND
+					(gc2.endTime IS NULL OR gc2.endTime >= :onDateTime)
+				)
+				AND
+            	(
+            		(cc.fromTime <= :onDateTime)
+            		AND
+            		(cc.endTime IS NULL OR cc.endTime >= :onDateTime)
+            	)
+        )
+ORDER BY gc.name ASC

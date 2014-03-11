@@ -16,6 +16,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
 
+use LaDanse\DomainBundle\Entity\Role;
+
 use LaDanse\SiteBundle\Model\ErrorModel;
 
 class CreateClaimController extends LaDanseController
@@ -70,6 +72,26 @@ class CreateClaimController extends LaDanseController
 
     public function createClaim($accountId, $formModel)
     {
-        $this->getClaimsService()->createClaim($accountId, $formModel->getCharacter(), false, true, false);    
+        $tank   = false;
+        $healer = false;
+        $dps    = false;
+
+        foreach($formModel->getRoles() as $role)
+        {
+            switch($role)
+            {
+                case Role::TANK:
+                    $tank = true;
+                    break;
+                case Role::HEALER:
+                    $healer = true;
+                    break;
+                case Role::DPS:
+                    $dps = true;
+                    break;       
+            }
+        }
+
+        $this->getClaimsService()->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
     }    
 }
