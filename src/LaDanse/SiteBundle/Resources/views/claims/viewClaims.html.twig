@@ -4,6 +4,13 @@
 
 {% block body %}
 
+    <script type="application/javascript">
+        function removeClaim()
+        {
+            return confirm('This will remove your claim, are you sure?');
+        }
+    </script>
+
 	<ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li class="active">Characters</li>
@@ -45,7 +52,7 @@
                     	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">
                             <i class="fa fa-pencil fa-1x"></i>
                         </a>
-                    	<a href="{{ path('removeClaim', {'claimId': claim.id}) }}">
+                    	<a onClick="return removeClaim()" href="{{ path('removeClaim', {'claimId': claim.id}) }}">
                             <i class="fa fa-trash-o fa-1x"></i>
                         </a>
                 	</span>
