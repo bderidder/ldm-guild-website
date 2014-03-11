@@ -143,4 +143,9 @@ class PlaysRole
     {
         return $this->endTime;
     }
+
+    public function isRole($roleStr)
+    {
+        return strcmp($roleStr, $this->role) == 0;
+    }
 }
