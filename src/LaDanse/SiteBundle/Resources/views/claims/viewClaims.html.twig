@@ -10,45 +10,54 @@
     </ol>
 
     <h1>Characters</h1>
+    
+	<p>Below you can find the list of characters you currently have a claim over and what roles you want to perform with them.</p>
 
+	<table class="table table-hover" style="width: auto;">
+    <tr>
+        <th></th>
+        <th class="center-td" style="width: 75px">Tank</th>
+        <th class="center-td" style="width: 75px">Healer</th>
+        <th class="center-td" style="width: 75px">Damage</th>
+        <th style="width: 50px"><!-- edit link --></th>
+    </tr>
     {% if claimModel.claims|length == 0 %}
-		<p>You haven't claimed any characters yet.</p>
-	{% else %}
-		<p>Below you can find the list of characters you currently have a claim over and what roles you could perform with them.</p>
-		<table class="table table-hover" style="width: auto;">
         <tr>
-            <th></th>
-            <th class="center-td" style="width: 75px">Tank</th>
-            <th class="center-td" style="width: 75px">Healer</th>
-            <th class="center-td" style="width: 75px">Damage</th>
-            <th style="width: 110px"><!-- edit link --></th>
+            <td colspan="5">
+                <i>You haven't claimed any characters yet.</i>
+            </td>
         </tr>
-        <tr>
-    		<td colspan="5" class="center-td">
-    			<a href="{{ path('createClaim') }}">Add a character</a>
-    		</td>
-    	</tr>
+    {% else %}
         {% for claim in claimModel.claims %}
             <tr class="claimRow">
                 <td>{{ claim.name }}</td>
                 <td class="center-td">
-                    
+                    {% if claim.playsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    
+                    {% if claim.playsHealer %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    
+                    {% if claim.playsDPS %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
                 <td>
                 	<span class="claimEditRemoveLinks">
-                    	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">Edit</a>
-                    	<a href="{{ path('removeClaim', {'claimId': claim.id}) }}">Remove</a>
+                    	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">
+                            <i class="fa fa-pencil fa-1x"></i>
+                        </a>
+                    	<a href="{{ path('removeClaim', {'claimId': claim.id}) }}">
+                            <i class="fa fa-trash-o fa-1x"></i>
+                        </a>
                 	</span>
                 </td>
             </tr>
         {% endfor %}
-    	</table>
-	{% endif %}
+    {% endif %}
+    <tr>
+        <td colspan="5" class="center-td">
+            <a href="{{ path('createClaim') }}">Add a character</a>
+        </td>
+    </tr>
+	</table>
 
 {% endblock %}
