@@ -8,17 +8,17 @@ WHERE
 	(
 		(ch.fromTime <= :onDateTime)
 		AND 
-		(ch.endTime >= :onDateTime OR ch.endTime IS NULL)
+		(ch.endTime > :onDateTime OR ch.endTime IS NULL)
 	)
 	AND
 	(
 		(c.fromTime <= :onDateTime)
 		AND 
-		(c.endTime >= :onDateTime OR c.endTime IS NULL)
+		(c.endTime > :onDateTime OR c.endTime IS NULL)
 	)
 	AND
 	(
 		(r.fromTime <= :onDateTime)
 		AND
-		(r.endTime >= :onDateTime OR r.endTime IS NULL)
+		(r.endTime > :onDateTime OR r.endTime IS NULL)
 	)
