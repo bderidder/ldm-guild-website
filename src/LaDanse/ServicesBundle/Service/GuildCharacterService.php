@@ -48,9 +48,12 @@ class GuildCharacterService extends LaDanseService
         foreach($claims as $claim)
         {
             $claimsModels[] = (object)array(
-                "id"        => $claim->getId(),
-                "name"      => $claim->getCharacter()->getName(),
-                "fromTime"  => $claim->getFromTime()
+                "id"          => $claim->getId(),
+                "name"        => $claim->getCharacter()->getName(),
+                "fromTime"    => $claim->getFromTime(),
+                "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
+                "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
+                "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
             );
         }
 
@@ -171,29 +174,17 @@ class GuildCharacterService extends LaDanseService
 
         if ($playsTank)
         {
-            $playsRole = new PlaysRole();
-            $playsRole->setRole(Role::TANK)
-                      ->setClaim($claim)
-                      ->setFromTime($onDateTime);
-            $em->persist($playsRole);
+            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
         }
         
         if ($playsHealer)
         {
-            $playsRole = new PlaysRole();
-            $playsRole->setRole(Role::HEALER)
-                      ->setClaim($claim)
-                      ->setFromTime($onDateTime);
-            $em->persist($playsRole);
+            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::HEALER));
         }
 
         if ($playsDPS)
         {
-            $playsRole = new PlaysRole();
-            $playsRole->setRole(Role::DPS)
-                      ->setClaim($claim)
-                      ->setFromTime($onDateTime);
-            $em->persist($playsRole);
+            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
         }
 
         $this->getLogger()->info(__CLASS__ . ' persisting new claim');
@@ -263,5 +254,28 @@ class GuildCharacterService extends LaDanseService
             "name"      => $character->getName(),
             "fromTime"  => $character->getFromTime()
         );
+    }
+
+    protected function createPlaysRole($onDateTime, $claim, $role)
+    {
+        $playsRole = new PlaysRole();
+        $playsRole->setRole($role)
+                  ->setClaim($claim)
+                  ->setFromTime($onDateTime);
+
+        return $playsRole;
+    }
+
+    protected function containsRole($playsRoles, $role)
+    {
+        foreach($playsRoles as $playsRole)
+        {
+            if ($playsRole->isRole($role))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
