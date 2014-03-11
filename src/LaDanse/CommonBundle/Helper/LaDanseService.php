@@ -12,6 +12,18 @@ class LaDanseService extends ContainerAware
 		$this->setContainer($container);
 	}
 
+	public function renderTemplate($templateName)
+	{
+		$twigEnvironment = $this->container->get('twig');
+
+		return $twigEnvironment->render($templateName);
+	}
+
+	public function createSQLFromTemplate($templateName)
+	{
+		return $this->renderTemplate($templateName);
+	}
+
 	protected function getLogger()
 	{
 		return $this->container->get('logger');
