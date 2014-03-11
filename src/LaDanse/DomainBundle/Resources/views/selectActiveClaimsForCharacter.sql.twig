@@ -1,5 +1,6 @@
-SELECT cc
+SELECT cc, r
 FROM LaDanse\DomainBundle\Entity\Claim cc
+	JOIN c.roles r
 WHERE
 	cc.endTime IS NULL
 	AND
