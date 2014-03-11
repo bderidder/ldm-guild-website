@@ -164,6 +164,27 @@ class GuildCharacterService extends LaDanseService
         $em->flush();
     }
 
+    public function endClaim($claimId)
+    {
+        $onDateTime = new \DateTime();
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $repository = $em->getRepository(Claim::REPOSITORY);
+        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
+        $claim = $repository->find($claimId);
+
+        $claim->setEndTime($onDateTime);
+
+        foreach($claim->getRoles() as $playsRole)
+        {
+            $playsRole->setEndTime($onDateTime);
+        }
+
+        $em->flush();
+    }
+
     public function endClaimsForCharacter($character)
     {
         $onDateTime = new \DateTime();
@@ -181,6 +202,11 @@ class GuildCharacterService extends LaDanseService
         foreach($claims as $claim)
         {
             $claim->setEndTime($onDateTime);
+
+            foreach($claim->getRoles() as $playsRole)
+            {
+                $playsRole->setEndTime($onDateTime);
+            }
         }
 
         $em->flush();
