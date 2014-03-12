@@ -101,7 +101,7 @@ class GuildCharacterService extends LaDanseService
     public function endCharacter($characterId)
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository("LaDanseDomainBundle:Character");
+        $repo = $this->getDoctrine()->getRepository(Character::REPOSITORY);
 
         $character = $repo->find($characterId);
 
