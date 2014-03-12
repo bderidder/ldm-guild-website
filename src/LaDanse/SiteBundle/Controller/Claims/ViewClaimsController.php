@@ -38,7 +38,7 @@ class ViewClaimsController extends LaDanseController
 
         $claimModel = (object)array(
             "accountId" => $accountId,
-            "claims"    => $this->getClaimsService()->getClaims($accountId)
+            "claims"    => $this->getGuildCharacterService()->getClaims($accountId)
         );
 
         return $this->render('LaDanseSiteBundle:claims:viewClaims.html.twig', 

@@ -22,7 +22,7 @@ class LaDanseController extends Controller
 	/**
      * @return \LaDanse\ServicesBundle\Service\ClaimsService
      */
-	protected function getClaimsService()
+	protected function getGuildCharacterService()
 	{
 		return $this->get('LaDanse.GuildCharacterService');
 	}

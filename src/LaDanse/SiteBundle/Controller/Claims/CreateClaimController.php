@@ -92,6 +92,6 @@ class CreateClaimController extends LaDanseController
             }
         }
 
-        $this->getClaimsService()->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
+        $this->getGuildCharacterService()->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
     }    
 }
