@@ -16,6 +16,21 @@
             {
                 return confirm('This will remove the event, are you sure?');
             });
+
+            $('.myPopover').popover(
+            {
+                toggle: "popover",
+                container: 'body',
+                trigger: 'hover',
+                html: true,
+                placement: 'bottom',
+                content: function () 
+                {
+                    var $value = $(this).attr('data-accountId');
+
+                    return $('.popper-content').html();
+                }
+            });
          });
     </script>
 
@@ -64,7 +79,7 @@
     {% if (event.signUps.willComeCount != 0) or (event.signUps.mightComeCount != 0) or (event.signUps.absentCount != 0) %}    
     <table class="table table-condensed" style="width: auto;">
         <tr>
-            <th>Name</th>
+            <th>&nbsp;</th>
             <th class="center-td">Tank</th>
             <th class="center-td">Healer</th>
             <th class="center-td">Damage</th>
@@ -78,13 +93,13 @@
             {% endif %}
                 <td>{{ signUp.account.name }}</td>
                 <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td>
                     {% if signUp.currentUser %}
@@ -101,13 +116,13 @@
             {% endif %}
                 <td>{{ signUp.account.name }}</td>
                 <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning"></i>{% endif %}
+                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
                 </td>
                 <td>
                     {% if signUp.currentUser %}
@@ -146,5 +161,10 @@
     {% if event.isOrganiser and auth.currentContext.authenticated %}
         <p>As an organiser you can <a href="{{ path('editEvent', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('removeEvent', {'id': event.id}) }}">delete</a> it.</p> 
     {% endif %}
+
+    <div class="popper-content hide">
+        <p>Letodas (90)</p>
+        <p>Sahibae (90)</p>
+    </div>
     
 {% endblock %}

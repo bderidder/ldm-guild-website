@@ -34,7 +34,7 @@ class RemoveClaimController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-        $this->getClaimsService()->endClaim($claimId);
+        $this->getGuildCharacterService()->endClaim($claimId);
 
         return $this->redirect($this->generateUrl('viewClaims'));
     }

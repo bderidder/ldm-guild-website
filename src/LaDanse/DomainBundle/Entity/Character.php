@@ -35,6 +35,19 @@ class Character
     protected $endTime;
 
     /**
+     * @ORM\OneToMany(targetEntity="CharacterVersion", mappedBy="character", cascade={"persist", "remove"})
+     */
+    protected $versions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -111,5 +124,38 @@ class Character
     public function getEndTime()
     {
         return $this->endTime;
+    }
+
+    /**
+     * Add versions
+     *
+     * @param \LaDanse\DomainBundle\Entity\CharacterVersion $versions
+     * @return Character
+     */
+    public function addVersion(\LaDanse\DomainBundle\Entity\CharacterVersion $versions)
+    {
+        $this->versions[] = $versions;
+
+        return $this;
+    }
+
+    /**
+     * Remove versions
+     *
+     * @param \LaDanse\DomainBundle\Entity\CharacterVersion $versions
+     */
+    public function removeVersion(\LaDanse\DomainBundle\Entity\CharacterVersion $versions)
+    {
+        $this->versions->removeElement($versions);
+    }
+
+    /**
+     * Get versions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVersions()
+    {
+        return $this->versions;
     }
 }

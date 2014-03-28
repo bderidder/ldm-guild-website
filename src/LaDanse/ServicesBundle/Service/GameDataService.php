@@ -7,20 +7,25 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\DomainBundle\Entity\Character,
-    LaDanse\DomainBundle\Entity\Claim,
-    LaDanse\DomainBundle\Entity\PlaysRole,
-    LaDanse\DomainBundle\Entity\Role,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\GameClass,
+    LaDanse\DomainBundle\Entity\GameRace;
 
-class GuildCharacterService extends LaDanseService
+class GameDataService extends LaDanseService
 {
-    const SERVICE_NAME = 'LaDanse.GuildCharacterService';
+    const SERVICE_NAME = 'LaDanse.GameDataService';
 
 	public function __construct(ContainerInterface $container)
 	{
 		parent::__construct($container);
 	}
+
+    public function getAllRaces()
+    {
+    }
+
+    public function getAllClasses()
+    {
+    }
 
 	public function getClaims($accountId, \DateTime $onDateTime = NULL)
     {
@@ -55,36 +60,6 @@ class GuildCharacterService extends LaDanseService
         }
 
         return $claimsModels;
-    }
-
-    public function getClaim($claimId)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig'));
-        $query->setParameter('claimId', $claimId);
-        
-        $claims = $query->getResult();
-
-        if (count($claims) == 0)
-        {
-            return NULL;
-        }
-
-        $claim = $claims[0];
-        
-        $claimsModel = (object)array(
-            "id"          => $claim->getId(),
-            "name"        => $claim->getCharacter()->getName(),
-            "fromTime"    => $claim->getFromTime(),
-            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
-            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
-            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
-        );
-       
-        return $claimsModel;
     }
 
     public function getAllCharacters(\DateTime $onDateTime = NULL)
@@ -131,7 +106,7 @@ class GuildCharacterService extends LaDanseService
     public function endCharacter($characterId)
     {
         $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(Character::REPOSITORY);
+        $repo = $this->getDoctrine()->getRepository("LaDanseDomainBundle:Character");
 
         $character = $repo->find($characterId);
 
@@ -191,37 +166,6 @@ class GuildCharacterService extends LaDanseService
         $this->getLogger()->info(__CLASS__ . ' persisting new claim');
 
         $em->persist($claim);
-        $em->flush();
-    }
-
-    public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
-    {
-        $onDateTime = new \DateTime();
-
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $claimRepo = $em->getRepository(Claim::REPOSITORY);
-        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
-        $claim = $claimRepo->find($claimId);
-
-        foreach($claim->getRoles() as $playsRole)
-        {
-            if ($playsRole->isRole(Role::TANK) && !$playsTank)
-            {
-                $playsRole->setEndTime($onDateTime);
-
-                $this->getLogger()->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
-            }
-
-            if (!$playsRole->isRole(Role::TANK) && $playsTank)
-            {
-                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
-
-                $this->getLogger()->info(__CLASS__ . ' added TANK role to claim ' . $claimId);
-            }
-        }
-
         $em->flush();
     }
 
