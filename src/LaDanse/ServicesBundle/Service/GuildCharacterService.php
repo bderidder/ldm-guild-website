@@ -57,6 +57,36 @@ class GuildCharacterService extends LaDanseService
         return $claimsModels;
     }
 
+    public function getClaim($claimId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig'));
+        $query->setParameter('claimId', $claimId);
+        
+        $claims = $query->getResult();
+
+        if (count($claims) == 0)
+        {
+            return NULL;
+        }
+
+        $claim = $claims[0];
+        
+        $claimsModel = (object)array(
+            "id"          => $claim->getId(),
+            "name"        => $claim->getCharacter()->getName(),
+            "fromTime"    => $claim->getFromTime(),
+            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
+            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
+            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
+        );
+       
+        return $claimsModel;
+    }
+
     public function getAllCharacters(\DateTime $onDateTime = NULL)
     {
         if ($onDateTime == NULL)
@@ -161,6 +191,37 @@ class GuildCharacterService extends LaDanseService
         $this->getLogger()->info(__CLASS__ . ' persisting new claim');
 
         $em->persist($claim);
+        $em->flush();
+    }
+
+    public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
+    {
+        $onDateTime = new \DateTime();
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $claimRepo = $em->getRepository(Claim::REPOSITORY);
+        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
+        $claim = $claimRepo->find($claimId);
+
+        foreach($claim->getRoles() as $playsRole)
+        {
+            if ($playsRole->isRole(Role::TANK) && !$playsTank)
+            {
+                $playsRole->setEndTime($onDateTime);
+
+                $this->getLogger()->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
+            }
+
+            if (!$playsRole->isRole(Role::TANK) && $playsTank)
+            {
+                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
+
+                $this->getLogger()->info(__CLASS__ . ' added TANK role to claim ' . $claimId);
+            }
+        }
+
         $em->flush();
     }
 
