@@ -1,0 +1,19 @@
+{% extends 'LaDanseSiteBundle:layout:layout.html.twig' %}
+
+{% block title %}Characters - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li><a href="{{ path('viewClaims') }}">Characters</a></li>
+        <li class="active">Edit Character</li>
+    </ol>
+
+    <h1>Update character '{{ claim.name }}'</h1>
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+    {{ form(form) }}
+
+{% endblock %}
