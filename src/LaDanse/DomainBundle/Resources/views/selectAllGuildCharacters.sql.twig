@@ -1,0 +1,11 @@
+SELECT gc, cv
+FROM LaDanse\DomainBundle\Entity\Character gc
+	JOIN gc.versions cv
+WHERE
+	(gc.fromTime <= :onDateTime)
+	AND 
+	(gc.endTime >= :onDateTime OR gc.endTime IS NULL)
+	AND
+	(cv.fromTime <= :onDateTime)
+	AND 
+	(cv.endTime >= :onDateTime OR cv.endTime IS NULL)

@@ -8,7 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacterService,
+    LaDanse\ServicesBundle\Service\GameDataService;
 
 use LaDanse\DomainBundle\Entity\Character;
 
@@ -44,7 +45,10 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         foreach($armoryGuild->members as $entry)
         {
             $armoryNames[] = (object) array(
-                "name"  => $entry->character->name
+                "name"  => $entry->character->name,
+                "class" => $entry->character->class,
+                "race"  => $entry->character->race,
+                "level" => $entry->character->level
             );
         }        
 
@@ -58,31 +62,15 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $this->debug($input, $output, "Fetching guild members from the database");
 
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            'SELECT c ' .
-            'FROM LaDanse\DomainBundle\Entity\Character c ' .
-            'WHERE c.fromTime <= :onDateTime AND (c.endTime >= :onDateTime OR c.endTime IS NULL)');
+        $characterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
         
-        $query->setParameter('onDateTime', new \DateTime());
+        $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
+        $gameRaces = $gameDataService->getAllRaces();
+        $gameClasses = $gameDataService->getAllClasses();
         
-        $dbCharacters = $query->getResult();
+        $dbNames = $characterService->getAllGuildCharacters();
 
-        $dbNames = array();
-
-        // we have to create our own array so we can sort it using
-        // exactly the same sorting algoritm as we used to sort
-        // the Armory data.
-        // Note that MySQL and PHP sort a unicode array differently!
-        foreach($dbCharacters as $dbCharacter)
-        {
-            $dbNames[] = (object) array(
-                "id"    => $dbCharacter->getId(),
-                "name"  => $dbCharacter->getName()
-            );
-        }
+        $this->debug($input, $output, "Number of members in database " . count($dbNames));
 
         usort($dbNames, function($a, $b)
             {
@@ -108,6 +96,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 // if character is the same as the next character from armory, do nothing
                 $this->debug($input, $output, "Character already in our database " . $dbName);
                 
+                $this->updateCharacter();
+
                 $armoryIndex++; 
                 $dbIndex++;                   
             }
@@ -127,7 +117,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 // the armory has new characters, import them
                 $this->info($input, $output, "Character is not yet in database, importing " . $armoryName);
 
-                $this->importCharacter($armoryName);
+                $this->importCharacter(
+                    $armoryNames[$armoryIndex],
+                    $this->getGameRace($gameRaces, $armoryNames[$armoryIndex]->race),
+                    $this->getGameClass($gameClasses, $armoryNames[$armoryIndex]->class)
+                );
 
                 $armoryIndex++; 
             }
@@ -156,7 +150,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             // the amory has new characters, import it
             $this->info($input, $output, "Character is not yet in database, importing " . $armoryName);
 
-            $this->importCharacter($armoryName);
+            $this->importCharacter(
+                $armoryNames[$armoryIndex],
+                $this->getGameRace($gameRaces, $armoryNames[$armoryIndex]->race),
+                $this->getGameClass($gameClasses, $armoryNames[$armoryIndex]->class)
+            );
 
             $armoryIndex++;
         }
@@ -169,11 +167,45 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         $guildCharacterService->endCharacter($characterId);
     }
 
-    protected function importCharacter($name)
+    protected function updateCharacter()
+    {
+
+    }
+
+    protected function importCharacter($armoryCharacter, $gameRace, $gameClass)
     {
         $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
 
-        $guildCharacterService->importCharacter($name);
+        $guildCharacterService->importCharacter(
+            $armoryCharacter->name, 
+            $armoryCharacter->level, 
+            $gameRace, $gameClass);
+    }
+
+    protected function getGameRace($gameRaces, $gameRaceId)
+    {
+        foreach($gameRaces as $gameRace)
+        {
+            if ($gameRace->getId() == $gameRaceId)
+            {
+                return $gameRace;
+            }
+        }
+
+        return NULL;
+    }
+
+    protected function getGameClass($gameClasses, $gameClassId)
+    {
+        foreach($gameClasses as $gameClass)
+        {
+            if ($gameClass->getId() == $gameClassId)
+            {
+                return $gameClass;
+            }
+        }
+
+        return NULL;
     }
 
     protected function debug(InputInterface $input, OutputInterface $output, $text)

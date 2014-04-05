@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
 use LaDanse\DomainBundle\Entity\Character,
+    LaDanse\DomainBundle\Entity\CharacterVersion,
     LaDanse\DomainBundle\Entity\Claim,
     LaDanse\DomainBundle\Entity\PlaysRole,
     LaDanse\DomainBundle\Entity\Role,
@@ -21,6 +22,37 @@ class GuildCharacterService extends LaDanseService
 	{
 		parent::__construct($container);
 	}
+
+    public function getAllGuildCharacters(\DateTime $onDateTime = NULL)
+    {
+        if ($onDateTime == NULL)
+        {
+            // when not set, initialize to right now
+            $onDateTime = new \DateTime();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectAllGuildCharacters.sql.twig'));
+        $query->setParameter('onDateTime', $onDateTime);
+        
+        $characters = $query->getResult();
+
+        $charModels = array();
+
+        foreach($characters as $character)
+        {
+            $charModels[] = (object)array(
+                "id"    => $character->getId(),
+                "name"  => $character->getName(),
+                "level" => $character->getVersions()[0]->getLevel()
+            );
+        }
+
+        return $charModels;
+    }
 
 	public function getClaims($accountId, \DateTime $onDateTime = NULL)
     {
@@ -220,6 +252,34 @@ class GuildCharacterService extends LaDanseService
 
                 $this->getLogger()->info(__CLASS__ . ' added TANK role to claim ' . $claimId);
             }
+
+            if ($playsRole->isRole(Role::HEALER) && !$playsHealer)
+            {
+                $playsRole->setEndTime($onDateTime);
+
+                $this->getLogger()->info(__CLASS__ . ' removed HEALER role from claim ' . $claimId);
+            }
+
+            if (!$playsRole->isRole(Role::HEALER) && $playsHealer)
+            {
+                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::HEALER));
+
+                $this->getLogger()->info(__CLASS__ . ' added HEALER role to claim ' . $claimId);
+            }
+
+            if ($playsRole->isRole(Role::DPS) && !$playsDPS)
+            {
+                $playsRole->setEndTime($onDateTime);
+
+                $this->getLogger()->info(__CLASS__ . ' removed DPS role from claim ' . $claimId);
+            }
+
+            if (!$playsRole->isRole(Role::DPS) && $playsDPS)
+            {
+                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
+
+                $this->getLogger()->info(__CLASS__ . ' added DPS role to claim ' . $claimId);
+            }
         }
 
         $em->flush();
@@ -273,15 +333,25 @@ class GuildCharacterService extends LaDanseService
         $em->flush();
     }
 
-    public function importCharacter($name)
+    public function importCharacter($name, $level, $gameRace, $gameClass)
     {
+        $importInstant = new \DateTime();
+
         $em = $this->getDoctrine()->getManager();
 
         $character = new Character();
         $character->setName($name);
-        $character->setFromTime(new \DateTime());
+        $character->setFromTime($importInstant);
+
+        $version = new CharacterVersion();
+        $version->setCharacter($character);
+        $version->setLevel($level);
+        $version->setFromTime($importInstant);
+        $version->setGameClass($gameClass);
+        $version->setGameRace($gameRace);
 
         $em->persist($character);
+        $em->persist($version);
         $em->flush();
     }
 
