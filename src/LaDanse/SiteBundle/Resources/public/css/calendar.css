@@ -20,13 +20,13 @@
 .today-calendar-cell
 {
 	/*background-color: #162f30;*/
-	background-color: rgb(200, 200, 200);
+	background-color: rgba(200, 200, 200, .2);
 }
 	
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
 {
 	/*background-color: #162f30;*/
-	background-color: rgb(200, 200, 200);
+	background-color: rgba(200, 200, 200, .2);
 }
 
 .hover-me-container
