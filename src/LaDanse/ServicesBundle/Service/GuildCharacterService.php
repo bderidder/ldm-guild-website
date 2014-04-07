@@ -44,10 +44,12 @@ class GuildCharacterService extends LaDanseService
 
         foreach($characters as $character)
         {
+            $versions = $character->getVersions();
+
             $charModels[] = (object)array(
                 "id"    => $character->getId(),
                 "name"  => $character->getName(),
-                "level" => $character->getVersions()[0]->getLevel()
+                "level" => $versions[0]->getLevel()
             );
         }
 
