@@ -134,15 +134,7 @@
         </div> <!-- container -->
     </div> <!-- nav-container -->
 
-    {# content is placed in a classical 960 grid #}
-	<div id="body-container"
-         class="container bg-color-container centered-grid-container">
-        <div class="row">
-            <div class="col-md-12">
-                {% block body %}{% endblock %}
-            </div> <!-- col -->
-        </div> <!-- row -->
-	</div> <!-- container -->
+    {% block content %}{% endblock %}
 
     {# all Javascript is moved to the rear of the document to speed up rendering #}
 

@@ -1,15 +1,9 @@
-{% extends 'LaDanseSiteBundle:layout:layout.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:bare.html.twig' %}
 
-{% block title %}La Danse - Index{% endblock %}
+{% block title %}La Danse Macabre{% endblock %}
 
 {% block body %}
 
-	<ol class="breadcrumb">
-        <li class="active">Home</li>
-    </ol>
-
-    <h1>Raids</h1>
-
-    {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial')) }}
+<p>Test</p>
 
 {% endblock %}

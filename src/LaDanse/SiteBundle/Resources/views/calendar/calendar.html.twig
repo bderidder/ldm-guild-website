@@ -1,4 +1,4 @@
-{% extends 'LaDanseSiteBundle:layout:layout.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
 
 {% block title %}La Danse - Calendar{% endblock %}
 
@@ -10,8 +10,6 @@
     </ol>
 
     <h1>Raids</h1>
-
-    <!--a href="{{ path('createEventIndex') }}" class="btn btn-primary active" role="button">Create Raid</a -->
 
     {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial')) }}
 
