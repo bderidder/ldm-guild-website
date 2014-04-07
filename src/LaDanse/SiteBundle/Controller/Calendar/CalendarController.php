@@ -18,7 +18,7 @@ class CalendarController extends LaDanseController
 
     /**
      * @Route("/", name="calendarIndex")
-     * @Template("LaDanseSiteBundle::calendar.html.twig")
+     * @Template("LaDanseSiteBundle:calendar:calendar.html.twig")
      */
     public function indexAction(Request $request)
     {
