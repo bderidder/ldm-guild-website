@@ -2,6 +2,38 @@
 
 {% block content %}
 
+    <div class="nav-container">
+        <div class="container centered-grid-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>La Danse Macabre</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="outer-container">
+                        <div class="inner-container">
+                            {% if auth.currentContext.authenticated %}
+                                <div class="btn-group" style="text-align: left">
+                                    <span data-toggle="dropdown" style="cursor: pointer;">
+                                        <i class="fa fa-user"></i> Logged in with {{ auth.currentContext.account.username }} 
+                                        <span class="caret"></span>
+                                    </span>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('viewClaims') }}">Characters</a></li>
+                                        <li><a href="{{ path('fos_user_profile_show') }}">View profile</a></li>
+                                        <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+                                    </ul>
+                                </div> <!-- btn-group -->
+                                | <i class="fa fa-envelope"></i> <a href="{{ path('createFeedbackIndex') }}">feedback</a>
+                            {% else %}
+                                <p>Not logged in | <a href="{{ path('fos_user_security_login') }}">log in</a></p>
+                            {% endif %}
+                        </div> <!-- inner-container -->
+                    </div> <!-- outer-container -->
+                </div> <!-- col -->
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div> <!-- nav-container -->
+
     {# content is placed in a classical 960 grid #}
     <div class="container rounded-corners body-container bg-color-container centered-grid-container">
         <div class="row">

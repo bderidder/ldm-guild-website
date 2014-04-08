@@ -2,7 +2,16 @@
 
 {% block content %}
 
-	<div class="body-container centered-grid-container">
+	<style>
+		.bare-container
+        {
+            min-height: 100%;
+            height: auto !important; /*min-height hack*/
+            height: 100%;
+        }
+	</style>
+
+	<div class="bare-container centered-grid-container">
 		{% block body %}{% endblock %}       
 	</div> <!-- container -->
 
