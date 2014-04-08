@@ -8,12 +8,13 @@
 
 		a div.tile:hover
 		{
-			background-color: rgba(75, 75, 75, .9);
-			border: solid 2px gray;
+			background-color: rgba(75, 75, 75, .95);
+			outline: #999999 solid 3px;
 		}
 
 		.tile
 		{
+            height: 100%;
 			background-color: rgba(75, 75, 75, .8);
 			
 			position: relative;
@@ -43,8 +44,10 @@
 		.tile-content
 		{
 			width: 100%;
-			height: 100%;
 			padding: 10px;
+            margin-top: auto;
+            margin-bottom: auto;
+            vertical-align: middle;
 		}
 
         .tile.high
@@ -58,43 +61,100 @@
             background-color: rgba(0, 0, 0, 0);
             border: none;
         }
+
+        .center-block
+        {
+            margin: auto;
+            text-align: center;
+        }
+
+        .tile-content .image
+        {
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .tile-content .label
+        {
+            position: absolute;
+            left: 0px;
+            bottom: 5px;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .tile p
+        {
+            font-weight: 300;
+        }
+
+        .jumbo
+        {
+            padding: 30px;
+            padding-left: 0px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+          color: inherit;
+        }
+
+        .jumbo h1,
+  .jumbo .h1 {
+    font-size: 63px;
+  }
+
+        .jumbo p {
+  margin-bottom: 15px;
+  font-size: 21px;
+  font-weight: 100;
+}
+
 	</style>
     
-    <div class="jumbotron" >
-      <div class="container-fluid">
+    <div class="jumbo">
+      <div style="width: 100%;">
         <h1>La Danse Macabre</h1>
-        <p>Welcome to the website of La Danse Macabre, a guild on World of Warcraft (Defias Brotherhood), Star
-            Wars the Old Repulic (The Progenitor) and WildStar (Nexus).</p>
+        <p>Welcome to the website of La Danse Macabre, a gaming guild of fun people of all ages and interests. Join us in World of Warcraft, Star Wars The Old Republic or Wildstar.</p>
       </div> <!-- container -->
     </div> <!-- jumbotron -->
 
-	<div class="container-fluid">
+	<div class="container-fluid" style="padding: 0px;">
 		<div class="row">
             
             <a href="{{ path('calendarIndex') }}">
             	<div class="tile double">
             		<div class="tile-content">
-                		<i class="fa fa-calendar fa-2x"></i>
+                		<div style="padding: 15px;">
+                            <p style="font-size: 1.3em;">Friday 11/04 - 19:15</p>
+                            <p>Siege of Orgrimmar</p>
+                        </div>
+                        <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
                 	</div>
                 </div>
             </a>
 
         	<div class="tile default">
-        		<div class="tile-content">
-            		<i class="fa fa-picture-o fa-3x"></i>
-            	</div>
+                <div class="tile-content">
+                        <div class="image">
+                          <i class="fa fa-picture-o fa-5x"></i>  
+                        </div>
+                        <div class="label"><span>Pictures</span></div>
+                    </div>
             </div>
 
             <div class="tile default">
         		<div class="tile-content">
-            		<i class="fa fa-headphones fa-3x"></i>
+            		
+                    <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
             	</div>
             </div>
 
             <a href="{{ path('fos_user_profile_show') }}">
                 <div class="tile default">
             		<div class="tile-content">
-                		<i class="fa fa-user fa-3x"></i>
+                        <div class="image">
+                		  <i class="fa fa-user fa-5x"></i>  
+                        </div>
+                        <div class="label"><span>My Account</span></div>
                 	</div>
                 </div>
             </a>
@@ -106,21 +166,28 @@
             <a href="{{ path('viewClaims') }}">
             	<div class="tile default">
             		<div class="tile-content">
-                		<i class="fa fa-users fa-3x"></i>
-                	</div>
+                        <div class="image">
+                          <i class="fa fa-users fa-5x"></i>  
+                        </div>
+                        <div class="label"><span>My Characters</span></div>
+                    </div>
                 </div>    
             </a>  
 
             <div class="tile double">
         		<div class="tile-content">
-            		<i class="fa fa-comment fa-3x"></i>
+            		
+                    <div class="label"><i class="fa fa-comment fa-2x"></i></div>
             	</div>
             </div>   
 
             <div class="tile default">
-        		<div class="tile-content">
-            		<i class="fa fa-info-circle fa-3x"></i>
-            	</div>
+                <div class="tile-content">
+                        <div class="image">
+                          <i class="fa fa-info-circle fa-5x"></i>  
+                        </div>
+                        <div class="label"><span>Help</span></div>
+                    </div>
             </div>
             
         </div> <!-- row -->
