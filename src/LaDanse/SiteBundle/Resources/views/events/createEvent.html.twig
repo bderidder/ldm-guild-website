@@ -2,17 +2,26 @@
 
 {% block title %}Create raid - La Danse Macabre{% endblock %}
 
-{% block body %}
 
-	<script type="application/javascript">
-    	$( document ).ready(function()
-    	{
-    		$('.date').datepicker({ dateFormat: 'D dd-mm-yy', firstDay: 1 })
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <script type="application/javascript">
+        $( document ).ready(function()
+        {
+            $('.date').datepicker({ dateFormat: 'D dd-mm-yy', firstDay: 1 })
         });
-	</script>
+    </script>
+
+{% endblock %}
+
+{% block body %}
 
     <ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
         <li class="active">Create Event</li>
     </ol>
 

@@ -1,5 +1,12 @@
 {% extends 'LaDanseSiteBundle:layout:layout.html.twig' %}
 
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+{% endblock %}
+
 {% block content %}
 
     <div class="nav-container">

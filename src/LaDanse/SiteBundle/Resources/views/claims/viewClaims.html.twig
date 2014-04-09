@@ -2,7 +2,10 @@
 
 {% block title %}Characters - La Danse Macabre{% endblock %}
 
-{% block body %}
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
 
     <script type="application/javascript">
         function removeClaim()
@@ -10,6 +13,10 @@
             return confirm('This will remove your claim, are you sure?');
         }
     </script>
+
+{% endblock %}
+
+{% block body %}
 
 	<ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
