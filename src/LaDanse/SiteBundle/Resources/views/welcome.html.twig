@@ -44,11 +44,21 @@
 		.tile-content
 		{
 			width: 100%;
+            height: 100%;
 			padding: 10px;
             margin-top: auto;
             margin-bottom: auto;
             vertical-align: middle;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
 		}
+
+        .tile .tile-content:nth-of-type(1)
+        {
+            display: block; 
+        }
 
         .tile.high
         {
@@ -74,11 +84,20 @@
             text-align: center;
         }
 
-        .tile-content .label
+        .tile .label
         {
             position: absolute;
             left: 0px;
             bottom: 5px;
+            font-size: 1em;
+            font-weight: 300;
+        }
+
+        .tile .tile-content.label
+        {
+            position: absolute;
+            left: 0px;
+            bottom: -5px;
             font-size: 1em;
             font-weight: 300;
         }
@@ -123,31 +142,25 @@
 		<div class="row">
             
             <a href="{{ path('calendarIndex') }}">
-            	<div class="tile double">
-            		<div class="tile-content">
-                		<div style="padding: 15px;">
-                            <p style="font-size: 1.3em;">Friday 11/04 - 19:15</p>
-                            <p>Siege of Orgrimmar</p>
-                        </div>
-                        <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
-                	</div>
+            	<div id="tile" class="tile double">
+            		{{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
+                    <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
                 </div>
             </a>
 
         	<div class="tile default">
                 <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-picture-o fa-5x"></i>  
-                        </div>
-                        <div class="label"><span>Pictures</span></div>
+                    <div class="image">
+                      <i class="fa fa-picture-o fa-5x"></i>  
                     </div>
+                </div>
+                <div class="label"><span>Pictures</span></div>
             </div>
 
             <div class="tile default">
-        		<div class="tile-content">
-            		
-                    <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
+        		<div class="tile-content">  
             	</div>
+                <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
             </div>
 
             <a href="{{ path('fos_user_profile_show') }}">
@@ -156,8 +169,8 @@
                         <div class="image">
                 		  <i class="fa fa-user fa-5x"></i>  
                         </div>
-                        <div class="label"><span>My Account</span></div>
                 	</div>
+                    <div class="label"><span>My Account</span></div>
                 </div>
             </a>
             
@@ -171,25 +184,24 @@
                         <div class="image">
                           <i class="fa fa-users fa-5x"></i>  
                         </div>
-                        <div class="label"><span>My Characters</span></div>
                     </div>
+                    <div class="label"><span>My Characters</span></div>
                 </div>    
             </a>  
 
             <div class="tile double">
-        		<div class="tile-content">
-            		
-                    <div class="label"><i class="fa fa-comment fa-2x"></i></div>
+        		<div class="tile-content">     
             	</div>
+                <div class="label"><i class="fa fa-comment fa-2x"></i></div>
             </div>   
 
             <div class="tile default">
                 <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-info-circle fa-5x"></i>  
-                        </div>
-                        <div class="label"><span>Help</span></div>
-                    </div>
+                    <div class="image">
+                      <i class="fa fa-info-circle fa-5x"></i>  
+                    </div>       
+                </div>
+                <div class="label"><span>Help</span></div>
             </div>
             
         </div> <!-- row -->
