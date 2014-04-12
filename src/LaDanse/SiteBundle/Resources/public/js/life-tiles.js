@@ -6,7 +6,7 @@ $( document ).ready(function()
     var contentDelay = 5000;
     var slideSpeed = 700;
 
-    if (contentDivs.length < 1)
+    if (contentDivs.length <= 1)
         return;
 
     var currentVisible = 0;
