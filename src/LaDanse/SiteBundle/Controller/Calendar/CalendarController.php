@@ -36,7 +36,10 @@ class CalendarController extends LaDanseController
 
         $calendarDates = array();
 
-        $events = $this->getEvents();
+        $startTime = new \DateTime('now');
+        $startTime = $startTime->sub(new \DateInterval("P10D"));
+        $events = $this->getEvents($startTime);
+
         $eventIndex = 0;
 
         $currentDate = clone $startDate;
@@ -96,12 +99,20 @@ class CalendarController extends LaDanseController
         }
     }
 
-    protected function getEvents()
+    public function tilePartialAction()
+    {
+        $startTime = new \DateTime('now');
+        $events = $this->getEvents($startTime);
+
+
+        return $this->render('LaDanseSiteBundle::calendarTilePartial.html.twig',
+                    array('events' => $events)
+                );
+    }
+
+    protected function getEvents($startTime)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $startTime = new \DateTime('now');
-        $startTime = $startTime->sub(new \DateInterval("P10D"));
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :start ORDER BY e.inviteTime ASC');
