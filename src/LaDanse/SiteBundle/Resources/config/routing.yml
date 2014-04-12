@@ -22,3 +22,8 @@ ClaimsRouting:
     resource: "@LaDanseSiteBundle/Controller/Claims"
     type:     annotation
     prefix:   /claims
+
+TeamSpeakRouting:
+    resource: "@LaDanseSiteBundle/Controller/TeamSpeak"
+    type:     annotation
+    prefix:   /teamspeak
