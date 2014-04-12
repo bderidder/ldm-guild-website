@@ -1,11 +1,25 @@
 $( document ).ready(function()
 {
-    var tile = $("#tile");
-    var contentDivs = tile.find(".tile-content");
+    var tiles = $(".tile");
 
-    var contentDelay = 5000;
-    var slideSpeed = 700;
+    for (var i = 0; i < tiles.length; i++)
+    {
+        animateTile($(tiles[i]));
+    }
+});
 
+function animateTile(tile)
+{
+    tile.find(".tile-content").wrap("<div class='tile-content-wrapper'></div>");
+    var contentDivs = tile.find(".tile-content-wrapper");
+
+    var animationParams =
+    {
+        delay:     fetchDataValue(tile, "delay", 5000),
+        speed:     fetchDataValue(tile, "speed", 700),
+        direction: fetchDataValue(tile, "direction", "horizontal"),
+    };
+    
     if (contentDivs.length <= 1)
         return;
 
@@ -13,11 +27,11 @@ $( document ).ready(function()
 
     setTimeout(function()
         {
-            slideInSlideOut(contentDivs, currentVisible, contentDelay, slideSpeed)
-        }, contentDelay);
-});
+            slideInSlideOut(contentDivs, currentVisible, animationParams)
+        }, animationParams.delay);
+}
 
-function slideInSlideOut(divArray, currentVisible, contentDelay, slideSpeed)
+function slideInSlideOut(divArray, currentVisible, animationParams)
 {
     var nextVisible = currentVisible + 1;
 
@@ -27,11 +41,39 @@ function slideInSlideOut(divArray, currentVisible, contentDelay, slideSpeed)
     var currentDiv = divArray[currentVisible];
     var nextDiv = divArray[nextVisible];
 
-    $(currentDiv).hide('slide', { direction: 'left' }, slideSpeed);
-    $(nextDiv).show('slide', { direction: 'right' }, slideSpeed);
+    switch(animationParams.direction)
+    {
+        case "horizontal":
+            hideDirection = "left";
+            showDirection = "right";
+            break;
+        case "vertical":
+            hideDirection = "up";
+            showDirection = "down";
+            break;    
+        default:
+            hideDirection = "left";
+            showDirection = "right";
+            break;
+    }
+
+    $(currentDiv).hide('slide', { direction: hideDirection }, animationParams.speed);
+    $(nextDiv).show('slide', { direction: showDirection }, animationParams.speed);
 
     setTimeout(function()
         {
-            slideInSlideOut(divArray, nextVisible, contentDelay, slideSpeed)
-        }, contentDelay);
+            slideInSlideOut(divArray, nextVisible, animationParams)
+        }, animationParams.delay);
+}
+
+function fetchDataValue(element, name, defaultValue)
+{
+    value = element.data(name);
+
+    if ((typeof value == "undefined") || (value == null))
+    {
+        value = defaultValue;
+    }
+
+    return value;
 }
