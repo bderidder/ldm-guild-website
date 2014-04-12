@@ -15,12 +15,14 @@
             <div style="padding: 15px;">
                 <p style="font-size: 1.3em;">{{ event.inviteTime|date('D, M d - H:i') }}</p>
                 <p>
-                    {% if event.signUps.currentUserComes %}
-                        <i class="fa fa-check fa-1x text-success"></i>
-                    {% elseif event.signUps.currentUserAbsent %}
-                        <i class="fa fa-ban fa-1x text-danger"></i>
-                    {% else %}
-                        <i class="fa fa-question fa-1x text-muted"></i>
+                    {% if auth.currentContext.authenticated %}
+                        {% if event.signUps.currentUserComes %}
+                            <i class="fa fa-check fa-1x text-success"></i>
+                        {% elseif event.signUps.currentUserAbsent %}
+                            <i class="fa fa-ban fa-1x text-danger"></i>
+                        {% else %}
+                            <i class="fa fa-question fa-1x text-muted"></i>
+                        {% endif %}
                     {% endif %}
                     {{ event.name }}
                 </p>
