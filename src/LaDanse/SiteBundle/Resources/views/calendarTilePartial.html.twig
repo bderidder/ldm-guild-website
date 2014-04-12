@@ -1,0 +1,30 @@
+{% if events|length == 0 %}
+    <div class="tile-content">
+        <div style="padding: 15px;">
+            <p style="font-size: 1.3em;">There are no raids scheduled!</p>
+        </div>                        
+    </div>
+    <div class="tile-content">
+        <div style="padding: 15px;">
+            <p style="font-size: 1.3em;">Why not schedule one?</p>
+        </div>                        
+    </div>
+{% else %}
+    {% for event in events %}
+        <div class="tile-content">
+            <div style="padding: 15px;">
+                <p style="font-size: 1.3em;">{{ event.inviteTime|date('D, M d - H:i') }}</p>
+                <p>
+                    {% if event.signUps.currentUserComes %}
+                        <i class="fa fa-check fa-1x text-success"></i>
+                    {% elseif event.signUps.currentUserAbsent %}
+                        <i class="fa fa-ban fa-1x text-danger"></i>
+                    {% else %}
+                        <i class="fa fa-question fa-1x text-muted"></i>
+                    {% endif %}
+                    {{ event.name }}
+                </p>
+            </div>                        
+        </div>
+    {% endfor %}
+{% endif %}      
