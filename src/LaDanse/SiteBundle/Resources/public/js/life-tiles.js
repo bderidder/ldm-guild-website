@@ -11,6 +11,10 @@ $( document ).ready(function()
 function animateTile(tile)
 {
     tile.find(".tile-content").wrap("<div class='tile-content-wrapper'></div>");
+
+    tile.find(".tile-content").show();
+    tile.find(".tile-content-wrapper").eq(0).show();
+
     var contentDivs = tile.find(".tile-content-wrapper");
 
     var animationParams =
