@@ -60,8 +60,6 @@ class EventFormModel
     /**
      * Get description
      *
-     * @Assert\NotBlank()
-     *
      * @return string 
      */
     public function getDescription()
