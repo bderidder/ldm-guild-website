@@ -18,21 +18,6 @@
             {
                 return confirm('This will remove the event, are you sure?');
             });
-
-            $('.myPopover').popover(
-            {
-                toggle: "popover",
-                container: 'body',
-                trigger: 'hover',
-                html: true,
-                placement: 'bottom',
-                content: function () 
-                {
-                    var $value = $(this).attr('data-accountId');
-
-                    return $('.popper-content').html();
-                }
-            });
          });
     </script>
 {% endblock %}
@@ -42,45 +27,87 @@
     <ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
-        <li class="active">Event '{{ event.name }}'</li>
+        <li class="active">Event '{{ event.name }}' - {{ event.inviteTime|date("d/m (D)") }}</li>
     </ol>
 
     <h1>{{ event.name }}</h1>
 
-    <p>{{ event.description }}</p>
+    <style>
+        .fluid-grid-event
+        {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
 
-    <table class="table" style="width: auto;">
-        <thead>
-        <tr>
-            <th class="center-td">Organiser</th>
-            <th class="center-td">Date</th>
-            <th class="center-td">Invite Time</th>
-            <th class="center-td">Start Time</th>
-            <th class="center-td">End Time</th>
-            <th class="center-td"># Sign Ups</th>
-            <th class="center-td"># Absences</th>
-        </tr>
-    </thead>
-        <tr>
-            <td class="center-td">{{ event.organiser.name }}</td>
-            <td class="center-td">{{ event.inviteTime|date("d/m (D)") }}</td>
-            <td class="center-td">{{ event.inviteTime|date("H:i") }}</td>
-            <td class="center-td">{{ event.startTime|date("H:i") }}</td>
-            <td class="center-td">{{ event.endTime|date("H:i") }}</td>
-            <td class="center-td">
-                {% if event.signUps.signUpCount != 0 %}
-                    {{ event.signUps.signUpCount }}
-                {% endif %}
-            </td>
-            <td class="center-td">
-                {% if event.signUps.absentCount != 0 %}
-                    {{ event.signUps.absentCount }}
-                {% endif %}
-            </td>
-        </tr>
-    </table>
+        .row-event
+        {
+            clear: both;
+        }
 
-    <h3>Sign Ups</h3>
+        .col-event
+        {
+            position: relative;
+            width: 18.4%;
+            float: left;
+            margin-right: 2%;
+        }
+
+        .col-event:last-child
+        {
+            margin-right: 0;
+        }
+
+        .event-label-container
+        {
+            text-align: center;
+        }
+
+        .event-label
+        {
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+    </style>
+
+
+    <div class="container-fluid" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-4">
+                <p class="event-label">Organised by {{ event.organiser.name }}</p>
+                <p>{{ event.description }}</p>
+            </div>
+            
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">When</p>
+                        <p>{{ event.inviteTime|date("d/m (D)") }}</p>
+                    </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">Invite Time</p>
+                        <p>{{ event.inviteTime|date("H:i") }}</p>
+                    </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">Start Time</p>
+                        <p>{{ event.startTime|date("H:i") }}</p>
+                    </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">End Time</p>
+                        <p>{{ event.endTime|date("H:i") }}</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <h4>Sign Ups</h4>
 
     {% if (event.signUps.willComeCount != 0) or (event.signUps.mightComeCount != 0) or (event.signUps.absentCount != 0) %}    
     <table class="table table-condensed" style="width: auto;">
@@ -99,13 +126,13 @@
             {% endif %}
                 <td>{{ signUp.account.name }}</td>
                 <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
                 </td>
                 <td>
                     {% if signUp.currentUser %}
@@ -122,13 +149,13 @@
             {% endif %}
                 <td>{{ signUp.account.name }}</td>
                 <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
                 </td>
                 <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning myPopover" data-accountId="14"></i>{% endif %}
+                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
                 </td>
                 <td>
                     {% if signUp.currentUser %}
@@ -167,10 +194,5 @@
     {% if event.isOrganiser and auth.currentContext.authenticated %}
         <p>As an organiser you can <a href="{{ path('editEvent', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('removeEvent', {'id': event.id}) }}">delete</a> it.</p> 
     {% endif %}
-
-    <div class="popper-content hide">
-        <p>Letodas (90)</p>
-        <p>Sahibae (90)</p>
-    </div>
     
 {% endblock %}
