@@ -53,16 +53,6 @@
             overflow: hidden;
 		}
 
-        .tile .tile-content-wrapper:nth-of-type(1)
-        {
-            display: block; 
-        }
-
-        .tile .tile-content:nth-of-type(1)
-        {
-            display: block; 
-        }
-
         .tile.high
         {
             width: 150px;
@@ -148,6 +138,16 @@
             padding-top: 20px;
         }
 
+        .tile .tile-content-wrapper:nth-of-type(1)
+        {
+            display: block; 
+        }
+
+        .tile .tile-content:nth-of-type(1)
+        {
+            display: block; 
+        }
+
 	</style>
     
     <div class="jumbo">
@@ -167,7 +167,7 @@
                 </div>
             </a>
 
-            <a href="#">
+            <a href="{{ path('galleryUnderConstruction') }}">
             	<div class="tile default" data-direction="vertical" data-delay="8000">
                     <div class="tile-content">
                         <div class="image">
@@ -178,28 +178,42 @@
                 </div>
             </a>
 
-            <a href="#">
+            <a href="{{ path('teamSpeakUnderConstruction') }}">
                 <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
                     <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
                 </div>
             </a>
 
-            <a href="{{ path('fos_user_profile_show') }}">
-                <div class="tile default">
-            		<div class="tile-content">
-                        <div class="image">
-                		  <i class="fa fa-user fa-5x"></i>  
+            {% if auth.currentContext.authenticated %}
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <div class="tile default">
+                        <div class="tile-content">
+                            <div class="image">
+                              <i class="fa fa-user fa-5x"></i>  
+                            </div>
                         </div>
-                	</div>
-                    <div class="label"><span>My Account</span></div>
-                </div>
-            </a>
+                        <div class="label"><span>My Account</span></div>
+                    </div>
+                </a>
+            {% else %}
+                 <a href="{{ path('fos_user_security_login') }}">
+                    <div class="tile default">
+                        <div class="tile-content">
+                            <div class="image">
+                              <i class="fa fa-sign-in fa-5x"></i>  
+                            </div>
+                        </div>
+                        <div class="label"><span>Log In</span></div>
+                    </div>
+                </a>
+            {% endif %}
+
             
         </div> <!-- row -->
 
         <div class="row">
             
-            <a href="{{ path('viewClaims') }}">
+            <a href="{{ path('claimsUnderConstruction') }}">
             	<div class="tile default" data-direction="vertical" data-delay="8000">
             		<div class="tile-content">
                         <div class="image">
@@ -210,7 +224,7 @@
                 </div>    
             </a>  
 
-            <a href="#">
+            <a href="{{ path('forumUnderConstruction') }}">
                 <div class="tile double" data-direction="vertical" data-delay="8000">
             		<div class="tile-content">  
                         <div style="padding: 15px;">
@@ -223,11 +237,11 @@
                             <p style="font-size: 1.8em;">Stay tuned!</p>
                         </div>     
                     </div>
-                    <div class="label"><i class="fa fa-comment fa-2x"></i></div>
+                    <div class="label"><i class="fa fa-comments fa-2x"></i></div>
                 </div>   
             </a>
 
-            <a href="#">
+            <a href="{{ path('helpIndex') }}">
                 <div class="tile default">
                     <div class="tile-content">
                         <div class="image">
