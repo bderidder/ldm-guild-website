@@ -74,6 +74,9 @@ function sanitizeClientNickname(nickname)
 
 function tsClientsErrorFunc(jqXHR, textStatus, errorThrown)
 {
+    console.log("Error fetching online TS people " + textStatus);
+    console.log(errorThrown);
+
     var errorString = '';
 
     errorString += "<div>";
