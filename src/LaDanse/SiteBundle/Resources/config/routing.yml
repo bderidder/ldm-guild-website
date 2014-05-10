@@ -27,3 +27,18 @@ TeamSpeakRouting:
     resource: "@LaDanseSiteBundle/Controller/TeamSpeak"
     type:     annotation
     prefix:   /teamspeak
+
+GalleryRouting:
+    resource: "@LaDanseSiteBundle/Controller/Gallery"
+    type:     annotation
+    prefix:   /gallery
+
+ForumRouting:
+    resource: "@LaDanseSiteBundle/Controller/Forum"
+    type:     annotation
+    prefix:   /forum
+
+HelpRouting:
+    resource: "@LaDanseSiteBundle/Controller/Help"
+    type:     annotation
+    prefix:   /help
