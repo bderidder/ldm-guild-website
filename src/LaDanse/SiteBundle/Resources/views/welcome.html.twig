@@ -178,7 +178,7 @@
                 </div>
             </a>
 
-            <a href="{{ path('teamSpeakUnderConstruction') }}">
+            <a href="{{ path('teamSpeakIndex') }}">
                 <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
                     <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
                 </div>
@@ -255,5 +255,25 @@
         </div> <!-- row -->
 
 	</div> <!-- container -->
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+$(document).ready(function()
+{
+    var clientsServiceURL = 'teamspeak/clients';
+
+    $.when($.ajax({
+        type: "GET",
+        url: clientsServiceURL,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
+});
+
+</script>
 
 {% endblock %}

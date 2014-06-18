@@ -9,11 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
-class UnderConstructionController extends LaDanseController
+class TeamSpeakController extends LaDanseController
 {
 	/**
-     * @Route("/", name="teamSpeakUnderConstruction")
-     * @Template("LaDanseSiteBundle:teamspeak:underConstruction.html.twig")
+     * @Route("/", name="teamSpeakIndex")
+     * @Template("LaDanseSiteBundle:teamspeak:index.html.twig")
      */
     public function indexAction(Request $request)
     {

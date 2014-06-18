@@ -1,0 +1,93 @@
+{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+
+{% block title %}TeamSpeak - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Team Speak</li>
+    </ol>
+
+    <h1>TeamSpeak</h1>
+
+    <p>The guild has its own TeamSpeak server at ts.ladanse.org (password 'm3llon'). You can download
+    	a client at <a href="http://www.teamspeak.com/?page=downloads">www.teamspeak.com</a>.</p>
+
+    <p>Right now the following people are online:</p>
+
+    <div id="teamspeakContainer"></div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+$(document).ready(function()
+{
+    var clientsServiceURL = 'clients';
+
+    $.when($.ajax({
+        type: "GET",
+        url: clientsServiceURL,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    })).then(tsPageClientsSuccessFunc, tsPageClientsErrorFunc);
+});
+
+function tsPageClientsSuccessFunc(data, textStatus, jqXHR)
+{
+    var clientsList = data;
+
+    // creating html string
+    var htmlString = "";
+
+    if (clientsList.length === 0)
+    {
+        htmlString += "<div>";
+        htmlString += "  <div class='ts-top-label'>";
+        htmlString += "     <p style='font-size: 0.85em; text-align: center;'>There is nobody<br/> online now on TS</p>";
+        htmlString += "  </div>";
+        htmlString += "</div>";
+
+        $('#teamspeakContainer').append($(htmlString));
+    }
+    else
+    {
+        htmlString = "";
+        htmlString += "<ul class='TeamSpeakClientList'>";
+
+        for (var j = 0; j < clientsList.length; j++)
+        {
+            var client = clientsList[j];
+
+            htmlString += "     <li class='TeamSpeakNickname'>" + client.client_nickname + "</li> ";
+        }
+
+        htmlString += "</ul>";
+
+        $('#teamspeakContainer').append($(htmlString));
+    }
+}
+
+function tsPageClientsErrorFunc(jqXHR, textStatus, errorThrown)
+{
+    console.log("Error fetching online TS people " + textStatus);
+    console.log(errorThrown);
+
+    var errorString = '';
+
+    errorString += "<div>";
+    errorString += "  <div class='ts-top-label'>";
+    errorString += "     <p style='font-size: 0.85em; text-align: center;'>We are sorry but there was a problem fetching the list of online people</p>";
+    errorString += "  </div>";
+    errorString += "</div>";
+
+    //appending to the div
+    $('#teamspeakContainer').append($(errorString));
+}
+
+</script>
+
+{% endblock %}

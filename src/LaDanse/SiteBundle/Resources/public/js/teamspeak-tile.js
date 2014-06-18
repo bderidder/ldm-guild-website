@@ -1,15 +1,3 @@
-$(document).ready(function()
-{
-    var clientsServiceURL = 'teamspeak/clients';
-
-    $.when($.ajax({
-        type: "GET",
-        url: clientsServiceURL,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
-});
-
 function tsClientsSuccessFunc(data, textStatus, jqXHR)
 {
     var clientsList = data;
