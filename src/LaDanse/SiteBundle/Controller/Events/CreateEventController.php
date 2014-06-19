@@ -25,7 +25,7 @@ class CreateEventController extends LaDanseController
      * @Route("/create/{onDate}", name="createEvent")
      * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
-    public function createAction(Request $request, $onDate = NULL)
+    public function createAction(Request $request, $onDate = \NULL)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -44,7 +44,10 @@ class CreateEventController extends LaDanseController
         {
             $eventDate = DateTime::createFromFormat("Ymd", $onDate);
 
-            if ($eventDate === FALSE) $eventDate = new DateTime('tomorrow');
+            if ($eventDate === FALSE)
+            {
+                $eventDate = new DateTime('tomorrow');
+            }
         }
 
     	$formModel = new EventFormModel();
