@@ -76,12 +76,14 @@ class FeedbackController extends LaDanseController
             ->setSubject('Feedback from La Danse site')
             ->setFrom('bderidder@gmail.com')
             ->setTo('bderidder@gmail.com')
-            ->setBody(
-                $this->renderView(
+            ->addPart($this->renderView(
                     'LaDanseSiteBundle:feedback:email.txt.twig',
                     array('description' => $description, 'account' => $account)
-                )
-        );
+                ), 'text/plain; charset=utf-8')
+            ->addPart($this->renderView(
+                    'LaDanseSiteBundle:feedback:email.html.twig',
+                    array('description' => $description, 'account' => $account)
+                ), 'text/html; charset=utf-8');
     
         $this->get('mailer')->send($message);
     }
