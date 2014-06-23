@@ -2,26 +2,6 @@
 
 {% block title %}Raid - La Danse Macabre{% endblock %}
 
-{% block javascript %}
-    {# make sure that any other content of this tag is rendered as well #}
-    {{ parent() }}
-
-    <script type="application/javascript">
-        $(document).ready(function()
-        {
-            $("#removeWillComeSignUp").click(function()
-            {
-                return confirm('This will remove your sign up, are you sure?');
-            });
-
-            $("#removeEvent").click(function()
-            {
-                return confirm('This will remove the event, are you sure?');
-            });
-         });
-    </script>
-{% endblock %}
-
 {% block body %}
 
     <ol class="breadcrumb">
@@ -67,6 +47,23 @@
         {
             font-weight: bold;
             font-size: 1.3em;
+        }
+
+        .post
+        {
+            margin-bottom: 15px;
+        }
+
+        .post .poster
+        {
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+        }
+
+        .post .postDate
+        {
+            font-size: 85%;
+            font-style: italic;
         }
     </style>
 
@@ -194,5 +191,169 @@
     {% if event.isOrganiser and auth.currentContext.authenticated %}
         <p>As an organiser you can <a href="{{ path('editEvent', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('removeEvent', {'id': event.id}) }}">delete</a> it.</p> 
     {% endif %}
+
+    <div id="TopicContainer">
+    </div>
+
+    <div id="PostFormContainer" style="display: none;">
+        <textarea id="PostMessage" placeholder="Write a comment ..." cols="60"></textarea>
+        <button type="button" class="btn btn-default"
+            onClick="submitNewPost();">Post</button>
+    </div>
     
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <script type="application/javascript">
+        $(document).ready(function()
+        {
+            $("#removeWillComeSignUp").click(function()
+            {
+                return confirm('This will remove your sign up, are you sure?');
+            });
+
+            $("#removeEvent").click(function()
+            {
+                return confirm('This will remove the event, are you sure?');
+            });
+         });
+    </script>
+
+    {% verbatim %}
+        <script id="posts-template" type="text/template">
+
+            <hr />
+
+            {{#posts}}
+                <div class="post">
+                    <div>
+                        <span class="poster">{{ poster }}</span> <span class="message">{{ message }}</span>
+                    </div>
+                    <div><span class="postDate">{{ postDate }}</span></div>
+                </div>
+            {{/posts}}
+        </script>
+
+        <script id="no-posts-template" type="text/template">
+
+            <hr />
+
+            <p>There are no posts yet, be the first to comment on this event!</p>
+        </script>
+
+        <script id="error-posts-template" type="text/template">
+
+            <hr />
+
+            <p>We are sorry but there was a problem fetching comments.</p>
+        </script>
+    {% endverbatim %}
+
+<script>
+
+$(document).ready(function()
+{
+    refreshPosts();
+});
+
+function refreshPosts()
+{
+    var postsServiceURL = '../services/forum/topics/{{ event.topicId }}/posts/';
+
+    $.when($.ajax({
+        type: "GET",
+        url: postsServiceURL,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    })).then(postsSuccessFunc, postsErrorFunc);
+}
+
+function postsSuccessFunc(data, textStatus, jqXHR)
+{
+    var posts = data.posts;
+
+    if (posts.length === 0)
+    {
+        var template = $('#no-posts-template').html();
+        var html = Mustache.to_html(template, null);
+        $('#TopicContainer').html(html);
+
+        $('#PostFormContainer').show();
+    }
+    else
+    {
+        for (var i = 0; i < posts.length; i++)
+        {
+            var momentDate = moment(posts[i].postDate);
+
+            posts[i].postDate = momentDate.format("ddd MMM Do YYYY - HH:mm");
+        }
+
+        var view = {
+            posts: posts
+        };
+
+        var template = $('#posts-template').html();
+        var html = Mustache.to_html(template, view);
+        $('#TopicContainer').html(html);
+
+        $('#PostFormContainer').show();
+    }
+}
+
+function postsErrorFunc(jqXHR, textStatus, errorThrown)
+{
+    console.log("Error fetching topic comments " + textStatus);
+    console.log(errorThrown);
+
+    var template = $('#error-posts-template').html();
+    var html = Mustache.to_html(template, null);
+    $('#TopicContainer').html(html);
+}
+
+function submitNewPost()
+{
+    var postUrl = '../services/forum/topics/{{ event.topicId }}/posts/';
+
+    var textareaValue = $("textarea#PostMessage").val();
+
+    if (!textareaValue || !textareaValue.trim())
+    {
+        console.log("Textarea was empty");
+
+        return;
+    }
+
+    var postData = {
+        message: textareaValue.trim()
+    };
+
+    postDataString = JSON.stringify(postData); 
+
+    console.log(postDataString);
+
+    $.post(postUrl, postDataString, 
+        function(data, textStatus, jqXHR)
+        {
+            console.log("Posting succeeded");
+
+            $("textarea#PostMessage").val("");
+
+            refreshPosts();
+        })
+    .done(function()
+    {
+    })
+    .fail(function()
+    {
+        console.log("Posting failed");
+    });
+}
+
+</script>
+
 {% endblock %}
