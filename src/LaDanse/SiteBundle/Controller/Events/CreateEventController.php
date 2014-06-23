@@ -90,7 +90,11 @@ class CreateEventController extends LaDanseController
 
     private function persistEvent(AuthenticationContext $authContext, EventFormModel $formModel)
     {
-    	$event = $this->modelToEntity($authContext->getAccount(), $formModel);
+        $forumService = $this->getForumService();
+     
+        $topicId = $forumService->createTopic($authContext->getAccount(), $formModel->getName());
+
+    	$event = $this->modelToEntity($authContext->getAccount(), $formModel, $topicId);
 
         $this->getLogger()->info(__CLASS__ . ' persisting event');
 
@@ -99,7 +103,7 @@ class CreateEventController extends LaDanseController
     	$em->flush();
     }
 
-    private function modelToEntity($organiser, EventFormModel $formModel)
+    private function modelToEntity($organiser, EventFormModel $formModel, $topicId)
     {
         $event = new Event();
         $event->setOrganiser($organiser);
@@ -108,6 +112,7 @@ class CreateEventController extends LaDanseController
         $event->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()));
         $event->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()));
         $event->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()));
+        $event->setTopicId($topicId);
 
         return $event;
     }
