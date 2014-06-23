@@ -53,6 +53,11 @@ class Event
     protected $lastModifiedTime;
 
     /**
+     * @ORM\Column(type="text", nullable=false)
+     */
+    protected $topicId;
+
+    /**
      * @ORM\OneToMany(targetEntity="SignUp", mappedBy="event", cascade={"persist", "remove"})
      */
     protected $signUps;
@@ -278,5 +283,28 @@ class Event
     public function getLastModifiedTime()
     {
         return $this->lastModifiedTime;
+    }
+
+    /**
+     * Set topicId
+     *
+     * @param string $topicId
+     * @return Event
+     */
+    public function setTopicId($topicId)
+    {
+        $this->topicId = $topicId;
+
+        return $this;
+    }
+
+    /**
+     * Get topicId
+     *
+     * @return string 
+     */
+    public function getTopicId()
+    {
+        return $this->topicId;
     }
 }
