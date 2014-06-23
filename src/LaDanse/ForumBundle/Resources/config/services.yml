@@ -1,0 +1,7 @@
+parameters:
+    ForumService.class: LaDanse\ForumBundle\Service\ForumService
+
+services:
+    LaDanse.ForumService:
+        class: "%ForumService.class%"
+        arguments: ['@service_container']
