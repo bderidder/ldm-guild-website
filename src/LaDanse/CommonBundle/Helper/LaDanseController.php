@@ -27,6 +27,14 @@ class LaDanseController extends Controller
 		return $this->get('LaDanse.GuildCharacterService');
 	}
 
+	/**
+     * @return \LaDanse\ForumBundle\Service\ForumService
+     */
+	protected function getForumService()
+	{
+		return $this->get('LaDanse.ForumService');
+	}
+
     /**
      * @return \LaDanse\CommonBundle\Helper\ContainerInjector
      */
