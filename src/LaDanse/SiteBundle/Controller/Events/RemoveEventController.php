@@ -32,6 +32,8 @@ class RemoveEventController extends LaDanseController
         }
         else
         {
+            $this->getForumService()->removeTopic($event->getTopicId());
+
     	   $em->remove($event);
 
            $this->getLogger()->warn(__CLASS__ . ' removing event in deleteAction', 
