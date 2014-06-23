@@ -6,6 +6,10 @@ la_danse_site:
     resource: "@LaDanseSiteBundle/Resources/config/routing.yml"
     prefix:	  /
 
+la_danse_forum:
+    resource: "@LaDanseForumBundle/Resources/config/routing.yml"
+    prefix:   /
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
