@@ -20,6 +20,7 @@ class EventModel extends ContainerAwareClass
     protected $lastModifiedTime;
     protected $signUpsModel;
     protected $isOrganiser;
+    protected $topicId;
 
     public function __construct(ContainerInjector $injector, Event $event)
     {
@@ -34,6 +35,7 @@ class EventModel extends ContainerAwareClass
         $this->endTime = $event->getEndTime();
         $this->lastModifiedTime = $event->getLastModifiedTime();
         $this->organiser = new AccountModel($injector, $event->getOrganiser());
+        $this->topicId = $event->getTopicId();
 
         $this->signUpsModel = new EventSignUpsModel($injector, $event);
 
@@ -110,6 +112,14 @@ class EventModel extends ContainerAwareClass
     public function getLastModifiedTime()
     {
         return $this->lastModifiedTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopicId()
+    {
+        return $this->topicId;
     }
 
     /**
