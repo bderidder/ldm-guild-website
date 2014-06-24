@@ -12,7 +12,7 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 class UnderConstructionController extends LaDanseController
 {
 	/**
-     * @Route("/", name="claimsUnderConstruction")
+     * @Route("/underconstruction", name="claimsUnderConstruction")
      * @Template("LaDanseSiteBundle:claims:underConstruction.html.twig")
      */
     public function indexAction(Request $request)
