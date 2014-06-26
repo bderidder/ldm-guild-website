@@ -35,12 +35,8 @@
                     {% else %}
                         <i class="fa fa-question fa-1x text-muted"></i>
                     {% endif %}
-                    {% if event.inThePast %}
-                        {{ event.inviteTime|date("H:i") }} {{ event.name }} ({{ event.signUps.willComeCount }})
-                    {% else %}
                         {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEvent', {'id': event.id}) }}">{{ event.name }}</a> ({{ event.signUps.willComeCount }}/{{ event.signUps.mightComeCount }})
                     </small></div>
-                    {% endif %}
                 {% endfor %}
                 {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
                     <div class="hover-me-container">
