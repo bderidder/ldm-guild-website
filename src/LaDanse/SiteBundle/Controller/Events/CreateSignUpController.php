@@ -55,6 +55,12 @@ class CreateSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         } 
 
+        $currentDateTime = new \DateTime();
+        if ($event->getInviteTime() <= $currentDateTime)
+        {
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        }
+
         if ($this->getCurrentUserSignUp($event))
         {
             $this->getLogger()->warn(__CLASS__ . ' the user is already subscribed to this event in indexAction', 

@@ -47,7 +47,13 @@ class RemoveSignUpController extends LaDanseController
         if (null === $event)
         {
             return $this->redirect($this->generateUrl('welcomeIndex'));
-        } 
+        }
+
+        $currentDateTime = new \DateTime();
+        if ($event->getInviteTime() <= $currentDateTime)
+        {
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        }
 
         $signUp = $this->getCurrentUserSignUp($event);
 

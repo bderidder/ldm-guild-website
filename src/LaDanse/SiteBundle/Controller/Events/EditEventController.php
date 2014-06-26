@@ -52,6 +52,12 @@ class EditEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
+        $currentDateTime = new \DateTime();
+        if ($event->getInviteTime() <= $currentDateTime)
+        {
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        }
+
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
             $this->getLogger()->warn(__CLASS__ . ' the user is not the organiser of the event in indexAction', 

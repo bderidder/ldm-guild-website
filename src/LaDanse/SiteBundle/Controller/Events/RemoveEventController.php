@@ -32,18 +32,24 @@ class RemoveEventController extends LaDanseController
         }
         else
         {
+            $currentDateTime = new \DateTime();
+            if ($event->getInviteTime() <= $currentDateTime)
+            {
+                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            }
+
             $this->getForumService()->removeTopic($event->getTopicId());
 
-    	   $em->remove($event);
+            $em->remove($event);
 
-           $this->getLogger()->warn(__CLASS__ . ' removing event in deleteAction', 
+            $this->getLogger()->warn(__CLASS__ . ' removing event in deleteAction', 
                 array("event" => $id));
 
-    	   $em->flush();
+            $em->flush();
 
-           $this->addToast('Event removed');
+            $this->addToast('Event removed');
 
-    	   return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
     }
 }
