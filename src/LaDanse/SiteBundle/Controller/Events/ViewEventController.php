@@ -19,6 +19,8 @@ class ViewEventController extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        $currentDateTime = new \DateTime();
+
         if (!$authContext->isAuthenticated())
         {
             $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
@@ -41,9 +43,18 @@ class ViewEventController extends LaDanseController
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:events:viewEvent.html.twig',
-                array('event' => new EventModel($this->getContainerInjector(), $event))
-            );
+            if ($event->getInviteTime() > $currentDateTime)
+            {
+                return $this->render('LaDanseSiteBundle:events:viewFutureEvent.html.twig',
+                    array('event' => new EventModel($this->getContainerInjector(), $event))
+                );
+            }
+            else
+            {
+                return $this->render('LaDanseSiteBundle:events:viewPastEvent.html.twig',
+                    array('event' => new EventModel($this->getContainerInjector(), $event))
+                );
+            }
         }
     }
 }
