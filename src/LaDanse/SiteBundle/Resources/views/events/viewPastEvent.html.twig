@@ -49,9 +49,49 @@
             font-size: 1.3em;
         }
 
+        #TopicContainer
+        {
+            width: 40%;
+        }
+
+        #TopicContainer textarea
+        {
+            border-bottom-color: rgb(218, 220, 224);
+border-bottom-left-radius: 0px;
+border-bottom-right-radius: 0px;
+border-bottom-style: none;
+border-bottom-width: 0px;
+border-image-outset: 0px;
+border-image-repeat: stretch;
+border-image-slice: 100%;
+border-image-source: none;
+border-image-width: 1;
+border-left-color: rgb(218, 220, 224);
+border-left-style: none;
+border-left-width: 0px;
+border-right-color: rgb(218, 220, 224);
+border-right-style: none;
+border-right-width: 0px;
+border-top-color: rgb(218, 220, 224);
+border-top-left-radius: 0px;
+border-top-right-radius: 0px;
+border-top-style: none;
+border-top-width: 0px;
+            
+            resize: none;
+
+            outline-color: rgb(145, 151, 163);
+outline-style: none;
+outline-width: 0px;
+            
+            padding: 2px;
+
+        }
+
         .post
         {
             margin-bottom: 15px;
+            width: 100%;
         }
 
         .post .poster
@@ -105,7 +145,7 @@
     <br/>
 
     <h4>Sign Ups</h4>
-
+ 
     {% if (event.signUps.willComeCount != 0) or (event.signUps.mightComeCount != 0) or (event.signUps.absentCount != 0) %}    
     <table class="table table-condensed" style="width: auto;">
         <tr>
@@ -113,7 +153,6 @@
             <th class="center-td">Tank</th>
             <th class="center-td">Healer</th>
             <th class="center-td">Damage</th>
-            <th><!-- remove --></th>
         </tr>
         {% for signUp in event.signUps.willComeSignUps %}
             {% if signUp.currentUser %}
@@ -130,11 +169,6 @@
                 </td>
                 <td class="center-td">
                     {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
-                </td>
-                <td>
-                    {% if signUp.currentUser %}
-                        <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
@@ -154,11 +188,6 @@
                 <td class="center-td">
                     {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
                 </td>
-                <td>
-                    {% if signUp.currentUser %}
-                        <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                    {% endif %}
-                </td>
             </tr>
         {% endfor %}
         {% for signUp in event.signUps.absentSignUps %}
@@ -171,34 +200,15 @@
                 <td class="center-td" colspan="3">
                     <i class="text-danger">can't come</i>
                 </td>
-                <td>
-                    {% if signUp.currentUser %}
-                        <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                    {% endif %}
-                </td>
             </tr>
         {% endfor %}
     </table>
 
-    {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
-        <p>You seemed to have forgotten to sign up for this event! Please <a href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a> or inform us of your <a href="{{ path('createAbsence', {'id': event.id}) }}">absence</a>.</p>
-    {% endif %}
-    
     {% else %}    
-        <p>There are no sign ups, <a href="{{ path('createSignUp', {'id': event.id}) }}">why not be the first</a> ... or inform us of your <a href="{{ path('createAbsence', {'id': event.id}) }}">absence</a>?</p>
-    {% endif %}
-
-    {% if event.isOrganiser and auth.currentContext.authenticated %}
-        <p>As an organiser you can <a href="{{ path('editEvent', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('removeEvent', {'id': event.id}) }}">delete</a> it.</p> 
+        <p>There are no sign ups for this event.</p>
     {% endif %}
 
     <div id="TopicContainer">
-    </div>
-
-    <div id="PostFormContainer" style="display: none;">
-        <textarea id="PostMessage" placeholder="Write a comment ..." cols="60"></textarea>
-        <button type="button" class="btn btn-default"
-            onClick="submitNewPost();">Post</button>
     </div>
     
 {% endblock %}
@@ -230,10 +240,12 @@
 
             {{#posts}}
                 <div class="post">
-                    <div>
-                        <span class="poster">{{ poster }}</span> <span class="message">{{ message }}</span>
+                    <div id="Post_{{ postId }}" onClick="postClicked('{{ postId }}');">
+                        <div>
+                            <span class="poster">{{ poster }}</span> <span class="message">{{ message }}</span>
+                        </div>
+                        <div><span class="postDate">{{ postDate }}</span></div>
                     </div>
-                    <div><span class="postDate">{{ postDate }}</span></div>
                 </div>
             {{/posts}}
         </script>
@@ -250,6 +262,20 @@
             <hr />
 
             <p>We are sorry but there was a problem fetching comments.</p>
+        </script>
+
+        <script id="new-post-template" type="text/template">
+            <div id="{{ containerId }}">
+                <textarea id="{{ containerId }}_textarea" 
+                    placeholder="Write a comment ..." cols="60">{{ value }}</textarea>
+            </div>
+        </script>
+
+        <script id="edit-post-template" type="text/template">
+            <div id="{{ containerId }}">
+                <textarea id="{{ containerId }}_textarea" 
+                    placeholder="Write a comment ..." cols="60">{{ value }}</textarea>
+            </div>
         </script>
     {% endverbatim %}
 
@@ -279,10 +305,12 @@ function postsSuccessFunc(data, textStatus, jqXHR)
     if (posts.length === 0)
     {
         var template = $('#no-posts-template').html();
+
         var html = Mustache.to_html(template, null);
+
         $('#TopicContainer').html(html);
 
-        $('#PostFormContainer').show();
+        showNewPostForm();
     }
     else
     {
@@ -298,11 +326,41 @@ function postsSuccessFunc(data, textStatus, jqXHR)
         };
 
         var template = $('#posts-template').html();
+
         var html = Mustache.to_html(template, view);
+
         $('#TopicContainer').html(html);
 
-        $('#PostFormContainer').show();
+        showNewPostForm();
     }
+}
+
+function showNewPostForm()
+{
+    var template = $('#new-post-template').html();
+
+    var view = {
+        containerId: 'NewPostForm',
+        value: '',
+        callbackFunction: 'submitNewPost',
+        callbackValue: ''
+    };
+
+    var html = Mustache.to_html(template, view);
+
+    $('#TopicContainer').append(html);
+
+    $("#NewPostForm_textarea").keydown(function (e)
+    {
+        if (e.keyCode == 27)
+        {
+            $("#NewPostForm_textarea").val('');
+        }
+        else if (e.keyCode == 10 || e.keyCode == 13)
+        {
+            submitNewPost();
+        }
+    });
 }
 
 function postsErrorFunc(jqXHR, textStatus, errorThrown)
@@ -311,15 +369,51 @@ function postsErrorFunc(jqXHR, textStatus, errorThrown)
     console.log(errorThrown);
 
     var template = $('#error-posts-template').html();
+
     var html = Mustache.to_html(template, null);
+
     $('#TopicContainer').html(html);
+}
+
+function postClicked(postId)
+{
+    var template = $('#edit-post-template').html();
+
+    var view = {
+        containerId: 'EditPost_' + postId,
+        value: 'A value that should come from a data structure',
+        callbackFunction: 'submitNewPost',
+        callbackValue: postId
+    };
+
+    var html = Mustache.to_html(template, view);
+
+    var textAreaId = 'EditPost_' + postId + '_textarea';
+
+    $('#Post_' + postId).replaceWith(html);
+
+    $('#' + textAreaId).focus();
+
+    $('#' + textAreaId).keydown(function (e)
+    {
+        if (e.keyCode == 27)
+        {
+            refreshPosts();
+        }
+        else if (e.keyCode == 10 || e.keyCode == 13)
+        {
+            e.preventDefault();
+
+            refreshPosts();
+        }
+    });
 }
 
 function submitNewPost()
 {
     var postUrl = '../services/forum/topics/{{ event.topicId }}/posts/';
 
-    var textareaValue = $("textarea#PostMessage").val();
+    var textareaValue = $("#NewPostForm_textarea").val();
 
     if (!textareaValue || !textareaValue.trim())
     {
@@ -341,7 +435,7 @@ function submitNewPost()
         {
             console.log("Posting succeeded");
 
-            $("textarea#PostMessage").val("");
+            $("#NewPostForm_textarea").val("");
 
             refreshPosts();
         })
