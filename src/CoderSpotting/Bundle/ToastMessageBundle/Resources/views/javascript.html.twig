@@ -2,7 +2,7 @@
     $( document ).ready(function()
     {
     {% for toast in toasts %}
-        $().toastmessage('showNoticeToast', '{{ toast }}');
+    	alertify.success('{{ toast }}');
     {% endfor %}
     });
 </script>
