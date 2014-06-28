@@ -12,102 +12,6 @@
 
     <h1>{{ event.name }}</h1>
 
-    <style>
-        .fluid-grid-event
-        {
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-        }
-
-        .row-event
-        {
-            clear: both;
-        }
-
-        .col-event
-        {
-            position: relative;
-            width: 18.4%;
-            float: left;
-            margin-right: 2%;
-        }
-
-        .col-event:last-child
-        {
-            margin-right: 0;
-        }
-
-        .event-label-container
-        {
-            text-align: center;
-        }
-
-        .event-label
-        {
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-
-        #TopicContainer
-        {
-            width: 40%;
-        }
-
-        #TopicContainer textarea
-        {
-            border-bottom-color: rgb(218, 220, 224);
-border-bottom-left-radius: 0px;
-border-bottom-right-radius: 0px;
-border-bottom-style: none;
-border-bottom-width: 0px;
-border-image-outset: 0px;
-border-image-repeat: stretch;
-border-image-slice: 100%;
-border-image-source: none;
-border-image-width: 1;
-border-left-color: rgb(218, 220, 224);
-border-left-style: none;
-border-left-width: 0px;
-border-right-color: rgb(218, 220, 224);
-border-right-style: none;
-border-right-width: 0px;
-border-top-color: rgb(218, 220, 224);
-border-top-left-radius: 0px;
-border-top-right-radius: 0px;
-border-top-style: none;
-border-top-width: 0px;
-            
-            resize: none;
-
-            outline-color: rgb(145, 151, 163);
-outline-style: none;
-outline-width: 0px;
-            
-            padding: 2px;
-
-        }
-
-        .post
-        {
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        .post .poster
-        {
-            font-weight: bold;
-            color: rgb(255, 255, 255);
-        }
-
-        .post .postDate
-        {
-            font-size: 85%;
-            font-style: italic;
-        }
-    </style>
-
-
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
             <div class="col-md-4">
@@ -118,26 +22,26 @@ outline-width: 0px;
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">When</p>
-                        <p>{{ event.inviteTime|date("d/m (D)") }}</p>
-                    </div>
+                    <p>{{ event.inviteTime|date("d/m (D)") }}</p>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">Invite Time</p>
-                        <p>{{ event.inviteTime|date("H:i") }}</p>
-                    </div>
+                    <p>{{ event.inviteTime|date("H:i") }}</p>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">Start Time</p>
-                        <p>{{ event.startTime|date("H:i") }}</p>
-                    </div>
+                    <p>{{ event.startTime|date("H:i") }}</p>
+                </div>
             </div>
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">End Time</p>
-                        <p>{{ event.endTime|date("H:i") }}</p>
-                    </div>
+                    <p>{{ event.endTime|date("H:i") }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -146,68 +50,83 @@ outline-width: 0px;
 
     <h4>Sign Ups</h4>
  
-    {% if (event.signUps.willComeCount != 0) or (event.signUps.mightComeCount != 0) or (event.signUps.absentCount != 0) %}    
-    <table class="table table-condensed" style="width: auto;">
-        <tr>
-            <th>&nbsp;</th>
-            <th class="center-td">Tank</th>
-            <th class="center-td">Healer</th>
-            <th class="center-td">Damage</th>
-        </tr>
-        {% for signUp in event.signUps.willComeSignUps %}
-            {% if signUp.currentUser %}
-            <tr class="active">
-            {% else %} 
-            <tr>   
-            {% endif %}
-                <td>{{ signUp.account.name }}</td>
-                <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
-                </td>
+    {% if (event.signUps.willComeCount != 0) 
+        or (event.signUps.mightComeCount != 0) 
+        or (event.signUps.absentCount != 0) %}    
+
+        <table class="table table-condensed" style="width: auto;">
+            <tr>
+                <th>&nbsp;</th>
+                <th class="center-td">Tank</th>
+                <th class="center-td">Healer</th>
+                <th class="center-td">Damage</th>
             </tr>
-        {% endfor %}
-        {% for signUp in event.signUps.mightComeSignUps %}
-            {% if signUp.currentUser %}
-            <tr class="active">
-            {% else %} 
-            <tr>   
-            {% endif %}
-                <td>{{ signUp.account.name }}</td>
-                <td class="center-td">
-                    {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
-                </td>
-                <td class="center-td">
-                    {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        {% for signUp in event.signUps.absentSignUps %}
-            {% if signUp.currentUser %}
-            <tr class="active">
-            {% else %} 
-            <tr>   
-            {% endif %}
-                <td>{{ signUp.account.name }}</td>
-                <td class="center-td" colspan="3">
-                    <i class="text-danger">can't come</i>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+
+            {# render 'will come' sign ups, if any #}
+            {% for signUp in event.signUps.willComeSignUps %}
+                {% if signUp.currentUser %}
+                <tr class="active">
+                {% else %} 
+                <tr>   
+                {% endif %}
+                    <td>{{ signUp.account.name }}</td>
+                    <td class="center-td">
+                        {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {# render 'might come' sign ups, if any #}
+            {% for signUp in event.signUps.mightComeSignUps %}
+                {% if signUp.currentUser %}
+                <tr class="active">
+                {% else %} 
+                <tr>   
+                {% endif %}
+                    <td>{{ signUp.account.name }}</td>
+                    <td class="center-td">
+                        {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {# render 'absent' sign ups, if any #}
+            {% for signUp in event.signUps.absentSignUps %}
+                {% if signUp.currentUser %}
+                <tr class="active">
+                {% else %} 
+                <tr>   
+                {% endif %}
+                    <td>{{ signUp.account.name }}</td>
+                    <td class="center-td" colspan="3">
+                        <i class="text-danger">can't come</i>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
 
     {% else %}    
-        <p>There are no sign ups for this event.</p>
+        <p>There were no sign ups for this event. 
+            Since this event is in the past, no new sign ups can be made.</p>
     {% endif %}
 
+    <br/>
+
+    <h4>Comments</h4>
+
+    {# placeholder for comments, content is supplied by jQuery scripts #}
     <div id="TopicContainer">
     </div>
     
@@ -215,7 +134,7 @@ outline-width: 0px;
 
 {% block javascript %}
 
-    {# make sure that any other content of this tag is rendered as well #}
+    {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
     {{ parent() }}
 
     <script type="application/javascript">
@@ -233,221 +152,6 @@ outline-width: 0px;
          });
     </script>
 
-    {% verbatim %}
-        <script id="posts-template" type="text/template">
-
-            <hr />
-
-            {{#posts}}
-                <div class="post">
-                    <div id="Post_{{ postId }}" onClick="postClicked('{{ postId }}');">
-                        <div>
-                            <span class="poster">{{ poster }}</span> <span class="message">{{ message }}</span>
-                        </div>
-                        <div><span class="postDate">{{ postDate }}</span></div>
-                    </div>
-                </div>
-            {{/posts}}
-        </script>
-
-        <script id="no-posts-template" type="text/template">
-
-            <hr />
-
-            <p>There are no posts yet, be the first to comment on this event!</p>
-        </script>
-
-        <script id="error-posts-template" type="text/template">
-
-            <hr />
-
-            <p>We are sorry but there was a problem fetching comments.</p>
-        </script>
-
-        <script id="new-post-template" type="text/template">
-            <div id="{{ containerId }}">
-                <textarea id="{{ containerId }}_textarea" 
-                    placeholder="Write a comment ..." cols="60">{{ value }}</textarea>
-            </div>
-        </script>
-
-        <script id="edit-post-template" type="text/template">
-            <div id="{{ containerId }}">
-                <textarea id="{{ containerId }}_textarea" 
-                    placeholder="Write a comment ..." cols="60">{{ value }}</textarea>
-            </div>
-        </script>
-    {% endverbatim %}
-
-<script>
-
-$(document).ready(function()
-{
-    refreshPosts();
-});
-
-function refreshPosts()
-{
-    var postsServiceURL = '../services/forum/topics/{{ event.topicId }}/posts/';
-
-    $.when($.ajax({
-        type: "GET",
-        url: postsServiceURL,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    })).then(postsSuccessFunc, postsErrorFunc);
-}
-
-function postsSuccessFunc(data, textStatus, jqXHR)
-{
-    var posts = data.posts;
-
-    if (posts.length === 0)
-    {
-        var template = $('#no-posts-template').html();
-
-        var html = Mustache.to_html(template, null);
-
-        $('#TopicContainer').html(html);
-
-        showNewPostForm();
-    }
-    else
-    {
-        for (var i = 0; i < posts.length; i++)
-        {
-            var momentDate = moment(posts[i].postDate);
-
-            posts[i].postDate = momentDate.format("ddd MMM Do YYYY - HH:mm");
-        }
-
-        var view = {
-            posts: posts
-        };
-
-        var template = $('#posts-template').html();
-
-        var html = Mustache.to_html(template, view);
-
-        $('#TopicContainer').html(html);
-
-        showNewPostForm();
-    }
-}
-
-function showNewPostForm()
-{
-    var template = $('#new-post-template').html();
-
-    var view = {
-        containerId: 'NewPostForm',
-        value: '',
-        callbackFunction: 'submitNewPost',
-        callbackValue: ''
-    };
-
-    var html = Mustache.to_html(template, view);
-
-    $('#TopicContainer').append(html);
-
-    $("#NewPostForm_textarea").keydown(function (e)
-    {
-        if (e.keyCode == 27)
-        {
-            $("#NewPostForm_textarea").val('');
-        }
-        else if (e.keyCode == 10 || e.keyCode == 13)
-        {
-            submitNewPost();
-        }
-    });
-}
-
-function postsErrorFunc(jqXHR, textStatus, errorThrown)
-{
-    console.log("Error fetching topic comments " + textStatus);
-    console.log(errorThrown);
-
-    var template = $('#error-posts-template').html();
-
-    var html = Mustache.to_html(template, null);
-
-    $('#TopicContainer').html(html);
-}
-
-function postClicked(postId)
-{
-    var template = $('#edit-post-template').html();
-
-    var view = {
-        containerId: 'EditPost_' + postId,
-        value: 'A value that should come from a data structure',
-        callbackFunction: 'submitNewPost',
-        callbackValue: postId
-    };
-
-    var html = Mustache.to_html(template, view);
-
-    var textAreaId = 'EditPost_' + postId + '_textarea';
-
-    $('#Post_' + postId).replaceWith(html);
-
-    $('#' + textAreaId).focus();
-
-    $('#' + textAreaId).keydown(function (e)
-    {
-        if (e.keyCode == 27)
-        {
-            refreshPosts();
-        }
-        else if (e.keyCode == 10 || e.keyCode == 13)
-        {
-            e.preventDefault();
-
-            refreshPosts();
-        }
-    });
-}
-
-function submitNewPost()
-{
-    var postUrl = '../services/forum/topics/{{ event.topicId }}/posts/';
-
-    var textareaValue = $("#NewPostForm_textarea").val();
-
-    if (!textareaValue || !textareaValue.trim())
-    {
-        console.log("Textarea was empty");
-
-        return;
-    }
-
-    var postData = {
-        message: textareaValue.trim()
-    };
-
-    postDataString = JSON.stringify(postData); 
-
-    console.log(postDataString);
-
-    $.post(postUrl, postDataString, 
-        function(data, textStatus, jqXHR)
-        {
-            console.log("Posting succeeded");
-
-            $("#NewPostForm_textarea").val("");
-
-            refreshPosts();
-        })
-    .done(function()
-    {
-    })
-    .fail(function()
-    {
-        console.log("Posting failed");
-    });
-}
-
-</script>
+    {% include 'LaDanseSiteBundle:events:eventForum.html.twig' %}
 
 {% endblock %}
