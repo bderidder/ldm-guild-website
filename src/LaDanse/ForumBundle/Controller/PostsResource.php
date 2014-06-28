@@ -117,6 +117,48 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @Route("/{postId}", name="updatePost")
+     * @Method({"POST", "PUT"})
+     */
+    public function updatePostAction(Request $request, $topicId, $postId)
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        $post = null;
+
+        try
+        {
+            $post = $this->getForumService()->getPost($postId);
+        }
+        catch(TopicDoesNotExistException $e)
+        {
+            return ResourceHelper::createErrorResponse($request, 
+                    Response::HTTP_NOT_FOUND, $e->getMessage(), array("Allow" => "GET"));
+        }
+
+        if (!($post->getPoster()->getId() == $authContext->getAccount()->getId()))
+        {
+            return ResourceHelper::createErrorResponse($request, 
+                    Response::HTTP_FORBIDDEN, 'Not allowed', array("Allow" => "GET"));
+        }
+
+        $jsonData = $request->getContent(false);
+
+        $logger = $this->get('logger');
+        $logger->info('JSON DATA ' . $jsonData);
+
+        $jsonObject = json_decode($jsonData);
+
+        $this->getForumService()->updatePost($postId, $jsonObject->message);
+
+        $jsonObject = (object)array(
+            "posts"    => "test"
+        );
+
+        return new JsonResponse($jsonObject);
+    }
+
+    /**
      * @Route("/comments", name="putPost")
      * @Method({"POST"})
      */
@@ -187,6 +229,7 @@ class PostsResource extends LaDanseController
     {
         return (object)array(
             "postId"    => $post->getId(),
+            "posterId"    => $post->getPoster()->getId(),
             "poster"    => $post->getPoster()->getUsername(),
             "message"   => $post->getMessage(),
             "postDate"  => $post->getPostDate()->format(\DateTime::ISO8601),
