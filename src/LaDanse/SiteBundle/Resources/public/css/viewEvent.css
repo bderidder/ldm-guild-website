@@ -1,0 +1,117 @@
+.fluid-grid-event
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.row-event
+{
+    clear: both;
+}
+
+.col-event
+{
+    position: relative;
+    width: 18.4%;
+    float: left;
+    margin-right: 2%;
+}
+
+.col-event:last-child
+{
+    margin-right: 0;
+}
+
+.event-label-container
+{
+    text-align: center;
+}
+
+.event-label
+{
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+#TopicContainer
+{
+    width: 60%;
+}
+
+.postContainer
+{
+    overflow: auto;
+    width: 100%;
+}
+
+.postEditLink
+{
+    margin-left: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: none;
+}
+
+.postContainer:hover .postEditLink
+{
+    display: initial;
+}
+
+.ForumTextArea
+{
+    border-bottom-color: rgb(218, 220, 224);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-left-color: rgb(218, 220, 224);
+    border-left-style: none;
+    border-left-width: 0px;
+    border-right-color: rgb(218, 220, 224);
+    border-right-style: none;
+    border-right-width: 0px;
+    border-top-color: rgb(218, 220, 224);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-top-style: none;
+    border-top-width: 0px;
+            
+    resize: none !important;
+    overflow: hidden !important;
+
+    outline-color: rgb(145, 151, 163);  
+    outline-style: none;
+    outline-width: 0px;
+
+    height: 34px;
+}
+
+.TextTooLong textarea
+{
+    color: rgb(255, 0, 0) !important;
+    background-color: rgb(255, 120, 120) !important;
+}
+
+.TextTooLong p[id^=length]
+{
+    color: rgb(255, 0, 0) !important;
+}
+
+.post
+{
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.post .poster
+{
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+
+.post .postDate
+{
+    font-size: 85%;
+    font-style: italic;
+}
