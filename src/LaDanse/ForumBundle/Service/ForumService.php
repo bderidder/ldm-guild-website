@@ -50,6 +50,25 @@ class ForumService extends LaDanseService
         }
     }
 
+    public function getPost($postId)
+    {
+        $doc = $this->getDoctrine();
+
+        $em = $doc->getManager();
+        $postRepo = $doc->getRepository(Post::REPOSITORY);
+
+        $post = $postRepo->find($postId);
+
+        if (null === $post)
+        {
+            throw new PostDoesNotExistException("Post does not exist: " . $postId);
+        }
+        else 
+        {
+            return $post;
+        }
+    }
+
     public function createTopic($account, $subject)
     {
         $doc = $this->getDoctrine();
@@ -115,6 +134,28 @@ class ForumService extends LaDanseService
 
             $topic->addPost($post);
 
+            $em->persist($post);
+            $em->flush();
+        }
+    }
+
+    public function updatePost($postId, $message)
+    {
+        $doc = $this->getDoctrine();
+
+        $em = $doc->getManager();
+        $postRepo = $doc->getRepository(Post::REPOSITORY);
+
+        $post = $postRepo->find($postId);
+
+        if (null === $post)
+        {
+            throw new PostDoesNotExistException("Post does not exist: " . $postId);
+        }
+        else 
+        {
+            $post->setMessage($message);
+            
             $em->persist($post);
             $em->flush();
         }
