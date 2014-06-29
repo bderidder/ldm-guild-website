@@ -34,17 +34,13 @@
 {
 	display: none;
 	position: absolute;
-	bottom: 0;
-	width: 100%;
-	/*background-color: DarkOrange;
-	border: solid rgb(175, 175, 175) 1px;
-	-moz-border-radius: 5px;
-    border-radius: 5px;*/
+	top: 0px;
+	right: 0px;
 }
 
 .hover-me
 {
-	text-align: center;
+	text-align: right;
 }
 
 .calendar-cell:hover .hover-me-container
