@@ -46,23 +46,49 @@ class GuildCharacterService extends LaDanseService
         {
             $versions = $character->getVersions();
 
-            $charModels[] = (object)array(
-                "id"    => $character->getId(),
-                "name"  => $character->getName(),
-                "level" => $versions[0]->getLevel()
-            );
+            $charModels[] = $this->characterToDto($character);
         }
 
         return $charModels;
     }
 
+    public function getGuildCharacter($characterName, \DateTime $onDateTime = NULL)
+    {
+        if ($onDateTime == NULL)
+        {
+            // when not set, initialize to right now
+            $onDateTime = new \DateTime();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectGuildCharacter.sql.twig'));
+        $query->setParameter('characterName', $characterName);
+        $query->setParameter('onDateTime', $onDateTime);
+        
+        $characters = $query->getResult();
+
+        if (count($characters) == 0)
+        {
+            throw new \Exception('No character could be found at that time.');
+        }
+
+        $character = $characters[0];
+
+        $versions = $character->getVersions();
+
+        return $this->characterToDto($character);
+    }
+
 	public function getClaims($accountId, \DateTime $onDateTime = NULL)
     {
-    	if ($onDateTime == NULL)
-    	{
-    		// when not set, initialize to right now
-    		$onDateTime = new \DateTime();
-    	}
+        if ($onDateTime == NULL)
+        {
+            // when not set, initialize to right now
+            $onDateTime = new \DateTime();
+        }
 
         $em = $this->getDoctrine()->getManager();
 
@@ -70,6 +96,41 @@ class GuildCharacterService extends LaDanseService
         $query = $em->createQuery(
             $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig'));
         $query->setParameter('accountId', $accountId);
+        $query->setParameter('onDateTime', $onDateTime);
+        
+        $claims = $query->getResult();
+
+        $claimsModels = array();
+
+        foreach($claims as $claim)
+        {
+            $claimsModels[] = (object)array(
+                "id"          => $claim->getId(),
+                "name"        => $claim->getCharacter()->getName(),
+                "fromTime"    => $claim->getFromTime(),
+                "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
+                "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
+                "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
+            );
+        }
+
+        return $claimsModels;
+    }
+
+    public function getClaimsForCharacter($characterName, \DateTime $onDateTime = NULL)
+    {
+        if ($onDateTime == NULL)
+        {
+            // when not set, initialize to right now
+            $onDateTime = new \DateTime();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForCharacter.sql.twig'));
+        $query->setParameter('characterName', $characterName);
         $query->setParameter('onDateTime', $onDateTime);
         
         $claims = $query->getResult();
@@ -369,6 +430,7 @@ class GuildCharacterService extends LaDanseService
         return $charactersDto;
     }
 
+    /*
     protected function characterToDto($character)
     {
         return (object)array(
@@ -377,6 +439,7 @@ class GuildCharacterService extends LaDanseService
             "fromTime"  => $character->getFromTime()
         );
     }
+    */
 
     protected function createPlaysRole($onDateTime, $claim, $role)
     {
@@ -399,5 +462,25 @@ class GuildCharacterService extends LaDanseService
         }
 
         return false;
+    }
+
+    protected function characterToDto($character)
+    {
+        $versions = $character->getVersions();
+
+        return (object)array(
+            "id"    => $character->getId(),
+            "fromTime"  => $character->getFromTime(),
+            "name"  => $character->getName(),
+            "level" => $versions[0]->getLevel(),
+            "class" => (object)array(
+                "id"   => $versions[0]->getGameClass()->getId(),
+                "name" => $versions[0]->getGameClass()->getName()
+            ),
+            "race"  => (object)array(
+                "id"   => $versions[0]->getGameRace()->getId(),
+                "name" => $versions[0]->getGameRace()->getName()
+            )
+        );
     }
 }
