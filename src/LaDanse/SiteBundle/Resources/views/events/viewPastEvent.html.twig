@@ -10,6 +10,10 @@
         <li class="active">Event '{{ event.name }}' - {{ event.inviteTime|date("d/m (D)") }}</li>
     </ol>
 
+    <div style="text-align: center; width: 100%; color: red; font-size: 150%">
+        this event is in the past and therefore closed
+    </div>
+
     <h1>{{ event.name }}</h1>
 
     <div class="container-fluid" style="padding-top: 15px;">
