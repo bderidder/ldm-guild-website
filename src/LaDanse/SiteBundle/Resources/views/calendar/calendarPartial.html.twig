@@ -26,6 +26,16 @@
                 {% else %}
                     <p>{{ calendarDay.date|date('d') }}</p>
                 {% endif %}
+                {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
+                    <div class="hover-me-container">
+                        <div class="hover-me">
+                            <small>
+                            <a href="{{ path('createEvent', 
+                                             {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a>
+                            </small>
+                        </div>
+                    </div>
+                {% endif %}
                 {% for event in calendarDay.events %}
                     <div class="event-container"><small>
                         {% if event.signUps.currentUserComes %}
@@ -38,16 +48,6 @@
                         {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEvent', {'id': event.id}) }}">{{ event.name }}</a> ({{ event.signUps.willComeCount }}/{{ event.signUps.mightComeCount }})
                     </small></div>
                 {% endfor %}
-                {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
-                    <div class="hover-me-container">
-                        <div class="hover-me">
-                            <small>
-                            <a href="{{ path('createEvent', 
-                                             {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a>
-                            </small>
-                        </div>
-                    </div>
-                {% endif %}
             </div>
         </td>
         {% if loop.index0%7 == 6 %}</tr>{% endif %}
