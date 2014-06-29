@@ -190,8 +190,8 @@
         <p>As an organiser you can edit this event or delete it.</p> 
 
         <p>
-            <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Edit Event</a>
-            <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Delete Event</a>
+            <a class="btn btn-default" href="{{ path('editEvent', {'id': event.id}) }}">Edit Event</a>
+            <a class="btn btn-default" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
         </p>
     {% endif %}
 
