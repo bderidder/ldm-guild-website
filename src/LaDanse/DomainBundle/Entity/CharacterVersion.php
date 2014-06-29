@@ -20,7 +20,7 @@ class CharacterVersion
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="versions")
      * @ORM\JoinColumn(name="characterId", referencedColumnName="id", nullable=false)
      */
     protected $character;
