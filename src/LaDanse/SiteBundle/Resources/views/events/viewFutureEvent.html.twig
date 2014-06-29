@@ -167,17 +167,32 @@
 
         {# if the currently logged in user is not signed up yet, invite to do so #}
         {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
-            <p>You seemed to have forgotten to sign up for this event! Please <a href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a> or inform us of your <a href="{{ path('createAbsence', {'id': event.id}) }}">absence</a>.</p>
+            <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
+
+            <p>
+                <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
+                <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+            </p>
         {% endif %}
     
     {# no sign ups, invite the user to make one or inform about absence #}
     {% else %}    
-        <p>There are no sign ups, <a href="{{ path('createSignUp', {'id': event.id}) }}">why not be the first</a> ... or inform us of your <a href="{{ path('createAbsence', {'id': event.id}) }}">absence</a>?</p>
+        <p>There are no sign ups yet.</p>
+
+        <p>
+            <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
+            <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+        </p>
     {% endif %}
 
     {# if the currently logged in user is the organiser, edit and delete options are shown #}
     {% if event.isOrganiser and auth.currentContext.authenticated %}
-        <p>As an organiser you can <a href="{{ path('editEvent', {'id': event.id}) }}">edit</a> this event or <a  id="removeEvent" href="{{ path('removeEvent', {'id': event.id}) }}">delete</a> it.</p> 
+        <p>As an organiser you can edit this event or delete it.</p> 
+
+        <p>
+            <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Edit Event</a>
+            <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Delete Event</a>
+        </p>
     {% endif %}
 
     <br/>
