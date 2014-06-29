@@ -73,13 +73,31 @@
                 {% endif %}
                     <td>{{ signUp.account.name }}</td>
                     <td class="center-td">
-                        {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsTank %}
+                            <i class="signUp fa fa-times fa-1x text-success" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'Tank'}) }}"></i>
+                        {% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsHealer %}
+                            <i class="signUp fa fa-times fa-1x text-success" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'Healer'}) }}"></i>
+                        {% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsDamage %}
+                            <i class="signUp fa fa-times fa-1x text-success" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'DPS'}) }}"></i>
+                        {% endif %}
                     </td>
                     <td>
                         {% if signUp.currentUser %}
@@ -98,13 +116,25 @@
                 {% endif %}
                     <td>{{ signUp.account.name }}</td>
                     <td class="center-td">
-                        {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" data-accountId="14"></i>{% endif %}
+                        {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" 
+                                data-url="{{ path('listClaims', 
+                                    {'eventId': event.id,
+                                     'accountId': signUp.account.id,
+                                     'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td>
                         {% if signUp.currentUser %}
@@ -198,6 +228,39 @@
                 return false;
             });
          });
+    </script>
+
+    <script>
+        $(document).ready(function()
+        {
+            $('i.signUp').each(function()
+            {
+                $(this).qtip(
+                {
+                    content: {
+                        text: function(event, api) 
+                        {
+                            $.ajax({
+                                url: api.elements.target.attr('data-url') // Use href attribute as URL
+                            })
+                            .then(function(content) {
+                                // Set the tooltip content upon successful retrieval
+                                api.set('content.text', content);
+                            }, function(xhr, status, error) {
+                                // Upon failure... set the tooltip content to error
+                                api.set('content.text', status + ': ' + error);
+                            });
+                
+                            return 'Loading...'; // Set some initial text
+                        }
+                    },
+                    position: {
+                        viewport: $(window)
+                    },
+                    style: 'qtip-bootstrap'
+                });
+            });
+        });
     </script>
 
     {% include 'LaDanseSiteBundle:events:eventForum.html.twig' %}
