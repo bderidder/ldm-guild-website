@@ -1,0 +1,28 @@
+{% if error is defined %}
+
+    <p>{{ error }}</p>
+
+{% else %} 
+
+    {% if (claims|length != 0) %} 
+
+        <table style="background-color: white;" cellpadding="5">
+
+            {% for claim in claims %}
+
+                <tr>
+                    <td>{{ claim.name }}</td>
+                    <td>{{ claim.level }}</td>
+                    <td>{{ claim.class }}</td>
+                    <td>{{ claim.race }}</td>
+                </tr>
+            
+            {% endfor %}
+
+        </table>
+
+    {% else %} 
+            <p>There are no claims for this character for this role.</p>
+    {% endif %}
+
+{% endif %}
