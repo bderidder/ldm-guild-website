@@ -191,7 +191,7 @@
 
         <p>
             <a class="btn btn-default" href="{{ path('editEvent', {'id': event.id}) }}">Edit Event</a>
-            <a class="btn btn-default" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
+            <a id="removeEvent" class="btn btn-default" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
         </p>
     {% endif %}
 
