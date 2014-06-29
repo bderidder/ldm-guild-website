@@ -16,12 +16,34 @@
 {
 	/*padding-left: 1em;
     text-indent: -1em;*/
+    background-color: rgba(200, 200, 200, .2);
+    padding: 3px;
+    margin-bottom: 4px;
+
+    -moz-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-bottom-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -moz-bottom-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .today-calendar-cell
 {
 	/*background-color: #162f30;*/
-	background-color: rgba(200, 200, 200, .2);
+	background-color: rgba(100, 100, 100, 0);
+}
+
+.today-calendar-cell .event-container
+{
+	background-color: rgba(33, 37, 41, 1) !important;
 }
 	
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
