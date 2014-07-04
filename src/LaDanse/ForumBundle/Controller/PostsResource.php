@@ -230,7 +230,7 @@ class PostsResource extends LaDanseController
         return (object)array(
             "postId"    => $post->getId(),
             "posterId"    => $post->getPoster()->getId(),
-            "poster"    => $post->getPoster()->getUsername(),
+            "poster"    => $post->getPoster()->getDisplayName(),
             "message"   => $post->getMessage(),
             "postDate"  => $post->getPostDate()->format(\DateTime::ISO8601),
             "links"     => (object)array(
