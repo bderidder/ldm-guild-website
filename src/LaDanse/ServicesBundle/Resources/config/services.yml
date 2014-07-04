@@ -1,6 +1,7 @@
 parameters:
     GuildCharacterService.class: LaDanse\ServicesBundle\Service\GuildCharacterService
     GameDataService.class: LaDanse\ServicesBundle\Service\GameDataService
+    SettingsService.class: LaDanse\ServicesBundle\Service\SettingsService
 
 services:
     LaDanse.GuildCharacterService:
@@ -8,4 +9,7 @@ services:
         arguments: ['@service_container']
     LaDanse.GameDataService:
         class: "%GameDataService.class%"
+        arguments: ['@service_container']
+    LaDanse.SettingsService:
+        class: "%SettingsService.class%"
         arguments: ['@service_container']
