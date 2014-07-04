@@ -29,10 +29,13 @@
 
 	<table class="table table-hover" style="width: auto;">
     <tr>
-        <th></th>
+        <th></th> <!-- name -->
+        <th></th> <!-- level -->
         <th class="center-td" style="width: 75px">Tank</th>
         <th class="center-td" style="width: 75px">Healer</th>
         <th class="center-td" style="width: 75px">Damage</th>
+        <th></th> <!-- class -->
+        <th></th> <!-- race -->
         <th style="width: 50px"><!-- edit link --></th>
     </tr>
     {% if claimModel.claims|length == 0 %}
@@ -44,7 +47,8 @@
     {% else %}
         {% for claim in claimModel.claims %}
             <tr class="claimRow">
-                <td>{{ claim.name }}</td>
+                <td>{{ claim.character.name }}</td>
+                <td>{{ claim.character.level }}</td>
                 <td class="center-td">
                     {% if claim.playsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
@@ -54,6 +58,8 @@
                 <td class="center-td">
                     {% if claim.playsDPS %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
                 </td>
+                <td>{{ claim.character.class.name }}</td>
+                <td>{{ claim.character.race.name }}</td>
                 <td>
                 	<span class="claimEditRemoveLinks">
                     	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">

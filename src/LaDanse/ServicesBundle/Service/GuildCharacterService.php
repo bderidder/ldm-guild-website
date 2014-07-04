@@ -104,14 +104,7 @@ class GuildCharacterService extends LaDanseService
 
         foreach($claims as $claim)
         {
-            $claimsModels[] = (object)array(
-                "id"          => $claim->getId(),
-                "name"        => $claim->getCharacter()->getName(),
-                "fromTime"    => $claim->getFromTime(),
-                "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
-                "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
-                "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
-            );
+            $claimsModels[] = $this->claimToDto($claim);
         }
 
         return $claimsModels;
@@ -139,14 +132,7 @@ class GuildCharacterService extends LaDanseService
 
         foreach($claims as $claim)
         {
-            $claimsModels[] = (object)array(
-                "id"          => $claim->getId(),
-                "name"        => $claim->getCharacter()->getName(),
-                "fromTime"    => $claim->getFromTime(),
-                "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
-                "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
-                "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
-            );
+            $claimsModels[] = $this->claimToDto($claim);
         }
 
         return $claimsModels;
@@ -170,14 +156,7 @@ class GuildCharacterService extends LaDanseService
 
         $claim = $claims[0];
         
-        $claimsModel = (object)array(
-            "id"          => $claim->getId(),
-            "name"        => $claim->getCharacter()->getName(),
-            "fromTime"    => $claim->getFromTime(),
-            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
-            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
-            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
-        );
+        $claimsModel = $this->claimToDto($claim);
        
         return $claimsModel;
     }
@@ -430,17 +409,6 @@ class GuildCharacterService extends LaDanseService
         return $charactersDto;
     }
 
-    /*
-    protected function characterToDto($character)
-    {
-        return (object)array(
-            "id"        => $character->getId(),
-            "name"      => $character->getName(),
-            "fromTime"  => $character->getFromTime()
-        );
-    }
-    */
-
     protected function createPlaysRole($onDateTime, $claim, $role)
     {
         $playsRole = new PlaysRole();
@@ -462,6 +430,18 @@ class GuildCharacterService extends LaDanseService
         }
 
         return false;
+    }
+
+    protected function claimToDto($claim)
+    {
+        return (object)array(
+            "id"          => $claim->getId(),
+            "character"   => $this->characterToDto($claim->getCharacter()),
+            "fromTime"    => $claim->getFromTime(),
+            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
+            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
+            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
+        );
     }
 
     protected function characterToDto($character)
