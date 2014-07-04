@@ -26,25 +26,42 @@ class SettingsService extends LaDanseService
     /*
      * Return for a specific account all known settings
      */
-    public function getSettingsForAccount($account)
+    public function getSettingsForAccount($accountId)
     {
     }
 
     /*
-     * Return for a specific setting, the value (if it exists) for each known account
+     * Return for a specific setting, the value (if it exists) for each account
      */
     public function getSettingForAllAccounts($settingName)
     {
     }
 
     /*
-     * 
+     * Update all settings passed for an account, settings not passed as
+     * a parameter are left untouched.
      */
-    public function updateSettingsForAccount($account, $settings)
+    public function updateSettingsForAccount($accountId, $settings)
     {
     }
 
-    public function removeSettingsForAccount($settingNames)
+    /*
+     * Remove settings for the given account
+     */
+    public function removeSettingsForAccount($accountId, $settingNames)
     {
+    }
+
+    protected function doesSettingExist($settings, $settingName)
+    {
+        foreach($settings as $setting)
+        {
+            if ($setting->name == $settingName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
