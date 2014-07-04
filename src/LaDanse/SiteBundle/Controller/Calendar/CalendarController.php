@@ -22,14 +22,19 @@ class CalendarController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+        $page = $this->sanitizePage($request->query->get('page'));
+
+        return $this->render('LaDanseSiteBundle:calendar:calendar.html.twig',
+            array('page' => $page)
+        );
     }
 
-    public function indexPartialAction()
+    public function indexPartialAction(Request $request, $page)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
         // fetch the Monday we should start with
-        $startDate = $this->getStartDate();
+        $startDate = $this->getStartDate($page);
 
         // the algoritm below needs to start on the day before, so we substract a day
         $startDate = $startDate->sub(new \DateInterval("P1D"));
@@ -88,13 +93,13 @@ class CalendarController extends LaDanseController
         if ($authContext->isAuthenticated())
         {
             return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
-                    array('calendarDays' => $calendarDates)
+                    array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
                 );
         }
         else
         {
             return $this->render('LaDanseSiteBundle:calendar:calendarPartialGuest.html.twig',
-                    array('calendarDays' => $calendarDates)
+                    array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
                 );
         }
     }
@@ -130,7 +135,7 @@ class CalendarController extends LaDanseController
         return $eventModels;
     }
 
-    private function getStartDate()
+    private function getStartDate($page)
     {
         $day = date('w');
 
@@ -154,8 +159,56 @@ class CalendarController extends LaDanseController
             $day = $day - 1;
         }
 
-        $calendarStart = date('d/m/Y', strtotime('-' . $day . ' days'));
+        $currentMonthStart = strtotime('-' . $day . ' days');
 
-        return \DateTime::createFromFormat("d/m/Y", $calendarStart);
+        if ($page != 0)
+        {
+            $calendarStart = date('d/m/Y', strtotime(($page * 28) .' days', $currentMonthStart));
+
+            return \DateTime::createFromFormat("d/m/Y", $calendarStart);
+        }
+        else
+        {
+            return \DateTime::createFromFormat("d/m/Y", date('d/m/Y', $currentMonthStart));
+        }
+    }
+
+    private function sanitizePage($strPage)
+    {
+        $intPage = intval($strPage);
+
+        if ($intPage < -10)
+        {
+            $intPage = -10;
+        }
+        elseif ($intPage > 10)
+        {
+            $intPage = 10;
+        }
+
+        return $intPage;
+    }
+
+    private function createPager($page)
+    {
+        if ($page <= -10)
+        {
+            return (object)array(
+                'nextPage' => -9
+            );
+        }
+        elseif ($page >= 10)
+        {
+            return (object)array(
+                'previousPage' => 9
+            );
+        }
+        else
+        {
+            return (object)array(
+                'previousPage' => $page - 1,
+                'nextPage' => $page + 1
+            );
+        }
     }
 }

@@ -2,7 +2,25 @@
     <p>Can't find the raid you were looking for? <a href="{{ path('createEvent') }}">Why not create a raid yourself!</a></p>
 {% endif %}
 
+<!--
 <p><a href="{{ path('eventList') }}">Click here if you prefer a list view.</a></p>
+-->
+
+<div style="text-align: center; width: 100;">
+    <div style="margin: 15px;">
+        <span>
+            {% if pager.previousPage is defined %}
+            <i class="fa fa-chevron-left fa-1x"></i> <a href="{{ path('calendarIndex', {'page': pager.previousPage }) }}">previous month</a> 
+            | 
+            {% endif %}
+            <a href="{{ path('calendarIndex', {'page': 0 }) }}">today</a> 
+            {% if pager.nextPage is defined %}
+            | 
+            <a href="{{ path('calendarIndex', {'page': pager.nextPage }) }}">next month</a> <i class="fa fa-chevron-right fa-1x"></i>
+            {% endif %}
+        </span>
+    </div>
+</div>
 
 <table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
 <thead>
