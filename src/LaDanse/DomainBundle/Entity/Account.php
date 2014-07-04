@@ -21,6 +21,11 @@ class Account extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string", length=32, nullable=false)
+     */
+    protected $displayName;
+
     public function __construct()
     {
         parent::__construct();
@@ -34,5 +39,28 @@ class Account extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set displayName
+     *
+     * @param string $displayName
+     * @return Account
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * Get displayName
+     *
+     * @return string 
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
     }
 }
