@@ -11,6 +11,7 @@ class AccountModel extends ContainerAwareClass
 {
     protected $id;
     protected $name;
+    protected $displayName;
 
     public function __construct(ContainerInjector $injector, Account $account)
     {
@@ -18,6 +19,7 @@ class AccountModel extends ContainerAwareClass
     
         $this->id = $account->getId();
         $this->name = $account->getUsername();
+        $this->displayName = $account->getDisplayName();
     }
 
     /**
@@ -53,5 +55,24 @@ class AccountModel extends ContainerAwareClass
     public function getName()
     {
         return $this->name;
+    }
+
+        /**
+     * @param string $displayName
+     * @return AccountModel
+     */
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
     }
 }
