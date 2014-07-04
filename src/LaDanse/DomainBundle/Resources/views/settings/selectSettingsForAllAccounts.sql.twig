@@ -1,0 +1,5 @@
+SELECT s
+FROM LaDanse\DomainBundle\Entity\Setting s
+	JOIN s.account a
+WHERE
+	s.name LIKE :namePattern
