@@ -22,7 +22,7 @@ class SettingsService extends LaDanseService
     /*
      * Return for a specific account all known settings
      */
-    public function getSettingsForAccount($accountId)
+    public function getSettingsForAccount($accountId, $settingNamePrefix = '')
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -30,6 +30,7 @@ class SettingsService extends LaDanseService
         $query = $em->createQuery(
             $this->createSQLFromTemplate('LaDanseDomainBundle:settings:selectSettingsForAccount.sql.twig'));
         $query->setParameter('accountId', $accountId);
+        $query->setParameter('namePattern', $settingNamePrefix . '%');
         
         $settings = $query->getResult();
 
@@ -44,10 +45,27 @@ class SettingsService extends LaDanseService
     }
 
     /*
-     * Return for a specific setting, the value (if it exists) for each account
+     * Return for a specific setting (prefix), the value (if it exists) for each account
      */
-    public function getSettingForAllAccounts($settingName)
+    public function getSettingsForAllAccounts($settingNamePrefix)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:selectSettingsForAllAccounts.sql.twig'));
+        $query->setParameter('namePattern', $settingNamePrefix . '%');
+        
+        $settings = $query->getResult();
+
+        $settingModels = array();
+
+        foreach($settings as $setting)
+        {
+            $settingModels[] = $this->settingToDto($setting);
+        }
+
+        return $settingModels;
     }
 
     /*
@@ -82,8 +100,9 @@ class SettingsService extends LaDanseService
     protected function settingToDto($setting)
     {
         return (object) array(
-            'name'  => $setting->getName(),
-            'value' => $setting->getValue()
+            'name'      => $setting->getName(),
+            'value'     => $setting->getValue(),
+            'accountId' => $setting->getAccount()->getId()
         );
     }
 }
