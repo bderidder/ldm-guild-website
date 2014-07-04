@@ -1,4 +1,7 @@
 SELECT s
 FROM LaDanse\DomainBundle\Entity\Setting s
+	JOIN s.account a
 WHERE
 	s.account = :accountId
+	AND
+	s.name LIKE :namePattern
