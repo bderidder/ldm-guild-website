@@ -19,7 +19,7 @@
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
             <div class="col-md-4">
-                <p class="event-label">Organised by {{ event.organiser.name }}</p>
+                <p class="event-label">Organised by {{ event.organiser.displayName }}</p>
                 <p>{{ event.description }}</p>
             </div>
             
@@ -73,7 +73,7 @@
                 {% else %} 
                 <tr>   
                 {% endif %}
-                    <td>{{ signUp.account.name }}</td>
+                    <td>{{ signUp.account.displayName }}</td>
                     <td class="center-td">
                         {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" 
                                 data-url="{{ path('listClaims', 
@@ -105,7 +105,7 @@
                 {% else %} 
                 <tr>   
                 {% endif %}
-                    <td>{{ signUp.account.name }}</td>
+                    <td>{{ signUp.account.displayName }}</td>
                     <td class="center-td">
                         {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" 
                                 data-url="{{ path('listClaims', 
@@ -137,7 +137,7 @@
                 {% else %} 
                 <tr>   
                 {% endif %}
-                    <td>{{ signUp.account.name }}</td>
+                    <td>{{ signUp.account.displayName }}</td>
                     <td class="center-td" colspan="3">
                         <i class="text-danger">can't come</i>
                     </td>

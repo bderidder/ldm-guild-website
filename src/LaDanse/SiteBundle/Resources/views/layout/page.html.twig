@@ -21,7 +21,7 @@
                             {% if auth.currentContext.authenticated %}
                                 <div class="btn-group" style="text-align: left">
                                     <span data-toggle="dropdown" style="cursor: pointer;">
-                                        <i class="fa fa-user"></i> Logged in with {{ auth.currentContext.account.username }} 
+                                        <i class="fa fa-user"></i> Logged in with {{ auth.currentContext.account.displayName }} 
                                         <span class="caret"></span>
                                     </span>
                                     <ul class="dropdown-menu" role="menu">
