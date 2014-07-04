@@ -35,6 +35,14 @@ class LaDanseController extends Controller
 		return $this->get('LaDanse.ForumService');
 	}
 
+	/**
+     * @return \LaDanse\ForumBundle\Service\SettingsService
+     */
+	protected function getSettingsService()
+	{
+		return $this->get(LaDanse\ServicesBundle\Service\SettingsService::SERVICE_NAME);
+	}
+
     /**
      * @return \LaDanse\CommonBundle\Helper\ContainerInjector
      */
