@@ -40,7 +40,7 @@ class LaDanseController extends Controller
      */
 	protected function getSettingsService()
 	{
-		return $this->get(LaDanse\ServicesBundle\Service\SettingsService::SERVICE_NAME);
+		return $this->get(\LaDanse\ServicesBundle\Service\SettingsService::SERVICE_NAME);
 	}
 
     /**
