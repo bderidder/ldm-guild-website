@@ -6,6 +6,7 @@
 <p><a href="{{ path('eventList') }}">Click here if you prefer a list view.</a></p>
 -->
 
+<!--
 <div style="text-align: center; width: 100;">
     <div style="margin: 15px;">
         <span>
@@ -21,6 +22,23 @@
         </span>
     </div>
 </div>
+-->
+
+<ul class="pager">
+    {% if pager.previousPage is defined %}
+        <li class="previous"><a href="{{ path('calendarIndex', {'page': pager.previousPage }) }}">&larr; Older</a></li>
+    {% else %}
+        <li class="previous disabled"><a href="#">&larr; Older</a></li>
+    {% endif %}
+
+    <li><a href="{{ path('calendarIndex', {'page': 0 }) }}">today</a></li>
+
+    {% if pager.nextPage is defined %}
+        <li class="next"><a href="{{ path('calendarIndex', {'page': pager.nextPage }) }}">&larr; Newer</a></li>
+    {% else %}
+        <li class="next disabled"><a href="#">&larr; Newer</a></li>
+    {% endif %}
+</ul>
 
 <table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
 <thead>
