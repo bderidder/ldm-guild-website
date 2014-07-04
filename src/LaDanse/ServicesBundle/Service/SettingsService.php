@@ -7,11 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\DomainBundle\Entity\Character,
-    LaDanse\DomainBundle\Entity\CharacterVersion,
-    LaDanse\DomainBundle\Entity\Claim,
-    LaDanse\DomainBundle\Entity\PlaysRole,
-    LaDanse\DomainBundle\Entity\Role,
+use LaDanse\DomainBundle\Entity\Setting,
     LaDanse\DomainBundle\Entity\Account;
 
 class SettingsService extends LaDanseService
@@ -28,6 +24,23 @@ class SettingsService extends LaDanseService
      */
     public function getSettingsForAccount($accountId)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:selectSettingsForAccount.sql.twig'));
+        $query->setParameter('accountId', $accountId);
+        
+        $settings = $query->getResult();
+
+        $settingModels = array();
+
+        foreach($settings as $setting)
+        {
+            $settingModels[] = $this->settingToDto($setting);
+        }
+
+        return $settingModels;
     }
 
     /*
@@ -40,6 +53,7 @@ class SettingsService extends LaDanseService
     /*
      * Update all settings passed for an account, settings not passed as
      * a parameter are left untouched.
+     * Settings that didn't exist yet are created on the fly.
      */
     public function updateSettingsForAccount($accountId, $settings)
     {
@@ -63,5 +77,13 @@ class SettingsService extends LaDanseService
         }
 
         return false;
+    }
+
+    protected function settingToDto($setting)
+    {
+        return (object) array(
+            'name'  => $setting->getName(),
+            'value' => $setting->getValue()
+        );
     }
 }
