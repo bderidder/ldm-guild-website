@@ -179,14 +179,14 @@
             </a>
 
             {% if auth.currentContext.authenticated %}
-            <a href="{{ path('teamSpeakIndex') }}">
+                <a href="{{ path('teamSpeakIndex') }}">
+            {% else %}
+                <a href="{{ path('welcomeIndex') }}">
             {% endif %}
                 <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
                     <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
                 </div>
-            {% if auth.currentContext.authenticated %}
             </a>
-            {% endif %}
 
             {% if auth.currentContext.authenticated %}
                 <a href="{{ path('fos_user_profile_show') }}">
