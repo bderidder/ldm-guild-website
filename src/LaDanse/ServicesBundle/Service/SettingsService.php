@@ -80,7 +80,7 @@ class SettingsService extends LaDanseService
     /*
      * Remove settings for the given account
      */
-    public function removeSettingsForAccount($accountId, $settingNames)
+    public function removeSettingsForAccount($accountId, $settingNames = '')
     {
     }
 
