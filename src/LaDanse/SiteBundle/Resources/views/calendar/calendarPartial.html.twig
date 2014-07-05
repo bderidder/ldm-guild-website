@@ -22,6 +22,12 @@
     {% endif %}
 </ul>
 
+<div>
+    <span class="event-container event-signed">You are signed</span>
+    <span class="event-container event-absent">You signed absent</span>
+    <span class="event-container event-notSigned"> You haven't signed yet</span>
+</div>
+
 <table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
 <thead>
     <tr>
@@ -55,16 +61,21 @@
                     </div>
                 {% endif %}
                 {% for event in calendarDay.events %}
-                    <div class="event-container"><small>
-                        {% if event.signUps.currentUserComes %}
-                        <i class="fa fa-check fa-1x text-success"></i>
-                    {% elseif event.signUps.currentUserAbsent %}
-                        <i class="fa fa-ban fa-1x text-danger"></i>
-                    {% else %}
-                        <i class="fa fa-question fa-1x text-muted"></i>
-                    {% endif %}
-                        {{ event.inviteTime|date("H:i") }} <a href="{{ path('viewEvent', {'id': event.id}) }}">{{ event.name }}</a> ({{ event.signUps.willComeCount }}/{{ event.signUps.mightComeCount }})
-                    </small></div>
+                    <a class="event-container-link" href="{{ path('viewEvent', {'id': event.id}) }}">
+                        <div class="event-container event-signed
+                            {% if event.signUps.currentUserComes %}
+                                event-signed
+                            {% elseif event.signUps.currentUserAbsent %}
+                                event-absent
+                            {% else %}
+                                event-notSigned
+                            {% endif %}
+                            ">
+                            <small>
+                                {{ event.inviteTime|date("H:i") }} {{ event.name }}
+                            </small>
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </td>
