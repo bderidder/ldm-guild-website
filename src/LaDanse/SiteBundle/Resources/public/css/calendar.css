@@ -38,7 +38,6 @@
 .event-container:hover
 {
     background-color: rgba(200, 200, 200, .2);
-    color: black;
 }
 
 .event-signed
