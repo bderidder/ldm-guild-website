@@ -39,12 +39,14 @@
 .today-calendar-cell
 {
 	/*background-color: #162f30;*/
-	background-color: rgba(100, 100, 100, 0);
+	/*background-color: rgba(100, 100, 100, 0);*/
+    background-color: rgb(100, 60, 50);
 }
 
 .today-calendar-cell .event-container
 {
-	background-color: rgba(33, 37, 41, 1) !important;
+	/*background-color: rgba(33, 37, 41, 1) !important;*/
+    background-color: rgb(100, 60, 50); !important;
 }
 	
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
