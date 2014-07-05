@@ -9,18 +9,102 @@
         <li class="active">Team Speak</li>
     </ol>
 
+    <style>
+
+    .teamspeak-sidebar-container
+    {
+        width: 100%;
+        background-color: rgb(65,100, 160);
+        background-color: rgb(100, 60, 50);
+        
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        -moz-border-top-left-radius: 15px;
+        border-top-left-radius: 15px;
+        -moz-border-top-right-radius: 15px;
+        border-top-right-radius: 15px;
+        -moz-bottom-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        -moz-bottom-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    .teamspeak-value
+    {
+        font-size: 170%;
+    }
+
+    .TeamSpeakNickname
+    {
+        font-size: 200%;
+        list-style: none;
+    }
+
+    </style>
+
     <h1>TeamSpeak</h1>
 
-    <p>The guild has its own TeamSpeak server at ts.ladanse.org (password 'm3llon'). You can download
-    	a client at <a href="http://www.teamspeak.com/?page=downloads">www.teamspeak.com</a>.</p>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <p>Right now the following people are online:</p>
+                <div id="teamspeakContainer"></div>
+            </div>
+            <div class="col-md-3" style="text-align: center;">
+                <div class="well well-lg">
+                    <p>
+                        <span class="teamspeak-value">Server</span><br/>
+                        <span class="text-danger">ts.ladanse.org</span>
+                    </p>
+                    <p>
+                        <span class="teamspeak-value">Password</span><br/>
+                        <span class="text-danger">m3llon</span>
+                    </p>
+                    <p>
+                        <a href="http://www.teamspeak.com/?page=downloads" target="_blank">
+                            <span style="font-size: 80%">(click here to download client)</span>
+                        </a>
+                        <br/>
+                        <br/>
+                        <a href="http://www.teamspeak.com/">
+                            <img src="{{ asset('bundles/ladansesite/images/TeamSpeak2.png') }}" ></img>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
 
-    <p>Right now the following people are online:</p>
-
-    <div id="teamspeakContainer"></div>
+    </div>
 
 {% endblock %}
 
 {% block javascript %}
+
+{% verbatim %}
+
+    <script id="teamspeak-users-template" type="text/template">
+
+        <div id="Post_{{ post.postId }}" class="postContainer">
+            <div>
+                <span class="poster">{{ post.poster }}</span> <span class="message">{{ post.message }}</span>
+            </div>
+            <div>
+                <span class="postDate">{{ post.postDate }}</span>
+                {{#editable}}
+                <span id="EditLink_{{ post.postId }}" class="postEditLink">Edit</span>
+                {{/editable}}
+            </div>
+        </div>
+
+    </script>
+
+{% endverbatim %}
 
 <script>
 
