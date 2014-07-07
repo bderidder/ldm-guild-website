@@ -16,7 +16,6 @@ class SettingsIndexController extends LaDanseController
 {
 	/**
      * @Route("/", name="welcomeSettings")
-     * @Template("LaDanseSiteBundle:settings:index.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -28,5 +27,7 @@ class SettingsIndexController extends LaDanseController
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
+
+        return $this->redirect($this->generateUrl('viewProfile'));
     }
 }
