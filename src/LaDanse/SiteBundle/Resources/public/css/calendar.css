@@ -43,21 +43,24 @@
 .event-signed
 {
     background-color: rgb(60, 100, 50); 
+    background-color: #00a300;
 }
 
 .event-absent
 {
     background-color: rgb(100, 60, 50);
+    background-color: #b91d47;
 }
 
 .event-notSigned
 {
     background-color: rgb(65,100, 160);
+    background-color: #2d89ef;
 }
 
 .today-calendar-cell
 {
-    background-color: rgb(100, 60, 50);
+    background-color: rgba(200, 200, 200, .2);
 }
 	
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
