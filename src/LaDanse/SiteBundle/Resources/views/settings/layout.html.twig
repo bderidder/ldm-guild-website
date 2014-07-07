@@ -1,0 +1,83 @@
+{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+
+{% block title %}My Settings - La Danse Macabre{% endblock %}
+
+{% block body %}
+
+	<ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Settings</li>
+    </ol>
+
+    <style>
+    #SettingsPane
+    {
+    	border-left: 1px solid #777777;
+    	padding-left: 20px;
+    }
+
+    .settings-link-container
+    {
+        width: 100%;
+
+        -moz-border-top-left-radius: 5px;
+        border-top-left-radius: 5px;
+        -moz-border-top-right-radius: 5px;
+        border-top-right-radius: 5px;
+        -moz-bottom-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        -moz-bottom-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .settings-link-container:hover
+    {
+        background-color: #00a300;
+    }
+
+    .settings-link-container p
+    {
+        padding: 4px;
+    }
+
+    .settings-link, .settings-link:hover
+    {
+        text-decoration: none;
+    }
+    </style>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <a class="settings-link" href="{{ path('viewProfile') }}">
+                    <div id="settingsProfileLink" class="settings-link-container">
+                        <p><i class="fa fa-gears"></i> Profile </p>
+                    </div>
+                </a>
+                <a class="settings-link" href="{{ path('changePassword') }}">
+                    <div id="settingsPasswordLink" class="settings-link-container">
+                        <p><i class="fa fa-key"></i> Password</p>
+                    </div>
+                </a>
+                <a class="settings-link" href="{{ path('viewNotifications') }}">
+                    <div id="settingsNotificationsLink" class="settings-link-container">
+                        <p><i class="fa fa-globe"></i> Notifications</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-10">
+            	<div id="SettingsPane">
+                	
+                    {% block settingsPanel %}{% endblock %}
+                    
+            	</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
