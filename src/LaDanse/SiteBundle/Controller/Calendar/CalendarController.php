@@ -37,7 +37,7 @@ class CalendarController extends LaDanseController
         $startTime = $this->getStartDate($page);
 
         // the algoritm below needs to start on the day before, so we substract a day
-        $startTime = $startDate->sub(new \DateInterval("P1D"));
+        $startTime = $startTime->sub(new \DateInterval("P1D"));
 
         $calendarDates = array();
 
