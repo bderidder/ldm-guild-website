@@ -34,16 +34,16 @@ class CalendarController extends LaDanseController
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
         // fetch the Monday we should start with
-        $startTime = $this->getStartDate($page);
+        $startDate = $this->getStartDate($page);
 
         // the algoritm below needs to start on the day before, so we substract a day
-        $startTime = $startTime->sub(new \DateInterval("P1D"));
+        $startDate = $startDate->sub(new \DateInterval("P1D"));
 
         $calendarDates = array();
 
-        //$startTime = new \DateTime('now');
-        //$startTime = $startTime->sub(new \DateInterval("P10D"));
-        $events = $this->getEvents($startTime);
+        //$startDate = new \DateTime('now');
+        //$startDate = $startDate->sub(new \DateInterval("P10D"));
+        $events = $this->getEvents($startDate);
 
         $eventIndex = 0;
 
@@ -106,8 +106,8 @@ class CalendarController extends LaDanseController
 
     public function tilePartialAction()
     {
-        $startTime = new \DateTime('now');
-        $events = $this->getEvents($startTime);
+        $startDate = new \DateTime('now');
+        $events = $this->getEvents($startDate);
 
 
         return $this->render('LaDanseSiteBundle::calendarTilePartial.html.twig',
@@ -115,13 +115,13 @@ class CalendarController extends LaDanseController
                 );
     }
 
-    protected function getEvents($startTime)
+    protected function getEvents($startDate)
     {
         $em = $this->getDoctrine()->getManager();
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :start ORDER BY e.inviteTime ASC');
-        $query->setParameter('start', $startTime);
+        $query->setParameter('start', $startDate);
         
         $events = $query->getResult();
 
