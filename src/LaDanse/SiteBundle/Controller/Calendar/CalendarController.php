@@ -34,15 +34,15 @@ class CalendarController extends LaDanseController
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
 
         // fetch the Monday we should start with
-        $startDate = $this->getStartDate($page);
+        $startTime = $this->getStartDate($page);
 
         // the algoritm below needs to start on the day before, so we substract a day
-        $startDate = $startDate->sub(new \DateInterval("P1D"));
+        $startTime = $startDate->sub(new \DateInterval("P1D"));
 
         $calendarDates = array();
 
-        $startTime = new \DateTime('now');
-        $startTime = $startTime->sub(new \DateInterval("P10D"));
+        //$startTime = new \DateTime('now');
+        //$startTime = $startTime->sub(new \DateInterval("P10D"));
         $events = $this->getEvents($startTime);
 
         $eventIndex = 0;
