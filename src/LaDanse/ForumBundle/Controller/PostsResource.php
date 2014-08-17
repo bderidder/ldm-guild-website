@@ -5,8 +5,6 @@ namespace LaDanse\ForumBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,12 +13,7 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
-use Latte\Bundle\GuestbookRestBundle\Entity\GuestComment;
-
-use LaDanse\ForumBundle\Entity\Forum,
-    LaDanse\ForumBundle\Entity\Topic,
-    LaDanse\ForumBundle\Entity\Post,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
@@ -47,6 +40,9 @@ class PostsResource extends LaDanseController
 
         usort($posts, function($a, $b)
             {
+                /** @var $a \LaDanse\ForumBundle\Entity\Post */
+                /** @var $b \LaDanse\ForumBundle\Entity\Post */
+
                 return $a->getPostDate() > $b->getPostDate();
             }
         );
@@ -73,7 +69,7 @@ class PostsResource extends LaDanseController
      * @Route("/create", name="createPost")
      * @Method({"GET"})
      */
-    public function createTopicAction(Request $request, $topicId)
+    public function createTopicAction($topicId)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -86,10 +82,8 @@ class PostsResource extends LaDanseController
      */
     public function getTopicAction(Request $request, $topicId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        return ResourceHelper::createErrorResponse($request, 
-            Response::HTTP_NOT_FOUND, "Resource not found", array("Allow" => "GET"));
+        return ResourceHelper::createErrorResponse($request,
+            Response::HTTP_NOT_FOUND, "Resource not found (" . $topicId . ")", array("Allow" => "GET"));
     }
 
     /**
@@ -144,9 +138,6 @@ class PostsResource extends LaDanseController
 
         $jsonData = $request->getContent(false);
 
-        $logger = $this->get('logger');
-        $logger->info('JSON DATA ' . $jsonData);
-
         $jsonObject = json_decode($jsonData);
 
         $this->getForumService()->updatePost($postId, $jsonObject->message);
@@ -159,63 +150,10 @@ class PostsResource extends LaDanseController
     }
 
     /**
-     * @Route("/comments", name="putPost")
-     * @Method({"POST"})
-     */
-    public function createTempPostAction(Request $request, $topicId)
-    {
-        $logger = $this->get('logger');
-        $logger->info('Post request received');
-
-        $guestbook = $this->fetchGuestbook($guestbookId);
-
-        if ($guestbook === NULL)
-        {
-            return ResourceHelper::createErrorResponse($request, Response::HTTP_NOT_FOUND, "Resource not found");
-        }
-
-        // $_POST parameters
-        $subject = $request->request->get('subject');
-        $poster = $request->request->get('poster');
-        $message = $request->request->get('message');
-
-        if ((isset($subject) && (strlen($subject) > 2)) &&
-            (isset($poster) && (strlen($poster) > 2)) &&
-            (isset($message) && (strlen($message))))
-        {
-            $logger->info('Subject is ' . $subject);
-            $logger->info('Poster is ' . $poster);
-            $logger->info('Message is ' . $message);
-
-            $newComment = new GuestComment();
-            $newComment->setId(ResourceHelper::createUUID());
-            $newComment->setPoster($poster);
-            $newComment->setSubject($subject);
-            $newComment->setMessage($message);
-            $newComment->setGuestbook($guestbook);
-            $newComment->setPostDate(new \DateTime());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($newComment);
-            $em->flush();
-
-            $response = new JsonResponse();
-
-            ResourceHelper::addAccessControlAllowOrigin($request, $response);
-
-            return $response;
-        }
-        else
-        {
-            return ResourceHelper::createErrorResponse($request, Response::HTTP_BAD_REQUEST, "Not all fields are provided");
-        }
-    }
-
-    /**
      * @Route("/{commentId}", name="otherPost")
      * @Method({"POST", "PUT", "DELETE", "OPTIONS"})
      */
-    public function otherPostAction(Request $request, $topicId, $postId)
+    public function otherPostAction(Request $request, $topicId, $commentId)
     {
         return ResourceHelper::createErrorResponse($request, 
             Response::HTTP_NOT_FOUND, "Resource not found", array("Allow" => "GET"));
