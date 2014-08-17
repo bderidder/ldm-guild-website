@@ -38,7 +38,7 @@ class LaDanseService extends ContainerAware
 	}
 
 	/**
-     * @return Symfony\Bundle\DoctrineBundle\Registry
+     * @return \Doctrine\Bundle\DoctrineBundle\Registry
      */
 	protected function getDoctrine()
 	{
