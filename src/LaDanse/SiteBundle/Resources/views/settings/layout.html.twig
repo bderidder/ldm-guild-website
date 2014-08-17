@@ -10,10 +10,22 @@
     </ol>
 
     <style>
+
+    #SettingsLinks
+    {
+        margin-top: 10px;
+    }
+
     #SettingsPane
     {
     	border-left: 1px solid #777777;
     	padding-left: 20px;
+    }
+
+    #SettingsPane h1
+    {
+        padding-top: 0px;
+        margin-top: 0px;
     }
 
     .settings-link-container
@@ -37,7 +49,8 @@
 
     .settings-link-container:hover
     {
-        background-color: #00a300;
+        /* background-color: #00a300; */
+        background-color: #808080;
     }
 
     .settings-link-container p
@@ -54,21 +67,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <a class="settings-link" href="{{ path('viewProfile') }}">
-                    <div id="settingsProfileLink" class="settings-link-container">
-                        <p><i class="fa fa-gears"></i> Profile </p>
-                    </div>
-                </a>
-                <a class="settings-link" href="{{ path('changePassword') }}">
-                    <div id="settingsPasswordLink" class="settings-link-container">
-                        <p><i class="fa fa-key"></i> Password</p>
-                    </div>
-                </a>
-                <a class="settings-link" href="{{ path('viewNotifications') }}">
-                    <div id="settingsNotificationsLink" class="settings-link-container">
-                        <p><i class="fa fa-globe"></i> Notifications</p>
-                    </div>
-                </a>
+                <div id="SettingsLinks">
+                    <a class="settings-link" href="{{ path('editProfile') }}">
+                        <div id="settingsProfileLink" class="settings-link-container">
+                            <p><i class="fa fa-gears"></i> Profile </p>
+                        </div>
+                    </a>
+                    <a class="settings-link" href="{{ path('changePassword') }}">
+                        <div id="settingsPasswordLink" class="settings-link-container">
+                            <p><i class="fa fa-key"></i> Password</p>
+                        </div>
+                    </a>
+                    <a class="settings-link" href="{{ path('editNotifications') }}">
+                        <div id="settingsNotificationsLink" class="settings-link-container">
+                            <p><i class="fa fa-globe"></i> Notifications</p>
+                        </div>
+                    </a>
+                </div>
             </div>
             <div class="col-md-10">
             	<div id="SettingsPane">
