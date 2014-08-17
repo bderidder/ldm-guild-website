@@ -28,6 +28,6 @@ class SettingsIndexController extends LaDanseController
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
 
-        return $this->redirect($this->generateUrl('viewProfile'));
+        return $this->redirect($this->generateUrl('editProfile'));
     }
 }
