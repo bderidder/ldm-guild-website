@@ -4,6 +4,8 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class PasswordFormModel
 {
     /** @var  $passwordOne string */
@@ -21,6 +23,9 @@ class PasswordFormModel
     }
 
     /**
+     *
+     * @Assert\NotBlank()
+     *
      * @return string
      */
     public function getPasswordOne()
@@ -37,6 +42,9 @@ class PasswordFormModel
     }
 
     /**
+     *
+     * @Assert\NotBlank()
+     *
      * @return string
      */
     public function getPasswordTwo()
@@ -47,6 +55,13 @@ class PasswordFormModel
     public function isValid(ErrorModel $errorModel)
     {
         $isValid = true;
+
+        if (strcmp($this->passwordOne, $this->passwordTwo) != 0)
+        {
+            $errorModel->addError('Both password entries must be equal');
+
+            $isValid = false;
+        }
 
         return $isValid;
     }
