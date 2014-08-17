@@ -19,6 +19,19 @@ class SettingsService extends LaDanseService
 		parent::__construct($container);
 	}
 
+    public function updateProfile($accountId, $displayName, $email)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $this->getDoctrine()->getRepository(Account::REPOSITORY);
+
+        $account = $repo->find($accountId);
+
+        $account->setDisplayName($displayName);
+        $account->setEmail($email);
+
+        $em->flush();
+    }
+
     /*
      * Return for a specific account all known settings
      */
