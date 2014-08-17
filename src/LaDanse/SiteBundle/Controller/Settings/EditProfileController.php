@@ -46,6 +46,9 @@ class EditProfileController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors))
             {
+               $this->updateProfile($authContext->getAccount()->getId(),
+                   $formModel->getDisplayName(), $formModel->getEmail());
+
                $this->addToast('Profile updated');
 
                 return $this->redirect($this->generateUrl('editProfile'));
@@ -62,5 +65,12 @@ class EditProfileController extends LaDanseController
             return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',
                 array('form' => $form->createView()));
         }
+    }
+
+    private function updateProfile($accountId, $displayName, $email)
+    {
+        $settingsService = $this->getSettingsService();
+
+        $settingsService->updateProfile($accountId, $displayName, $email);
     }
 }
