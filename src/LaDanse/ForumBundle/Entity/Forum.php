@@ -50,7 +50,7 @@ class Forum
     /**
      * Get id
      *
-     * @return guid 
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +116,7 @@ class Forum
     /**
      * Set id
      *
-     * @param guid $id
+     * @param integer $id
      * @return Forum
      */
     public function setId($id)

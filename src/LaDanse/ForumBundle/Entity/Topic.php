@@ -55,13 +55,13 @@ class Topic
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return guid 
+     * @return integer
      */
     public function getId()
     {
@@ -173,7 +173,7 @@ class Topic
     /**
      * Set id
      *
-     * @param guid $id
+     * @param integer $id
      * @return Topic
      */
     public function setId($id)

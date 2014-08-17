@@ -53,7 +53,7 @@ class Post
     /**
      * Get id
      *
-     * @return guid 
+     * @return integer
      */
     public function getId()
     {
@@ -122,7 +122,7 @@ class Post
     /**
      * Get poster
      *
-     * @return \LaDanse\ForumBundle\Entity\Account 
+     * @return \LaDanse\DomainBundle\Entity\Account
      */
     public function getPoster()
     {
@@ -155,7 +155,7 @@ class Post
     /**
      * Set id
      *
-     * @param guid $id
+     * @param integer $id
      * @return Post
      */
     public function setId($id)
