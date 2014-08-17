@@ -44,6 +44,8 @@ class ChangePasswordController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors))
             {
+                $this->changePassword($authContext->getAccount()->getUsername(), $formModel->getPasswordOne());
+
                 $this->addToast('Password changed');
 
                 return $this->redirect($this->generateUrl('welcomeIndex'));
@@ -60,5 +62,21 @@ class ChangePasswordController extends LaDanseController
             return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
                 array('form' => $form->createView()));
         }
+    }
+
+    private function changePassword($username, $newPassword)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+
+        $user = $userManager->findUserByUsername($username);
+
+        if ($user == null)
+        {
+            return;
+        }
+
+        $user->setPlainPassword($newPassword);
+
+        $userManager->updateUser($user);
     }
 }
