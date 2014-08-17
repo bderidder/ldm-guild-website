@@ -2,13 +2,11 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerAware,
-    Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\DomainBundle\Entity\Setting,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Account;
 
 class SettingsService extends LaDanseService
 {
@@ -110,6 +108,10 @@ class SettingsService extends LaDanseService
         return false;
     }
 
+    /**
+     * @param $setting \LaDanse\DomainBundle\Entity\Setting
+     * @return object
+     */
     protected function settingToDto($setting)
     {
         return (object) array(
