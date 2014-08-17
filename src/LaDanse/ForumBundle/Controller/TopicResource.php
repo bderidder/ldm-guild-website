@@ -5,8 +5,6 @@ namespace LaDanse\ForumBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,12 +13,7 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 
-use Latte\Bundle\GuestbookRestBundle\Entity\GuestComment;
-
-use LaDanse\ForumBundle\Entity\Forum,
-    LaDanse\ForumBundle\Entity\Topic,
-    LaDanse\ForumBundle\Entity\Post,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ForumBundle\Entity\Topic;
 
 /**
  * @Route("/topics")
