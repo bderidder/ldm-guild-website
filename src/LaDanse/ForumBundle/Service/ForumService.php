@@ -2,15 +2,12 @@
 
 namespace LaDanse\ForumBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerAware,
-    Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\ForumBundle\Entity\Forum,
-    LaDanse\ForumBundle\Entity\Topic,
-    LaDanse\ForumBundle\Entity\Post,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ForumBundle\Entity\Topic,
+    LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
 
@@ -54,7 +51,6 @@ class ForumService extends LaDanseService
     {
         $doc = $this->getDoctrine();
 
-        $em = $doc->getManager();
         $postRepo = $doc->getRepository(Post::REPOSITORY);
 
         $post = $postRepo->find($postId);
@@ -66,6 +62,24 @@ class ForumService extends LaDanseService
         else 
         {
             return $post;
+        }
+    }
+
+    public function getTopic($topicId)
+    {
+        $doc = $this->getDoctrine();
+
+        $topicRepo = $doc->getRepository(Topic::REPOSITORY);
+
+        $topic = $topicRepo->find($topicId);
+
+        if (null === $topic)
+        {
+            throw new TopicDoesNotExistException("Topic does not exist: " . $topicId);
+        }
+        else
+        {
+            return $topic;
         }
     }
 
