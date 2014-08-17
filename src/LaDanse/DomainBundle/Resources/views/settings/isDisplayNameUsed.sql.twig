@@ -1,7 +1,6 @@
-SELECT s
-FROM LaDanse\DomainBundle\Entity\Setting s
-	JOIN s.account a
+SELECT a
+FROM LaDanse\DomainBundle\Entity\Account a
 WHERE
-	s.account = :accountId
+	a.id != :accountId
 	AND
-	s.name LIKE :namePattern
+	a.displayName = :displayName
