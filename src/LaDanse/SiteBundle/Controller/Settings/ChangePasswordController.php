@@ -9,8 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
-use LaDanse\SiteBundle\Form\Model\SettingsFormModel;
-use LaDanse\SiteBundle\Form\Type\SettingsFormType;
+use LaDanse\SiteBundle\Model\ErrorModel;
+
+use LaDanse\SiteBundle\Form\Model\PasswordFormModel;
+use LaDanse\SiteBundle\Form\Type\PasswordFormType;
 
 class ChangePasswordController extends LaDanseController
 {
@@ -20,13 +22,43 @@ class ChangePasswordController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-    	if (!$authContext->isAuthenticated())
-    	{
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in changePassword');
 
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-    	}
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+
+        $formModel = new PasswordFormModel();
+
+        $form = $this->createForm(new PasswordFormType(), $formModel,
+            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+
+        if ($request->getMethod() == 'POST')
+        {
+            $form->handleRequest($request);
+
+            $errors = new ErrorModel();
+
+            if ($form->isValid() && $formModel->isValid($errors))
+            {
+                $this->addToast('Password changed');
+
+                return $this->redirect($this->generateUrl('welcomeIndex'));
+            }
+            else
+            {
+                return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
+                    array('form' => $form->createView(),
+                        'errors' => $errors));
+            }
+        }
+        else
+        {
+            return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
+                array('form' => $form->createView()));
+        }
     }
 }
