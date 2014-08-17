@@ -44,7 +44,7 @@ class EditProfileController extends LaDanseController
 
             $errors = new ErrorModel();
 
-            if ($form->isValid() && $formModel->isValid($errors))
+            if ($form->isValid() && $formModel->isValid($errors, $authContext->getAccount(), $this->getSettingsService()))
             {
                $this->updateProfile($authContext->getAccount()->getId(),
                    $formModel->getDisplayName(), $formModel->getEmail());

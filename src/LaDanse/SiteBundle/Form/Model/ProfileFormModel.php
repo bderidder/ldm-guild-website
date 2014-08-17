@@ -2,7 +2,13 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+use LaDanse\DomainBundle\Entity\Account;
+
 use LaDanse\SiteBundle\Model\ErrorModel;
+
+use LaDanse\ServicesBundle\Service\SettingsService;
 
 class ProfileFormModel
 {
@@ -40,6 +46,12 @@ class ProfileFormModel
     }
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "4",
+     *      max = "12",
+     *      minMessage = "Your display name must be at least {{ limit }} characters length",
+     *      maxMessage = "Your display name cannot be longer than {{ limit }} characters length")
      * @return string
      */
     public function getDisplayName()
@@ -56,6 +68,9 @@ class ProfileFormModel
     }
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.",
+     *      checkMX = false)
      * @return string
      */
     public function getEmail()
@@ -63,9 +78,16 @@ class ProfileFormModel
         return $this->email;
     }
 
-    public function isValid(ErrorModel $errorModel)
+    public function isValid(ErrorModel $errorModel, Account $currentAccount, SettingsService $settingsService)
     {
         $isValid = true;
+
+        if ($settingsService->isDisplayNameUsed($this->displayName, $currentAccount->getId()))
+        {
+            $errorModel->addError("That display name is already in use by someone else");
+
+            $isValid = false;
+        }
 
         return $isValid;
     }
