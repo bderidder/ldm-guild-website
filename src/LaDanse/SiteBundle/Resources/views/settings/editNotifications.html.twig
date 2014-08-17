@@ -1,0 +1,40 @@
+{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+
+{% block settingsPanel %}
+
+	<style>
+		#settingsNotificationsLink
+	    {
+	        background-color: #99b433;
+	    }
+	</style>
+
+	<h1>Notifications</h1>
+
+    <p>You don't want to miss out on a new event, do you? This site can notify you when things happen that might
+       interest you. To avoid sending you more emails than you care for, you'll have to tell us what you are
+       interested in and what not.</p>
+
+    <p>Remember: we won't send you any emails unless you allow us to (or when we really have to)!</p>
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form.newEvents,
+        { 'label': 'Notify me when a new event (e.g. raid) is created' })
+    }}
+
+    {{ form_widget(form.changeSignedEvent,
+        { 'label': 'Notify me when an event I signed up for is changed' })
+    }}
+
+    {{ form_widget(form.signUpChange,
+        { 'label': 'When I created an event, notify me when someone signs up' })
+    }}
+
+    {{ form_row(form.change, { 'label': 'Update' }) }}
+
+    {{ form_end(form) }}
+
+{% endblock %}
