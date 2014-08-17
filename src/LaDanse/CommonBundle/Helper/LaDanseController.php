@@ -20,7 +20,7 @@ class LaDanseController extends Controller
 	}
 
 	/**
-     * @return \LaDanse\ServicesBundle\Service\ClaimsService
+     * @return \LaDanse\ServicesBundle\Service\GuildCharacterService
      */
 	protected function getGuildCharacterService()
 	{
@@ -36,7 +36,7 @@ class LaDanseController extends Controller
 	}
 
 	/**
-     * @return \LaDanse\ForumBundle\Service\SettingsService
+     * @return \LaDanse\ServicesBundle\Service\SettingsService
      */
 	protected function getSettingsService()
 	{
