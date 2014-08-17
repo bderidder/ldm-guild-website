@@ -31,6 +31,32 @@ class SettingsService extends LaDanseService
     }
 
     /*
+     * Check if a given display name is already used by an account except the given account
+     */
+    public function isDisplayNameUsed($displayName, $exceptAccountId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isDisplayNameUsed.sql.twig'));
+        $query->setParameter('accountId', $exceptAccountId);
+        $query->setParameter('displayName', $displayName);
+
+        $result = $query->getResult();
+
+        return !(count($result) == 0);
+    }
+
+    /*
+     * Check if a given email is already used by an account except the given account
+     */
+    public function isEmailUsed($email, $exceptAccountId)
+    {
+
+    }
+
+    /*
      * Return for a specific account all known settings
      */
     public function getSettingsForAccount($accountId, $settingNamePrefix = '')
