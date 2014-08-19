@@ -10,7 +10,9 @@
         <li class="active">Edit Character</li>
     </ol>
 
-    <h1>Update character '{{ claim.name }}'</h1>
+    <h1>Update character '{{ claim.character.name }}'</h1>
+
+    <p>Update the roles you are willing to perform with that character. You don't have to select any roles.</p>
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 

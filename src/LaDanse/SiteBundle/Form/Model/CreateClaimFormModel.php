@@ -17,7 +17,7 @@ class CreateClaimFormModel
      * Set roles
      *
      * @param array $roles
-     * @return NewClaimFormModel
+     * @return CreateClaimFormModel
      */
     public function setRoles($roles)
     {
@@ -29,7 +29,7 @@ class CreateClaimFormModel
     /**
      * Get roles
      *
-     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 1, max = 3)
+     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 0, max = 3)
      *
      * @return array 
      */
@@ -42,7 +42,7 @@ class CreateClaimFormModel
      * Set character
      *
      * @param string $character
-     * @return NewClaimFormModel
+     * @return CreateClaimFormModel
      */
     public function setCharacter($character)
     {

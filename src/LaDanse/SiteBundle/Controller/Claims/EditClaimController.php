@@ -35,8 +35,6 @@ class EditClaimController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-        $accountId = $authContext->getAccount()->getId();
-
         $claimModel = $this->getGuildCharacterService()->getClaim($claimId);
 
         $formModel = new EditClaimFormModel($claimModel);
@@ -71,6 +69,10 @@ class EditClaimController extends LaDanseController
         }   
     }
 
+    /**
+     * @param $claimId int
+     * @param $formModel EditClaimFormModel
+     */
     public function updateClaim($claimId, $formModel)
     {
         $tank   = false;

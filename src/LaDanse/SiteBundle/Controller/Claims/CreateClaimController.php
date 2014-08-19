@@ -69,6 +69,10 @@ class CreateClaimController extends LaDanseController
         }   
     }
 
+    /**
+     * @param $accountId int
+     * @param $formModel CreateClaimFormModel
+     */
     public function createClaim($accountId, $formModel)
     {
         $tank   = false;

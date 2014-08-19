@@ -48,7 +48,7 @@ class EditClaimFormModel
     /**
      * Get roles
      *
-     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 1, max = 3)
+     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 0, max = 3)
      *
      * @return array 
      */

@@ -104,7 +104,7 @@ class GuildCharacterService extends LaDanseService
 
         foreach($claims as $claim)
         {
-            $claimsModels[] = $this->claimToDto($claim);
+            $claimsModels[] = $this->claimToDto($claim, $onDateTime);
         }
 
         return $claimsModels;
@@ -132,14 +132,20 @@ class GuildCharacterService extends LaDanseService
 
         foreach($claims as $claim)
         {
-            $claimsModels[] = $this->claimToDto($claim);
+            $claimsModels[] = $this->claimToDto($claim, $onDateTime);
         }
 
         return $claimsModels;
     }
 
-    public function getClaim($claimId)
+    public function getClaim($claimId, \DateTime $onDateTime = NULL)
     {
+        if ($onDateTime == NULL)
+        {
+            // when not set, initialize to right now
+            $onDateTime = new \DateTime();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         /* @var $query \Doctrine\ORM\Query */
@@ -156,7 +162,7 @@ class GuildCharacterService extends LaDanseService
 
         $claim = $claims[0];
         
-        $claimsModel = $this->claimToDto($claim);
+        $claimsModel = $this->claimToDto($claim, $onDateTime);
        
         return $claimsModel;
     }
@@ -232,14 +238,14 @@ class GuildCharacterService extends LaDanseService
 
         $em = $this->getDoctrine()->getManager();
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
+        /* @var $characterRepo \Doctrine\ORM\EntityRepository */
         $characterRepo = $em->getRepository(Character::REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Character */
+        /* @var $character \LaDanse\DomainBundle\Entity\Character */
         $character = $characterRepo->find($characterId);
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
+        /* @var $accountRepo \Doctrine\ORM\EntityRepository */
         $accountRepo = $em->getRepository(Account::REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Character */
+        /* @var $account \LaDanse\DomainBundle\Entity\Account */
         $account = $accountRepo->find($accountId);
 
         $claim = new Claim();
@@ -274,27 +280,37 @@ class GuildCharacterService extends LaDanseService
 
         $em = $this->getDoctrine()->getManager();
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
+        /* @var $claimRepo \Doctrine\ORM\EntityRepository */
         $claimRepo = $em->getRepository(Claim::REPOSITORY);
         /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
         $claim = $claimRepo->find($claimId);
 
+        $notCurrentPlaysTank = true;
+        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
         foreach($claim->getRoles() as $playsRole)
         {
-            if ($playsRole->isRole(Role::TANK) && !$playsTank)
+            if ($playsRole->getRole() == Role::TANK
+                AND is_null($playsRole->getEndTime()))
             {
-                $playsRole->setEndTime($onDateTime);
+                $notCurrentPlaysTank = false;
 
-                $this->getLogger()->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
+                if (!$playsTank)
+                {
+                    $playsRole->setEndTime($onDateTime);
+
+                    $this->getLogger()->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
+                }
             }
+        }
 
-            if (!$playsRole->isRole(Role::TANK) && $playsTank)
-            {
-                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
+        if ($notCurrentPlaysTank && $playsTank)
+        {
+            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
+        }
 
-                $this->getLogger()->info(__CLASS__ . ' added TANK role to claim ' . $claimId);
-            }
-
+        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
+        foreach($claim->getRoles() as $playsRole)
+        {
             if ($playsRole->isRole(Role::HEALER) && !$playsHealer)
             {
                 $playsRole->setEndTime($onDateTime);
@@ -419,28 +435,35 @@ class GuildCharacterService extends LaDanseService
         return $playsRole;
     }
 
-    protected function containsRole($playsRoles, $role)
+    protected function containsRole($playsRoles, $role, \DateTime $onDateTime)
     {
         foreach($playsRoles as $playsRole)
         {
-            if ($playsRole->isRole($role))
+            if (($playsRole->isRole($role))
+                AND
+                (($playsRole->getFromTime()->getTimestamp() <= $onDateTime->getTimestamp())
+                    AND (is_null($playsRole->getEndTime()) OR
+                        ($playsRole->getEndTime()->getTimestamp() > $onDateTime->getTimestamp())))
+                )
             {
                 return true;
             }
+
         }
 
         return false;
     }
 
-    protected function claimToDto($claim)
+    /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
+    protected function claimToDto($claim, \DateTime $onDateTime)
     {
         return (object)array(
             "id"          => $claim->getId(),
             "character"   => $this->characterToDto($claim->getCharacter()),
             "fromTime"    => $claim->getFromTime(),
-            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK),
-            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER),
-            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS),
+            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK, $onDateTime),
+            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER, $onDateTime),
+            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS, $onDateTime),
         );
     }
 
