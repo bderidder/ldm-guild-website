@@ -78,21 +78,21 @@
                 {% endif %}
                     <td>{{ signUp.account.displayName }}</td>
                     <td class="center-td">
-                        {% if signUp.signedAsTank %}<i class="fa fa-times fa-1x text-success" 
+                        {% if signUp.signedAsTank %}<i class="signUp fa fa-times fa-1x text-success"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
                                      'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsHealer %}<i class="fa fa-times fa-1x text-success" 
+                        {% if signUp.signedAsHealer %}<i class="signUp fa fa-times fa-1x text-success"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
                                      'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsDamage %}<i class="fa fa-times fa-1x text-success" 
+                        {% if signUp.signedAsDamage %}<i class="signUp fa fa-times fa-1x text-success"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
@@ -110,21 +110,21 @@
                 {% endif %}
                     <td>{{ signUp.account.displayName }}</td>
                     <td class="center-td">
-                        {% if signUp.signedAsTank %}<i class="fa fa-question fa-1x text-warning" 
+                        {% if signUp.signedAsTank %}<i class="signUp fa fa-question fa-1x text-warning"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
                                      'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsHealer %}<i class="fa fa-question fa-1x text-warning" 
+                        {% if signUp.signedAsHealer %}<i class="signUp fa fa-question fa-1x text-warning"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
                                      'role': 'DPS'}) }}"></i>{% endif %}
                     </td>
                     <td class="center-td">
-                        {% if signUp.signedAsDamage %}<i class="fa fa-question fa-1x text-warning" 
+                        {% if signUp.signedAsDamage %}<i class="signUp fa fa-question fa-1x text-warning"
                                 data-url="{{ path('listClaims', 
                                     {'eventId': event.id,
                                      'accountId': signUp.account.id,
