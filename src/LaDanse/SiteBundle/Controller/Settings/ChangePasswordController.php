@@ -42,7 +42,7 @@ class ChangePasswordController extends LaDanseController
 
             $errors = new ErrorModel();
 
-            if ($form->isValid() && $formModel->isValid($errors))
+            if ($form->isValid() && $formModel->isValid($errors, $form))
             {
                 $this->changePassword($authContext->getAccount()->getUsername(), $formModel->getPasswordOne());
 

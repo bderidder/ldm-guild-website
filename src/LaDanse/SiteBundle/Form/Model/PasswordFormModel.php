@@ -2,6 +2,9 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
+
 use LaDanse\SiteBundle\Model\ErrorModel;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -52,13 +55,13 @@ class PasswordFormModel
         return $this->passwordTwo;
     }
 
-    public function isValid(ErrorModel $errorModel)
+    public function isValid(ErrorModel $errorModel, FormInterface $form)
     {
         $isValid = true;
 
         if (strcmp($this->passwordOne, $this->passwordTwo) != 0)
         {
-            $errorModel->addError('Both password entries must be equal');
+            $form->get('passwordTwo')->addError(new FormError('Both password entries must be equal'));
 
             $isValid = false;
         }

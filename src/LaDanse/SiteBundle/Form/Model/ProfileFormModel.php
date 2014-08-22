@@ -4,6 +4,9 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
+
 use LaDanse\DomainBundle\Entity\Account;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -78,13 +81,23 @@ class ProfileFormModel
         return $this->email;
     }
 
-    public function isValid(ErrorModel $errorModel, Account $currentAccount, SettingsService $settingsService)
+    public function isValid(ErrorModel $errorModel,
+                            FormInterface $form,
+                            Account $currentAccount,
+                            SettingsService $settingsService)
     {
         $isValid = true;
 
         if ($settingsService->isDisplayNameUsed($this->displayName, $currentAccount->getId()))
         {
-            $errorModel->addError("That display name is already in use by someone else");
+            $form->get('displayName')->addError(new FormError('That display name is already in use by someone else'));
+
+            $isValid = false;
+        }
+
+        if ($settingsService->isEmailUsed($this->email, $currentAccount->getId()))
+        {
+            $form->get('email')->addError(new FormError('That email address is already in use by someone else'));
 
             $isValid = false;
         }
