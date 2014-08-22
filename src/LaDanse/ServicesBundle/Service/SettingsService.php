@@ -53,7 +53,17 @@ class SettingsService extends LaDanseService
      */
     public function isEmailUsed($email, $exceptAccountId)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isEmailUsed.sql.twig'));
+        $query->setParameter('accountId', $exceptAccountId);
+        $query->setParameter('email', $email);
+
+        $result = $query->getResult();
+
+        return !(count($result) == 0);
     }
 
     /*
