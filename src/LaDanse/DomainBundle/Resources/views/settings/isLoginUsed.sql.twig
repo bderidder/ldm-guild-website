@@ -1,0 +1,6 @@
+SELECT a
+FROM LaDanse\DomainBundle\Entity\Account a
+WHERE
+	a.id != :accountId
+	AND
+	a.email = :email
