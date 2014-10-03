@@ -15,8 +15,8 @@ use LaDanse\ServicesBundle\Service\SettingsService;
 
 class RegistrationFormModel
 {
-    /** @var  $login string */
-    private $login;
+    /** @var  $username string */
+    private $username;
 
     /** @var  $displayName string */
     private $displayName;
@@ -31,23 +31,23 @@ class RegistrationFormModel
     private $passwordTwo;
 
     /**
-     * @param string $login
+     * @param string $username
      */
-    public function setLogin($login)
+    public function setUsername($username)
     {
-        $this->login = $login;
+        $this->username = $username;
     }
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "4",
-     *      minMessage = "Your login must be at least {{ limit }} characters long")
+     *      minMessage = "Your username must be at least {{ limit }} characters long")
      * @return string
      */
-    public function getLogin()
+    public function getUsername()
     {
-        return $this->login;
+        return $this->username;
     }
 
     /**
@@ -129,7 +129,7 @@ class RegistrationFormModel
     {
         $isValid = true;
 
-        if ($settingsService->isLoginUsed($this->login))
+        if ($settingsService->isLoginUsed($this->username))
         {
             $form->get('username')->addError(new FormError('That username is already in use by someone else'));
 

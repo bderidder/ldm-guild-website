@@ -58,7 +58,7 @@ class RegistrationController extends LaDanseController
         /* @var $user \LaDanse\DomainBundle\Entity\Account */
         $user = $userManager->createUser();
 
-        $user->setUsername($formModel->getLogin());
+        $user->setUsername($formModel->getUsername());
         $user->setPlainPassword($formModel->getPasswordOne());
         $user->setDisplayName($formModel->getDisplayName());
         $user->setEmail($formModel->getEmail());
