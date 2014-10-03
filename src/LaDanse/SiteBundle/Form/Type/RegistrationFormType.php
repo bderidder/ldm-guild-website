@@ -6,13 +6,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProfileFormType extends AbstractType
+class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('login', 'text', array('label' => "Login", 'read_only' => true))
+        $builder->add('username', 'text', array('label' => "Login"))
                 ->add('displayName', 'text', array('label' => "Display Name"))
                 ->add('email', 'text', array('label' => "Email"))
+                ->add('passwordOne', 'password', array('label' => "Password"))
+                ->add('passwordTwo', 'password', array('label' => "Repeat Password"))
                 ->add('save', 'submit');
     }
 
@@ -26,6 +28,6 @@ class ProfileFormType extends AbstractType
      */
     public function getName()
     {
-        return 'EditProfile';
+        return 'RegisterProfile';
     }
 }

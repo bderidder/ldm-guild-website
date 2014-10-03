@@ -1,41 +1,26 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller\Settings;
+namespace LaDanse\SiteBundle\Controller\Registration;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\SiteBundle\Form\Model\ProfileFormModel;
-use LaDanse\SiteBundle\Form\Type\ProfileFormType;
+use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
+use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
-class EditProfileController extends LaDanseController
+class RegistrationController extends LaDanseController
 {
 	/**
-     * @Route("/profile", name="editProfile")
-     * @Template("LaDanseSiteBundle:settings:editProfile.html.twig")
+     * @Route("/", name="registerProfile")
+     * @Template("LaDanseSiteBundle:registration:registerProfile.html.twig")
      */
     public function indexAction(Request $request)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
+        $formModel = new RegistrationFormModel();
 
-    	if (!$authContext->isAuthenticated())
-    	{
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in editProfile');
-
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-    	}
-
-        $account = $authContext->getAccount();
-
-        $formModel = new ProfileFormModel();
-
-        $formModel->setDisplayName($account->getDisplayName());
-        $formModel->setLogin($account->getUsername());
-        $formModel->setEmail($account->getEmail());
-
-        $form = $this->createForm(new ProfileFormType(), $formModel,
+        $form = $this->createForm(new RegistrationFormType(), $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')
@@ -44,33 +29,41 @@ class EditProfileController extends LaDanseController
 
             $errors = new ErrorModel();
 
-            if ($form->isValid() && $formModel->isValid($errors, $form, $authContext->getAccount(), $this->getSettingsService()))
+            if ($form->isValid() && $formModel->isValid($errors, $form, $this->getSettingsService()))
             {
-               $this->updateProfile($authContext->getAccount()->getId(),
-                   $formModel->getDisplayName(), $formModel->getEmail());
+                $this->registerUser($formModel);
 
-               $this->addToast('Profile updated');
+                $this->addToast('Registration saved');
 
-                return $this->redirect($this->generateUrl('editProfile'));
+                return $this->redirect($this->generateUrl('welcomeIndex'));
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',
+                return $this->render('LaDanseSiteBundle:registration:registerProfile.html.twig',
                     array('form' => $form->createView(),
                         'errors' => $errors));
             }
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',
+            return $this->render('LaDanseSiteBundle:registration:registerProfile.html.twig',
                 array('form' => $form->createView()));
         }
     }
 
-    private function updateProfile($accountId, $displayName, $email)
+    private function registerUser(RegistrationFormModel $formModel)
     {
-        $settingsService = $this->getSettingsService();
+        $userManager = $this->get('fos_user.user_manager');
 
-        $settingsService->updateProfile($accountId, $displayName, $email);
+        /* @var $user \LaDanse\DomainBundle\Entity\Account */
+        $user = $userManager->createUser();
+
+        $user->setUsername($formModel->getLogin());
+        $user->setPlainPassword($formModel->getPasswordOne());
+        $user->setDisplayName($formModel->getDisplayName());
+        $user->setEmail($formModel->getEmail());
+        $user->setEnabled(true);
+
+        $userManager->updateUser($user);
     }
 }

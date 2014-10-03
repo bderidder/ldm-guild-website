@@ -13,7 +13,7 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 
 use LaDanse\ServicesBundle\Service\SettingsService;
 
-class ProfileFormModel
+class RegistrationFormModel
 {
     /** @var  $login string */
     private $login;
@@ -24,6 +24,12 @@ class ProfileFormModel
     /** @var  $email string */
     private $email;
 
+    /** @var  $passwordOne string */
+    private $passwordOne;
+
+    /** @var  $passwordTwo string */
+    private $passwordTwo;
+
     /**
      * @param string $login
      */
@@ -33,6 +39,10 @@ class ProfileFormModel
     }
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "4",
+     *      minMessage = "Your login must be at least {{ limit }} characters long")
      * @return string
      */
     public function getLogin()
@@ -71,6 +81,38 @@ class ProfileFormModel
     }
 
     /**
+     * @return string
+     */
+    public function getPasswordOne()
+    {
+        return $this->passwordOne;
+    }
+
+    /**
+     * @param string $passwordOne
+     */
+    public function setPasswordOne($passwordOne)
+    {
+        $this->passwordOne = $passwordOne;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordTwo()
+    {
+        return $this->passwordTwo;
+    }
+
+    /**
+     * @param string $passwordTwo
+     */
+    public function setPasswordTwo($passwordTwo)
+    {
+        $this->passwordTwo = $passwordTwo;
+    }
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Email(message = "The email '{{ value }}' is not a valid email.",
      *      checkMX = false)
@@ -83,19 +125,25 @@ class ProfileFormModel
 
     public function isValid(ErrorModel $errorModel,
                             FormInterface $form,
-                            Account $currentAccount,
                             SettingsService $settingsService)
     {
         $isValid = true;
 
-        if ($settingsService->isDisplayNameUsed($this->displayName, $currentAccount->getId()))
+        if ($settingsService->isLoginUsed($this->login))
+        {
+            $form->get('username')->addError(new FormError('That username is already in use by someone else'));
+
+            $isValid = false;
+        }
+
+        if ($settingsService->isDisplayNameUsed($this->displayName))
         {
             $form->get('displayName')->addError(new FormError('That display name is already in use by someone else'));
 
             $isValid = false;
         }
 
-        if ($settingsService->isEmailUsed($this->email, $currentAccount->getId()))
+        if ($settingsService->isEmailUsed($this->email))
         {
             $form->get('email')->addError(new FormError('That email address is already in use by someone else'));
 

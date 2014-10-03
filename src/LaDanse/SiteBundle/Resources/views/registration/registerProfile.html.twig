@@ -1,24 +1,15 @@
-{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
 
-{% block settingsPanel %}
+{% block title %}Register - La Danse Macabre{% endblock %}
 
-	<style>
-		#settingsProfileLink
-	    {
-	        background-color: #99b433;
-	    }
-	</style>
+{% block body %}
 
-	<h1>Profile</h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
+        <li class="active">Register</li>
+    </ol>
 
-    <p>Edit your personal profile information. Your display name is used throughout the website so make sure
-       to pick something so people recognize it's you. Your email address will be used to send notifications
-       or password resets.</p>
-
-    <p>You cannot change your login name through this form. Use the feedback link in the top right corner to contact
-       the site maintainers and request a change of login name if you desire such a change.</p>
-
-    <br/>
+    <h1>Registration</h1>
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
