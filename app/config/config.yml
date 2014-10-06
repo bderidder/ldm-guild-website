@@ -39,6 +39,7 @@ assetic:
         - LaDanseSiteBundle
         - LaDanseBootstrapBundle
         - CoderSpottingToastMessageBundle
+        - FOSUserBundle
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
