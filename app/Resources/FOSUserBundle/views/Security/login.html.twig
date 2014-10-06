@@ -73,7 +73,7 @@
             {% endimage %}
 		</div>
 		<div id="text-container">
-			<h2>Sign In</h2>
+			<h2 style="font-weight: normal; text-shadow: none;">Sign In</h2>
 			<p>La Danse Account</p>
 
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
@@ -94,7 +94,7 @@
                     <div class="form-group">
                         <div class="col-lg-9">
                             <input type="checkbox" class="f" id="remember_me" name="_remember_me" value="on" />
-                            <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            <label for="remember_me" style="font-weight: normal; text-shadow: none;">{{ 'security.login.remember_me'|trans }}</label>
                         </div>
                     </div>
 
