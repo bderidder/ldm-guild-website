@@ -19,12 +19,12 @@
 
         color: black;
 
-		background-image:url('{{ asset('bundles/ladansesite/images/background-2.jpg') }}');
-	    background-color: rgb(56, 0, 0);
+	    background-color: black;
 	    background-repeat: no-repeat;
 	    background-attachment: fixed;
-	    background-position: top;  
-	    background-size: 100% auto; 
+	    background-position: top;
+        background-size: cover;
+        transition: background-image 2s ease-in-out;
 	}
 
 	#left-login-container
@@ -111,5 +111,67 @@
 	</div>
 
 </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    var backgroundImages = [
+    '{{ asset('bundles/ladansesite/images/background-2.jpg') }}',
+    '{{ asset('bundles/ladansesite/images/background-3.jpg') }}',
+    '{{ asset('bundles/ladansesite/images/background-4.jpg') }}'
+    ];
+
+    function doLoginWindowResize()
+    {
+        var viewportHeight;
+
+        if (document.compatMode === 'BackCompat')
+        {
+            viewportHeight = document.body.clientHeight;
+        }
+        else
+        {
+            viewportHeight = document.documentElement.clientHeight;
+        }
+
+        $('#page-container').height = viewportHeight;
+        $('#right-login-container').height = viewportHeight;
+    }
+
+    function startBackgroundImageChanger()
+    {
+        var imageIndex = Math.floor((Math.random() * backgroundImages.length));
+
+        setInterval(function()
+        {
+            $('#page-container').css("background-image", "url('" + backgroundImages[imageIndex] + "')");
+
+            imageIndex++;
+
+            if (imageIndex >= backgroundImages.length)
+            {
+                imageIndex = 0;
+            }
+        }, 5000);
+    }
+
+    var resizeTimer;
+    $(window).resize(function()
+    {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(doLoginWindowResize, 100);
+    });
+
+    $(document).ready(function()
+    {
+        doLoginWindowResize();
+
+        startBackgroundImageChanger();
+    });
+
+</script>
 
 {% endblock %}
