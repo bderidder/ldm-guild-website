@@ -27,17 +27,12 @@
         transition: background-image 2s ease-in-out;
 	}
 
-	#left-login-container
-	{
-		
-	}
-
 	#right-login-container
 	{
 		float: right;
 		z-index: 90;
 		width: 30%;
-		height: 775px;
+        height: 100%;
 		background-color: rgba(242, 242, 242, .80);
 	}
 
@@ -59,7 +54,6 @@
 	}
 </style>
 
-
 <div id="page-container">
 
 	<div id="right-login-container">
@@ -74,6 +68,7 @@
 		</div>
 		<div id="text-container">
 			<h2 style="font-weight: normal; text-shadow: none;">Sign In</h2>
+
 			<p>La Danse Account</p>
 
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
@@ -137,8 +132,10 @@
             viewportHeight = document.documentElement.clientHeight;
         }
 
-        $('#page-container').height = viewportHeight;
-        $('#right-login-container').height = viewportHeight;
+        console.log("viewportHeight " + viewportHeight);
+
+        $('#page-container').height(viewportHeight);
+        $('#right-login-container').height(viewportHeight);
     }
 
     function startBackgroundImageChanger()
