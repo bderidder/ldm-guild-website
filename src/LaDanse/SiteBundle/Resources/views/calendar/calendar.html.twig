@@ -1,15 +1,15 @@
-{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
 
 {% block title %}La Danse - Calendar{% endblock %}
 
 {% block body %}
 
-	<ol class="breadcrumb">
+	<!-- ol class="breadcrumb">
         <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
         <li class="active">Calendar</li>
-    </ol>
+    </ol -->
 
-    <h1>Events</h1>
+    <h1 style="padding-top: 10px;">Calendar</h1>
 
     {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial', {'page': page})) }}
 

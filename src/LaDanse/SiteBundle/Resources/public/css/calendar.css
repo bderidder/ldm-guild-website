@@ -33,6 +33,7 @@
 .event-container-link, .event-container-link:hover
 {
     text-decoration: none;
+    color: black;
 }
 
 .event-container:hover
@@ -49,7 +50,7 @@
 .event-absent
 {
     background-color: rgb(100, 60, 50);
-    background-color: #b91d47;
+    background-color: #ce607e;
 }
 
 .event-notSigned
@@ -60,12 +61,22 @@
 
 .today-calendar-cell
 {
-    background-color: rgba(200, 200, 200, .2);
+    background-color: #e5e5e5;
 }
-	
+
+.table-bordered
+{
+    background-color: white;
+}
+
 .table-striped tbody tr:nth-child(odd) td.today-calendar-cell
 {
-	background-color: rgba(200, 200, 200, .2);
+	background-color: #b2b2b2;
+}
+
+.table-striped tbody tr:nth-child(even)
+{
+    background-color: #e5e5e5;
 }
 
 .hover-me-container

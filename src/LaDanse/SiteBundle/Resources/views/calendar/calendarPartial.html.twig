@@ -1,5 +1,5 @@
 {% if auth.currentContext.authenticated %}
-    <p>Can't find the raid you were looking for? <a href="{{ path('createEvent') }}">Why not create an event yourself?</a></p>
+    <p>Can't find the event you were looking for? <a href="{{ path('createEvent') }}">Why not create an event yourself?</a></p>
 {% endif %}
 
 <!--
@@ -28,7 +28,9 @@
     <span class="event-container event-notSigned"> You haven't signed yet</span>
 </div>
 
-<table class="table table-striped" style="table-layout: fixed; text-overflow: ellipsis;">
+<br/>
+
+<table class="table table-bordered" style="table-layout: fixed; text-overflow: ellipsis;">
 <thead>
     <tr>
         <th>monday</th>            
@@ -55,7 +57,7 @@
                         <div class="hover-me">
                             <small>
                             <a href="{{ path('createEvent', 
-                                             {'onDate': calendarDay.date|date('Ymd')}) }}" >add a raid</a>
+                                             {'onDate': calendarDay.date|date('Ymd')}) }}" >add an event</a>
                             </small>
                         </div>
                     </div>

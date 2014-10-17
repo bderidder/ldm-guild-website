@@ -1,22 +1,24 @@
-{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
 
 {% block title %}Characters - La Danse Macabre{% endblock %}
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('viewClaims') }}">Characters</a></li>
-        <li class="active">Add Character</li>
-    </ol>
+    <div style="position: absolute; left: -90px;">
+        <a href="{{ path('viewClaims') }}">
+            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" />
+        </a>
+    </div>
 
-    <h1>Add a character</h1>
+    <h1 style="padding-top: 10px;">Add a character</h1>
 
     <p>Select the character you want to claim and the roles you are willing to perform with that character. You
        don't have to select any roles.</p>
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
-    {{ form(form) }}
+    <div style="max-width: 600px;">
+        {{ form(form) }}
+    </div>
 
 {% endblock %}

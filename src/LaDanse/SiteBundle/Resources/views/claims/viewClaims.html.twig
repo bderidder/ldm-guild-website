@@ -1,4 +1,4 @@
-{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
 
 {% block title %}Characters - La Danse Macabre{% endblock %}
 
@@ -8,9 +8,19 @@
     {{ parent() }}
 
     <script type="application/javascript">
-        function removeClaim()
+        function removeClaim(removeClaimUrl)
         {
-            return confirm('This will remove your claim, are you sure?');
+            alertify.confirm('This will remove your claim, are you sure?',
+                    function (e)
+                    {
+                        if (e)
+                        {
+                            location.assign(removeClaimUrl);
+                        }
+                    }
+            );
+
+            return false;
         }
     </script>
 
@@ -18,12 +28,7 @@
 
 {% block body %}
 
-	<ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li class="active">Characters</li>
-    </ol>
-
-    <h1>Characters</h1>
+    <h1 style="padding-top: 10px;">Characters</h1>
     
 	<p>Below you can find the list of characters you currently have a claim over and what roles you want to perform with them.</p>
 
@@ -65,7 +70,7 @@
                     	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">
                             <i class="fa fa-pencil fa-1x"></i>
                         </a>
-                    	<a onClick="return removeClaim()" href="{{ path('removeClaim', {'claimId': claim.id}) }}">
+                    	<a onClick="return removeClaim('{{ path('removeClaim', {'claimId': claim.id}) }}');" href="#">
                             <i class="fa fa-trash-o fa-1x"></i>
                         </a>
                 	</span>
@@ -75,6 +80,6 @@
     {% endif %}
 	</table>
 
-    <a class="btn btn-default" href="{{ path('createClaim') }}">Add a character</a>
+    <a class="btn btn-primary" href="{{ path('createClaim') }}">Add a character</a>
 
 {% endblock %}

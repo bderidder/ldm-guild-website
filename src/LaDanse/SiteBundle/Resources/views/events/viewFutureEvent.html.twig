@@ -1,16 +1,16 @@
-{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
 
 {% block title %}Event - La Danse Macabre{% endblock %}
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
-        <li class="active">Event '{{ event.name }}' - {{ event.inviteTime|date("d/m (D)") }}</li>
-    </ol>
+    <div style="position: absolute; left: -90px;">
+        <a href="{{ path('calendarIndex') }}">
+            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" />
+        </a>
+    </div>
 
-    <h1>{{ event.name }}</h1>
+    <h1 style="padding-top: 10px;">{{ event.name }}</h1>
 
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
@@ -170,8 +170,8 @@
             <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
             <p>
-                <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
-                <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
+                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
             </p>
         {% endif %}
     
@@ -180,8 +180,8 @@
         <p>There are no sign ups yet.</p>
 
         <p>
-            <a class="btn btn-default" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
-            <a class="btn btn-default" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
+            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
         </p>
     {% endif %}
 
@@ -190,8 +190,8 @@
         <p>As an organiser you can edit this event or delete it.</p> 
 
         <p>
-            <a class="btn btn-default" href="{{ path('editEvent', {'id': event.id}) }}">Edit Event</a>
-            <a id="removeEvent" class="btn btn-default" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
+            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">Edit Event</a>
+            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
         </p>
     {% endif %}
 
