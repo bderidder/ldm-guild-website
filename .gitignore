@@ -15,6 +15,7 @@ composer.phar
 /composer.phar
 web/css/*
 web/js/*
+web/images/*
 
 TestCommand.php
 
