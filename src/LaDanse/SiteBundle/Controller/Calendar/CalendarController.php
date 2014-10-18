@@ -98,9 +98,7 @@ class CalendarController extends LaDanseController
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:calendar:calendarPartialGuest.html.twig',
-                    array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
-                );
+            return $this->redirect($this->generateUrl('welcomeIndex'));
         }
     }
 

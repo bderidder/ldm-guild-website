@@ -1,13 +1,8 @@
-{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
 
 {% block title %}My Settings - La Danse Macabre{% endblock %}
 
 {% block body %}
-
-	<ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li class="active">Settings</li>
-    </ol>
 
     <style>
 
@@ -49,8 +44,7 @@
 
     .settings-link-container:hover
     {
-        /* background-color: #00a300; */
-        background-color: #808080;
+        background-color: #00a300;
     }
 
     .settings-link-container p
@@ -60,6 +54,7 @@
 
     .settings-link, .settings-link:hover
     {
+        color: black;
         text-decoration: none;
     }
     </style>

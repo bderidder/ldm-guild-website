@@ -12,7 +12,11 @@ class PasswordFormType extends AbstractType
     {
         $builder->add('passwordOne', 'password', array('label' => "New Password"))
                 ->add('passwordTwo', 'password', array('label' => "Repeat Password"))
-                ->add('change', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'Save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

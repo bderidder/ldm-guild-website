@@ -13,7 +13,11 @@ class ProfileFormType extends AbstractType
         $builder->add('login', 'text', array('label' => "Login", 'read_only' => true))
                 ->add('displayName', 'text', array('label' => "Display Name"))
                 ->add('email', 'text', array('label' => "Email"))
-                ->add('save', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'Save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

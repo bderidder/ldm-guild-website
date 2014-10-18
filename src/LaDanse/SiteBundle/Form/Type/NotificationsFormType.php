@@ -13,7 +13,11 @@ class NotificationsFormType extends AbstractType
         $builder->add('newEvents', 'checkbox', array('label' => "New event is created"))
                 ->add('changeSignedEvent', 'checkbox', array('label' => "An event I signed up for changed"))
                 ->add('signUpChange', 'checkbox', array('label' => "Someone signed up for an event I created"))
-                ->add('change', 'submit');
+                ->add('change', 'submit', array(
+                    'label'  => 'Save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

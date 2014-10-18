@@ -26,12 +26,14 @@
     }}
 
     {{ form_widget(form.changeSignedEvent,
-        { 'label': 'Notify me when an event I signed up for is changed' })
+        { 'label': 'Notify me when an event I signed up for, is changed' })
     }}
 
     {{ form_widget(form.signUpChange,
-        { 'label': 'When I created an event, notify me when someone signs up' })
+        { 'label': 'For an event I created, notify me when something changes in the sign ups' })
     }}
+
+    <br/>
 
     {{ form_row(form.change, { 'label': 'Update' }) }}
 
