@@ -22,6 +22,15 @@ class CalendarController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in calendarIndex');
+
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+
         $page = $this->sanitizePage($request->query->get('page'));
 
         return $this->render('LaDanseSiteBundle:calendar:calendar.html.twig',
@@ -31,8 +40,6 @@ class CalendarController extends LaDanseController
 
     public function indexPartialAction(Request $request, $page)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
         // fetch the Monday we should start with
         $startDate = $this->getStartDate($page);
 
@@ -90,16 +97,9 @@ class CalendarController extends LaDanseController
             $currentDate = $date;
         }
 
-        if ($authContext->isAuthenticated())
-        {
-            return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
-                    array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
-                );
-        }
-        else
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
+        return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
+                array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
+            );
     }
 
     public function tilePartialAction()
