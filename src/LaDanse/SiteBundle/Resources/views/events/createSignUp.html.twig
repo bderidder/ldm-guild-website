@@ -4,14 +4,13 @@
 
 {% block body %}
 
-	<ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
-        <li><a href="{{ path('viewEvent', {'id': event.id}) }}">Event '{{ event.name }}' - {{ event.inviteTime|date("d/m (D)") }}</a></li>
-        <li class="active">Sign Up</li>
-    </ol>
+    <div style="position: absolute; left: -90px;">
+        <a href="{{ path('viewEvent', {'id': event.id}) }}">
+            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancel and back to calendar" />
+        </a>
+    </div>
 
-    <h1>Sign up for '{{ event.name }}' on {{ event.startTime|date("D d/m") }}</h1>
+    <h1 style="padding-top: 10px;">Sign up for '{{ event.name }}' on {{ event.startTime|date("D d/m") }}</h1>
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 

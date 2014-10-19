@@ -4,11 +4,15 @@
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
-        <li class="active">Event '{{ event.name }}' - {{ event.inviteTime|date("d/m (D)") }}</li>
-    </ol>
+    <div style="position: absolute; left: -90px;">
+        <a href="{{ path('calendarIndex') }}">
+            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancel and back to calendar" />
+        </a>
+    </div>
+
+    <h1 style="padding-top: 10px;">{{ event.name }}</h1>
+
+    <br/>
 
     <div class="alert alert-danger">
         <div style="text-align: center; font-size: 150%">
@@ -16,8 +20,6 @@
             Nothing can be changed, you can only comment.
         </div>
     </div>
-
-    <h1>{{ event.name }}</h1>
 
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
