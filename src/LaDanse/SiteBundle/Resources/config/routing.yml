@@ -47,3 +47,8 @@ RegistrationRouting:
     resource: "@LaDanseSiteBundle/Controller/Registration"
     type:     annotation
     prefix:   /registration
+
+MenuRouting:
+    resource: "@LaDanseSiteBundle/Controller/Menu"
+    type:     annotation
+    prefix:   /menu
