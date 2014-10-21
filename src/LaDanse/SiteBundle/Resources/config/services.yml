@@ -1,0 +1,9 @@
+parameters:
+    TwigHeaderAndBackExtension.class: LaDanse\SiteBundle\Twig\TwigHeaderAndBackExtension
+
+services:
+    LaDanse.TwigHeaderAndBack:
+        class: "%TwigHeaderAndBackExtension.class%"
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }
