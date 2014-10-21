@@ -2,10 +2,6 @@
     <p>Can't find the event you were looking for? <a href="{{ path('createEvent') }}">Why not create an event yourself?</a></p>
 {% endif %}
 
-<!--
-<p><a href="{{ path('eventList') }}">Click here if you prefer a list view.</a></p>
--->
-
 <ul class="pager">
     {% if pager.previousPage is defined %}
         <li class="previous"><a href="{{ path('calendarIndex', {'page': pager.previousPage }) }}"><i class="fa fa-arrow-left fa-1x"></i> Older</a></li>
