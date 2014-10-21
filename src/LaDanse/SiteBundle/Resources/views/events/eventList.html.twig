@@ -4,13 +4,7 @@
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li><a href="{{ path('calendarIndex') }}">Calendar</a></li>
-        <li class="active">Events</li>
-    </ol>
-
-    <h1>Event List</h1>
+    {{ renderHeader('Events', path('calendarIndex')) }}
 
     <p>We are sorry but this feature is not yet implemented.</p>
     

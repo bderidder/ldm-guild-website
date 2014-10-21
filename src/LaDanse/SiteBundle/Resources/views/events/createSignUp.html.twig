@@ -4,13 +4,7 @@
 
 {% block body %}
 
-    <div style="position: absolute; left: -90px;">
-        <a href="{{ path('viewEvent', {'id': event.id}) }}">
-            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Cancel and back to calendar" />
-        </a>
-    </div>
-
-    <h1 style="padding-top: 10px;">Sign up for '{{ event.name }}' on {{ event.startTime|date("D d/m") }}</h1>
+    {{ renderHeader('Sign up for ' + event.name + ' on ' + event.startTime|date("D d/m"), path('viewEvent', {'id': event.id})) }}
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
