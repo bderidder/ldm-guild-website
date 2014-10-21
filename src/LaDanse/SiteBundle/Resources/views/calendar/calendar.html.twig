@@ -4,12 +4,7 @@
 
 {% block body %}
 
-	<!-- ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li class="active">Calendar</li>
-    </ol -->
-
-    <h1 style="padding-top: 10px;">Calendar</h1>
+    {{ renderHeader('Calendar') }}
 
     {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial', {'page': page})) }}
 

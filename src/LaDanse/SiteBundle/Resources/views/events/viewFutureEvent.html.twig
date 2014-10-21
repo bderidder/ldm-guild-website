@@ -4,13 +4,7 @@
 
 {% block body %}
 
-    <div style="position: absolute; left: -90px;">
-        <a href="{{ path('calendarIndex') }}">
-            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" />
-        </a>
-    </div>
-
-    <h1 style="padding-top: 10px;">{{ event.name }}</h1>
+    {{ renderHeader(event.name, path('calendarIndex')) }}
 
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">

@@ -4,12 +4,7 @@
 
 {% block body %}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li class="active">Register</li>
-    </ol>
-
-    <h1>Registration</h1>
+    {{ renderHeader('Registration') }}
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 

@@ -4,13 +4,7 @@
 
 {% block body %}
 
-
-    <ol class="breadcrumb">
-        <li><a href="{{ path('welcomeIndex') }}">Home</a></li>
-        <li class="active">Feedback</li>
-    </ol>
-
-    <h1>Feedback</h1>
+    {{ renderHeader('Feedback') }}
 
     <p>Have you experienced an error, saw something that didn't behave as it should have
        or do you have a good idea for improvements? Use the form below to contact the maintainers of this site.</p>
