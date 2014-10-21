@@ -143,47 +143,8 @@
 
 	</style>
 
-    <!--
-    <div class="jumbo">
-      <div style="width: 100%;">
-        <h1>La Danse Macabre</h1>
-        <p>Welcome to the website of La Danse Macabre, a gaming guild of fun people of all ages and interests. Join us in World of Warcraft, Star Wars The Old Republic or Wildstar.</p>
-      </div>
-    </div>
-    -->
-
-    <h3>guild</h3>
-
 	<div class="container-fluid tile-container" style="padding: 0px; margin-top: 100px;">
 		<div class="row">
-            
-            <a href="{{ path('calendarIndex') }}">
-            	<div id="tile" class="tile double">
-            		{{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
-                    <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
-                </div>
-            </a>
-
-            <a href="{{ path('galleryUnderConstruction') }}">
-            	<div class="tile default" data-direction="vertical" data-delay="8000">
-                    <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-picture-o fa-5x"></i>  
-                        </div>
-                    </div>
-                    <div class="label"><span>Pictures</span></div>
-                </div>
-            </a>
-
-            {% if auth.currentContext.authenticated %}
-                <a href="{{ path('teamSpeakIndex') }}">
-            {% else %}
-                <a href="{{ path('welcomeIndex') }}">
-            {% endif %}
-                <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
-                    <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
-                </div>
-            </a>
 
             {% if auth.currentContext.authenticated %}
                 <a href="{{ path('welcomeSettings') }}">
@@ -209,50 +170,6 @@
                 </a>
             {% endif %}
 
-            
-        </div> <!-- row -->
-
-        <div class="row">
-            
-            <a href="{{ path('viewClaims') }}">
-            	<div class="tile default" data-direction="vertical" data-delay="8000">
-            		<div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-users fa-5x"></i>  
-                        </div>
-                    </div>
-                    <div class="label"><span>My Characters</span></div>
-                </div>    
-            </a>  
-
-            <a href="{{ path('forumUnderConstruction') }}">
-                <div class="tile double" data-direction="vertical" data-delay="8000">
-            		<div class="tile-content">  
-                        <div style="padding: 15px;">
-                            <p style="font-size: 1.3em;">Coming Soon</p>
-                            <p>latest forum posts and hot topics</p>
-                        </div>     
-                	</div>
-                    <div class="tile-content">  
-                        <div style="padding: 15px;">
-                            <p style="font-size: 1.8em;">Stay tuned!</p>
-                        </div>     
-                    </div>
-                    <div class="label"><i class="fa fa-comments fa-2x"></i></div>
-                </div>   
-            </a>
-
-            <a href="{{ path('helpIndex') }}">
-                <div class="tile default">
-                    <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-info-circle fa-5x"></i>  
-                        </div>       
-                    </div>
-                    <div class="label"><span>Help</span></div>
-                </div>
-            </a>
-            
         </div> <!-- row -->
 
 	</div> <!-- container -->
