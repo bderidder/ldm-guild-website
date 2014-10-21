@@ -71,6 +71,10 @@
 
 			<p>La Danse Account</p>
 
+            {% if error %}
+                <div>Could not log you in with these credentials.</div>
+            {% endif %}
+
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
 
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
