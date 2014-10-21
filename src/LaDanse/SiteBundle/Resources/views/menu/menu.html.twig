@@ -143,18 +143,9 @@
 
 	</style>
 
-    <!--
-    <div class="jumbo">
-      <div style="width: 100%;">
-        <h1>La Danse Macabre</h1>
-        <p>Welcome to the website of La Danse Macabre, a gaming guild of fun people of all ages and interests. Join us in World of Warcraft, Star Wars The Old Republic or Wildstar.</p>
-      </div>
-    </div>
-    -->
+    <h3>guild wow swtor wildstar</h3>
 
-    <h3>guild</h3>
-
-	<div class="container-fluid tile-container" style="padding: 0px; margin-top: 100px;">
+	<div class="container-fluid tile-container" style="padding: 0px; margin-top: 20px;">
 		<div class="row">
             
             <a href="{{ path('calendarIndex') }}">
@@ -176,43 +167,20 @@
             </a>
 
             {% if auth.currentContext.authenticated %}
-                <a href="{{ path('teamSpeakIndex') }}">
-            {% else %}
+            <a href="{{ path('teamSpeakIndex') }}">
+                {% else %}
                 <a href="{{ path('welcomeIndex') }}">
-            {% endif %}
-                <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
-                    <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
-                </div>
-            </a>
-
-            {% if auth.currentContext.authenticated %}
-                <a href="{{ path('welcomeSettings') }}">
-                    <div class="tile default">
-                        <div class="tile-content">
-                            <div class="image">
-                              <i class="fa fa-user fa-5x"></i>  
-                            </div>
-                        </div>
-                        <div class="label"><span>My Account</span></div>
+                    {% endif %}
+                    <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
+                        <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
                     </div>
                 </a>
-            {% else %}
-                 <a href="{{ path('fos_user_security_login') }}">
-                    <div class="tile default">
-                        <div class="tile-content">
-                            <div class="image">
-                              <i class="fa fa-sign-in fa-5x"></i>  
-                            </div>
-                        </div>
-                        <div class="label"><span>Log In</span></div>
-                    </div>
-                </a>
-            {% endif %}
 
-            
         </div> <!-- row -->
 
         <div class="row">
+
+
             
             <a href="{{ path('viewClaims') }}">
             	<div class="tile default" data-direction="vertical" data-delay="8000">
@@ -241,17 +209,6 @@
                     <div class="label"><i class="fa fa-comments fa-2x"></i></div>
                 </div>   
             </a>
-
-            <a href="{{ path('helpIndex') }}">
-                <div class="tile default">
-                    <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-info-circle fa-5x"></i>  
-                        </div>       
-                    </div>
-                    <div class="label"><span>Help</span></div>
-                </div>
-            </a>
             
         </div> <!-- row -->
 
@@ -265,7 +222,7 @@
 
 $(document).ready(function()
 {
-    var clientsServiceURL = 'teamspeak/clients';
+    var clientsServiceURL = '../teamspeak/clients';
 
     $.when($.ajax({
         type: "GET",
