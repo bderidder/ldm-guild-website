@@ -88,28 +88,6 @@
             font-weight: 300;
         }
 
-        .jumbo
-        {
-            padding: 30px;
-            padding-left: 0px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .jumbo h1,
-        .jumbo .h1
-        {
-            font-size: 63px;
-        }
-
-        .jumbo p
-        {
-            margin-bottom: 15px;
-            font-size: 21px;
-            font-weight: 200;
-        }
-
         .tile-content-wrapper
         {
             position: absolute;
@@ -139,80 +117,195 @@
         .tile-container a
         {
             color: white;
+            white-space: nowrap;
         }
+
+        .tile-column
+        {
+            position: relative;
+            float: left;
+            margin-right: 110px;
+        }
+
+        .tile-container
+        {
+            width: 100%;
+            overflow: hidden;
+        }
+
+
+        .wrapper { width: 999999px; }
 
 	</style>
 
     <h3>guild wow swtor wildstar</h3>
 
-	<div class="container-fluid tile-container" style="padding: 0px; margin-top: 20px;">
-		<div class="row">
-            
-            <a href="{{ path('calendarIndex') }}">
-            	<div id="tile" class="tile double">
-            		{{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
-                    <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
-                </div>
-            </a>
+    <div class="tile-container">
+        <div class="wrapper">
 
-            <a href="{{ path('galleryUnderConstruction') }}">
-            	<div class="tile default" data-direction="vertical" data-delay="8000">
-                    <div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-picture-o fa-5x"></i>  
+            <div class="container-fluid tile-column" style="padding: 0px; margin-top: 20px;">
+                <div class="row">
+
+                    <a href="{{ path('calendarIndex') }}">
+                        <div id="tile" class="tile double">
+                            {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
+                            <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
                         </div>
-                    </div>
-                    <div class="label"><span>Pictures</span></div>
-                </div>
-            </a>
+                    </a>
 
-            {% if auth.currentContext.authenticated %}
-            <a href="{{ path('teamSpeakIndex') }}">
-                {% else %}
-                <a href="{{ path('welcomeIndex') }}">
-                    {% endif %}
-                    <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
-                        <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
-                    </div>
-                </a>
-
-        </div> <!-- row -->
-
-        <div class="row">
-
-
-            
-            <a href="{{ path('viewClaims') }}">
-            	<div class="tile default" data-direction="vertical" data-delay="8000">
-            		<div class="tile-content">
-                        <div class="image">
-                          <i class="fa fa-users fa-5x"></i>  
+                    <a href="{{ path('viewClaims') }}">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>My Characters</span></div>
                         </div>
-                    </div>
-                    <div class="label"><span>My Characters</span></div>
-                </div>    
-            </a>  
+                    </a>
 
-            <a href="{{ path('forumUnderConstruction') }}">
-                <div class="tile double" data-direction="vertical" data-delay="8000">
-            		<div class="tile-content">  
-                        <div style="padding: 15px;">
-                            <p style="font-size: 1.3em;">Coming Soon</p>
-                            <p>latest forum posts and hot topics</p>
-                        </div>     
-                	</div>
-                    <div class="tile-content">  
-                        <div style="padding: 15px;">
-                            <p style="font-size: 1.8em;">Stay tuned!</p>
-                        </div>     
-                    </div>
-                    <div class="label"><i class="fa fa-comments fa-2x"></i></div>
-                </div>   
-            </a>
-            
-        </div> <!-- row -->
+                </div>
+                <!-- row -->
 
-	</div> <!-- container -->
+                <div class="row">
+
+                    {% if auth.currentContext.authenticated %}
+                    <a href="{{ path('teamSpeakIndex') }}">
+                        {% else %}
+                        <a href="{{ path('welcomeIndex') }}">
+                            {% endif %}
+                            <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
+                                <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
+                            </div>
+                        </a>
+
+                    <a href="{{ path('forumUnderConstruction') }}">
+                        <div class="tile double" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div style="padding: 15px;">
+                                    <p style="font-size: 1.3em;">Coming Soon</p>
+
+                                    <p>latest forum posts and hot topics</p>
+                                </div>
+                            </div>
+                            <div class="tile-content">
+                                <div style="padding: 15px;">
+                                    <p style="font-size: 1.8em;">Stay tuned!</p>
+                                </div>
+                            </div>
+                            <div class="label"><i class="fa fa-comments fa-2x"></i></div>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- row -->
+
+                <div class="row">
+
+                    <a href="{{ path('galleryUnderConstruction') }}">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-picture-o fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>Pictures</span></div>
+                        </div>
+                    </a>
+
+                </div> <!-- row -->
+
+
+            </div>
+            <!-- container -->
+
+            <div class="container-fluid tile-column" style="padding: 0px; margin-top: 20px;">
+                <div class="row">
+
+                    <a href="http://www.wowhead.com/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_wowhead.png') }}"></img>
+                                </div>
+                            </div>
+                            <div class="label"><span>Wowhead</span></div>
+                        </div>
+                    </a>
+
+                    <a href="http://www.icy-veins.com/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_icyveins.png') }}"></img>
+                                </div>
+                            </div>
+                            <div class="label"><span>Icy Veins</span></div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <div class="row">
+
+                    <a href="http://wowpedia.org/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/logo_wowpedia.png') }}"></img>
+                                </div>
+                            </div>
+                            <div class="label"><span>Wowpedia</span></div>
+                        </div>
+                    </a>
+
+                    <a href="http://wow.joystiq.com/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+
+                                </div>
+                            </div>
+                            <div class="label"><span>WoW Insider (news)</span></div>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- row -->
+
+                <div class="row">
+
+                    <a href="http://eu.battle.net/wow/en/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+
+                                </div>
+                            </div>
+                            <div class="label"><span>WoW Battle.net</span></div>
+                        </div>
+                    </a>
+
+                    <a href="http://eu.battle.net/wow/en/guild/defias-brotherhood/La_Danse_Macabre/">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+
+                                </div>
+                            </div>
+                            <div class="label"><span>La Danse @ Battle.net</span></div>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- row -->
+
+            </div>
+            <!-- container -->
+
+        </div>
+
+    </div>
 
 {% endblock %}
 
