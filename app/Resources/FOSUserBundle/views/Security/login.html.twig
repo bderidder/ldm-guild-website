@@ -25,6 +25,7 @@
 	    background-position: top;
         background-size: cover;
         transition: background-image 2s ease-in-out;
+        background-image: url("{{ asset('bundles/ladansesite/images/background.jpg') }}");
 	}
 
 	#right-login-container
@@ -118,7 +119,7 @@
 <script>
 
     var backgroundImages = [
-    '{{ asset('bundles/ladansesite/images/background-2.jpg') }}',
+    '{{ asset('bundles/ladansesite/images/background.jpg') }}',
     '{{ asset('bundles/ladansesite/images/background-3.jpg') }}',
     '{{ asset('bundles/ladansesite/images/background-4.jpg') }}'
     ];
@@ -170,7 +171,7 @@
     {
         doLoginWindowResize();
 
-        startBackgroundImageChanger();
+        //startBackgroundImageChanger();
     });
 
 </script>
