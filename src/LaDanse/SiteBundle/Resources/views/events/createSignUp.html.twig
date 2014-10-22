@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {{ renderHeader('Sign up for ' + event.name + ' on ' + event.startTime|date("D d/m"), path('viewEvent', {'id': event.id})) }}
+    {{ renderHeader('Sign up for ' ~ event.name ~ ' on ' ~ event.startTime|date("D d/m"), path('viewEvent', {'id': event.id})) }}
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
