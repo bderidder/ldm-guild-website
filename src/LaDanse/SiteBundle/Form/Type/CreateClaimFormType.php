@@ -36,7 +36,11 @@ class CreateClaimFormType extends AbstractType
                     'choices' => $this->getUnclaimedChoices(),
                     'expanded'  => false,
                     'multiple'  => false))
-                ->add('save', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
 	}
 
     /**

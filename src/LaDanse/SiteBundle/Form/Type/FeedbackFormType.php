@@ -12,7 +12,11 @@ class FeedbackFormType extends AbstractType
 	{
 		$builder->add('description', 'textarea', array('label' => false, 
 			'attr' => array('rows' => '15')))
-		        ->add('post feedback', 'submit');
+            ->add('post feedback', 'submit', array(
+                'label'  => 'post feedback',
+                'attr'   =>  array(
+                    'class'   => 'btn-primary')
+            ));
 	}
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver)

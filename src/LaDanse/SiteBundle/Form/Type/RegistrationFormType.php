@@ -15,7 +15,11 @@ class RegistrationFormType extends AbstractType
                 ->add('email', 'text', array('label' => "Email"))
                 ->add('passwordOne', 'password', array('label' => "Password"))
                 ->add('passwordTwo', 'password', array('label' => "Repeat Password"))
-                ->add('save', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

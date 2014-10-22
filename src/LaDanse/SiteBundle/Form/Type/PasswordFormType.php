@@ -13,7 +13,7 @@ class PasswordFormType extends AbstractType
         $builder->add('passwordOne', 'password', array('label' => "New Password"))
                 ->add('passwordTwo', 'password', array('label' => "Repeat Password"))
                 ->add('save', 'submit', array(
-                    'label'  => 'Save',
+                    'label'  => 'change',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
             ));

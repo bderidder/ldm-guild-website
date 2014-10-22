@@ -32,7 +32,11 @@ class EditClaimFormType extends AbstractType
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
-                ->add('save', 'submit');
+            ->add('save', 'submit', array(
+                'label'  => 'save',
+                'attr'   =>  array(
+                    'class'   => 'btn-primary')
+            ));
 	}
 
     /**

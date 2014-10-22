@@ -14,7 +14,7 @@ class ProfileFormType extends AbstractType
                 ->add('displayName', 'text', array('label' => "Display Name"))
                 ->add('email', 'text', array('label' => "Email"))
                 ->add('save', 'submit', array(
-                    'label'  => 'Save',
+                    'label'  => 'save',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
                 ));

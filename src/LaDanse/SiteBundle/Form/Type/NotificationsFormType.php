@@ -14,7 +14,7 @@ class NotificationsFormType extends AbstractType
                 ->add('changeSignedEvent', 'checkbox', array('label' => "An event I signed up for changed"))
                 ->add('signUpChange', 'checkbox', array('label' => "Someone signed up for an event I created"))
                 ->add('change', 'submit', array(
-                    'label'  => 'Save',
+                    'label'  => 'save',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
                 ));

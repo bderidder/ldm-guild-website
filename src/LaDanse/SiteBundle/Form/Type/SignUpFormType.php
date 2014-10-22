@@ -29,7 +29,11 @@ class SignUpFormType extends AbstractType
     				'expanded'	=> true,
     				'multiple'	=> false
 				))
-		        ->add('save', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
 	}
 
     /**

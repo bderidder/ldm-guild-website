@@ -24,7 +24,11 @@ class EventFormType extends AbstractType
 		        	'widget' => 'single_text'))
 		        ->add('endTime', 'time', array(
 		        	'widget' => 'single_text'))
-		        ->add('save', 'submit');
+                ->add('save', 'submit', array(
+                    'label'  => 'save',
+                    'attr'   =>  array(
+                        'class'   => 'btn-primary')
+                ));
 	}
 
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
