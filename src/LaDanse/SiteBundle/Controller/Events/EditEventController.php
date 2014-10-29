@@ -49,7 +49,7 @@ class EditEventController extends LaDanseController
             $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
                 array("event" => $id));
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('calendarIndex'));
         }
 
         $currentDateTime = new \DateTime();
@@ -63,7 +63,7 @@ class EditEventController extends LaDanseController
             $this->getLogger()->warn(__CLASS__ . ' the user is not the organiser of the event in indexAction', 
                 array('event' => new EventModel($this->getContainerInjector(), $event), 'user' => $authContext->getAccount()->getId()));
 
-        	return $this->redirect($this->generateUrl('welcomeIndex'));
+        	return $this->redirect($this->generateUrl('calendarIndex'));
         }
         
         $formModel = $this->entityToModel($event);

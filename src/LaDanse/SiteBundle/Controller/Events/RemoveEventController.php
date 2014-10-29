@@ -17,6 +17,15 @@ class RemoveEventController extends LaDanseController
      */
     public function removeAction($id)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in calendarIndex');
+
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
+
     	$em = $this->getDoctrine()->getManager();
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
 
@@ -28,7 +37,7 @@ class RemoveEventController extends LaDanseController
             $this->getLogger()->warn(__CLASS__ . ' the event does not exist in deleteAction', 
                 array("event" => $id));
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('calendarIndex'));
         }
         else
         {
@@ -49,7 +58,7 @@ class RemoveEventController extends LaDanseController
 
             $this->addToast('Event removed');
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('menuIndex'));
         }
     }
 }

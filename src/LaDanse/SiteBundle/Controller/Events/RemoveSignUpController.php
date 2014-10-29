@@ -46,7 +46,7 @@ class RemoveSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('calendarIndex'));
         }
 
         $currentDateTime = new \DateTime();

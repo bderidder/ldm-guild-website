@@ -39,7 +39,7 @@ class ViewEventController extends LaDanseController
             $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
                 array("event" => $id));
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            return $this->redirect($this->generateUrl('calendarIndex'));
         }
         else
         {
