@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{% block title %}La Danse - Welcome{% endblock %}</title>
+
+    {# all CSS must be in the header to speed up rendering #}
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
+          rel="stylesheet">
+
+    <link href="//cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet">
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
+    'bundles/coderspottingtoastmessage/css/*'
+    'bundles/ladansesite/css/*'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
+
+    <style>
+        #first-top-bar
+        {
+            position: relative;
+            width: 100%;
+            height: 68px;
+            background-color: #000000;
+        }
+
+        #second-top-bar
+        {
+            width: 100%;
+            height: 50px;
+
+        }
+
+        body
+        {
+            background-color: white;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: top;
+            background-size: cover;
+            background-image: url('{{ asset('bundles/ladansesite/images/background-white.jpg') }}');
+        }
+
+        .tooltip > .tooltip-inner {background-color: #f00;}
+
+        #menuActivator
+        {
+            width: 25px;
+            text-align: center;
+        }
+
+        #menuActivator:hover
+        {
+            background-color: maroon;
+        }
+
+        .top-bar-left-container
+        {
+            float: left;
+            position: relative;
+            height: 68px;
+            margin-right: 3px;
+        }
+
+        .no-underline,.no-underline:hover
+        {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body class="">
+
+    {% block body %}{% endblock %}
+
+{# all Javascript is moved to the rear of the document to speed up rendering #}
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/lang/en-gb.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+<script src="//cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.js"></script>
+
+{% javascripts '@CoderSpottingToastMessageBundle/Resources/public/js/*'
+'@LaDanseBootstrapBundle/Resources/public/js/*'
+'@LaDanseSiteBundle/Resources/public/js/*' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{{ renderToasts() }}
+
+{% if auth.currentContext.authenticated %}
+    <script>
+        var currentAccount = {
+            id: {{ auth.currentContext.account.id }},
+            username: '{{ auth.currentContext.account.username }}'
+        };
+    </script>
+{% endif %}
+
+<script type="text/javascript">
+    $( document ).ready(function()
+    {
+        $("[data-toggle='tooltip']").tooltip(
+                {
+                    'container':'body'
+                }
+        );
+    });
+</script>
+
+{% block javascript %}{% endblock %}
+
+</body>
+</html>
