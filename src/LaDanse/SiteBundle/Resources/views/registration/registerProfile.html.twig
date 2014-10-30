@@ -1,13 +1,15 @@
-{% extends 'LaDanseSiteBundle:layout:layout2.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:guest-page-centered.html.twig' %}
 
 {% block title %}Register - La Danse Macabre{% endblock %}
 
-{% block body %}
+{% block guestPageCenteredBody %}
 
     {{ renderHeader('Registration') }}
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
-    {{ form(form) }}
+    <div style="max-width: 600px;">
+        {{ form(form) }}
+    </div>
 
 {% endblock %}

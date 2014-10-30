@@ -16,7 +16,7 @@ class RegistrationFormType extends AbstractType
                 ->add('passwordOne', 'password', array('label' => "Password"))
                 ->add('passwordTwo', 'password', array('label' => "Repeat Password"))
                 ->add('save', 'submit', array(
-                    'label'  => 'save',
+                    'label'  => 'register',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
                 ));
