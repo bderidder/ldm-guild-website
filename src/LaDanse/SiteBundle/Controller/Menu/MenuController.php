@@ -17,5 +17,13 @@ class MenuController extends LaDanseController
      */
     public function indexAction(Request $request)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in menuIndex');
+
+            return $this->redirect($this->generateUrl('welcomeIndex'));
+        }
     }
 }
