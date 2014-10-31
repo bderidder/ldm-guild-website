@@ -10,7 +10,11 @@
             <div class="top-bar-left-container" style="font-size: 1.7em; color: white; line-height: 68px;">
                 La Danse Macabre
             </div>
-            <a style="color: white;" href="{{ path('menuIndex') }}">
+            {% if auth.currentContext.authenticated %}
+                <a style="color: white;" href="{{ path('menuIndex') }}">
+            {% else %}
+                <a style="color: white;" href="{{ path('welcomeIndex') }}">
+            {% endif %}
                 <div id="menuActivator" class="top-bar-left-container"
                      style="font-size: 1.7em; color: white; line-height: 68px;">
                     <i class="fa fa-angle-down fa-1x"></i>
@@ -19,6 +23,7 @@
 
             <div style="position: relative; float: right;">
                 <p style="font-size: 1.0em; color: white; line-height: 68px;">
+                    {% if auth.currentContext.authenticated %}
                     <a class="no-underline" style="color: white;" href="{{ path('welcomeSettings') }}"
                        data-toggle="tooltip" data-placement="bottom" title="Edit account and settings">{{ auth.currentContext.account.displayName }}</a>
                     &nbsp; &nbsp;
@@ -27,8 +32,9 @@
                     <a class="no-underline" style="color: white;" href="{{ path('createFeedbackIndex') }}"
                        data-toggle="tooltip" data-placement="bottom" title="Give feedback or report a bug"><i class="fa fa-envelope"></i></a>
                     &nbsp; &nbsp;
-                    <a class="no-underline" style="color: white;" href="#"
-                       data-toggle="tooltip" data-placement="bottom" title="Help and info"><i class="fa fa-info-circle"></i></a>
+                    {% endif %}
+                    <!-- a class="no-underline" style="color: white;" href="#"
+                       data-toggle="tooltip" data-placement="bottom" title="Help and info"><i class="fa fa-info-circle"></i></a -->
                 </p>
             </div>
         </div>
