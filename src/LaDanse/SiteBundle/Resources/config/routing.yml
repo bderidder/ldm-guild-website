@@ -52,3 +52,9 @@ MenuRouting:
     resource: "@LaDanseSiteBundle/Controller/Menu"
     type:     annotation
     prefix:   /menu
+
+PrivacyPolicyRouting:
+    resource: "@LaDanseSiteBundle/Controller/Privacy"
+    type:     annotation
+    prefix:   /privacy
+    
