@@ -48,7 +48,7 @@ class ChangePasswordController extends LaDanseController
 
                 $this->addToast('Password changed');
 
-                return $this->redirect($this->generateUrl('welcomeIndex'));
+                return $this->redirect($this->generateUrl('menuIndex'));
             }
             else
             {
