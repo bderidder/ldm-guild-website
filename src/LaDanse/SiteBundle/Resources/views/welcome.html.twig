@@ -4,194 +4,58 @@
 
 {% block body %}
 
-	<style>
+    <div style="width: 100%; max-width: 980px; margin: auto; position: relative; margin-top: 100px;">
 
-		a div.tile:hover
-		{
-			background-color: rgba(75, 75, 75, .95);
-			outline: #999999 solid 3px;
-		}
+        <div class="container-fluid">
 
-		.tile
-		{
-            height: 100%;
-			background-color: rgba(75, 75, 75, .8);
-			
-			position: relative;
-			float: left;
-			margin-left: 15px;
-			margin-top: 15px;
-		}
+            <div class="row">
 
-		.tile.default
-		{
-			width: 150px;
-			height: 150px;
-		}
+                <div class="col-md-5" style="text-align: center;">
 
-		.tile.double
-		{
-			width: 300px;
-			height: 150px;
-		}
+                    <img src="{{ asset('bundles/ladansesite/images/GuildLogo.png') }}"
+                         style="width: 90%; max-width: 300px; padding-top: 10px; margin: auto;"/>
 
-		.tile.triple
-		{
-			width: 380px;
-			height: 150px;
-		}
+                </div>
 
-		.tile-content
-		{
-			width: 100%;
-            height: 100%;
-			padding: 10px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: none;
-            overflow: hidden;
-		}
+                <div class="col-md-7">
 
-        .tile.high
-        {
-            width: 150px;
-            height: 300px;
-        }
+                    <div class="jumbo">
+                        <div style="width: 100%;">
+                            <h1>La Danse Macabre</h1>
 
-        .tile-content .image
-        {
-            padding-top: 20px;
-            text-align: center;
-        }
+                            <br/>
 
-        .tile .label
-        {
-            position: absolute;
-            left: 0px;
-            bottom: 5px;
-            font-size: 1em;
-            font-weight: 300;
-        }
+                            <p>Welcome to the website of La Danse Macabre, a gaming guild of fun people of all ages and
+                                interests. Join us in World of Warcraft, Star Wars The Old Republic or Wildstar.</p>
 
-        .tile .tile-content.label
-        {
-            position: absolute;
-            left: 0px;
-            bottom: -5px;
-            font-size: 1em;
-            font-weight: 300;
-        }
+                            <p>LDM is a 'friends and family guild'. We always aim to have fun. While we raid and do some
+                                PvP, this is not meant as serious or hardcore, but casual and fun. While we can aim to
+                                progress in raids and push rating in arena, the aim is to keep it fun.</p>
 
-        .tile p
-        {
-            font-weight: 300;
-        }
+                            <br/>
 
-        .jumbo
-        {
-            padding: 30px;
-            padding-left: 0px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            color: white;
-        }
+                            <p><a class="btn btn-info" href="{{ path('aboutIndex') }}">More information</a></p>
 
-        .jumbo h1,
-        .jumbo .h1
-        {
-            font-size: 63px;
-        }
+                            <br/>
 
-        .jumbo p
-        {
-            margin-bottom: 15px;
-            font-size: 21px;
-            font-weight: 200;
-        }
-
-        .tile-content-wrapper
-        {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            display: none;
-        }
-
-        .ts-top-label
-        {
-            width: 100%;
-            position: absolute;
-            padding: 15px;
-            padding-top: 20px;
-        }
-
-        .tile .tile-content-wrapper:nth-of-type(1)
-        {
-            display: block; 
-        }
-
-        .tile .tile-content:nth-of-type(1)
-        {
-            display: block; 
-        }
-
-        .tile-container a
-        {
-            color: white;
-        }
-
-	</style>
-
-	<div class="container-fluid tile-container" style="padding: 0px; margin-top: 100px;">
-		<div class="row">
-
-            {% if auth.currentContext.authenticated %}
-                <a href="{{ path('welcomeSettings') }}">
-                    <div class="tile default">
-                        <div class="tile-content">
-                            <div class="image">
-                              <i class="fa fa-user fa-5x"></i>  
-                            </div>
+                            {% if auth.currentContext.authenticated %}
+                                <p><a class="btn btn-success" href="{{ path('menuIndex') }}">Member Section</a></p>
+                            {% else %}
+                                <p><a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Login or Register</a></p>
+                            {% endif %}
                         </div>
-                        <div class="label"><span>My Account</span></div>
                     </div>
-                </a>
-            {% else %}
-                 <a href="{{ path('fos_user_security_login') }}">
-                    <div class="tile default">
-                        <div class="tile-content">
-                            <div class="image">
-                              <i class="fa fa-sign-in fa-5x"></i>  
-                            </div>
-                        </div>
-                        <div class="label"><span>Log In</span></div>
-                    </div>
-                </a>
-            {% endif %}
 
-        </div> <!-- row -->
+                </div>
 
-	</div> <!-- container -->
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}
 
 {% block javascript %}
-
-<script>
-
-$(document).ready(function()
-{
-    var clientsServiceURL = 'teamspeak/clients';
-
-    $.when($.ajax({
-        type: "GET",
-        url: clientsServiceURL,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
-});
-
-</script>
 
 {% endblock %}
