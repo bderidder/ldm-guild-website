@@ -108,7 +108,7 @@ class CalendarController extends LaDanseController
         $events = $this->getEvents($startDate);
 
 
-        return $this->render('LaDanseSiteBundle:Calendar:calendarTilePartial.html.twig',
+        return $this->render('LaDanseSiteBundle:calendar:calendarTilePartial.html.twig',
                     array('events' => $events)
                 );
     }
