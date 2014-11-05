@@ -10,14 +10,14 @@
 
             <div class="row">
 
-                <div class="col-md-5" style="text-align: center;">
+                <div class="col-md-4" style="text-align: center;">
 
                     <img src="{{ asset('bundles/ladansesite/images/GuildLogo.png') }}"
                          style="width: 90%; max-width: 300px; padding-top: 10px; margin: auto;"/>
 
                 </div>
 
-                <div class="col-md-7">
+                <div class="col-md-8">
 
                     <div class="jumbo">
                         <div style="width: 100%;">
@@ -34,15 +34,26 @@
 
                             <br/>
 
-                            <p><a class="btn btn-info" href="{{ path('aboutIndex') }}">More information</a></p>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: center;">
+                                        <p><a class="btn btn-info" href="{{ path('aboutIndex') }}">More information</a></p>
+                                    </div>
+                                    <div class="col-md-4" style="text-align: center;">
+                                        {% if auth.currentContext.authenticated %}
+                                            <p><a class="btn btn-success" href="{{ path('menuIndex') }}">Member Section</a></p>
+                                        {% else %}
+                                            <p><a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Login or Register</a></p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4" style="text-align: center;">
+                                        {% image '@LaDanseSiteBundle/Resources/public/images/FB_FindUsOnFacebook-100.png' %}
+                                        <p><a href="https://www.facebook.com/groups/23877201619/"><img src="{{ asset_url }}" /></a></p>
+                                        {% endimage %}
+                                    </div>
+                                </div>
+                            </div>
 
-                            <br/>
-
-                            {% if auth.currentContext.authenticated %}
-                                <p><a class="btn btn-success" href="{{ path('menuIndex') }}">Member Section</a></p>
-                            {% else %}
-                                <p><a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Login or Register</a></p>
-                            {% endif %}
                         </div>
                     </div>
 
