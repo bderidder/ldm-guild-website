@@ -57,4 +57,8 @@ PrivacyPolicyRouting:
     resource: "@LaDanseSiteBundle/Controller/Privacy"
     type:     annotation
     prefix:   /privacy
-    
+
+AboutRouting:
+    resource: "@LaDanseSiteBundle/Controller/About"
+    type:     annotation
+    prefix:   /about
