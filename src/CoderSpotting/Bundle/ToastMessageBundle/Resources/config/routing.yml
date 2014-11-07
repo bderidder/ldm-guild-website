@@ -1,3 +1,0 @@
-coder_spotting_toast_message_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: CoderSpottingToastMessageBundle:Default:index }
