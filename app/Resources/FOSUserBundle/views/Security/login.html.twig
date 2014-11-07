@@ -71,12 +71,10 @@
 		<div id="text-container">
 			<h2 style="font-weight: normal; text-shadow: none;">Sign In</h2>
 
-			<p>La Danse Account</p>
-
-            <p class="bg-info">Your account from the old La Danse site will not work here!</p>
+            <p>Your account from the old La Danse site will not work here!</p>
 
             {% if error %}
-                <div class="alert alert-danger alert-dismissable">Could not log you in with these credentials.</div>
+                <p>Could not log you in with these credentials.</p>
             {% endif %}
 
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
