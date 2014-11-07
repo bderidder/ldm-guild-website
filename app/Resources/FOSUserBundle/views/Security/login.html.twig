@@ -73,10 +73,10 @@
 
 			<p>La Danse Account</p>
 
-            <p class="text-info">Your account from the old La Danse site will not work here!</p>
+            <p class="bg-info">Your account from the old La Danse site will not work here!</p>
 
             {% if error %}
-                <p class="text-danger">Could not log you in with these credentials.</p>
+                <div class="alert alert-danger alert-dismissable">Could not log you in with these credentials.</div>
             {% endif %}
 
             <form action="{{ path("fos_user_security_check") }}" method="post" class="form-horizontal">
