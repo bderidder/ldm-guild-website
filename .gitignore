@@ -2,6 +2,10 @@ composer.phar
 
 *.sublime-*
 
+bin/doctrine
+bin/doctrine.php
+bin/phpunit
+
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
