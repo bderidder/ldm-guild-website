@@ -1,8 +1,8 @@
-{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+{% extends 'LaDanseSiteBundle:layout:page.html.twig' %}
 
 {% block title %}La Danse Macabre{% endblock %}
 
-{% block memberPageCenteredBody %}
+{% block memberPageBody %}
 
 	<style>
 
@@ -31,13 +31,7 @@
 
 		.tile.double
 		{
-			width: 300px;
-			height: 150px;
-		}
-
-		.tile.triple
-		{
-			width: 380px;
+			width: 315px;
 			height: 150px;
 		}
 
@@ -52,12 +46,6 @@
             display: none;
             overflow: hidden;
 		}
-
-        .tile.high
-        {
-            width: 150px;
-            height: 300px;
-        }
 
         .tile-content .image
         {
@@ -127,21 +115,25 @@
             margin-right: 110px;
         }
 
-        .tile-container
+        .tile-column:last-child
         {
-            width: 100%;
-            overflow: hidden;
+            margin-right: 0px;
         }
 
-
-        .wrapper { width: 999999px; }
+        .tile-container
+        {
+            display: inline-block;
+            visibility: hidden;
+        }
 
 	</style>
 
-    <div class="tile-container">
-        <div class="wrapper">
+    <div class="clearfix"></div>
+
+    <div id="tileContainer" class="tile-container">
 
             <div class="container-fluid tile-column" style="padding: 0px; margin-top: 20px;">
+
                 <div class="row">
 
                     <a href="{{ path('calendarIndex') }}">
@@ -222,53 +214,66 @@
                         </div>
                     </a>
 
-                </div> <!-- row -->
-
+                </div>
+                <!-- row -->
 
             </div>
             <!-- container -->
 
             <div class="container-fluid tile-column" style="padding: 0px; margin-top: 20px;">
+
                 <div class="row">
 
-                    <a href="http://www.wowhead.com/">
+                    <a href="https://www.facebook.com/groups/23877201619/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
-                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_wowhead.png') }}"></img>
+                                    <img width="70" src="{{ asset('bundles/ladansesite/images/FB-f-Logo__blue_100.png') }}" />
                                 </div>
                             </div>
-                            <div class="label"><span>Wowhead</span></div>
+                            <div class="label"><span>Facebook Page</span></div>
                         </div>
                     </a>
 
-                    <a href="http://www.icy-veins.com/">
+                    <a href="http://www.icy-veins.com/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
-                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_icyveins.png') }}"></img>
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_icyveins.png') }}" />
                                 </div>
                             </div>
                             <div class="label"><span>Icy Veins</span></div>
                         </div>
                     </a>
 
-                </div>
-
-                <div class="row">
-
-                    <a href="http://wowpedia.org/">
+                    <a href="http://www.wowhead.com/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
-                                    <img width="90" src="{{ asset('bundles/ladansesite/images/logo_wowpedia.png') }}"></img>
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_wowhead.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Wowhead</span></div>
+                        </div>
+                    </a>
+
+                </div>
+                <!-- row -->
+
+                <div class="row">
+
+                    <a href="http://wowpedia.org/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/logo_wowpedia.png') }}" />
                                 </div>
                             </div>
                             <div class="label"><span>Wowpedia</span></div>
                         </div>
                     </a>
 
-                    <a href="http://wow.joystiq.com/">
+                    <a href="http://wow.joystiq.com/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
@@ -283,22 +288,22 @@
 
                 <div class="row">
 
-                    <a href="http://eu.battle.net/wow/en/">
+                    <a href="http://eu.battle.net/wow/en/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
-                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNet.png') }}"></img>
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNet.png') }}" />
                                 </div>
                             </div>
                             <div class="label"><span>WoW Battle.net</span></div>
                         </div>
                     </a>
 
-                    <a href="http://eu.battle.net/wow/en/guild/defias-brotherhood/La_Danse_Macabre/">
+                    <a href="http://eu.battle.net/wow/en/guild/defias-brotherhood/La_Danse_Macabre/" target="_blank">
                         <div class="tile default" data-direction="vertical" data-delay="8000">
                             <div class="tile-content">
                                 <div class="image">
-                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNetAndGuildLogo.png') }}"></img>
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNetAndGuildLogo.png') }}" />
                                 </div>
                             </div>
                             <div class="label"><span>La Danse @ Battle.net</span></div>
@@ -311,9 +316,8 @@
             </div>
             <!-- container -->
 
-        </div>
-
     </div>
+    <!-- tile-container -->
 
 {% endblock %}
 
@@ -331,6 +335,17 @@ $(document).ready(function()
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
+});
+
+$(document).ready(function()
+{
+    var viewportWidth = $( document ).width();
+    var tileContainer = $( '#tileContainer' );
+
+    var margin = Math.round((viewportWidth - tileContainer.width()) / 2 - 1);
+
+    tileContainer.css('margin-left', margin + 'px');
+    tileContainer.css('visibility', 'visible');
 });
 
 </script>
