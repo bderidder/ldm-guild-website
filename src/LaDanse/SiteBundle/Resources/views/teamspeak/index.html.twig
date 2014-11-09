@@ -4,45 +4,6 @@
 
 {% block memberPageCenteredBody %}
 
-    <style>
-
-    .teamspeak-sidebar-container
-    {
-        width: 100%;
-        background-color: rgb(65,100, 160);
-        background-color: rgb(100, 60, 50);
-        
-        padding-top: 10px;
-        padding-bottom: 10px;
-
-        -moz-border-top-left-radius: 15px;
-        border-top-left-radius: 15px;
-        -moz-border-top-right-radius: 15px;
-        border-top-right-radius: 15px;
-        -moz-bottom-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
-        -moz-bottom-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-        border-bottom-left-radius: 15px;
-    }
-
-    .teamspeak-value
-    {
-        font-size: 170%;
-    }
-
-    .TeamSpeakNickname
-    {
-        font-size: 200%;
-        list-style: none;
-    }
-
-    </style>
-
     {{ renderHeader('TeamSpeak') }}
 
     <div class="container-fluid">
@@ -168,5 +129,51 @@ function tsPageClientsErrorFunc(jqXHR, textStatus, errorThrown)
 }
 
 </script>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+
+        .teamspeak-sidebar-container
+        {
+            width: 100%;
+            background-color: rgb(65,100, 160);
+            background-color: rgb(100, 60, 50);
+
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+            -moz-border-top-left-radius: 15px;
+            border-top-left-radius: 15px;
+            -moz-border-top-right-radius: 15px;
+            border-top-right-radius: 15px;
+            -moz-bottom-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            -moz-bottom-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .teamspeak-value
+        {
+            font-size: 170%;
+        }
+
+        .TeamSpeakNickname
+        {
+            font-size: 200%;
+            list-style: none;
+        }
+
+    </style>
 
 {% endblock %}

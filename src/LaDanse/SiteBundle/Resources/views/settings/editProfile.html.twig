@@ -2,13 +2,6 @@
 
 {% block settingsPanel %}
 
-	<style>
-		#settingsProfileLink
-	    {
-	        background-color: #99b433;
-	    }
-	</style>
-
 	<h1>Profile</h1>
 
     <p>Edit your personal profile information. Your display name is used throughout the website so make sure
@@ -23,5 +16,19 @@
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
     {{ form(form) }}
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #settingsProfileLink
+        {
+            background-color: #99b433;
+        }
+    </style>
 
 {% endblock %}

@@ -4,13 +4,6 @@
 
 {% block memberPageCenteredBody %}
 
-	<script type="application/javascript">
-    	$( document ).ready(function()
-    	{
-    		$('.date').datepicker({ dateFormat: 'D dd-mm-yy', firstDay: 1 })
-        });
-	</script>
-
     {{ renderHeader('Edit event', path('viewEvent', {'id': event.id})) }}
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
@@ -18,5 +11,19 @@
     <div style="max-width: 600px;">
         {{ form(form) }}
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <script type="application/javascript">
+        $( document ).ready(function()
+        {
+            $('.date').datepicker({ dateFormat: 'D dd-mm-yy', firstDay: 1 })
+        });
+    </script>
 
 {% endblock %}

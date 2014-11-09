@@ -2,13 +2,6 @@
 
 {% block settingsPanel %}
 
-	<style>
-		#settingsNotificationsLink
-	    {
-	        background-color: #99b433;
-	    }
-	</style>
-
 	<h1>Notifications</h1>
 
     <p>You don't want to miss out on a new event, do you? This site can notify you when things happen that might
@@ -38,5 +31,19 @@
     {{ form_row(form.change, { 'label': 'Update' }) }}
 
     {{ form_end(form) }}
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #settingsNotificationsLink
+        {
+            background-color: #99b433;
+        }
+    </style>
 
 {% endblock %}

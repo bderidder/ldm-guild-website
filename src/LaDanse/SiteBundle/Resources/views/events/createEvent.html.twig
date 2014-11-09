@@ -2,6 +2,18 @@
 
 {% block title %}Create event - La Danse Macabre{% endblock %}
 
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Create event', path('calendarIndex')) }}
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+    <div style="max-width: 600px;">
+        {{ form(form) }}
+    </div>
+
+{% endblock %}
+
 {% block javascript %}
 
     {# make sure that any other content of this tag is rendered as well #}
@@ -21,17 +33,5 @@
                 'container': 'body' });
         });
     </script>
-
-{% endblock %}
-
-{% block memberPageCenteredBody %}
-
-    {{ renderHeader('Create event', path('calendarIndex')) }}
-
-    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
-
-    <div style="max-width: 600px;">
-        {{ form(form) }}
-    </div>
 
 {% endblock %}

@@ -25,99 +25,15 @@
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
 
     <style>
-        html, body
-        {
-            height: 100%;
-        }
-
-        #first-top-bar
-        {
-            position: relative;
-            width: 100%;
-            height: 68px;
-            background-color: #000000;
-        }
-
-        #second-top-bar
-        {
-            width: 100%;
-            height: 50px;
-
-        }
 
         body
         {
-            background-color: white;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: top;
-            background-size: cover;
             background-image: url('{{ asset('bundles/ladansesite/images/background-white.jpg') }}');
         }
 
-        .tooltip > .tooltip-inner {background-color: #f00;}
-
-        #menuActivator
-        {
-            width: 25px;
-            text-align: center;
-        }
-
-        #menuActivator:hover
-        {
-            background-color: maroon;
-        }
-
-        .top-bar-left-container
-        {
-            float: left;
-            position: relative;
-            height: 68px;
-            margin-right: 3px;
-        }
-
-        .no-underline,.no-underline:hover
-        {
-            text-decoration: none;
-        }
     </style>
 
-    <style>
-        div#body-wrapper
-        {
-            width: 100%;
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0px 0px -41px 0px;
-        }
-
-
-        div#footer-wrapper {
-            width: 100%;
-            height: 41px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-
-        div#content-wrapper {
-            width: 100%;
-            padding: 0px 0px 41px 0px;
-        }
-
-
-        div#footer-wrapper, div#content-wrapper {
-            width: 100%;
-        }
-
-
-        div#footer-inner-wrapper, div#content-inner-wrapper {
-            width: 100%;
-            margin: 0px auto;
-        }
-    </style>
+    {% block stylesheet %}{% endblock %}
 
 </head>
 
