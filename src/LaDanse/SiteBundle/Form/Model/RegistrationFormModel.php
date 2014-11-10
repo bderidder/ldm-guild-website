@@ -62,7 +62,7 @@ class RegistrationFormModel
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "4",
-     *      max = "12",
+     *      max = "20",
      *      minMessage = "Your display name must be at least {{ limit }} characters length",
      *      maxMessage = "Your display name cannot be longer than {{ limit }} characters length")
      * @return string
