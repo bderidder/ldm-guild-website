@@ -1,12 +1,23 @@
 {% trans_default_domain 'FOSUserBundle' %}
+
 {% block subject %}
-{% autoescape false %}
-{{ 'resetting.email.subject'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
-{% endautoescape %}
+[La Danse Website] Password reset for '{{ user.username }}'
 {% endblock %}
+
 {% block body_text %}
-{% autoescape false %}
-{{ 'resetting.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) }}
-{% endautoescape %}
+Hello,
+
+We have received a request to reset the password for the user '{{ user.username }}'.
+
+If this was you, you can use the following URL to reset your password:
+
+{{ confirmationUrl }}
+
+If you did not request this password reset you can ignore this email.
+
+
+La Danse Website Team
 {% endblock %}
-{% block body_html %}{% endblock %}
+
+{% block body_html %}
+{% endblock %}

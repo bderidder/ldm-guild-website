@@ -1,5 +1,11 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
-{% endblock fos_user_content %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Reset Password - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+
+{% endblock memberPageCenteredBody %}

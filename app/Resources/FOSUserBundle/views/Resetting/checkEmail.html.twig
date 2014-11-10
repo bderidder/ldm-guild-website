@@ -1,9 +1,13 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
-{% endblock %}
+{% block title %}Reset Password - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    <p>
+        {{ 'resetting.check_email'|trans({'%email%': email}) }}
+    </p>
+
+{% endblock memberPageCenteredBody %}

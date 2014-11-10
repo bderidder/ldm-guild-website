@@ -60,13 +60,9 @@
 
 	<div id="right-login-container">
 		<div id="ldm-intro-container">
+
 			<h1>La Danse Macabre</h1>
 
-			<p>Welcome to the website of La Danse Macabre, a gaming guild of fun people of all ages and interests. Join us in World of Warcraft, Star Wars The Old Republic or Wildstar.</p>
-
-            {% image '@LaDanseSiteBundle/Resources/public/images/FB_FindUsOnFacebook-100.png' %}
-                <p><a href="https://www.facebook.com/groups/23877201619/"><img src="{{ asset_url }}" /></a></p>
-            {% endimage %}
 		</div>
 		<div id="text-container">
 			<h2 style="font-weight: normal; text-shadow: none;">Sign In</h2>
@@ -108,6 +104,7 @@
             <br />
 
 			<p>Don't have a La Danse account? <a href="{{ path('registerProfile') }}">Sign up now</a></p>
+            <p><a href="{{ path('fos_user_resetting_request') }}">I forgot my password</a></p>
 		</div>
 	</div>
 
