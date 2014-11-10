@@ -6,9 +6,13 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends LaDanseController
 {
@@ -31,7 +35,7 @@ class RegistrationController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors, $form, $this->getSettingsService()))
             {
-                $this->registerUser($formModel);
+                $this->registerUser($formModel, $request, new Response());
 
                 $this->addToast('Registration saved');
 
@@ -51,9 +55,10 @@ class RegistrationController extends LaDanseController
         }
     }
 
-    private function registerUser(RegistrationFormModel $formModel)
+    private function registerUser(RegistrationFormModel $formModel, Request $request, Response $response)
     {
         $userManager = $this->get('fos_user.user_manager');
+        $dispatcher = $this->get('event_dispatcher');
 
         /* @var $user \LaDanse\DomainBundle\Entity\Account */
         $user = $userManager->createUser();
@@ -65,5 +70,7 @@ class RegistrationController extends LaDanseController
         $user->setEnabled(true);
 
         $userManager->updateUser($user);
+
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
     }
 }
