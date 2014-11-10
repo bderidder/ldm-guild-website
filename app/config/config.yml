@@ -83,6 +83,13 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: LaDanse\DomainBundle\Entity\Account
+    from_email:
+            address:        noreply@ladanse.org
+            sender_name:    La Danse Website
+    registration:
+            confirmation:
+                enabled:    false # change to true for required email confirmation
+                template:   FOSUserBundle:Registration:email.txt.twig
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -104,3 +111,8 @@ services:
     class: LaDanse\SiteBundle\Security\AuthenticationContext
     scope: request
     arguments: ['@service_container']
+  LaDanse.PasswordResetting:
+      class: LaDanse\SiteBundle\EventListener\PasswordResettingListener
+      arguments: [ @router ]
+      tags:
+          - { name: kernel.event_subscriber }
