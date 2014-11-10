@@ -74,7 +74,7 @@ class FeedbackController extends LaDanseController
     {
         $message = \Swift_Message::newInstance()
             ->setSubject('Feedback from La Danse site')
-            ->setFrom('bderidder@gmail.com')
+            ->setFrom('noreply@ladanse.org')
             ->setTo('bderidder@gmail.com')
             ->addPart($this->renderView(
                     'LaDanseSiteBundle:feedback:email.txt.twig',
