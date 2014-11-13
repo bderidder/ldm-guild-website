@@ -164,8 +164,8 @@
             <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
             <p>
-                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
-                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
+                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
             </p>
         {% endif %}
     
@@ -174,8 +174,8 @@
         <p>There are no sign ups yet.</p>
 
         <p>
-            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">Sign Up</a>
-            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">Inform Absence</a>
+            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
+            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
         </p>
     {% endif %}
 
@@ -184,8 +184,8 @@
         <p>As an organiser you can edit this event or delete it.</p> 
 
         <p>
-            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">Edit Event</a>
-            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">Delete Event</a>
+            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
+            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
         </p>
     {% endif %}
 
