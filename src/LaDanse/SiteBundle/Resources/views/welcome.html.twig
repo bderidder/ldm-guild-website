@@ -37,13 +37,13 @@
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: center;">
-                                        <p><a class="btn btn-info" href="{{ path('aboutIndex') }}">More information</a></p>
+                                        <p><a class="btn btn-info" href="{{ path('aboutIndex') }}">more information</a></p>
                                     </div>
                                     <div class="col-md-4" style="text-align: center;">
                                         {% if auth.currentContext.authenticated %}
-                                            <p><a class="btn btn-success" href="{{ path('menuIndex') }}">Member Section</a></p>
+                                            <p><a class="btn btn-success" href="{{ path('menuIndex') }}">member section</a></p>
                                         {% else %}
-                                            <p><a class="btn btn-success" href="{{ path('fos_user_security_login') }}">Login or Register</a></p>
+                                            <p><a class="btn btn-success" href="{{ path('fos_user_security_login') }}">login or register</a></p>
                                         {% endif %}
                                     </div>
                                     <div class="col-md-4" style="text-align: center;">
