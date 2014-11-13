@@ -4,24 +4,24 @@
 
 <ul class="pager">
     {% if pager.previousPage is defined %}
-        <li class="previous"><a href="{{ path('calendarIndex', {'page': pager.previousPage }) }}"><i class="fa fa-arrow-left fa-1x"></i> Older</a></li>
+        <li class="previous"><a href="{{ path('calendarIndex', {'page': pager.previousPage }) }}"><i class="fa fa-arrow-left fa-1x"></i> older</a></li>
     {% else %}
-        <li class="previous disabled"><a href="#"><i class="fa fa-arrow-left fa-1x"></i> Older</a></li>
+        <li class="previous disabled"><a href="#"><i class="fa fa-arrow-left fa-1x"></i> older</a></li>
     {% endif %}
 
     <li><a href="{{ path('calendarIndex', {'page': 0 }) }}">today</a></li>
 
     {% if pager.nextPage is defined %}
-        <li class="next"><a href="{{ path('calendarIndex', {'page': pager.nextPage }) }}">Newer <i class="fa fa-arrow-right fa-1x"></i></a></li>
+        <li class="next"><a href="{{ path('calendarIndex', {'page': pager.nextPage }) }}">newer <i class="fa fa-arrow-right fa-1x"></i></a></li>
     {% else %}
-        <li class="next disabled"><a href="#">Newer <i class="fa fa-arrow-right fa-1x"></i></a></li>
+        <li class="next disabled"><a href="#">newer <i class="fa fa-arrow-right fa-1x"></i></a></li>
     {% endif %}
 </ul>
 
 <div>
-    <span class="event-container event-signed">You are signed</span>
-    <span class="event-container event-absent">You signed absent</span>
-    <span class="event-container event-notSigned"> You haven't signed yet</span>
+    <span class="event-container event-signed">you are signed</span>
+    <span class="event-container event-absent">you signed absent</span>
+    <span class="event-container event-notSigned">you haven't signed yet</span>
 </div>
 
 <br/>
