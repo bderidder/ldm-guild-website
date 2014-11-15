@@ -7,11 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormError;
 
-use LaDanse\DomainBundle\Entity\Account;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\AccountService;
 
 class RegistrationFormModel
 {
@@ -125,25 +123,25 @@ class RegistrationFormModel
 
     public function isValid(ErrorModel $errorModel,
                             FormInterface $form,
-                            SettingsService $settingsService)
+                            AccountService $accountService)
     {
         $isValid = true;
 
-        if ($settingsService->isLoginUsed($this->username))
+        if ($accountService->isLoginUsed($this->username))
         {
             $form->get('username')->addError(new FormError('That username is already in use by someone else'));
 
             $isValid = false;
         }
 
-        if ($settingsService->isDisplayNameUsed($this->displayName))
+        if ($accountService->isDisplayNameUsed($this->displayName))
         {
             $form->get('displayName')->addError(new FormError('That display name is already in use by someone else'));
 
             $isValid = false;
         }
 
-        if ($settingsService->isEmailUsed($this->email))
+        if ($accountService->isEmailUsed($this->email))
         {
             $form->get('email')->addError(new FormError('That email address is already in use by someone else'));
 

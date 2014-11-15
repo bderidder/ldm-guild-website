@@ -11,7 +11,7 @@ use LaDanse\DomainBundle\Entity\Account;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\AccountService;
 
 class ProfileFormModel
 {
@@ -84,18 +84,18 @@ class ProfileFormModel
     public function isValid(ErrorModel $errorModel,
                             FormInterface $form,
                             Account $currentAccount,
-                            SettingsService $settingsService)
+                            AccountService $accountService)
     {
         $isValid = true;
 
-        if ($settingsService->isDisplayNameUsed($this->displayName, $currentAccount->getId()))
+        if ($accountService->isDisplayNameUsed($this->displayName, $currentAccount->getId()))
         {
             $form->get('displayName')->addError(new FormError('That display name is already in use by someone else'));
 
             $isValid = false;
         }
 
-        if ($settingsService->isEmailUsed($this->email, $currentAccount->getId()))
+        if ($accountService->isEmailUsed($this->email, $currentAccount->getId()))
         {
             $form->get('email')->addError(new FormError('That email address is already in use by someone else'));
 
