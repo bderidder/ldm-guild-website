@@ -4,17 +4,17 @@
 
     <div id="first-top-bar">
         <div style="width: 100%; max-width: 980px; margin: auto; position: relative;">
-            <div class="top-bar-left-container">
-                <img src="{{ asset('bundles/ladansesite/images/GuildLogo.png') }}" style="height: 85px; padding-top: 10px;" />
-            </div>
-            <div class="top-bar-left-container" style="font-size: 1.7em; color: white; line-height: 68px;">
-                La Danse Macabre
-            </div>
             {% if auth.currentContext.authenticated %}
                 <a style="color: white;" href="{{ path('menuIndex') }}">
             {% else %}
                 <a style="color: white;" href="{{ path('welcomeIndex') }}">
             {% endif %}
+                <div class="top-bar-left-container">
+                    <img src="{{ asset('bundles/ladansesite/images/GuildLogo.png') }}" style="height: 85px; padding-top: 10px;" />
+                </div>
+                <div class="top-bar-left-container" style="font-size: 1.7em; color: white; line-height: 68px;">
+                    La Danse Macabre
+                </div>
                 <div id="menuActivator" class="top-bar-left-container"
                      style="font-size: 1.7em; color: white; line-height: 68px;">
                     <i class="fa fa-angle-down fa-1x"></i>
