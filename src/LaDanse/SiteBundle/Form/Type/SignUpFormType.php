@@ -2,13 +2,11 @@
 
 namespace LaDanse\SiteBundle\Form\Type;
 
-use Symfony\Component\Validator\Constraints;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints;
 
 class SignUpFormType extends AbstractType
 {

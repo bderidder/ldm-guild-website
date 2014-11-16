@@ -4,7 +4,6 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
-
 use LaDanse\DomainBundle\Entity\Event;
 
 class EventModel extends ContainerAwareClass

@@ -2,28 +2,26 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use \DateTime;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Component\HttpFoundation\Request;
-
+use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
 use LaDanse\DomainBundle\Entity\Event;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateEventController extends LaDanseController
 {
     /**
+     * @param $request Request
+     * @param $onDate string
+     *
+     * @return Response
+     *
      * @Route("/create/{onDate}", name="createEvent")
-     * @Template("LaDanseSiteBundle::createEvent.html.twig")
      */
     public function createAction(Request $request, $onDate = \NULL)
     {
@@ -31,7 +29,7 @@ class CreateEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

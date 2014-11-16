@@ -2,9 +2,8 @@
 
 namespace LaDanse\SiteBundle\Security;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AuthenticationService extends ContainerAwareClass
 {

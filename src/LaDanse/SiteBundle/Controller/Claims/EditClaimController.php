@@ -2,26 +2,23 @@
 
 namespace LaDanse\SiteBundle\Controller\Claims;
 
-use \DateTime;
-
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\SiteBundle\Form\Model\EditClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\EditClaimFormType;
-
-use LaDanse\DomainBundle\Entity\Role;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditClaimController extends LaDanseController
 {
     /**
+     * @param $request Request
+     * @param $claimId string
+     *
+     * @return Response
+     *
      * @Route("/{claimId}/edit", name="editClaim")
      */
     public function editAction(Request $request, $claimId)
@@ -30,7 +27,7 @@ class EditClaimController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in viewClaims');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

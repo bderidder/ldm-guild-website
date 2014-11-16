@@ -22,9 +22,7 @@ class TwigHeaderAndBackExtension extends \Twig_Extension
 
     public function renderFunction($headerTitle, $backPath = null)
     {
-        $html = $this->renderTwigTemplate($headerTitle, $backPath);
-
-        return $html;
+        return $this->renderTwigTemplate($headerTitle, $backPath);
     }
 
     public function getName()

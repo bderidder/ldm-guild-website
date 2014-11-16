@@ -2,28 +2,28 @@
 
 namespace LaDanse\SiteBundle\Controller\Menu;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends LaDanseController
 {
 	/**
+     * @return Response
+     *
      * @Route("/", name="menuIndex")
-     * @Template("LaDanseSiteBundle:menu:menu.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in menuIndex');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in menuIndex');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
+
+        return $this->render('LaDanseSiteBundle:menu:menu.html.twig');
     }
 }

@@ -2,16 +2,12 @@
 
 namespace LaDanse\SiteBundle\Form\Type;
 
-use Symfony\Component\Validator\Constraints;
-
+use LaDanse\CommonBundle\Helper\ContainerInjector;
+use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Service\GuildCharacterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use LaDanse\CommonBundle\Helper\ContainerInjector;
-
-use LaDanse\DomainBundle\Entity\Role;
-
-use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use Symfony\Component\Validator\Constraints;
 
 class CreateClaimFormType extends AbstractType
 {

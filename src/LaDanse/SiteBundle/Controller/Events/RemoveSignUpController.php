@@ -2,22 +2,10 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
-
-use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
-use LaDanse\SiteBundle\Form\Type\SignUpFormType;
-
-use LaDanse\DomainBundle\Entity\SignUp;
-use LaDanse\DomainBundle\Entity\ForRole;
-use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\DomainBundle\Entity\Event;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{id}/signup")
@@ -27,6 +15,10 @@ class RemoveSignUpController extends LaDanseController
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
     /**
+     * @param $id string
+     *
+     * @return Response
+     *
      * @Route("/remove", name="removeSignUp")
      */
     public function removeAction($id)

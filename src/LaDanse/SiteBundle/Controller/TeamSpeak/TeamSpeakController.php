@@ -2,28 +2,28 @@
 
 namespace LaDanse\SiteBundle\Controller\TeamSpeak;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class TeamSpeakController extends LaDanseController
 {
 	/**
+     * @return Response
+     *
      * @Route("/", name="teamSpeakIndex")
-     * @Template("LaDanseSiteBundle:teamspeak:index.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
     	
     	if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
+
+        return $this->render('LaDanseSiteBundle:teamspeak:index.html.twig');
     }
 }

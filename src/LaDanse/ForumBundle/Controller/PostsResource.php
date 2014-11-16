@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Request,
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
-use LaDanse\SiteBundle\Security\AuthenticationContext;
-
 use LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
@@ -23,6 +21,11 @@ use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 class PostsResource extends LaDanseController
 {
     /**
+     * @param Request $request
+     * @param string $topicId
+     *
+     * @return Response
+     *
      * @Route("/", name="getPosts")
      * @Method({"GET"})
      */
@@ -57,8 +60,7 @@ class PostsResource extends LaDanseController
         $jsonObject = (object)array(
             "posts"      => $jsonArray,
             "links"      => (object)array(
-                "self"   => $this->generateUrl('getPosts', array('topicId' => $topicId), true),
-                "topic"  => $this->generateUrl('getTopic', array('topicId' => $topicId), true)
+                "self"   => $this->generateUrl('getPosts', array('topicId' => $topicId), true)
             )
         );
 
@@ -66,6 +68,8 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @param string $topicId
+     *
      * @Route("/create", name="createPost")
      * @Method({"GET"})
      */
@@ -77,6 +81,11 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @param Request $request
+     * @param string $topicId
+     *
+     * @return Response
+     *
      * @Route("/{postId}", name="getPost")
      * @Method({"GET"})
      */
@@ -87,6 +96,11 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @param Request $request
+     * @param string $topicId
+     *
+     * @return Response
+     *
      * @Route("/", name="createPost")
      * @Method({"POST", "PUT"})
      */
@@ -111,10 +125,15 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @param Request $request
+     * @param string $postId
+     *
+     * @return Response
+     *
      * @Route("/{postId}", name="updatePost")
      * @Method({"POST", "PUT"})
      */
-    public function updatePostAction(Request $request, $topicId, $postId)
+    public function updatePostAction(Request $request, $postId)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -150,17 +169,26 @@ class PostsResource extends LaDanseController
     }
 
     /**
+     * @param Request $request
+     * @param string $topicId
+     * @param string $commentId
+     *
+     * @return Response
+     *
      * @Route("/{commentId}", name="otherPost")
      * @Method({"POST", "PUT", "DELETE", "OPTIONS"})
      */
     public function otherPostAction(Request $request, $topicId, $commentId)
     {
+        $this->getLogger()->warning('POST/PUT/DELETE/OPTIONS for Comment resource with ' . $topicId . ' and ' . $commentId);
+
         return ResourceHelper::createErrorResponse($request, 
             Response::HTTP_NOT_FOUND, "Resource not found", array("Allow" => "GET"));
     }
 
     /**
      * @param Post $post
+     *
      * @return object
      */
     private function postToJson(Post $post)
@@ -172,7 +200,7 @@ class PostsResource extends LaDanseController
             "message"   => $post->getMessage(),
             "postDate"  => $post->getPostDate()->format(\DateTime::ISO8601),
             "links"     => (object)array(
-                "self"  => $this->generateUrl('getPost', 
+                "self"  => $this->generateUrl('getPost',
                     array('postId' => $post->getId(),
                           'topicId' => $post->getTopic()->getId()), true),
             )

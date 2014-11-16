@@ -2,17 +2,19 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RemoveEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
     /**
+     * @param string $id
+     *
+     * @return Response
+     *
      * @Route("/{id}/remove", name="removeEvent")
      */
     public function removeAction($id)
@@ -21,7 +23,7 @@ class RemoveEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -34,7 +36,7 @@ class RemoveEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in deleteAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in deleteAction',
                 array("event" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -51,7 +53,7 @@ class RemoveEventController extends LaDanseController
 
             $em->remove($event);
 
-            $this->getLogger()->warn(__CLASS__ . ' removing event in deleteAction', 
+            $this->getLogger()->warning(__CLASS__ . ' removing event in deleteAction',
                 array("event" => $id));
 
             $em->flush();

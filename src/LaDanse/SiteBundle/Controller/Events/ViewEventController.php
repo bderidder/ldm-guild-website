@@ -2,17 +2,20 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
 use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ViewEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
+     * @param string $id
+     *
+     * @return Response
+     *
      * @Route("/{id}", name="viewEvent")
      */
     public function viewAction($id)
@@ -23,7 +26,7 @@ class ViewEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -36,7 +39,7 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction',
                 array("event" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));

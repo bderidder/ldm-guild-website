@@ -2,30 +2,28 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use \DateTime;
-
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use LaDanse\DomainBundle\Entity\Event;
-
+use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
+use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
-
-use LaDanse\SiteBundle\Model\EventModel,
-    LaDanse\SiteBundle\Model\ErrorModel;
+use LaDanse\SiteBundle\Model\ErrorModel;
+use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
+     * @param $request Request
+     * @param $id string
+     *
+     * @return Response
+     *
      * @Route("/{id}/edit", name="editEvent")
-     * @Template("LaDanseSiteBundle:events:editEvent.html.twig")
      */
     public function editAction(Request $request, $id)
     {
@@ -33,7 +31,7 @@ class EditEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -46,7 +44,7 @@ class EditEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction',
                 array("event" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -60,7 +58,7 @@ class EditEventController extends LaDanseController
 
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user is not the organiser of the event in indexAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction',
                 array('event' => new EventModel($this->getContainerInjector(), $event), 'user' => $authContext->getAccount()->getId()));
 
         	return $this->redirect($this->generateUrl('calendarIndex'));

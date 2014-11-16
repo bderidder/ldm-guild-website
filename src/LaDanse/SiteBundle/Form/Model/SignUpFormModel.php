@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
-
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUpType;
 

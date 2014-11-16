@@ -2,22 +2,17 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
-
+use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\ForRole;
+use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
-
-use LaDanse\DomainBundle\Entity\SignUp;
-use LaDanse\DomainBundle\Entity\ForRole;
-use LaDanse\DomainBundle\Entity\SignUpType;
-use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{id}/signup")
@@ -27,8 +22,12 @@ class CreateSignUpController extends LaDanseController
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
+     * @param $request Request
+     * @param $id string
+     *
+     * @return Response
+     *
      * @Route("/create", name="createSignUp")
-     * @Template("LaDanseSiteBundle:events:createSignUp.html.twig")
      */
     public function createAction(Request $request, $id)
     {
@@ -36,7 +35,7 @@ class CreateSignUpController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
@@ -50,7 +49,7 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         } 
@@ -63,7 +62,7 @@ class CreateSignUpController extends LaDanseController
 
         if ($this->getCurrentUserSignUp($event))
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user is already subscribed to this event in indexAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the user is already subscribed to this event in indexAction',
                 array('event' => $id, 'user' => $authContext->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -86,11 +85,16 @@ class CreateSignUpController extends LaDanseController
         }
         else
         {
-            return array('event' => $event, 'form' => $form->createView());            
+            return $this->render("LaDanseSiteBundle:events:createSignUp.html.twig",
+                array('event' => $event, 'form' => $form->createView()));
         }
     }
 
     /**
+     * @param $id string
+     *
+     * @return Response
+     *
      * @Route("/createabsence", name="createAbsence")
      */
     public function createAbsenceAction($id)
@@ -99,7 +103,7 @@ class CreateSignUpController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -112,14 +116,14 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction',
                 array('event' => $id, 'user' => $authContext->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));

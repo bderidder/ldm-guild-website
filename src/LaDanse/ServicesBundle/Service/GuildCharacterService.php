@@ -2,17 +2,14 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerAware,
-    Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
-use LaDanse\DomainBundle\Entity\Character,
-    LaDanse\DomainBundle\Entity\CharacterVersion,
-    LaDanse\DomainBundle\Entity\Claim,
-    LaDanse\DomainBundle\Entity\PlaysRole,
-    LaDanse\DomainBundle\Entity\Role,
-    LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Character;
+use LaDanse\DomainBundle\Entity\CharacterVersion;
+use LaDanse\DomainBundle\Entity\Claim;
+use LaDanse\DomainBundle\Entity\PlaysRole;
+use LaDanse\DomainBundle\Entity\Role;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GuildCharacterService extends LaDanseService
 {
@@ -44,8 +41,6 @@ class GuildCharacterService extends LaDanseService
 
         foreach($characters as $character)
         {
-            $versions = $character->getVersions();
-
             $charModels[] = $this->characterToDto($character);
         }
 
@@ -76,8 +71,6 @@ class GuildCharacterService extends LaDanseService
         }
 
         $character = $characters[0];
-
-        $versions = $character->getVersions();
 
         return $this->characterToDto($character);
     }
@@ -378,10 +371,12 @@ class GuildCharacterService extends LaDanseService
 
         $claims = $query->getResult();
 
+        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
         foreach($claims as $claim)
         {
             $claim->setEndTime($onDateTime);
 
+            /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
             foreach($claim->getRoles() as $playsRole)
             {
                 $playsRole->setEndTime($onDateTime);
@@ -437,6 +432,7 @@ class GuildCharacterService extends LaDanseService
 
     protected function containsRole($playsRoles, $role, \DateTime $onDateTime)
     {
+        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
         foreach($playsRoles as $playsRole)
         {
             if (($playsRole->isRole($role))
@@ -454,7 +450,10 @@ class GuildCharacterService extends LaDanseService
         return false;
     }
 
-    /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
+    /* @var $claim \LaDanse\DomainBundle\Entity\Claim
+     * @var $onDateTime \DateTime
+     * @return object
+     */
     protected function claimToDto($claim, \DateTime $onDateTime)
     {
         return (object)array(
@@ -467,6 +466,11 @@ class GuildCharacterService extends LaDanseService
         );
     }
 
+    /**
+     * @param Character $character
+     *
+     * @return object
+     */
     protected function characterToDto($character)
     {
         $versions = $character->getVersions();

@@ -130,6 +130,7 @@ class ForumService extends LaDanseService
         $em = $doc->getManager();
         $topicRepo = $doc->getRepository(Topic::REPOSITORY);
 
+        /* @var $topic \LaDanse\ForumBundle\Entity\Topic */
         $topic = $topicRepo->find($topicId);
 
         if (null === $topic)

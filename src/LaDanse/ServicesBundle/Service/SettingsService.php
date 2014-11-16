@@ -2,11 +2,8 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
-use LaDanse\DomainBundle\Entity\Account;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SettingsService extends LaDanseService
 {

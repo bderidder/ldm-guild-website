@@ -2,11 +2,8 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class EventListController extends LaDanseController
 {

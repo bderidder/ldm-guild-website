@@ -2,13 +2,10 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerAware,
-    Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
-use LaDanse\DomainBundle\Entity\GameClass,
-    LaDanse\DomainBundle\Entity\GameRace;
+use LaDanse\DomainBundle\Entity\GameClass;
+use LaDanse\DomainBundle\Entity\GameRace;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class GameDataService extends LaDanseService
 {

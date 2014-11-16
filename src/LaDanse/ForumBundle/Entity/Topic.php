@@ -130,7 +130,7 @@ class Topic
     /**
      * Get creator
      *
-     * @return \LaDanse\DomainBundle\Entity\Accountt 
+     * @return \LaDanse\DomainBundle\Entity\Account
      */
     public function getCreator()
     {

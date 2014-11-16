@@ -2,11 +2,9 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
-
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PasswordFormModel

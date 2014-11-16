@@ -2,14 +2,11 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormError;
-
-use LaDanse\SiteBundle\Model\ErrorModel;
-
 use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\SiteBundle\Model\ErrorModel;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormModel
 {

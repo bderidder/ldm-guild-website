@@ -2,18 +2,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\JsonResponse,
-    Symfony\Component\HttpFoundation\Request;
-
-use Latte\Bundle\GuestbookRestBundle\Entity\Guestbook,
-    Latte\Bundle\GuestbookRestBundle\Entity\GuestComment;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ResourceHelper
 {

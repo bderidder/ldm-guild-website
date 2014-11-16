@@ -4,10 +4,6 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-use LaDanse\SiteBundle\Model\ErrorModel;
-
-use \DateTime;
-
 class FeedbackFormModel
 {
     private $description;

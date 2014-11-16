@@ -2,26 +2,22 @@
 
 namespace LaDanse\SiteBundle\Controller\Claims;
 
-use \DateTime;
-
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
-
-use LaDanse\DomainBundle\Entity\Role;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateClaimController extends LaDanseController
 {
     /**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/create", name="createClaim")
      */
     public function createAction(Request $request)
@@ -30,7 +26,7 @@ class CreateClaimController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

@@ -2,12 +2,9 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/")
@@ -15,10 +12,12 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 class WelcomeController extends LaDanseController
 {
 	/**
+     * @return Response
+     *
      * @Route("/", name="welcomeIndex")
-     * @Template("LaDanseSiteBundle::welcome.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
+        return $this->render("LaDanseSiteBundle::welcome.html.twig");
     }
 }

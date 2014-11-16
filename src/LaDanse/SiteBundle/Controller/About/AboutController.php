@@ -2,20 +2,19 @@
 
 namespace LaDanse\SiteBundle\Controller\About;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class AboutController extends LaDanseController
 {
 	/**
+     * @return Response
+     *
      * @Route("/", name="aboutIndex")
-     * @Template("LaDanseSiteBundle:about:about.html.twig")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
+        return $this->render("LaDanseSiteBundle:about:about.html.twig");
     }
 }

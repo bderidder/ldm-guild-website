@@ -2,22 +2,13 @@
 
 namespace LaDanse\SiteBundle\Controller;
 
-use \DateTime;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use Symfony\Component\HttpFoundation\Request;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\DomainBundle\Entity\Event;
-
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
-
 use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/feedback")
@@ -25,8 +16,11 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 class FeedbackController extends LaDanseController
 {
     /**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/create", name="createFeedbackIndex")
-     * @Template("LaDanseSiteBundle:feedback:feedbackForm.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -34,7 +28,7 @@ class FeedbackController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

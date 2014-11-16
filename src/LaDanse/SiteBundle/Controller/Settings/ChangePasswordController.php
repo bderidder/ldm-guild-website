@@ -2,23 +2,22 @@
 
 namespace LaDanse\SiteBundle\Controller\Settings;
 
-use Symfony\Component\HttpFoundation\Request;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Model\ErrorModel;
-
 use LaDanse\SiteBundle\Form\Model\PasswordFormModel;
 use LaDanse\SiteBundle\Form\Type\PasswordFormType;
+use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChangePasswordController extends LaDanseController
 {
 	/**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/password", name="changePassword")
-     * @Template("LaDanseSiteBundle:settings:changePassword.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -26,7 +25,7 @@ class ChangePasswordController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in changePassword');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in changePassword');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

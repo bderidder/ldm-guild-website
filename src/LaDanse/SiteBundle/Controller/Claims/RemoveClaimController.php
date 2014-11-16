@@ -2,25 +2,17 @@
 
 namespace LaDanse\SiteBundle\Controller\Claims;
 
-use \DateTime;
-
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\JsonResponse;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Form\Model\NewClaimFormModel;
-use LaDanse\SiteBundle\Form\Type\NewClaimFormType;
-
-use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class RemoveClaimController extends LaDanseController
 {
     /**
+     * @param string $claimId
+     *
+     * @return Response
+     *
      * @Route("/{claimId}/remove", name="removeClaim")
      */
     public function removeAction($claimId)
@@ -29,7 +21,7 @@ class RemoveClaimController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in viewClaims');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

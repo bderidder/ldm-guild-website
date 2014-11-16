@@ -44,6 +44,14 @@ class LaDanseController extends Controller
 	}
 
     /**
+     * @return \LaDanse\ServicesBundle\Service\AccountService
+     */
+    protected function getAccountService()
+    {
+        return $this->get(\LaDanse\ServicesBundle\Service\AccountService::SERVICE_NAME);
+    }
+
+    /**
      * @return \LaDanse\CommonBundle\Helper\ContainerInjector
      */
 	protected function getContainerInjector()

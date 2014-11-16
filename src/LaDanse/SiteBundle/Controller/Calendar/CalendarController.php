@@ -2,23 +2,24 @@
 
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
-use Symfony\Component\HttpFoundation\Request;
-
+use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Model\CalendarDayModel;
+use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Model\EventModel,
-    LaDanse\SiteBundle\Model\CalendarDayModel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CalendarController extends LaDanseController
 {
     const COMPARE_DATE_FORMAT = "Y-m-d";
 
     /**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/", name="calendarIndex")
-     * @Template("LaDanseSiteBundle:calendar:calendar.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -26,7 +27,7 @@ class CalendarController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -38,8 +39,9 @@ class CalendarController extends LaDanseController
         );
     }
 
-    public function indexPartialAction(Request $request, $page)
+    public function indexPartialAction($page)
     {
+        /* @var $startDate \DateTime */
         // fetch the Monday we should start with
         $startDate = $this->getStartDate($page);
 
@@ -48,8 +50,6 @@ class CalendarController extends LaDanseController
 
         $calendarDates = array();
 
-        //$startDate = new \DateTime('now');
-        //$startDate = $startDate->sub(new \DateInterval("P10D"));
         $events = $this->getEvents($startDate);
 
         $eventIndex = 0;
@@ -73,6 +73,7 @@ class CalendarController extends LaDanseController
 
             while($eventIndex < count($events))
             {
+                /* @var $currentEvent EventModel */
                 $currentEvent = $events[$eventIndex];
                 $inviteTime = $currentEvent->getInviteTime();
 

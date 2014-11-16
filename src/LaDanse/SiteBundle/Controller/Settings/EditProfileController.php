@@ -7,14 +7,17 @@ use LaDanse\SiteBundle\Form\Model\ProfileFormModel;
 use LaDanse\SiteBundle\Form\Type\ProfileFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditProfileController extends LaDanseController
 {
 	/**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/profile", name="editProfile")
-     * @Template("LaDanseSiteBundle:settings:editProfile.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -22,7 +25,7 @@ class EditProfileController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in editProfile');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in editProfile');
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
@@ -44,14 +47,14 @@ class EditProfileController extends LaDanseController
 
             $errors = new ErrorModel();
 
-            if ($form->isValid() && $formModel->isValid($errors, $form, $authContext->getAccount(), $this->getSettingsService()))
+            if ($form->isValid() && $formModel->isValid($errors, $form, $authContext->getAccount(), $this->getAccountService()))
             {
                $this->updateProfile($authContext->getAccount()->getId(),
                    $formModel->getDisplayName(), $formModel->getEmail());
 
                $this->addToast('Profile updated');
 
-                return $this->redirect($this->generateUrl('editProfile'));
+               return $this->redirect($this->generateUrl('editProfile'));
             }
             else
             {
@@ -69,8 +72,8 @@ class EditProfileController extends LaDanseController
 
     private function updateProfile($accountId, $displayName, $email)
     {
-        $settingsService = $this->getSettingsService();
+        $accountService = $this->getAccountService();
 
-        $settingsService->updateProfile($accountId, $displayName, $email);
+        $accountService->updateProfile($accountId, $displayName, $email);
     }
 }

@@ -44,7 +44,7 @@ class Forum
      */
     public function __construct()
     {
-        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     /**
@@ -86,7 +86,7 @@ class Forum
      * @param \LaDanse\ForumBundle\Entity\Topic $topics
      * @return Forum
      */
-    public function addTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
+    public function addTopic(Topic $topics)
     {
         $this->topics[] = $topics;
 
@@ -98,7 +98,7 @@ class Forum
      *
      * @param \LaDanse\ForumBundle\Entity\Topic $topics
      */
-    public function removeTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
+    public function removeTopic(Topic $topics)
     {
         $this->topics->removeElement($topics);
     }

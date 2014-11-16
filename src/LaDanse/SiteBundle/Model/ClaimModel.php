@@ -12,8 +12,6 @@ class ClaimModel
     
     public function __construct($claimsDto)
     {
-        parent::__construct($injector->getContainer());
-
         $this->characterName = $claimsDto->character;
         $this->playsTank = $claimsDto->playsTank;
         $this->playsHealer = $claimsDto->playsHealer;

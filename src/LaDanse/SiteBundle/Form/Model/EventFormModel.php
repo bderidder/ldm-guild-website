@@ -2,11 +2,9 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
+use DateTime;
 use LaDanse\SiteBundle\Model\ErrorModel;
-
-use \DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class EventFormModel
 {

@@ -2,23 +2,24 @@
 
 namespace LaDanse\SiteBundle\Controller\Registration;
 
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\FOSUserEvents;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class RegistrationController extends LaDanseController
 {
 	/**
+     * @param $request Request
+     *
+     * @return Response
+     *
      * @Route("/", name="registerProfile")
-     * @Template("LaDanseSiteBundle:registration:registerProfile.html.twig")
      */
     public function indexAction(Request $request)
     {
@@ -33,7 +34,7 @@ class RegistrationController extends LaDanseController
 
             $errors = new ErrorModel();
 
-            if ($form->isValid() && $formModel->isValid($errors, $form, $this->getSettingsService()))
+            if ($form->isValid() && $formModel->isValid($errors, $form, $this->getAccountService()))
             {
                 $this->registerUser($formModel, $request, new Response());
 

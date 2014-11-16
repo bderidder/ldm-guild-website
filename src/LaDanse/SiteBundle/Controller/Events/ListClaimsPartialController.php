@@ -2,41 +2,41 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListClaimsPartialController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
 	/**
+     * @param string $eventId
+     * @param string $accountId
+     * @param string $role
+     *
+     * @return Response
+     *
      * @Route("/{eventId}/claims/{accountId}/role/{role}", name="listClaims")
      */
     public function listAction($eventId, $accountId, $role)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        $currentDateTime = new \DateTime();
-
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warn(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->render('LaDanseSiteBundle:events:listClaims.html.twig',
                 array('error' => 'Not authenticated')
             );
         }
 
-        $account = $authContext->getAccount();
-
         $event = $this->getEvent($eventId);
 
         if (null === $event)
         {
-            $this->getLogger()->warn(__CLASS__ . ' the event does not exist in listAction', 
+            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in listAction',
                 array("event" => $eventId));
 
             return $this->render('LaDanseSiteBundle:events:listClaims.html.twig',
@@ -51,7 +51,6 @@ class ListClaimsPartialController extends LaDanseController
 
     private function getEvent($eventId)
     {
-        $em = $this->getDoctrine()->getManager();
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
         /* @var $event \LaDanse\DomainBundle\Entity\Event */

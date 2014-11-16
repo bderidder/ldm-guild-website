@@ -2,16 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
+use LaDanse\ServicesBundle\Service\GameDataService;
+use LaDanse\ServicesBundle\Service\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-
-use LaDanse\ServicesBundle\Service\GuildCharacterService,
-    LaDanse\ServicesBundle\Service\GameDataService;
-
-use LaDanse\DomainBundle\Entity\Character;
+use \Symfony\Component\Console\Input\InputArgument;
+use \Symfony\Component\Console\Input\InputInterface;
+use \Symfony\Component\Console\Input\InputOption;
+use \Symfony\Component\Console\Output\OutputInterface;
 
 class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
@@ -184,6 +181,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
     protected function getGameRace($gameRaces, $gameRaceId)
     {
+        /* @var $gameRace \LaDanse\DomainBundle\Entity\GameRace */
         foreach($gameRaces as $gameRace)
         {
             if ($gameRace->getId() == $gameRaceId)
@@ -197,6 +195,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
     protected function getGameClass($gameClasses, $gameClassId)
     {
+        /* @var $gameClass \LaDanse\DomainBundle\Entity\GameClass */
         foreach($gameClasses as $gameClass)
         {
             if ($gameClass->getId() == $gameClassId)

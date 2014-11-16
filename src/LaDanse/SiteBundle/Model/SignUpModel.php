@@ -4,10 +4,9 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
-
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use LaDanse\DomainBundle\Entity\Role;
 
 class SignUpModel extends ContainerAwareClass
 {
