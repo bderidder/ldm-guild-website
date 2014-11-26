@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\ServicesBundle\Command;
 
@@ -10,6 +14,10 @@ use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class RefreshGuildMembersCommand
+ * @package LaDanse\ServicesBundle\Command
+ */
 class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
     const ARMORY_URL = "http://eu.battle.net/api/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members";
@@ -17,6 +25,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     const VERBOSE_OPTION = 'verbose';
     const DIAG_OPTION    = 'diag';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this
@@ -27,6 +38,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // first we fetch all the guild members from the armory and we sort them
@@ -47,9 +63,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 "race"  => $entry->character->race,
                 "level" => $entry->character->level
             );
-        }        
+        }
 
-        usort($armoryNames, function($a, $b)
+        usort(
+            $armoryNames,
+            function ($a, $b)
             {
                 return strcmp($a->name, $b->name);
             }
@@ -69,7 +87,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $this->debug($input, $output, "Number of members in database " . count($dbNames));
 
-        usort($dbNames, function($a, $b)
+        usort(
+            $dbNames,
+            function ($a, $b)
             {
                 return strcmp($a->name, $b->name);
             }
@@ -95,8 +115,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 
                 $this->updateCharacter();
 
-                $armoryIndex++; 
-                $dbIndex++;                   
+                $armoryIndex++;
+                $dbIndex++;
             }
             elseif (strcmp($dbName, $armoryName) < 0)
             {
@@ -157,6 +177,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         }
     }
 
+    /**
+     * @param $characterId
+     */
     protected function endCharacter($characterId)
     {
         $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
@@ -164,19 +187,29 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         $guildCharacterService->endCharacter($characterId);
     }
 
+    /**
+     *
+     */
     protected function updateCharacter()
     {
 
     }
 
+    /**
+     * @param $armoryCharacter
+     * @param $gameRace
+     * @param $gameClass
+     */
     protected function importCharacter($armoryCharacter, $gameRace, $gameClass)
     {
         $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
 
         $guildCharacterService->importCharacter(
-            $armoryCharacter->name, 
-            $armoryCharacter->level, 
-            $gameRace, $gameClass);
+            $armoryCharacter->name,
+            $armoryCharacter->level,
+            $gameRace,
+            $gameClass
+        );
     }
 
     protected function getGameRace($gameRaces, $gameRaceId)
@@ -190,9 +223,14 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             }
         }
 
-        return NULL;
+        return null;
     }
 
+    /**
+     * @param $gameClasses
+     * @param $gameClassId
+     * @return \LaDanse\DomainBundle\Entity\GameClass|null
+     */
     protected function getGameClass($gameClasses, $gameClassId)
     {
         /* @var $gameClass \LaDanse\DomainBundle\Entity\GameClass */
@@ -204,9 +242,14 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             }
         }
 
-        return NULL;
+        return null;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @param $text
+     */
     protected function debug(InputInterface $input, OutputInterface $output, $text)
     {
         if ($input->getOption(self::DIAG_OPTION))
@@ -215,6 +258,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         }
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @param $text
+     */
     protected function info(InputInterface $input, OutputInterface $output, $text)
     {
         if ($input->getOption(self::VERBOSE_OPTION))

@@ -26,6 +26,9 @@ class Account extends BaseUser
      */
     protected $displayName;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();

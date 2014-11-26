@@ -1,13 +1,17 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\HttpFoundation\Response,
-    Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
@@ -15,9 +19,9 @@ use LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
-/** 
+/**
  * @Route("/topics/{topicId}/posts")
-*/
+ */
 class PostsResource extends LaDanseController
 {
     /**
@@ -35,14 +39,19 @@ class PostsResource extends LaDanseController
         {
             $posts = $this->getForumService()->getAllPosts($topicId);
         }
-        catch(TopicDoesNotExistException $e)
+        catch (TopicDoesNotExistException $e)
         {
-            return ResourceHelper::createErrorResponse($request, 
-                    Response::HTTP_NOT_FOUND, $e->getMessage(), array("Allow" => "GET"));
+            return ResourceHelper::createErrorResponse(
+                $request,
+                Response::HTTP_NOT_FOUND,
+                $e->getMessage(),
+                array("Allow" => "GET")
+            );
         }
 
-        usort($posts, function($a, $b)
-            {
+        usort(
+            $posts,
+            function ($a, $b) {
                 /** @var $a \LaDanse\ForumBundle\Entity\Post */
                 /** @var $b \LaDanse\ForumBundle\Entity\Post */
 
@@ -52,15 +61,15 @@ class PostsResource extends LaDanseController
 
         $jsonArray = array();
 
-        foreach($posts as $post)
+        foreach ($posts as $post)
         {
             $jsonArray[] = $this->postToJson($post);
         }
 
         $jsonObject = (object)array(
-            "posts"      => $jsonArray,
-            "links"      => (object)array(
-                "self"   => $this->generateUrl('getPosts', array('topicId' => $topicId), true)
+            "posts" => $jsonArray,
+            "links" => (object)array(
+                "self" => $this->generateUrl('getPosts', array('topicId' => $topicId), true)
             )
         );
 
@@ -91,8 +100,12 @@ class PostsResource extends LaDanseController
      */
     public function getTopicAction(Request $request, $topicId)
     {
-        return ResourceHelper::createErrorResponse($request,
-            Response::HTTP_NOT_FOUND, "Resource not found (" . $topicId . ")", array("Allow" => "GET"));
+        return ResourceHelper::createErrorResponse(
+            $request,
+            Response::HTTP_NOT_FOUND,
+            "Resource not found (" . $topicId . ")",
+            array("Allow" => "GET")
+        );
     }
 
     /**
@@ -118,7 +131,7 @@ class PostsResource extends LaDanseController
         $this->getForumService()->createPost($topicId, $authContext->getAccount(), $jsonObject->message);
 
         $jsonObject = (object)array(
-            "posts"    => "test"
+            "posts" => "test"
         );
 
         return new JsonResponse($jsonObject);
@@ -143,16 +156,24 @@ class PostsResource extends LaDanseController
         {
             $post = $this->getForumService()->getPost($postId);
         }
-        catch(TopicDoesNotExistException $e)
+        catch (TopicDoesNotExistException $e)
         {
-            return ResourceHelper::createErrorResponse($request, 
-                    Response::HTTP_NOT_FOUND, $e->getMessage(), array("Allow" => "GET"));
+            return ResourceHelper::createErrorResponse(
+                $request,
+                Response::HTTP_NOT_FOUND,
+                $e->getMessage(),
+                array("Allow" => "GET")
+            );
         }
 
         if (!($post->getPoster()->getId() == $authContext->getAccount()->getId()))
         {
-            return ResourceHelper::createErrorResponse($request, 
-                    Response::HTTP_FORBIDDEN, 'Not allowed', array("Allow" => "GET"));
+            return ResourceHelper::createErrorResponse(
+                $request,
+                Response::HTTP_FORBIDDEN,
+                'Not allowed',
+                array("Allow" => "GET")
+            );
         }
 
         $jsonData = $request->getContent(false);
@@ -162,7 +183,7 @@ class PostsResource extends LaDanseController
         $this->getForumService()->updatePost($postId, $jsonObject->message);
 
         $jsonObject = (object)array(
-            "posts"    => "test"
+            "posts" => "test"
         );
 
         return new JsonResponse($jsonObject);
@@ -180,10 +201,16 @@ class PostsResource extends LaDanseController
      */
     public function otherPostAction(Request $request, $topicId, $commentId)
     {
-        $this->getLogger()->warning('POST/PUT/DELETE/OPTIONS for Comment resource with ' . $topicId . ' and ' . $commentId);
+        $this->getLogger()->warning(
+            'POST/PUT/DELETE/OPTIONS for Comment resource with ' . $topicId . ' and ' . $commentId
+        );
 
-        return ResourceHelper::createErrorResponse($request, 
-            Response::HTTP_NOT_FOUND, "Resource not found", array("Allow" => "GET"));
+        return ResourceHelper::createErrorResponse(
+            $request,
+            Response::HTTP_NOT_FOUND,
+            "Resource not found",
+            array("Allow" => "GET")
+        );
     }
 
     /**
@@ -194,15 +221,20 @@ class PostsResource extends LaDanseController
     private function postToJson(Post $post)
     {
         return (object)array(
-            "postId"    => $post->getId(),
-            "posterId"    => $post->getPoster()->getId(),
-            "poster"    => $post->getPoster()->getDisplayName(),
-            "message"   => $post->getMessage(),
-            "postDate"  => $post->getPostDate()->format(\DateTime::ISO8601),
-            "links"     => (object)array(
-                "self"  => $this->generateUrl('getPost',
-                    array('postId' => $post->getId(),
-                          'topicId' => $post->getTopic()->getId()), true),
+            "postId" => $post->getId(),
+            "posterId" => $post->getPoster()->getId(),
+            "poster" => $post->getPoster()->getDisplayName(),
+            "message" => $post->getMessage(),
+            "postDate" => $post->getPostDate()->format(\DateTime::ISO8601),
+            "links" => (object)array(
+                "self" => $this->generateUrl(
+                    'getPost',
+                    array(
+                        'topicId' => $post->getTopic()->getId(),
+                        'postId' => $post->getId()
+                    ),
+                    true
+                ),
             )
         );
     }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\DomainBundle\Entity;
 
@@ -142,6 +146,10 @@ class PlaysRole
         return $this->endTime;
     }
 
+    /**
+     * @param $roleStr
+     * @return bool
+     */
     public function isRole($roleStr)
     {
         return strcmp($roleStr, $this->role) == 0;

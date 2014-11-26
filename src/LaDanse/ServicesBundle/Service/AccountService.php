@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\ServicesBundle\Service;
 
@@ -8,15 +12,27 @@ use LaDanse\CommonBundle\Helper\LaDanseService;
 
 use LaDanse\DomainBundle\Entity\Account;
 
+/**
+ * Class AccountService
+ * @package LaDanse\ServicesBundle\Service
+ */
 class AccountService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.AccountService';
 
-	public function __construct(ContainerInterface $container)
-	{
-		parent::__construct($container);
-	}
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
+    /**
+     * @param $accountId
+     * @param $displayName
+     * @param $email
+     */
     public function updateProfile($accountId, $displayName, $email)
     {
         $em = $this->getDoctrine()->getManager();
@@ -30,8 +46,12 @@ class AccountService extends LaDanseService
         $em->flush();
     }
 
-    /*
+    /**
      * Check if a given display name is already used by an account except the given account
+     *
+     * @param $login
+     * @param int $exceptAccountId
+     * @return bool
      */
     public function isLoginUsed($login, $exceptAccountId = 9999999)
     {
@@ -48,8 +68,12 @@ class AccountService extends LaDanseService
         return !(count($result) == 0);
     }
 
-    /*
+    /**
      * Check if a given display name is already used by an account except the given account
+     *
+     * @param $displayName
+     * @param int $exceptAccountId
+     * @return bool
      */
     public function isDisplayNameUsed($displayName, $exceptAccountId = 9999999)
     {
@@ -57,7 +81,8 @@ class AccountService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isDisplayNameUsed.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isDisplayNameUsed.sql.twig')
+        );
         $query->setParameter('accountId', $exceptAccountId);
         $query->setParameter('displayName', $displayName);
 
@@ -66,8 +91,12 @@ class AccountService extends LaDanseService
         return !(count($result) == 0);
     }
 
-    /*
+    /**
      * Check if a given email is already used by an account except the given account
+     *
+     * @param $email
+     * @param int $exceptAccountId
+     * @return bool
      */
     public function isEmailUsed($email, $exceptAccountId = 9999999)
     {
@@ -75,7 +104,8 @@ class AccountService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isEmailUsed.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isEmailUsed.sql.twig')
+        );
         $query->setParameter('accountId', $exceptAccountId);
         $query->setParameter('email', $email);
 

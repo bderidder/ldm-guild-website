@@ -8,8 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 class AuthenticationContext extends ContainerAwareClass
 {
     public function __construct(Container $container)
-	{
-		parent::__construct($container);
+    {
+        parent::__construct($container);
     }
 
     /**
@@ -17,7 +17,7 @@ class AuthenticationContext extends ContainerAwareClass
      */
     public function isAuthenticated()
     {
-    	return (true === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY'));
+        return (true === $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
     }
 
     /**
@@ -40,6 +40,6 @@ class AuthenticationContext extends ContainerAwareClass
      */
     public function getAccount()
     {
-    	return $this->get('security.context')->getToken()->getUser();
+        return $this->get('security.context')->getToken()->getUser();
     }
 }

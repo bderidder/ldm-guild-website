@@ -1,11 +1,23 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\ForumBundle\Service;
 
+/**
+ * Class PostDoesNotExistException
+ * @package LaDanse\ForumBundle\Service
+ */
 class PostDoesNotExistException extends \Exception
 {
-	public function __construct($message = null, $code = 0)
-	{
+    /**
+     * @param string $message
+     * @param int $code
+     */
+    public function __construct($message = null, $code = 0)
+    {
         parent::__construct($message, $code);
     }
 }

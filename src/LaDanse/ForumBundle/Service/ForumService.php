@@ -1,4 +1,8 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
 namespace LaDanse\ForumBundle\Service;
 
@@ -6,20 +10,32 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use LaDanse\ForumBundle\Entity\Topic,
-    LaDanse\ForumBundle\Entity\Post;
+use LaDanse\ForumBundle\Entity\Topic;
+use LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
 
+/**
+ * Class ForumService
+ * @package LaDanse\ForumBundle\Service
+ */
 class ForumService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.ForumService';
 
-	public function __construct(ContainerInterface $container)
-	{
-		parent::__construct($container);
-	}
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
+    /**
+     * @param $topicId
+     * @return array
+     * @throws TopicDoesNotExistException
+     */
     public function getAllPosts($topicId)
     {
         $doc = $this->getDoctrine();
@@ -32,7 +48,7 @@ class ForumService extends LaDanseService
         {
             throw new TopicDoesNotExistException("Topic does not exist: " . $topicId);
         }
-        else 
+        else
         {
             $result = array();
 
@@ -47,6 +63,11 @@ class ForumService extends LaDanseService
         }
     }
 
+    /**
+     * @param $postId
+     * @return Post
+     * @throws PostDoesNotExistException
+     */
     public function getPost($postId)
     {
         $doc = $this->getDoctrine();
@@ -59,12 +80,17 @@ class ForumService extends LaDanseService
         {
             throw new PostDoesNotExistException("Post does not exist: " . $postId);
         }
-        else 
+        else
         {
             return $post;
         }
     }
 
+    /**
+     * @param $topicId
+     * @return Topic
+     * @throws TopicDoesNotExistException
+     */
     public function getTopic($topicId)
     {
         $doc = $this->getDoctrine();
@@ -83,6 +109,11 @@ class ForumService extends LaDanseService
         }
     }
 
+    /**
+     * @param $account
+     * @param $subject
+     * @return string
+     */
     public function createTopic($account, $subject)
     {
         $doc = $this->getDoctrine();
@@ -103,6 +134,10 @@ class ForumService extends LaDanseService
         return $topicId;
     }
 
+    /**
+     * @param $topicId
+     * @throws TopicDoesNotExistException
+     */
     public function removeTopic($topicId)
     {
         $doc = $this->getDoctrine();
@@ -116,13 +151,19 @@ class ForumService extends LaDanseService
         {
             throw new TopicDoesNotExistException("Topic does not exist: " . $topicId);
         }
-        else 
+        else
         {
             $em->remove($topic);
             $em->flush();
         }
     }
 
+    /**
+     * @param $topicId
+     * @param $account
+     * @param $message
+     * @throws TopicDoesNotExistException
+     */
     public function createPost($topicId, $account, $message)
     {
         $doc = $this->getDoctrine();
@@ -137,7 +178,7 @@ class ForumService extends LaDanseService
         {
             throw new TopicDoesNotExistException("Topic does not exist: " . $topicId);
         }
-        else 
+        else
         {
             $post = new Post();
 
@@ -154,6 +195,11 @@ class ForumService extends LaDanseService
         }
     }
 
+    /**
+     * @param $postId
+     * @param $message
+     * @throws PostDoesNotExistException
+     */
     public function updatePost($postId, $message)
     {
         $doc = $this->getDoctrine();
@@ -167,7 +213,7 @@ class ForumService extends LaDanseService
         {
             throw new PostDoesNotExistException("Post does not exist: " . $postId);
         }
-        else 
+        else
         {
             $post->setMessage($message);
             

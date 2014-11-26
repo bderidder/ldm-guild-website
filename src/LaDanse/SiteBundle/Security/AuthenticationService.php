@@ -7,9 +7,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AuthenticationService extends ContainerAwareClass
 {
-	public function __construct(ContainerInterface $container)
-	{
-		parent::__construct($container);
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
     }
 
     /**
