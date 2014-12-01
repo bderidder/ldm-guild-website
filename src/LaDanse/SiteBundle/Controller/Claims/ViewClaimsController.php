@@ -28,7 +28,9 @@ class ViewClaimsController extends LaDanseController
             "claims"    => $this->getGuildCharacterService()->getClaims($accountId)
         );
 
-        return $this->render('LaDanseSiteBundle:claims:viewClaims.html.twig', 
-            array('claimModel' => $claimModel));    
+        return $this->render(
+            'LaDanseSiteBundle:claims:viewClaims.html.twig',
+            array('claimModel' => $claimModel)
+        );
     }
 }

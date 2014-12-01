@@ -42,7 +42,7 @@ class GuildCharacterService extends LaDanseService
 
         foreach($characters as $character)
         {
-            $charModels[] = $this->characterToDto($character);
+            $charModels[] = $this->characterToDto($character, $onDateTime);
         }
 
         return $charModels;
@@ -74,7 +74,7 @@ class GuildCharacterService extends LaDanseService
 
         $character = $characters[0];
 
-        return $this->characterToDto($character);
+        return $this->characterToDto($character, $onDateTime);
     }
 
     public function getClaims($accountId, \DateTime $onDateTime = null)
@@ -184,7 +184,7 @@ class GuildCharacterService extends LaDanseService
 
         $characters = $query->getResult();
 
-        return $this->charactersToDtoArray($characters);
+        return $this->charactersToDtoArray($characters, $onDateTime);
     }
 
     public function getUnclaimedCharacters(\DateTime $onDateTime = null)
@@ -205,7 +205,7 @@ class GuildCharacterService extends LaDanseService
 
         $characters = $query->getResult();
 
-        return $this->charactersToDtoArray($characters);
+        return $this->charactersToDtoArray($characters, $onDateTime);
     }
 
     public function endCharacter($characterId)
@@ -447,13 +447,13 @@ class GuildCharacterService extends LaDanseService
         $em->flush();
     }
 
-    protected function charactersToDtoArray($characters)
+    protected function charactersToDtoArray($characters, \DateTime $onDateTime)
     {
         $charactersDto = array();
 
         foreach($characters as $character)
         {
-            $charactersDto[] = $this->characterToDto($character);
+            $charactersDto[] = $this->characterToDto($character, $onDateTime);
         }
 
         return $charactersDto;
@@ -497,7 +497,7 @@ class GuildCharacterService extends LaDanseService
     {
         return (object)array(
             "id"          => $claim->getId(),
-            "character"   => $this->characterToDto($claim->getCharacter()),
+            "character"   => $this->characterToDto($claim->getCharacter(), $onDateTime),
             "fromTime"    => $claim->getFromTime(),
             "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK, $onDateTime),
             "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER, $onDateTime),
@@ -510,22 +510,33 @@ class GuildCharacterService extends LaDanseService
      *
      * @return object
      */
-    protected function characterToDto($character)
+    protected function characterToDto($character, \DateTime $onDateTime)
     {
         $versions = $character->getVersions();
+
+        $activeVersion = $versions[count($versions) - 1];
+
+        foreach($versions as $version)
+        {
+            if ((($version->getFromTime() <= $onDateTime) == 0)
+                and ((($version->getEndTime() > $onDateTime) == 0) or is_null($version->getEndTime())))
+            {
+                $activeVersion = $version;
+            }
+        }
 
         return (object)array(
             "id"    => $character->getId(),
             "fromTime"  => $character->getFromTime(),
             "name"  => $character->getName(),
-            "level" => $versions[0]->getLevel(),
+            "level" => $activeVersion->getLevel(),
             "class" => (object)array(
-                "id"   => $versions[0]->getGameClass()->getId(),
-                "name" => $versions[0]->getGameClass()->getName()
+                "id"   => $activeVersion->getGameClass()->getId(),
+                "name" => $activeVersion->getGameClass()->getName()
             ),
             "race"  => (object)array(
-                "id"   => $versions[0]->getGameRace()->getId(),
-                "name" => $versions[0]->getGameRace()->getName()
+                "id"   => $activeVersion->getGameRace()->getId(),
+                "name" => $activeVersion->getGameRace()->getName()
             )
         );
     }
