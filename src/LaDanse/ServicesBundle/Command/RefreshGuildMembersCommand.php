@@ -57,7 +57,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         if (is_null($armoryGuild))
         {
-            $this->debug($input, $output, "Could not get Armory information");
+            $context->debug("Could not get Armory information");
 
             return;
         }
@@ -83,7 +83,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         // second we fetch all the currently active guild member from the database
 
-        $this->debug($input, $output, "Fetching guild members from the database");
+        $context->debug("Fetching guild members from the database");
 
         $characterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
         
@@ -93,7 +93,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         
         $dbNames = $characterService->getAllGuildCharacters();
 
-        $this->debug($input, $output, "Number of members in database " . count($dbNames));
+        $context->debug("Number of members in database " . count($dbNames));
 
         usort(
             $dbNames,
@@ -105,7 +105,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         // below we use a classical algoritm that calculates the difference
         // between two sorted lists, acting accordingly on any difference found
 
-        $this->debug($input, $output, "Comparing both lists ...");
+        $context->debug("Comparing both lists ...");
 
         $dbIndex = 0;
         $armoryIndex = 0;
@@ -118,13 +118,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             if (strcmp($dbName, $armoryName) == 0)
             {
                 // if character is the same as the next character from armory, do nothing
-                $this->debug($input, $output, "Character already in our database " . $dbName);
+                $context->debug("Character already in our database " . $dbName);
 
                 if ($this->hasCharacterChanged($dbNames[$dbIndex], $armoryNames[$armoryIndex]))
                 {
-                    $this->info(
-                        $input,
-                        $output,
+                    $context->info(
                         "Character changed in Armory, updating " . $dbName . " " . $dbNames[$dbIndex]->id
                     );
 
@@ -143,7 +141,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 // if character comes before the current character from armory, it means
                 // the character isn't in the guild any more, end it
-                $this->info($input, $output, "Character is not in the guild anymore " . $dbName);
+                $context->info("Character is not in the guild anymore " . $dbName);
 
                 $this->endCharacter($dbNames[$dbIndex]->id);
 
@@ -153,7 +151,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 // if character comes after the current character from armory, it means
                 // the armory has new characters, import them
-                $this->info($input, $output, "Character is not yet in database, importing " . $armoryName);
+                $context->info("Character is not yet in database, importing " . $armoryName);
 
                 $this->importCharacter(
                     $armoryNames[$armoryIndex],
@@ -171,7 +169,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         {
             $dbName = $dbNames[$dbIndex]->name;
 
-            $this->info($input, $output, "Character is not in the guild anymore " . $dbName);
+            $context->info("Character is not in the guild anymore " . $dbName);
 
             $this->endCharacter($dbNames[$dbIndex]->id);
 
@@ -186,7 +184,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $armoryName = $armoryNames[$armoryIndex]->name;
 
             // the amory has new characters, import it
-            $this->info($input, $output, "Character is not yet in database, importing " . $armoryName);
+            $context->info("Character is not yet in database, importing " . $armoryName);
 
             $this->importCharacter(
                 $armoryNames[$armoryIndex],
@@ -208,6 +206,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         $guildCharacterService->endCharacter($characterId);
     }
 
+    /**
+     * @param $dbCharacter
+     * @param $armoryCharacter
+     * @return bool
+     */
     protected function hasCharacterChanged($dbCharacter, $armoryCharacter)
     {
         if ($dbCharacter->level != $armoryCharacter->level)
@@ -223,7 +226,12 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         return false;
     }
 
-
+    /**
+     * @param $id
+     * @param $armoryCharacter
+     * @param $gameRace
+     * @param $gameClass
+     */
     protected function updateCharacter($id, $armoryCharacter, $gameRace, $gameClass)
     {
         $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
@@ -254,6 +262,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         );
     }
 
+    /**
+     * @param $gameRaces
+     * @param $gameRaceId
+     * @return \LaDanse\DomainBundle\Entity\GameRace|null
+     */
     protected function getGameRace($gameRaces, $gameRaceId)
     {
         /* @var $gameRace \LaDanse\DomainBundle\Entity\GameRace */
@@ -331,32 +344,6 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $context->debug("Exception while fetching Armory data " . $e);
 
             return null;
-        }
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param $text
-     */
-    protected function debug(InputInterface $input, OutputInterface $output, $text)
-    {
-        if ($input->getOption(self::DIAG_OPTION))
-        {
-            $output->writeln($text);
-        }
-    }
-
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param $text
-     */
-    protected function info(InputInterface $input, OutputInterface $output, $text)
-    {
-        if ($input->getOption(self::VERBOSE_OPTION) or $input->getOption(self::DIAG_OPTION))
-        {
-            $output->writeln($text);
         }
     }
 }
