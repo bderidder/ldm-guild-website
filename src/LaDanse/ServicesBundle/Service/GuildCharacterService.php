@@ -15,14 +15,14 @@ class GuildCharacterService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.GuildCharacterService';
 
-	public function __construct(ContainerInterface $container)
-	{
-		parent::__construct($container);
-	}
-
-    public function getAllGuildCharacters(\DateTime $onDateTime = NULL)
+    public function __construct(ContainerInterface $container)
     {
-        if ($onDateTime == NULL)
+        parent::__construct($container);
+    }
+
+    public function getAllGuildCharacters(\DateTime $onDateTime = null)
+    {
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -32,7 +32,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectAllGuildCharacters.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectAllGuildCharacters.sql.twig')
+        );
         $query->setParameter('onDateTime', $onDateTime);
         
         $characters = $query->getResult();
@@ -47,9 +48,9 @@ class GuildCharacterService extends LaDanseService
         return $charModels;
     }
 
-    public function getGuildCharacter($characterName, \DateTime $onDateTime = NULL)
+    public function getGuildCharacter($characterName, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -59,7 +60,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectGuildCharacter.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectGuildCharacter.sql.twig')
+        );
         $query->setParameter('characterName', $characterName);
         $query->setParameter('onDateTime', $onDateTime);
         
@@ -75,9 +77,9 @@ class GuildCharacterService extends LaDanseService
         return $this->characterToDto($character);
     }
 
-	public function getClaims($accountId, \DateTime $onDateTime = NULL)
+    public function getClaims($accountId, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -87,7 +89,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig')
+        );
         $query->setParameter('accountId', $accountId);
         $query->setParameter('onDateTime', $onDateTime);
         
@@ -103,9 +106,9 @@ class GuildCharacterService extends LaDanseService
         return $claimsModels;
     }
 
-    public function getClaimsForCharacter($characterName, \DateTime $onDateTime = NULL)
+    public function getClaimsForCharacter($characterName, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -115,7 +118,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForCharacter.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForCharacter.sql.twig')
+        );
         $query->setParameter('characterName', $characterName);
         $query->setParameter('onDateTime', $onDateTime);
         
@@ -131,9 +135,9 @@ class GuildCharacterService extends LaDanseService
         return $claimsModels;
     }
 
-    public function getClaim($claimId, \DateTime $onDateTime = NULL)
+    public function getClaim($claimId, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -143,14 +147,15 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig')
+        );
         $query->setParameter('claimId', $claimId);
         
         $claims = $query->getResult();
 
         if (count($claims) == 0)
         {
-            return NULL;
+            return null;
         }
 
         $claim = $claims[0];
@@ -160,9 +165,9 @@ class GuildCharacterService extends LaDanseService
         return $claimsModel;
     }
 
-    public function getAllCharacters(\DateTime $onDateTime = NULL)
+    public function getAllCharacters(\DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -172,7 +177,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectCharactersForAccount.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectCharactersForAccount.sql.twig')
+        );
 
         $query->setParameter('onDateTime', $onDateTime);
 
@@ -181,9 +187,9 @@ class GuildCharacterService extends LaDanseService
         return $this->charactersToDtoArray($characters);
     }
 
-    public function getUnclaimedCharacters(\DateTime $onDateTime = NULL)
+    public function getUnclaimedCharacters(\DateTime $onDateTime = null)
     {
-        if ($onDateTime == NULL)
+        if ($onDateTime == null)
         {
             // when not set, initialize to right now
             $onDateTime = new \DateTime();
@@ -193,7 +199,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectUnclaimedCharacters.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectUnclaimedCharacters.sql.twig')
+        );
         $query->setParameter('onDateTime', $onDateTime);
 
         $characters = $query->getResult();
@@ -215,12 +222,12 @@ class GuildCharacterService extends LaDanseService
         $this->endClaimsForCharacter($character);
     }
 
-    public function getActiveClaimsForAccount($account, \DateTime $onDateTime = NULL)
+    public function getActiveClaimsForAccount($account, \DateTime $onDateTime = null)
     {
 
     }
 
-    public function getActiveClaimsForCharacter($character, \DateTime $onDateTime = NULL)
+    public function getActiveClaimsForCharacter($character, \DateTime $onDateTime = null)
     {
 
     }
@@ -283,7 +290,7 @@ class GuildCharacterService extends LaDanseService
         foreach($claim->getRoles() as $playsRole)
         {
             if ($playsRole->getRole() == Role::TANK
-                AND is_null($playsRole->getEndTime()))
+                and is_null($playsRole->getEndTime()))
             {
                 $notCurrentPlaysTank = false;
 
@@ -365,7 +372,8 @@ class GuildCharacterService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaimsForCharacter.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaimsForCharacter.sql.twig')
+        );
 
         $query->setParameter('character', $character);
 
@@ -408,6 +416,37 @@ class GuildCharacterService extends LaDanseService
         $em->flush();
     }
 
+    public function updateCharacter($id, $name, $level, $gameRace, $gameClass)
+    {
+        $updateInstant = new \DateTime();
+
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $charRepo \Doctrine\ORM\EntityRepository */
+        $charRepo = $em->getRepository(Character::REPOSITORY);
+        /* @var $character \LaDanse\DomainBundle\Entity\Character */
+        $character = $charRepo->find($id);
+
+        foreach($character->getVersions() as $charVersion)
+        {
+            if (is_null($charVersion->getEndTime()))
+            {
+                $charVersion->setEndTime($updateInstant);
+            }
+        }
+
+        $version = new CharacterVersion();
+        $version->setCharacter($character);
+        $version->setLevel($level);
+        $version->setFromTime($updateInstant);
+        $version->setGameClass($gameClass);
+        $version->setGameRace($gameRace);
+
+        $em->persist($character);
+        $em->persist($version);
+        $em->flush();
+    }
+
     protected function charactersToDtoArray($characters)
     {
         $charactersDto = array();
@@ -436,9 +475,9 @@ class GuildCharacterService extends LaDanseService
         foreach($playsRoles as $playsRole)
         {
             if (($playsRole->isRole($role))
-                AND
+                and
                 (($playsRole->getFromTime()->getTimestamp() <= $onDateTime->getTimestamp())
-                    AND (is_null($playsRole->getEndTime()) OR
+                    and (is_null($playsRole->getEndTime()) or
                         ($playsRole->getEndTime()->getTimestamp() > $onDateTime->getTimestamp())))
                 )
             {
