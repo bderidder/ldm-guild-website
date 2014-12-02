@@ -2,7 +2,7 @@ parameters:
     GuildCharacterService.class: LaDanse\ServicesBundle\Service\GuildCharacterService
     GameDataService.class: LaDanse\ServicesBundle\Service\GameDataService
     SettingsService.class: LaDanse\ServicesBundle\Service\SettingsService
-    AccountService.class: LaDanse\ServicesBundle\Service\SettingsService
+    AccountService.class: LaDanse\ServicesBundle\Service\AccountService
 
 services:
     LaDanse.GuildCharacterService:
