@@ -10,7 +10,7 @@ namespace LaDanse\ForumBundle\Service;
  * Class TopicDoesNotExistException
  * @package LaDanse\ForumBundle\Service
  */
-class TopicDoesNotExistException extends \Exception
+class ForumDoesNotExistException extends \Exception
 {
     /**
      * @param string $message
