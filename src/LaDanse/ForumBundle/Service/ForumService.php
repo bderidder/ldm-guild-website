@@ -18,6 +18,7 @@ use LaDanse\ForumBundle\Controller\ResourceHelper;
 
 /**
  * Class ForumService
+ *
  * @package LaDanse\ForumBundle\Service
  */
 class ForumService extends LaDanseService
@@ -30,6 +31,32 @@ class ForumService extends LaDanseService
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+    }
+
+    /**
+     * @param $forumId
+     *
+     * @return Forum
+     *
+     * @throws ForumDoesNotExistException
+     */
+    public function getForum($forumId)
+    {
+        $doc = $this->getDoctrine();
+
+        $topicRepo = $doc->getRepository(Forum::REPOSITORY);
+
+        /** @var $forum \LaDanse\ForumBundle\Entity\Forum */
+        $forum = $topicRepo->find($forumId);
+
+        if (null === $forum)
+        {
+            throw new ForumDoesNotExistException("Forum does not exist: " . $forumId);
+        }
+        else
+        {
+            return $forum;
+        }
     }
 
     /**
@@ -147,7 +174,42 @@ class ForumService extends LaDanseService
 
     /**
      * @param $account
+     * @param $forumId
      * @param $subject
+     *
+     * @return string
+     *
+     * @throws ForumDoesNotExistException
+     */
+    public function createTopicInForum($account, $forumId, $subject)
+    {
+        $doc = $this->getDoctrine();
+        $em = $doc->getManager();
+
+        $forum = $this->getForum($forumId);
+
+        $topicId = ResourceHelper::createUUID();
+
+        $topic = new Topic();
+
+        $topic->setId($topicId);
+        $topic->setCreateDate(new \DateTime());
+        $topic->setCreator($account);
+        $topic->setSubject($subject);
+
+        $forum->addTopic($topic);
+
+        $em->persist($forum);
+        $em->persist($topic);
+        $em->flush();
+
+        return $topicId;
+    }
+
+    /**
+     * @param $account
+     * @param $subject
+     *
      * @return string
      */
     public function createTopic($account, $subject)
