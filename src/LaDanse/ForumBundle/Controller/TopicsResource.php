@@ -17,30 +17,29 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\ForumBundle\Entity\Topic;
 
-use LaDanse\ForumBundle\Service\ForumDoesNotExistException;
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
 /**
- * @Route("/forums/{forumId}/topics")
+ * @Route("/topics")
  */
 class TopicsResource extends LaDanseController
 {
     /**
      * @param Request $request
-     * @param string $forumId
+     * @param string $topicId
      *
      * @return Response
      *
-     * @Route("/", name="getTopics")
+     * @Route("/{topicId}", name="getTopics")
      * @Method({"GET"})
      */
-    public function getTopicsAction(Request $request, $forumId)
+    public function getTopicAction(Request $request, $topicId)
     {
         try
         {
-            $topics = $this->getForumService()->getAllTopicsInForum($forumId);
+            $topic = $this->getForumService()->getTopic($topicId);
         }
-        catch (ForumDoesNotExistException $e)
+        catch (TopicDoesNotExistException $e)
         {
             return ResourceHelper::createErrorResponse(
                 $request,
@@ -50,31 +49,9 @@ class TopicsResource extends LaDanseController
             );
         }
 
-        usort(
-            $topics,
-            function ($a, $b) {
-                /** @var $a \LaDanse\ForumBundle\Entity\Topic */
-                /** @var $b \LaDanse\ForumBundle\Entity\Topic */
+        $topicMapper = new TopicMapper();
 
-                return $a->getCreateDate() > $b->getCreateDate();
-            }
-        );
-
-        $jsonArray = array();
-
-        foreach ($topics as $topic)
-        {
-            /** @var $topic Topic */
-
-            $jsonArray[] = $this->topicToJson($topic);
-        }
-
-        $jsonObject = (object)array(
-            "topics" => $jsonArray,
-            "links" => (object)array(
-                "self" => $this->generateUrl('getTopics', array('forumId' => $forumId), true)
-            )
-        );
+        $jsonObject = $topicMapper->mapTopicAndPosts($this, $topic);
 
         return new JsonResponse($jsonObject);
     }
@@ -85,24 +62,44 @@ class TopicsResource extends LaDanseController
      *
      * @return Response
      *
-     * @Route("/", name="createTopic")
+     * @Route("/{topicId}/posts", name="createPost")
      * @Method({"POST", "PUT"})
      */
-    public function createTopicAction(Request $request, $topicId)
+    public function createPostInTopicAction(Request $request, $topicId)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        $jsonData = $request->getContent(false);
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
-        $logger = $this->get('logger');
-        $logger->info('JSON DATA ' . $jsonData);
+            $jsonObject = (object)array(
+                "status" => "must be authenticated"
+            );
+
+            return new JsonResponse($jsonObject);
+        }
+
+        $jsonData = $request->getContent(false);
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getForumService()->createPost($topicId, $authContext->getAccount(), $jsonObject->message);
+        try
+        {
+            $this->getForumService()->createPost($topicId, $authContext->getAccount(), $jsonObject->message);
+        }
+        catch (TopicDoesNotExistException $e)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                Response::HTTP_NOT_FOUND,
+                $e->getMessage(),
+                array("Allow" => "GET")
+            );
+        }
 
         $jsonObject = (object)array(
-            "posts" => "test"
+            "status" => "post created in topic"
         );
 
         return new JsonResponse($jsonObject);
@@ -158,48 +155,5 @@ class TopicsResource extends LaDanseController
         );
 
         return new JsonResponse($jsonObject);
-    }
-
-    /**
-     * @param Request $request
-     * @param string $topicId
-     * @param string $commentId
-     *
-     * @return Response
-     *
-     * @Route("/{commentId}", name="otherPost")
-     * @Method({"POST", "PUT", "DELETE", "OPTIONS"})
-     */
-    public function otherPostAction(Request $request, $topicId, $commentId)
-    {
-        $this->getLogger()->warning(
-            'POST/PUT/DELETE/OPTIONS for Comment resource with ' . $topicId . ' and ' . $commentId
-        );
-
-        return ResourceHelper::createErrorResponse(
-            $request,
-            Response::HTTP_NOT_FOUND,
-            "Resource not found",
-            array("Allow" => "GET")
-        );
-    }
-
-    /**
-     * @param Topic $topic
-     *
-     * @return object
-     */
-    private function topicToJson(Topic $topic)
-    {
-        return (object)array(
-            "topicId" => $topic->getId(),
-            "creatorId" => $topic->getCreator()->getId(),
-            "creator" => $topic->getCreator()->getDisplayName(),
-            "subject" => $topic->getSubject(),
-            "createDate" => $topic->getCreateDate()->format(\DateTime::ISO8601),
-            "links" => (object)array(
-                "self" => $this->generateUrl('getPosts', array('topicId' => $topic->getId()), true)
-            )
-        );
     }
 }
