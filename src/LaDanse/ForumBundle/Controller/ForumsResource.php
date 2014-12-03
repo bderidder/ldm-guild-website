@@ -64,12 +64,23 @@ class ForumsResource extends LaDanseController
      *
      * @return Response
      *
-     * @Route("/{forumId}", name="createTopic")
+     * @Route("/{forumId}/topics", name="createTopic")
      * @Method({"POST", "PUT"})
      */
     public function createTopicAction(Request $request, $forumId)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
+
+            $jsonObject = (object)array(
+                "status" => "must be authenticated"
+            );
+
+            return new JsonResponse($jsonObject);
+        }
 
         $jsonData = $request->getContent(false);
 
