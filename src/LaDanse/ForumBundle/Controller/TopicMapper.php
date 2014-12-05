@@ -32,7 +32,10 @@ class TopicMapper
             "subject"    => $topic->getSubject(),
             "createDate" => $topic->getCreateDate()->format(\DateTime::ISO8601),
             "links"      => (object)array(
-                "self" => $controller->generateUrl('getPosts', array('topicId' => $topic->getId()), true)
+                "self"
+                    => $controller->generateUrl('getPostsInTopic', array('topicId' => $topic->getId()), true),
+                "createPostInTopic"
+                    => $controller->generateUrl('createPostInTopic', array('topicId' => $topic->getId()), true)
             )
         );
     }

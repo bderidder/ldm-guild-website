@@ -32,7 +32,8 @@ class PostMapper
             "message"  => $post->getMessage(),
             "postDate" => $post->getPostDate()->format(\DateTime::ISO8601),
             "links"    => (object)array(
-                "self" => $controller->generateUrl('getPost', array('postId' => $post->getId()), true),
+                "self"   => $controller->generateUrl('getPost', array('postId' => $post->getId()), true),
+                "update" => $controller->generateUrl('updatePost', array('postId' => $post->getId()), true)
             )
         );
     }

@@ -46,7 +46,8 @@ class ForumMapper
             "name"    => $forum->getName(),
             "posts"   => $jsonArray,
             "links"   => (object)array(
-                "self" => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true)
+                "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
+                "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
             )
         );
     }
