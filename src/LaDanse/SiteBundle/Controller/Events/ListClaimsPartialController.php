@@ -48,9 +48,22 @@ class ListClaimsPartialController extends LaDanseController
             );
         }
 
+        $now = new \DateTime();
+
+        if ($event->getInviteTime() < $now)
+        {
+            // event is in the past, use invite time
+            $onDate = $event->getInviteTime();
+        }
+        else
+        {
+            $onDate = $now;
+        }
+
+
         return $this->render(
             'LaDanseSiteBundle:events:listClaims.html.twig',
-            array('claims' => $this->getClaims($accountId, $role, new \DateTime()))
+            array('claims' => $this->getClaims($accountId, $role, $onDate))
         );
     }
 
