@@ -17,29 +17,29 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 
 use LaDanse\ForumBundle\Entity\Post;
 
-use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
+use LaDanse\ForumBundle\Service\PostDoesNotExistException;
 
 /**
- * @Route("/topics/{topicId}/posts")
+ * @Route("/posts")
  */
 class PostsResource extends LaDanseController
 {
     /**
      * @param Request $request
-     * @param string $topicId
+     * @param string $postId
      *
      * @return Response
      *
-     * @Route("/", name="getPosts")
+     * @Route("/{postId}", name="getPost")
      * @Method({"GET"})
      */
-    public function getPostsAction(Request $request, $topicId)
+    public function getPostAction(Request $request, $postId)
     {
         try
         {
-            $posts = $this->getForumService()->getAllPosts($topicId);
+            $post = $this->getForumService()->getPost($postId);
         }
-        catch (TopicDoesNotExistException $e)
+        catch (PostDoesNotExistException $e)
         {
             return ResourceHelper::createErrorResponse(
                 $request,
@@ -49,90 +49,9 @@ class PostsResource extends LaDanseController
             );
         }
 
-        usort(
-            $posts,
-            function ($a, $b) {
-                /** @var $a \LaDanse\ForumBundle\Entity\Post */
-                /** @var $b \LaDanse\ForumBundle\Entity\Post */
+        $postMapper = new PostMapper();
 
-                return $a->getPostDate() > $b->getPostDate();
-            }
-        );
-
-        $jsonArray = array();
-
-        foreach ($posts as $post)
-        {
-            $jsonArray[] = $this->postToJson($post);
-        }
-
-        $jsonObject = (object)array(
-            "posts" => $jsonArray,
-            "links" => (object)array(
-                "self" => $this->generateUrl('getPosts', array('topicId' => $topicId), true)
-            )
-        );
-
-        return new JsonResponse($jsonObject);
-    }
-
-    /**
-     * @param string $topicId
-     *
-     * @Route("/create", name="createPost")
-     * @Method({"GET"})
-     */
-    public function createTopicAction($topicId)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        $this->getForumService()->createPost($topicId, $authContext->getAccount(), 'This is a message');
-    }
-
-    /**
-     * @param Request $request
-     * @param string $topicId
-     *
-     * @return Response
-     *
-     * @Route("/{postId}", name="getPost")
-     * @Method({"GET"})
-     */
-    public function getTopicAction(Request $request, $topicId)
-    {
-        return ResourceHelper::createErrorResponse(
-            $request,
-            Response::HTTP_NOT_FOUND,
-            "Resource not found (" . $topicId . ")",
-            array("Allow" => "GET")
-        );
-    }
-
-    /**
-     * @param Request $request
-     * @param string $topicId
-     *
-     * @return Response
-     *
-     * @Route("/", name="createPost")
-     * @Method({"POST", "PUT"})
-     */
-    public function createPostAction(Request $request, $topicId)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        $jsonData = $request->getContent(false);
-
-        $logger = $this->get('logger');
-        $logger->info('JSON DATA ' . $jsonData);
-
-        $jsonObject = json_decode($jsonData);
-
-        $this->getForumService()->createPost($topicId, $authContext->getAccount(), $jsonObject->message);
-
-        $jsonObject = (object)array(
-            "posts" => "test"
-        );
+        $jsonObject = $postMapper->mapPost($this, $post);
 
         return new JsonResponse($jsonObject);
     }
@@ -156,7 +75,7 @@ class PostsResource extends LaDanseController
         {
             $post = $this->getForumService()->getPost($postId);
         }
-        catch (TopicDoesNotExistException $e)
+        catch (PostDoesNotExistException $e)
         {
             return ResourceHelper::createErrorResponse(
                 $request,
@@ -187,55 +106,5 @@ class PostsResource extends LaDanseController
         );
 
         return new JsonResponse($jsonObject);
-    }
-
-    /**
-     * @param Request $request
-     * @param string $topicId
-     * @param string $commentId
-     *
-     * @return Response
-     *
-     * @Route("/{commentId}", name="otherPost")
-     * @Method({"POST", "PUT", "DELETE", "OPTIONS"})
-     */
-    public function otherPostAction(Request $request, $topicId, $commentId)
-    {
-        $this->getLogger()->warning(
-            'POST/PUT/DELETE/OPTIONS for Comment resource with ' . $topicId . ' and ' . $commentId
-        );
-
-        return ResourceHelper::createErrorResponse(
-            $request,
-            Response::HTTP_NOT_FOUND,
-            "Resource not found",
-            array("Allow" => "GET")
-        );
-    }
-
-    /**
-     * @param Post $post
-     *
-     * @return object
-     */
-    private function postToJson(Post $post)
-    {
-        return (object)array(
-            "postId" => $post->getId(),
-            "posterId" => $post->getPoster()->getId(),
-            "poster" => $post->getPoster()->getDisplayName(),
-            "message" => $post->getMessage(),
-            "postDate" => $post->getPostDate()->format(\DateTime::ISO8601),
-            "links" => (object)array(
-                "self" => $this->generateUrl(
-                    'getPost',
-                    array(
-                        'topicId' => $post->getTopic()->getId(),
-                        'postId' => $post->getId()
-                    ),
-                    true
-                ),
-            )
-        );
     }
 }
