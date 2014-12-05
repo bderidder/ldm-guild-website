@@ -505,7 +505,7 @@ TopicModel.prototype.fetchPosts = function(successCallback, failCallback)
 {
     var topicThis = this;
 
-    var postsServiceURL = '../services/forum/topics/' + this.topicId + '/posts/';
+    var postsServiceURL = '../services/forum/topics/' + this.topicId;
 
     $.when($.ajax({
         type: "GET",
@@ -556,7 +556,7 @@ TopicModel.prototype.addPost = function(message, successCallback, failCallback)
         return;
     }
 
-    var postUrl = '../services/forum/topics/' + this.topicId + '/posts/';
+    var postUrl = '../services/forum/topics/' + this.topicId + '/posts';
 
     var postData = {
         message: message
@@ -577,7 +577,7 @@ TopicModel.prototype.addPost = function(message, successCallback, failCallback)
 
 TopicModel.prototype.updatePost = function(postId, message, successCallback, failCallback)
 {
-    var postUrl = '../services/forum/topics/' + this.topicId + '/posts/' + postId;
+    var postUrl = '../services/forum/posts/' + postId;
 
     var postData = {
         message: message

@@ -30,7 +30,7 @@ class TopicsResource extends LaDanseController
      *
      * @return Response
      *
-     * @Route("/{topicId}", name="getTopics")
+     * @Route("/{topicId}", name="getPostsInTopic")
      * @Method({"GET"})
      */
     public function getTopicAction(Request $request, $topicId)
@@ -62,7 +62,7 @@ class TopicsResource extends LaDanseController
      *
      * @return Response
      *
-     * @Route("/{topicId}/posts", name="createPost")
+     * @Route("/{topicId}/posts", name="createPostInTopic")
      * @Method({"POST", "PUT"})
      */
     public function createPostInTopicAction(Request $request, $topicId)
@@ -71,7 +71,7 @@ class TopicsResource extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in createPost');
 
             $jsonObject = (object)array(
                 "status" => "must be authenticated"
