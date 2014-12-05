@@ -2,7 +2,7 @@ SELECT gc, cv
 FROM LaDanse\DomainBundle\Entity\Character gc
 	JOIN gc.versions cv
 WHERE
-	gc.name = :characterName
+	gc.id = :characterName
 	AND
 	(gc.fromTime <= :onDateTime)
 	AND 
