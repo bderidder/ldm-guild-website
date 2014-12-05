@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ListClaimsPartialController extends LaDanseController
 {
-	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+    const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
-	/**
+    /**
      * @param string $eventId
      * @param string $accountId
      * @param string $role
@@ -25,9 +25,10 @@ class ListClaimsPartialController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in listClaims');
 
-            return $this->render('LaDanseSiteBundle:events:listClaims.html.twig',
+            return $this->render(
+                'LaDanseSiteBundle:events:listClaims.html.twig',
                 array('error' => 'Not authenticated')
             );
         }
@@ -36,15 +37,19 @@ class ListClaimsPartialController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in listAction',
-                array("event" => $eventId));
+            $this->getLogger()->warning(
+                __CLASS__ . ' the event does not exist in listAction',
+                array("event" => $eventId)
+            );
 
-            return $this->render('LaDanseSiteBundle:events:listClaims.html.twig',
+            return $this->render(
+                'LaDanseSiteBundle:events:listClaims.html.twig',
                 array('error' => 'Event does not exist')
             );
         }
 
-        return $this->render('LaDanseSiteBundle:events:listClaims.html.twig',
+        return $this->render(
+            'LaDanseSiteBundle:events:listClaims.html.twig',
             array('claims' => $this->getClaims($accountId, $role, new \DateTime()))
         );
     }
@@ -72,13 +77,22 @@ class ListClaimsPartialController extends LaDanseController
             switch ($role)
             {
                 case "Tank":
-                    if ($claim->playsTank) { $includeClaim = true; };
+                    if ($claim->playsTank)
+                    {
+                        $includeClaim = true;
+                    };
                     break;
                 case "Healer":
-                    if ($claim->playsHealer) { $includeClaim = true; };
+                    if ($claim->playsHealer)
+                    {
+                        $includeClaim = true;
+                    };
                     break;
                 case "DPS":
-                    if ($claim->playsDPS) { $includeClaim = true; };
+                    if ($claim->playsDPS)
+                    {
+                        $includeClaim = true;
+                    };
                     break;
             }
 
@@ -91,7 +105,7 @@ class ListClaimsPartialController extends LaDanseController
                     "level" => $character->level,
                     "race"  => $character->race->name,
                     "class" => $character->class->name
-                );     
+                );
             }
         }
 
