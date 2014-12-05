@@ -48,7 +48,7 @@ class GuildCharacterService extends LaDanseService
         return $charModels;
     }
 
-    public function getGuildCharacter($characterName, \DateTime $onDateTime = null)
+    public function getGuildCharacter($characterId, \DateTime $onDateTime = null)
     {
         if ($onDateTime == null)
         {
@@ -62,7 +62,7 @@ class GuildCharacterService extends LaDanseService
         $query = $em->createQuery(
             $this->createSQLFromTemplate('LaDanseDomainBundle::selectGuildCharacter.sql.twig')
         );
-        $query->setParameter('characterName', $characterName);
+        $query->setParameter('characterName', $characterId);
         $query->setParameter('onDateTime', $onDateTime);
         
         $characters = $query->getResult();

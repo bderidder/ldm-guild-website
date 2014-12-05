@@ -111,7 +111,7 @@ class ListClaimsPartialController extends LaDanseController
 
             if ($includeClaim)
             {
-                $character = $this->getGuildCharacterService()->getGuildCharacter($claim->character->name, $onDateTime);
+                $character = $this->getGuildCharacterService()->getGuildCharacter($claim->character->id, $onDateTime);
 
                 $claimsDto[] = (object)array(
                     "name"  => $character->name,
