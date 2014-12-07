@@ -20,7 +20,8 @@ use \Symfony\Component\Console\Output\OutputInterface;
  */
 class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
-    const ARMORY_URL = "http://eu.battle.net/api/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members";
+    const BATTLENET_API_URL =
+        "https://eu.api.battle.net/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members&locale=en_GB&apikey=";
 
     const VERBOSE_OPTION = 'verbose';
     const DIAG_OPTION    = 'diag';
@@ -311,7 +312,10 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         {
             $context->debug("Fetching guild members from the Armory");
 
-            $json = file_get_contents(RefreshGuildMembersCommand::ARMORY_URL);
+            $apiKey = $this->getContainer()->getParameter("battlenet_key");
+            $fullUrl = RefreshGuildMembersCommand::BATTLENET_API_URL . $apiKey;
+
+            $json = file_get_contents($fullUrl);
 
             $context->debug("Armory returned " . $json);
 
