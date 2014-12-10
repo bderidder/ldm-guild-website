@@ -9,9 +9,7 @@ namespace LaDanse\ServicesBundle\Command;
 use LaDanse\ServicesBundle\Service\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -22,7 +20,6 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
     const BATTLENET_API_URL =
         "https://eu.api.battle.net/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members&locale=en_GB&apikey=";
-
 
     /**
      * @return void
