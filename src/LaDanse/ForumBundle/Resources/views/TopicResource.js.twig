@@ -1,0 +1,123 @@
+<script>
+
+    function TopicResource(topicId)
+    {
+        this.topicId = topicId;
+
+        this.updateDateTimes = function()
+        {
+            for (var i = 0; i < this.posts.length; i++)
+            {
+                var momentDate = moment(this.posts[i].postDate);
+
+                this.posts[i].postDate = momentDate.format("ddd MMM Do YYYY - HH:mm");
+            }
+        };
+    }
+
+    TopicResource.prototype.fetchPosts = function(successCallback, failCallback)
+    {
+        var topicThis = this;
+
+        var postsServiceURL = '../services/forum/topics/' + this.topicId;
+
+        console.log(postsServiceURL);
+
+        $.when($.ajax({
+            type: "GET",
+            url: postsServiceURL,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        })).then(
+                function(data, textStatus, jqXHR)
+                {
+                    topicThis.posts = data.posts;
+
+                    if (topicThis.posts.length > 0)
+                    {
+                        topicThis.updateDateTimes();
+                    }
+
+                    successCallback();
+                },
+                function(jqXHR, textStatus, errorThrown)
+                {
+                    console.log("Error fetching topic comments " + textStatus);
+                    console.log(errorThrown);
+
+                    topicThis.posts = null;
+
+                    failCallback();
+                }
+        );
+    };
+
+    TopicResource.prototype.getPost = function(postId)
+    {
+        for (var i = 0; i < this.posts.length; i++)
+        {
+            if (this.posts[i].postId === postId)
+            {
+                return this.posts[i];
+            }
+        }
+
+        return null;
+    }
+
+    TopicResource.prototype.addPost = function(message, successCallback, failCallback)
+    {
+        if (!message || !message.trim())
+        {
+            return;
+        }
+
+        var postUrl = '../services/forum/topics/' + this.topicId + '/posts';
+
+        var postData = {
+            message: message
+        };
+
+        postDataString = JSON.stringify(postData);
+
+        $.post(postUrl, postDataString,
+                function(data, textStatus, jqXHR)
+                {
+                    if (successCallback) { successCallback(); }
+                })
+                .fail(function()
+                {
+                    if (failCallback) { failCallback(); }
+                });
+    };
+
+    TopicResource.prototype.updatePost = function(postId, message, successCallback, failCallback)
+    {
+        var postUrl = '../services/forum/posts/' + postId;
+
+        var postData = {
+            message: message
+        };
+
+        postDataString = JSON.stringify(postData);
+
+        $.post(postUrl, postDataString,
+                function(data, textStatus, jqXHR)
+                {
+                    successCallback();
+                })
+                .done(function()
+                {
+                })
+                .fail(function()
+                {
+                    failCallback();
+                });
+    };
+
+    TopicResource.prototype.getPosts = function()
+    {
+        return this.posts;
+    };
+
+</script>
