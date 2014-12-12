@@ -1,0 +1,7 @@
+parameters:
+    CommentService.class: LaDanse\CommentBundle\Service\CommentService
+
+services:
+    LaDanse.CommentService:
+        class: "%CommentService.class%"
+        arguments: ['@service_container']

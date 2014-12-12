@@ -1,0 +1,4 @@
+CommentServiceRouting:
+    resource: "@LaDanseCommentBundle/Controller"
+    type:     annotation
+    prefix:   /services/comment
