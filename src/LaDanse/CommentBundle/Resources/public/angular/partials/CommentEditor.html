@@ -1,0 +1,13 @@
+<textarea class="ForumTextArea"
+          placeholder="Join the discussion ..."
+          style="width: 100%;"
+          esc-key="escapePressed()"
+          enter-key="enterPressed()"
+          ng-model="message"
+        ></textarea>
+<div style="float: left;">
+    <p style="font-size: 80%;">(press escape to cancel, enter to save)</p>
+</div>
+<div style="float: right;">
+    <p id="length_{{ comment.postId }}" style="font-size: 80%;">{{ characterUsage }}</p>
+</div>
