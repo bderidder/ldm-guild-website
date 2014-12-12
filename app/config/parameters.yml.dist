@@ -15,3 +15,5 @@ parameters:
     secret:             ThisTokenIsNotSoSecretChangeIt
     nodejs_binary_path: /usr/bin/node
     nodejs_module_path: ["C:\\Users\\bderidder\\AppData\\Roaming\\npm\\node_modules",]
+    battlenet_key:      BattleNetAPIKey
+    battlenet_secret:   BattleNetAPISecret
