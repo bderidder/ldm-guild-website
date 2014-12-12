@@ -6,9 +6,14 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class RemoveEventController
+ *
+ * @package LaDanse\SiteBundle\Controller\Events
+ */
 class RemoveEventController extends LaDanseController
 {
-	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+    const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
 
     /**
      * @param string $id
@@ -28,16 +33,18 @@ class RemoveEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-    	$em = $this->getDoctrine()->getManager();
-    	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
 
         /* @var $repository \Doctrine\ORM\EntityRepository */
-    	$event = $repository->find($id);
+        $event = $repository->find($id);
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in deleteAction',
-                array("event" => $id));
+            $this->getLogger()->warning(
+                __CLASS__ . ' the event does not exist in deleteAction',
+                array("event" => $id)
+            );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }
@@ -49,12 +56,14 @@ class RemoveEventController extends LaDanseController
                 return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
             }
 
-            $this->getForumService()->removeTopic($event->getTopicId());
+            $this->getCommentService()->removeCommentGroup($event->getTopicId());
 
             $em->remove($event);
 
-            $this->getLogger()->warning(__CLASS__ . ' removing event in deleteAction',
-                array("event" => $id));
+            $this->getLogger()->warning(
+                __CLASS__ . ' removing event in deleteAction',
+                array("event" => $id)
+            );
 
             $em->flush();
 

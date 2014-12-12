@@ -13,6 +13,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class CreateEventController
+ *
+ * @package LaDanse\SiteBundle\Controller\Events
+ */
 class CreateEventController extends LaDanseController
 {
     /**
@@ -34,7 +39,7 @@ class CreateEventController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-        if ($onDate === NULL)
+        if ($onDate === null)
         {
             $eventDate = new DateTime('tomorrow');
         }
@@ -42,63 +47,70 @@ class CreateEventController extends LaDanseController
         {
             $eventDate = DateTime::createFromFormat("Ymd", $onDate);
 
-            if ($eventDate === FALSE)
+            if ($eventDate === false)
             {
                 $eventDate = new DateTime('tomorrow');
             }
         }
 
-    	$formModel = new EventFormModel();
-    	$formModel->setName('');
-    	$formModel->setDescription('');
-    	$formModel->setDate($eventDate);
-    	$formModel->setInviteTime(new DateTime('19:15'));
-    	$formModel->setStartTime(new DateTime('19:30'));
-    	$formModel->setEndTime(new DateTime('22:00'));
+        $formModel = new EventFormModel();
+        $formModel->setName('');
+        $formModel->setDescription('');
+        $formModel->setDate($eventDate);
+        $formModel->setInviteTime(new DateTime('19:15'));
+        $formModel->setStartTime(new DateTime('19:30'));
+        $formModel->setEndTime(new DateTime('22:00'));
 
-    	$form = $this->createForm(new EventFormType(), $formModel, 
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+        $form = $this->createForm(
+            new EventFormType(),
+            $formModel,
+            array('attr' => array('class' => 'form-horizontal', 'novalidate' => ''))
+        );
 
         if ($request->getMethod() == 'POST')
         {
-    	   $form->handleRequest($request);
+            $form->handleRequest($request);
 
             $errors = new ErrorModel();
 
-        	if ($form->isValid() && $formModel->isValid($errors))
-        	{
-    			$this->persistEvent($authContext, $formModel);
+            if ($form->isValid() && $formModel->isValid($errors))
+            {
+                $this->persistEvent($authContext, $formModel);
 
                 $this->addToast('New event created');
 
-        		return $this->redirect($this->generateUrl('calendarIndex'));
-    		}
-    		else
-    		{
-    			return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
-    					array('form' => $form->createView(), 'errors' => $errors));
-    		}
+                return $this->redirect($this->generateUrl('calendarIndex'));
+            }
+            else
+            {
+                return $this->render(
+                    'LaDanseSiteBundle:events:createEvent.html.twig',
+                    array('form' => $form->createView(), 'errors' => $errors)
+                );
+            }
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:events:createEvent.html.twig',
-                        array('form' => $form->createView()));
-        }	
+            return $this->render(
+                'LaDanseSiteBundle:events:createEvent.html.twig',
+                array('form' => $form->createView())
+            );
+        }
     }
 
     private function persistEvent(AuthenticationContext $authContext, EventFormModel $formModel)
     {
-        $forumService = $this->getForumService();
+        $commentService = $this->getCommentService();
      
-        $topicId = $forumService->createTopic($authContext->getAccount(), $formModel->getName());
+        $commentGroupId = $commentService->createCommentGroup();
 
-    	$event = $this->modelToEntity($authContext->getAccount(), $formModel, $topicId);
+        $event = $this->modelToEntity($authContext->getAccount(), $formModel, $commentGroupId);
 
         $this->getLogger()->info(__CLASS__ . ' persisting event');
 
-    	$em = $this->getDoctrine()->getManager();
-    	$em->persist($event);
-    	$em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($event);
+        $em->flush();
     }
 
     private function modelToEntity($organiser, EventFormModel $formModel, $topicId)
@@ -117,11 +129,11 @@ class CreateEventController extends LaDanseController
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)
     {
-    	$resultDate = new DateTime();
+        $resultDate = new DateTime();
 
-    	$resultDate->setDate($datePart->format('Y'), $datePart->format('m'), $datePart->format('d'));
-    	$resultDate->setTime($timePart->format('H'), $timePart->format('i'), $timePart->format('s'));
+        $resultDate->setDate($datePart->format('Y'), $datePart->format('m'), $datePart->format('d'));
+        $resultDate->setTime($timePart->format('H'), $timePart->format('i'), $timePart->format('s'));
 
-    	return $resultDate;
+        return $resultDate;
     }
 }
