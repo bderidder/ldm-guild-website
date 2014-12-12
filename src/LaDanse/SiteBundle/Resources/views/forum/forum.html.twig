@@ -16,10 +16,16 @@
 
 {% block javascript %}
 
-    {% javascripts
-        '@LaDanseForumBundle/Resources/public/angular/js/ForumApp.js'
-        '@LaDanseForumBundle/Resources/public/angular/js/ForumControllers.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript">
+        var commentGroupId = '8a443daf5e2e3406362a543c93888673';
+    </script>
+
+    {% javascripts '@LaDanseForumBundle/Resources/public/angular/app/*.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts '@LaDanseForumBundle/Resources/public/angular/controllers/*.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
 {% endblock %}
