@@ -48,6 +48,14 @@ class LaDanseController extends Controller
     }
 
     /**
+     * @return \LaDanse\CommentBundle\Service\CommentService
+     */
+    protected function getCommentService()
+    {
+        return $this->get(\LaDanse\CommentBundle\Service\CommentService::SERVICE_NAME);
+    }
+
+    /**
      * @return \LaDanse\ServicesBundle\Service\SettingsService
      */
     protected function getSettingsService()
