@@ -34,8 +34,8 @@ class Topic
     private $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account", inversedBy="comments")
-     * @ORM\JoinColumn(name="posterId", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account")
+     * @ORM\JoinColumn(name="posterId", referencedColumnName="id", nullable=false)
      */
     private $creator;
 

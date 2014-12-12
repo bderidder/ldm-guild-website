@@ -32,7 +32,7 @@ class Post
     private $postDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account")
      * @ORM\JoinColumn(name="posterId", referencedColumnName="id", nullable=true)
      */
     private $poster;
@@ -45,7 +45,7 @@ class Post
     private $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts")
      * @ORM\JoinColumn(name="topicId", referencedColumnName="topicId", nullable=true)
      */
     private $topic;
