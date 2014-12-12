@@ -65,6 +65,14 @@
                 <th class="center-td">Damage</th>
             </tr>
 
+            <tr>
+                <td>&nbsp;</td>
+                <td class="center-td">({{ event.signUps.willComeTankCount }}/{{ event.signUps.mightComeTankCount }})</td>
+                <td class="center-td">({{ event.signUps.willComeHealerCount }}/{{ event.signUps.mightComeHealerCount }})</td>
+                <td class="center-td">({{ event.signUps.willComeDPSCount }}/{{ event.signUps.mightComeDPSCount }})</td>
+                <td><!-- remove --></td>
+            </tr>
+
             {# render 'will come' sign ups, if any #}
             {% for signUp in event.signUps.willComeSignUps %}
                 {% if signUp.currentUser %}
@@ -154,7 +162,10 @@
     <h4>Comments</h4>
 
     {# placeholder for comments, content is supplied by jQuery scripts #}
-    <div id="TopicContainer">
+    <div ng-app="CommentsApp">
+
+        <div ng-view></div>
+
     </div>
     
 {% endblock %}
@@ -163,6 +174,16 @@
 
     {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
     {{ parent() }}
+
+    <script type="text/javascript">
+        var commentGroupId = '{{ event.topicId }}';
+    </script>
+
+    {% javascripts
+    '@LaDanseCommentBundle/Resources/public/angular/js/CommentApp.js'
+    '@LaDanseCommentBundle/Resources/public/angular/js/CommentControllers.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
     <script>
         $(document).ready(function()
@@ -196,7 +217,5 @@
             });
         });
     </script>
-
-    {% include 'LaDanseSiteBundle:events:eventForum.html.twig' %}
 
 {% endblock %}
