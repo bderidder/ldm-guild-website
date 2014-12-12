@@ -139,20 +139,23 @@ class EventModel extends ContainerAwareClass
         return $this->isOrganiser;
     }
 
+    /**
+     * @param Event $event
+     */
     private function calculateEditable(Event $event)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        $this->isOrganiser = FALSE;
+        $this->isOrganiser = false;
 
-        if ($authContext->isAuthenticated() 
+        if ($authContext->isAuthenticated()
             && ($authContext->getAccount()->getId() === $event->getOrganiser()->getId()))
         {
-            $this->isOrganiser = TRUE;
+            $this->isOrganiser = true;
         }
         else
         {
-            $this->isOrganiser = FALSE;
+            $this->isOrganiser = false;
         }
     }
 }
