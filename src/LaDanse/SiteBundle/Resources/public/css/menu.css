@@ -11,7 +11,7 @@ a div.tile:hover
 
     position: relative;
     float: left;
-    margin-left: 15px;
+    margin-left: 0px;
     margin-top: 15px;
 }
 
@@ -114,6 +114,7 @@ a div.tile:hover
 
 .tile-container
 {
-    display: inline-block;
+    display: block;
     visibility: hidden;
+    width: 880px;
 }

@@ -7,21 +7,34 @@ use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
 
+/**
+ * Class EventSignUpsModel
+ * @package LaDanse\SiteBundle\Model
+ */
 class EventSignUpsModel extends ContainerAwareClass
 {
     const SIGNUP_REPOSITORY = 'LaDanseDomainBundle:SignUp';
 
     protected $eventId;
-    protected $signUps;    
-    protected $willComeCount;
-    protected $mightComeCount;
-    protected $absentCount;
+    protected $signUps;
     protected $organiser;
     protected $currentUserSigned;
     protected $mightComeSignUps = array();
     protected $willComeSignUps = array();
     protected $absentSignUps = array();
 
+    protected $willComeTankCount = 0;
+    protected $willComeHealerCount = 0;
+    protected $willComeDPSCount = 0;
+
+    protected $mightComeTankCount = 0;
+    protected $mightComeHealerCount = 0;
+    protected $mightComeDPSCount = 0;
+
+    /**
+     * @param ContainerInjector $injector
+     * @param Event $event
+     */
     public function __construct(ContainerInjector $injector, Event $event)
     {
         parent::__construct($injector->getContainer());
@@ -50,13 +63,15 @@ class EventSignUpsModel extends ContainerAwareClass
             {
                 case SignUpType::WILLCOME:
                     $this->willComeSignUps[] = $signUpModel;
+                    $this->updateSignUpCounts(true, $signUpModel);
                     break;
                 case SignUpType::MIGHTCOME:
                     $this->mightComeSignUps[] = $signUpModel;
+                    $this->updateSignUpCounts(false, $signUpModel);
                     break;
                 case SignUpType::ABSENCE:
                     $this->absentSignUps[] = $signUpModel;
-                    break;   
+                    break;
             }
         }
     }
@@ -123,6 +138,36 @@ class EventSignUpsModel extends ContainerAwareClass
         return $this->absentSignUps;
     }
 
+    public function getWillComeTankCount()
+    {
+        return $this->willComeTankCount;
+    }
+
+    public function getWillComeHealerCount()
+    {
+        return $this->willComeHealerCount;
+    }
+
+    public function getWillComeDPSCount()
+    {
+        return $this->willComeDPSCount;
+    }
+
+    public function getMightComeTankCount()
+    {
+        return $this->mightComeTankCount;
+    }
+
+    public function getMightComeHealerCount()
+    {
+        return $this->mightComeHealerCount;
+    }
+
+    public function getMightComeDPSCount()
+    {
+        return $this->mightComeDPSCount;
+    }
+
     public function getWillComeCount()
     {
         return count($this->willComeSignUps);
@@ -141,5 +186,38 @@ class EventSignUpsModel extends ContainerAwareClass
     public function getSignUpCount()
     {
         return $this->getWillComeCount() + $this->getMightComeCount();
+    }
+
+    private function updateSignUpCounts($willCome, SignUpModel $signUpModel)
+    {
+        if ($signUpModel->getSignedAsTank() && $willCome)
+        {
+            $this->willComeTankCount++;
+        }
+
+        if ($signUpModel->getSignedAsTank() && !$willCome)
+        {
+            $this->mightComeTankCount++;
+        }
+
+        if ($signUpModel->getSignedAsHealer() && $willCome)
+        {
+            $this->willComeHealerCount++;
+        }
+
+        if ($signUpModel->getSignedAsHealer() && !$willCome)
+        {
+            $this->mightComeHealerCount++;
+        }
+
+        if ($signUpModel->getSignedAsDamage() && $willCome)
+        {
+            $this->willComeDPSCount++;
+        }
+
+        if ($signUpModel->getSignedAsDamage() && !$willCome)
+        {
+            $this->mightComeDPSCount++;
+        }
     }
 }
