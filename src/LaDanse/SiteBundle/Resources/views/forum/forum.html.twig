@@ -1,0 +1,25 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Forum - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Forum') }}
+
+    <div ng-app="ForumApp">
+
+        <div ng-view></div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {% javascripts
+        '@LaDanseForumBundle/Resources/public/angular/js/ForumApp.js'
+        '@LaDanseForumBundle/Resources/public/angular/js/ForumControllers.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock %}
