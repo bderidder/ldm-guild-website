@@ -2,69 +2,49 @@
 
     <div ng-controller="AddCommentCtrl"
          ng-init="initAddCommentCtrl()"
-         ng-show="visible"
-         ng-cloak>
-        <textarea class="ForumTextArea"
-                  placeholder="Join the discussion ..."
-                  style="width: 100%;"
-                  esc-key="escapePressed()"
-                  enter-key="enterPressed(message)"
-                  ng-model="message"
-                ></textarea>
-        <div style="float: left;">
-            <p style="font-size: 80%;">(press escape to cancel, enter to save)</p>
+         ng-show="visible">
+        <div ng-controller="CommentEditorCtrl"
+             ng-init="initCommentEditorCtrl('', saveCommentEditor, cancelCommentEditor)"
+             comment-editor-template>
         </div>
-        <div style="float: right;">
-            <p id="length_{{ comment.postId }}" style="font-size: 80%;">{{ characterUsage }}</p>
-        </div>
-    </div>
+    </div> <!-- AddCommentCtrl -->
 
     <div ng-repeat="comment in comments">
 
-        <div id="PostContainer_{{ postId }}" class="post" style="clear: both;"
+        <div class="post" style="clear: both;"
              ng-controller="CommentCtrl"
              ng-init="initCommentCtrl(comment)"
              ng-cloak
              ng-switch="editing">
 
-            <div ng-switch-when="false">
+            <div ng-switch="editing"ng-switch-when="false">
 
-                <div id="Post_{{ comment.postId }}" class="postContainer">
+                <div class="postContainer">
                     <div>
                         <span class="poster">{{ comment.poster }}</span>
                         <span class="message">{{ comment.message }}</span>
                     </div>
                     <div>
                         <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
-                                <span ng-if="isEditable()"
-                                      ng-click="editClicked()"
-                                      id="EditLink_{{ comment.postId }}"
-                                      class="postEditLink">Edit</span>
+                                <span class="postEditLink"
+                                      ng-if="isEditable()"
+                                      ng-click="editClicked()">Edit</span>
                     </div>
                 </div>
 
-            </div>
+            </div> <!-- ng-switch="editing" - ng-switch-when="false" -->
 
             <div ng-switch-when="true">
 
-                <div class="">
-                    <textarea class="ForumTextArea"
-                              placeholder="Write a comment ..." style="width: 100%;"
-                              esc-key="escapePressed()"
-                              enter-key="enterPressed(editedValue)"
-                              ng-model="editedValue"></textarea>
-                    <div style="float: left;">
-                        <p style="font-size: 80%;">(press escape to cancel, enter to save)</p>
-                    </div>
-                    <div style="float: right;">
-                        <p id="length_{{ comment.postId }}" style="font-size: 80%;">0/0</p>
-                    </div>
+                <div ng-controller="CommentEditorCtrl"
+                     ng-init="initCommentEditorCtrl(comment.message, saveCommentEditor, cancelCommentEditor)"
+                     comment-editor-template>
                 </div>
 
-            </div>
+            </div> <!-- ng-switch="editing" - ng-switch-when="true" -->
 
-        </div>
+        </div> <!-- CommentCtrl -->
 
-    </div>
+    </div> <!-- ng-repeat="comment in comments" -->
 
-</div>
+</div> <!-- CommentGroupCtrl -->
