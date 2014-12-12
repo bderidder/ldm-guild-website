@@ -22,20 +22,14 @@ class CommandExecutionContext
     /** @var $output OutputInterface */
     private $output;
 
-    private $isVerbose;
-    private $isDiag;
-
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      */
-    public function __construct(InputInterface $input, OutputInterface $output, $isVerbose, $isDiag)
+    public function __construct(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
         $this->output = $output;
-
-        $this->isVerbose = $isVerbose;
-        $this->isDiag = $isDiag;
     }
 
     /**
@@ -59,7 +53,7 @@ class CommandExecutionContext
      */
     public function debug($text)
     {
-        if ($this->isDiag)
+        if ($this->output->isDebug())
         {
             $this->output->writeln($text);
         }
@@ -68,9 +62,17 @@ class CommandExecutionContext
     /**
      * @param $text
      */
+    public function error($text)
+    {
+        $this->output->writeln($text);
+    }
+
+    /**
+     * @param $text
+     */
     public function info($text)
     {
-        if ($this->isVerbose or $this->isDiag)
+        if ($this->output->isVerbose())
         {
             $this->output->writeln($text);
         }

@@ -9,9 +9,7 @@ namespace LaDanse\ServicesBundle\Command;
 use LaDanse\ServicesBundle\Service\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -20,10 +18,8 @@ use \Symfony\Component\Console\Output\OutputInterface;
  */
 class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
-    const ARMORY_URL = "http://eu.battle.net/api/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members";
-
-    const VERBOSE_OPTION = 'verbose';
-    const DIAG_OPTION    = 'diag';
+    const BATTLENET_API_URL =
+        "https://eu.api.battle.net/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members&locale=en_GB&apikey=";
 
     /**
      * @return void
@@ -33,8 +29,6 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         $this
             ->setName('ladanse:refreshGuildMembers')
             ->setDescription('Refresh guild members from the armory')
-            ->addOption(self::DIAG_OPTION, null, InputOption::VALUE_NONE, 'Print diagnostic messages')
-            // the option "verbose" is by default present on commands
         ;
     }
 
@@ -48,16 +42,14 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     {
         $context = new CommandExecutionContext(
             $input,
-            $output,
-            $input->getOption(self::VERBOSE_OPTION),
-            $input->getOption(self::DIAG_OPTION)
+            $output
         );
 
         $armoryGuild = $this->getArmoryObjects($context);
 
         if (is_null($armoryGuild))
         {
-            $context->debug("Could not get Armory information");
+            $context->error("Could not get Armory information");
 
             return;
         }
@@ -118,7 +110,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             if (strcmp($dbName, $armoryName) == 0)
             {
                 // if character is the same as the next character from armory, do nothing
-                $context->debug("Character already in our database " . $dbName);
+                $context->info("Character already in our database " . $dbName);
 
                 if ($this->hasCharacterChanged($dbNames[$dbIndex], $armoryNames[$armoryIndex]))
                 {
@@ -169,7 +161,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         {
             $dbName = $dbNames[$dbIndex]->name;
 
-            $context->info("Character is not in the guild anymore " . $dbName);
+            $context->info("Character is not in the guild anymore, ending " . $dbName);
 
             $this->endCharacter($dbNames[$dbIndex]->id);
 
@@ -311,13 +303,16 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         {
             $context->debug("Fetching guild members from the Armory");
 
-            $json = file_get_contents(RefreshGuildMembersCommand::ARMORY_URL);
+            $apiKey = $this->getContainer()->getParameter("battlenet_key");
+            $fullUrl = RefreshGuildMembersCommand::BATTLENET_API_URL . $apiKey;
+
+            $json = file_get_contents($fullUrl);
 
             $context->debug("Armory returned " . $json);
 
             if (is_null($json))
             {
-                $context->debug("Armory URL returned nothing");
+                $context->error("Armory URL returned empty content");
 
                 return null;
             }
@@ -326,13 +321,15 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
             if (is_null($armoryGuild))
             {
-                $context->debug("Could not decode Armory data into objects");
+                $context->error("Could not decode Armory data into objects");
+                $context->error($json);
 
                 return null;
             }
             elseif (!property_exists($armoryGuild, "battlegroup") or !property_exists($armoryGuild, "realm"))
             {
-                $context->debug("Armory did not return list of members");
+                $context->error("Armory did not return list of members");
+                $context->error($json);
 
                 return null;
             }
@@ -341,7 +338,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         }
         catch(\Exception $e)
         {
-            $context->debug("Exception while fetching Armory data " . $e);
+            $context->error("Exception while fetching Armory data " . $e);
 
             return null;
         }
