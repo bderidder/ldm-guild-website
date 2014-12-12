@@ -179,9 +179,11 @@
         var commentGroupId = '{{ event.topicId }}';
     </script>
 
-    {% javascripts
-    '@LaDanseCommentBundle/Resources/public/angular/js/CommentApp.js'
-    '@LaDanseCommentBundle/Resources/public/angular/js/CommentControllers.js' %}
+    {% javascripts '@LaDanseCommentBundle/Resources/public/angular/app/*.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts '@LaDanseCommentBundle/Resources/public/angular/controllers/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
