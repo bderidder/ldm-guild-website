@@ -52,7 +52,7 @@ class CommentGroupMapper
                 /** @var $a \LaDanse\CommentBundle\Entity\Comment */
                 /** @var $b \LaDanse\CommentBundle\Entity\COmment */
 
-                return $a->getPostDate() > $b->getPostDate();
+                return $a->getPostDate() < $b->getPostDate();
             }
         );
 
