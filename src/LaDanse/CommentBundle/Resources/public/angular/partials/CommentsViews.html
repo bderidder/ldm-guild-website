@@ -1,8 +1,15 @@
-<div ng-controller="CommentGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
+<div class="CommentContainer" ng-controller="CommentGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
+
+    <div class="CommentsTitle">
+
+        <h4>{{ comments.length }} Comments</h4>
+
+    </div>
 
     <div ng-controller="AddCommentCtrl"
          ng-init="initAddCommentCtrl()"
-         ng-show="visible">
+         ng-show="visible"
+         class="AddComment">
         <div ng-controller="CommentEditorCtrl"
              ng-init="initCommentEditorCtrl('', saveCommentEditor, cancelCommentEditor)"
              comment-editor-template>
@@ -17,30 +24,24 @@
              ng-cloak
              ng-switch="editing">
 
-            <div ng-switch="editing"ng-switch-when="false">
-
-                <div class="postContainer">
-                    <div>
-                        <span class="poster">{{ comment.poster }}</span>
-                        <span class="message">{{ comment.message }}</span>
-                    </div>
-                    <div>
-                        <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
-                                <span class="postEditLink"
-                                      ng-if="isEditable()"
-                                      ng-click="editClicked()">Edit</span>
-                    </div>
+            <div class="postContainer"
+                 ng-switch-when="false">
+                <div>
+                    <span class="poster">{{ comment.poster }}</span>
+                    <span class="message">{{ comment.message }}</span>
                 </div>
-
+                <div>
+                    <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
+                    <span class="postEditLink"
+                          ng-if="isEditable()"
+                          ng-click="editClicked()">Edit</span>
+                </div>
             </div> <!-- ng-switch="editing" - ng-switch-when="false" -->
 
-            <div ng-switch-when="true">
-
-                <div ng-controller="CommentEditorCtrl"
-                     ng-init="initCommentEditorCtrl(comment.message, saveCommentEditor, cancelCommentEditor)"
-                     comment-editor-template>
-                </div>
-
+            <div ng-controller="CommentEditorCtrl"
+                 ng-init="initCommentEditorCtrl(comment.message, saveCommentEditor, cancelCommentEditor)"
+                 ng-switch-when="true"
+                 comment-editor-template>
             </div> <!-- ng-switch="editing" - ng-switch-when="true" -->
 
         </div> <!-- CommentCtrl -->

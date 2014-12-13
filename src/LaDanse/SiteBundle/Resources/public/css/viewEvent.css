@@ -84,7 +84,7 @@
     outline-style: none;
     outline-width: 0px;
 
-    height: 34px;
+    height: 50px;
 }
 
 .TextTooLong textarea
@@ -115,4 +115,56 @@
 {
     font-size: 85%;
     font-style: italic;
+}
+
+div.CommentContainer
+{
+    border: solid 1px darkgray;
+    margin: 0;
+    padding: 0;
+}
+
+div.CommentSeparator
+{
+    background-color: rgb(242, 242, 242);
+    height: 10px;
+
+}
+
+div.CommentsTitle
+{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(242, 242, 242);
+    height: 50px;
+}
+
+div.CommentsTitle h4
+{
+    line-height: 50px;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+}
+
+div.AddComment
+{
+    border-top: solid 1px darkgray;
+    padding: 30px;
+    padding-left: 45px;
+    border-bottom: solid 1px darkgray;
+}
+
+div.CommentContainer textarea
+{
+    padding: 5px;
+}
+
+div.post
+{
+
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-left: 45px;
 }
