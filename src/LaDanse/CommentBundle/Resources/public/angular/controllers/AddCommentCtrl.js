@@ -6,7 +6,7 @@ commentControllers.controller('AddCommentCtrl', function ($scope, $rootScope, $h
     $scope.initAddCommentCtrl = function()
     {
         var unbindStarted =
-            $rootScope.$on('CommentsApp.EditComment.Started', $scope.hideEditor);
+            $rootScope.$on('CommentsApp.EditComment.Started', $scope.showEditor);
         var unbindCancelled =
             $rootScope.$on('CommentsApp.EditComment.Cancelled', $scope.showEditor);
         var unbindSucceeded =
