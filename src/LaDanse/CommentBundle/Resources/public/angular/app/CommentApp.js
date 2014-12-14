@@ -1,5 +1,5 @@
 var commentsApp = angular.module('CommentsApp',
-    ['ngRoute', 'ngResource', 'ngAnimate', 'commentControllers']
+    ['ngRoute', 'ngResource', 'commentControllers']
 );
 
 commentsApp.config(['$routeProvider',
