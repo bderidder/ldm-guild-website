@@ -1,7 +1,5 @@
 var MAX_COMMENT_LENGTH = 250;
 
-var forumControllers = angular.module('forumControllers', ['ngRoute', 'ngResource']);
-
 forumControllers.controller('ForumGroupCtrl', function ($scope, $rootScope, $http) {
 
     $scope.comments = [];
@@ -9,15 +7,15 @@ forumControllers.controller('ForumGroupCtrl', function ($scope, $rootScope, $htt
 
     $scope.initCommentGroupCtrl = function()
     {
-        $scope.groupId = commentGroupId;
+        $scope.groupId = forumId;
 
         $scope.refreshPosts();
     };
 
     $scope.refreshPosts = function()
     {
-        $http.get('../services/comment/groups/' + $scope.groupId).success(function(data) {
-            $scope.comments = data.comments;
+        $http.get('../services/forum/forums/' + forumId).success(function(data) {
+            $scope.comments = data.posts;
         });
     }
 
@@ -103,27 +101,10 @@ forumControllers.controller('CommentCtrl', function ($scope, $rootScope, $http) 
 forumControllers.controller('AddCommentCtrl', function ($scope, $rootScope, $http) {
 
     $scope.message = "";
-    $scope.visible = true;
-    $scope.characterUsage = "0/0";
     $scope.maxLength = 250;
 
     $scope.initAddCommentCtrl = function()
     {
-        $scope.$watch('message', $scope.updateCharacterUsage);
-
-        var unbindStarted =
-            $rootScope.$on('CommentsApp.EditComment.Started', $scope.hideEditor);
-        var unbindCancelled =
-            $rootScope.$on('CommentsApp.EditComment.Cancelled', $scope.showEditor);
-        var unbindSucceeded =
-            $rootScope.$on('CommentsApp.EditComment.Succeeded', $scope.showEditor);
-        var unbindFailed =
-            $rootScope.$on('CommentsApp.EditComment.Failed', $scope.showEditor);
-
-        $scope.$on('$destroy', unbindStarted);
-        $scope.$on('$destroy', unbindCancelled);
-        $scope.$on('$destroy', unbindSucceeded);
-        $scope.$on('$destroy', unbindFailed);
     };
 
     $scope.showEditor = function()
@@ -155,9 +136,9 @@ forumControllers.controller('AddCommentCtrl', function ($scope, $rootScope, $htt
             return;
         }
 
-        $http.post('../services/comment/groups/' + $scope.groupId + "/comments",
+        $http.post('../services/forum/forums/' + forumId + "/topics",
             {
-                message: newValue.trim()
+                subject: newValue.trim()
             }).
             success(function(data, status, headers, config)
             {
@@ -172,31 +153,3 @@ forumControllers.controller('AddCommentCtrl', function ($scope, $rootScope, $htt
     }
 
 });
-
-commentsApp.directive('escKey', function () {
-    return function (scope, element, attrs) {
-        element.bind('keydown keypress', function (event) {
-            if(event.which === 27) { // 27 = esc key
-                scope.$apply(function (){
-                    scope.$eval(attrs.escKey);
-                });
-
-                event.preventDefault();
-            }
-        });
-    };
-})
-
-commentsApp.directive('enterKey', function () {
-    return function (scope, element, attrs) {
-        element.bind('keydown keypress', function (event) {
-            if(event.which === 13) { // 13 = enter key
-                scope.$apply(function (){
-                    scope.$eval(attrs.enterKey);
-                });
-
-                event.preventDefault();
-            }
-        });
-    };
-})

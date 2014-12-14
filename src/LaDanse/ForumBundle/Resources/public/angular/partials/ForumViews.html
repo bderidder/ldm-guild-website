@@ -1,22 +1,15 @@
-<div ng-controller="CommentGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
+<div ng-controller="ForumGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
 
     <div ng-controller="AddCommentCtrl"
          ng-init="initAddCommentCtrl()"
-         ng-show="visible"
          ng-cloak>
         <textarea class="ForumTextArea"
-                  placeholder="Join the discussion ..."
+                  placeholder="Create a new topic"
                   style="width: 100%;"
                   esc-key="escapePressed()"
                   enter-key="enterPressed(message)"
-                  ng-model="message"
-                ></textarea>
-        <div style="float: left;">
-            <p style="font-size: 80%;">(press escape to cancel, enter to save)</p>
-        </div>
-        <div style="float: right;">
-            <p id="length_{{ comment.postId }}" style="font-size: 80%;">{{ characterUsage }}</p>
-        </div>
+                  ng-model="message">
+        </textarea>
     </div>
 
     <div ng-repeat="comment in comments">
@@ -32,7 +25,7 @@
                 <div id="Post_{{ comment.postId }}" class="postContainer">
                     <div>
                         <span class="poster">{{ comment.poster }}</span>
-                        <span class="message">{{ comment.message }}</span>
+                        <span class="message"><a href="#/topic/{{ comment.topicId }}">{{ comment.subject }}</a></span>
                     </div>
                     <div>
                         <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
