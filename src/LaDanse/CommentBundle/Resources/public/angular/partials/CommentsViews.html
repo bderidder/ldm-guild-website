@@ -1,9 +1,7 @@
 <div class="CommentContainer" ng-controller="CommentGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
 
     <div class="CommentsTitle">
-
-        <h4>{{ comments.length }} Comments</h4>
-
+        <h3>{{ comments.length }} Comments</h3>
     </div>
 
     <div ng-controller="AddCommentCtrl"
@@ -33,8 +31,7 @@
                 <div>
                     <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
                     <span class="postEditLink"
-                          ng-if="isEditable()"
-                          ng-click="editClicked()">Edit</span>
+                          ng-click="editClicked()"><i class="fa fa-pencil fa-1x"></i></span>
                 </div>
             </div> <!-- ng-switch="editing" - ng-switch-when="false" -->
 
