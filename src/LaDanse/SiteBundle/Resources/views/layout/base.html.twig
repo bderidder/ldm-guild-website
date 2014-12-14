@@ -16,9 +16,9 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.css" rel="stylesheet">
 
     {% stylesheets filter='cssrewrite'
-    'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
-    'bundles/coderspottingtoastmessage/css/*'
-    'bundles/ladansesite/css/*'
+        'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
+        'bundles/coderspottingtoastmessage/css/*'
+        'bundles/ladansesite/css/*'
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
@@ -80,23 +80,19 @@
 
 {# all Javascript is moved to the rear of the document to speed up rendering #}
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/lang/en-gb.js"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/lang/en-gb.js"></script>
+    <script src="//cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.js"></script>
 
-<script src="//cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.js"></script>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-animate.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-resource.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.11/angular-ui-router.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-resource.min.js"></script>
 
 {% javascripts '@CoderSpottingToastMessageBundle/Resources/public/js/*'
 '@LaDanseBootstrapBundle/Resources/public/js/*'
