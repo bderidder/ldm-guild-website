@@ -107,7 +107,6 @@
 .post .poster
 {
     font-weight: bold;
-    color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
 
@@ -119,29 +118,19 @@
 
 div.CommentContainer
 {
-    border: solid 1px darkgray;
     margin: 0;
     padding: 0;
 }
 
-div.CommentSeparator
-{
-    background-color: rgb(242, 242, 242);
-    height: 10px;
-
-}
 
 div.CommentsTitle
 {
     margin: 0;
     padding: 0;
-    background-color: rgb(242, 242, 242);
-    height: 50px;
 }
 
 div.CommentsTitle h4
 {
-    line-height: 50px;
     font-size: 1.1em;
     margin: 0;
     padding: 0;
@@ -150,10 +139,9 @@ div.CommentsTitle h4
 
 div.AddComment
 {
-    border-top: solid 1px darkgray;
     padding: 30px;
-    padding-left: 45px;
-    border-bottom: solid 1px darkgray;
+    padding-top: 10px;
+    padding-left: 0px;
 }
 
 div.CommentContainer textarea
@@ -163,8 +151,6 @@ div.CommentContainer textarea
 
 div.post
 {
-
     padding-top: 10px;
     padding-right: 30px;
-    padding-left: 45px;
 }
