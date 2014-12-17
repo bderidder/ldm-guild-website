@@ -1,5 +1,10 @@
 <div ng-controller="ForumListCtrl" ng-init="initForumListCtrl()" ng-cloak>
 
+    <div ng-controller="HeaderCtrl"
+         ng-init="initHeaderCtrl('Forums', null)"
+         header-template>
+    </div>
+
     <div ng-repeat="forum in forums">
 
         <div>
