@@ -1,0 +1,11 @@
+<div ng-controller="ForumListCtrl" ng-init="initForumListCtrl()" ng-cloak>
+
+    <div ng-repeat="forum in forums">
+
+        <div>
+            <span class="message"><a href="#/{{ forum.forumId }}">{{ forum.name }}</a></span>
+        </div>
+
+    </div>
+
+</div>

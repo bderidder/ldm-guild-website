@@ -1,0 +1,79 @@
+<div ng-controller="ForumCtrl" ng-init="initForumCtrl()" ng-cloak>
+
+    <div ng-if="isForumLoaded">
+
+        <div ng-controller="HeaderCtrl"
+             ng-init="initHeaderCtrl(name, '#/')"
+             header-template>
+        </div>
+
+        <style>
+            span.subjectTooLong {
+                color: red;
+            }
+
+            span.subjectLengthOk {
+                color: green;
+            }
+
+            input.subjectTooLong {
+                background-color: red;
+            }
+        </style>
+
+        <div ng-controller="AddTopicCtrl"
+             ng-init="initAddTopicCtrl()"
+             ng-cloak>
+
+            <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Add Topic</button>
+
+            <div ng-if="!collapsed">
+                <div class="form-group">
+                    <input type="text"
+                           placeholder="Create a new topic"
+                           style="width: 100%;"
+                           ng-model="subject"
+                           ng-class="subject.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"/>
+                </div>
+                <button class="btn btn-success" ng-click="addButtonClicked()">Submit Topic</button>
+                <button class="btn btn-warning" ng-click="cancelButtonClicked()">Cancel</button>
+            <span ng-class="subject.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"
+                  ng-if="subject.length > 0">{{ subject.length }}/{{ maxLength }}</span>
+            </div>
+
+        </div>
+
+        <br/>
+
+        <div ng-repeat="topic in topics">
+
+            <div ng-controller="TopicListCtrl"
+                 ng-init="initTopicListCtrl(topic)"
+                 ng-cloak
+                 class="well">
+
+                <div class="postContainer">
+                    <div>
+                        <span class="message">
+                            <a href="#/{{ forumId }}/topics/{{ topic.topicId }}">{{ topic.subject }}</a>
+                        </span>
+                    </div>
+                    <div>
+                        <span>Created by {{ topic.creator }} on
+                            <span popover="{{ topic.createDate | date: 'EEE MMM d, y' }} at {{ topic.createDate | date: 'H:mm' }}"
+                                  popover-trigger="mouseenter"
+                                  popover-append-to-body="true"
+                                  popover-placement="top">
+                                {{ topic.createDate | date: 'MMM d' }}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
