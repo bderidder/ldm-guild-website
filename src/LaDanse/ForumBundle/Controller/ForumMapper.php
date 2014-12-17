@@ -12,6 +12,33 @@ use LaDanse\ForumBundle\Entity\Forum;
 
 class ForumMapper
 {
+    public function mapForums(Controller $controller, $forums)
+    {
+        $jsonForums = [];
+
+        /** @var Forum $forum */
+        foreach($forums as $forum)
+        {
+            $jsonForums[] = (object)array(
+                "forumId" => $forum->getId(),
+                "name"    => $forum->getName(),
+                "links"   => (object)array(
+                    "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true)
+                )
+            );
+        }
+
+        $jsonObject = (object)array(
+            "forums"  => $jsonForums,
+            "links"   => (object)array(
+                "self"        => $controller->generateUrl('getForumList', array(), true)
+            )
+        );
+
+        return $jsonObject;
+    }
+
+
     /**
      * @param Controller $controller
      * @param Forum $forum
@@ -28,7 +55,7 @@ class ForumMapper
                 /** @var $a \LaDanse\ForumBundle\Entity\Topic */
                 /** @var $b \LaDanse\ForumBundle\Entity\Topic */
 
-                return $a->getCreateDate() > $b->getCreateDate();
+                return $a->getCreateDate() < $b->getCreateDate();
             }
         );
 
@@ -42,9 +69,9 @@ class ForumMapper
         }
 
         return (object)array(
-            "topicId" => $forum->getId(),
+            "forumId" => $forum->getId(),
             "name"    => $forum->getName(),
-            "posts"   => $jsonArray,
+            "topics"  => $jsonArray,
             "links"   => (object)array(
                 "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
                 "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
