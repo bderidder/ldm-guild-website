@@ -208,10 +208,8 @@ class ForumService extends LaDanseService
         $topic->setCreateDate(new \DateTime());
         $topic->setCreator($account);
         $topic->setSubject($subject);
-
-        $forum->addTopic($topic);
-
-        $em->persist($forum);
+        $topic->setForum($forum);
+        
         $em->persist($topic);
         $em->flush();
 
