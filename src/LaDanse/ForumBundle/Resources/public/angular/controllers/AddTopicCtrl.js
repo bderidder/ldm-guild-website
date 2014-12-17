@@ -1,7 +1,7 @@
 forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
 
     $scope.newSubject = {};
-    $scope.maxLength = 55;
+    $scope.maxLength = 58;
     $scope.collapsed = true;
 
     $scope.initAddTopicCtrl = function()
