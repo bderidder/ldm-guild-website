@@ -1,11 +1,12 @@
 forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
 
-    $scope.subject = "";
+    $scope.newSubject = {};
     $scope.maxLength = 100;
     $scope.collapsed = true;
 
     $scope.initAddTopicCtrl = function()
     {
+        $scope.newSubject.value = "";
     };
 
     $scope.showButtonClicked = function()
@@ -23,27 +24,27 @@ forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http)
         $scope.collapsed = true;
     }
 
-    $scope.addButtonClicked = function()
+    $scope.addButtonClicked = function(value)
     {
-        if (($scope.subject.trim().length < 5) || ($scope.subject.trim().length > $scope.maxLength) )
+        var subjectValue = $scope.newSubject.value;
+
+        if ((subjectValue.trim().length < 5) || (subjectValue.trim().length > $scope.maxLength) )
         {
             return;
         }
 
         $http.post('../services/forum/forums/' + $scope.forumId + "/topics",
             {
-                subject: $scope.subject.trim()
+                subject: subjectValue.trim()
             }).
             success(function(data, status, headers, config)
             {
-                $rootScope.$broadcast('CommentsApp.AddComment.Succeeded');
                 $scope.subject = "";
                 $scope.hideAndReset();
                 $scope.refreshTopics();
             }).
             error(function(data, status, headers, config)
             {
-                $rootScope.$broadcast('CommentsApp.AddComment.Failed');
             });
     }
 });

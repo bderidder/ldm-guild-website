@@ -32,13 +32,11 @@
                     <input type="text"
                            placeholder="Create a new topic"
                            style="width: 100%;"
-                           ng-model="subject"
-                           ng-class="subject.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"/>
+                           ng-model="newSubject.value"
+                           ng-class="newSubject.value.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"/>
                 </div>
-                <button class="btn btn-success" ng-click="addButtonClicked()">Submit Topic</button>
+                <button class="btn btn-success" ng-click="addButtonClicked(newSubject.value)">Submit Topic</button>
                 <button class="btn btn-warning" ng-click="cancelButtonClicked()">Cancel</button>
-            <span ng-class="subject.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"
-                  ng-if="subject.length > 0">{{ subject.length }}/{{ maxLength }}</span>
             </div>
 
         </div>
