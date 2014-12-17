@@ -34,6 +34,18 @@ class ForumService extends LaDanseService
     }
 
     /**
+     * @return array
+     */
+    public function getAllForums()
+    {
+        $doc = $this->getDoctrine();
+
+        $forumRepo = $doc->getRepository(Forum::REPOSITORY);
+
+        return $forumRepo->findAll();
+    }
+
+    /**
      * @param $forumId
      *
      * @return Forum
@@ -44,10 +56,10 @@ class ForumService extends LaDanseService
     {
         $doc = $this->getDoctrine();
 
-        $topicRepo = $doc->getRepository(Forum::REPOSITORY);
+        $forumRepo = $doc->getRepository(Forum::REPOSITORY);
 
         /** @var $forum \LaDanse\ForumBundle\Entity\Forum */
-        $forum = $topicRepo->find($forumId);
+        $forum = $forumRepo->find($forumId);
 
         if (null === $forum)
         {
