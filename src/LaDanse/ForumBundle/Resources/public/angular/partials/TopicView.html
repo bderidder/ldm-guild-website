@@ -39,7 +39,9 @@
                                   popover-trigger="mouseenter"
                                   popover-append-to-body="true"
                                   popover-placement="top">{{ post.postDate | date: 'MMM d' }}
-                            &nbsp;<a ng-if="!isEditing" ng-click="editRequested()"><i class="fa fa-pencil fa-1x"></i></a></span></div>
+                            </span>
+                                &nbsp;<a ng-if="!isEditing" ng-click="editRequested()"><i class="fa fa-pencil fa-1x"></i></a>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 well"
