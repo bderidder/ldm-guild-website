@@ -27,6 +27,23 @@ use LaDanse\ForumBundle\Service\ForumDoesNotExistException;
 class ForumsResource extends LaDanseController
 {
     /**
+     * @return Response
+     *
+     * @Route("/", name="getForumList")
+     * @Method({"GET"})
+     */
+    public function getForumList()
+    {
+        $forums = $this->getForumService()->getAllForums();
+
+        $forumMapper = new ForumMapper();
+
+        $jsonObject = $forumMapper->mapForums($this, $forums);
+
+        return new JsonResponse($jsonObject);
+    }
+
+    /**
      * @param Request $request
      * @param string $forumId
      *
