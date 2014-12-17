@@ -1,17 +1,33 @@
 var forumApp = angular.module('ForumApp',
-    ['ngRoute', 'ngResource', 'forumControllers']
+    ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 'textAngular', 'forumControllers']
 );
 
 var forumControllers = angular.module('forumControllers', ['ngRoute', 'ngResource']);
+
+forumApp.directive('postEditorTemplate', function() {
+    return {
+        templateUrl: '/bundles/ladanseforum/angular/partials/PostEditor.html',
+    };
+});
+
+forumApp.directive('headerTemplate', function() {
+    return {
+        templateUrl: '/bundles/ladanseforum/angular/partials/HeaderView.html',
+    };
+});
 
 forumApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '/bundles/ladanseforum/angular/partials/ForumViews.html',
-                controller: 'ForumGroupCtrl'
+                templateUrl: '/bundles/ladanseforum/angular/partials/ForumListView.html',
+                controller: 'ForumListCtrl'
             })
-            .when('/topic/:TopicId', {
+            .when('/:forumId', {
+                templateUrl: '/bundles/ladanseforum/angular/partials/ForumView.html',
+                controller: 'ForumCtrl'
+            })
+            .when('/:forumId/topics/:topicId', {
                 templateUrl: '/bundles/ladanseforum/angular/partials/TopicView.html',
                 controller: 'TopicCtrl'
             });
