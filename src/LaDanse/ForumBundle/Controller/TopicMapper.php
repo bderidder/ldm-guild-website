@@ -58,7 +58,7 @@ class TopicMapper
                 /** @var $a \LaDanse\ForumBundle\Entity\Post */
                 /** @var $b \LaDanse\ForumBundle\Entity\Post */
 
-                return $a->getPostDate() > $b->getPostDate();
+                return $a->getPostDate() < $b->getPostDate();
             }
         );
 
