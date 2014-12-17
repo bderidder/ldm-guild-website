@@ -47,6 +47,12 @@ class Topic
     private $subject;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Forum", inversedBy="topics")
+     * @ORM\JoinColumn(name="forumId", referencedColumnName="forumId", nullable=true)
+     */
+    private $forum;
+
+    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"persist", "remove"})
      */
     protected $posts;
@@ -55,13 +61,26 @@ class Topic
      */
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set id
+     *
+     * @param guid $id
+     * @return Topic
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return guid 
      */
     public function getId()
     {
@@ -120,7 +139,7 @@ class Topic
      * @param \LaDanse\DomainBundle\Entity\Account $creator
      * @return Topic
      */
-    public function setCreator(\LaDanse\DomainBundle\Entity\Account $creator = null)
+    public function setCreator(\LaDanse\DomainBundle\Entity\Account $creator)
     {
         $this->creator = $creator;
 
@@ -130,11 +149,34 @@ class Topic
     /**
      * Get creator
      *
-     * @return \LaDanse\DomainBundle\Entity\Account
+     * @return \LaDanse\DomainBundle\Entity\Account 
      */
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Set forum
+     *
+     * @param \LaDanse\ForumBundle\Entity\Forum $forum
+     * @return Topic
+     */
+    public function setForum(\LaDanse\ForumBundle\Entity\Forum $forum = null)
+    {
+        $this->forum = $forum;
+
+        return $this;
+    }
+
+    /**
+     * Get forum
+     *
+     * @return \LaDanse\ForumBundle\Entity\Forum 
+     */
+    public function getForum()
+    {
+        return $this->forum;
     }
 
     /**
@@ -168,18 +210,5 @@ class Topic
     public function getPosts()
     {
         return $this->posts;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return Topic
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 }

@@ -51,9 +51,22 @@ class Post
     private $topic;
 
     /**
+     * Set id
+     *
+     * @param guid $id
+     * @return Post
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * Get id
      *
-     * @return integer
+     * @return guid 
      */
     public function getId()
     {
@@ -122,7 +135,7 @@ class Post
     /**
      * Get poster
      *
-     * @return \LaDanse\DomainBundle\Entity\Account
+     * @return \LaDanse\DomainBundle\Entity\Account 
      */
     public function getPoster()
     {
@@ -150,18 +163,5 @@ class Post
     public function getTopic()
     {
         return $this->topic;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return Post
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 }

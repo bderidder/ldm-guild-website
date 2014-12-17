@@ -32,25 +32,34 @@ class Forum
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Topic")
-     * @ORM\JoinTable(name="TopicsInForum",
-     *      joinColumns={@ORM\JoinColumn(name="forumId", referencedColumnName="forumId")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="topicId", referencedColumnName="topicId")}
-     *      )
-     **/
+     * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum", cascade={"persist", "remove"})
+     */
     protected $topics;
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->topics = new ArrayCollection();
+        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set id
+     *
+     * @param guid $id
+     * @return Forum
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return guid 
      */
     public function getId()
     {
@@ -86,7 +95,7 @@ class Forum
      * @param \LaDanse\ForumBundle\Entity\Topic $topics
      * @return Forum
      */
-    public function addTopic(Topic $topics)
+    public function addTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
     {
         $this->topics[] = $topics;
 
@@ -98,7 +107,7 @@ class Forum
      *
      * @param \LaDanse\ForumBundle\Entity\Topic $topics
      */
-    public function removeTopic(Topic $topics)
+    public function removeTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
     {
         $this->topics->removeElement($topics);
     }
@@ -111,18 +120,5 @@ class Forum
     public function getTopics()
     {
         return $this->topics;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return Forum
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 }
