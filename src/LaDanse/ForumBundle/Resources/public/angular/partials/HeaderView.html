@@ -1,7 +1,10 @@
 <div style="position: absolute; left: -90px;">
-    <a href="{{ headerURL }}" style="float: left;">
-        <img src="/bundles/ladansesite/images/LeftArrow.png" style="height: 70px;" />
+    <a href="{{ headerURL }}" style="float: left;"
+       ng-if="hasUrl()">
+        <img src="/bundles/ladansesite/images/LeftArrow.png" style="width: 70px;" />
     </a>
+    <div style="width: 70px; float: left;"
+         ng-if="!hasUrl()">&nbsp;</div>
     <h1 style="margin-left: 20px; margin-top: 13px; float: right;">{{ headerText }}</h1>
 </div>
 <div style="clear: both; height: 70px;"></div>

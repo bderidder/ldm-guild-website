@@ -6,5 +6,10 @@ forumControllers.controller('HeaderCtrl',
             $scope.headerText = headerText;
             $scope.headerURL = headerURL;
         };
+
+        $scope.hasUrl = function()
+        {
+            return !(angular.isUndefined($scope.headerURL) || $scope.headerURL === null);
+        }
     }
 );
