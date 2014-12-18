@@ -25,11 +25,11 @@ forumApp.config(['$routeProvider',
             })
             .when('/:forumId', {
                 templateUrl: '/bundles/ladanseforum/angular/partials/ForumView.html',
-                controller: 'ForumCtrl'
+                controller: 'ForumPageCtrl'
             })
             .when('/:forumId/topics/:topicId', {
                 templateUrl: '/bundles/ladanseforum/angular/partials/TopicView.html',
-                controller: 'TopicCtrl'
+                controller: 'TopicPageCtrl'
             });
     }]);
 
