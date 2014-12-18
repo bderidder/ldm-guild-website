@@ -48,6 +48,14 @@ class LaDanseController extends Controller
     }
 
     /**
+     * @return \LaDanse\ForumBundle\Service\ForumStatsService
+     */
+    protected function getForumStatsService()
+    {
+        return $this->get(\LaDanse\ForumBundle\Service\ForumStatsService::SERVICE_NAME);
+    }
+
+    /**
      * @return \LaDanse\CommentBundle\Service\CommentService
      */
     protected function getCommentService()
