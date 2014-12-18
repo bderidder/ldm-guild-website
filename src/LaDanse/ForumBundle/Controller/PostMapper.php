@@ -37,4 +37,41 @@ class PostMapper
             )
         );
     }
+
+    /**
+     * @param Controller $controller
+     * @param Post $post
+     *
+     * @return object
+     */
+    public function mapPostAndTopic(Controller $controller, Post $post)
+    {
+        $jsonPost = $this->mapPost($controller, $post);
+
+        $topicMapper = new TopicMapper();
+        $jsonForum = $topicMapper->mapTopicAndForum($controller, $post->getTopic());
+
+        $jsonPost->topic = $jsonForum;
+
+        return $jsonPost;
+    }
+
+    /**
+     * @param Controller $controller
+     * @param array $posts
+     *
+     * @return object
+     */
+    public function mapPostsAndTopic(Controller $controller, $posts)
+    {
+        $jsonPosts = array();
+
+        /** @var Post $post */
+        foreach($posts as $post)
+        {
+            $jsonPosts[] = $this->mapPostAndTopic($controller, $post);
+        }
+
+        return $jsonPosts;
+    }
 } 

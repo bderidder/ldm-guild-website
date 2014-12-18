@@ -38,6 +38,23 @@ class ForumMapper
         return $jsonObject;
     }
 
+    /**
+     * @param Controller $controller
+     * @param Forum $forum
+     *
+     * @return object
+     */
+    public function mapForum(Controller $controller, Forum $forum)
+    {
+        return (object)array(
+            "forumId" => $forum->getId(),
+            "name"    => $forum->getName(),
+            "links"   => (object)array(
+                "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
+                "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
+            )
+        );
+    }
 
     /**
      * @param Controller $controller

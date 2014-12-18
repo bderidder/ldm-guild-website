@@ -46,6 +46,43 @@ class TopicMapper
      *
      * @return object
      */
+    public function mapTopicAndForum(Controller $controller, Topic $topic)
+    {
+        $jsonTopic = $this->mapTopic($controller, $topic);
+
+        $forumMapper = new ForumMapper();
+        $jsonForum = $forumMapper->mapForum($controller, $topic->getForum());
+
+        $jsonTopic->forum = $jsonForum;
+
+        return $jsonTopic;
+    }
+
+    /**
+     * @param Controller $controller
+     * @param array $topics
+     *
+     * @return object
+     */
+    public function mapTopicsAndForum(Controller $controller, $topics)
+    {
+        $jsonTopics = array();
+
+        /** @var Topic $topic */
+        foreach($topics as $topic)
+        {
+            $jsonTopics[] = $this->mapTopicAndForum($controller, $topic);
+        }
+
+        return $jsonTopics;
+    }
+
+    /**
+     * @param Controller $controller
+     * @param Topic $topic
+     *
+     * @return object
+     */
     public function mapTopicAndPosts(Controller $controller, Topic $topic)
     {
         $topicObject = $this->mapTopic($controller, $topic);
