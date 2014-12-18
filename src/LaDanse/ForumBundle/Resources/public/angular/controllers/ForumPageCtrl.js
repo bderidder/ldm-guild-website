@@ -1,4 +1,4 @@
-forumControllers.controller('ForumCtrl',
+forumControllers.controller('ForumPageCtrl',
     function ($scope, $routeParams, $rootScope, $http)
     {
         $scope.forumId = $routeParams.forumId;
@@ -11,23 +11,14 @@ forumControllers.controller('ForumCtrl',
         $scope.initForumCtrl = function()
         {
             $scope.refreshTopics();
-            $scope.refreshActivity();
         };
 
         $scope.refreshTopics = function()
         {
-            $http.get('../services/forum/forums/' + forumId).success(function(data) {
+            $http.get('../services/forum/forums/' + $scope.forumId).success(function(data) {
                 $scope.name = data.name;
                 $scope.topics = data.topics;
                 $scope.isForumLoaded = true;
-            });
-        }
-
-        $scope.refreshActivity = function()
-        {
-            $http.get('../services/forum/forums/' + forumId + "/activity").success(function(data) {
-                $scope.recentPosts = data.posts;
-                console.log("recent activity loaded");
             });
         }
     }
