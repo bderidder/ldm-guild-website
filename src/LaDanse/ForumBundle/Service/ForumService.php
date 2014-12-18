@@ -75,6 +75,25 @@ class ForumService extends LaDanseService
      * @param $forumId
      *
      * @return array
+     */
+    public function getActivityForForum($forumId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseForumBundle::selectActivityForForum.sql.twig')
+        );
+        $query->setParameter('forumId', $forumId);
+        $query->setMaxResults(10);
+
+        return $query->getResult();
+    }
+
+    /**
+     * @param $forumId
+     *
+     * @return array
      *
      * @throws ForumDoesNotExistException
      */
@@ -209,7 +228,7 @@ class ForumService extends LaDanseService
         $topic->setCreator($account);
         $topic->setSubject($subject);
         $topic->setForum($forum);
-        
+
         $em->persist($topic);
         $em->flush();
 
