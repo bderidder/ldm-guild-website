@@ -1,4 +1,4 @@
-forumControllers.controller('TopicCtrl',
+forumControllers.controller('TopicPageCtrl',
     function($scope, $routeParams, $rootScope, $http)
     {
         $scope.forumId = $routeParams.forumId;
@@ -13,7 +13,7 @@ forumControllers.controller('TopicCtrl',
 
         $scope.isTopicLoaded = false;
 
-        $scope.initTopicCtrl = function()
+        $scope.initTopicPageCtrl = function()
         {
             $scope.refreshPosts();
         };
