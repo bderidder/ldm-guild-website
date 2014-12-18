@@ -81,6 +81,45 @@ class ForumsResource extends LaDanseController
      *
      * @return Response
      *
+     * @Route("/{forumId}/activity", name="getActivityForForum")
+     * @Method({"GET"})
+     */
+    public function getActivityForForum(Request $request, $forumId)
+    {
+        try
+        {
+            $forum = $this->getForumService()->getForum($forumId);
+        }
+        catch (ForumDoesNotExistException $e)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                Response::HTTP_NOT_FOUND,
+                $e->getMessage(),
+                array("Allow" => "GET")
+            );
+        }
+
+        $posts = $this->getForumService()->getActivityForForum($forumId);
+
+        $postMapper = new PostMapper();
+
+        $jsonObject = (object)array(
+            "posts"   => $postMapper->mapPostsAndTopic($this, $posts),
+            "links"   => (object)array(
+                "self"  => $this->generateUrl('getActivityForForum', array('forumId' => $forumId), true)
+            )
+        );
+
+        return new JsonResponse($jsonObject);
+    }
+
+    /**
+     * @param Request $request
+     * @param string $forumId
+     *
+     * @return Response
+     *
      * @Route("/{forumId}/topics", name="createTopic")
      * @Method({"POST", "PUT"})
      */
