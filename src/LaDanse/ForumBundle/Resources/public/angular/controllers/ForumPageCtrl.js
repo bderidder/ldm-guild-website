@@ -11,6 +11,7 @@ forumControllers.controller('ForumCtrl',
         $scope.initForumCtrl = function()
         {
             $scope.refreshTopics();
+            $scope.refreshActivity();
         };
 
         $scope.refreshTopics = function()
@@ -22,7 +23,12 @@ forumControllers.controller('ForumCtrl',
             });
         }
 
-        $scope.currentEdited = {};
-        $scope.currentEdited.controller = null
+        $scope.refreshActivity = function()
+        {
+            $http.get('../services/forum/forums/' + forumId + "/activity").success(function(data) {
+                $scope.recentPosts = data.posts;
+                console.log("recent activity loaded");
+            });
+        }
     }
 );
