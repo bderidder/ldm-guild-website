@@ -59,7 +59,8 @@ class AccountService extends LaDanseService
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isLoginUsed.sql.twig'));
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:isLoginUsed.sql.twig')
+        );
         $query->setParameter('accountId', $exceptAccountId);
         $query->setParameter('login', $login);
 
