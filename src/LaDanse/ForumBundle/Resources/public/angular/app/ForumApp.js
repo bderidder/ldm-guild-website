@@ -16,6 +16,12 @@ forumApp.directive('headerTemplate', function() {
     };
 });
 
+forumApp.directive('forumItemTemplate', function() {
+    return {
+        templateUrl: '/bundles/ladanseforum/angular/partials/ForumItemView.html',
+    };
+});
+
 forumApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider
