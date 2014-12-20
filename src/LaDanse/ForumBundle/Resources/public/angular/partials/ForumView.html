@@ -25,7 +25,7 @@
              ng-init="initAddTopicCtrl()"
              ng-cloak>
 
-            <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Add Topic</button>
+            <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Create Topic</button>
 
             <div ng-if="!collapsed">
                 <div class="form-group">
@@ -35,7 +35,7 @@
                            ng-model="newSubject.value"
                            ng-class="newSubject.value.length > maxLength ? 'subjectTooLong' : 'subjectLengthOk'"/>
                 </div>
-                <button class="btn btn-success" ng-click="addButtonClicked(newSubject.value)">Submit Topic</button>
+                <button class="btn btn-success" ng-click="addButtonClicked(newSubject.value)">Create Topic</button>
                 <button class="btn btn-warning" ng-click="cancelButtonClicked()">Cancel</button>
             </div>
 
