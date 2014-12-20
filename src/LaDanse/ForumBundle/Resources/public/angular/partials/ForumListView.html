@@ -1,159 +1,355 @@
 <div ng-controller="ForumListCtrl" ng-init="initForumListCtrl()" ng-cloak>
 
+    <style>
+
+        .forum-container div.forumBox
+        {
+            padding: 10px;
+            background-color: white;
+            height: 100px;
+        }
+        
+        .forum-container div.activity
+        {
+            background-color: white;
+            height: 150px;
+        }
+
+        .forum-container div.header-row
+        {
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .forum-container div.forum-row
+        {
+
+        }
+
+        .forum-container div.forumBox a
+        {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+
     <div ng-controller="HeaderCtrl"
          ng-init="initHeaderCtrl('Forums', null)"
          header-template>
     </div>
 
-    <div ng-if="isForumLoaded">
+    <div ng-if="isForumLoaded"
+         class="container-fluid forum-container">
 
-        <h4>Development</h4>
+        <div class="row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed01151ce')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+            <div class="col-md-4">
+                <div class="activity">&nbsp;</div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="activity">&nbsp;</div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="activity">&nbsp;</div>
+            </div>
+
         </div>
 
-        <h4>Recruitment</h4>
+        <div class="row header-row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z02')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+            <div class="col-md-12">
+
+                <h4>Development</h4>
+
+            </div>
+
         </div>
 
-        <h4>General</h4>
+        <div class="row forum-row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z03')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed01151ce')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z04')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>Recruitment</h4>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z05')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z02')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z06')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>General</h4>
+
+            </div>
+
         </div>
 
-        <h4>PvE</h4>
+        <div class="row forum-row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z07')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z03')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z04')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z05')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z06')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z08')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>PvE</h4>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z09')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z07')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z08')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z09')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z10')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z10')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row forum-row" style="margin-top: 30px;">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z11')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z11')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>PvP</h4>
+
+            </div>
+
         </div>
 
-        <h4>PvP</h4>
+        <div class="row forum-row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z12')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z12')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z13')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z14')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z15')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z13')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>RP/ Events</h4>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z14')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z16')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z17')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z15')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>Officers forum</h4>
+
+            </div>
+
         </div>
 
-        <h4>RP/ Events</h4>
+        <div class="row forum-row">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z16')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
-        </div>
+            <div class="col-md-3">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z17')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
-        </div>
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z18')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
 
-        <h4>Officers forum</h4>
+            </div>
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z18')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
-        </div>
+            <div class="col-md-3">
 
-        <div ng-controller="ForumItemCtrl"
-             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z19')">
-            <span><a href="#/{{ forumId }}">{{ name }}</a></span>
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z19')"
+                     class="forumBox"
+                     forum-item-template>
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
-
-<!--
-
-Recruitment
-    About the guild
-    Guild rules
-    Application
-
-General
-    General
-    Info from the officers
-    Member introductions
-    Other games
-    Off topic
-
-PvE
-    General
-    Raid tactics
-    Dungeons HC/CM
-    Raids
-    Raid rules
-
-PvP
-    General
-    Arena
-    Rbgs
-    Wpvp
-
-RP/ Events
-    RP
-    Events
-
-Officers forum
-    Active concerns
-    Recruitments information
-
-
--->
