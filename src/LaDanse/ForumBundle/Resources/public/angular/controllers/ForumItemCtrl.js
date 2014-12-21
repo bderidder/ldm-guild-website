@@ -8,6 +8,7 @@ forumControllers.controller('ForumItemCtrl',
             var forum = $scope.getForum($scope.forumId);
 
             $scope.name = forum.name;
+            $scope.description = forum.description;
             $scope.topics = forum.topics;
             $scope.isForumLoaded = true;
 
