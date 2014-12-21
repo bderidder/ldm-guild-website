@@ -12,7 +12,8 @@
         
         .forum-container div.activity
         {
-            background-color: white;
+            background-color: rgb(249, 249, 249);
+            border: 1px solid rgb(200, 200, 200);
             height: 150px;
         }
 
@@ -33,6 +34,39 @@
             color: black;
         }
 
+        .forum-container div.slider
+        {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .forum-container div.slide
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .forum-container img
+        {
+            max-width: 650px;
+            max-height: 350px;
+        }
+
+        .slide:after
+        {
+            content: "";
+            position: absolute;
+            top: 60px;
+            left: 0;
+            height: 90px;
+            width: 100%;
+            background: -webkit-linear-gradient(#fff, #000);
+            background: linear-gradient(rgba(255,255,255,0), #fff);
+        }
+
     </style>
 
     <div ng-controller="HeaderCtrl"
@@ -43,17 +77,35 @@
     <div ng-if="isForumLoaded"
          class="container-fluid forum-container">
 
-        <!--
-
         <div class="row">
 
             <div class="col-md-12">
-                <div class="activity">&nbsp;</div>
+                <div class="activity">
+
+                    <div ng-controller="ActivitySliderCtrl"
+                         ng-init="initActivitySliderCtrl('../services/forum/forums/activity')"
+                         class="slider">
+                        <div ng-repeat="post in posts"
+                             ng-hide="!isCurrentSlideIndex($index)"
+                             class="slide slide-animation">
+                            <div style="padding: 10px;">
+                                <div>
+                                    <b>{{ post.poster }}</b> posted in <i>{{ post.topic.subject }}</i> ({{ post.topic.forum.name }})
+                                </div>
+                                <div style="font-size: 0.8em;">
+                                    {{ post.postDate | date: 'MMM d, H:mm' }}
+                                </div>
+                                <div ng-bind-html="post.message"
+                                     style="padding-top: 10px; padding-left: 10px;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
         </div>
-
-        -->
 
         <div class="row header-row">
 
