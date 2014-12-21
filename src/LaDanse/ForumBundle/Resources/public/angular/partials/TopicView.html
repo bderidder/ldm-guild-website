@@ -65,7 +65,7 @@
                 <p>
                     <b>{{ post.poster }}</b>&nbsp;
                     <a class="editPostLink"
-                       ng-if="!isEditing"
+                       ng-if="!isEditing && canUserEdit()"
                        ng-click="editRequested()"
                        popover="Edit this post"
                        popover-trigger="mouseenter"

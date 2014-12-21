@@ -8,6 +8,11 @@ forumControllers.controller('PostCtrl',
             $scope.post = post;
         };
 
+        $scope.canUserEdit = function()
+        {
+            return ($scope.post.posterId == currentAccount.id);
+        }
+
         $scope.editRequested = function()
         {
             $scope.isEditing = true;
