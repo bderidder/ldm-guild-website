@@ -45,7 +45,7 @@
 
                 <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
 
-                <div collapse="collapsed">
+                <div ng-if="!collapsed">
                     <div ng-controller="PostEditorCtrl"
                          ng-init="initPostEditorCtrl('', 'Add A Reply', savePostEditor, cancelPostEditor)"
                          post-editor-template>
