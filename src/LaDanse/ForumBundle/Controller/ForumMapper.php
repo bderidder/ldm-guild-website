@@ -19,14 +19,7 @@ class ForumMapper
         /** @var Forum $forum */
         foreach($forums as $forum)
         {
-            $jsonForums[] = (object)array(
-                "forumId"     => $forum->getId(),
-                "name"        => $forum->getName(),
-                "description" => $forum->getDescription(),
-                "links"       => (object)array(
-                    "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true)
-                )
-            );
+            $jsonForums[] = $this->mapForum($controller, $forum);
         }
 
         $jsonObject = (object)array(
@@ -87,15 +80,10 @@ class ForumMapper
             $jsonArray[] = $topicMapper->mapTopic($controller, $topic);
         }
 
-        return (object)array(
-            "forumId"     => $forum->getId(),
-            "name"        => $forum->getName(),
-            "description" => $forum->getDescription(),
-            "topics"      => $jsonArray,
-            "links"       => (object)array(
-                "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
-                "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
-            )
-        );
+        $jsonForum = $this->mapForum($controller, $forum);
+
+        $jsonForum->topics = $jsonArray;
+
+        return $jsonForum;
     }
 } 
