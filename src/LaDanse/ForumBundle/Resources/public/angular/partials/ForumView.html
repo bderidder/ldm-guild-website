@@ -61,6 +61,10 @@
 
         <br/>
 
+        <div ng-if="topics.length == 0">
+            <p>There are not topics yet in this forum. Why not be the first to create one?</p>
+        </div>
+
         <div ng-repeat="topic in topics">
 
             <div ng-controller="TopicListCtrl"
