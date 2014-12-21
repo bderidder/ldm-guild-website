@@ -26,7 +26,6 @@ forumControllers.controller('ForumListCtrl',
         {
             $http.get('../services/forum/forums').success(function(data) {
                 $scope.forums = data.forums;
-                $scope.topics = data.topics;
                 $scope.isForumLoaded = true;
             });
         }
