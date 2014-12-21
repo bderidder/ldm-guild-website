@@ -13,73 +13,94 @@
             cursor: pointer;
         }
 
+        .topicContainer .postRow
+        {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid gray;
+        }
+
     </style>
 
-    <div ng-if="isTopicLoaded">
+    <div ng-if="isTopicLoaded"
+         class="container-fluid topicContainer">
 
-        <div ng-controller="HeaderCtrl"
-             ng-init="initHeaderCtrl(subject, '#/' + forumId)"
-             ng-if="isTopicLoaded"
-             header-template>
-        </div>
+        <div class="row">
 
-        <div ng-controller="AddPostCtrl"
-             ng-init="initAddPostCtrl()"
-             ng-cloak>
-
-            <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
-
-            <div collapse="collapsed">
-                <div ng-controller="PostEditorCtrl"
-                     ng-init="initPostEditorCtrl('', savePostEditor, cancelPostEditor)"
-                     post-editor-template>
-                </div>
+            <div ng-controller="HeaderCtrl"
+                 ng-init="initHeaderCtrl(subject, '#/' + forumId)"
+                 ng-if="isTopicLoaded"
+                 class="col-md-12"
+                 header-template>
             </div>
 
         </div>
 
-        <br/>
+        <div class="row">
 
-        <div ng-repeat="post in posts">
+            <div ng-controller="AddPostCtrl"
+                 ng-init="initAddPostCtrl()"
+                 class="col-md-12"
+                 ng-cloak>
 
-            <div ng-controller="PostCtrl"
-                 ng-init="initPostCtrl(post)"
+                <button ng-if="collapsed" class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
+
+                <div collapse="collapsed">
+                    <div ng-controller="PostEditorCtrl"
+                         ng-init="initPostEditorCtrl('', 'Add A Reply', savePostEditor, cancelPostEditor)"
+                         post-editor-template>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div ng-repeat="post in posts"
+             ng-controller="PostCtrl"
+             ng-init="initPostCtrl(post)"
+             class="row postRow">
+
+            <div class="col-md-2">
+                <p>
+                    <b>{{ post.poster }}</b>&nbsp;
+                    <a class="editPostLink"
+                       ng-if="!isEditing"
+                       ng-click="editRequested()"
+                       popover="Edit this post"
+                       popover-trigger="mouseenter"
+                       popover-append-to-body="true"
+                       popover-placement="bottom">
+                        <i class="fa fa-pencil fa-1x"></i></a>
+                </p>
+                <p>
+                    <span popover="{{ post.postDate | date: 'EEE MMM d, y' }} at {{ post.postDate | date: 'H:mm' }}"
+                          popover-trigger="mouseenter"
+                          popover-append-to-body="true"
+                          popover-placement="bottom">{{ post.postDate | date: 'MMM d H:mm' }}
+                    </span>
+
+            </div>
+
+            <div class="col-md-10"
                  ng-switch="isEditing">
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12" style="margin-bottom: 10px">
-                            <b>{{ post.poster }}</b> on
-                            <span popover="{{ post.postDate | date: 'EEE MMM d, y' }} at {{ post.postDate | date: 'H:mm' }}"
-                                  popover-trigger="mouseenter"
-                                  popover-append-to-body="true"
-                                  popover-placement="top">{{ post.postDate | date: 'MMM d' }}
-                            </span>
-                                &nbsp;<a class="editPostLink" ng-if="!isEditing" ng-click="editRequested()"><i class="fa fa-pencil fa-1x"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 well postBox"
-                             ng-switch-when="false"
-                             ng-bind-html="post.message"></div>
-                        <div class="col-md-12 well"
-                             ng-switch-when="true">
-                            <div ng-controller="PostEditorCtrl"
-                                 ng-init="initPostEditorCtrl(post.message, savePostEditor, cancelPostEditor)"
-                                 post-editor-template>
-                            </div>
-                        </div>
+                <div class="postBox well"
+                     ng-switch-when="false"
+                     ng-bind-html="post.message"></div>
+                <div class="postBox well"
+                     ng-switch-when="true">
+                    <div ng-controller="PostEditorCtrl"
+                         ng-init="initPostEditorCtrl(post.message, 'Update Reply', savePostEditor, cancelPostEditor)"
+                         post-editor-template>
                     </div>
                 </div>
+
 
             </div>
 
         </div>
 
-        <br/>
-
     </div>
-
-</div>
 
 </div>
