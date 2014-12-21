@@ -147,7 +147,8 @@ class ForumsResource extends LaDanseController
             $this->getForumService()->createTopicInForum(
                 $authContext->getAccount(),
                 $forumId,
-                $jsonObject->subject
+                $jsonObject->subject,
+                $jsonObject->text
             );
         }
         catch (ForumDoesNotExistException $e)

@@ -212,7 +212,7 @@ class ForumService extends LaDanseService
      *
      * @throws ForumDoesNotExistException
      */
-    public function createTopicInForum($account, $forumId, $subject)
+    public function createTopicInForum($account, $forumId, $subject, $text)
     {
         $doc = $this->getDoctrine();
         $em = $doc->getManager();
@@ -232,31 +232,7 @@ class ForumService extends LaDanseService
         $em->persist($topic);
         $em->flush();
 
-        return $topicId;
-    }
-
-    /**
-     * @param $account
-     * @param $subject
-     *
-     * @return string
-     */
-    public function createTopic($account, $subject)
-    {
-        $doc = $this->getDoctrine();
-        $em = $doc->getManager();
-
-        $topicId = ResourceHelper::createUUID();
-        
-        $topic = new Topic();
-
-        $topic->setId($topicId);
-        $topic->setCreateDate(new \DateTime());
-        $topic->setCreator($account);
-        $topic->setSubject($subject);
-
-        $em->persist($topic);
-        $em->flush();
+        $this->createPost($topicId, $account, $text);
 
         return $topicId;
     }

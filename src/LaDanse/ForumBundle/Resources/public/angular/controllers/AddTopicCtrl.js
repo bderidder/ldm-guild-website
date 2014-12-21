@@ -1,12 +1,15 @@
 forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
 
     $scope.newSubject = {};
-    $scope.maxLength = 58;
+    $scope.newText = {};
+    $scope.subjectMaxLength = 58;
+    $scope.textMaxLength = 2048;
     $scope.collapsed = true;
 
     $scope.initAddTopicCtrl = function()
     {
         $scope.newSubject.value = "";
+        $scope.newText.value = "";
     };
 
     $scope.showButtonClicked = function()
@@ -24,22 +27,30 @@ forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http)
         $scope.collapsed = true;
     }
 
-    $scope.addButtonClicked = function(value)
+    $scope.addButtonClicked = function()
     {
         var subjectValue = $scope.newSubject.value;
+        var textValue = $scope.newText.value;
 
-        if ((subjectValue.trim().length < 5) || (subjectValue.trim().length > $scope.maxLength) )
+        if ((subjectValue.trim().length < 5) || (subjectValue.trim().length > $scope.subjectMaxLength) )
+        {
+            return;
+        }
+
+        if ((textValue.trim().length < 5) || (textValue.trim().length > $scope.textMaxLength) )
         {
             return;
         }
 
         $http.post('../services/forum/forums/' + $scope.forumId + "/topics",
             {
-                subject: subjectValue.trim()
+                subject: subjectValue.trim(),
+                text: textValue.trim()
             }).
             success(function(data, status, headers, config)
             {
-                $scope.subject = "";
+                $scope.newSubject.value = "";
+                $scope.newText.value = "";
                 $scope.hideAndReset();
                 $scope.refreshTopics();
             }).
