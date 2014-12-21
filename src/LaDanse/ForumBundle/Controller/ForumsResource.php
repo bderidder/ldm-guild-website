@@ -44,6 +44,28 @@ class ForumsResource extends LaDanseController
     }
 
     /**
+     * @return Response
+     *
+     * @Route("/activity", name="getActivityForForums")
+     * @Method({"GET"})
+     */
+    public function getActivityForForums()
+    {
+        $posts = $this->getForumService()->getActivityForForums();
+
+        $postMapper = new PostMapper();
+
+        $jsonObject = (object)array(
+            "posts"   => $postMapper->mapPostsAndTopic($this, $posts),
+            "links"   => (object)array(
+                "self"  => $this->generateUrl('getActivityForForums', array(), true)
+            )
+        );
+
+        return new JsonResponse($jsonObject);
+    }
+
+    /**
      * @param Request $request
      * @param string $forumId
      *
