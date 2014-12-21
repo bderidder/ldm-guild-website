@@ -5,7 +5,8 @@
         .forum-container div.forumBox
         {
             padding: 10px;
-            background-color: white;
+            background-color: rgb(249, 249, 249);
+            border: 1px solid rgb(200, 200, 200);
             height: 100px;
         }
         
@@ -42,6 +43,8 @@
     <div ng-if="isForumLoaded"
          class="container-fluid forum-container">
 
+        <!--
+
         <div class="row">
 
             <div class="col-md-12">
@@ -50,29 +53,7 @@
 
         </div>
 
-        <div class="row header-row">
-
-            <div class="col-md-12">
-
-                <h4>Development</h4>
-
-            </div>
-
-        </div>
-
-        <div class="row forum-row">
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed01151ce')"
-                     class="forumBox"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-        </div>
+        -->
 
         <div class="row header-row">
 
@@ -308,39 +289,43 @@
 
         </div>
 
-        <div class="row header-row">
+        <!--
 
-            <div class="col-md-12">
+<div class="row header-row">
 
-                <h4>Officers forum</h4>
+    <div class="col-md-12">
 
-            </div>
+        <h4>Officers forum</h4>
 
+    </div>
+
+</div>
+
+<div class="row forum-row">
+
+    <div class="col-md-3">
+
+        <div ng-controller="ForumItemCtrl"
+             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z18')"
+             class="forumBox"
+             forum-item-template>
         </div>
 
-        <div class="row forum-row">
+    </div>
 
-            <div class="col-md-3">
+    <div class="col-md-3">
 
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z18')"
-                     class="forumBox"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z19')"
-                     class="forumBox"
-                     forum-item-template>
-                </div>
-
-            </div>
-
+        <div ng-controller="ForumItemCtrl"
+             ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z19')"
+             class="forumBox"
+             forum-item-template>
         </div>
+
+    </div>
+
+</div>
+
+-->
 
     </div>
 
