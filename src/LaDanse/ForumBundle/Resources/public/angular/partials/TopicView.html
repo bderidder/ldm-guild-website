@@ -1,5 +1,20 @@
 <div ng-controller="TopicPageCtrl" ng-init="initTopicPageCtrl()" ng-cloak>
 
+    <style>
+
+        .postBox img
+        {
+            max-width: 650px;
+            max-height: 350px;
+        }
+
+        a.editPostLink
+        {
+            cursor: pointer;
+        }
+
+    </style>
+
     <div ng-if="isTopicLoaded">
 
         <div ng-controller="HeaderCtrl"
@@ -40,11 +55,11 @@
                                   popover-append-to-body="true"
                                   popover-placement="top">{{ post.postDate | date: 'MMM d' }}
                             </span>
-                                &nbsp;<a ng-if="!isEditing" ng-click="editRequested()"><i class="fa fa-pencil fa-1x"></i></a>
+                                &nbsp;<a class="editPostLink" ng-if="!isEditing" ng-click="editRequested()"><i class="fa fa-pencil fa-1x"></i></a>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 well"
+                        <div class="col-md-12 well postBox"
                              ng-switch-when="false"
                              ng-bind-html="post.message"></div>
                         <div class="col-md-12 well"
