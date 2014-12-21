@@ -20,9 +20,10 @@ class ForumMapper
         foreach($forums as $forum)
         {
             $jsonForums[] = (object)array(
-                "forumId" => $forum->getId(),
-                "name"    => $forum->getName(),
-                "links"   => (object)array(
+                "forumId"     => $forum->getId(),
+                "name"        => $forum->getName(),
+                "description" => $forum->getDescription(),
+                "links"       => (object)array(
                     "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true)
                 )
             );
@@ -47,9 +48,10 @@ class ForumMapper
     public function mapForum(Controller $controller, Forum $forum)
     {
         return (object)array(
-            "forumId" => $forum->getId(),
-            "name"    => $forum->getName(),
-            "links"   => (object)array(
+            "forumId"     => $forum->getId(),
+            "name"        => $forum->getName(),
+            "description" => $forum->getDescription(),
+            "links"       => (object)array(
                 "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
                 "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
             )
@@ -86,10 +88,11 @@ class ForumMapper
         }
 
         return (object)array(
-            "forumId" => $forum->getId(),
-            "name"    => $forum->getName(),
-            "topics"  => $jsonArray,
-            "links"   => (object)array(
+            "forumId"     => $forum->getId(),
+            "name"        => $forum->getName(),
+            "description" => $forum->getDescription(),
+            "topics"      => $jsonArray,
+            "links"       => (object)array(
                 "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
                 "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
             )
