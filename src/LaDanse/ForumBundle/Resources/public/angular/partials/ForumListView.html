@@ -77,6 +77,16 @@
     <div ng-if="isForumLoaded"
          class="container-fluid forum-container">
 
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4>Recent Activity</h4>
+
+            </div>
+
+        </div>
+
         <div class="row">
 
             <div class="col-md-12">
@@ -90,7 +100,9 @@
                              class="slide slide-animation">
                             <div style="padding: 10px;">
                                 <div>
-                                    <b>{{ post.poster }}</b> posted in <i>{{ post.topic.subject }}</i> ({{ post.topic.forum.name }})
+                                    <b>{{ post.poster }}</b> posted in&nbsp;
+                                    <i><a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{ post.topic.subject }}</a></i>&nbsp;
+                                    (<a href="#/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>)
                                 </div>
                                 <div style="font-size: 0.8em;">
                                     {{ post.postDate | date: 'MMM d, H:mm' }}
@@ -111,7 +123,7 @@
 
             <div class="col-md-12">
 
-                <h4>Public</h4>
+                <h4>Public Forums</h4>
 
             </div>
 
@@ -135,7 +147,7 @@
 
             <div class="col-md-12">
 
-                <h4>General</h4>
+                <h4>General Forums</h4>
 
             </div>
 
@@ -203,7 +215,7 @@
 
             <div class="col-md-12">
 
-                <h4>PvE</h4>
+                <h4>PvE Forums</h4>
 
             </div>
 
@@ -271,7 +283,7 @@
 
             <div class="col-md-12">
 
-                <h4>PvP</h4>
+                <h4>PvP Forums</h4>
 
             </div>
 
@@ -325,7 +337,7 @@
 
             <div class="col-md-12">
 
-                <h4>RP/ Events</h4>
+                <h4>Role Playing &amp; Events Forums</h4>
 
             </div>
 
@@ -361,7 +373,7 @@
 
     <div class="col-md-12">
 
-        <h4>Officers forum</h4>
+        <h4>Officers Forums</h4>
 
     </div>
 
