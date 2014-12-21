@@ -72,6 +72,22 @@ class ForumService extends LaDanseService
     }
 
     /**
+     * @return array
+     */
+    public function getActivityForForums()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseForumBundle::selectActivityForForums.sql.twig')
+        );
+        $query->setMaxResults(10);
+
+        return $query->getResult();
+    }
+
+    /**
      * @param $forumId
      *
      * @return array
