@@ -2,9 +2,10 @@ forumControllers.controller('PostEditorCtrl', function ($scope, $rootScope) {
 
     $scope.maxLength = 2048;
 
-    $scope.initPostEditorCtrl = function(text, enterCallback, cancelCallback)
+    $scope.initPostEditorCtrl = function(text, saveLabel, enterCallback, cancelCallback)
     {
         $scope.text = text;
+        $scope.saveLabel = saveLabel;
         $scope.enterCallback = enterCallback;
         $scope.cancelCallback = cancelCallback;
     };
