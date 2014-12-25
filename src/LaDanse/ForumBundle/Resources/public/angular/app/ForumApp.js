@@ -54,6 +54,10 @@ forumApp.config(['$routeProvider',
                 templateUrl: '/bundles/ladanseforum/angular/partials/ForumListView.html',
                 controller: 'ForumListCtrl'
             })
+            .when('/latestposts', {
+                templateUrl: '/bundles/ladanseforum/angular/partials/LatestPostsView.html',
+                controller: 'LatestPostsPageCtrl'
+            })
             .when('/:forumId', {
                 templateUrl: '/bundles/ladanseforum/angular/partials/ForumView.html',
                 controller: 'ForumPageCtrl'
