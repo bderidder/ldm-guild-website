@@ -3,8 +3,6 @@ forumControllers.controller('ForumListCtrl',
     {
         $scope.initForumListCtrl = function()
         {
-            forumService.getLastActivity();
-
             $scope.refreshTopics();
         };
 
