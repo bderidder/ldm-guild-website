@@ -5,7 +5,7 @@ forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $ro
         $scope.topic = topic;
         $scope.isRecentlyUpdated = false;
 
-        forumService.getLastActivity()
+        forumService.getChangesForUser()
             .then(function(activityModel)
             {
                 $scope.isRecentlyUpdated = activityModel.isTopicInActivity($scope.topic.topicId);

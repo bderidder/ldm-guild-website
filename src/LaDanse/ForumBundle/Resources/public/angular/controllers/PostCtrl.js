@@ -1,11 +1,14 @@
 forumControllers.controller('PostCtrl',
-    function($scope, $routeParams, $rootScope, $http)
+    function($scope, $routeParams, $rootScope, $http, forumService)
     {
         $scope.isEditing = false;
+        $scope.isNew = false;
 
         $scope.initPostCtrl = function(post)
         {
             $scope.post = post;
+
+            $scope.initIsNew();
         };
 
         $scope.canUserEdit = function()
@@ -21,6 +24,26 @@ forumControllers.controller('PostCtrl',
         $scope.cancelPostEditor = function()
         {
             $scope.isEditing = false;
+        }
+
+        $scope.markAsReadClicked = function()
+        {
+            forumService.getChangesForUser()
+                .then(function(activityModel)
+                {
+                    activityModel.markPostAsRead($scope.post.postId);
+                });
+
+            $scope.initIsNew();
+        }
+
+        $scope.initIsNew = function()
+        {
+            forumService.getChangesForUser()
+                .then(function(activityModel)
+                {
+                    $scope.isNew = activityModel.isPostInActivity($scope.post.postId);
+                });
         }
 
         $scope.savePostEditor = function(postValue)

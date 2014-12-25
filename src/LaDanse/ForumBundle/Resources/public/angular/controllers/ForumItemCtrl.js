@@ -26,7 +26,7 @@ forumControllers.controller('ForumItemCtrl',
 
         $scope.initRecentActivity = function()
         {
-            forumService.getLastActivity()
+            forumService.getChangesForUser()
                 .then(function(activityModel)
                 {
                     $scope.isRecentlyUpdated = activityModel.isForumInActivity($scope.forumId);
