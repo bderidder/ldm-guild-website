@@ -1,0 +1,63 @@
+<style>
+
+    .postBox img
+    {
+        max-width: 650px;
+        max-height: 350px;
+    }
+
+    .topicContainer .postRow
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid gray;
+    }
+
+</style>
+
+<div ng-controller="LatestPostsPageCtrl" ng-init="initLatestPostsPageCtrl()" ng-cloak>
+
+    <div class="container-fluid topicContainer">
+
+        <div class="row">
+
+            <div ng-controller="HeaderCtrl"
+                 ng-init="initHeaderCtrl('Latest Posts', '#/')"
+                 header-template>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div ng-repeat="post in latest.getPosts()"
+         class="row postRow">
+
+        <div class="col-md-2">
+            <p>
+                <b>{{ post.poster }}</b>&nbsp;
+            </p>
+            <p>
+                <span popover="{{ post.postDate | date: 'EEE MMM d, y' }} at {{ post.postDate | date: 'H:mm' }}"
+                      popover-trigger="mouseenter"
+                      popover-append-to-body="true"
+                      popover-placement="bottom">{{ post.postDate | date: 'MMM d H:mm' }}
+                </span>
+            </p>
+        </div>
+
+        <div class="col-md-10">
+
+            <div style="margin-bottom: 5px;">
+                In <a href="#/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>
+                (<a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{ post.topic.subject }}</a>)
+            </div>
+
+            <div class="postBox well"
+                 ng-bind-html="post.message"></div>
+
+        </div>
+
+    </div>
+
+</div>
