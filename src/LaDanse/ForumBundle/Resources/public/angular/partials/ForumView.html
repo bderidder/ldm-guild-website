@@ -37,7 +37,6 @@
 
             .topicBoxUpdated
             {
-                background-color: lightgreen;
             }
         </style>
 
@@ -87,6 +86,8 @@
                 <a href="#/{{ forumId }}/topics/{{ topic.topicId }}">
                 <div class="postContainer">
                     <div>
+                        <i ng-if="isRecentlyUpdated"
+                           class="fa fa-star" style="color: green;"></i>
                         <span class="message">{{ topic.subject }}
                         </span>
                     </div>

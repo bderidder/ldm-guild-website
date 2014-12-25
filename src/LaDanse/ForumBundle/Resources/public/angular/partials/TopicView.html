@@ -20,6 +20,10 @@
             border-bottom: 1px solid gray;
         }
 
+        .topicContainer .postBoxNew
+        {
+        }
+
     </style>
 
     <div ng-if="isTopicLoaded"
@@ -63,6 +67,8 @@
 
             <div class="col-md-2">
                 <p>
+                    <i ng-if="isNew"
+                       class="fa fa-star" style="color: green;"></i>
                     <b>{{ post.poster }}</b>&nbsp;
                     <a class="editPostLink"
                        ng-if="!isEditing && canUserEdit()"
@@ -79,6 +85,12 @@
                           popover-append-to-body="true"
                           popover-placement="bottom">{{ post.postDate | date: 'MMM d H:mm' }}
                     </span>
+                </p>
+                <p ng-if="isNew"
+                   ng-click="markAsReadClicked()"
+                   style="cursor: pointer; font-size: 0.9em;">
+                    mark as read
+                </p>
 
             </div>
 
@@ -86,8 +98,10 @@
                  ng-switch="isEditing">
 
                 <div class="postBox well"
-                     ng-switch-when="false"
-                     ng-bind-html="post.message"></div>
+                     ng-class="{postBoxNew: isNew}"
+                     ng-switch-when="false">
+                    <div ng-bind-html="post.message"></div>
+                </div>
                 <div class="postBox well"
                      ng-switch-when="true">
                     <div ng-controller="PostEditorCtrl"
