@@ -1,5 +1,5 @@
 forumControllers.controller('ActivitySliderCtrl',
-    function($scope, $rootScope, $http, $timeout)
+    function($scope, $rootScope, $timeout, forumService)
     {
         $scope.counter = {};
         $scope.active = true;
@@ -35,17 +35,19 @@ forumControllers.controller('ActivitySliderCtrl',
                 $timeout(function()
                 {
                     $scope.advanceValue();
-                }, 3500);
+                }, 4500);
             }
         }
 
         $scope.fetchData = function(dataUrl)
         {
-            $http.get(dataUrl).success(function(data) {
-                $scope.itemCount = data.posts.length;
-                $scope.posts = data.posts;
-                $scope.advanceValue();
-            });
+            forumService.getLastActivity()
+                .then(function(activityModel)
+                {
+                    $scope.itemCount = activityModel.getPostCount();
+                    $scope.posts = activityModel.getPosts();
+                    $scope.advanceValue();
+                });
         }
     }
 );
