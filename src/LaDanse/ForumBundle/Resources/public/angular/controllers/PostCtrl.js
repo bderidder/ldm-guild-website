@@ -29,9 +29,9 @@ forumControllers.controller('PostCtrl',
         $scope.markAsReadClicked = function()
         {
             forumService.getChangesForUser()
-                .then(function(activityModel)
+                .then(function(lastChangesModel)
                 {
-                    activityModel.markPostAsRead($scope.post.postId);
+                    lastChangesModel.markPostAsRead($scope.post.postId);
                 });
 
             $scope.initIsNew();
@@ -40,9 +40,9 @@ forumControllers.controller('PostCtrl',
         $scope.initIsNew = function()
         {
             forumService.getChangesForUser()
-                .then(function(activityModel)
+                .then(function(lastChangesModel)
                 {
-                    $scope.isNew = activityModel.isPostInActivity($scope.post.postId);
+                    $scope.isNew = lastChangesModel.isPostNew($scope.post.postId);
                 });
         }
 

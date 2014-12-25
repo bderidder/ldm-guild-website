@@ -64,7 +64,7 @@ forumApp.service(
             $http.get('../services/forum/account/changesForAccount')
                 .success(function(data)
                 {
-                    forumServiceInstance.changesForUserModel = new ActivityModel(data.newPosts);
+                    forumServiceInstance.changesForUserModel = new LastChangesModel(data.newPosts, data.newTopics);
 
                     for (i = 0; i < forumServiceInstance.changesForUserPromises.length; i++)
                     {

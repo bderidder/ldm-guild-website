@@ -27,9 +27,9 @@ forumControllers.controller('ForumItemCtrl',
         $scope.initRecentActivity = function()
         {
             forumService.getChangesForUser()
-                .then(function(activityModel)
+                .then(function(lastChangesModel)
                 {
-                    $scope.isRecentlyUpdated = activityModel.isForumInActivity($scope.forumId);
+                    $scope.isRecentlyUpdated = lastChangesModel.hasForumChanged($scope.forumId);
                 });
         }
     }

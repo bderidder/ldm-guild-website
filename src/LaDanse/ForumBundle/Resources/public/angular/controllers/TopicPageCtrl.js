@@ -1,5 +1,5 @@
 forumControllers.controller('TopicPageCtrl',
-    function($scope, $routeParams, $rootScope, $http)
+    function($scope, $routeParams, $rootScope, $http, forumService)
     {
         $scope.forumId = $routeParams.forumId;
         $scope.topicId = $routeParams.topicId;
@@ -16,6 +16,12 @@ forumControllers.controller('TopicPageCtrl',
         $scope.initTopicPageCtrl = function()
         {
             $scope.refreshPosts();
+
+            forumService.getChangesForUser()
+                .then(function(lastChangesModel)
+                {
+                    lastChangesModel.markTopicAsRead($scope.topicId);
+                });
         };
 
         $scope.refreshPosts = function()

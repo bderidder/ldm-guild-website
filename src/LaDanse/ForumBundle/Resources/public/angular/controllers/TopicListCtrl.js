@@ -6,9 +6,12 @@ forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $ro
         $scope.isRecentlyUpdated = false;
 
         forumService.getChangesForUser()
-            .then(function(activityModel)
+            .then(function(lastChangesModel)
             {
-                $scope.isRecentlyUpdated = activityModel.isTopicInActivity($scope.topic.topicId);
+                $scope.isRecentlyUpdated =
+                    lastChangesModel.isTopicNew($scope.topic.topicId)
+                    ||
+                    lastChangesModel.hasTopicChanged($scope.topic.topicId);
             });
     };
 });
