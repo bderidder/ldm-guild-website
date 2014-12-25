@@ -28,6 +28,17 @@
                 max-width: 650px;
                 max-height: 350px;
             }
+
+            div.topicBox a
+            {
+                text-decoration: none;
+                color: black;
+            }
+
+            .topicBoxUpdated
+            {
+                background-color: lightgreen;
+            }
         </style>
 
         <div ng-controller="AddTopicCtrl"
@@ -70,12 +81,13 @@
             <div ng-controller="TopicListCtrl"
                  ng-init="initTopicListCtrl(topic)"
                  ng-cloak
-                 class="well">
+                 class="well topicBox"
+                 ng-class="{topicBoxUpdated: isRecentlyUpdated}">
 
+                <a href="#/{{ forumId }}/topics/{{ topic.topicId }}">
                 <div class="postContainer">
                     <div>
-                        <span class="message">
-                            <a href="#/{{ forumId }}/topics/{{ topic.topicId }}">{{ topic.subject }}</a>
+                        <span class="message">{{ topic.subject }}
                         </span>
                     </div>
                     <div>
@@ -89,6 +101,7 @@
                         </span>
                     </div>
                 </div>
+                    </a>
 
             </div>
 

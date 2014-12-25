@@ -1,6 +1,11 @@
 <a href="#/{{ forumId }}">
 
-    <div>
+    <div style="position: relative;">
+
+        <div ng-if="isRecentlyUpdated"
+             style="position: absolute; left: 175px;">
+            <i class="fa fa-star" style="color: green;"></i>
+        </div>
 
         <p style="font-weight: bold;">{{ name }}</p>
 

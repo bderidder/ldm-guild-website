@@ -1,8 +1,10 @@
 forumControllers.controller('ForumListCtrl',
-    function ($scope, $routeParams, $rootScope, $http)
+    function ($scope, $routeParams, $rootScope, $http, forumService)
     {
         $scope.initForumListCtrl = function()
         {
+            forumService.getLastActivity();
+
             $scope.refreshTopics();
         };
 

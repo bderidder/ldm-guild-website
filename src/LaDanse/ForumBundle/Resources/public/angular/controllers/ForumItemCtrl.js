@@ -1,5 +1,5 @@
 forumControllers.controller('ForumItemCtrl',
-    function($scope, $routeParams, $rootScope, $http)
+    function($scope, $routeParams, $rootScope, $http, forumService)
     {
         $scope.initForumItemCtrl = function(forumId)
         {
@@ -11,8 +11,10 @@ forumControllers.controller('ForumItemCtrl',
             $scope.description = forum.description;
             $scope.topics = forum.topics;
             $scope.isForumLoaded = true;
+            $scope.isRecentlyUpdated = false;
 
             $scope.refreshActivity();
+            $scope.initRecentActivity();
         };
 
         $scope.refreshActivity = function()
@@ -22,5 +24,13 @@ forumControllers.controller('ForumItemCtrl',
             });
         }
 
+        $scope.initRecentActivity = function()
+        {
+            forumService.getLastActivity()
+                .then(function(activityModel)
+                {
+                    $scope.isRecentlyUpdated = activityModel.isForumInActivity($scope.forumId);
+                });
+        }
     }
 );
