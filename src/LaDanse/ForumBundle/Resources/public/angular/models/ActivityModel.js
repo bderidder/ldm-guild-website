@@ -50,4 +50,19 @@ function ActivityModel(posts)
 
         return false;
     }
+
+    this.markPostAsRead = function(postId)
+    {
+        console.log('markPostAsRead called');
+
+        for (i = 0; i < this.posts.length; i++)
+        {
+            if (this.posts[i].postId === postId)
+            {
+                this.posts.splice(i, 1);
+
+                return;
+            }
+        }
+    };
 }
