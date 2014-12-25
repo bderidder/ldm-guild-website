@@ -7,6 +7,9 @@ forumApp.service(
         forumServiceInstance.activityModel = null;
         forumServiceInstance.activityPromises = [];
 
+        forumServiceInstance.changesForUserModel = null;
+        forumServiceInstance.changesForUserPromises = [];
+
         forumServiceInstance.getLastActivity = function()
         {
             var deferred = $q.defer();
@@ -40,7 +43,41 @@ forumApp.service(
             ;
         }
 
+        forumServiceInstance.getChangesForUser = function()
+        {
+            var deferred = $q.defer();
+
+            if (forumServiceInstance.changesForUserModel === null)
+            {
+                forumServiceInstance.changesForUserPromises.push(deferred);
+            }
+            else
+            {
+                deferred.resolve(forumServiceInstance.changesForUserModel);
+            };
+
+            return deferred.promise;
+        };
+
+        forumServiceInstance.fetchChangesForUser = function()
+        {
+            $http.get('../services/forum/account/changesForAccount')
+                .success(function(data)
+                {
+                    forumServiceInstance.changesForUserModel = new ActivityModel(data.newPosts);
+
+                    for (i = 0; i < forumServiceInstance.changesForUserPromises.length; i++)
+                    {
+                        forumServiceInstance.changesForUserPromises[i].resolve(forumServiceInstance.changesForUserModel);
+                    }
+
+                    forumServiceInstance.changesForUserPromises = []
+                })
+            ;
+        }
+
         forumServiceInstance.fetchActivityData();
+        forumServiceInstance.fetchChangesForUser();
 
         return forumServiceInstance;
 });
