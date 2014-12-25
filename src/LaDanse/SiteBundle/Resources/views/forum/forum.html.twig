@@ -18,6 +18,14 @@
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
+    {% javascripts '@LaDanseForumBundle/Resources/public/angular/services/*.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts '@LaDanseForumBundle/Resources/public/angular/models/*.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
     {% javascripts '@LaDanseForumBundle/Resources/public/angular/controllers/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
