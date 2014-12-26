@@ -12,6 +12,7 @@ forumControllers.controller('TopicPageCtrl',
         $scope.posts = [];
 
         $scope.isTopicLoaded = false;
+        $scope.hasUnreadItems = false;
 
         $scope.initTopicPageCtrl = function()
         {
@@ -20,9 +21,23 @@ forumControllers.controller('TopicPageCtrl',
             forumService.getChangesForUser()
                 .then(function(lastChangesModel)
                 {
-                    lastChangesModel.markTopicAsRead($scope.topicId);
+                    $scope.hasUnreadItems = lastChangesModel.hasTopicChanged($scope.topicId);
                 });
         };
+
+        $scope.markAllAsReadClicked = function()
+        {
+            $scope.refreshPosts();
+        }
+
+        $scope.updateTopicUnreadPosts = function()
+        {
+            forumService.getChangesForUser()
+                .then(function(lastChangesModel)
+                {
+                    $scope.hasUnreadItems = lastChangesModel.hasTopicChanged($scope.topicId);
+                });
+        }
 
         $scope.refreshPosts = function()
         {

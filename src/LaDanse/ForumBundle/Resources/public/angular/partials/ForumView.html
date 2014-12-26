@@ -37,6 +37,7 @@
 
             .topicBoxUpdated
             {
+                background-color: lightgreen;
             }
         </style>
 
@@ -88,8 +89,7 @@
                     <div>
                         <i ng-if="isRecentlyUpdated"
                            class="fa fa-star" style="color: green;"></i>
-                        <span class="message">{{ topic.subject }}
-                        </span>
+                        <span class="message">{{ topic.subject }}</span>
                     </div>
                     <div>
                         <span>Created by {{ topic.creator }} on

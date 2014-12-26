@@ -20,8 +20,19 @@
             border-bottom: 1px solid gray;
         }
 
+        .topicContainer .markAsReadRow
+        {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
         .topicContainer .postBoxNew
         {
+        }
+
+        .clickable
+        {
+            cursor: pointer;
         }
 
     </style>
@@ -60,6 +71,17 @@
 
         </div>
 
+        <!--
+        <div class="row markAsReadRow"
+             ng-if="hasUnreadItems">
+
+            <div class="col-md-12 clickable">
+                <i class="fa fa-star"></i> mark all as read
+            </div>
+
+        </div>
+        -->
+
         <div ng-repeat="post in posts"
              ng-controller="PostCtrl"
              ng-init="initPostCtrl(post)"
@@ -68,7 +90,13 @@
             <div class="col-md-2">
                 <p>
                     <i ng-if="isNew"
-                       class="fa fa-star" style="color: green;"></i>
+                       ng-click="markAsReadClicked()"
+                       class="fa fa-star clickable"
+                       style="color: green;"
+                       popover="Mark as read"
+                       popover-trigger="mouseenter"
+                       popover-append-to-body="true"
+                       popover-placement="bottom"></i>
                     <b>{{ post.poster }}</b>&nbsp;
                     <a class="editPostLink"
                        ng-if="!isEditing && canUserEdit()"
@@ -86,12 +114,6 @@
                           popover-placement="bottom">{{ post.postDate | date: 'MMM d H:mm' }}
                     </span>
                 </p>
-                <p ng-if="isNew"
-                   ng-click="markAsReadClicked()"
-                   style="cursor: pointer; font-size: 0.9em;">
-                    mark as read
-                </p>
-
             </div>
 
             <div class="col-md-10"

@@ -30,6 +30,7 @@ forumControllers.controller('PostCtrl',
         {
             forumService.markPostAsRead($scope.post.postId);
 
+            $scope.updateTopicUnreadPosts();
             $scope.initIsNew();
         }
 
