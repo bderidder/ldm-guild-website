@@ -5,3 +5,5 @@ FROM LaDanse\ForumBundle\Entity\UnreadPost u
 	LEFT JOIN t.forum f
 WHERE
 	(u.account = :forAccount)
+	AND
+	(p.poster != :forAccount)
