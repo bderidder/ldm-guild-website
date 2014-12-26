@@ -89,16 +89,15 @@
                     <div>
                         <i ng-if="isRecentlyUpdated"
                            class="fa fa-star" style="color: green;"></i>
-                        <span class="message">{{ topic.subject }}</span>
+                        <span><b>{{ topic.subject }}</b></span>
                     </div>
                     <div>
-                        <span>Created by {{ topic.creator }} on
+                        <span>{{ topic.creator }},
                             <span popover="{{ topic.createDate | date: 'EEE MMM d, y' }} at {{ topic.createDate | date: 'H:mm' }}"
                                   popover-trigger="mouseenter"
                                   popover-append-to-body="true"
-                                  popover-placement="right">
-                                {{ topic.createDate | date: 'MMM d' }}
-                            </span>
+                                  popover-placement="right"
+                                  am-time-ago="topic.createDate"></span>
                         </span>
                     </div>
                 </div>

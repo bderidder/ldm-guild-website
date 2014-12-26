@@ -111,9 +111,8 @@
                                     <i><a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{ post.topic.subject }}</a></i>&nbsp;
                                     (<a href="#/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>)
                                 </div>
-                                <div style="font-size: 0.8em;">
-                                    {{ post.postDate | date: 'MMM d, H:mm' }}
-                                </div>
+                                <div style="font-size: 0.8em;"
+                                     am-time-ago="post.postDate"></div>
                                 <div ng-bind-html="post.message"
                                      style="padding-top: 10px; padding-left: 10px;"></div>
                             </div>

@@ -1,5 +1,14 @@
 var forumApp = angular.module('ForumApp',
-    ['ngRoute', 'ngResource', 'ui.bootstrap', 'ngSanitize', 'textAngular', 'ngAnimate', 'forumControllers']
+    [
+        'ngRoute',
+        'ngResource',
+        'ui.bootstrap',
+        'ngSanitize',
+        'textAngular',
+        'ngAnimate',
+        'angularMoment',
+        'forumControllers'
+    ]
 );
 
 var forumControllers = angular.module('forumControllers', ['ngRoute', 'ngResource']);

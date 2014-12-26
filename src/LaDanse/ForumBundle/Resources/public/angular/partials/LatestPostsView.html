@@ -41,8 +41,8 @@
                 <span popover="{{ post.postDate | date: 'EEE MMM d, y' }} at {{ post.postDate | date: 'H:mm' }}"
                       popover-trigger="mouseenter"
                       popover-append-to-body="true"
-                      popover-placement="bottom">{{ post.postDate | date: 'MMM d H:mm' }}
-                </span>
+                      popover-placement="bottom"
+                      am-time-ago="post.postDate"></span>
             </p>
         </div>
 
