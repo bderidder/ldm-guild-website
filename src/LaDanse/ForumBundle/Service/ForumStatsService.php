@@ -10,7 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
+use LaDanse\DomainBundle\Entity\Account;
+
 use LaDanse\ForumBundle\Entity\ForumLastVisit;
+use LaDanse\ForumBundle\Entity\UnreadPost;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
 
@@ -50,6 +53,52 @@ class ForumStatsService extends LaDanseService
     }
 
     /**
+     * @return array
+     *
+     * @param Account $account
+     */
+    public function getUnreadPostsForAccount(Account $account)
+    {
+        $doc = $this->getDoctrine();
+        $em = $doc->getManager();
+
+        $lastVisit = $this->getLastVisitForAccount($account, new \DateTime());
+
+        $newPosts = $this->getNewPostsSince($lastVisit);
+
+        foreach($newPosts as $newPost)
+        {
+            $unreadPost = new UnreadPost();
+            $unreadPost->setId(ResourceHelper::createUUID());
+            $unreadPost->setAccount($account);
+            $unreadPost->setPost($newPost);
+
+            $em->persist($unreadPost);
+        }
+
+        $em->flush();
+
+        $this->resetLastVisitForAccount($account);
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseForumBundle::selectUnreadPostsForAccount.sql.twig')
+        );
+        $query->setParameter('forAccount', $account);
+
+        $queryResult = $query->getResult();
+
+        $unreadPosts = array();
+
+        foreach($queryResult as $unreadPost)
+        {
+            $unreadPosts[] = $unreadPost->getPost();
+        }
+
+        return $unreadPosts;
+    }
+
+    /**
      * @param \DateTime $sinceDateTime
      *
      * @return array
@@ -68,12 +117,34 @@ class ForumStatsService extends LaDanseService
     }
 
     /**
+     * @param Account $account
+     * @param string $postId
+     */
+    public function markPostAsRead(Account $account, $postId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->delete('LaDanse\ForumBundle\Entity\UnreadPost', 'u')
+           ->where('u.post = :readPost')
+           ->andWhere('u.account = :forAccount')
+           ->setParameter('readPost', $postId)
+           ->setParameter('forAccount', $account);
+
+        $query = $qb->getQuery();
+
+        $query->getResult();
+    }
+
+    /**
      * @param \LaDanse\DomainBundle\Entity\Account $account
      * @param \DateTime $default
      *
      * @return \DateTime
      */
-    public function getLastVisitForAccount($account, \DateTime $default = null)
+    private function getLastVisitForAccount($account, \DateTime $default = null)
     {
         $doc = $this->getDoctrine();
         $em = $doc->getManager();
@@ -107,7 +178,7 @@ class ForumStatsService extends LaDanseService
     /**
      * @param \LaDanse\DomainBundle\Entity\Account $account
      */
-    public function resetLastVisitForAccount($account)
+    private function resetLastVisitForAccount($account)
     {
         $doc = $this->getDoctrine();
         $em = $doc->getManager();

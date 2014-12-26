@@ -1,7 +1,6 @@
-function LastChangesModel(posts, topics)
+function LastChangesModel(posts)
 {
     this.posts = posts;
-    this.topics = topics;
 
     this.getPostCount = function()
     {
@@ -23,14 +22,6 @@ function LastChangesModel(posts, topics)
             }
         }
 
-        for (i = 0; i < this.topics.length; i++)
-        {
-            if (this.topics[i].forum.forumId == forumId)
-            {
-                return true;
-            }
-        }
-
         return false;
     }
 
@@ -39,19 +30,6 @@ function LastChangesModel(posts, topics)
         for (i = 0; i < this.posts.length; i++)
         {
             if (this.posts[i].topic.topicId == topicId)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    this.isTopicNew = function(topicId)
-    {
-        for (i = 0; i < this.topics.length; i++)
-        {
-            if (this.topics[i].topicId == topicId)
             {
                 return true;
             }
@@ -73,18 +51,13 @@ function LastChangesModel(posts, topics)
         return false;
     }
 
+    this.markForumAsRead = function(topicId)
+    {
+    }
+
     this.markTopicAsRead = function(topicId)
     {
-        for (i = 0; i < this.topics.length; i++)
-        {
-            if (this.topics[i].topicId === topicId)
-            {
-                this.topics.splice(i, 1);
-
-                return;
-            }
-        }
-    };
+    }
 
     this.markPostAsRead = function(postId)
     {

@@ -61,10 +61,10 @@ forumApp.service(
 
         forumServiceInstance.fetchChangesForUser = function()
         {
-            $http.get('../services/forum/account/changesForAccount')
+            $http.get('../services/forum/account/unread')
                 .success(function(data)
                 {
-                    forumServiceInstance.changesForUserModel = new LastChangesModel(data.newPosts, data.newTopics);
+                    forumServiceInstance.changesForUserModel = new LastChangesModel(data.unreadPosts);
 
                     for (i = 0; i < forumServiceInstance.changesForUserPromises.length; i++)
                     {
@@ -74,6 +74,13 @@ forumApp.service(
                     forumServiceInstance.changesForUserPromises = []
                 })
             ;
+        }
+
+        forumServiceInstance.markPostAsRead = function(postId)
+        {
+            forumServiceInstance.changesForUserModel.markPostAsRead(postId);
+
+            $http.get('../services/forum/posts/' + postId + '/markRead');
         }
 
         forumServiceInstance.fetchActivityData();

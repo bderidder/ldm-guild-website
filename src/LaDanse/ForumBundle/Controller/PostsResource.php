@@ -107,4 +107,39 @@ class PostsResource extends LaDanseController
 
         return new JsonResponse($jsonObject);
     }
+
+    /**
+     * @param string $postId
+     *
+     * @return Response
+     *
+     * @Route("/{postId}/markRead", name="markPostAsRead")
+     * @Method({"GET", "POST", "PUT"})
+     */
+    public function markPostAsReadAction($postId)
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in markPostAsRead');
+
+            $jsonObject = (object)array(
+                "status" => "must be authenticated"
+            );
+
+            return new JsonResponse($jsonObject);
+        }
+
+        $account = $authContext->getAccount();
+        $statsService = $this->getForumStatsService();
+
+        $statsService->markPostAsRead($account, $postId);
+
+        $jsonObject = (object)array(
+            "status" => "200"
+        );
+
+        return new JsonResponse($jsonObject);
+    }
 }

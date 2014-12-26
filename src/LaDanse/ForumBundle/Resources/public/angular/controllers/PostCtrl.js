@@ -28,11 +28,7 @@ forumControllers.controller('PostCtrl',
 
         $scope.markAsReadClicked = function()
         {
-            forumService.getChangesForUser()
-                .then(function(lastChangesModel)
-                {
-                    lastChangesModel.markPostAsRead($scope.post.postId);
-                });
+            forumService.markPostAsRead($scope.post.postId);
 
             $scope.initIsNew();
         }

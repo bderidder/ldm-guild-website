@@ -8,10 +8,7 @@ forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $ro
         forumService.getChangesForUser()
             .then(function(lastChangesModel)
             {
-                $scope.isRecentlyUpdated =
-                    lastChangesModel.isTopicNew($scope.topic.topicId)
-                    ||
-                    lastChangesModel.hasTopicChanged($scope.topic.topicId);
+                $scope.isRecentlyUpdated = lastChangesModel.hasTopicChanged($scope.topic.topicId);
             });
     };
 });

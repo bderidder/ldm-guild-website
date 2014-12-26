@@ -27,10 +27,10 @@ class AccountResource extends LaDanseController
     /**
      * @return Response
      *
-     * @Route("/changesForAccount", name="getChangesForAccount")
+     * @Route("/unread", name="getUnreadForAccount")
      * @Method({"GET"})
      */
-    public function getChangesForAccount()
+    public function getUnreadForAccount()
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
@@ -48,66 +48,19 @@ class AccountResource extends LaDanseController
         $account = $authContext->getAccount();
         $statsService = $this->getForumStatsService();
 
-        $lastVisitDate = $statsService->getLastVisitForAccount($account, $this->defaultLastVisitDate());
-
-        $recentPosts = $statsService->getNewPostsSince($lastVisitDate);
-        $recentTopics = $statsService->getNewTopicsSince($lastVisitDate);
+        $unreadPosts = $statsService->getUnreadPostsForAccount($account);
 
         $postMapper = new PostMapper();
-        $topicMapper = new TopicMapper();
 
         $jsonObject = (object)array(
             "accountId"   => $account->getId(),
             "displayName" => $account->getDisplayName(),
-            "newPosts"    => $postMapper->mapPostsAndTopic($this, $recentPosts),
-            "newTopics"   => $topicMapper->mapTopicsAndForum($this, $recentTopics),
+            "unreadPosts" => $postMapper->mapPostsAndTopic($this, $unreadPosts),
             "links"       => (object)array(
-                "self"  => $this->generateUrl('getChangesForAccount', array(), true),
-                "reset" => $this->generateUrl('resetChangesForAccount', array(), true)
+                "self"  => $this->generateUrl('getUnreadForAccount', array(), true)
             )
         );
 
         return new JsonResponse($jsonObject);
-    }
-
-    /**
-     * @return Response
-     *
-     * @Route("/changesForAccount/reset", name="resetChangesForAccount")
-     * @Method({"GET"})
-     */
-    public function resetChangesForAccount()
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in getChangesForAccount');
-
-            $jsonObject = (object)array(
-                "status" => "must be authenticated"
-            );
-
-            return new JsonResponse($jsonObject);
-        }
-
-        $account = $authContext->getAccount();
-        $statsService = $this->getForumStatsService();
-
-        $statsService->resetLastVisitForAccount($account);
-
-        $jsonObject = (object)array(
-            "status" => 200
-        );
-
-        return new JsonResponse($jsonObject);
-    }
-
-    /**
-     * @return \DateTime
-     */
-    private function defaultLastVisitDate()
-    {
-        return new \DateTime();
     }
 }
