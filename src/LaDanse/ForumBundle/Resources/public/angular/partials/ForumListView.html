@@ -2,67 +2,57 @@
 
     <style>
 
-        .forum-container div.forumBox
-        {
+        .forum-container div.forumBox {
             padding: 10px;
             background-color: rgb(249, 249, 249);
             border: 1px solid rgb(200, 200, 200);
             height: 100px;
         }
 
-        .forum-container div.forumBoxUpdated
-        {
+        .forum-container div.forumBoxUpdated {
             background-color: lightgreen;
         }
-        
-        .forum-container div.activity
-        {
+
+        .forum-container div.activity {
             background-color: rgb(249, 249, 249);
             border: 1px solid rgb(200, 200, 200);
             height: 150px;
         }
 
-        .forum-container div.header-row
-        {
+        .forum-container div.header-row {
             margin-top: 25px;
             margin-bottom: 10px;
         }
 
-        .forum-container div.forum-row
-        {
+        .forum-container div.forum-row {
 
         }
 
-        .forum-container div.forumBox a
-        {
+        .forum-container div.forumBox a {
             text-decoration: none;
             color: black;
         }
 
-        .forum-container div.slider
-        {
+        .forum-container div.slider {
             overflow: hidden;
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-        .forum-container div.slide
-        {
+        .forum-container div.slide {
             position: absolute;
             top: 0;
             left: 0;
         }
 
-        .forum-container img
-        {
+        .forum-container img {
             max-width: 650px;
             max-height: 350px;
             display: none;
         }
 
-        .slide:after
-        {
+        .slide:after {
             content: "";
             position: absolute;
             top: 60px;
@@ -108,7 +98,8 @@
                             <div style="padding: 10px;">
                                 <div>
                                     <b>{{ post.poster }}</b> posted in&nbsp;
-                                    <i><a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{ post.topic.subject }}</a></i>&nbsp;
+                                    <i><a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{
+                                        post.topic.subject }}</a></i>&nbsp;
                                     (<a href="#/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>)
                                 </div>
                                 <div style="font-size: 0.8em;"
