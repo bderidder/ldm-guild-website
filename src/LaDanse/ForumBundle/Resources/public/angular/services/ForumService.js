@@ -83,6 +83,24 @@ forumApp.service(
             $http.get('../services/forum/posts/' + postId + '/markRead');
         }
 
+        forumServiceInstance.markTopicAsRead = function(topicId)
+        {
+            var posts = forumServiceInstance.changesForUserModel.getPosts();
+            var i = 0;
+
+            while(i < posts.length)
+            {
+                if (posts[i].topic.topicId == topicId)
+                {
+                    forumServiceInstance.markPostAsRead(posts[i].postId);
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+
         forumServiceInstance.fetchActivityData();
         forumServiceInstance.fetchChangesForUser();
 

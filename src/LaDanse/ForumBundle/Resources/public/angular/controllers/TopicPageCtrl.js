@@ -8,6 +8,7 @@ forumControllers.controller('TopicPageCtrl',
         $scope.creator = '';
         $scope.subject = '';
         $scope.createDate = '';
+        $scope.showRead = true;
 
         $scope.posts = [];
 
@@ -25,9 +26,21 @@ forumControllers.controller('TopicPageCtrl',
                 });
         };
 
+        $scope.toggleShowRead = function()
+        {
+            $scope.showRead = !$scope.showRead;
+        }
+
         $scope.markAllAsReadClicked = function()
         {
+            console.log('marking all as read in topic');
+
+            forumService.markTopicAsRead($scope.topicId);
+
+            $scope.showRead = true;
+
             $scope.refreshPosts();
+            $scope.updateTopicUnreadPosts();
         }
 
         $scope.updateTopicUnreadPosts = function()

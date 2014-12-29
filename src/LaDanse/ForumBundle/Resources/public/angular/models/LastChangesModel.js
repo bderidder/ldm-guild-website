@@ -57,6 +57,19 @@ function LastChangesModel(posts)
 
     this.markTopicAsRead = function(topicId)
     {
+        var i = 0;
+
+        while(i < this.posts.length)
+        {
+            if (this.posts[i].topic.topidId === topicId)
+            {
+                this.posts.splice(i, 1);
+            }
+            else
+            {
+                i++;
+            }
+        }
     }
 
     this.markPostAsRead = function(postId)
