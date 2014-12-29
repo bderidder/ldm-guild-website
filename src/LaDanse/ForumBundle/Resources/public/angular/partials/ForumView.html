@@ -39,6 +39,11 @@
             {
                 background-color: lightgreen;
             }
+
+            .clickable
+            {
+                cursor: pointer;
+            }
         </style>
 
         <div ng-controller="AddTopicCtrl"
@@ -84,12 +89,17 @@
                  class="well topicBox"
                  ng-class="{topicBoxUpdated: isRecentlyUpdated}">
 
-                <a href="#/{{ forumId }}/topics/{{ topic.topicId }}">
                 <div class="postContainer">
                     <div>
                         <i ng-if="isRecentlyUpdated"
-                           class="fa fa-star" style="color: green;"></i>
-                        <span><b>{{ topic.subject }}</b></span>
+                           ng-click="markTopicAsReadClicked()"
+                           class="fa fa-star clickable"
+                           style="color: green;"
+                           popover="Mark as read"
+                           popover-trigger="mouseenter"
+                           popover-append-to-body="true"
+                           popover-placement="bottom"></i>
+                        <a href="#/{{ forumId }}/topics/{{ topic.topicId }}"><span><b>{{ topic.subject }}</b></span></a>
                     </div>
                     <div>
                         <span>{{ topic.creator }},
@@ -101,7 +111,6 @@
                         </span>
                     </div>
                 </div>
-                    </a>
 
             </div>
 
