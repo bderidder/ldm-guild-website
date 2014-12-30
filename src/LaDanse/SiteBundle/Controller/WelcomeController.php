@@ -18,6 +18,15 @@ class WelcomeController extends LaDanseController
      */
     public function indexAction()
     {
-        return $this->render("LaDanseSiteBundle::welcome.html.twig");
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            return $this->render("LaDanseSiteBundle::welcome.html.twig");
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('menuIndex'));
+        }
     }
 }
