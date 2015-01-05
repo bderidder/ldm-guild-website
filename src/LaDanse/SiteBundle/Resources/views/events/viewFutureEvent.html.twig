@@ -40,171 +40,181 @@
         </div>
     </div>
 
-    <br/>
+    <div class="container-fluid" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-7">
 
-    <h4>Sign Ups</h4>
+			    <h4>Sign Ups</h4>
 
-    {# render all sign ups if at least one exists #}
-    {% if (event.signUps.willComeCount != 0) 
-        or (event.signUps.mightComeCount != 0) 
-        or (event.signUps.absentCount != 0) %}   
+			    {# render all sign ups if at least one exists #}
+			    {% if (event.signUps.willComeCount != 0) 
+			        or (event.signUps.mightComeCount != 0) 
+			        or (event.signUps.absentCount != 0) %}   
 
-        <table class="table table-condensed" style="width: auto;">
-            <tr>
-                <th>&nbsp;</th>
-                <th class="center-td">Tank</th>
-                <th class="center-td">Healer</th>
-                <th class="center-td">Damage</th>
-                <th><!-- remove --></th>
-            </tr>
+			        <table class="table table-condensed" style="width: auto;">
+			            <tr>
+			                <th>&nbsp;</th>
+			                <th class="center-td">Tank</th>
+			                <th class="center-td">Healer</th>
+			                <th class="center-td">Damage</th>
+			                <th><!-- placeholder for remove signup action --></th>
+			            </tr>
 
-            <tr>
-                <td>&nbsp;</td>
-                <td class="center-td">({{ event.signUps.willComeTankCount }}/{{ event.signUps.mightComeTankCount }})</td>
-                <td class="center-td">({{ event.signUps.willComeHealerCount }}/{{ event.signUps.mightComeHealerCount }})</td>
-                <td class="center-td">({{ event.signUps.willComeDPSCount }}/{{ event.signUps.mightComeDPSCount }})</td>
-                <td><!-- remove --></td>
-            </tr>
+			            <tr>
+			                <td>&nbsp;</td>
+			                <td class="center-td">({{ event.signUps.willComeTankCount }}/{{ event.signUps.mightComeTankCount }})</td>
+			                <td class="center-td">({{ event.signUps.willComeHealerCount }}/{{ event.signUps.mightComeHealerCount }})</td>
+			                <td class="center-td">({{ event.signUps.willComeDPSCount }}/{{ event.signUps.mightComeDPSCount }})</td>
+			                <td><!-- remove --></td>
+			            </tr>
 
-            {# render 'will come' sign ups, if any #}
-            {% for signUp in event.signUps.willComeSignUps %}
-                {% if signUp.currentUser %}
-                <tr class="active">
-                {% else %} 
-                <tr>   
-                {% endif %}
-                    <td>{{ signUp.account.displayName }}</td>
-                    <td class="center-td">
-                        {% if signUp.signedAsTank %}
-                            <i class="signUp fa fa-times fa-1x text-success" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'Tank'}) }}"></i>
-                        {% endif %}
-                    </td>
-                    <td class="center-td">
-                        {% if signUp.signedAsHealer %}
-                            <i class="signUp fa fa-times fa-1x text-success" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'Healer'}) }}"></i>
-                        {% endif %}
-                    </td>
-                    <td class="center-td">
-                        {% if signUp.signedAsDamage %}
-                            <i class="signUp fa fa-times fa-1x text-success" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'DPS'}) }}"></i>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if signUp.currentUser %}
-                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+			            {# render 'will come' sign ups, if any #}
+			            {% for signUp in event.signUps.willComeSignUps %}
+			                {% if signUp.currentUser %}
+			                <tr class="active">
+			                {% else %} 
+			                <tr>   
+			                {% endif %}
+			                    <td>{{ signUp.account.displayName }}</td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsTank %}
+			                            <i class="signUp fa fa-times fa-1x text-success" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'Tank'}) }}"></i>
+			                        {% endif %}
+			                    </td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsHealer %}
+			                            <i class="signUp fa fa-times fa-1x text-success" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'Healer'}) }}"></i>
+			                        {% endif %}
+			                    </td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsDamage %}
+			                            <i class="signUp fa fa-times fa-1x text-success" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'DPS'}) }}"></i>
+			                        {% endif %}
+			                    </td>
+			                    <td>
+			                        {% if signUp.currentUser %}
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                        {% endif %}
+			                    </td>
+			                </tr>
+			            {% endfor %}
 
-            {# render 'might come' sign ups, if any #}
-            {% for signUp in event.signUps.mightComeSignUps %}
-                {% if signUp.currentUser %}
-                <tr class="active">
-                {% else %} 
-                <tr>   
-                {% endif %}
-                    <td>{{ signUp.account.displayName }}</td>
-                    <td class="center-td">
-                        {% if signUp.signedAsTank %}<i class="signUp fa fa-question fa-1x text-warning" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'Tank'}) }}"></i>{% endif %}
-                    </td>
-                    <td class="center-td">
-                        {% if signUp.signedAsHealer %}<i class="signUp fa fa-question fa-1x text-warning" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'Healer'}) }}"></i>{% endif %}
-                    </td>
-                    <td class="center-td">
-                        {% if signUp.signedAsDamage %}<i class="signUp fa fa-question fa-1x text-warning" 
-                                data-url="{{ path('listClaims', 
-                                    {'eventId': event.id,
-                                     'accountId': signUp.account.id,
-                                     'role': 'DPS'}) }}"></i>{% endif %}
-                    </td>
-                    <td>
-                        {% if signUp.currentUser %}
-                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+			            {# render 'might come' sign ups, if any #}
+			            {% for signUp in event.signUps.mightComeSignUps %}
+			                {% if signUp.currentUser %}
+			                <tr class="active">
+			                {% else %} 
+			                <tr>   
+			                {% endif %}
+			                    <td>{{ signUp.account.displayName }}</td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsTank %}<i class="signUp fa fa-question fa-1x text-warning" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'Tank'}) }}"></i>{% endif %}
+			                    </td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsHealer %}<i class="signUp fa fa-question fa-1x text-warning" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'Healer'}) }}"></i>{% endif %}
+			                    </td>
+			                    <td class="center-td">
+			                        {% if signUp.signedAsDamage %}<i class="signUp fa fa-question fa-1x text-warning" 
+			                                data-url="{{ path('listClaims', 
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id,
+			                                     'role': 'DPS'}) }}"></i>{% endif %}
+			                    </td>
+			                    <td>
+			                        {% if signUp.currentUser %}
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                        {% endif %}
+			                    </td>
+			                </tr>
+			            {% endfor %}
 
-            {# render 'absent' sign ups, if any #}
-            {% for signUp in event.signUps.absentSignUps %}
-                {% if signUp.currentUser %}
-                <tr class="active">
-                {% else %} 
-                <tr>   
-                {% endif %}
-                    <td>{{ signUp.account.displayName }}</td>
-                    <td class="center-td" colspan="3">
-                        <i class="text-danger">can't come</i>
-                    </td>
-                    <td>
-                        {% if signUp.currentUser %}
-                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+			            {# render 'absent' sign ups, if any #}
+			            {% for signUp in event.signUps.absentSignUps %}
+			                {% if signUp.currentUser %}
+			                <tr class="active">
+			                {% else %} 
+			                <tr>   
+			                {% endif %}
+			                    <td>{{ signUp.account.displayName }}</td>
+			                    <td class="center-td" colspan="3">
+			                        <i class="text-danger">can't come</i>
+			                    </td>
+			                    <td>
+			                        {% if signUp.currentUser %}
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                        {% endif %}
+			                    </td>
+			                </tr>
+			            {% endfor %}
 
-        </table>
+			        </table>
 
-        {# if the currently logged in user is not signed up yet, invite to do so #}
-        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
-            <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
+			        {# if the currently logged in user is not signed up yet, invite to do so #}
+			        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
+			            <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
-            <p>
-                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
-                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
-            </p>
-        {% endif %}
-    
-    {# no sign ups, invite the user to make one or inform about absence #}
-    {% else %}    
-        <p>There are no sign ups yet.</p>
+			            <p>
+			                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
+			                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
+			            </p>
+			        {% endif %}
+			    
+			    {# no sign ups, invite the user to make one or inform about absence #}
+			    {% else %}    
+			        <p>There are no sign ups yet.</p>
 
-        <p>
-            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
-            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
-        </p>
-    {% endif %}
+			        <p>
+			            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
+			            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
+			        </p>
+			    {% endif %}
 
-    {# if the currently logged in user is the organiser, edit and delete options are shown #}
-    {% if event.isOrganiser and auth.currentContext.authenticated %}
-        <p>As an organiser you can edit this event or delete it.</p> 
+			    {# if the currently logged in user is the organiser, edit and delete options are shown #}
+			    {% if event.isOrganiser and auth.currentContext.authenticated %}
+			        <p>As an organiser you can edit this event or delete it.</p> 
 
-        <p>
-            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
-            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
-        </p>
-    {% endif %}
+			        <p>
+			            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
+			            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
+			        </p>
+			    {% endif %}
 
-    <br/>
+		    </div>
 
-    {# placeholder for comments, content is supplied by jQuery scripts #}
-    <div ng-app="CommentsApp">
+		    <div class="col-md-5">
 
-        <div ng-view></div>
+			    {# placeholder for comments, content is supplied by Angular application #}
+			    <div ng-app="CommentsApp">
 
-    </div>
+			        <div ng-view></div>
+
+			    </div>
+
+		    </div>
+
+		</div>
+
+	</div>
     
 {% endblock %}
 
