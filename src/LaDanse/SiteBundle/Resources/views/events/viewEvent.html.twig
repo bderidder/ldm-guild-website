@@ -6,6 +6,15 @@
 
     {{ renderHeader(event.name, path('calendarIndex')) }}
 
+	{% if (not isFuture) %}
+		<div class="alert alert-danger">
+			<div style="text-align: center; font-size: 150%">
+				This event is in the past!<br/>
+				Nothing can be changed, you can only comment.
+			</div>
+		</div>
+	{% endif %}
+
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
             <div class="col-md-4">
@@ -104,7 +113,7 @@
 			                        {% endif %}
 			                    </td>
 			                    <td>
-			                        {% if signUp.currentUser %}
+			                        {% if signUp.currentUser and isFuture %}
 			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
 			                        {% endif %}
 			                    </td>
@@ -141,7 +150,7 @@
 			                                     'role': 'DPS'}) }}"></i>{% endif %}
 			                    </td>
 			                    <td>
-			                        {% if signUp.currentUser %}
+			                        {% if signUp.currentUser and isFuture %}
 			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
 			                        {% endif %}
 			                    </td>
@@ -160,7 +169,7 @@
 			                        <i class="text-danger">can't come</i>
 			                    </td>
 			                    <td>
-			                        {% if signUp.currentUser %}
+			                        {% if signUp.currentUser and isFuture %}
 			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
 			                        {% endif %}
 			                    </td>
@@ -170,7 +179,7 @@
 			        </table>
 
 			        {# if the currently logged in user is not signed up yet, invite to do so #}
-			        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated %}
+			        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated and isFuture %}
 			            <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
 			            <p>
@@ -180,17 +189,20 @@
 			        {% endif %}
 			    
 			    {# no sign ups, invite the user to make one or inform about absence #}
-			    {% else %}    
+			    {% elseif isFuture %}
 			        <p>There are no sign ups yet.</p>
 
 			        <p>
 			            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
 			            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
 			        </p>
+				{% else %}
+					<p>There were no sign ups.</p>
+
 			    {% endif %}
 
 			    {# if the currently logged in user is the organiser, edit and delete options are shown #}
-			    {% if event.isOrganiser and auth.currentContext.authenticated %}
+			    {% if event.isOrganiser and auth.currentContext.authenticated and isFuture %}
 			        <p>As an organiser you can edit this event or delete it.</p> 
 
 			        <p>

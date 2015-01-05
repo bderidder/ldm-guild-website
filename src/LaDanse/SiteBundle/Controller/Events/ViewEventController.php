@@ -35,29 +35,25 @@ class ViewEventController extends LaDanseController
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
-    	$event = $repository->find($id);
+        $event = $repository->find($id);
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction',
-                array("event" => $id));
+            $this->getLogger()->warning(
+                __CLASS__ . ' the event does not exist in indexAction',
+                array("event" => $id)
+            );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }
         else
         {
-            if ($event->getInviteTime() > $currentDateTime)
-            {
-                return $this->render('LaDanseSiteBundle:events:viewFutureEvent.html.twig',
-                    array('event' => new EventModel($this->getContainerInjector(), $event))
-                );
-            }
-            else
-            {
-                return $this->render('LaDanseSiteBundle:events:viewPastEvent.html.twig',
-                    array('event' => new EventModel($this->getContainerInjector(), $event))
-                );
-            }
+            return $this->render(
+                'LaDanseSiteBundle:events:viewEvent.html.twig',
+                array(
+                    'isFuture' => ($event->getInviteTime() > $currentDateTime),
+                    'event' => new EventModel($this->getContainerInjector(), $event))
+            );
         }
     }
 }
