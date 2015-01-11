@@ -68,6 +68,11 @@ class ForumStatsService extends LaDanseService
 
         foreach($newPosts as $newPost)
         {
+            if ($newPost->getPoster()->getId() == $account->getId())
+            {
+                continue;
+            }
+
             $unreadPost = new UnreadPost();
             $unreadPost->setId(ResourceHelper::createUUID());
             $unreadPost->setAccount($account);
