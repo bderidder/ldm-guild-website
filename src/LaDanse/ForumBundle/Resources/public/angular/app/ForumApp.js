@@ -38,7 +38,6 @@ forumApp.animation('.slide-animation', function()
         {
             if (className == 'ng-hide')
             {
-                console.log('move element out to the left');
                 TweenMax.to(element, 0.5, {left: -element.parent().width(), onComplete: done});
             }
             else
@@ -50,12 +49,7 @@ forumApp.animation('.slide-animation', function()
         {
             if (className == 'ng-hide')
             {
-                //element.removeClass('ng-hide');
-
-                console.log('set element ready on the right');
                 TweenMax.set(element, {left: element.parent().width()});
-
-                console.log('move element in from the right');
                 TweenMax.to(element, 0.5, {left: 0, onComplete: done});
             }
             else
