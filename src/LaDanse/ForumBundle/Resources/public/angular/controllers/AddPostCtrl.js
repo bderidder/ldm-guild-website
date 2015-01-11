@@ -1,6 +1,6 @@
 forumControllers.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
 
-    $scope.maxLength = 2048;
+    $scope.maxLength = 32768;
     $scope.collapsed = true;
 
     $scope.initAddPostCtrl = function()
