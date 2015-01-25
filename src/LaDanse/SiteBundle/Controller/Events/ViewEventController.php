@@ -7,9 +7,17 @@ use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class ViewEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
 	/**
      * @param string $id
@@ -26,7 +34,7 @@ class ViewEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -39,7 +47,7 @@ class ViewEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(
+            $this->logger->warning(
                 __CLASS__ . ' the event does not exist in indexAction',
                 array("event" => $id)
             );

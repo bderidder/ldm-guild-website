@@ -6,8 +6,16 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class SettingsIndexController extends LaDanseController
 {
+	/**
+	 * @var $logger \Monolog\Logger
+	 * @DI\Inject("monolog.logger.latte")
+	 */
+	private $logger;
+
 	/**
      * @return Response
      *
@@ -19,7 +27,7 @@ class SettingsIndexController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}

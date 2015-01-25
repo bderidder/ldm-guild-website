@@ -6,9 +6,17 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class ListClaimsPartialController extends LaDanseController
 {
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
     /**
      * @param string $eventId
@@ -25,7 +33,7 @@ class ListClaimsPartialController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in listClaims');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in listClaims');
 
             return $this->render(
                 'LaDanseSiteBundle:events:listClaims.html.twig',
@@ -37,7 +45,7 @@ class ListClaimsPartialController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(
+            $this->logger->warning(
                 __CLASS__ . ' the event does not exist in listAction',
                 array("event" => $eventId)
             );

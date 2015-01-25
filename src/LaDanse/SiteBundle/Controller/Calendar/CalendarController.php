@@ -9,9 +9,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class CalendarController extends LaDanseController
 {
     const COMPARE_DATE_FORMAT = "Y-m-d";
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
     /**
      * @param $request Request
@@ -26,7 +34,7 @@ class CalendarController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -106,7 +114,6 @@ class CalendarController extends LaDanseController
     {
         $startDate = new \DateTime('now');
         $events = $this->getEvents($startDate);
-
 
         return $this->render('LaDanseSiteBundle:calendar:calendarTilePartial.html.twig',
                     array('events' => $events)

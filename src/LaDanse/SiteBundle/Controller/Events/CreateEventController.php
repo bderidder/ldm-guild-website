@@ -13,6 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class CreateEventController
  *
@@ -20,6 +22,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CreateEventController extends LaDanseController
 {
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
+
     /**
      * @param $request Request
      * @param $onDate string
@@ -34,7 +42,7 @@ class CreateEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -106,7 +114,7 @@ class CreateEventController extends LaDanseController
 
         $event = $this->modelToEntity($authContext->getAccount(), $formModel, $commentGroupId);
 
-        $this->getLogger()->info(__CLASS__ . ' persisting event');
+        $this->logger->info(__CLASS__ . ' persisting event');
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($event);

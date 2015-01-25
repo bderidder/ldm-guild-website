@@ -7,12 +7,20 @@ use LaDanse\DomainBundle\Entity\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * @Route("/{id}/signup")
 */
 class RemoveSignUpController extends LaDanseController
 {
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
     /**
      * @param $id string

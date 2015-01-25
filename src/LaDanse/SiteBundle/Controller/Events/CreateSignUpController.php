@@ -14,12 +14,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * @Route("/{id}/signup")
 */
 class CreateSignUpController extends LaDanseController
 {
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
 	/**
      * @param $request Request
@@ -35,7 +43,7 @@ class CreateSignUpController extends LaDanseController
 
     	if (!$authContext->isAuthenticated())
     	{
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
     		return $this->redirect($this->generateUrl('welcomeIndex'));
     	}
@@ -49,7 +57,7 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
+            $this->logger->warning(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         } 
@@ -62,7 +70,7 @@ class CreateSignUpController extends LaDanseController
 
         if ($this->getCurrentUserSignUp($event))
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user is already subscribed to this event in indexAction',
+            $this->logger->warning(__CLASS__ . ' the user is already subscribed to this event in indexAction',
                 array('event' => $id, 'user' => $authContext->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -103,7 +111,7 @@ class CreateSignUpController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -116,14 +124,14 @@ class CreateSignUpController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
+            $this->logger->warning(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         } 
 
         if ($this->getCurrentUserSignUp($event))
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction',
+            $this->logger->warning(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction',
                 array('event' => $id, 'user' => $authContext->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -134,7 +142,7 @@ class CreateSignUpController extends LaDanseController
         $signUp->setType(SignUpType::ABSENCE);
         $signUp->setAccount($authContext->getAccount());
 
-        $this->getLogger()->info(__CLASS__ . ' persisting new sign up in createAbsenceAction');
+        $this->logger->info(__CLASS__ . ' persisting new sign up in createAbsenceAction');
 
         $em->persist($signUp);
         $em->flush();
@@ -167,8 +175,8 @@ class CreateSignUpController extends LaDanseController
 
             $em->persist($forRole);
         }
-        
-        $this->getLogger()->info(__CLASS__ . ' persisting new sign up');
+
+        $this->logger->info(__CLASS__ . ' persisting new sign up');
 
         $em->persist($signUp);
         $em->flush();

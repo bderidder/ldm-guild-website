@@ -13,9 +13,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class EditEventController extends LaDanseController
 {
 	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
 	/**
      * @param $request Request
@@ -31,7 +39,7 @@ class EditEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -44,7 +52,7 @@ class EditEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(__CLASS__ . ' the event does not exist in indexAction',
+            $this->logger->warning(__CLASS__ . ' the event does not exist in indexAction',
                 array("event" => $id));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -58,7 +66,7 @@ class EditEventController extends LaDanseController
 
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction',
+            $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction',
                 array('event' => new EventModel($this->getContainerInjector(), $event), 'user' => $authContext->getAccount()->getId()));
 
         	return $this->redirect($this->generateUrl('calendarIndex'));
@@ -79,7 +87,7 @@ class EditEventController extends LaDanseController
         	{
         		$this->modelToEntity($formModel, $event);
 
-                $this->getLogger()->info(__CLASS__ . ' persisting changes to event indexAction');
+                $this->logger->info(__CLASS__ . ' persisting changes to event indexAction');
 
         		$em->flush();
 

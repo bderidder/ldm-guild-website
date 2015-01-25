@@ -11,9 +11,17 @@ use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class GuildCharacterService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.GuildCharacterService';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
 
     public function __construct(ContainerInterface $container)
     {
@@ -268,7 +276,7 @@ class GuildCharacterService extends LaDanseService
             $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
         }
 
-        $this->getLogger()->info(__CLASS__ . ' persisting new claim');
+        $this->logger->info(__CLASS__ . ' persisting new claim');
 
         $em->persist($claim);
         $em->flush();
@@ -298,7 +306,7 @@ class GuildCharacterService extends LaDanseService
                 {
                     $playsRole->setEndTime($onDateTime);
 
-                    $this->getLogger()->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
+                    $this->logger->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
                 }
             }
         }
@@ -315,28 +323,28 @@ class GuildCharacterService extends LaDanseService
             {
                 $playsRole->setEndTime($onDateTime);
 
-                $this->getLogger()->info(__CLASS__ . ' removed HEALER role from claim ' . $claimId);
+                $this->logger->info(__CLASS__ . ' removed HEALER role from claim ' . $claimId);
             }
 
             if (!$playsRole->isRole(Role::HEALER) && $playsHealer)
             {
                 $em->persist($this->createPlaysRole($onDateTime, $claim, Role::HEALER));
 
-                $this->getLogger()->info(__CLASS__ . ' added HEALER role to claim ' . $claimId);
+                $this->logger->info(__CLASS__ . ' added HEALER role to claim ' . $claimId);
             }
 
             if ($playsRole->isRole(Role::DPS) && !$playsDPS)
             {
                 $playsRole->setEndTime($onDateTime);
 
-                $this->getLogger()->info(__CLASS__ . ' removed DPS role from claim ' . $claimId);
+                $this->logger->info(__CLASS__ . ' removed DPS role from claim ' . $claimId);
             }
 
             if (!$playsRole->isRole(Role::DPS) && $playsDPS)
             {
                 $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
 
-                $this->getLogger()->info(__CLASS__ . ' added DPS role to claim ' . $claimId);
+                $this->logger->info(__CLASS__ . ' added DPS role to claim ' . $claimId);
             }
         }
 

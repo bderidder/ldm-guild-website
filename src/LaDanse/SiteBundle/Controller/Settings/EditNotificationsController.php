@@ -10,8 +10,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class EditNotificationsController extends LaDanseController
 {
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
+
 	/**
      * @param $request Request
      *
@@ -25,7 +33,7 @@ class EditNotificationsController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in editNotifications');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in editNotifications');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

@@ -5,8 +5,16 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class ViewClaimsController extends LaDanseController
 {
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.latte")
+     */
+    private $logger;
+
     /**
      * @Route("/", name="viewClaims")
      */
@@ -16,7 +24,7 @@ class ViewClaimsController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
