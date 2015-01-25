@@ -12,7 +12,7 @@ imports:
 #        query_cache_driver: apc
 
 monolog:
-    channels: ["latte"]
+    channels: ["ladanse"]
     handlers:
         main:
             type:         fingers_crossed
@@ -26,6 +26,6 @@ monolog:
             type:  console
         latte:
             type:     stream
-            path:     "%kernel.logs_dir%/latte.log"
+            path:     "%kernel.logs_dir%/ladanse.log"
             level:  debug
-            channels: [latte]
+            channels: [ladanse]

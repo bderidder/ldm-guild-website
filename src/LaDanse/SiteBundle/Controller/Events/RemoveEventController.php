@@ -19,7 +19,7 @@ class RemoveEventController extends LaDanseController
 
     /**
      * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.latte")
+     * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
 
