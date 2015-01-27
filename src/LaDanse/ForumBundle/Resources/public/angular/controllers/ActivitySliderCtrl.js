@@ -21,6 +21,17 @@ forumControllers.controller('ActivitySliderCtrl',
             return $scope.counter.value == index;
         }
 
+        $scope.startSlider = function()
+        {
+            $scope.active = true;
+            $scope.counter.value = 0;
+
+            $timeout(function()
+            {
+                $scope.advanceValue();
+            }, 4500);
+        }
+
         $scope.advanceValue = function()
         {
             $scope.counter.value = $scope.counter.value + 1;
@@ -46,7 +57,7 @@ forumControllers.controller('ActivitySliderCtrl',
                 {
                     $scope.itemCount = activityModel.getPostCount();
                     $scope.posts = activityModel.getPosts();
-                    $scope.advanceValue();
+                    $scope.startSlider();
                 });
         }
     }
