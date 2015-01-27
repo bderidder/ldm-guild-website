@@ -6,6 +6,8 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class RemoveEventController
  *
@@ -14,6 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 class RemoveEventController extends LaDanseController
 {
     const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
+
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    private $logger;
 
     /**
      * @param string $id
@@ -28,7 +36,7 @@ class RemoveEventController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
@@ -41,7 +49,7 @@ class RemoveEventController extends LaDanseController
 
         if (null === $event)
         {
-            $this->getLogger()->warning(
+            $this->logger->warning(
                 __CLASS__ . ' the event does not exist in deleteAction',
                 array("event" => $id)
             );
@@ -60,7 +68,7 @@ class RemoveEventController extends LaDanseController
 
             $em->remove($event);
 
-            $this->getLogger()->warning(
+            $this->logger->warning(
                 __CLASS__ . ' removing event in deleteAction',
                 array("event" => $id)
             );

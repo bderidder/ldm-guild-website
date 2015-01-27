@@ -11,8 +11,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class CreateClaimController extends LaDanseController
 {
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    private $logger;
+
     /**
      * @param $request Request
      *
@@ -26,7 +34,7 @@ class CreateClaimController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }

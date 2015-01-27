@@ -6,8 +6,16 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 class RemoveClaimController extends LaDanseController
 {
+    /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    private $logger;
+
     /**
      * @param string $claimId
      *
@@ -21,7 +29,7 @@ class RemoveClaimController extends LaDanseController
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
