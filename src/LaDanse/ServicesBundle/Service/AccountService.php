@@ -12,16 +12,30 @@ use LaDanse\CommonBundle\Helper\LaDanseService;
 
 use LaDanse\DomainBundle\Entity\Account;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class AccountService
  * @package LaDanse\ServicesBundle\Service
+ *
+ * @DI\Service(AccountService::SERVICE_NAME, public=true)
  */
 class AccountService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.AccountService';
 
     /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    public $logger;
+
+    /**
      * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
      */
     public function __construct(ContainerInterface $container)
     {

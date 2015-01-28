@@ -13,16 +13,26 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
+/**
+ * @DI\Service(GuildCharacterService::SERVICE_NAME, public=true)
+ */
 class GuildCharacterService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.GuildCharacterService';
 
     /**
      * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.latte")
+     * @DI\Inject("monolog.logger.ladanse")
      */
-    private $logger;
+    public $logger;
 
+    /**
+     * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
+     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);

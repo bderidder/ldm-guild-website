@@ -11,16 +11,30 @@ use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class GameDataService
  * @package LaDanse\ServicesBundle\Service
+ *
+ * @DI\Service(GameDataService::SERVICE_NAME, public=true)
  */
 class GameDataService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.GameDataService';
 
     /**
+     * @var $logger \Monolog\Logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    public $logger;
+
+    /**
      * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
      */
     public function __construct(ContainerInterface $container)
     {
