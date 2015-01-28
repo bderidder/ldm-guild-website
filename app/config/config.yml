@@ -31,11 +31,11 @@ twig:
     globals:
         auth: "@LaDanse.AuthenticationService"
 
-#jms_di_extra:
-#    locations:
-#        all_bundles: false
-#        bundles: [LaDanseSiteBundle]
-#        directories: ["%kernel.root_dir%/../src"]
+jms_di_extra:
+    locations:
+        all_bundles: false
+        bundles: [LaDanseCommentBundle, LaDanseCommonBundle, LaDanseDomainBundle, LaDanseForumBundle, LaDanseServicesBundle, LaDanseSiteBundle]
+        directories: ["%kernel.root_dir%/../src"]
 
 # Assetic Configuration
 assetic:
