@@ -2,36 +2,30 @@
 
     <style>
 
-        .postBox img
-        {
+        .postBox img {
             max-width: 650px;
             max-height: 350px;
         }
 
-        a.editPostLink
-        {
+        a.editPostLink {
             cursor: pointer;
         }
 
-        .topicContainer .postRow
-        {
+        .topicContainer .postRow {
             margin-top: 20px;
             margin-bottom: 20px;
             border-bottom: 1px solid gray;
         }
 
-        .topicContainer .markAsReadRow
-        {
+        .topicContainer .markAsReadRow {
             margin-top: 20px;
             margin-bottom: 20px;
         }
 
-        .topicContainer .postBoxNew
-        {
+        .topicContainer .postBoxNew {
         }
 
-        .clickable
-        {
+        .clickable {
             cursor: pointer;
         }
 
@@ -60,14 +54,17 @@
 
                 <span ng-if="collapsed">
                     <button class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
-                    <span >&nbsp;</span>
+                    <span>&nbsp;</span>
                     <button ng-if="hasUnreadItems" type="button" class="btn btn-warning"
-                            ng-click="markAllAsReadClicked()">mark all as read</button>
-                    <span >&nbsp;</span>
+                            ng-click="markAllAsReadClicked()">mark all as read
+                    </button>
+                    <span>&nbsp;</span>
                     <button ng-if="hasUnreadItems && !showRead" type="button" class="btn btn-success"
-                            ng-click="toggleShowRead()">show read items</button>
+                            ng-click="toggleShowRead()">show read items
+                    </button>
                     <button ng-if="hasUnreadItems && showRead" type="button" class="btn btn-success"
-                            ng-click="toggleShowRead()">hide read items</button>
+                            ng-click="toggleShowRead()">hide read items
+                    </button>
                 </span>
 
                 <div ng-if="!collapsed">
@@ -88,52 +85,76 @@
 
             <div ng-if="showRead || isNew" class="row postRow">
 
-            <div class="col-md-2">
-                <p>
-                    <i ng-if="isNew"
-                       ng-click="markAsReadClicked()"
-                       class="fa fa-star clickable"
-                       style="color: green;"
-                       popover="Mark as read"
-                       popover-trigger="mouseenter"
-                       popover-append-to-body="true"
-                       popover-placement="bottom"></i>
-                    <b>{{ post.poster }}</b>&nbsp;
-                    <a class="editPostLink"
-                       ng-if="!isEditing && canUserEdit()"
-                       ng-click="editRequested()"
-                       popover="Edit this post"
-                       popover-trigger="mouseenter"
-                       popover-append-to-body="true"
-                       popover-placement="bottom">
-                        <i class="fa fa-pencil fa-1x"></i></a>
-                </p>
-                <p>
+                <div class="col-md-2">
+                    <p>
+                        <i ng-if="isNew"
+                           ng-click="markAsReadClicked()"
+                           class="fa fa-star clickable"
+                           style="color: green;"
+                           popover="Mark as read"
+                           popover-trigger="mouseenter"
+                           popover-append-to-body="true"
+                           popover-placement="bottom"></i>
+                        <b>{{ post.poster }}</b>&nbsp;
+                        <a class="editPostLink"
+                           ng-if="!isEditing && canUserEdit()"
+                           ng-click="editRequested()"
+                           popover="Edit this post"
+                           popover-trigger="mouseenter"
+                           popover-append-to-body="true"
+                           popover-placement="bottom">
+                            <i class="fa fa-pencil fa-1x"></i></a>
+                    </p>
+
+                    <p>
                     <span popover="{{ post.postDate | date: 'EEE MMM d, y' }} at {{ post.postDate | date: 'H:mm' }}"
                           popover-trigger="mouseenter"
                           popover-append-to-body="true"
                           popover-placement="bottom"
                           am-time-ago="post.postDate"></span>
-                </p>
+                    </p>
+                </div>
+
+                <div class="col-md-10"
+                     ng-switch="isEditing">
+
+                    <div class="postBox well"
+                         ng-class="{postBoxNew: isNew}"
+                         ng-switch-when="false">
+                        <div ng-bind-html="post.message"></div>
+                    </div>
+                    <div class="postBox well"
+                         ng-switch-when="true">
+                        <div ng-controller="PostEditorCtrl"
+                             ng-init="initPostEditorCtrl(post.message, 'Update Reply', savePostEditor, cancelPostEditor)"
+                             post-editor-template>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="col-md-10"
-                 ng-switch="isEditing">
+        </div>
 
-                <div class="postBox well"
-                     ng-class="{postBoxNew: isNew}"
-                     ng-switch-when="false">
-                    <div ng-bind-html="post.message"></div>
-                </div>
-                <div class="postBox well"
-                     ng-switch-when="true">
+        <div class="row"
+                ng-if="posts.length > 0">
+
+            <div ng-controller="AddPostCtrl"
+                 ng-init="initAddPostCtrl()"
+                 class="col-md-12"
+                 ng-cloak>
+
+                    <span ng-if="collapsed">
+                        <button class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
+                    </span>
+
+                <div ng-if="!collapsed">
                     <div ng-controller="PostEditorCtrl"
-                         ng-init="initPostEditorCtrl(post.message, 'Update Reply', savePostEditor, cancelPostEditor)"
+                         ng-init="initPostEditorCtrl('', 'Add A Reply', savePostEditor, cancelPostEditor)"
                          post-editor-template>
                     </div>
                 </div>
-
-            </div>
 
             </div>
 
