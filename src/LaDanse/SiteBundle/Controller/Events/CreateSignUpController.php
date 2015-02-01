@@ -83,7 +83,7 @@ class CreateSignUpController extends LaDanseController
 
         $form->handleRequest($request);
 
-        if ($form->isValid())
+        if ($form->isValid() && $formModel->isValid($form))
         {
             $this->persistSignUp($authContext, $id, $formModel);
 

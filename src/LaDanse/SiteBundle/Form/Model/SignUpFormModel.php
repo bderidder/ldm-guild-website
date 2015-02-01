@@ -3,13 +3,32 @@
 namespace LaDanse\SiteBundle\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
 
 class SignUpFormModel
 {
 	private $roles;
     private $type;
+
+    public function __construct(SignUp $signUp = null)
+    {
+        if ($signUp == null)
+        {
+            return;
+        }
+
+        $this->type = $signUp->getType();
+
+        $this->roles = array();
+        foreach($signUp->getRoles() as $signedRole)
+        {
+            $this->roles[] = $signedRole->getRole();
+        }
+    }
 
 	/**
      * Set roles
@@ -27,7 +46,7 @@ class SignUpFormModel
     /**
      * Get roles
      *
-     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 1, max = 3)
+     * @Assert\Choice(choices = {Role::TANK, Role::HEALER, Role::DPS}, multiple = true, min = 0, max = 3)
      *
      * @return array 
      */
@@ -53,12 +72,30 @@ class SignUpFormModel
      * Get type
      *
      * @Assert\NotBlank(message = "You must select one choice")
-     * @Assert\Choice(choices = {SignUpType::WILLCOME, SignUpType::MIGHTCOME}, multiple = false)
+     * @Assert\Choice(choices = {SignUpType::WILLCOME, SignUpType::MIGHTCOME, SignUpType::ABSENCE}, multiple = false)
      *
      * @return string 
      */
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param FormInterface $form
+     * @return bool
+     */
+    public function isValid(FormInterface $form)
+    {
+        $isValid = true;
+
+        if (($this->getType() != SignUpType::ABSENCE) && (count($this->getRoles()) == 0))
+        {
+            $form->get('roles')->addError(new FormError('At least one role must be chosen when not signed up up as absent'));
+
+            $isValid = false;
+        }
+
+        return $isValid;
     }
 }

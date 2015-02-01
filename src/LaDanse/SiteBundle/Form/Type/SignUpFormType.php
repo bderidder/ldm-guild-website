@@ -23,7 +23,8 @@ class SignUpFormType extends AbstractType
 		        ->add('type', 'choice', array(
     				'choices'   => array(
     					SignUpType::WILLCOME  => 'Will come',
-    					SignUpType::MIGHTCOME => 'Might come'),
+    					SignUpType::MIGHTCOME => 'Might come',
+						SignUpType::ABSENCE => 'Can\'t come'),
     				'expanded'	=> true,
     				'multiple'	=> false
 				))

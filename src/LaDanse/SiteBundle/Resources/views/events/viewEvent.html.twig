@@ -67,6 +67,7 @@
 			                <th class="center-td">Healer</th>
 			                <th class="center-td">Damage</th>
 			                <th><!-- placeholder for remove signup action --></th>
+							<th><!-- placeholder for edit signup action --></th>
 			            </tr>
 
 			            <tr>
@@ -75,6 +76,7 @@
 			                <td class="center-td">({{ event.signUps.willComeHealerCount }}/{{ event.signUps.mightComeHealerCount }})</td>
 			                <td class="center-td">({{ event.signUps.willComeDPSCount }}/{{ event.signUps.mightComeDPSCount }})</td>
 			                <td><!-- remove --></td>
+							<td><!-- edit --></td>
 			            </tr>
 
 			            {# render 'will come' sign ups, if any #}
@@ -114,9 +116,18 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+											<i class="fa fa-trash-o fa-1x"></i>
+										</a>
 			                        {% endif %}
 			                    </td>
+								<td>
+									{% if signUp.currentUser and isFuture %}
+										<a href="{{ path('editSignUp', {'id': event.id}) }}">
+											<i class="fa fa-pencil fa-1x"></i>
+										</a>
+									{% endif %}
+								</td>
 			                </tr>
 			            {% endfor %}
 
@@ -151,9 +162,18 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+											<i class="fa fa-trash-o fa-1x"></i>
+										</a>
 			                        {% endif %}
 			                    </td>
+								<td>
+									{% if signUp.currentUser and isFuture %}
+										<a href="{{ path('editSignUp', {'id': event.id}) }}">
+											<i class="fa fa-pencil fa-1x"></i>
+										</a>
+									{% endif %}
+								</td>
 			                </tr>
 			            {% endfor %}
 
@@ -170,9 +190,18 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">Remove</a>
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+											<i class="fa fa-trash-o fa-1x"></i>
+										</a>
 			                        {% endif %}
 			                    </td>
+								<td>
+									{% if signUp.currentUser and isFuture %}
+										<a href="{{ path('editSignUp', {'id': event.id}) }}">
+											<i class="fa fa-pencil fa-1x"></i>
+										</a>
+									{% endif %}
+								</td>
 			                </tr>
 			            {% endfor %}
 
@@ -184,7 +213,7 @@
 
 			            <p>
 			                <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
-			                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
+			                <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">can't come</a>
 			            </p>
 			        {% endif %}
 			    
@@ -194,7 +223,7 @@
 
 			        <p>
 			            <a class="btn btn-success" href="{{ path('createSignUp', {'id': event.id}) }}">sign up</a>
-			            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">inform absence</a>
+			            <a class="btn btn-warning" href="{{ path('createAbsence', {'id': event.id}) }}">can't come</a>
 			        </p>
 				{% else %}
 					<p>There were no sign ups.</p>
