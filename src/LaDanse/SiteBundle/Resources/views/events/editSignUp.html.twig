@@ -1,0 +1,13 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Edit sign up for event - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Edit sign up for ' ~ event.name ~ ' on ' ~ event.startTime|date("D d/m"), path('viewEvent', {'id': event.id})) }}
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+    {{ form(form) }}
+
+{% endblock %}
