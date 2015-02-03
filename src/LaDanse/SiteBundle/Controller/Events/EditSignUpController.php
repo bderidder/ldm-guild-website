@@ -110,14 +110,17 @@ class EditSignUpController extends LaDanseController
             $em->remove($origRole);
         }
 
-        foreach($formModel->getRoles() as $strForRole)
+        if ($formModel->getType() != SignUpType::ABSENCE)
         {
-            $forRole = new ForRole();
-        
-            $forRole->setSignUp($signUp);
-            $forRole->setRole($strForRole);
+            foreach($formModel->getRoles() as $strForRole)
+            {
+                $forRole = new ForRole();
 
-            $em->persist($forRole);
+                $forRole->setSignUp($signUp);
+                $forRole->setRole($strForRole);
+
+                $em->persist($forRole);
+            }
         }
 
         $this->logger->info(__CLASS__ . ' update sign up');
