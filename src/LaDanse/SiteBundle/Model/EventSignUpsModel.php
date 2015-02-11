@@ -23,6 +23,9 @@ class EventSignUpsModel extends ContainerAwareClass
     protected $willComeSignUps = array();
     protected $absentSignUps = array();
 
+    protected $totalWillCome = 0;
+    protected $totalMightCome = 0;
+
     protected $willComeTankCount = 0;
     protected $willComeHealerCount = 0;
     protected $willComeDPSCount = 0;
@@ -62,10 +65,12 @@ class EventSignUpsModel extends ContainerAwareClass
             switch($signUp->getType())
             {
                 case SignUpType::WILLCOME:
+                    $this->totalWillCome++;
                     $this->willComeSignUps[] = $signUpModel;
                     $this->updateSignUpCounts(true, $signUpModel);
                     break;
                 case SignUpType::MIGHTCOME:
+                    $this->totalMightCome++;
                     $this->mightComeSignUps[] = $signUpModel;
                     $this->updateSignUpCounts(false, $signUpModel);
                     break;
@@ -136,6 +141,26 @@ class EventSignUpsModel extends ContainerAwareClass
     public function getAbsentSignUps()
     {
         return $this->absentSignUps;
+    }
+
+    public function getTotalWillCome()
+    {
+        return $this->totalWillCome;
+    }
+
+    public function setTotalWillCome($totalWillCome)
+    {
+        $this->totalWillCome = $totalWillCome;
+    }
+
+    public function getTotalMightCome()
+    {
+        return $this->totalMightCome;
+    }
+
+    public function setTotalMightCome($totalMightCome)
+    {
+        $this->totalMightCome = $totalMightCome;
     }
 
     public function getWillComeTankCount()
