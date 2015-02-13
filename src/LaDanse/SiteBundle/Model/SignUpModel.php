@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
@@ -17,14 +18,12 @@ class SignUpModel extends ContainerAwareClass
     protected $currentUser = false;
     protected $account;
 
-    public function __construct(ContainerInjector $injector, SignUp $signUp)
+    public function __construct(ContainerInjector $injector, SignUp $signUp, Account $currentUser)
     {
         parent::__construct($injector->getContainer());
 
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-        $account = $authContext->getAccount();
 
-        if ($authContext->isAuthenticated() && ($signUp->getAccount()->getId() === $account->getId()))
+        if ($signUp->getAccount()->getId() === $currentUser->getId())
         {
             $this->currentUser = true;
         }

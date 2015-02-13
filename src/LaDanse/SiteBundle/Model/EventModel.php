@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 
 class EventModel extends ContainerAwareClass
@@ -21,7 +22,7 @@ class EventModel extends ContainerAwareClass
     protected $isOrganiser;
     protected $topicId;
 
-    public function __construct(ContainerInjector $injector, Event $event)
+    public function __construct(ContainerInjector $injector, Event $event, Account $currentUser)
     {
         parent::__construct($injector->getContainer());
 
@@ -36,9 +37,9 @@ class EventModel extends ContainerAwareClass
         $this->organiser = new AccountModel($injector, $event->getOrganiser());
         $this->topicId = $event->getTopicId();
 
-        $this->signUpsModel = new EventSignUpsModel($injector, $event);
+        $this->signUpsModel = new EventSignUpsModel($injector, $event, $currentUser);
 
-        $this->calculateEditable($event);
+        $this->calculateEditable($event, $currentUser);
     }
 
     /**
@@ -141,15 +142,13 @@ class EventModel extends ContainerAwareClass
 
     /**
      * @param Event $event
+     * @param Account $currentUser
      */
-    private function calculateEditable(Event $event)
+    private function calculateEditable(Event $event, Account $currentUser)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
         $this->isOrganiser = false;
 
-        if ($authContext->isAuthenticated()
-            && ($authContext->getAccount()->getId() === $event->getOrganiser()->getId()))
+        if ($currentUser->getId() === $event->getOrganiser()->getId())
         {
             $this->isOrganiser = true;
         }

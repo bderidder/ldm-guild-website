@@ -8,6 +8,7 @@ use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LaDanse\DomainBundle\Entity\Account;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -57,7 +58,7 @@ class CalendarController extends LaDanseController
 
         $calendarDates = array();
 
-        $events = $this->getEvents($startDate);
+        $events = $this->getEvents($startDate, $this->getAuthenticationService()->getCurrentContext()->getAccount());
 
         $eventIndex = 0;
 
@@ -113,14 +114,14 @@ class CalendarController extends LaDanseController
     public function tilePartialAction()
     {
         $startDate = new \DateTime('now');
-        $events = $this->getEvents($startDate);
+        $events = $this->getEvents($startDate, $this->getAuthenticationService()->getCurrentContext()->getAccount());
 
         return $this->render('LaDanseSiteBundle:calendar:calendarTilePartial.html.twig',
                     array('events' => $events)
                 );
     }
 
-    protected function getEvents($startDate)
+    protected function getEvents($startDate, Account $currentUser)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -134,7 +135,7 @@ class CalendarController extends LaDanseController
 
         foreach($events as $event)
         {
-            $eventModels[] = new EventModel($this->getContainerInjector(), $event);
+            $eventModels[] = new EventModel($this->getContainerInjector(), $event, $currentUser);
         }
 
         return $eventModels;
