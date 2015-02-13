@@ -64,15 +64,13 @@ class ICalController extends LaDanseController
                     $this->createICalEvent($event, '(SIGNED) ' . $event->getName())
                 );
             }
-
-            if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
+            else if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
             {
                 $vCalendar->addComponent(
                     $this->createICalEvent($event, '(ABSENT) ' . $event->getName())
                 );
             }
-
-            if (!($event->getSignUps()->getCurrentUserSignedUp() || $event->getSignUps()->getCurrentUserAbsent())
+            else if (!($event->getSignUps()->getCurrentUserSignedUp() || $event->getSignUps()->getCurrentUserAbsent())
                 && $exportSettings->getExportNew())
             {
                 $vCalendar->addComponent(
