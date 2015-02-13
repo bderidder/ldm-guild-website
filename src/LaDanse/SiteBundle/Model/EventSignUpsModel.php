@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
 
@@ -37,16 +38,13 @@ class EventSignUpsModel extends ContainerAwareClass
     /**
      * @param ContainerInjector $injector
      * @param Event $event
+     * @param Account $currentUser
      */
-    public function __construct(ContainerInjector $injector, Event $event)
+    public function __construct(ContainerInjector $injector, Event $event, Account $currentUser)
     {
         parent::__construct($injector->getContainer());
 
         $this->eventId = $event->getId();
-
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        $account = $authContext->getAccount();
 
         $signUps = $event->getSignUps();
 
@@ -55,9 +53,9 @@ class EventSignUpsModel extends ContainerAwareClass
         /* @var $signUp \LaDanse\DomainBundle\Entity\SignUp */
         foreach($signUps as &$signUp)
         {
-            $signUpModel = new SignUpModel($injector, $signUp);
+            $signUpModel = new SignUpModel($injector, $signUp, $currentUser);
 
-            if ($authContext->isAuthenticated() && ($signUp->getAccount()->getId() === $account->getId()))
+            if ($signUp->getAccount()->getId() === $currentUser->getId())
             {
                 $this->currentUserSigned = true;
             }
@@ -86,7 +84,7 @@ class EventSignUpsModel extends ContainerAwareClass
         return $this->eventId;
     }
 
-    public function getCurrentUserComes()
+    public function getCurrentUserWillCome()
     {
         /* @var $signUpModel \LaDanse\SiteBundle\Model\SignUpModel */
         foreach($this->getWillComeSignUps() as $signUpModel)
@@ -96,7 +94,10 @@ class EventSignUpsModel extends ContainerAwareClass
                 return true;
             }
         }
+    }
 
+    public function getCurrentUserMightCome()
+    {
         /* @var $signUpModel \LaDanse\SiteBundle\Model\SignUpModel */
         foreach($this->getMightComeSignUps() as $signUpModel)
         {
@@ -105,8 +106,11 @@ class EventSignUpsModel extends ContainerAwareClass
                 return true;
             }
         }
+    }
 
-        return false;
+    public function getCurrentUserComes()
+    {
+        return $this->getCurrentUserWillCome() || $this->getCurrentUserMightCome();
     }
 
     public function getCurrentUserAbsent()
