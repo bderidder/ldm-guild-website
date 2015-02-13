@@ -60,24 +60,27 @@ class ICalController extends LaDanseController
         {
             if ($event->getSignUps()->getCurrentUserWillCome() || $event->getSignUps()->getCurrentUserMightCome())
             {
-                $vCalendar->addComponent(
-                    $this->createICalEvent($event, '(SIGNED) ' . $event->getName())
-                );
+                $vEvent = $this->createICalEvent($event, '(SIGNED) ' . $event->getName());
+                $vEvent->setStatus(iCal\Event::STATUS_CONFIRMED);
+
+                $vCalendar->addComponent($vEvent);
             }
 
             if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
             {
-                $vCalendar->addComponent(
-                    $this->createICalEvent($event, '(ABSENT) ' . $event->getName())
-                );
+                $vEvent = $this->createICalEvent($event, '(ABSENT) ' . $event->getName());
+                $vEvent->setStatus(iCal\Event::STATUS_CANCELLED);
+
+                $vCalendar->addComponent($vEvent);
             }
 
             if (!($event->getSignUps()->getCurrentUserSignedUp() || $event->getSignUps()->getCurrentUserAbsent())
                 && $exportSettings->getExportNew())
             {
-                $vCalendar->addComponent(
-                    $this->createICalEvent($event, '(NEW) ' . $event->getName())
-                );
+                $vEvent = $this->createICalEvent($event, '(NEW) ' . $event->getName());
+                $vEvent->setStatus(iCal\Event::STATUS_TENTATIVE);
+
+                $vCalendar->addComponent($vEvent);
             }
         }
 
@@ -176,6 +179,7 @@ class ICalController extends LaDanseController
         $vEvent->setDtStart($event->getInviteTime());
         $vEvent->setDtEnd($event->getEndTime());
         $vEvent->setSummary($description);
+        $vEvent->setUrl($this->generateUrl('viewEvent', array('id' => $event->getId()), true));
 
         $vEvent->setUseTimezone(true);
 
