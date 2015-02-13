@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\SiteBundle\Model\CalendarDayModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
