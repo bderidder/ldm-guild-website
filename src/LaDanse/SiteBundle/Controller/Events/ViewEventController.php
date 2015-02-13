@@ -60,7 +60,7 @@ class ViewEventController extends LaDanseController
                 'LaDanseSiteBundle:events:viewEvent.html.twig',
                 array(
                     'isFuture' => ($event->getInviteTime() > $currentDateTime),
-                    'event' => new EventModel($this->getContainerInjector(), $event))
+                    'event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()))
             );
         }
     }
