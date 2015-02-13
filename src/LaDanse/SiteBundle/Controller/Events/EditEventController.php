@@ -66,8 +66,7 @@ class EditEventController extends LaDanseController
 
         if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
         {
-            $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction',
-                array('event' => new EventModel($this->getContainerInjector(), $event), 'user' => $authContext->getAccount()->getId()));
+            $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction');
 
         	return $this->redirect($this->generateUrl('calendarIndex'));
         }
@@ -98,7 +97,7 @@ class EditEventController extends LaDanseController
             else
             {
                 return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-                        array('event' => new EventModel($this->getContainerInjector(), $event), 
+                        array('event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()),
                               'form' => $form->createView(),
                               'errors' => $errors));    
             }
@@ -106,7 +105,7 @@ class EditEventController extends LaDanseController
     	else
     	{
         	return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-						array('event' => new EventModel($this->getContainerInjector(), $event), 'form' => $form->createView()));	
+						array('event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()), 'form' => $form->createView()));
     	}
     }
 
