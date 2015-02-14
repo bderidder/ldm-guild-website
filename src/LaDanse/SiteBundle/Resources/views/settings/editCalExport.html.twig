@@ -1,0 +1,53 @@
+{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+
+{% block settingsPanel %}
+
+	<h1>Calendar Subscription</h1>
+
+    <p>Below you can control which events will appear in your personal calendar export.</p>
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form.exportSignUp,
+        { 'label': 'Events you signed up for as \'Will Come\' or \'Might Come\' are included by default', 'disabled': true })
+    }}
+
+    {{ form_widget(form.exportAbsence,
+        { 'label': 'Include events where I signed absent' })
+    }}
+
+    {{ form_widget(form.exportNew,
+        { 'label': 'Include events I haven\'t yet signed up for or informed about absence' })
+    }}
+
+    <br/>
+
+    {{ form_row(form.change, { 'label': 'Update' }) }}
+
+    {{ form_end(form) }}
+
+    <br/>
+
+<div class="well">
+    Your personal subscription URL is <b>{{ personalUrl }}</b>
+    <br/>
+    <span style="font-size: 0.8em;"><a href="{{ path('resetSecret') }}">generate a new personal URL</a></span>
+</div>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #settingsCalExportLink
+        {
+            background-color: #99b433;
+        }
+    </style>
+
+{% endblock %}
