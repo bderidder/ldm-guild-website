@@ -3,7 +3,10 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -14,6 +17,12 @@ class ViewClaimsController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
     /**
      * @Route("/", name="viewClaims")
@@ -34,6 +43,14 @@ class ViewClaimsController extends LaDanseController
         $claimModel = (object)array(
             "accountId" => $accountId,
             "claims"    => $this->getGuildCharacterService()->getClaims($accountId)
+        );
+
+        $this->eventDispatcher->dispatch(
+            FeatureUseEvent::EVENT_NAME,
+            new FeatureUseEvent(
+                Features::CLAIM_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            )
         );
 
         return $this->render(

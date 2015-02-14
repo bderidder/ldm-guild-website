@@ -4,8 +4,11 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -21,6 +24,12 @@ class RemoveSignUpController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
     /**
      * @param $id string
@@ -59,6 +68,14 @@ class RemoveSignUpController extends LaDanseController
 
         $em->remove($signUp);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            FeatureUseEvent::EVENT_NAME,
+            new FeatureUseEvent(
+                Features::SIGNUP_DELETE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            )
+        );
 
         $this->addToast('Sign up removed');
 

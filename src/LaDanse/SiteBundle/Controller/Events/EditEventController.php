@@ -5,13 +5,16 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -24,6 +27,12 @@ class EditEventController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
 	/**
      * @param $request Request
@@ -91,6 +100,14 @@ class EditEventController extends LaDanseController
         		$em->flush();
 
                 $this->addToast('Event updated');
+
+                $this->eventDispatcher->dispatch(
+                    FeatureUseEvent::EVENT_NAME,
+                    new FeatureUseEvent(
+                        Features::EVENT_EDIT,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
+                    )
+                );
 
         		return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         	}

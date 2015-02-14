@@ -3,12 +3,15 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Model\CalendarDayModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -21,6 +24,12 @@ class CalendarController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
     /**
      * @param $request Request
@@ -39,6 +48,11 @@ class CalendarController extends LaDanseController
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
+
+        $this->eventDispatcher->dispatch(
+            FeatureUseEvent::EVENT_NAME,
+            new FeatureUseEvent(Features::CALENDAR_VIEW, $authContext->getAccount())
+        );
 
         $page = $this->sanitizePage($request->query->get('page'));
 

@@ -3,7 +3,10 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -15,11 +18,25 @@ class EventListController extends LaDanseController
      */
     private $logger;
 
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
+
 	/**
      * @Route("/", name="eventList")
      */
     public function viewAction()
     {
+        $this->eventDispatcher->dispatch(
+            FeatureUseEvent::EVENT_NAME,
+            new FeatureUseEvent(
+                Features::EVENT_LIST,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            )
+        );
+
         return $this->render('LaDanseSiteBundle:events:eventList.html.twig');
     }
 }

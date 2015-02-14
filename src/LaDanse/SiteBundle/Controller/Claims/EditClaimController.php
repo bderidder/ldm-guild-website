@@ -4,12 +4,15 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\EditClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\EditClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -20,6 +23,12 @@ class EditClaimController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
     /**
      * @param $request Request
@@ -58,6 +67,14 @@ class EditClaimController extends LaDanseController
                 $this->updateClaim($claimId, $formModel);
 
                 $this->addToast('Character claim updated');
+
+                $this->eventDispatcher->dispatch(
+                    FeatureUseEvent::EVENT_NAME,
+                    new FeatureUseEvent(
+                        Features::CLAIM_EDIT,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
+                    )
+                );
 
                 return $this->redirect($this->generateUrl('viewClaims'));
             }

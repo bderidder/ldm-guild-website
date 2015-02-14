@@ -3,7 +3,10 @@
 namespace LaDanse\SiteBundle\Controller\Forum;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -14,6 +17,12 @@ class ForumController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    private $eventDispatcher;
 
     /**
      * @Route("/", name="forumIndex")
@@ -28,6 +37,14 @@ class ForumController extends LaDanseController
 
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
+
+        $this->eventDispatcher->dispatch(
+            FeatureUseEvent::EVENT_NAME,
+            new FeatureUseEvent(
+                Features::FORUM_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            )
+        );
 
         return $this->render("LaDanseSiteBundle:forum:forum.html.twig");
     }
