@@ -69,7 +69,7 @@ class ICalController extends LaDanseController
             if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
             {
                 $vEvent = $this->createICalEvent($event, '(ABSENT) ' . $event->getName());
-                $vEvent->setStatus(iCal\Event::STATUS_CANCELLED);
+                $vEvent->setStatus(iCal\Event::STATUS_TENTATIVE); // CANCELLED is not always shown in some applications
 
                 $vCalendar->addComponent($vEvent);
             }
