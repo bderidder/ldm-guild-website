@@ -36,7 +36,7 @@ class AboutController extends LaDanseController
             FeatureUseEvent::EVENT_NAME,
             new FeatureUseEvent(
                 Features::ABOUT_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+                $this->getAuthenticationService()->getCurrentContext()->isAuthenticated() ? $this->getAuthenticationService()->getCurrentContext()->getAccount() : null
             )
         );
 
