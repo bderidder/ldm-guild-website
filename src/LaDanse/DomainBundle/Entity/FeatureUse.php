@@ -44,7 +44,7 @@ class FeatureUse
      * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="usedBy", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="usedBy", referencedColumnName="id", nullable=true)
      */
     protected $usedBy;
 

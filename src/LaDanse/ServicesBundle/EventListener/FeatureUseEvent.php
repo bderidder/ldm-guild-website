@@ -25,7 +25,7 @@ class FeatureUseEvent extends Event
      */
     protected $usedBy;
 
-    public function __construct($feature, Account $usedBy)
+    public function __construct($feature, Account $usedBy = null)
     {
         $this->feature = $feature;
         $this->usedBy = $usedBy;
