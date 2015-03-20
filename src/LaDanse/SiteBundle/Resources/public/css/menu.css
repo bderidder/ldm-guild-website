@@ -48,7 +48,25 @@ a div.tile:hover
 .tile .label
 {
     position: absolute;
-    left: 0px;
+    left: 0;
+    bottom: 5px;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+.tile .badge-left
+{
+    position: absolute;
+    left: 8px;
+    bottom: 5px;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+.tile .badge-right
+{
+    position: absolute;
+    right: 8px;
     bottom: 5px;
     font-size: 1em;
     font-weight: 300;
@@ -57,7 +75,7 @@ a div.tile:hover
 .tile .tile-content.label
 {
     position: absolute;
-    left: 0px;
+    left: 0;
     bottom: -5px;
     font-size: 1em;
     font-weight: 300;
