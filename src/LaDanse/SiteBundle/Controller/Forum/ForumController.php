@@ -48,4 +48,28 @@ class ForumController extends LaDanseController
 
         return $this->render("LaDanseSiteBundle:forum:forum.html.twig");
     }
+
+    public function tileLabelAction()
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        if (!$authContext->isAuthenticated())
+        {
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in tileLabelAction');
+
+            return "";
+        }
+
+        $account = $authContext->getAccount();
+        $statsService = $this->getForumStatsService();
+
+        $unreadPosts = $statsService->getUnreadPostsForAccount($account);
+
+        return $this->render(
+            "LaDanseSiteBundle:forum:menuPartial.html.twig",
+            array(
+                'unreadPosts' => $unreadPosts
+            )
+        );
+    }
 }
