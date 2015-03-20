@@ -1,0 +1,12 @@
+<div class="badge-right">
+    <span style="color: lightgreen; font-weight: bold;">
+        {% if unreadPosts|length == 1 %}
+            <i class="fa fa-star"></i>
+            {{ unreadPosts|length }} unread post
+        {% endif %}
+        {% if unreadPosts|length > 1 %}
+            <i class="fa fa-star"></i>
+            {{ unreadPosts|length }} unread posts
+        {% endif %}
+    </span>
+</div>
