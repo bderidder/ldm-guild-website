@@ -2,6 +2,8 @@
 
 namespace LaDanse\SiteBundle\Tests\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
@@ -53,8 +55,7 @@ class WelcomeControllerTest extends WebTestCase
     }
 
     /**
-     * Test if the welcome page shows the "login or register" button
-     * when not logged in
+     * Test if requesting / with a logged-in user gives menu
      *
      * @return void
      */
@@ -68,39 +69,10 @@ class WelcomeControllerTest extends WebTestCase
             )
         );
 
-        $crawler = $client->request('GET', '/');
+        $client->request('GET', '/');
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("member section")')->count() > 0
-        );
+        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("login or register")')->count() == 0
-        );
-    }
-
-    /**
-     * Test if the welcome page contains the username in Javascript
-     * when not logged in
-     *
-     * @return void
-     */
-    public function testUsernameInJS()
-    {
-        $client = static::createClient(
-            array(),
-            array(
-                'PHP_AUTH_USER' => AccountConst::USER1_USERNAME,
-                'PHP_AUTH_PW'   => AccountConst::USER1_PASSWORD,
-            )
-        );
-
-        $crawler = $client->request('GET', '/');
-
-        $this->assertTrue(
-            $crawler->filter(
-                'html:contains("username: \'' . AccountConst::USER1_DISPLAY . '\'")'
-            )->count() == 1
-        );
+        $this->assertRegExp('/\/menu\/$/', $client->getResponse()->headers->get('location'));
     }
 }
