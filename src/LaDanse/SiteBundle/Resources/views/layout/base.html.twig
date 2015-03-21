@@ -73,7 +73,8 @@
         <script type="text/javascript">
             var currentAccount = {
                 id: {{ auth.currentContext.account.id }},
-                username: '{{ auth.currentContext.account.username }}'
+                username: '{{ auth.currentContext.account.username }}',
+                displayName: '{{ auth.currentContext.account.displayName }}'
             };
         </script>
     {% endif %}
