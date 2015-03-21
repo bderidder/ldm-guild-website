@@ -13,7 +13,7 @@ namespace LaDanse\SiteBundle\Tests\Controller;
  */
 class AccountConst
 {
-    const USER1_USERNAME = 'Leto';
+    const USER1_USERNAME = 'test1';
     const USER1_PASSWORD = 'test';
-    const USER1_DISPLAY  = 'Leto';
+    const USER1_DISPLAY  = 'Test User 1';
 } 
