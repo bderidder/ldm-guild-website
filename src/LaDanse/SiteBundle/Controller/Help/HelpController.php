@@ -3,10 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\Help;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -30,11 +31,10 @@ class HelpController extends LaDanseController
     public function indexAction()
     {
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::HELP_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
-            )
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::HELP_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->render("LaDanseSiteBundle:help:index.html.twig");

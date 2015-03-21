@@ -4,13 +4,14 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\CalendarExport;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use Eluceo\iCal\Component as iCal;
 
@@ -58,8 +59,11 @@ class ICalController extends LaDanseController
         $account = $exportSettings->getAccount();
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(Features::CALENDAR_ICAL, $account)
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CALENDAR_ICAL,
+                $account
+            )
         );
 
         $vCalendar = new iCal\Calendar('www.ladanse.org');

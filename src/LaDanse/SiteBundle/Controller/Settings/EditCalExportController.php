@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\CalExportFormModel;
 use LaDanse\SiteBundle\Form\Type\CalExportFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\CalendarExport;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -70,11 +71,10 @@ class EditCalExportController extends LaDanseController
                 $this->updateExportSettings($calExport, $formModel);
 
                 $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(
-                        Features::SETTINGS_CALEXPORT_UPDATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                    )
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::SETTINGS_CALEXPORT_UPDATE,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
                 );
 
                return $this->redirect($this->generateUrl('editCalExport'));
@@ -92,11 +92,10 @@ class EditCalExportController extends LaDanseController
         else
         {
             $this->eventDispatcher->dispatch(
-                FeatureUseEvent::EVENT_NAME,
-                new FeatureUseEvent(
-                    Features::SETTINGS_CALEXPORT_VIEW,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                )
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::SETTINGS_CALEXPORT_VIEW,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
             return $this->render('LaDanseSiteBundle:settings:editCalExport.html.twig',
@@ -135,11 +134,10 @@ class EditCalExportController extends LaDanseController
         $em->flush();
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::SETTINGS_CALEXPORT_RESET,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
-            )
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SETTINGS_CALEXPORT_RESET,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->redirect($this->generateUrl('editCalExport'));

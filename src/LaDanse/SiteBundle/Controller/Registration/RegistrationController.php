@@ -5,7 +5,6 @@ namespace LaDanse\SiteBundle\Controller\Registration;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -13,7 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -58,8 +59,11 @@ class RegistrationController extends LaDanseController
                 $this->addToast('Registration saved, you are logged in now');
 
                 $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(Features::REGISTRATION_CREATE, $user)
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::ABOUT_VIEW,
+                        $user
+                    )
                 );
 
                 return $this->redirect($this->generateUrl('menuIndex'));

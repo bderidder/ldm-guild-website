@@ -3,11 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -46,11 +47,10 @@ class RemoveClaimController extends LaDanseController
         $this->getGuildCharacterService()->endClaim($claimId);
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::CLAIM_REMOVE,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
-            )
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_REMOVE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->redirect($this->generateUrl('viewClaims'));

@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\ProfileFormModel;
 use LaDanse\SiteBundle\Form\Type\ProfileFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -11,7 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -72,11 +73,10 @@ class EditProfileController extends LaDanseController
                $this->addToast('Profile updated');
 
                 $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(
-                        Features::SETTINGS_PROFILE_UPDATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                    )
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::SETTINGS_PROFILE_UPDATE,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
                 );
 
                return $this->redirect($this->generateUrl('editProfile'));
@@ -91,11 +91,10 @@ class EditProfileController extends LaDanseController
         else
         {
             $this->eventDispatcher->dispatch(
-                FeatureUseEvent::EVENT_NAME,
-                new FeatureUseEvent(
-                    Features::SETTINGS_PROFILE_VIEW,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                )
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::SETTINGS_PROFILE_VIEW,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
             return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',

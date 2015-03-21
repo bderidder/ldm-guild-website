@@ -5,7 +5,6 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -14,7 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -97,11 +98,10 @@ class CreateEventController extends LaDanseController
                 $this->addToast('New event created');
 
                 $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(
-                        Features::EVENT_CREATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                    )
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::EVENT_CREATE,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
                 );
 
                 return $this->redirect($this->generateUrl('calendarIndex'));

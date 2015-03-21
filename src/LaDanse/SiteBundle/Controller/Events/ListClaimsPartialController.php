@@ -3,11 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -78,11 +79,10 @@ class ListClaimsPartialController extends LaDanseController
         }
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::CLAIMS_LIST,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
-            )
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIMS_LIST,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->render(

@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Model\CalendarDayModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,7 +10,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -50,8 +51,10 @@ class CalendarController extends LaDanseController
         }
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(Features::CALENDAR_VIEW, $authContext->getAccount())
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CALENDAR_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         $page = $this->sanitizePage($request->query->get('page'));

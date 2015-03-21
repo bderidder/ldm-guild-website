@@ -3,10 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\TeamSpeak;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use JMS\DiExtraBundle\Annotation as DI;
@@ -42,11 +43,10 @@ class TeamSpeakController extends LaDanseController
         }
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::TEAMSPEAK_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
-            )
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::TEAMSPEAK_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->render('LaDanseSiteBundle:teamspeak:index.html.twig');

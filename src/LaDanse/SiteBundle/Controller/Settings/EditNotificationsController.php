@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -11,7 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -63,11 +64,10 @@ class EditNotificationsController extends LaDanseController
                 $this->addToast('Notifications updated');
 
                 $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(
-                        Features::SETTINGS_NOTIF_UPDATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                    )
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::SETTINGS_NOTIF_UPDATE,
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
                 );
 
                 return $this->redirect($this->generateUrl('editNotifications'));

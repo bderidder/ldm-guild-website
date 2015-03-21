@@ -7,14 +7,15 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use LaDanse\ServicesBundle\EventListener\Features;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -98,11 +99,10 @@ class EditSignUpController extends LaDanseController
             $this->addToast('Signup updated');
 
             $this->eventDispatcher->dispatch(
-                FeatureUseEvent::EVENT_NAME,
-                new FeatureUseEvent(
-                    Features::SIGNUP_EDIT,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                )
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::SIGNUP_EDIT,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
@@ -136,14 +136,6 @@ class EditSignUpController extends LaDanseController
                 $forRole->setRole($strForRole);
 
                 $em->persist($forRole);
-
-                $this->eventDispatcher->dispatch(
-                    FeatureUseEvent::EVENT_NAME,
-                    new FeatureUseEvent(
-                        Features::CALENDAR_VIEW,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount()
-                    )
-                );
             }
         }
 

@@ -3,11 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\About;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -33,9 +34,9 @@ class AboutController extends LaDanseController
     public function indexAction()
     {
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::ABOUT_VIEW,
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::ABOUT_VIEW,
                 $this->getAuthenticationService()->getCurrentContext()->isAuthenticated() ? $this->getAuthenticationService()->getCurrentContext()->getAccount() : null
             )
         );

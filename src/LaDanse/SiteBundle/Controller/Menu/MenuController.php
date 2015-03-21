@@ -3,11 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Menu;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -42,10 +43,13 @@ class MenuController extends LaDanseController
         }
 
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::MENU_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::MENU_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                array(
+                    'someProperty' => 'someValue'
+                )
             )
         );
 

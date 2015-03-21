@@ -3,10 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\Privacy;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\EventListener\Features;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\ServicesBundle\EventListener\FeatureUseEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -30,10 +31,10 @@ class PrivacyPolicyController extends LaDanseController
     public function indexAction()
     {
         $this->eventDispatcher->dispatch(
-            FeatureUseEvent::EVENT_NAME,
-            new FeatureUseEvent(
-                Features::PRIVACY_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount()
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::PRIVACY_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->isAuthenticated() ? $this->getAuthenticationService()->getCurrentContext()->getAccount() : null
             )
         );
 
