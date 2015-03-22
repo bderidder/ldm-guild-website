@@ -1,5 +1,5 @@
-LaDanseSiteRouting:
-    resource: "@LaDanseSiteBundle/Controller"
+WelcomeRouting:
+    resource: "@LaDanseSiteBundle/Controller/Welcome"
     type:     annotation
     prefix:   /
 
@@ -62,3 +62,8 @@ AboutRouting:
     resource: "@LaDanseSiteBundle/Controller/About"
     type:     annotation
     prefix:   /about
+
+FeedbackRouting:
+    resource: "@LaDanseSiteBundle/Controller/Feedback"
+    type:     annotation
+    prefix:   /feedback
