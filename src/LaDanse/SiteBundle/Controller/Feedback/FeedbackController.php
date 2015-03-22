@@ -16,9 +16,6 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-/**
- * @Route("/feedback")
-*/
 class FeedbackController extends LaDanseController
 {
     /**
@@ -43,13 +40,6 @@ class FeedbackController extends LaDanseController
     public function indexAction(Request $request)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
 
         $formModel = new FeedbackFormModel();
         $formModel->setDescription('');
