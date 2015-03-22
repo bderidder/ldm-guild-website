@@ -21,16 +21,16 @@ class MemberTestBase extends LaDanseTestBase
 
         $this->assertTrue($client->getResponse() instanceof RedirectResponse);
 
-        $this->assertRegExp('/\/$/', $client->getResponse()->headers->get('location'));
+        $this->assertRegExp('/\/login$/', $client->getResponse()->headers->get('location'));
 
         $crawler = $client->followRedirect();
 
         $this->assertTrue(
-            $crawler->filter('html:contains("login or register")')->count() > 0
+            $crawler->filter('html:contains("Sign In")')->count() == 1
         );
 
         $this->assertTrue(
-            $crawler->filter('html:contains("member section")')->count() == 0
+            $crawler->filter('html:contains("I forgot my password")')->count() == 1
         );
     }
 
