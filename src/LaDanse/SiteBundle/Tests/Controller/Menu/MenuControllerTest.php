@@ -6,22 +6,9 @@ use LaDanse\SiteBundle\Tests\Controller\MemberTestBase;
 
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
 
-/**
- * Class DefaultControllerTest
- *
- * @category TestCase
- * @package  LaDanse\SiteBundle\Tests\Controller
- * @author   Bavo De Ridder <bavo@coderspotting.org>
- * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link     https://github.com/bderidder/ldm-guild-website
- */
 class MenuControllerTest extends MemberTestBase
 {
-    const CONTROLLER_URL = "/menu/";
-
     /**
-     * Test if requesting / with a logged-in user gives menu
-     *
      * @return void
      */
     public function testMember()
