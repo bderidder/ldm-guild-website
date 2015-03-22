@@ -33,11 +33,20 @@ class AboutController extends LaDanseController
      */
     public function indexAction()
     {
+        if ($this->getAuthenticationService()->getCurrentContext()->isAuthenticated())
+        {
+            $account = $this->getAuthenticationService()->getCurrentContext()->getAccount();
+        }
+        else
+        {
+            $account = null;
+        }
+
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::ABOUT_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->isAuthenticated() ? $this->getAuthenticationService()->getCurrentContext()->getAccount() : null
+                $account
             )
         );
 
