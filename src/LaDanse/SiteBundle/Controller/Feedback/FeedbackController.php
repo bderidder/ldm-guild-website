@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Feedback;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;

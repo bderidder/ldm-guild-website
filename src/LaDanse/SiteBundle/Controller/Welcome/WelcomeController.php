@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller;
+namespace LaDanse\SiteBundle\Controller\Welcome;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
