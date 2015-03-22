@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-/**
- * @Route("/")
-*/
 class WelcomeController extends LaDanseController
 {
     /**
