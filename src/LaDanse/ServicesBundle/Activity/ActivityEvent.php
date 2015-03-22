@@ -30,7 +30,7 @@ class ActivityEvent extends Event
      */
     protected $data;
 
-    public function __construct($type, Account $usedBy, $data = null)
+    public function __construct($type, Account $usedBy = null, $data = null)
     {
         $this->type = $type;
         $this->activityOn = new \DateTime();
