@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -42,18 +43,10 @@ class ViewEventController extends LaDanseController
 
         $currentDateTime = new \DateTime();
 
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $em = $this->getDoctrine();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
+        $event = $eventService->getEventById($id);
 
         if (null === $event)
         {
