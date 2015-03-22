@@ -31,7 +31,12 @@
                     <span class="message">{{ comment.message }}</span>
                 </div>
                 <div>
-                    <span class="postDate">{{ comment.postDate | date: 'MMM d, y H:mm:ss' }}</span>
+                    <span popover="{{ comment.postDate | date: 'EEE MMM d, y' }} at {{ comment.postDate | date: 'H:mm' }}"
+                          popover-trigger="mouseenter"
+                          popover-append-to-body="true"
+                          popover-placement="bottom"
+                          am-time-ago="comment.postDate"
+                          class="postDate"></span>
                     <span class="postEditLink"
                           ng-click="editClicked()"><i class="fa fa-pencil fa-1x"></i></span>
                 </div>

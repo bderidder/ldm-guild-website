@@ -1,5 +1,11 @@
 var commentsApp = angular.module('CommentsApp',
-    ['ngRoute', 'ngResource', 'commentControllers']
+    [
+        'ngRoute',
+        'ngResource',
+        'ui.bootstrap',
+        'angularMoment',
+        'commentControllers'
+    ]
 );
 
 commentsApp.config(['$routeProvider',
