@@ -44,7 +44,7 @@ class ActivityQueueItem
      * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="usedBy", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="activityBy", referencedColumnName="id", nullable=true)
      */
     protected $activityBy;
 
