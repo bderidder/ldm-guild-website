@@ -4,18 +4,9 @@ namespace LaDanse\SiteBundle\Tests\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
 
-/**
- * Class DefaultControllerTest
- *
- * @category TestCase
- * @package  LaDanse\SiteBundle\Tests\Controller
- * @author   Bavo De Ridder <bavo@coderspotting.org>
- * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link     https://github.com/bderidder/ldm-guild-website
- */
-class MemberTestBase extends WebTestCase
+class MemberTestBase extends LaDanseTestBase
 {
     /**
      * Test if the welcome page shows the "more information" button
@@ -26,7 +17,7 @@ class MemberTestBase extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', $this->getUrl());
+        $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue($client->getResponse() instanceof RedirectResponse);
 
@@ -60,7 +51,7 @@ class MemberTestBase extends WebTestCase
 
         $client->followRedirects();
 
-        $crawler = $client->request('GET', $this->getUrl());
+        $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
             $crawler->filter(
@@ -75,7 +66,7 @@ class MemberTestBase extends WebTestCase
         );
     }
 
-    protected function getUrl()
+    protected function getUrl(Client $client, $parameters = array())
     {
         return '';
     }

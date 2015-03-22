@@ -1,21 +1,13 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller;
+namespace LaDanse\SiteBundle\Tests\Controller\Welcome;
 
+use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use LaDanse\SiteBundle\Tests\Controller\AccountConst;
 
-/**
- * Class DefaultControllerTest
- *
- * @category TestCase
- * @package  LaDanse\SiteBundle\Tests\Controller
- * @author   Bavo De Ridder <bavo@coderspotting.org>
- * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
- * @link     https://github.com/bderidder/ldm-guild-website
- */
-class WelcomeControllerTest extends WebTestCase
+class WelcomeControllerTest extends LaDanseTestBase
 {
     /**
      * Test if the welcome page shows the "more information" button
@@ -26,7 +18,7 @@ class WelcomeControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
             $crawler->filter('html:contains("more information")')->count() > 0
@@ -43,7 +35,7 @@ class WelcomeControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
             $crawler->filter('html:contains("login or register")')->count() > 0
@@ -69,10 +61,15 @@ class WelcomeControllerTest extends WebTestCase
             )
         );
 
-        $client->request('GET', '/');
+        $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue($client->getResponse() instanceof RedirectResponse);
 
         $this->assertRegExp('/\/menu\/$/', $client->getResponse()->headers->get('location'));
+    }
+
+    protected function getUrl($client)
+    {
+        return $this->generateUrl($client, "welcomeIndex");
     }
 }

@@ -3,9 +3,6 @@
 namespace LaDanse\SiteBundle\Tests\Controller\Menu;
 
 use LaDanse\SiteBundle\Tests\Controller\MemberTestBase;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
 
@@ -37,7 +34,7 @@ class MenuControllerTest extends MemberTestBase
             )
         );
 
-        $crawler = $client->request('GET', MenuControllerTest::CONTROLLER_URL);
+        $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
             $crawler->filter('html:contains("My Characters")')->count() > 0
@@ -48,8 +45,8 @@ class MenuControllerTest extends MemberTestBase
         );
     }
 
-    protected function getUrl()
+    protected function getUrl($client)
     {
-        return MenuControllerTest::CONTROLLER_URL;
+        return $this->generateUrl($client, "menuIndex");
     }
 }
