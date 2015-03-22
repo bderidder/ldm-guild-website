@@ -37,7 +37,7 @@
                           popover-placement="bottom"
                           am-time-ago="comment.postDate"
                           class="postDate"></span>
-                    <span class="postEditLink"
+                    <span class="postEditLink" ng-if="isEditable()"
                           ng-click="editClicked()"><i class="fa fa-pencil fa-1x"></i></span>
                 </div>
             </div> <!-- ng-switch="editing" - ng-switch-when="false" -->
