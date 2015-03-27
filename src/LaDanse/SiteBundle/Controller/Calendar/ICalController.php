@@ -2,13 +2,19 @@
 
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
-use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\DomainBundle\Entity\CalendarExport;
-use LaDanse\SiteBundle\Model\EventModel;
+use LaDanse\CommentBundle\Service\CommentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
+
+use LaDanse\CommonBundle\Helper\LaDanseController;
+
+use LaDanse\DomainBundle\Entity\CalendarExport;
 use LaDanse\DomainBundle\Entity\Account;
+
+use LaDanse\CommentBundle\Entity\Comment;
+
+use LaDanse\SiteBundle\Model\EventModel;
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -198,10 +204,56 @@ class ICalController extends LaDanseController
         $vEvent->setDtStart($event->getInviteTime());
         $vEvent->setDtEnd($event->getEndTime());
         $vEvent->setSummary($description);
+        $vEvent->setDescription($this->createDescription($event));
+
         $vEvent->setUrl($this->generateUrl('viewEvent', array('id' => $event->getId()), true));
 
         $vEvent->setUseTimezone(true);
 
         return $vEvent;
+    }
+
+    /**
+     * @param EventModel $event
+     *
+     * @return string
+     */
+    protected function createDescription(EventModel $event)
+    {
+        $description = "";
+
+        /**
+         * @var CommentService $commentService
+         */
+        $commentService = $this->get(CommentService::SERVICE_NAME);
+
+        $commentGroup = $commentService->getCommentGroup($event->getTopicId());
+
+        $description = $description . $event->getDescription();
+
+        if (($event->getDescription() !== null || strlen($event->getDescription()) > 0)
+            and
+            ($commentGroup->getComments()->count() > 0))
+        {
+            $description = $description . "\n\n";
+        }
+
+        for($i = 0; $i < $commentGroup->getComments()->count(); $i++)
+        {
+            /**
+             * @var Comment $comment
+             */
+            $comment = $commentGroup->getComments()->get($i);
+
+            if ($i >= 1)
+            {
+                $description = $description . "\n\n";
+            }
+
+            $description = $description . $comment->getPoster()->getDisplayName();
+            $description = $description . " - " . $comment->getMessage();
+        }
+
+        return $description;
     }
 }
