@@ -13,6 +13,11 @@ EventsRouting:
     type:     annotation
     prefix:   /events
 
+MemberRouting:
+    resource: "@LaDanseSiteBundle/Controller/Member"
+    type:     annotation
+    prefix:   /member
+
 SettingsRouting:
     resource: "@LaDanseSiteBundle/Controller/Settings"
     type:     annotation
