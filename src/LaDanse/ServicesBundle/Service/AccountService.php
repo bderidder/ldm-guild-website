@@ -42,6 +42,11 @@ class AccountService extends LaDanseService
         parent::__construct($container);
     }
 
+    /**
+     * @param $accountId
+     * 
+     * @return Account
+     */
     public function getAccount($accountId)
     {
         $repo = $this->getDoctrine()->getRepository(Account::REPOSITORY);
