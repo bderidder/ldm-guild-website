@@ -44,7 +44,7 @@ class AccountService extends LaDanseService
 
     /**
      * @param $accountId
-     * 
+     *
      * @return Account
      */
     public function getAccount($accountId)
