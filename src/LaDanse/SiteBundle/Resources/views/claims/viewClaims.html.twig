@@ -52,7 +52,7 @@
     {% else %}
         {% for claim in claimModel.claims %}
             <tr class="claimRow">
-                <td>{{ claim.character.name }}</td>
+                <td><a target="_blank" href="http://eu.battle.net/wow/en/character/defias-brotherhood/{{ claim.character.name }}/simple">{{ claim.character.name }}</a>
                 <td>{{ claim.character.level }}</td>
                 <td class="center-td">
                     {% if claim.playsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
