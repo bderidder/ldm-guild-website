@@ -1,5 +1,6 @@
 {% if auth.currentContext.authenticated %}
     <p>Can't find the event you were looking for? <a href="{{ path('createEvent') }}">Why not create an event yourself?</a></p>
+    <p>You can <a href="{{ path('editCalExport') }}">subscribe to this calendar</a> in your calendar app.</p>
 {% endif %}
 
 <ul class="pager">
