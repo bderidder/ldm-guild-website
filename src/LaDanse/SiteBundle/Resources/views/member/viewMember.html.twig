@@ -1,0 +1,55 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Characters - La Danse Macabre{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader(member.displayName) }}
+    
+	<p>Below you can find the list of characters this member currently has a claim over and what roles they want to perform with them.</p>
+
+	<table class="table table-hover" style="width: auto;">
+    <tr>
+        <th></th> <!-- name -->
+        <th></th> <!-- level -->
+        <th class="center-td" style="width: 75px">Tank</th>
+        <th class="center-td" style="width: 75px">Healer</th>
+        <th class="center-td" style="width: 75px">Damage</th>
+        <th></th> <!-- class -->
+        <th></th> <!-- race -->
+    </tr>
+    {% if claimModel.claims|length == 0 %}
+        <tr>
+            <td colspan="8">
+                <i>This member hasn't claimed any characters yet.</i>
+            </td>
+        </tr>
+    {% else %}
+        {% for claim in claimModel.claims %}
+            <tr class="claimRow">
+                <td><a target="_blank" href="http://eu.battle.net/wow/en/character/defias-brotherhood/{{ claim.character.name }}/simple">{{ claim.character.name }}</a>
+                <td>{{ claim.character.level }}</td>
+                <td class="center-td">
+                    {% if claim.playsTank %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                </td>
+                <td class="center-td">
+                    {% if claim.playsHealer %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                </td>
+                <td class="center-td">
+                    {% if claim.playsDPS %}<i class="fa fa-times fa-1x text-success"></i>{% endif %}
+                </td>
+                <td>{{ claim.character.class.name }}</td>
+                <td>{{ claim.character.race.name }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+	</table>
+
+{% endblock %}
