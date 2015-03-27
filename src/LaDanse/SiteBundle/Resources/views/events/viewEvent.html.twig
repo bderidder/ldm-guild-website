@@ -86,7 +86,7 @@
 			                {% else %} 
 			                <tr>   
 			                {% endif %}
-			                    <td>{{ signUp.account.displayName }}</td>
+			                    <td><a href="{{ path('viewMember', {'accountId': signUp.account.id} ) }}">{{ signUp.account.displayName }}</a></td>
 			                    <td class="center-td">
 			                        {% if signUp.signedAsTank %}
 			                            <i class="signUp fa fa-times fa-1x text-success" 
