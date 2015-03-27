@@ -229,6 +229,18 @@ class ICalController extends LaDanseController
 
         $commentGroup = $commentService->getCommentGroup($event->getTopicId());
 
+        $comments = $commentGroup->getComments()->getValues();
+
+        usort(
+            $comments,
+            function ($a, $b) {
+                /** @var $a \LaDanse\CommentBundle\Entity\Comment */
+                /** @var $b \LaDanse\CommentBundle\Entity\COmment */
+
+                return $a->getPostDate() < $b->getPostDate();
+            }
+        );
+
         $description = $description . $event->getDescription();
 
         if (($event->getDescription() !== null || strlen($event->getDescription()) > 0)
@@ -238,12 +250,12 @@ class ICalController extends LaDanseController
             $description = $description . "\n\n";
         }
 
-        for($i = 0; $i < $commentGroup->getComments()->count(); $i++)
+        for($i = 0; $i < count($comments); $i++)
         {
             /**
              * @var Comment $comment
              */
-            $comment = $commentGroup->getComments()->get($i);
+            $comment = $comments[$i];
 
             if ($i >= 1)
             {
@@ -251,7 +263,8 @@ class ICalController extends LaDanseController
             }
 
             $description = $description . $comment->getPoster()->getDisplayName();
-            $description = $description . " - " . $comment->getMessage();
+            $description = $description . " (" . $comment->getPostDate()->format("d/m H:i") . ") ";
+            $description = $description . $comment->getMessage();
         }
 
         return $description;
