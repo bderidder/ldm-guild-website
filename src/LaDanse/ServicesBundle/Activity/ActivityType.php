@@ -28,6 +28,8 @@ class ActivityType
     const CLAIM_REMOVE  = 'Claim.Remove';
     const CLAIM_VIEW    = 'Claim.View';
 
+    const MEMBER_VIEW   = 'Member.View';
+
     const FORUM_VIEW    = 'Forum.View';
 
     const HELP_VIEW     = 'Help.View';
