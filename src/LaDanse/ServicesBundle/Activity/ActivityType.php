@@ -23,6 +23,10 @@ class ActivityType
 
     const GALLERY_VIEW  = 'Gallery.View';
 
+    const CHARACTER_CREATE = "Character.Create";
+    const CHARACTER_UPDATE = "Character.Update";
+    const CHARACTER_REMOVE = "Character.Remove";
+
     const CLAIM_CREATE  = 'Claim.Create';
     const CLAIM_EDIT    = 'Claim.Edit';
     const CLAIM_REMOVE  = 'Claim.Remove';
