@@ -12,9 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use JMS\DiExtraBundle\Annotation as DI;
 
 class CreateClaimController extends LaDanseController
@@ -67,13 +64,6 @@ class CreateClaimController extends LaDanseController
                 $this->createClaim($accountId, $formModel);
 
                 $this->addToast('Character claimed');
-
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::CLAIM_CREATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
-                );
 
                 return $this->redirect($this->generateUrl('viewClaims'));
             }
