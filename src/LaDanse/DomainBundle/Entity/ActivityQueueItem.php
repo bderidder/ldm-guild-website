@@ -56,6 +56,13 @@ class ActivityQueueItem
     protected $rawData;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $processedOn;
+
+    /**
      * @return int
      */
     public function getId()
@@ -133,6 +140,22 @@ class ActivityQueueItem
     public function setRawData($rawData)
     {
         $this->rawData = $rawData;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getProcessedOn()
+    {
+        return $this->processedOn;
+    }
+
+    /**
+     * @param \DateTime $processedOn
+     */
+    public function setProcessedOn($processedOn)
+    {
+        $this->processedOn = $processedOn;
     }
 
     /**
