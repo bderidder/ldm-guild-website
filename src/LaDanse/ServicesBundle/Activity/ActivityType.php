@@ -30,7 +30,12 @@ class ActivityType
 
     const MEMBER_VIEW   = 'Member.View';
 
-    const FORUM_VIEW    = 'Forum.View';
+    const FORUM_VIEW         = 'Forum.View';
+    const FORUM_TOPIC_CREATE = "Forum.Topic.Create";
+    const FORUM_TOPIC_REMOVE = "Forum.Topic.Remove";
+    const FORUM_TOPIC_UPDATE = "Forum.Topic.Update";
+    const FORUM_POST_CREATE  = "Forum.Post.Create";
+    const FORUM_POST_UPDATE  = "Forum.Post.Update";
 
     const HELP_VIEW     = 'Help.View';
 
