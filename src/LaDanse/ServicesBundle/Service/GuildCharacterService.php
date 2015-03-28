@@ -248,6 +248,17 @@ class GuildCharacterService extends LaDanseService
         $em->flush();
 
         $this->endClaimsForCharacter($character);
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHARACTER_REMOVE,
+                null,
+                array(
+                    'character'   => $character->getName()
+                )
+            )
+        );
     }
 
     public function getActiveClaimsForAccount($account, \DateTime $onDateTime = null)
@@ -382,6 +393,19 @@ class GuildCharacterService extends LaDanseService
         }
 
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_EDIT,
+                $claim->getAccount(),
+                array(
+                    'character'   => $claim->getCharacter()->getName(),
+                    'playsTank'   => $playsTank,
+                    'playsHealer' => $playsHealer,
+                    'playsDPS'    => $playsDPS
+                ))
+        );
     }
 
     public function endClaim($claimId)
@@ -403,6 +427,16 @@ class GuildCharacterService extends LaDanseService
         }
 
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_REMOVE,
+                $claim->getAccount(),
+                array(
+                    'character'   => $claim->getCharacter()->getName()
+                ))
+        );
     }
 
     public function endClaimsForCharacter($character)
@@ -455,6 +489,17 @@ class GuildCharacterService extends LaDanseService
         $em->persist($character);
         $em->persist($version);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHARACTER_CREATE,
+                null,
+                array(
+                    'character'   => $name,
+                )
+            )
+        );
     }
 
     public function updateCharacter($id, $name, $level, $gameRace, $gameClass)
@@ -468,11 +513,20 @@ class GuildCharacterService extends LaDanseService
         /* @var $character \LaDanse\DomainBundle\Entity\Character */
         $character = $charRepo->find($id);
 
+        $oldCharacter = clone($character);
+
+        /**
+         * @var $oldCharacterVersion CharacterVersion
+         */
+        $oldCharacterVersion = null;
+
         foreach($character->getVersions() as $charVersion)
         {
             if (is_null($charVersion->getEndTime()))
             {
                 $charVersion->setEndTime($updateInstant);
+
+                $oldCharacterVersion = clone($charVersion);
             }
         }
 
@@ -486,6 +540,20 @@ class GuildCharacterService extends LaDanseService
         $em->persist($character);
         $em->persist($version);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHARACTER_UPDATE,
+                null,
+                array(
+                    'oldName'   => $oldCharacter->getName(),
+                    'oldLevel'  => $oldCharacterVersion->getLevel(),
+                    'newName'   => $name,
+                    'newLevel'  => $level
+                )
+            )
+        );
     }
 
     protected function charactersToDtoArray($characters, \DateTime $onDateTime)
