@@ -46,11 +46,7 @@ class MenuController extends LaDanseController
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::MENU_VIEW,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'someProperty' => 'someValue'
-                )
-            )
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->render('LaDanseSiteBundle:menu:menu.html.twig');
