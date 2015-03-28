@@ -267,6 +267,14 @@ class ICalController extends LaDanseController
             $description = $description . $comment->getMessage();
         }
 
+        if (($event->getDescription() !== null || strlen($event->getDescription()) > 0)
+            or
+            ($commentGroup->getComments()->count() > 0))
+        {
+            $description = $description . "\n\n";
+            $description = $description . $this->generateUrl('viewEvent', array('id' => $event->getId()), true);
+        }
+
         return $description;
     }
 }
