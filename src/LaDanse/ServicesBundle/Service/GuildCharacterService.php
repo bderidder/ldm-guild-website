@@ -10,6 +10,10 @@ use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -25,6 +29,12 @@ class GuildCharacterService extends LaDanseService
      * @DI\Inject("monolog.logger.ladanse")
      */
     public $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
 
     /**
      * @param ContainerInterface $container
@@ -290,6 +300,19 @@ class GuildCharacterService extends LaDanseService
 
         $em->persist($claim);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_CREATE,
+                $account,
+                array(
+                    'character'   => $character->getName(),
+                    'playsTank'   => $playsTank,
+                    'playsHealer' => $playsHealer,
+                    'playsDPS'    => $playsDPS
+                ))
+        );
     }
 
     public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
