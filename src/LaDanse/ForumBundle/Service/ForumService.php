@@ -7,6 +7,7 @@
 namespace LaDanse\ForumBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
@@ -16,17 +17,34 @@ use LaDanse\ForumBundle\Entity\Post;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
 
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
+
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class ForumService
  *
  * @package LaDanse\ForumBundle\Service
+ *
+ * @DI\Service(ForumService::SERVICE_NAME, public=true)
  */
 class ForumService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.ForumService';
 
     /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
+
+    /**
      * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
      */
     public function __construct(ContainerInterface $container)
     {
@@ -223,6 +241,7 @@ class ForumService extends LaDanseService
      * @param $account
      * @param $forumId
      * @param $subject
+     * @param $text
      *
      * @return string
      *
@@ -250,6 +269,18 @@ class ForumService extends LaDanseService
 
         $this->createPost($topicId, $account, $text);
 
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::FORUM_TOPIC_CREATE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                array(
+                    'forumId'      => $forumId,
+                    'topicSubject' => $subject,
+                    'forumName'    => $forum->getName()
+                ))
+        );
+
         return $topicId;
     }
 
@@ -274,6 +305,18 @@ class ForumService extends LaDanseService
         {
             $em->remove($topic);
             $em->flush();
+
+            $this->eventDispatcher->dispatch(
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::FORUM_TOPIC_REMOVE,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                    array(
+                        'topicId'      => $topicId,
+                        'topicSubject' => $topic->getSubject(),
+                        'forumName'    => $topic->getForum()->getName()
+                    ))
+            );
         }
     }
 
@@ -311,6 +354,19 @@ class ForumService extends LaDanseService
 
             $em->persist($post);
             $em->flush();
+
+            $this->eventDispatcher->dispatch(
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::FORUM_POST_CREATE,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                    array(
+                        'topicId'      => $topicId,
+                        'topicSubject' => $topic->getSubject(),
+                        'forumName'    => $topic->getForum()->getName(),
+                        'message'      => $message
+                    ))
+            );
         }
     }
 
@@ -328,6 +384,8 @@ class ForumService extends LaDanseService
 
         $post = $postRepo->find($postId);
 
+        $oldMessage = $post->getMessage();
+
         if (null === $post)
         {
             throw new PostDoesNotExistException("Post does not exist: " . $postId);
@@ -338,6 +396,20 @@ class ForumService extends LaDanseService
             
             $em->persist($post);
             $em->flush();
+
+            $this->eventDispatcher->dispatch(
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::FORUM_POST_UPDATE,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                    array(
+                        'postId'       => $postId,
+                        'topicSubject' => $post->getTopic()->getSubject(),
+                        'forumName'    => $post->getTopic()->getForum()->getName(),
+                        'oldMessage'   => $oldMessage,
+                        'newMessage'   => $message
+                    ))
+            );
         }
     }
 
@@ -351,20 +423,36 @@ class ForumService extends LaDanseService
         $doc = $this->getDoctrine();
 
         $em = $doc->getManager();
-        $postRepo = $doc->getRepository(Topic::REPOSITORY);
+        $topicRepo = $doc->getRepository(Topic::REPOSITORY);
 
-        $post = $postRepo->find($topicId);
+        $topic = $topicRepo->find($topicId);
 
-        if (null === $post)
+        $oldSubject = $topic->getSubject();
+
+        if (null === $topic)
         {
             throw new TopicDoesNotExistException("Topic does not exist: " . $topicId);
         }
         else
         {
-            $post->setSubject($subject);
+            $topic->setSubject($subject);
 
-            $em->persist($post);
+            $em->persist($topic);
             $em->flush();
+
+            $this->eventDispatcher->dispatch(
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::FORUM_TOPIC_UPDATE,
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                    array(
+                        'topicId'      => $topicId,
+                        'topicSubject' => $topic->getSubject(),
+                        'forumName'    => $topic->getForum()->getName(),
+                        'oldMessage'   => $oldSubject,
+                        'newMessage'   => $subject
+                    ))
+            );
         }
     }
 }
