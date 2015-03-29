@@ -167,4 +167,20 @@ class SignUp
     {
         return $this->type;
     }
+
+    public function toJson()
+    {
+        $simpleRoles = array();
+
+        for($i = 0; $i < $this->roles->count(); $i++)
+        {
+            $simpleRoles[] = $this->roles->get($i)->getRole();
+        }
+
+        return (object) array(
+            'signUpId' => $this->id,
+            'type'     => $this->type,
+            'roles'    => $simpleRoles
+        );
+    }
 }

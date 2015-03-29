@@ -67,6 +67,8 @@ class Event
     protected $signUps;
 
     /**
+     * @var Account $organiser Account
+     *
      * @ORM\ManyToOne(targetEntity="Account")
      * @ORM\JoinColumn(name="organiserId", referencedColumnName="id", nullable=false)
      */
@@ -313,5 +315,18 @@ class Event
     public function getTopicId()
     {
         return $this->topicId;
+    }
+
+    public function toJson()
+    {
+        return (object) array(
+            'eventId'     => $this->id,
+            'name'        => $this->name,
+            'description' => $this->description,
+            'inviteTime'  => $this->inviteTime->format(\DateTime::ISO8601),
+            'startTime'   => $this->startTime->format(\DateTime::ISO8601),
+            'endTime'     => $this->endTime->format(\DateTime::ISO8601),
+            'organiserId' => $this->organiser->getId()
+        );
     }
 }
