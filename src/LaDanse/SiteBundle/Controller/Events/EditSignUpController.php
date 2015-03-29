@@ -98,13 +98,6 @@ class EditSignUpController extends LaDanseController
 
             $this->addToast('Signup updated');
 
-            $this->eventDispatcher->dispatch(
-                ActivityEvent::EVENT_NAME,
-                new ActivityEvent(
-                    ActivityType::SIGNUP_EDIT,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
-            );
-
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
         else
@@ -119,12 +112,16 @@ class EditSignUpController extends LaDanseController
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        $oldSignUpJson = $signUp->toJson();
+
         $signUp->setType($formModel->getType());
 
         foreach($signUp->getRoles() as $origRole)
         {
             $em->remove($origRole);
         }
+
+        $signUp->getRoles()->clear();
 
         if ($formModel->getType() != SignUpType::ABSENCE)
         {
@@ -135,14 +132,27 @@ class EditSignUpController extends LaDanseController
                 $forRole->setSignUp($signUp);
                 $forRole->setRole($strForRole);
 
+                $signUp->addRole($forRole);
+
                 $em->persist($forRole);
             }
         }
 
         $this->logger->info(__CLASS__ . ' update sign up');
 
-        //$em->persist($signUp);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SIGNUP_EDIT,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                array(
+                    'event'     => $signUp->getEvent()->toJson(),
+                    'oldSignUp' => $oldSignUpJson,
+                    'newSignUp' => $signUp->toJson()
+                ))
+        );
     }
 
     private function getCurrentUserSignUp(Event $event)

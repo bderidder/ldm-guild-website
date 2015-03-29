@@ -74,7 +74,11 @@ class RemoveSignUpController extends LaDanseController
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::SIGNUP_DELETE,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                array(
+                    'event'  => $signUp->getEvent()->toJson(),
+                    'signUp' => $signUp->toJson()
+                ))
         );
 
         $this->addToast('Sign up removed');

@@ -99,13 +99,6 @@ class CreateSignUpController extends LaDanseController
 
             $this->addToast('Signed up');
 
-            $this->eventDispatcher->dispatch(
-                ActivityEvent::EVENT_NAME,
-                new ActivityEvent(
-                    ActivityType::SIGNUP_CREATE,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
-            );
-
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
         else
@@ -190,6 +183,8 @@ class CreateSignUpController extends LaDanseController
             $forRole->setSignUp($signUp);
             $forRole->setRole($strForRole);
 
+            $signUp->addRole($forRole);
+
             $em->persist($forRole);
         }
 
@@ -197,6 +192,18 @@ class CreateSignUpController extends LaDanseController
 
         $em->persist($signUp);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SIGNUP_CREATE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                array(
+                    'event'  => $event->toJson(),
+                    'signUp' => $signUp->toJson()
+                )
+            )
+        );
     }
 
     private function getCurrentUserSignUp(Event $event)

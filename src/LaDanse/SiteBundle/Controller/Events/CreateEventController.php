@@ -97,13 +97,6 @@ class CreateEventController extends LaDanseController
 
                 $this->addToast('New event created');
 
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::EVENT_CREATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
-                );
-
                 return $this->redirect($this->generateUrl('calendarIndex'));
             }
             else
@@ -136,6 +129,17 @@ class CreateEventController extends LaDanseController
         $em = $this->getDoctrine()->getManager();
         $em->persist($event);
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::EVENT_CREATE,
+                $authContext->getAccount(),
+                array(
+                    'event' => $event->toJson()
+                )
+            )
+        );
     }
 
     private function modelToEntity($organiser, EventFormModel $formModel, $topicId)

@@ -91,7 +91,11 @@ class RemoveEventController extends LaDanseController
                 ActivityEvent::EVENT_NAME,
                 new ActivityEvent(
                     ActivityType::EVENT_DELETE,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount())
+                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                    array(
+                        'event' => $event->toJson()
+                    )
+                )
             );
 
             return $this->redirect($this->generateUrl('menuIndex'));

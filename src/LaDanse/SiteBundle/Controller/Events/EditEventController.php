@@ -94,20 +94,27 @@ class EditEventController extends LaDanseController
 
         	if ($form->isValid() && $formModel->isValid($errors))
         	{
+                $oldEventJson = $event->toJson();
+
         		$this->modelToEntity($formModel, $event);
 
                 $this->logger->info(__CLASS__ . ' persisting changes to event indexAction');
 
         		$em->flush();
 
-                $this->addToast('Event updated');
-
                 $this->eventDispatcher->dispatch(
                     ActivityEvent::EVENT_NAME,
                     new ActivityEvent(
                         ActivityType::EVENT_EDIT,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
+                        $authContext->getAccount(),
+                        array(
+                            'oldEvent' => $oldEventJson,
+                            'newEvent' => $event->toJson()
+                        )
+                    )
                 );
+
+                $this->addToast('Event updated');
 
         		return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         	}
@@ -121,8 +128,13 @@ class EditEventController extends LaDanseController
     	}
     	else
     	{
-        	return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-						array('event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()), 'form' => $form->createView()));
+        	return $this->render(
+                'LaDanseSiteBundle:events:editEvent.html.twig',
+                array(
+                    'event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()),
+                    'form' => $form->createView()
+                )
+            );
     	}
     }
 
