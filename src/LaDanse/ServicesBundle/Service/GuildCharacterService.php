@@ -255,7 +255,7 @@ class GuildCharacterService extends LaDanseService
                 ActivityType::CHARACTER_REMOVE,
                 null,
                 array(
-                    'character'   => $character->getName()
+                    'character' => $character->getName()
                 )
             )
         );
