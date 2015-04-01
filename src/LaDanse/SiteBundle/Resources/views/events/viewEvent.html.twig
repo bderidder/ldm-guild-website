@@ -340,8 +340,11 @@
                     },
                     style: 'qtip-bootstrap',
                     hide: {
-                        event: false,
-                        inactive: 1500
+                        event: 'unfocus',
+                        inactive: false
+                    },
+                    show: {
+                        solo: 'i.signUp'
                     }
                 });
             });
