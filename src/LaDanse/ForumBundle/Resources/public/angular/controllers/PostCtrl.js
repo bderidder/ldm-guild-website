@@ -61,6 +61,12 @@ forumControllers.controller('PostCtrl',
         {
             forumService.markPostAsRead($scope.post.postId);
 
+            if ($scope.markReadTimer != null)
+            {
+                $timeout.cancel($scope.markReadTimer);
+                $scope.markReadTimer = null;
+            }
+
             $scope.updateTopicUnreadPosts();
             $scope.initIsNew();
         }
