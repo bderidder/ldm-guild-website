@@ -7,6 +7,7 @@ var forumApp = angular.module('ForumApp',
         'textAngular',
         'ngAnimate',
         'angularMoment',
+        'angular-inview',
         'forumControllers'
     ]
 );

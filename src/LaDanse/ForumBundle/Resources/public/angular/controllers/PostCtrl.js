@@ -1,14 +1,24 @@
 forumControllers.controller('PostCtrl',
-    function($scope, $routeParams, $rootScope, $http, forumService)
+    function($scope, $routeParams, $rootScope, $http, $timeout, forumService)
     {
         $scope.isEditing = false;
         $scope.isNew = false;
+        $scope.markReadTimer = null;
 
         $scope.initPostCtrl = function(post)
         {
             $scope.post = post;
 
             $scope.initIsNew();
+
+            $scope.$on('$destroy', function ()
+            {
+                if ($scope.markReadTimer != null)
+                {
+                    $timeout.cancel($scope.markReadTimer);
+                    $scope.markReadTimer = null;
+                }
+            });
         };
 
         $scope.canUserEdit = function()
@@ -24,6 +34,27 @@ forumControllers.controller('PostCtrl',
         $scope.cancelPostEditor = function()
         {
             $scope.isEditing = false;
+        }
+
+        $scope.inViewChanged = function(inView)
+        {
+            if (inView && $scope.isNew)
+            {
+                // post is visible and is new
+                $scope.markReadTimer = $timeout(function()
+                {
+                    $scope.markAsReadClicked();
+                    $scope.markReadTimer = null;
+                }, 10000);
+            }
+            else if (!inView && ($scope.markReadTimer != null))
+            {
+                // post is not visible anymore and we have a timer
+                $timeout.cancel($scope.markReadTimer);
+                $scope.markReadTimer = null;
+            }
+
+            console.log("inViewChanged called for " + $scope.post.postId + " - " + inView)
         }
 
         $scope.markAsReadClicked = function()

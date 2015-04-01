@@ -83,7 +83,9 @@
              ng-init="initPostCtrl(post)"
              class="postRepeat">
 
-            <div ng-if="showRead || isNew" class="row postRow">
+            <div ng-if="showRead || isNew"
+                 class="row postRow"
+                 in-view="inViewChanged($inview)">
 
                 <div class="col-md-2">
                     <p>
