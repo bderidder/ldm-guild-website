@@ -2,7 +2,10 @@
 
 namespace LaDanse\ServicesBundle\Notification;
 
+use LaDanse\DomainBundle\Entity\ActivityQueueItem;
+
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 /**
  * @DI\Service(NotificationService::SERVICE_NAME, public=true)
@@ -23,13 +26,30 @@ class NotificationService
      */
     public $doctrine;
 
+    private $notifications = null;
+
+    public function __construct()
+    {
+        $this->notifications[ActivityType::FORUM_TOPIC_CREATE] = 'test';
+        $this->notifications[ActivityType::FORUM_POST_CREATE]  = 'test';
+        $this->notifications[ActivityType::FORUM_POST_UPDATE]  = 'test';
+    }
+
     /**
      * @param $activityType string
      *
      * @return bool
      */
-    protected function hasNotificationsFor($activityType)
+    public function hasNotificationsFor($activityType)
     {
-        return true;
+        return array_key_exists($activityType, $this->notifications);
+    }
+
+    /**
+     * @param $activityQueueItem ActivityQueueItem
+     */
+    public function processForNotification($activityQueueItem)
+    {
+
     }
 }
