@@ -45,7 +45,7 @@ forumControllers.controller('PostCtrl',
                 {
                     $scope.markAsReadClicked();
                     $scope.markReadTimer = null;
-                }, 10000);
+                }, 5000);
             }
             else if (!inView && ($scope.markReadTimer != null))
             {
