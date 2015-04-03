@@ -264,10 +264,19 @@ class ForumService extends LaDanseService
         $topic->setSubject($subject);
         $topic->setForum($forum);
 
+        $post = new Post();
+
+        $post->setId(ResourceHelper::createUUID());
+        $post->setPostDate(new \DateTime());
+        $post->setPoster($account);
+        $post->setMessage($text);
+        $post->setTopic($topic);
+
+        $topic->addPost($post);
+
+        $em->persist($post);
         $em->persist($topic);
         $em->flush();
-
-        $this->createPost($topicId, $account, $text);
 
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
@@ -277,6 +286,7 @@ class ForumService extends LaDanseService
                 array(
                     'forumId'      => $forumId,
                     'topicSubject' => $subject,
+                    'postMessage'  => $text,
                     'forumName'    => $forum->getName()
                 ))
         );
