@@ -17,7 +17,7 @@ class Post
     const REPOSITORY = 'LaDanseForumBundle:Post';
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="postId", type="guid")
      * @ORM\Id
@@ -53,7 +53,7 @@ class Post
     /**
      * Set id
      *
-     * @param guid $id
+     * @param string $id
      * @return Post
      */
     public function setId($id)
@@ -66,7 +66,7 @@ class Post
     /**
      * Get id
      *
-     * @return guid 
+     * @return string
      */
     public function getId()
     {

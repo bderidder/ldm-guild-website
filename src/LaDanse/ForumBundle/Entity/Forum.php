@@ -17,7 +17,7 @@ class Forum
     const REPOSITORY = 'LaDanseForumBundle:Forum';
 
     /**
-     * @var integer
+     * @var string
      *
      * @ORM\Column(name="forumId", type="guid")
      * @ORM\Id
@@ -53,7 +53,7 @@ class Forum
     /**
      * Set id
      *
-     * @param guid $id
+     * @param string $id
      * @return Forum
      */
     public function setId($id)
@@ -66,7 +66,7 @@ class Forum
     /**
      * Get id
      *
-     * @return guid 
+     * @return string
      */
     public function getId()
     {
