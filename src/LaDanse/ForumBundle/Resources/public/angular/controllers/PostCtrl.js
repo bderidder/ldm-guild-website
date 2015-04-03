@@ -53,8 +53,6 @@ forumControllers.controller('PostCtrl',
                 $timeout.cancel($scope.markReadTimer);
                 $scope.markReadTimer = null;
             }
-
-            console.log("inViewChanged called for " + $scope.post.postId + " - " + inView)
         }
 
         $scope.markAsReadClicked = function()
