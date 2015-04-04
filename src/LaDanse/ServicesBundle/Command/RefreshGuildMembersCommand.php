@@ -244,9 +244,10 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      */
     protected function importCharacter($armoryCharacter, $gameRace, $gameClass)
     {
+        /** @var $guildCharacterService GuildCharacterService */
         $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
 
-        $guildCharacterService->importCharacter(
+        $guildCharacterService->createCharacter(
             $armoryCharacter->name,
             $armoryCharacter->level,
             $gameRace,
