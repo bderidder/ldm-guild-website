@@ -33,12 +33,6 @@ class GuildCharacterService extends LaDanseService
     public $logger;
 
     /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    public $eventDispatcher;
-
-    /**
      * @param ContainerInterface $container
      *
      * @DI\InjectParams({
@@ -238,16 +232,6 @@ class GuildCharacterService extends LaDanseService
         return $this->charactersToDtoArray($characters, $onDateTime);
     }
 
-    public function endCharacter($characterId)
-    {
-        /** @var $endCharacterCommand EndCharacterCommand */
-        $endCharacterCommand = $this->get(EndCharacterCommand::SERVICE_NAME);
-
-        $endCharacterCommand->setCharacterId($characterId);
-
-        $endCharacterCommand->run();
-    }
-
     public function getActiveClaimsForAccount($account, \DateTime $onDateTime = null)
     {
 
@@ -304,7 +288,7 @@ class GuildCharacterService extends LaDanseService
      * @param GameRace $gameRace
      * @param GameClass $gameClass
      */
-    public function importCharacter($name, $level, GameRace $gameRace, GameClass $gameClass)
+    public function createCharacter($name, $level, GameRace $gameRace, GameClass $gameClass)
     {
         /** @var $createCharacterCommand CreateCharacterCommand */
         $createCharacterCommand = $this->get(CreateCharacterCommand::SERVICE_NAME);
@@ -336,6 +320,16 @@ class GuildCharacterService extends LaDanseService
         $updateCharacterCommand->setGameClass($gameClass);
 
         $updateCharacterCommand->run();
+    }
+
+    public function endCharacter($characterId)
+    {
+        /** @var $endCharacterCommand EndCharacterCommand */
+        $endCharacterCommand = $this->get(EndCharacterCommand::SERVICE_NAME);
+
+        $endCharacterCommand->setCharacterId($characterId);
+
+        $endCharacterCommand->run();
     }
 
     protected function charactersToDtoArray($characters, \DateTime $onDateTime)
