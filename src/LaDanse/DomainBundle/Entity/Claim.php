@@ -194,4 +194,24 @@ class Claim
     {
         return $this->roles;
     }
+
+    public function containsRole($roleName, \DateTime $onDateTime)
+    {
+        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
+        foreach($this->getRoles() as $playsRole)
+        {
+            if (($playsRole->isRole($roleName))
+                and
+                (($playsRole->getFromTime()->getTimestamp() <= $onDateTime->getTimestamp())
+                    and (is_null($playsRole->getEndTime()) or
+                        ($playsRole->getEndTime()->getTimestamp() > $onDateTime->getTimestamp())))
+            )
+            {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
 }
