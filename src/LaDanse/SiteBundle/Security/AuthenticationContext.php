@@ -3,11 +3,28 @@
 namespace LaDanse\SiteBundle\Security;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
+/**
+ * Class SettingsService
+ * @package LaDanse\ServicesBundle\Service
+ *
+ * @DI\Service(AuthenticationContext::SERVICE_NAME, public=true)
+ */
 class AuthenticationContext extends ContainerAwareClass
 {
-    public function __construct(Container $container)
+    const SERVICE_NAME = 'LaDanse.AuthenticationContext';
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
+     */
+    public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
     }
