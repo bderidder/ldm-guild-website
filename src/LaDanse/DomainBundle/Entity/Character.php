@@ -2,6 +2,8 @@
 
 namespace LaDanse\DomainBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,7 +46,7 @@ class Character
      */
     public function __construct()
     {
-        $this->versions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->versions = new ArrayCollection();
     }
 
     /**

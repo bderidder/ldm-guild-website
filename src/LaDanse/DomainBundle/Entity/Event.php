@@ -37,21 +37,29 @@ class Event
     protected $description;
 
     /**
+     * @var $inviteTime \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $inviteTime;
 
     /**
+     * @var $startTime \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $startTime;
 
     /**
+     * @var $endTime \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $endTime;
 
     /**
+     * @var $lastModifiedTime \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     protected $lastModifiedTime;
