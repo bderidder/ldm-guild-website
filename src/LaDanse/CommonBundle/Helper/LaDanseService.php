@@ -76,4 +76,9 @@ class LaDanseService extends ContainerAware
     {
         return $this->container->get(ContainerInjector::SERVICE_NAME);
     }
+
+    protected function get($serviceName)
+    {
+        return $this->container->get($serviceName);
+    }
 }
