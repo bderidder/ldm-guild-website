@@ -109,10 +109,10 @@ class Comment
     /**
      * Set poster
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $poster
+     * @param Account $poster
      * @return Comment
      */
-    public function setPoster(\LaDanse\DomainBundle\Entity\Account $poster = null)
+    public function setPoster(Account $poster = null)
     {
         $this->poster = $poster;
 
@@ -122,7 +122,7 @@ class Comment
     /**
      * Get poster
      *
-     * @return \LaDanse\DomainBundle\Entity\Account
+     * @return Account
      */
     public function getPoster()
     {
@@ -132,10 +132,10 @@ class Comment
     /**
      * Set CommentGroup
      *
-     * @param \LaDanse\CommentBundle\Entity\CommentGroup $group
+     * @param CommentGroup $group
      * @return Comment
      */
-    public function setGroup(\LaDanse\CommentBundle\Entity\CommentGroup $group = null)
+    public function setGroup(CommentGroup $group = null)
     {
         $this->group = $group;
 

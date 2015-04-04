@@ -80,10 +80,10 @@ class CommentGroup
     /**
      * Add posts
      *
-     * @param \LaDanse\CommentBundle\Entity\Comment $comment
+     * @param Comment $comment
      * @return CommentGroup
      */
-    public function addComment(\LaDanse\CommentBundle\Entity\Comment $comment)
+    public function addComment(Comment $comment)
     {
         $this->comments[] = $comment;
 
@@ -93,9 +93,9 @@ class CommentGroup
     /**
      * Remove posts
      *
-     * @param \LaDanse\CommentBundle\Entity\Comment $comment
+     * @param Comment $comment
      */
-    public function removeComment(\LaDanse\CommentBundle\Entity\Comment $comment)
+    public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
     }
