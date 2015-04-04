@@ -3,17 +3,19 @@
 namespace LaDanse\ServicesBundle\Service;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
-use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Character;
-use LaDanse\DomainBundle\Entity\CharacterVersion;
-use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\DomainBundle\Entity\PlaysRole;
+use LaDanse\DomainBundle\Entity\GameClass;
+use LaDanse\DomainBundle\Entity\GameRace;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CreateCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CreateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\EndCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\EndClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateClaimCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -238,27 +240,12 @@ class GuildCharacterService extends LaDanseService
 
     public function endCharacter($characterId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(Character::REPOSITORY);
+        /** @var $endCharacterCommand EndCharacterCommand */
+        $endCharacterCommand = $this->get(EndCharacterCommand::SERVICE_NAME);
 
-        $character = $repo->find($characterId);
+        $endCharacterCommand->setCharacterId($characterId);
 
-        $character->setEndTime(new \DateTime());
-
-        $em->flush();
-
-        $this->endClaimsForCharacter($character);
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CHARACTER_REMOVE,
-                null,
-                array(
-                    'character' => $character->getName()
-                )
-            )
-        );
+        $endCharacterCommand->run();
     }
 
     public function getActiveClaimsForAccount($account, \DateTime $onDateTime = null)
@@ -273,287 +260,82 @@ class GuildCharacterService extends LaDanseService
 
     public function createClaim($accountId, $characterId, $playsTank, $playsHealer, $playsDPS)
     {
-        $onDateTime = new \DateTime();
+        /** @var $createClaimCommand CreateClaimCommand */
+        $createClaimCommand = $this->get(CreateClaimCommand::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $createClaimCommand->setAccountId($accountId);
+        $createClaimCommand->setCharacterId($characterId);
+        $createClaimCommand->setPlaysTank($playsTank);
+        $createClaimCommand->setPlaysHealer($playsHealer);
+        $createClaimCommand->setPlaysDPS($playsDPS);
 
-        /* @var $characterRepo \Doctrine\ORM\EntityRepository */
-        $characterRepo = $em->getRepository(Character::REPOSITORY);
-        /* @var $character \LaDanse\DomainBundle\Entity\Character */
-        $character = $characterRepo->find($characterId);
-
-        /* @var $accountRepo \Doctrine\ORM\EntityRepository */
-        $accountRepo = $em->getRepository(Account::REPOSITORY);
-        /* @var $account \LaDanse\DomainBundle\Entity\Account */
-        $account = $accountRepo->find($accountId);
-
-        $claim = new Claim();
-        $claim->setCharacter($character)
-              ->setAccount($account)
-              ->setFromTime($onDateTime);
-
-        if ($playsTank)
-        {
-            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
-        }
-        
-        if ($playsHealer)
-        {
-            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::HEALER));
-        }
-
-        if ($playsDPS)
-        {
-            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
-        }
-
-        $this->logger->info(__CLASS__ . ' persisting new claim');
-
-        $em->persist($claim);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CLAIM_CREATE,
-                $account,
-                array(
-                    'character'   => $character->getName(),
-                    'playsTank'   => $playsTank,
-                    'playsHealer' => $playsHealer,
-                    'playsDPS'    => $playsDPS
-                ))
-        );
+        $createClaimCommand->run();
     }
 
     public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
     {
-        $onDateTime = new \DateTime();
+        /** @var $updateClaimCommand UpdateClaimCommand */
+        $updateClaimCommand = $this->get(UpdateClaimCommand::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $updateClaimCommand->setClaimId($claimId);
+        $updateClaimCommand->setPlaysTank($playsTank);
+        $updateClaimCommand->setPlaysHealer($playsHealer);
+        $updateClaimCommand->setPlaysDPS($playsDPS);
 
-        /* @var $claimRepo \Doctrine\ORM\EntityRepository */
-        $claimRepo = $em->getRepository(Claim::REPOSITORY);
-        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
-        $claim = $claimRepo->find($claimId);
-
-        $notCurrentPlaysTank = true;
-        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
-        foreach($claim->getRoles() as $playsRole)
-        {
-            if ($playsRole->getRole() == Role::TANK
-                and is_null($playsRole->getEndTime()))
-            {
-                $notCurrentPlaysTank = false;
-
-                if (!$playsTank)
-                {
-                    $playsRole->setEndTime($onDateTime);
-
-                    $this->logger->info(__CLASS__ . ' removed TANK role from claim ' . $claimId);
-                }
-            }
-        }
-
-        if ($notCurrentPlaysTank && $playsTank)
-        {
-            $em->persist($this->createPlaysRole($onDateTime, $claim, Role::TANK));
-        }
-
-        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
-        foreach($claim->getRoles() as $playsRole)
-        {
-            if ($playsRole->isRole(Role::HEALER) && !$playsHealer)
-            {
-                $playsRole->setEndTime($onDateTime);
-
-                $this->logger->info(__CLASS__ . ' removed HEALER role from claim ' . $claimId);
-            }
-
-            if (!$playsRole->isRole(Role::HEALER) && $playsHealer)
-            {
-                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::HEALER));
-
-                $this->logger->info(__CLASS__ . ' added HEALER role to claim ' . $claimId);
-            }
-
-            if ($playsRole->isRole(Role::DPS) && !$playsDPS)
-            {
-                $playsRole->setEndTime($onDateTime);
-
-                $this->logger->info(__CLASS__ . ' removed DPS role from claim ' . $claimId);
-            }
-
-            if (!$playsRole->isRole(Role::DPS) && $playsDPS)
-            {
-                $em->persist($this->createPlaysRole($onDateTime, $claim, Role::DPS));
-
-                $this->logger->info(__CLASS__ . ' added DPS role to claim ' . $claimId);
-            }
-        }
-
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CLAIM_EDIT,
-                $claim->getAccount(),
-                array(
-                    'character'   => $claim->getCharacter()->getName(),
-                    'playsTank'   => $playsTank,
-                    'playsHealer' => $playsHealer,
-                    'playsDPS'    => $playsDPS
-                ))
-        );
+        $updateClaimCommand->run();
     }
 
+    /**
+     * @param int $claimId
+     */
     public function endClaim($claimId)
     {
-        $onDateTime = new \DateTime();
+        /** @var $endClaimCommand EndClaimCommand */
+        $endClaimCommand = $this->get(EndClaimCommand::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $endClaimCommand->setClaimId($claimId);
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(Claim::REPOSITORY);
-        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
-        $claim = $repository->find($claimId);
-
-        $claim->setEndTime($onDateTime);
-
-        foreach($claim->getRoles() as $playsRole)
-        {
-            $playsRole->setEndTime($onDateTime);
-        }
-
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CLAIM_REMOVE,
-                $claim->getAccount(),
-                array(
-                    'character'   => $claim->getCharacter()->getName()
-                ))
-        );
+        $endClaimCommand->run();
     }
 
-    public function endClaimsForCharacter($character)
+    /**
+     * @param string $name
+     * @param int $level
+     * @param GameRace $gameRace
+     * @param GameClass $gameClass
+     */
+    public function importCharacter($name, $level, GameRace $gameRace, GameClass $gameClass)
     {
-        $onDateTime = new \DateTime();
+        /** @var $createCharacterCommand CreateCharacterCommand */
+        $createCharacterCommand = $this->get(CreateCharacterCommand::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $createCharacterCommand->setName($name);
+        $createCharacterCommand->setLevel($level);
+        $createCharacterCommand->setGameRace($gameRace);
+        $createCharacterCommand->setGameClass($gameClass);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaimsForCharacter.sql.twig')
-        );
-
-        $query->setParameter('character', $character);
-
-        $claims = $query->getResult();
-
-        /* @var $claim \LaDanse\DomainBundle\Entity\Claim */
-        foreach($claims as $claim)
-        {
-            $claim->setEndTime($onDateTime);
-
-            /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
-            foreach($claim->getRoles() as $playsRole)
-            {
-                $playsRole->setEndTime($onDateTime);
-            }
-        }
-
-        $em->flush();
+        $createCharacterCommand->run();
     }
 
-    public function importCharacter($name, $level, $gameRace, $gameClass)
+    /**
+     * @param int $characterId
+     * @param string $name
+     * @param int $level
+     * @param GameRace $gameRace
+     * @param GameClass $gameClass
+     */
+    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass)
     {
-        $importInstant = new \DateTime();
+        /** @var $updateCharacterCommand UpdateCharacterCommand */
+        $updateCharacterCommand = $this->get(UpdateCharacterCommand::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $updateCharacterCommand->setCharacterId($characterId);
+        $updateCharacterCommand->setName($name);
+        $updateCharacterCommand->setLevel($level);
+        $updateCharacterCommand->setGameRace($gameRace);
+        $updateCharacterCommand->setGameClass($gameClass);
 
-        $character = new Character();
-        $character->setName($name);
-        $character->setFromTime($importInstant);
-
-        $version = new CharacterVersion();
-        $version->setCharacter($character);
-        $version->setLevel($level);
-        $version->setFromTime($importInstant);
-        $version->setGameClass($gameClass);
-        $version->setGameRace($gameRace);
-
-        $em->persist($character);
-        $em->persist($version);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CHARACTER_CREATE,
-                null,
-                array(
-                    'character'   => $name,
-                )
-            )
-        );
-    }
-
-    public function updateCharacter($id, $name, $level, $gameRace, $gameClass)
-    {
-        $updateInstant = new \DateTime();
-
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $charRepo \Doctrine\ORM\EntityRepository */
-        $charRepo = $em->getRepository(Character::REPOSITORY);
-        /* @var $character \LaDanse\DomainBundle\Entity\Character */
-        $character = $charRepo->find($id);
-
-        $oldCharacter = clone($character);
-
-        /**
-         * @var $oldCharacterVersion CharacterVersion
-         */
-        $oldCharacterVersion = null;
-
-        foreach($character->getVersions() as $charVersion)
-        {
-            if (is_null($charVersion->getEndTime()))
-            {
-                $charVersion->setEndTime($updateInstant);
-
-                $oldCharacterVersion = clone($charVersion);
-            }
-        }
-
-        $version = new CharacterVersion();
-        $version->setCharacter($character);
-        $version->setLevel($level);
-        $version->setFromTime($updateInstant);
-        $version->setGameClass($gameClass);
-        $version->setGameRace($gameRace);
-
-        $em->persist($character);
-        $em->persist($version);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::CHARACTER_UPDATE,
-                null,
-                array(
-                    'oldName'   => $oldCharacter->getName(),
-                    'oldLevel'  => $oldCharacterVersion->getLevel(),
-                    'newName'   => $name,
-                    'newLevel'  => $level
-                )
-            )
-        );
+        $updateCharacterCommand->run();
     }
 
     protected function charactersToDtoArray($characters, \DateTime $onDateTime)
@@ -568,36 +350,6 @@ class GuildCharacterService extends LaDanseService
         return $charactersDto;
     }
 
-    protected function createPlaysRole($onDateTime, $claim, $role)
-    {
-        $playsRole = new PlaysRole();
-        $playsRole->setRole($role)
-                  ->setClaim($claim)
-                  ->setFromTime($onDateTime);
-
-        return $playsRole;
-    }
-
-    protected function containsRole($playsRoles, $role, \DateTime $onDateTime)
-    {
-        /* @var $playsRole \LaDanse\DomainBundle\Entity\PlaysRole */
-        foreach($playsRoles as $playsRole)
-        {
-            if (($playsRole->isRole($role))
-                and
-                (($playsRole->getFromTime()->getTimestamp() <= $onDateTime->getTimestamp())
-                    and (is_null($playsRole->getEndTime()) or
-                        ($playsRole->getEndTime()->getTimestamp() > $onDateTime->getTimestamp())))
-                )
-            {
-                return true;
-            }
-
-        }
-
-        return false;
-    }
-
     /* @var $claim \LaDanse\DomainBundle\Entity\Claim
      * @var $onDateTime \DateTime
      * @return object
@@ -608,9 +360,9 @@ class GuildCharacterService extends LaDanseService
             "id"          => $claim->getId(),
             "character"   => $this->characterToDto($claim->getCharacter(), $onDateTime),
             "fromTime"    => $claim->getFromTime(),
-            "playsTank"   => $this->containsRole($claim->getRoles(), Role::TANK, $onDateTime),
-            "playsHealer" => $this->containsRole($claim->getRoles(), Role::HEALER, $onDateTime),
-            "playsDPS"    => $this->containsRole($claim->getRoles(), Role::DPS, $onDateTime),
+            "playsTank"   => $claim->containsRole(Role::TANK, $onDateTime),
+            "playsHealer" => $claim->containsRole(Role::HEALER, $onDateTime),
+            "playsDPS"    => $claim->containsRole(Role::DPS, $onDateTime),
         );
     }
 
