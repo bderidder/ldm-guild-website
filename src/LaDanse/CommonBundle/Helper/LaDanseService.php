@@ -6,6 +6,7 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
+use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -57,7 +58,7 @@ class LaDanseService extends ContainerAware
      */
     protected function getAuthenticationService()
     {
-        return $this->container->get('LaDanse.AuthenticationService');
+        return $this->container->get(AuthenticationService::SERVICE_NAME);
     }
 
     /**
@@ -73,6 +74,6 @@ class LaDanseService extends ContainerAware
      */
     protected function getContainerInjector()
     {
-        return $this->container->get('LaDanse.ContainerInjector');
+        return $this->container->get(ContainerInjector::SERVICE_NAME);
     }
 }

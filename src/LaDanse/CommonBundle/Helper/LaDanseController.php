@@ -6,7 +6,17 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
+use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\SettingsService;
+
+use LaDanse\ForumBundle\Service\ForumService;
+use LaDanse\ForumBundle\Service\ForumStatsService;
+
+use LaDanse\CommentBundle\Service\CommentService;
 
 /**
  * Class LaDanseController
@@ -28,7 +38,7 @@ class LaDanseController extends Controller
      */
     protected function getAuthenticationService()
     {
-        return $this->get('LaDanse.AuthenticationService');
+        return $this->get(AuthenticationService::SERVICE_NAME);
     }
 
     /**
@@ -36,7 +46,7 @@ class LaDanseController extends Controller
      */
     protected function getGuildCharacterService()
     {
-        return $this->get('LaDanse.GuildCharacterService');
+        return $this->get(GuildCharacterService::SERVICE_NAME);
     }
 
     /**
@@ -44,7 +54,7 @@ class LaDanseController extends Controller
      */
     protected function getForumService()
     {
-        return $this->get(\LaDanse\ForumBundle\Service\ForumService::SERVICE_NAME);
+        return $this->get(ForumService::SERVICE_NAME);
     }
 
     /**
@@ -52,7 +62,7 @@ class LaDanseController extends Controller
      */
     protected function getForumStatsService()
     {
-        return $this->get(\LaDanse\ForumBundle\Service\ForumStatsService::SERVICE_NAME);
+        return $this->get(ForumStatsService::SERVICE_NAME);
     }
 
     /**
@@ -60,7 +70,7 @@ class LaDanseController extends Controller
      */
     protected function getCommentService()
     {
-        return $this->get(\LaDanse\CommentBundle\Service\CommentService::SERVICE_NAME);
+        return $this->get(CommentService::SERVICE_NAME);
     }
 
     /**
@@ -68,7 +78,7 @@ class LaDanseController extends Controller
      */
     protected function getSettingsService()
     {
-        return $this->get(\LaDanse\ServicesBundle\Service\SettingsService::SERVICE_NAME);
+        return $this->get(SettingsService::SERVICE_NAME);
     }
 
     /**
@@ -76,7 +86,7 @@ class LaDanseController extends Controller
      */
     protected function getAccountService()
     {
-        return $this->get(\LaDanse\ServicesBundle\Service\AccountService::SERVICE_NAME);
+        return $this->get(AccountService::SERVICE_NAME);
     }
 
     /**
@@ -84,7 +94,7 @@ class LaDanseController extends Controller
      */
     protected function getContainerInjector()
     {
-        return $this->get(\LaDanse\CommonBundle\Helper\ContainerInjector::SERVICE_NAME);
+        return $this->get(ContainerInjector::SERVICE_NAME);
     }
 
     /**
