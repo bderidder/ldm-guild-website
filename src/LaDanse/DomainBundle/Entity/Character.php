@@ -160,4 +160,32 @@ class Character
     {
         return $this->versions;
     }
+
+    /**
+     * Returns the CharacterVersion that is (was) active on the given date
+     *
+     * @param \DateTime $onDateTime
+     *
+     * @return CharacterVersion|null
+     */
+    public function getVersionForDate(\DateTime $onDateTime)
+    {
+        if (is_null($onDateTime))
+        {
+            return $this->versions[count($this->versions) - 1];
+        }
+
+        $activeVersion = null;
+
+        /** @var $version CharacterVersion */
+        foreach($this->versions as $version)
+        {
+            if ($version->isVersionActiveOn($onDateTime))
+            {
+                $activeVersion = $version;
+            }
+        }
+
+        return $activeVersion;
+    }
 }

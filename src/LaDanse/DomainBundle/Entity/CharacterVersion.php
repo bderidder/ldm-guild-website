@@ -157,10 +157,10 @@ class CharacterVersion
     /**
      * Set gameClass
      *
-     * @param \LaDanse\DomainBundle\Entity\GameClass $gameClass
+     * @param GameClass $gameClass
      * @return CharacterVersion
      */
-    public function setGameClass(\LaDanse\DomainBundle\Entity\GameClass $gameClass)
+    public function setGameClass(GameClass $gameClass)
     {
         $this->gameClass = $gameClass;
 
@@ -170,7 +170,7 @@ class CharacterVersion
     /**
      * Get gameClass
      *
-     * @return \LaDanse\DomainBundle\Entity\GameClass 
+     * @return GameClass
      */
     public function getGameClass()
     {
@@ -180,10 +180,10 @@ class CharacterVersion
     /**
      * Set gameRace
      *
-     * @param \LaDanse\DomainBundle\Entity\GameRace $gameRace
+     * @param GameRace $gameRace
      * @return CharacterVersion
      */
-    public function setGameRace(\LaDanse\DomainBundle\Entity\GameRace $gameRace)
+    public function setGameRace(GameRace $gameRace)
     {
         $this->gameRace = $gameRace;
 
@@ -193,10 +193,29 @@ class CharacterVersion
     /**
      * Get gameRace
      *
-     * @return \LaDanse\DomainBundle\Entity\GameRace 
+     * @return GameRace
      */
     public function getGameRace()
     {
         return $this->gameRace;
+    }
+
+    /**
+     * Return true if the given date is within the period of this version
+     *
+     * @param \DateTime $onDateTime
+     *
+     * @return bool
+     */
+    public function isVersionActiveOn(\DateTime $onDateTime)
+    {
+        if (($this->getFromTime() <= $onDateTime)
+            and
+            (($this->getEndTime() > $onDateTime) or is_null($this->getEndTime())))
+        {
+            return true;
+        }
+
+        return false;
     }
 }
