@@ -91,7 +91,7 @@ class SignUpFormModel
 
         if (($this->getType() != SignUpType::ABSENCE) && (count($this->getRoles()) == 0))
         {
-            $form->get('roles')->addError(new FormError('At least one role must be chosen when not signed up up as absent'));
+            $form->get('roles')->addError(new FormError('At least one role must be chosen when not signed up as absent'));
 
             $isValid = false;
         }
