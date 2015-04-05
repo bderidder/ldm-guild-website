@@ -38,6 +38,13 @@ class EventService
      */
     public $container;
 
+    /**
+     * Return the event with the given id
+     *
+     * @param $id int id of event to retrieve
+     *
+     * @return Event
+     */
     public function getEventById($id)
     {
         /* @var $repository \Doctrine\ORM\EntityRepository */
@@ -47,5 +54,35 @@ class EventService
         $event = $repository->find($id);
 
         return $event;
+    }
+
+    public function createEvent()
+    {
+
+    }
+
+    public function updateEvent()
+    {
+
+    }
+
+    public function removeEvent()
+    {
+
+    }
+
+    public function createSignUp()
+    {
+
+    }
+
+    public function updateSignUp()
+    {
+
+    }
+
+    public function removeSignUp()
+    {
+
     }
 }
