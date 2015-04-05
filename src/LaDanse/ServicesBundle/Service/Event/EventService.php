@@ -2,6 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\Event;
 
+use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
@@ -22,7 +23,7 @@ use JMS\DiExtraBundle\Annotation as DI;
  *
  * @DI\Service(EventService::SERVICE_NAME, public=true)
  */
-class EventService
+class EventService extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.EventService';
 
@@ -39,10 +40,16 @@ class EventService
     public $doctrine;
 
     /**
-     * @var $container ContainerInterface
-     * @DI\Inject("service_container")
+     * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
      */
-    public $container;
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
     /**
      * Return the event with the given id
