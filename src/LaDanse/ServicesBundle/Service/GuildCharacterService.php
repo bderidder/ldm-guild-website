@@ -7,6 +7,7 @@ use LaDanse\DomainBundle\Entity\Character;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Service\GuildCharacter\AllGuildCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\EndCharacterCommand;
@@ -46,30 +47,12 @@ class GuildCharacterService extends LaDanseService
 
     public function getAllGuildCharacters(\DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $allGuildCharactersQuery AllGuildCharactersQuery */
+        $allGuildCharactersQuery = $this->get(AllGuildCharactersQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $allGuildCharactersQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectAllGuildCharacters.sql.twig')
-        );
-        $query->setParameter('onDateTime', $onDateTime);
-        
-        $characters = $query->getResult();
-
-        $charModels = array();
-
-        foreach($characters as $character)
-        {
-            $charModels[] = $this->characterToDto($character, $onDateTime);
-        }
-
-        return $charModels;
+        return $allGuildCharactersQuery->run();
     }
 
     public function getGuildCharacter($characterId, \DateTime $onDateTime = null)
@@ -362,6 +345,7 @@ class GuildCharacterService extends LaDanseService
 
     /**
      * @param Character $character
+     * @param \DateTime $onDateTime
      *
      * @return object
      */
