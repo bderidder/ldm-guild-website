@@ -30,16 +30,7 @@ class CreateClaimController extends LaDanseController
      */
     public function createAction(Request $request)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaimsAction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $accountId = $authContext->getAccount()->getId();
+        $accountId = $this->getAccount()->getId();
 
         $formModel = new CreateClaimFormModel();
 

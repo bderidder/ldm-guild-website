@@ -5,7 +5,6 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -18,12 +17,6 @@ class RemoveClaimController extends LaDanseController
     private $logger;
 
     /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
-
-    /**
      * @param string $claimId
      *
      * @return Response
@@ -32,16 +25,7 @@ class RemoveClaimController extends LaDanseController
      */
     public function removeAction($claimId)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $this->getGuildCharacterService()->endClaim($claimId);
+    	$this->getGuildCharacterService()->endClaim($claimId);
 
         return $this->redirect($this->generateUrl('viewClaims'));
     }

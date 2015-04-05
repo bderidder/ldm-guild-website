@@ -30,16 +30,7 @@ class ViewClaimsController extends LaDanseController
      */
     public function viewAction()
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $accountId = $authContext->getAccount()->getId();
+        $accountId = $this->getAccount()->getId();
 
         $claimModel = (object)array(
             "accountId" => $accountId,
