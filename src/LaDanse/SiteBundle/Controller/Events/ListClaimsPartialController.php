@@ -103,7 +103,7 @@ class ListClaimsPartialController extends LaDanseController
 
     private function getClaims($accountId, $role, $onDateTime)
     {
-        $claims = $this->getGuildCharacterService()->getClaims($accountId, $onDateTime);
+        $claims = $this->getGuildCharacterService()->getClaimsForAccount($accountId, $onDateTime);
 
         $claimsDto = array();
 

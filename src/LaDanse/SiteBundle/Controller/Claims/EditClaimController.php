@@ -47,7 +47,7 @@ class EditClaimController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-        $claimModel = $this->getGuildCharacterService()->getClaim($claimId);
+        $claimModel = $this->getGuildCharacterService()->getClaimForId($claimId);
 
         $formModel = new EditClaimFormModel($claimModel);
 

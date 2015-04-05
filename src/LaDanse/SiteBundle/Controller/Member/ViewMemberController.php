@@ -45,7 +45,7 @@ class ViewMemberController extends LaDanseController
 
         $claimModel = (object)array(
             "accountId" => $accountId,
-            "claims"    => $this->getGuildCharacterService()->getClaims($accountId)
+            "claims"    => $this->getGuildCharacterService()->getClaimsForAccount($accountId)
         );
 
         $this->eventDispatcher->dispatch(
