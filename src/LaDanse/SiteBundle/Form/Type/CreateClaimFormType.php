@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Form\Type;
 
 use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Role;
-use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;

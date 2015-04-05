@@ -11,7 +11,7 @@ use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use LaDanse\ServicesBundle\Service\AccountService;
-use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\ServicesBundle\Service\SettingsService;
 
 use LaDanse\ForumBundle\Service\ForumService;
@@ -70,7 +70,7 @@ class LaDanseController extends Controller
     }
 
     /**
-     * @return \LaDanse\ServicesBundle\Service\GuildCharacterService
+     * @return \LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService
      */
     protected function getGuildCharacterService()
     {

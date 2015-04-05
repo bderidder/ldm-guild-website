@@ -7,7 +7,7 @@
 namespace LaDanse\ServicesBundle\Command;
 
 use LaDanse\ServicesBundle\Service\GameDataService;
-use LaDanse\ServicesBundle\Service\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Output\OutputInterface;
