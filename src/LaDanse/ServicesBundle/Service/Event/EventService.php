@@ -4,6 +4,10 @@ namespace LaDanse\ServicesBundle\Service\Event;
 
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
@@ -45,6 +49,8 @@ class EventService
      *
      * @param $id int id of event to retrieve
      *
+     * @throws EventDoesNotExistException if the event does not exist
+     *
      * @return Event
      */
     public function getEventById($id)
@@ -54,6 +60,11 @@ class EventService
 
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($id);
+
+        if (is_null($event))
+        {
+            throw new EventDoesNotExistException('Event does not exist');
+        }
 
         return $event;
     }
@@ -99,9 +110,29 @@ class EventService
 
     }
 
-    public function createSignUp()
+    /**
+     * Create a new signup with the given values
+     *
+     * @param int $eventId
+     * @param Account $account
+     * @param string $signUpType
+     * @param array $roles
+     *
+     * @throws EventDoesNotExistException if the event does not exist
+     * @throws UserAlreadySignedException if the user is already signed
+     * @throws EventInThePastException if the event is in the past
+     */
+    public function createSignUp($eventId, Account $account, $signUpType, $roles = array())
     {
+        /** @var $createSignUpCommand CreateSignUpCommand */
+        $createSignUpCommand = $this->container->get(CreateSignUpCommand::SERVICE_NAME);
 
+        $createSignUpCommand->setEventId($eventId);
+        $createSignUpCommand->setAccount($account);
+        $createSignUpCommand->setSignUpType($signUpType);
+        $createSignUpCommand->setRoles($roles);
+
+        $createSignUpCommand->run();
     }
 
     public function updateSignUp()
