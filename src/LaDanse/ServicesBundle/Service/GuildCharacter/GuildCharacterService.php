@@ -9,18 +9,19 @@ use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
 
-use LaDanse\ServicesBundle\Service\GuildCharacter\AllGuildCharactersQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimForIdQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimsForAccountQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimsForCharacterQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CreateCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CreateClaimCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\EndCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\EndClaimCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\UnclaimedCharactersQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
+
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndClaimCommand;
 
 use JMS\DiExtraBundle\Annotation as DI;
 

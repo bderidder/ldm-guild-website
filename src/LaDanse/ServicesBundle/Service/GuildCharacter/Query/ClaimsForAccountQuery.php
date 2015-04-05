@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter;
+namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
 
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\Role;

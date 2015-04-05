@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter;
+namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
 use LaDanse\DomainBundle\Entity\CharacterVersion;
 use LaDanse\DomainBundle\Entity\GameClass;
