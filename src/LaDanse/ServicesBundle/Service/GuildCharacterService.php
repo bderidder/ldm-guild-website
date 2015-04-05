@@ -2,21 +2,25 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use LaDanse\CommonBundle\Helper\LaDanseService;
-use LaDanse\DomainBundle\Entity\Character;
+
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
-use LaDanse\DomainBundle\Entity\Role;
+
 use LaDanse\ServicesBundle\Service\GuildCharacter\AllGuildCharactersQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimForIdQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimsForAccountQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\ClaimsForCharacterQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\EndCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\EndClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\UnclaimedCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\UpdateClaimCommand;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -45,6 +49,14 @@ class GuildCharacterService extends LaDanseService
         parent::__construct($container);
     }
 
+    /**
+     * Returns an array of all characters in the guild
+     * Properties are taken as valid on the given $onDateTime
+     *
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return mixed
+     */
     public function getAllGuildCharacters(\DateTime $onDateTime = null)
     {
         /** @var $allGuildCharactersQuery AllGuildCharactersQuery */
@@ -55,176 +67,110 @@ class GuildCharacterService extends LaDanseService
         return $allGuildCharactersQuery->run();
     }
 
+    /**
+     * Returns the properties of the character with given $characterId
+     * Properties are taken as valid on the given $onDateTime
+     *
+     * @param $characterId
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return mixed
+     */
     public function getGuildCharacter($characterId, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $guildCharacterQuery GuildCharacterQuery */
+        $guildCharacterQuery = $this->get(GuildCharacterQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $guildCharacterQuery->setCharacterId($characterId);
+        $guildCharacterQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectGuildCharacter.sql.twig')
-        );
-        $query->setParameter('characterName', $characterId);
-        $query->setParameter('onDateTime', $onDateTime);
-        
-        $characters = $query->getResult();
-
-        if (count($characters) == 0)
-        {
-            throw new \Exception('No character could be found at that time.');
-        }
-
-        $character = $characters[0];
-
-        return $this->characterToDto($character, $onDateTime);
+        return $guildCharacterQuery->run();
     }
 
-    public function getClaims($accountId, \DateTime $onDateTime = null)
+    /**
+     * Returns all claims for a given account that are active on the given $onDateTime
+     *
+     * @param $accountId
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return array
+     */
+    public function getClaimsForAccount($accountId, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $claimsForAccountQuery ClaimsForAccountQuery */
+        $claimsForAccountQuery = $this->get(ClaimsForAccountQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $claimsForAccountQuery->setAccountId($accountId);
+        $claimsForAccountQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig')
-        );
-        $query->setParameter('accountId', $accountId);
-        $query->setParameter('onDateTime', $onDateTime);
-        
-        $claims = $query->getResult();
-
-        $claimsModels = array();
-
-        foreach($claims as $claim)
-        {
-            $claimsModels[] = $this->claimToDto($claim, $onDateTime);
-        }
-
-        return $claimsModels;
+        return $claimsForAccountQuery->run();
     }
 
+    /**
+     * Returns all claims for a given account that are active on the given $onDateTime
+     *
+     * @param $characterName
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return array
+     */
     public function getClaimsForCharacter($characterName, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $claimsForCharacterQuery ClaimsForCharacterQuery */
+        $claimsForCharacterQuery = $this->get(ClaimsForCharacterQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $claimsForCharacterQuery->setCharacterName($characterName);
+        $claimsForCharacterQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForCharacter.sql.twig')
-        );
-        $query->setParameter('characterName', $characterName);
-        $query->setParameter('onDateTime', $onDateTime);
-        
-        $claims = $query->getResult();
-
-        $claimsModels = array();
-
-        foreach($claims as $claim)
-        {
-            $claimsModels[] = $this->claimToDto($claim, $onDateTime);
-        }
-
-        return $claimsModels;
+        return $claimsForCharacterQuery->run();
     }
 
-    public function getClaim($claimId, \DateTime $onDateTime = null)
+    /**
+     * Return the claim with given id
+     *
+     * @param $claimId
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return mixed
+     */
+    public function getClaimForId($claimId, \DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $claimForIdQuery ClaimForIdQuery */
+        $claimForIdQuery = $this->get(ClaimForIdQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $claimForIdQuery->setClaimId($claimId);
+        $claimForIdQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig')
-        );
-        $query->setParameter('claimId', $claimId);
-        
-        $claims = $query->getResult();
-
-        if (count($claims) == 0)
-        {
-            return null;
-        }
-
-        $claim = $claims[0];
-        
-        $claimsModel = $this->claimToDto($claim, $onDateTime);
-       
-        return $claimsModel;
+        return $claimForIdQuery->run();
     }
 
-    public function getAllCharacters(\DateTime $onDateTime = null)
-    {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectCharactersForAccount.sql.twig')
-        );
-
-        $query->setParameter('onDateTime', $onDateTime);
-
-        $characters = $query->getResult();
-
-        return $this->charactersToDtoArray($characters, $onDateTime);
-    }
-
+    /**
+     * Return all characters that are not claimed at the given date and time.
+     * Returns an empty array when no such characters exist.
+     *
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return mixed
+     */
     public function getUnclaimedCharacters(\DateTime $onDateTime = null)
     {
-        if ($onDateTime == null)
-        {
-            // when not set, initialize to right now
-            $onDateTime = new \DateTime();
-        }
+        /** @var $unclaimedCharactersQuery UnclaimedCharactersQuery */
+        $unclaimedCharactersQuery = $this->get(UnclaimedCharactersQuery::SERVICE_NAME);
 
-        $em = $this->getDoctrine()->getManager();
+        $unclaimedCharactersQuery->setOnDateTime($onDateTime);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectUnclaimedCharacters.sql.twig')
-        );
-        $query->setParameter('onDateTime', $onDateTime);
-
-        $characters = $query->getResult();
-
-        return $this->charactersToDtoArray($characters, $onDateTime);
+        return $unclaimedCharactersQuery->run();
     }
 
-    public function getActiveClaimsForAccount($account, \DateTime $onDateTime = null)
-    {
-
-    }
-
-    public function getActiveClaimsForCharacter($character, \DateTime $onDateTime = null)
-    {
-
-    }
-
+    /**
+     * Create a new claim for the given $characterId with the values supplied
+     *
+     * @param int $accountId
+     * @param int $characterId
+     * @param bool $playsTank
+     * @param bool $playsHealer
+     * @param bool $playsDPS
+     */
     public function createClaim($accountId, $characterId, $playsTank, $playsHealer, $playsDPS)
     {
         /** @var $createClaimCommand CreateClaimCommand */
@@ -239,6 +185,14 @@ class GuildCharacterService extends LaDanseService
         $createClaimCommand->run();
     }
 
+    /**
+     * Update the existing claim with id $claimId
+     *
+     * @param int $claimId
+     * @param bool $playsTank
+     * @param bool $playsHealer
+     * @param bool $playsDPS
+     */
     public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
     {
         /** @var $updateClaimCommand UpdateClaimCommand */
@@ -253,6 +207,8 @@ class GuildCharacterService extends LaDanseService
     }
 
     /**
+     * End the claim with the given $claimId
+     *
      * @param int $claimId
      */
     public function endClaim($claimId)
@@ -266,6 +222,8 @@ class GuildCharacterService extends LaDanseService
     }
 
     /**
+     * Create a new character with the given name, level, race and class.
+     *
      * @param string $name
      * @param int $level
      * @param GameRace $gameRace
@@ -285,6 +243,8 @@ class GuildCharacterService extends LaDanseService
     }
 
     /**
+     * Update an existing character with $characterId with the given name, level, race and class.
+     *
      * @param int $characterId
      * @param string $name
      * @param int $level
@@ -305,6 +265,11 @@ class GuildCharacterService extends LaDanseService
         $updateCharacterCommand->run();
     }
 
+    /**
+     * End the given character with $characterId
+     *
+     * @param int $characterId
+     */
     public function endCharacter($characterId)
     {
         /** @var $endCharacterCommand EndCharacterCommand */
@@ -313,70 +278,5 @@ class GuildCharacterService extends LaDanseService
         $endCharacterCommand->setCharacterId($characterId);
 
         $endCharacterCommand->run();
-    }
-
-    protected function charactersToDtoArray($characters, \DateTime $onDateTime)
-    {
-        $charactersDto = array();
-
-        foreach($characters as $character)
-        {
-            $charactersDto[] = $this->characterToDto($character, $onDateTime);
-        }
-
-        return $charactersDto;
-    }
-
-    /* @var $claim \LaDanse\DomainBundle\Entity\Claim
-     * @var $onDateTime \DateTime
-     * @return object
-     */
-    protected function claimToDto($claim, \DateTime $onDateTime)
-    {
-        return (object)array(
-            "id"          => $claim->getId(),
-            "character"   => $this->characterToDto($claim->getCharacter(), $onDateTime),
-            "fromTime"    => $claim->getFromTime(),
-            "playsTank"   => $claim->containsRole(Role::TANK, $onDateTime),
-            "playsHealer" => $claim->containsRole(Role::HEALER, $onDateTime),
-            "playsDPS"    => $claim->containsRole(Role::DPS, $onDateTime),
-        );
-    }
-
-    /**
-     * @param Character $character
-     * @param \DateTime $onDateTime
-     *
-     * @return object
-     */
-    protected function characterToDto($character, \DateTime $onDateTime)
-    {
-        $versions = $character->getVersions();
-
-        $activeVersion = $versions[count($versions) - 1];
-
-        foreach($versions as $version)
-        {
-            if ((($version->getFromTime() <= $onDateTime) == 0)
-                and ((($version->getEndTime() > $onDateTime) == 0) or is_null($version->getEndTime())))
-            {
-                $activeVersion = $version;
-            }
-        }
-
-        return (object)array(
-            "id"    => $character->getId(),
-            "fromTime"  => $character->getFromTime(),
-            "name"  => $character->getName(),
-            "level" => $activeVersion->getLevel(),
-            "class" => (object)array(
-                "id"   => $activeVersion->getGameClass()->getId(),
-                "name" => $activeVersion->getGameClass()->getName()
-            ),
-            "race"  => (object)array(
-                "id"   => $activeVersion->getGameRace()->getId(),
-                "name" => $activeVersion->getGameRace()->getName()
-            )
-        );
     }
 }
