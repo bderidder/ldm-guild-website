@@ -2,6 +2,8 @@
 
 namespace LaDanse\ServicesBundle\Service\Event;
 
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
@@ -56,9 +58,35 @@ class EventService
         return $event;
     }
 
-    public function createEvent()
+    /**
+     * Create a new event with the given values
+     *
+     * @param Account $organiser
+     * @param string $name
+     * @param string $description
+     * @param \DateTime $inviteTime
+     * @param \DateTime $startTime
+     * @param \DateTime $endTIme
+     */
+    public function createEvent(
+        Account $organiser,
+        $name,
+        $description,
+        \DateTime $inviteTime,
+        \DateTime $startTime,
+        \DateTime $endTIme)
     {
+        /** @var $createEventCommand CreateEventCommand */
+        $createEventCommand = $this->container->get(CreateEventCommand::SERVICE_NAME);
 
+        $createEventCommand->setOrganiser($organiser);
+        $createEventCommand->setName($name);
+        $createEventCommand->setDescription($description);
+        $createEventCommand->setInviteTime($inviteTime);
+        $createEventCommand->setStartTime($startTime);
+        $createEventCommand->setEndTime($endTIme);
+
+        $createEventCommand->run();
     }
 
     public function updateEvent()
