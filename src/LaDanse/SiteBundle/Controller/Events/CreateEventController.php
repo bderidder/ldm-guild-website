@@ -4,18 +4,14 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -33,12 +29,6 @@ class CreateEventController extends LaDanseController
     private $logger;
 
     /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
-
-    /**
      * @param $request Request
      * @param $onDate string
      *
@@ -48,15 +38,6 @@ class CreateEventController extends LaDanseController
      */
     public function createAction(Request $request, $onDate = \NULL)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         if ($onDate === null)
         {
             $eventDate = new DateTime('tomorrow');
@@ -93,7 +74,7 @@ class CreateEventController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors))
             {
-                $this->persistEvent($authContext, $formModel);
+                $this->persistEvent($this->getAccount(), $formModel);
 
                 $this->addToast('New event created');
 
@@ -116,44 +97,21 @@ class CreateEventController extends LaDanseController
         }
     }
 
-    private function persistEvent(AuthenticationContext $authContext, EventFormModel $formModel)
+    private function persistEvent(Account $account, EventFormModel $formModel)
     {
-        $commentService = $this->getCommentService();
-     
-        $commentGroupId = $commentService->createCommentGroup();
+        /** @var $eventService EventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $event = $this->modelToEntity($authContext->getAccount(), $formModel, $commentGroupId);
+        $eventService->createEvent(
+            $account,
+            $formModel->getName(),
+            $formModel->getDescription(),
+            $this->createDateTime($formModel->getDate(), $formModel->getInviteTime()),
+            $this->createDateTime($formModel->getDate(), $formModel->getStartTime()),
+            $this->createDateTime($formModel->getDate(), $formModel->getEndTime())
+        );
 
         $this->logger->info(__CLASS__ . ' persisting event');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($event);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::EVENT_CREATE,
-                $authContext->getAccount(),
-                array(
-                    'event' => $event->toJson()
-                )
-            )
-        );
-    }
-
-    private function modelToEntity($organiser, EventFormModel $formModel, $topicId)
-    {
-        $event = new Event();
-        $event->setOrganiser($organiser);
-        $event->setName($formModel->getName());
-        $event->setDescription($formModel->getDescription());
-        $event->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()));
-        $event->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()));
-        $event->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()));
-        $event->setTopicId($topicId);
-
-        return $event;
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)
