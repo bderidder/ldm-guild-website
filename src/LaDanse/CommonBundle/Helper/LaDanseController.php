@@ -6,6 +6,7 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -31,6 +32,33 @@ class LaDanseController extends Controller
     protected function getLogger()
     {
         return $this->get('logger');
+    }
+
+    /**
+     * Returns true if the current request is authenticated, false otherwise
+     *
+     * @return bool
+     */
+    protected function isAuthenticated()
+    {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+
+        return $authContext->isAuthenticated();
+    }
+
+    /**
+     * Returns the account that is currently logged in. When not authenticated, returns null.
+     *
+     * @return Account
+     */
+    protected function getAccount()
+    {
+        if ($this->isAuthenticated())
+        {
+            return $this->getAuthenticationService()->getCurrentContext()->getAccount();
+        }
+
+        return null;
     }
 
     /**
