@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
@@ -49,16 +50,7 @@ class CreateSignUpController extends LaDanseController
      */
     public function createAction(Request $request, $id)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-    	if (!$authContext->isAuthenticated())
-    	{
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
-
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-    	}
-
-        $em = $this->getDoctrine();
+    	$em = $this->getDoctrine();
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
 
@@ -81,7 +73,7 @@ class CreateSignUpController extends LaDanseController
         if ($this->getCurrentUserSignUp($event))
         {
             $this->logger->warning(__CLASS__ . ' the user is already subscribed to this event in indexAction',
-                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+                array('event' => $id, 'user' => $this->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }       
@@ -95,7 +87,7 @@ class CreateSignUpController extends LaDanseController
 
         if ($form->isValid() && $formModel->isValid($form))
         {
-            $this->persistSignUp($authContext, $id, $formModel);
+            $this->persistSignUp($this->getAccount(), $id, $formModel);
 
             $this->addToast('Signed up');
 
@@ -174,7 +166,7 @@ class CreateSignUpController extends LaDanseController
         return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
     }
 
-    private function persistSignUp(AuthenticationContext $authContext, $eventId, SignUpFormModel $formModel)
+    private function persistSignUp(Account $account, $eventId, SignUpFormModel $formModel)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -186,7 +178,7 @@ class CreateSignUpController extends LaDanseController
         $signUp = new SignUp();
         $signUp->setEvent($event);
         $signUp->setType($formModel->getType());
-        $signUp->setAccount($authContext->getAccount());
+        $signUp->setAccount($account);
 
         foreach($formModel->getRoles() as $strForRole)
         {

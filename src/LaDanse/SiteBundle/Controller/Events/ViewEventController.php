@@ -39,8 +39,6 @@ class ViewEventController extends LaDanseController
      */
     public function viewAction($id)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
         $currentDateTime = new \DateTime();
 
         /** @var EventService $eventService */
@@ -72,7 +70,7 @@ class ViewEventController extends LaDanseController
                 'LaDanseSiteBundle:events:viewEvent.html.twig',
                 array(
                     'isFuture' => ($event->getInviteTime() > $currentDateTime),
-                    'event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()))
+                    'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()))
             );
         }
     }

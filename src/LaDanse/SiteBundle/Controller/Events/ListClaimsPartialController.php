@@ -39,18 +39,6 @@ class ListClaimsPartialController extends LaDanseController
      */
     public function listAction($eventId, $accountId, $role)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in listClaims');
-
-            return $this->render(
-                'LaDanseSiteBundle:events:listClaims.html.twig',
-                array('error' => 'Not authenticated')
-            );
-        }
-
         $event = $this->getEvent($eventId);
 
         if (null === $event)
@@ -82,7 +70,7 @@ class ListClaimsPartialController extends LaDanseController
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::CLAIMS_LIST,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+                $this->getAccount())
         );
 
         return $this->render(

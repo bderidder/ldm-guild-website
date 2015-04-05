@@ -42,15 +42,6 @@ class RemoveEventController extends LaDanseController
      */
     public function removeAction($id)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
 

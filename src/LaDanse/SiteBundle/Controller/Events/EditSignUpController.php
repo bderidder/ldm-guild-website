@@ -46,16 +46,7 @@ class EditSignUpController extends LaDanseController
      */
     public function createAction(Request $request, $id)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-    	if (!$authContext->isAuthenticated())
-    	{
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in editSignUp');
-
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-    	}
-
-        $em = $this->getDoctrine();
+    	$em = $this->getDoctrine();
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(Event::REPOSITORY);
 
@@ -80,7 +71,7 @@ class EditSignUpController extends LaDanseController
         if (!$currentSignUp)
         {
             $this->logger->warning(__CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
-                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
+                array('event' => $id, 'user' => $this->getAccount()->getId()));
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }       

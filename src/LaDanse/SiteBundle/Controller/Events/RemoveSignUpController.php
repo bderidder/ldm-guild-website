@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\SignUp;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,13 +42,6 @@ class RemoveSignUpController extends LaDanseController
      */
     public function removeAction($id)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         $em = $this->getDoctrine()->getManager();
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(self::EVENT_REPOSITORY);
@@ -65,6 +59,7 @@ class RemoveSignUpController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
 
+        /** @var $signUp SignUp */
         $signUp = $this->getCurrentUserSignUp($event);
 
         $em->remove($signUp);

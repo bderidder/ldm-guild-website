@@ -45,15 +45,6 @@ class EditEventController extends LaDanseController
      */
     public function editAction(Request $request, $id)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in indexAction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
     	$em = $this->getDoctrine()->getManager();
         /* @var $repository \Doctrine\ORM\EntityRepository */
     	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
@@ -74,7 +65,7 @@ class EditEventController extends LaDanseController
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
 
-        if (!($event->getOrganiser()->getId() === $authContext->getAccount()->getId()))
+        if (!($event->getOrganiser()->getId() === $this->getAccount()->getId()))
         {
             $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction');
 
@@ -106,7 +97,7 @@ class EditEventController extends LaDanseController
                     ActivityEvent::EVENT_NAME,
                     new ActivityEvent(
                         ActivityType::EVENT_EDIT,
-                        $authContext->getAccount(),
+                        $this->getAccount(),
                         array(
                             'oldEvent' => $oldEventJson,
                             'newEvent' => $event->toJson()
@@ -121,7 +112,7 @@ class EditEventController extends LaDanseController
             else
             {
                 return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-                        array('event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()),
+                        array('event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()),
                               'form' => $form->createView(),
                               'errors' => $errors));    
             }
@@ -131,7 +122,7 @@ class EditEventController extends LaDanseController
         	return $this->render(
                 'LaDanseSiteBundle:events:editEvent.html.twig',
                 array(
-                    'event' => new EventModel($this->getContainerInjector(), $event, $authContext->getAccount()),
+                    'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()),
                     'form' => $form->createView()
                 )
             );
