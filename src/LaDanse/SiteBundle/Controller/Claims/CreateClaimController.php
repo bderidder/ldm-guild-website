@@ -8,7 +8,6 @@ use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,12 +20,6 @@ class CreateClaimController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
-
-    /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
 
     /**
      * @param $request Request

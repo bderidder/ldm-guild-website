@@ -8,7 +8,6 @@ use LaDanse\SiteBundle\Form\Model\EditClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\EditClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,12 +22,6 @@ class EditClaimController extends LaDanseController
     private $logger;
 
     /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
-
-    /**
      * @param $request Request
      * @param $claimId string
      *
@@ -38,16 +31,7 @@ class EditClaimController extends LaDanseController
      */
     public function editAction(Request $request, $claimId)
     {
-    	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in viewClaims');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
-        $claimModel = $this->getGuildCharacterService()->getClaimForId($claimId);
+    	$claimModel = $this->getGuildCharacterService()->getClaimForId($claimId);
 
         $formModel = new EditClaimFormModel($claimModel);
 
