@@ -3,26 +3,19 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\ForRole;
-use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
-use LaDanse\SiteBundle\Security\AuthenticationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
 /**
- * @Route("/{id}/signup")
+ * @Route("/{eventId}/signup")
 */
 class CreateSignUpController extends LaDanseController
 {
@@ -34,205 +27,111 @@ class CreateSignUpController extends LaDanseController
      */
     private $logger;
 
-    /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
-
 	/**
      * @param $request Request
-     * @param $id string
+     * @param $eventId string
      *
      * @return Response
      *
      * @Route("/create", name="createSignUp")
      */
-    public function createAction(Request $request, $id)
+    public function createAction(Request $request, $eventId)
     {
-    	$em = $this->getDoctrine();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
+        /** @var $eventService EventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
+        $event = null;
 
-        if (null === $event)
+        try
         {
-            $this->logger->warning(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
-
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        } 
-
-        $currentDateTime = new \DateTime();
-        if ($event->getInviteTime() <= $currentDateTime)
-        {
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            $event = $eventService->getEventById($eventId);
         }
-
-        if ($this->getCurrentUserSignUp($event))
+        catch (EventDoesNotExistException $e)
         {
-            $this->logger->warning(__CLASS__ . ' the user is already subscribed to this event in indexAction',
-                array('event' => $id, 'user' => $this->getAccount()->getId()));
+            $this->logger->warning(
+                __CLASS__ . ' the event does not exist in createAction',
+                array("event id" => $eventId)
+            );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
-        }       
+        }
 
         $formModel = new SignUpFormModel();
 
-        $form = $this->createForm(new SignUpFormType(), $formModel, 
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+        $form = $this->createForm(
+            new SignUpFormType(),
+            $formModel,
+            array('attr' => array('class' => 'form-horizontal', 'novalidate' => ''))
+        );
 
         $form->handleRequest($request);
 
         if ($form->isValid() && $formModel->isValid($form))
         {
-            $this->persistSignUp($this->getAccount(), $id, $formModel);
+            try
+            {
+                $eventService->createSignUp(
+                    $eventId,
+                    $this->getAccount(),
+                    $formModel->getType(),
+                    $formModel->getRoles()
+                );
 
-            $this->addToast('Signed up');
+                $this->addToast('Signed up');
+            }
+            catch (\Exception $e)
+            {
+                $this->logger->error(
+                    __CLASS__ . ' could not create sign up',
+                    array("exception" => $e)
+                );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                $this->addToast('Error saving sign up');
+            }
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
         }
         else
         {
-            return $this->render("LaDanseSiteBundle:events:createSignUp.html.twig",
-                array('event' => $event, 'form' => $form->createView()));
+            return $this->render(
+                "LaDanseSiteBundle:events:createSignUp.html.twig",
+                array('event' => $event, 'form' => $form->createView())
+            );
         }
     }
 
     /**
-     * @param $id string
+     * @param $eventId string
      *
      * @return Response
      *
      * @Route("/createabsence", name="createAbsence")
      */
-    public function createAbsenceAction($id)
+    public function createAbsenceAction($eventId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var $eventService EventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        if (!$authContext->isAuthenticated())
+        try
         {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in createAbsenceAction');
+            $eventService->createSignUp(
+                $eventId,
+                $this->getAccount(),
+                SignUpType::ABSENCE
+            );
 
-            return $this->redirect($this->generateUrl('welcomeIndex'));
+            $this->addToast('Absence saved');
+        }
+        catch (\Exception $e)
+        {
+            $this->logger->error(
+                __CLASS__ . ' could not create sign up',
+                array("exception" => $e)
+            );
+
+            $this->addToast('Error saving absence');
         }
 
-        $em = $this->getDoctrine()->getManager();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
-
-        if (null === $event)
-        {
-            $this->logger->warning(__CLASS__ . ' the event does not exist in createAbsenceAction', array("event id" => $id));
-
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        } 
-
-        if ($this->getCurrentUserSignUp($event))
-        {
-            $this->logger->warning(__CLASS__ . ' the user is already subscribed to this event in createAbsenceAction',
-                array('event' => $id, 'user' => $authContext->getAccount()->getId()));
-
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        }
-
-        $signUp = new SignUp();
-        $signUp->setEvent($event);
-        $signUp->setType(SignUpType::ABSENCE);
-        $signUp->setAccount($authContext->getAccount());
-
-        $this->logger->info(__CLASS__ . ' persisting new sign up in createAbsenceAction');
-
-        $em->persist($signUp);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::SIGNUP_CREATE,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'event'  => $event->toJson(),
-                    'signUp' => $signUp->toJson()
-                )
-            )
-        );
-
-        $this->addToast('Absence saved');
-
-        return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
-    }
-
-    private function persistSignUp(Account $account, $eventId, SignUpFormModel $formModel)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($eventId);
-
-        $signUp = new SignUp();
-        $signUp->setEvent($event);
-        $signUp->setType($formModel->getType());
-        $signUp->setAccount($account);
-
-        foreach($formModel->getRoles() as $strForRole)
-        {
-            $forRole = new ForRole();
-        
-            $forRole->setSignUp($signUp);
-            $forRole->setRole($strForRole);
-
-            $signUp->addRole($forRole);
-
-            $em->persist($forRole);
-        }
-
-        $this->logger->info(__CLASS__ . ' persisting new sign up');
-
-        $em->persist($signUp);
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::SIGNUP_CREATE,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'event'  => $event->toJson(),
-                    'signUp' => $signUp->toJson()
-                )
-            )
-        );
-    }
-
-    private function getCurrentUserSignUp(Event $event)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-        $account = $authContext->getAccount();
-
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery('SELECT s ' .
-                                  'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
-                                  'WHERE s.event = :event AND s.account = :account');
-        $query->setParameter('account', $account->getId());
-        $query->setParameter('event', $event->getId());
-
-        $signUps = $query->getResult();
-
-        if (count($signUps) === 0)
-        {
-            return NULL;
-        }
-        else
-        {
-            return $signUps[0];
-        }
+        return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
     }
 }
