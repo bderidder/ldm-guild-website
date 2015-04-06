@@ -87,3 +87,9 @@ div#footer-inner-wrapper, div#content-inner-wrapper {
     width: 100%;
     margin: 0px auto;
 }
+
+blockquote {
+    font-size: 14px;
+    font-style: italic;
+    color: rgb(197, 197, 197);
+}
