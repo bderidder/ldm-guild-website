@@ -29,7 +29,7 @@ abstract class AbstractCommand extends ContainerAware
      *
      * @return string
      */
-    public function renderTemplate($templateName, $data = null)
+    public function renderTemplate($templateName, $data = array())
     {
         $twigEnvironment = $this->container->get('twig');
 
@@ -42,7 +42,7 @@ abstract class AbstractCommand extends ContainerAware
      *
      * @return string
      */
-    public function createSQLFromTemplate($templateName, $data = null)
+    public function createSQLFromTemplate($templateName, $data = array())
     {
         return $this->renderTemplate($templateName, $data);
     }
