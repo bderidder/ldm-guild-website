@@ -78,7 +78,7 @@ class CreateEventController extends LaDanseController
 
                 $this->addToast('New event created');
 
-                return $this->redirect($this->generateUrl('calendarIndex'));
+                return $this->redirect($this->generateUrl('calendarIndex', array('showDate' => $eventDate->format('Ymd'))));
             }
             else
             {
