@@ -4,7 +4,7 @@
 
 {% block memberPageCenteredBody %}
 
-    {{ renderHeader(event.name, path('calendarIndex')) }}
+    {{ renderHeader(event.name, path('calendarIndex', {'showDate': event.startTime|date("Ymd") })) }}
 
 	{% if (not isFuture) %}
 		<div class="alert alert-danger">
