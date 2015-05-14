@@ -36,7 +36,6 @@ class ForumLastVisit
     /**
      * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account")
      * @ORM\JoinColumn(name="accountId", referencedColumnName="id", nullable=false)
-     * @ORM\Id
      */
     private $account;
 
