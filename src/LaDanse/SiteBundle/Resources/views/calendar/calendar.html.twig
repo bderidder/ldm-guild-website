@@ -6,6 +6,6 @@
 
     {{ renderHeader('Calendar') }}
 
-    {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial', {'page': page})) }}
+    {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:indexPartial', {'showDate': showDate})) }}
 
 {% endblock %}

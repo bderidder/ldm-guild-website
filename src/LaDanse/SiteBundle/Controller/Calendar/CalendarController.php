@@ -20,6 +20,8 @@ class CalendarController extends LaDanseController
 {
     const COMPARE_DATE_FORMAT = "Y-m-d";
 
+    const QUERY_DATE_FORMAT = "Ymd";
+
     /**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
@@ -57,18 +59,32 @@ class CalendarController extends LaDanseController
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
-        $page = $this->sanitizePage($request->query->get('page'));
+        $showDateStr = $request->query->get('showDate');
+
+        if ($showDateStr === null)
+        {
+            $showDate = new \DateTime('today');
+        }
+        else
+        {
+            $showDate = \DateTime::createFromFormat(CalendarController::QUERY_DATE_FORMAT, $showDateStr);
+
+            if ($showDate === false)
+            {
+                $showDate = new \DateTime('today');
+            }
+        }
 
         return $this->render('LaDanseSiteBundle:calendar:calendar.html.twig',
-            array('page' => $page)
+            array('showDate' => $showDate)
         );
     }
 
-    public function indexPartialAction($page)
+    public function indexPartialAction(\DateTime $showDate)
     {
         /* @var $startDate \DateTime */
         // fetch the Monday we should start with
-        $startDate = $this->getStartDate($page);
+        $startDate = $this->getStartDate($showDate);
 
         // the algoritm below needs to start on the day before, so we substract a day
         $startDate = $startDate->sub(new \DateInterval("P1D"));
@@ -123,9 +139,21 @@ class CalendarController extends LaDanseController
             $currentDate = $date;
         }
 
+        $previousPageDate = clone $startDate;
+        $previousPageDate->sub(new \DateInterval('P21D'));
+
+        $nextPageDate = clone $startDate;
+        $nextPageDate->add(new \DateInterval('P35D'));
+
+        $todayDate = new \DateTime('today');
+
         return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
-                array('calendarDays' => $calendarDates, 'pager' => $this->createPager($page))
-            );
+                array(
+                    'calendarDays'     => $calendarDates,
+                    'previousPageDate' => $previousPageDate->format(CalendarController::QUERY_DATE_FORMAT),
+                    'todayPageDate'    => $todayDate->format(CalendarController::QUERY_DATE_FORMAT),
+                    'nextPageDate'     => $nextPageDate->format(CalendarController::QUERY_DATE_FORMAT))
+        );
     }
 
     public function tilePartialAction()
@@ -158,9 +186,9 @@ class CalendarController extends LaDanseController
         return $eventModels;
     }
 
-    private function getStartDate($page)
+    private function getStartDate(\DateTime $showDate)
     {
-        $day = date('w');
+        $day = date('w', $showDate->getTimestamp());
 
         if ($day === 0)
         {
@@ -182,56 +210,10 @@ class CalendarController extends LaDanseController
             $day = $day - 1;
         }
 
-        $currentMonthStart = strtotime('-' . $day . ' days');
+        $currentMonthStart = strtotime('-' . $day . ' days', $showDate->getTimestamp());
 
-        if ($page != 0)
-        {
-            $calendarStart = date('d/m/Y', strtotime(($page * 28) .' days', $currentMonthStart));
+        $calendarStart = date('d/m/Y', $currentMonthStart);
 
-            return \DateTime::createFromFormat("d/m/Y", $calendarStart);
-        }
-        else
-        {
-            return \DateTime::createFromFormat("d/m/Y", date('d/m/Y', $currentMonthStart));
-        }
-    }
-
-    private function sanitizePage($strPage)
-    {
-        $intPage = intval($strPage);
-
-        if ($intPage < -10)
-        {
-            $intPage = -10;
-        }
-        elseif ($intPage > 10)
-        {
-            $intPage = 10;
-        }
-
-        return $intPage;
-    }
-
-    private function createPager($page)
-    {
-        if ($page <= -10)
-        {
-            return (object)array(
-                'nextPage' => -9
-            );
-        }
-        elseif ($page >= 10)
-        {
-            return (object)array(
-                'previousPage' => 9
-            );
-        }
-        else
-        {
-            return (object)array(
-                'previousPage' => $page - 1,
-                'nextPage' => $page + 1
-            );
-        }
+        return \DateTime::createFromFormat("d/m/Y", $calendarStart);
     }
 }
