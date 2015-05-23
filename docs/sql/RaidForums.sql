@@ -7,7 +7,7 @@ INSERT INTO Forum (forumId, name, description)
 INSERT INTO Forum (forumId, name, description) 
 	VALUES ('3908cb8b86657cdaf71b020ed0115z24', 'Slagworks', 'Oregorger, Gruul and Blast Furnace');
 INSERT INTO Forum (forumId, name, description) 
-	VALUES ('3908cb8b86657cdaf71b020ed0115z25', 'Black Forge', 'Hans\'gar and Franzok, Flamebender Ka\'graz and Kromog');
+	VALUES ('3908cb8b86657cdaf71b020ed0115z25', 'Black Forge', 'Hans and Franz, Flamebender Ka\'graz and Kromog');
 INSERT INTO Forum (forumId, name, description) 
 	VALUES ('3908cb8b86657cdaf71b020ed0115z26', 'Iron Assembly', 'Beastlord Darmac, Operator Thogar and Iron Maidens');
 INSERT INTO Forum (forumId, name, description) 
