@@ -12,3 +12,13 @@ INSERT INTO Forum (forumId, name, description)
 	VALUES ('3908cb8b86657cdaf71b020ed0115z26', 'Iron Assembly', 'Beastlord Darmac, Operator Thogar and Iron Maidens');
 INSERT INTO Forum (forumId, name, description) 
 	VALUES ('3908cb8b86657cdaf71b020ed0115z27', 'Blackhand', 'Blackhand');
+INSERT INTO Forum (forumId, name, description)
+	VALUES ('3908cb8b86657cdaf71b020ed0115z28', 'Hellbreach', 'Hellfire Assault, Iron Reaver and Kormrok');
+INSERT INTO Forum (forumId, name, description)
+	VALUES ('3908cb8b86657cdaf71b020ed0115z29', 'Halls of Blood', 'Hellfire High Council, Kilrogg Deadeye and Gorefiend');
+INSERT INTO Forum (forumId, name, description)
+	VALUES ('3908cb8b86657cdaf71b020ed0115z30', 'Bastion of Shadows', 'Shadow-Lord Iskar, Socrethar the Eternal and Tyrant Velhari');
+INSERT INTO Forum (forumId, name, description)
+	VALUES ('3908cb8b86657cdaf71b020ed0115z31', 'Destructor''s Rise', 'Fel Lord Zakuun, Xhul''horac and Mannoroth');
+INSERT INTO Forum (forumId, name, description)
+	VALUES ('3908cb8b86657cdaf71b020ed0115z32', 'The Black Gate', 'Archimonde');
