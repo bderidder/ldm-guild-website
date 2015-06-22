@@ -10,8 +10,9 @@
 </ul>
 
 <div>
-    <span class="event-container event-signed">you are signed</span>
-    <span class="event-container event-absent">you signed absent</span>
+    <span class="event-container event-willCome">will come</span>
+    <span class="event-container event-mightCome">might come</span>
+    <span class="event-container event-absent">absent</span>
     <span class="event-container event-notSigned">you haven't signed yet</span>
 </div>
 
@@ -52,8 +53,10 @@
                 {% for event in calendarDay.events %}
                     <a class="event-container-link" href="{{ path('viewEvent', {'id': event.id}) }}">
                         <div class="event-container event-signed
-                            {% if event.signUps.currentUserComes %}
-                                event-signed
+                            {% if event.signUps.currentUserWillCome %}
+                                event-willCome
+                            {% elseif event.signUps.currentUserMightCome %}
+                                event-mightCome
                             {% elseif event.signUps.currentUserAbsent %}
                                 event-absent
                             {% else %}
