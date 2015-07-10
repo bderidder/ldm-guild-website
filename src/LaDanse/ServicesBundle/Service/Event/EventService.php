@@ -8,6 +8,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -107,9 +108,35 @@ class EventService extends LaDanseService
         $createEventCommand->run();
     }
 
-    public function updateEvent()
+    /**
+     * Update an existing event with the new values
+     *
+     * @param int $eventId
+     * @param string $name
+     * @param string $description
+     * @param \DateTime $inviteTime
+     * @param \DateTime $startTime
+     * @param \DateTime $endTIme
+     */
+    public function updateEvent(
+        $eventId,
+        $name,
+        $description,
+        \DateTime $inviteTime,
+        \DateTime $startTime,
+        \DateTime $endTIme)
     {
+        /** @var UpdateEventCommand $updateEventCommand */
+        $updateEventCommand = $this->container->get(UpdateEventCommand::SERVICE_NAME);
 
+        $updateEventCommand->setEventId($eventId);
+        $updateEventCommand->setName($name);
+        $updateEventCommand->setDescription($description);
+        $updateEventCommand->setInviteTime($inviteTime);
+        $updateEventCommand->setStartTime($startTime);
+        $updateEventCommand->setEndTime($endTIme);
+
+        $updateEventCommand->run();
     }
 
     public function removeEvent()

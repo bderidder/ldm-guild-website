@@ -5,17 +5,14 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -28,12 +25,6 @@ class EditEventController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
-
-    /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
 
 	/**
      * @param $request Request
@@ -85,25 +76,9 @@ class EditEventController extends LaDanseController
 
         	if ($form->isValid() && $formModel->isValid($errors))
         	{
-                $oldEventJson = $event->toJson();
-
-        		$this->modelToEntity($formModel, $event);
-
                 $this->logger->info(__CLASS__ . ' persisting changes to event indexAction');
 
-        		$em->flush();
-
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::EVENT_EDIT,
-                        $this->getAccount(),
-                        array(
-                            'oldEvent' => $oldEventJson,
-                            'newEvent' => $event->toJson()
-                        )
-                    )
-                );
+        		$this->updateEvent($formModel, $id);
 
                 $this->addToast('Event updated');
 
@@ -142,13 +117,21 @@ class EditEventController extends LaDanseController
     	return $formModel;
     }
 
-    private function modelToEntity(EventFormModel $formModel, Event $event)
+    private function updateEvent(EventFormModel $formModel, $eventId)
     {
-        $event->setName($formModel->getName());
-        $event->setDescription($formModel->getDescription());
-        $event->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()));
-        $event->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()));
-        $event->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()));
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        $eventService->updateEvent(
+            $eventId,
+            $formModel->getName(),
+            $formModel->getDescription(),
+            $this->createDateTime($formModel->getDate(), $formModel->getInviteTime()),
+            $this->createDateTime($formModel->getDate(), $formModel->getStartTime()),
+            $this->createDateTime($formModel->getDate(), $formModel->getEndTime())
+        );
+
+        $this->logger->info(__CLASS__ . ' persisting event');
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)
