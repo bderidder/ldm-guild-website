@@ -9,7 +9,9 @@ use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
+use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
@@ -169,9 +171,21 @@ class EventService extends LaDanseService
         $createSignUpCommand->run();
     }
 
-    public function updateSignUp()
+    /**
+     * Update an existing sign up with the supplied new information
+     *
+     * @param int $signUpId
+     * @param SignUpFormModel $formModel
+     */
+    public function updateSignUp($signUpId, SignUpFormModel $formModel)
     {
+        /** @var $updateSignUpCommand UpdateSignUpCommand */
+        $updateSignUpCommand = $this->container->get(UpdateSignUpCommand::SERVICE_NAME);
 
+        $updateSignUpCommand->setSignUpId($signUpId);
+        $updateSignUpCommand->setFormModel($formModel);
+
+        $updateSignUpCommand->run();
     }
 
     public function removeSignUp()

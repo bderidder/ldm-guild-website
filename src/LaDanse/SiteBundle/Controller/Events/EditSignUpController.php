@@ -7,6 +7,7 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -100,50 +101,10 @@ class EditSignUpController extends LaDanseController
 
     private function updateSignUp(SignUp $signUp, SignUpFormModel $formModel)
     {
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $oldSignUpJson = $signUp->toJson();
-
-        $signUp->setType($formModel->getType());
-
-        foreach($signUp->getRoles() as $origRole)
-        {
-            $em->remove($origRole);
-        }
-
-        $signUp->getRoles()->clear();
-
-        if ($formModel->getType() != SignUpType::ABSENCE)
-        {
-            foreach($formModel->getRoles() as $strForRole)
-            {
-                $forRole = new ForRole();
-
-                $forRole->setSignUp($signUp);
-                $forRole->setRole($strForRole);
-
-                $signUp->addRole($forRole);
-
-                $em->persist($forRole);
-            }
-        }
-
-        $this->logger->info(__CLASS__ . ' update sign up');
-
-        $em->flush();
-
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::SIGNUP_EDIT,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'event'     => $signUp->getEvent()->toJson(),
-                    'oldSignUp' => $oldSignUpJson,
-                    'newSignUp' => $signUp->toJson()
-                ))
-        );
+        $eventService->updateSignUp($signUp->getId(), $formModel);
     }
 
     private function getCurrentUserSignUp(Event $event)
