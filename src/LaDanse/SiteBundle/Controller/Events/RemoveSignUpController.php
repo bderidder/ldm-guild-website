@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,19 +63,10 @@ class RemoveSignUpController extends LaDanseController
         /** @var $signUp SignUp */
         $signUp = $this->getCurrentUserSignUp($event);
 
-        $em->remove($signUp);
-        $em->flush();
+        /** @var $eventService EventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $this->eventDispatcher->dispatch(
-            ActivityEvent::EVENT_NAME,
-            new ActivityEvent(
-                ActivityType::SIGNUP_DELETE,
-                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'event'  => $signUp->getEvent()->toJson(),
-                    'signUp' => $signUp->toJson()
-                ))
-        );
+        $eventService->removeSignUp($signUp->getId());
 
         $this->addToast('Sign up removed');
 
