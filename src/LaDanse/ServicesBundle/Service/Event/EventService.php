@@ -8,7 +8,9 @@ use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
@@ -141,9 +143,19 @@ class EventService extends LaDanseService
         $updateEventCommand->run();
     }
 
-    public function removeEvent()
+    /**
+     * Remove an event
+     *
+     * @param int $eventId
+     */
+    public function removeEvent($eventId)
     {
+        /** @var RemoveEventCommand $removeEventCommand */
+        $removeEventCommand = $this->container->get(RemoveEventCommand::SERVICE_NAME);
 
+        $removeEventCommand->setEventId($eventId);
+
+        $removeEventCommand->run();
     }
 
     /**
@@ -188,8 +200,18 @@ class EventService extends LaDanseService
         $updateSignUpCommand->run();
     }
 
-    public function removeSignUp()
+    /**
+     * Remove a sign up
+     *
+     * @param int $signUpId
+     */
+    public function removeSignUp($signUpId)
     {
+        /** @var RemoveSignUpCommand $removeSignUpCommand */
+        $removeSignUpCommand = $this->container->get(RemoveSignUpCommand::SERVICE_NAME);
 
+        $removeSignUpCommand->setSignUpId($signUpId);
+
+        $removeSignUpCommand->run();
     }
 }
