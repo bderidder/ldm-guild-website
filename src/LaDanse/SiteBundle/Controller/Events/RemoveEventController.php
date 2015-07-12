@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,29 +66,12 @@ class RemoveEventController extends LaDanseController
                 return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
             }
 
-            $this->getCommentService()->removeCommentGroup($event->getTopicId());
+            /** @var $eventService EventService */
+            $eventService = $this->get(EventService::SERVICE_NAME);
 
-            $em->remove($event);
-
-            $this->logger->warning(
-                __CLASS__ . ' removing event in deleteAction',
-                array("event" => $id)
-            );
-
-            $em->flush();
+            $eventService->removeEvent($event->getId());
 
             $this->addToast('Event removed');
-
-            $this->eventDispatcher->dispatch(
-                ActivityEvent::EVENT_NAME,
-                new ActivityEvent(
-                    ActivityType::EVENT_DELETE,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    array(
-                        'event' => $event->toJson()
-                    )
-                )
-            );
 
             return $this->redirect($this->generateUrl('menuIndex'));
         }
