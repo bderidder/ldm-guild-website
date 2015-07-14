@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Notification;
 use LaDanse\DomainBundle\Entity\ActivityQueueItem;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
 /**
@@ -46,9 +47,9 @@ class NotificationService
     }
 
     /**
-     * @param $activityQueueItem ActivityQueueItem
+     * @param NotificationQueueItem $notificationQueueItem
      */
-    public function processForNotification($activityQueueItem)
+    public function processForNotification(NotificationQueueItem $notificationQueueItem)
     {
 
     }
