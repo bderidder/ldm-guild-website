@@ -8,11 +8,11 @@ use LaDanse\DomainBundle\Entity\ActivityQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
 /**
- * @DI\Service(ActivityQueue::SERVICE_NAME, public=true)
+ * @DI\Service(ActivityStreamQueue::SERVICE_NAME, public=true)
  */
-class ActivityQueue
+class ActivityStreamQueue
 {
-    const SERVICE_NAME = 'LaDanse.ActivityQueue';
+    const SERVICE_NAME = 'LaDanse.ActivityStreamQueue';
 
     /**
      * @var $logger \Monolog\Logger
