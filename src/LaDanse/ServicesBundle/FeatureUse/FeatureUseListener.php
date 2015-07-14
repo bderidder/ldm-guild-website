@@ -8,11 +8,11 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\DomainBundle\Entity\FeatureUse;
 
 /**
- * @DI\Service(ActivityListener::SERVICE_NAME, public=true)
+ * @DI\Service(FeatureUseListener::SERVICE_NAME, public=true)
  */
-class ActivityListener
+class FeatureUseListener
 {
-    const SERVICE_NAME = 'LaDanse.ActivityForFeatureListener';
+    const SERVICE_NAME = 'LaDanse.FeatureUseListener';
 
     /**
      * @var $logger \Monolog\Logger

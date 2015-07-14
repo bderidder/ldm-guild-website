@@ -16,7 +16,7 @@ use \Symfony\Component\Console\Output\OutputInterface;
  * Class ProcessActivityQueueCommand
  * @package LaDanse\ServicesBundle\Command
  */
-class ProcessActivityQueueCommand extends ContainerAwareCommand
+class ActivityStreamQueueCommand extends ContainerAwareCommand
 {
     /**
      * @return void

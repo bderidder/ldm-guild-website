@@ -1,10 +1,11 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Activity;
+namespace LaDanse\ServicesBundle\ActivityStream;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
 use LaDanse\DomainBundle\Entity\ActivityQueueItem;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
 /**
  * @DI\Service(ActivityQueue::SERVICE_NAME, public=true)
