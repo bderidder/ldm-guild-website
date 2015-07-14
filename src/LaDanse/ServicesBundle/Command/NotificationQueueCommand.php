@@ -31,7 +31,7 @@ class NotificationQueueCommand extends ContainerAwareCommand
     {
         $this
             ->setName('ladanse:queue:notifications')
-            ->setDescription('Remove all processed notification items on the queue')
+            ->setDescription('Process notification items on the queue given the command')
             ->addOption(
                 NotificationQueueCommand::OPTION_PURGE,
                 null,
