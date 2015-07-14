@@ -27,13 +27,11 @@ class NotificationService
      */
     public $doctrine;
 
-    private $notifications = null;
+    private $notificators = null;
 
     public function __construct()
     {
-        $this->notifications[ActivityType::FORUM_TOPIC_CREATE] = 'test';
-        $this->notifications[ActivityType::FORUM_POST_CREATE]  = 'test';
-        $this->notifications[ActivityType::FORUM_POST_UPDATE]  = 'test';
+        $this->initNotificators();
     }
 
     /**
@@ -43,7 +41,7 @@ class NotificationService
      */
     public function hasNotificationsFor($activityType)
     {
-        return array_key_exists($activityType, $this->notifications);
+        return array_key_exists($activityType, $this->notificators);
     }
 
     /**
@@ -52,5 +50,12 @@ class NotificationService
     public function processForNotification(NotificationQueueItem $notificationQueueItem)
     {
 
+    }
+
+    private function initNotificators()
+    {
+        $this->notificators[ActivityType::FORUM_TOPIC_CREATE] = 'test';
+        $this->notificators[ActivityType::FORUM_POST_CREATE]  = 'test';
+        $this->notificators[ActivityType::FORUM_POST_UPDATE]  = 'test';
     }
 }
