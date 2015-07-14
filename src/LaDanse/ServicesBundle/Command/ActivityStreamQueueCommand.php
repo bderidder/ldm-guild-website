@@ -6,10 +6,9 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use LaDanse\DomainBundle\Entity\ActivityQueueItem;
-use LaDanse\ServicesBundle\Notification\NotificationService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -18,14 +17,36 @@ use \Symfony\Component\Console\Output\OutputInterface;
  */
 class ActivityStreamQueueCommand extends ContainerAwareCommand
 {
+    const OPTION_PURGE   = 'purge';
+    const OPTION_PROCESS = 'process';
+    const OPTION_LIST    = 'list';
+
     /**
      * @return void
      */
     protected function configure()
     {
         $this
-            ->setName('ladanse:processActivityQueue')
-            ->setDescription('Process all outstanding activities')
+            ->setName('ladanse:queue:activityStream')
+            ->setDescription('Process activity stream items on the queue given the command')
+            ->addOption(
+                NotificationQueueCommand::OPTION_PURGE,
+                null,
+                InputOption::VALUE_NONE,
+                'If set, all processed activity stream items are purged from the queue'
+            )
+            ->addOption(
+                NotificationQueueCommand::OPTION_PROCESS,
+                null,
+                InputOption::VALUE_NONE,
+                'If set, process all activity stream items that have not been processed successfully so far'
+            )
+            ->addOption(
+                NotificationQueueCommand::OPTION_LIST,
+                null,
+                InputOption::VALUE_NONE,
+                'If set, list all the activity stream items that have not been processed successfully so far'
+            )
         ;
     }
 
@@ -37,38 +58,17 @@ class ActivityStreamQueueCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $context = new CommandExecutionContext(
-            $input,
-            $output
-        );
-
-        /* @var $notificationSvc NotificationService */
-        $notificationSvc = $this->getContainer()->get(NotificationService::SERVICE_NAME);
-
-        $em = $this->getContainer()->get('doctrine')->getManager();
-
-        /* @var $queueRepo \Doctrine\ORM\EntityRepository */
-        $queueRepo = $em->getRepository(ActivityQueueItem::REPOSITORY);
-
-        /* @var $items array */
-        $items = $queueRepo->findAll();
-
-        $context->info("Found items: " . count($items));
-
-        /* @var $item ActivityQueueItem */
-        foreach($items as $item)
+        if ($input->getOption(ActivityStreamQueueCommand::OPTION_PROCESS))
         {
-            if ($notificationSvc->hasNotificationsFor($item->getActivityType()))
-            {
-                $context->info(
-                    $item->getActivityType()
-                    . " by "
-                    . $item->getActivityBy()->getDisplayName()
-                    . " on " . $item->getActivityOn()->format("d/m/Y h:i:s")
-                );
 
-                $notificationSvc->processForNotification($item);
-            }
+        }
+        else if ($input->getOption(ActivityStreamQueueCommand::OPTION_PURGE))
+        {
+
+        }
+        else if ($input->getOption(ActivityStreamQueueCommand::OPTION_LIST))
+        {
+
         }
     }
 }
