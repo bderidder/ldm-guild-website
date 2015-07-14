@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\EventListener;
+namespace LaDanse\ServicesBundle\FeatureUse;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
