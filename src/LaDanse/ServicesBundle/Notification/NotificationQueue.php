@@ -72,8 +72,7 @@ class NotificationQueue
         /** @var QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('q')
-            ->from('LaDanseDomainBundle:NotificationQueueItem', 'q')
+        $qb->delete('LaDanseDomainBundle:NotificationQueueItem', 'q')
             ->where($qb->expr()->isNotNull('q.processedOn'));
 
         $query = $qb->getQuery();
@@ -88,34 +87,40 @@ class NotificationQueue
         /** @var QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->delete('LaDanseDomainBundle:NotificationQueueItem', 'q')
+        $qb->select('q')
+            ->from('LaDanseDomainBundle:NotificationQueueItem', 'q')
             ->where($qb->expr()->isNull('q.processedOn'));
 
         $query = $qb->getQuery();
 
-        /* @var $items array */
+        /* @var array $items */
         $items = $query->getResult();
 
-        /* @var $item NotificationQueueItem */
+        /* @var NotificationQueueItem $item */
         foreach($items as $item)
         {
             $this->logger->debug(
-                $item->getActivityType()
-                . " by "
-                . $item->getActivityBy()->getDisplayName()
-                . " on " . $item->getActivityOn()->format("d/m/Y h:i:s")
+                sprintf("%s - processing notification '%s' for %s on %s",
+                    __CLASS__,
+                    $item->getActivityType(),
+                    $item->getActivityBy()->getDisplayName(),
+                    $item->getActivityOn()->format("d/m/Y h:i:s")
+                )
             );
 
             try
             {
                 $this->notificationService->processForNotification($item);
 
-                $item->setProcessedOn(new \DateTime());
+                //$item->setProcessedOn(new \DateTime());
             }
             catch (\Exception $e)
             {
                 $this->logger->error(
-                    __CLASS__ .  ' caught exception: ' . $e->getMessage(),
+                    sprintf("%s - caught exception %s",
+                        __CLASS__,
+                        $e->getMessage()
+                    ),
                     array(
                         'notificationItem' => $item,
                         'exception' => $e
