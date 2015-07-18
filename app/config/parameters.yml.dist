@@ -17,3 +17,4 @@ parameters:
     nodejs_module_path: ["C:\\Users\\bderidder\\AppData\\Roaming\\npm\\node_modules",]
     battlenet_key:      BattleNetAPIKey
     battlenet_secret:   BattleNetAPISecret
+    error_email:        john@example.com
