@@ -17,15 +17,25 @@ monolog:
         main:
             type:         fingers_crossed
             action_level: error
-            handler:      nested
-        nested:
+            handler:      grouped
+        grouped:
+            type:    group
+            members: [streamed, ladanse, buffered]
+        streamed:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
-        console:
-            type:  console
-        latte:
+        buffered:
+            type:    buffer
+            handler: swift
+        swift:
+            type:       swift_mailer
+            from_email: "noreply@ladanse.org"
+            to_email:   "%error_email%"
+            subject:    "An Error Occurred on La Danse website!"
+            level:      debug
+        ladanse:
             type:     stream
             path:     "%kernel.logs_dir%/ladanse.log"
-            level:  debug
+            level:    debug
             channels: [ladanse]
