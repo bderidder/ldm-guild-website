@@ -21,6 +21,8 @@ web/css/*
 web/js/*
 web/images/*
 
+/app/spool
+
 TestCommand.php
 
 ## generic files to ignore
