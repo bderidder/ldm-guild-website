@@ -43,7 +43,7 @@ class FeatureToggle
      * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
-     * @ORM\JoinColumn(name="toggleFor", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="toggleFor", referencedColumnName="id", nullable=false)
      */
     protected $toggleFor;
 
