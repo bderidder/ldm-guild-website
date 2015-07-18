@@ -37,3 +37,9 @@ monolog:
 
 assetic:
     use_controller: true
+
+swiftmailer:
+    transport: "%mailer_transport%"
+    spool:
+        type: file
+        path: "%kernel.root_dir%/spool"
