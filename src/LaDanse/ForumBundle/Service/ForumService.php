@@ -292,6 +292,7 @@ class ForumService extends LaDanseService
                     'topicId'      => $topicId,
                     'topicSubject' => $subject,
                     'message'      => $text,
+                    'forumId'      => $forum->getId(),
                     'forumName'    => $forum->getName()
                 )
             )
@@ -334,6 +335,7 @@ class ForumService extends LaDanseService
                         ),
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
+                        'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName()
                     )
                 )
@@ -389,6 +391,7 @@ class ForumService extends LaDanseService
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
                         'message'      => $message,
+                        'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName()
                     )
                 )
@@ -435,7 +438,9 @@ class ForumService extends LaDanseService
                             'name' => $account->getDisplayName()
                         ),
                         'postId'       => $postId,
+                        'topicId'      => $post->getTopic()->getId(),
                         'topicSubject' => $post->getTopic()->getSubject(),
+                        'forumId'      => $post->getTopic()->getForum()->getId(),
                         'forumName'    => $post->getTopic()->getForum()->getName(),
                         'oldMessage'   => $oldMessage,
                         'newMessage'   => $message
@@ -485,6 +490,7 @@ class ForumService extends LaDanseService
                         ),
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
+                        'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName(),
                         'oldMessage'   => $oldSubject,
                         'newMessage'   => $subject
