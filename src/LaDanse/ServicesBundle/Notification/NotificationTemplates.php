@@ -7,6 +7,7 @@ class NotificationTemplates
     const TEST         = "test";
 
     const TOPIC_CREATE = "topicCreate";
+    const TOPIC_REPLY  = "topicReply";
 
     /**
      * @param string $templatePrefix
