@@ -4,6 +4,8 @@ namespace LaDanse\ServicesBundle\Notification;
 
 class NotificationTemplates
 {
+    const TEST         = "test";
+
     const TOPIC_CREATE = "topicCreate";
 
     /**
