@@ -1,20 +1,27 @@
-<html>
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
 
-<body>
+{% block notificationMessage %}
 
-<h1>Test Notification</h1>
+    <b>{{ data.account.displayName }}</b> performed an activity
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}</span>
 
-<p>This is a test notification for an activity performed by {{ data.account.displayName }}</p>
+    <div class="PostContent">
 
-<p>Activity Data:</p>
+        <code>{{ notificationItem | json_decode() }}</code>
 
-<code>{{ data.activityData | json_encode() }}</code>
+        <code>{{ data | json_decode() }}</code>
 
-<br/>
+    </div>
 
-<p>La Danse Website</p>
+{% endblock %}
 
-</body>
+{% block notificationActions %}
 
+    <a href="{{ url('menuIndex') }}">
+        <div class="button btn-lightGreen">
+            view site
+        </div>
+    </a>
 
-</html>
+{% endblock %}

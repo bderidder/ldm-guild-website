@@ -1,8 +1,13 @@
-Test Notification
+{{ data.account.displayName }}</b> replied to '{{ data.activityData.topicSubject }}'
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
 
-This is a test notification for an activity performed by {{ data.account.displayName }}
+{{ data.activityData.message | raw }}
 
-{{ data|json_encode() }}
+{{ url('forumIndex') }}#/{{ data.activityData.forumId }}/topics/{{ data.activityData.topicId }}
 
 
-La Danse Website
+
+You received this email because of your current notifications settings. You can view or change your
+notification settings at the following URL:
+
+{{ url('editNotifications') }}

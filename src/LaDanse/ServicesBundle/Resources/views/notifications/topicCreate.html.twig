@@ -1,20 +1,29 @@
-<html>
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
 
-<body>
+{% block notificationMessage %}
 
-<h1>Test Notification</h1>
+    <b>{{ data.account.displayName }}</b> posted a new topic in '{{ data.activityData.forumName }}'
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}</span>
 
-<p>This is a test notification for an activity performed by {{ data.account.displayName }}</p>
+    <div class="PostContent">
 
-<p>Activity Data:</p>
+        <b>{{ data.activityData.topicSubject }}</b>
+        <br/>
+        <div>
+            {{ data.activityData.message | raw }}
+        </div>
 
-<code>{{ data.activityData | json_encode() }}</code>
+    </div>
 
-<br/>
+{% endblock %}
 
-<p>La Danse Website</p>
+{% block notificationActions %}
 
-</body>
+    <a href="{{ url('forumIndex') }}#/{{ data.activityData.forumId }}/topics/{{ data.activityData.topicId }}">
+        <div class="button btn-lightGreen">
+            view topic
+        </div>
+    </a>
 
-
-</html>
+{% endblock %}
