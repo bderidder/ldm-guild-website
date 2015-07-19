@@ -86,7 +86,10 @@ class TopicsResource extends LaDanseController
 
         try
         {
-            $this->getForumService()->createPost($topicId, $authContext->getAccount(), $jsonObject->message);
+            $this->getForumService()->createPost(
+                $authContext->getAccount(),
+                $topicId,
+                $jsonObject->message);
         }
         catch (TopicDoesNotExistException $e)
         {
@@ -148,7 +151,11 @@ class TopicsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getForumService()->updateTopic($topicId, $jsonObject->subject);
+        $this->getForumService()->updateTopic(
+            $authContext->getAccount(),
+            $topicId,
+            $jsonObject->subject
+        );
 
         $jsonObject = (object)array(
             "posts" => "test"

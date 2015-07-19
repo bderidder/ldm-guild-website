@@ -99,7 +99,10 @@ class PostsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getForumService()->updatePost($postId, $jsonObject->message);
+        $this->getForumService()->updatePost(
+            $authContext->getAccount(),
+            $postId,
+            $jsonObject->message);
 
         $jsonObject = (object)array(
             "posts" => "test"
