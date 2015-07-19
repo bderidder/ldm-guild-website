@@ -75,11 +75,11 @@ class NotificationService
                 $notificator->processNotificationItem($notificationQueueItem, $notificationContext);
             }
 
-            $this->sendMailsFromContext($notificationContext);
+            $this->sendMailsFromContext($notificationQueueItem, $notificationContext);
         }
     }
 
-    private function sendMailsFromContext(NotificationContext $context)
+    private function sendMailsFromContext(NotificationQueueItem $notificationQueueItem, NotificationContext $context)
     {
         if ($context->mailCount() == 0)
         {
@@ -111,11 +111,17 @@ class NotificationService
                 ->setTo($mail->email)
                 ->setBody($this->renderView(
                     NotificationTemplates::getTxtTemplate($mail->templatePrefix),
-                    array('data' => $mail->data)
+                    array(
+                        'notificationItem' => $notificationQueueItem,
+                        'data'             => $mail->data
+                    )
                 ), 'text/plain; charset=utf-8')
                 ->addPart($this->renderView(
                     NotificationTemplates::getHtmlTemplate($mail->templatePrefix),
-                    array('data' => $mail->data)
+                    array(
+                        'notificationItem' => $notificationQueueItem,
+                        'data'             => $mail->data
+                    )
                 ), 'text/html; charset=utf-8');
 
             $this->container->get('mailer')->send($message);
