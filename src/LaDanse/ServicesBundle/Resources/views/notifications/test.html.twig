@@ -8,9 +8,9 @@
 
     <div class="PostContent">
 
-        <code>{{ notificationItem | json_decode() }}</code>
+        <code>{{ notificationItem | json_encode() }}</code>
 
-        <code>{{ data | json_decode() }}</code>
+        <code>{{ data | json_encode() }}</code>
 
     </div>
 
