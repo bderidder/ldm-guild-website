@@ -5,7 +5,9 @@ namespace LaDanse\ServicesBundle\Notification;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -141,7 +143,8 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::FORUM_POST_CREATE]  = [
-            TestNotificator::SERVICE_NAME
+            ReplyForumPostNotificator::SERVICE_NAME,
+            AllForumPostNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_CREATE]  = [
