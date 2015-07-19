@@ -92,9 +92,9 @@ class FeedbackController extends LaDanseController
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Feedback from La Danse site')
-            ->setFrom('noreply@ladanse.org')
+            ->setFrom(array('noreply@ladanse.org' => 'La Danse Macabre'))
             ->setTo($toEmail)
-            ->addPart($this->renderView(
+            ->setBody($this->renderView(
                     'LaDanseSiteBundle:feedback:email.txt.twig',
                     array('description' => $description, 'account' => $account)
                 ), 'text/plain; charset=utf-8')
