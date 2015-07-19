@@ -1,0 +1,152 @@
+<html>
+
+<head>
+
+    <style>
+
+        #MailContainer
+        {
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 20px;
+            font-family: sans-serif;
+        }
+
+        #ActivityContainer
+        {
+            border: 1px solid grey;
+            padding: 15px;
+        }
+
+        span.activityHour
+        {
+            font-style: italic;
+            font-size: 0.9em;
+            color: grey;
+        }
+
+        #disclaimer
+        {
+            margin-top: 20px;
+            font-size: 0.8em;
+            padding: 10px 10px 10px 10px;
+            background-color: lightgrey;
+        }
+
+        div.GuildTitle
+        {
+            height: 68px;
+            line-height: 68px;
+            background-color: rgb(29,29,29);
+            color: white;
+            margin-bottom: 45px;
+            font-size: 20px;
+        }
+
+        div.PostContent
+        {
+            margin: 15px 5px 15px 5px;
+        }
+
+        #ActionsContainer
+        {
+            margin: 15px 10px 15px 10px;
+            overflow: auto;
+        }
+
+        div.button
+        {
+            min-width: 80px;
+            height: 40px;
+            background-color: red;
+            line-height: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            position: relative;
+            float: left;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            padding: 0 10px 0 10px;
+        }
+
+        .btn-lightGreen
+        {
+            background-color: rgb(153,180,51) !important;
+        }
+
+        .btn-green
+        {
+            background-color: rgb(0,163,0) !important;
+        }
+
+        .btn-darkGreen
+        {
+            background-color: rgb(30,113,69) !important;
+        }
+
+        .btn-magenta
+        {
+            background-color: rgb(255,0,151) !important;
+        }
+
+        .btn-purple
+        {
+            background-color: rgb(126,56,120) !important;
+        }
+
+        .btn-darkBlue
+        {
+            background-color: rgb(43,87,151) !important;
+        }
+
+        .btn-darkOrange
+        {
+            background-color: rgb(218,83,44) !important;
+        }
+
+        .btn-darkRed
+        {
+            background-color: rgb(185,29,71) !important;
+        }
+
+    </style>
+
+    {% block stylesheet %}{% endblock %}
+
+</head>
+
+<body>
+
+<div id="MailContainer">
+
+    <div class="GuildTitle">
+        <div style="position: relative; float: left;">
+            <img src="https://www.ladanse.org/bundles/ladansesite/images/GuildLogo.png" height="85"
+                 style="height: 85px; margin: 10px 15px 0px 10px;">
+        </div>
+        <div style="line-height: 68px; position: relative; float: left;">Guild La Danse Macabre</div>
+    </div>
+
+    <div id="ActivityContainer">
+
+        {% block notificationMessage %}{% endblock %}
+
+    </div>
+
+    <div id="ActionsContainer">
+
+        {% block notificationActions %}{% endblock %}
+
+    </div>
+
+    <div id="disclaimer">
+        You received this email because of your current notifications settings. You can view or change your
+        notification settings by clicking <a href="{{ url('editNotifications') }}">this link</a>.
+    </div>
+
+</div>
+
+</body>
+
+</html>
