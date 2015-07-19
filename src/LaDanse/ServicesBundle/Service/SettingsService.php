@@ -142,7 +142,7 @@ class SettingsService extends LaDanseService
         return (object) array(
             'name'      => $setting->getName(),
             'value'     => $setting->getValue(),
-            'account' => $setting->getAccount()
+            'account'   => $setting->getAccount()
         );
     }
 }
