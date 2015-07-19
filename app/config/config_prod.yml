@@ -31,7 +31,7 @@ monolog:
         swift:
             type:       swift_mailer
             from_email: "noreply@ladanse.org"
-            to_email:   "%error_email%"
+            to_email:   "%admin_email%"
             subject:    "An Error Occurred on La Danse website!"
             level:      debug
         ladanse:
