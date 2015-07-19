@@ -20,27 +20,20 @@ class NotificationContext
     /** @var array $mails  */
     private $mails = array();
 
-    public function addMail($email, $subject, $data, $templatePrefix, $priority = 100)
+    public function addMail($email, $subject, $data, $templatePrefix)
     {
         if (array_key_exists($email, $this->mails))
         {
-            if ($this->mails[$email]->priority < $priority)
-            {
-                $this->addMailToArray($email, $subject, $data, $templatePrefix, $priority);
-            }
-            else
-            {
-                $this->logger->debug(
-                    sprintf("%s - a mail with a higher or equal priority already exists for %s",
-                        __CLASS__,
-                        $email
-                    )
-                );
-            }
+            $this->logger->debug(
+                sprintf("%s - a mail already exists for %s",
+                    __CLASS__,
+                    $email
+                )
+            );
         }
         else
         {
-            $this->addMailToArray($email, $subject, $data, $templatePrefix, $priority);
+            $this->addMailToArray($email, $subject, $data, $templatePrefix);
         }
     }
 
@@ -54,7 +47,7 @@ class NotificationContext
         return array_values($this->mails);
     }
 
-    private function addMailToArray($email, $subject, $data, $templatePrefix, $priority = 100)
+    private function addMailToArray($email, $subject, $data, $templatePrefix)
     {
         $this->logger->debug(
             sprintf("%s - adding new mail for %s with template %s",
@@ -68,8 +61,7 @@ class NotificationContext
             'email'          => $email,
             'subject'        => $subject,
             'data'           => $data,
-            'templatePrefix' => $templatePrefix,
-            'priority'       => $priority
+            'templatePrefix' => $templatePrefix
         );
     }
 }
