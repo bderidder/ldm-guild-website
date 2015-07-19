@@ -88,10 +88,12 @@ class FeedbackController extends LaDanseController
 
     private function sendFeedback($account, $description)
     {
+        $toEmail = $this->container->getParameter('admin_email');
+
         $message = \Swift_Message::newInstance()
             ->setSubject('Feedback from La Danse site')
             ->setFrom('noreply@ladanse.org')
-            ->setTo('bderidder@gmail.com')
+            ->setTo($toEmail)
             ->addPart($this->renderView(
                     'LaDanseSiteBundle:feedback:email.txt.twig',
                     array('description' => $description, 'account' => $account)
