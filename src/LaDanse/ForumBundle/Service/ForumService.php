@@ -289,9 +289,9 @@ class ForumService extends LaDanseService
                         'id'   => $account->getId(),
                         'name' => $account->getDisplayName()
                     ),
-                    'forumId'      => $forumId,
+                    'topicId'      => $topicId,
                     'topicSubject' => $subject,
-                    'postMessage'  => $text,
+                    'message'      => $text,
                     'forumName'    => $forum->getName()
                 )
             )
@@ -388,8 +388,8 @@ class ForumService extends LaDanseService
                         ),
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
-                        'forumName'    => $topic->getForum()->getName(),
-                        'message'      => $message
+                        'message'      => $message,
+                        'forumName'    => $topic->getForum()->getName()
                     )
                 )
             );
