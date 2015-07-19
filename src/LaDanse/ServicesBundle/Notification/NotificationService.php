@@ -139,7 +139,7 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::FORUM_POST_CREATE]  = [
-
+            TestNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_CREATE]  = [
