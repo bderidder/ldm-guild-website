@@ -121,7 +121,9 @@ class NotificationService
     }
 
     /**
-     * @param $templateName
+     * @param string $templateName
+     * @param mixed $params
+     *
      * @return string
      */
     protected function renderView($templateName, $params)
