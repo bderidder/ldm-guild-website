@@ -46,9 +46,11 @@ class CreateTopicNotificator extends AbstractNotificator
             $context->addMail(
                 $setting->account->getEmail(),
                 "Forums - new topic " . $data->topicSubject,
-                $data,
-                NotificationTemplates::TOPIC_CREATE,
-                100
+                array(
+                    'account'      => $queueItem->getActivityBy(),
+                    'activityData' => $queueItem->getData()
+                ),
+                NotificationTemplates::TOPIC_CREATE
             );
         }
     }
