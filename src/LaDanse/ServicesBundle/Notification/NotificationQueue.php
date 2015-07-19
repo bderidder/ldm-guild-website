@@ -112,7 +112,7 @@ class NotificationQueue
             {
                 $this->notificationService->processForNotification($item);
 
-                //$item->setProcessedOn(new \DateTime());
+                $item->setProcessedOn(new \DateTime());
             }
             catch (\Exception $e)
             {
