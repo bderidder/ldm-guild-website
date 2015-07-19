@@ -107,7 +107,7 @@ class NotificationService
                 ->setSubject($mail->subject)
                 ->setFrom(array('noreply@ladanse.org' => 'La Danse Macabre'))
                 ->setTo($mail->email)
-                ->addPart($this->renderView(
+                ->setBody($this->renderView(
                     NotificationTemplates::getTxtTemplate($mail->templatePrefix),
                     array('data' => $mail->data)
                 ), 'text/plain; charset=utf-8')
