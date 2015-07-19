@@ -4,9 +4,11 @@
 
 <h1>Test Notification</h1>
 
-<p>This is a test notification.</p>
+<p>This is a test notification for an activity performed by {{ data.account.displayName }}</p>
 
-<code>{{ data|json_encode() }}</code>
+<p>Activity Data:</p>
+
+<code>{{ data.activityData | json_encode() }}</code>
 
 <br/>
 
