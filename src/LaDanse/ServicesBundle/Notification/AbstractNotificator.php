@@ -4,6 +4,7 @@ namespace LaDanse\ServicesBundle\Notification;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
+use LaDanse\ServicesBundle\Service\SettingsService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -20,6 +21,12 @@ abstract class AbstractNotificator
     public $logger;
 
     /**
+     * @var SettingsService $settingsService
+     * @DI\Inject(SettingsService::SERVICE_NAME)
+     */
+    public $settingsService;
+
+    /**
      * @var ContainerInterface $container
      * @DI\Inject("service_container")
      */
@@ -28,4 +35,22 @@ abstract class AbstractNotificator
     abstract public function processNotificationItem(
         NotificationQueueItem $queueItem,
         NotificationContext $context);
+
+    protected function getEmailsHavingSetting($settingName)
+    {
+        $settings = $this->settingsService->getSettingsForAllAccounts($settingName);
+
+        $emails = array();
+
+        /** @var mixed $setting */
+        foreach($settings as $setting)
+        {
+            if ($setting->value)
+            {
+                $emails[] = $setting->account->getEmail();
+            }
+        }
+
+        return ListFunctions::sortList($emails);
+    }
 }
