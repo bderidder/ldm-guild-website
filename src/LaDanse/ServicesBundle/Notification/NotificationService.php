@@ -105,7 +105,7 @@ class NotificationService
 
             $message = \Swift_Message::newInstance()
                 ->setSubject($mail->subject)
-                ->setFrom('noreply@ladanse.org')
+                ->setFrom('La Danse Macabre <noreply@ladanse.org>')
                 ->setTo($mail->email)
                 ->addPart($this->renderView(
                     NotificationTemplates::getTxtTemplate($mail->templatePrefix),
