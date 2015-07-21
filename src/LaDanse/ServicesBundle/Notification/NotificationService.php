@@ -92,6 +92,8 @@ class NotificationService
             return;
         }
 
+        $fromName = $notificationQueueItem->getActivityBy()->getDisplayName();
+
         $mails = $context->getMails();
 
         /** @var object $mail */
@@ -107,7 +109,7 @@ class NotificationService
 
             $message = \Swift_Message::newInstance()
                 ->setSubject($mail->subject)
-                ->setFrom(array('noreply@ladanse.org' => 'La Danse Macabre'))
+                ->setFrom(array('noreply@ladanse.org' => $fromName))
                 ->setTo($mail->email)
                 ->setBody($this->renderView(
                     NotificationTemplates::getTxtTemplate($mail->templatePrefix),
