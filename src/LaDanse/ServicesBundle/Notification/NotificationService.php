@@ -92,7 +92,7 @@ class NotificationService
             return;
         }
 
-        $fromName = $notificationQueueItem->getActivityBy()->getDisplayName();
+        $fromName = $notificationQueueItem->getActivityBy()->getDisplayName() . " (La Danse)";
 
         $mails = $context->getMails();
 
