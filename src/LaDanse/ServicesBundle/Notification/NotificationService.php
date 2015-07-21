@@ -6,6 +6,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
@@ -156,7 +157,7 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::EVENT_CREATE]  = [
-            TestNotificator::SERVICE_NAME
+            CreateEventNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_DELETE]  = [
