@@ -75,7 +75,7 @@ class ICalController extends LaDanseController
         $vCalendar = new iCal\Calendar('www.ladanse.org');
 
         // we suggest a refresh every 30 minutes
-        $vCalendar->setPublishedTTL('P30M');
+        $vCalendar->setPublishedTTL('PT30M');
 
         $allEvents = $this->getAllEvents($account);
 
@@ -112,8 +112,11 @@ class ICalController extends LaDanseController
             $vCalendar->render(),
             Response::HTTP_OK,
             array(
-                'content-type' => 'text/calendar; charset=utf-8',
-                'content-disposition' => 'attachment; filename="cal.ics"'
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma' => 'no-cache',
+                'Expires' => '0',
+                'Content-Type' => 'text/calendar; charset=utf-8',
+                'Content-Disposition' => 'attachment; filename="cal.ics"'
                 )
         );
     }
