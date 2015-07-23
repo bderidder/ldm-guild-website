@@ -35,8 +35,7 @@ class TestNotificator extends AbstractNotificator
               'account'      => $queueItem->getActivityBy(),
               'activityData' => $queueItem->getData()
             ),
-            NotificationTemplates::TEST,
-            100
+            NotificationTemplates::TEST
         );
     }
 }
