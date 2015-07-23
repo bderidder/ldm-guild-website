@@ -18,24 +18,24 @@ class ActivityEvent extends Event
     /**
      * @var \DateTime
      */
-    protected $activityOn;
+    protected $time;
 
     /**
      * @var Account
      */
-    protected $activityBy;
+    protected $actor;
 
     /**
-     * @var array
+     * @var \stdClass
      */
-    protected $data;
+    protected $object;
 
-    public function __construct($type, Account $usedBy = null, $data = null)
+    public function __construct($type, Account $actor = null, \stdClass $object = null)
     {
         $this->type = $type;
-        $this->activityOn = new \DateTime();
-        $this->activityBy = $usedBy;
-        $this->data = $data;
+        $this->time = new \DateTime();
+        $this->actor = $actor;
+        $this->object = $object;
     }
 
     /**
@@ -57,48 +57,48 @@ class ActivityEvent extends Event
     /**
      * @return \DateTime
      */
-    public function getActivityOn()
+    public function getTime()
     {
-        return $this->activityOn;
+        return $this->time;
     }
 
     /**
-     * @param \DateTime $activityOn
+     * @param \DateTime $time
      */
-    public function setActivityOn($activityOn)
+    public function setTime($time)
     {
-        $this->activityOn = $activityOn;
+        $this->time = $time;
     }
 
     /**
      * @return Account
      */
-    public function getActivityBy()
+    public function getActor()
     {
-        return $this->activityBy;
+        return $this->actor;
     }
 
     /**
-     * @param Account $activityBy
+     * @param Account $actor
      */
-    public function setActivityBy($activityBy)
+    public function setActor($actor)
     {
-        $this->activityBy = $activityBy;
+        $this->actor = $actor;
     }
 
     /**
-     * @return array
+     * @return \stdClass
      */
-    public function getData()
+    public function getObject()
     {
-        return $this->data;
+        return $this->object;
     }
 
     /**
-     * @param array $data
+     * @param \stdClass $object
      */
-    public function setData($data)
+    public function setObject(\stdClass $object)
     {
-        $this->data = $data;
+        $this->object = $object;
     }
 }

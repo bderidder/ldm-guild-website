@@ -37,7 +37,7 @@ class FeatureUseListener
             __CLASS__ . ' received ActivityEvent',
             array(
                 'activity' => $activity->getType(),
-                'data' => $activity->getData()
+                'data' => $activity->getObject()
             )
         );
 
@@ -46,8 +46,8 @@ class FeatureUseListener
         $featureUse = new FeatureUse();
 
         $featureUse->setFeature($activity->getType());
-        $featureUse->setUsedOn($activity->getActivityOn());
-        $featureUse->setUsedBy($activity->getActivityBy());
+        $featureUse->setUsedOn($activity->getTime());
+        $featureUse->setUsedBy($activity->getActor());
 
         $em->persist($featureUse);
         $em->flush();

@@ -39,7 +39,7 @@ class ActivityStreamQueue
             __CLASS__ . ' received ActivityEvent',
             array(
                 'activity' => $activity->getType(),
-                'data' => $activity->getData()
+                'data' => $activity->getObject()
             )
         );
 
@@ -48,9 +48,9 @@ class ActivityStreamQueue
         $newQueueItem = new ActivityQueueItem();
 
         $newQueueItem->setActivityType($activity->getType());
-        $newQueueItem->setActivityOn($activity->getActivityOn());
-        $newQueueItem->setActivityBy($activity->getActivityBy());
-        $newQueueItem->setData($activity->getData());
+        $newQueueItem->setActivityOn($activity->getTime());
+        $newQueueItem->setActivityBy($activity->getActor());
+        $newQueueItem->setData($activity->getObject());
 
         $em->persist($newQueueItem);
         $em->flush();
