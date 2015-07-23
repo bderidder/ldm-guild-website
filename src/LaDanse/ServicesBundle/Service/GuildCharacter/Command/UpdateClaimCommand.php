@@ -2,9 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
-use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
@@ -12,8 +10,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use LaDanse\CommonBundle\Helper\AbstractCommand;
-
-use LaDanse\DomainBundle\Entity\Character;
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -138,6 +134,7 @@ class UpdateClaimCommand extends AbstractCommand
     {
         $onDateTime = new \DateTime();
 
+        /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
 
         /* @var $claimRepo \Doctrine\ORM\EntityRepository */
@@ -163,7 +160,7 @@ class UpdateClaimCommand extends AbstractCommand
         );
     }
 
-    private function checkAndUpdateRole(ObjectManager $em, Claim $claim, $roleName, $willPlayRole, $onDateTime)
+    private function checkAndUpdateRole(EntityManager $em, Claim $claim, $roleName, $willPlayRole, $onDateTime)
     {
         $alreadyPlaysRole = false;
 
