@@ -6,9 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -53,7 +51,7 @@ class CommandExecutionContext
      */
     public function debug($text)
     {
-        if ($this->output->isDebug())
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERY_VERBOSE)
         {
             $this->output->writeln($text);
         }
@@ -72,7 +70,7 @@ class CommandExecutionContext
      */
     public function info($text)
     {
-        if ($this->output->isVerbose())
+        if ($this->output->getVerbosity() == OutputInterface::VERBOSITY_VERBOSE)
         {
             $this->output->writeln($text);
         }
