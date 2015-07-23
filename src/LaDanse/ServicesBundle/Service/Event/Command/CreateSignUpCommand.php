@@ -2,17 +2,14 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
-use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
-use LaDanse\DomainBundle\Entity\SignUpType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 use LaDanse\CommonBundle\Helper\AbstractCommand;
-
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
