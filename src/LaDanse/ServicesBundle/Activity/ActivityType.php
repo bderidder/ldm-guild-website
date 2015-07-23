@@ -2,65 +2,72 @@
 
 namespace LaDanse\ServicesBundle\Activity;
 
+/**
+ * A list of constants to be used as values for ActivityEvent.type
+ *
+ * Class ActivityType
+ *
+ * @package LaDanse\ServicesBundle\Activity
+ */
 class ActivityType
 {
-    const CALENDAR_VIEW = 'Calendar.View';
-    const CALENDAR_ICAL = 'Calendar.iCal';
+    const CALENDAR_VIEW = 'Calendar.View'; // Read Only
+    const CALENDAR_ICAL = 'Calendar.iCal'; // Read Only
 
-    const EVENT_VIEW    = 'Event.View';
-    const EVENT_EDIT    = 'Event.Edit';
-    const EVENT_DELETE  = 'Event.Delete';
-    const EVENT_CREATE  = 'Event.Create';
-    const EVENT_LIST    = 'Event.List';
+    const EVENT_VIEW    = 'Event.View';    // Read Only
+    const EVENT_EDIT    = 'Event.Edit';    // State Change
+    const EVENT_DELETE  = 'Event.Delete';  // State Change
+    const EVENT_CREATE  = 'Event.Create';  // State Change
+    const EVENT_LIST    = 'Event.List';    // Read Only
 
-    const SIGNUP_CREATE = 'Signup.Create';
-    const SIGNUP_EDIT   = 'Signup.Edit';
-    const SIGNUP_DELETE = 'Signup.Delete';
+    const SIGNUP_CREATE = 'Signup.Create'; // State Change
+    const SIGNUP_EDIT   = 'Signup.Edit';   // State Change
+    const SIGNUP_DELETE = 'Signup.Delete'; // State Change
 
-    const CLAIMS_LIST   = 'Claims.List';
+    const CLAIMS_LIST   = 'Claims.List';   // Read Only
 
-    const ABOUT_VIEW    = 'About.View';
+    const ABOUT_VIEW    = 'About.View';    // Read Only
 
-    const GALLERY_VIEW  = 'Gallery.View';
+    const GALLERY_VIEW  = 'Gallery.View';  // Read Only
 
-    const CHARACTER_CREATE = "Character.Create";
-    const CHARACTER_UPDATE = "Character.Update";
-    const CHARACTER_REMOVE = "Character.Remove";
+    const CHARACTER_CREATE = "Character.Create"; // State Change
+    const CHARACTER_UPDATE = "Character.Update"; // State Change
+    const CHARACTER_REMOVE = "Character.Remove"; // State Change
 
-    const CLAIM_CREATE  = 'Claim.Create';
-    const CLAIM_EDIT    = 'Claim.Edit';
-    const CLAIM_REMOVE  = 'Claim.Remove';
-    const CLAIM_VIEW    = 'Claim.View';
+    const CLAIM_VIEW    = 'Claim.View';   // Read Only
+    const CLAIM_CREATE  = 'Claim.Create'; // State Change
+    const CLAIM_EDIT    = 'Claim.Edit';   // State Change
+    const CLAIM_REMOVE  = 'Claim.Remove'; // Read Only
 
-    const MEMBER_VIEW   = 'Member.View';
+    const MEMBER_VIEW   = 'Member.View';  // Read Only
 
-    const FORUM_VIEW         = 'Forum.View';
-    const FORUM_TOPIC_CREATE = "Forum.Topic.Create";
-    const FORUM_TOPIC_REMOVE = "Forum.Topic.Remove";
-    const FORUM_TOPIC_UPDATE = "Forum.Topic.Update";
-    const FORUM_POST_CREATE  = "Forum.Post.Create";
-    const FORUM_POST_UPDATE  = "Forum.Post.Update";
+    const FORUM_VIEW         = 'Forum.View';         // Read Only
+    const FORUM_TOPIC_CREATE = "Forum.Topic.Create"; // State Change
+    const FORUM_TOPIC_REMOVE = "Forum.Topic.Remove"; // State Change
+    const FORUM_TOPIC_UPDATE = "Forum.Topic.Update"; // State Change
+    const FORUM_POST_CREATE  = "Forum.Post.Create";  // State Change
+    const FORUM_POST_UPDATE  = "Forum.Post.Update";  // State Change
 
-    const HELP_VIEW     = 'Help.View';
+    const HELP_VIEW     = 'Help.View';    // Read Only
 
-    const MENU_VIEW     = 'Menu.View';
+    const MENU_VIEW     = 'Menu.View';    // Read Only
 
-    const PRIVACY_VIEW  = 'Privacy.View';
+    const PRIVACY_VIEW  = 'Privacy.View'; // Read Only
 
-    const REGISTRATION_CREATE = 'Registration.Create';
+    const REGISTRATION_CREATE = 'Registration.Create'; // State Change
 
-    const SETTINGS_VIEW             = 'Settings.View';
-    const SETTINGS_PROFILE_VIEW     = 'Settings.Profile.View';
-    const SETTINGS_PROFILE_UPDATE   = 'Settings.Profile.Update';
-    const SETTINGS_PASSWORD_VIEW    = 'Settings.Password.View';
-    const SETTINGS_PASSWORD_UPDATE  = 'Settings.Password.Update';
-    const SETTINGS_CALEXPORT_VIEW   = 'Settings.CalExport.View';
-    const SETTINGS_CALEXPORT_UPDATE = 'Settings.CalExport.Update';
-    const SETTINGS_CALEXPORT_RESET  = 'Settings.CalExport.Reset';
-    const SETTINGS_NOTIF_UPDATE     = 'Settings.Notifications.Update';
+    const SETTINGS_VIEW             = 'Settings.View';                 // Read Only
+    const SETTINGS_PROFILE_VIEW     = 'Settings.Profile.View';         // Read Only
+    const SETTINGS_PROFILE_UPDATE   = 'Settings.Profile.Update';       // State Change
+    const SETTINGS_PASSWORD_VIEW    = 'Settings.Password.View';        // Read Only
+    const SETTINGS_PASSWORD_UPDATE  = 'Settings.Password.Update';      // State Change
+    const SETTINGS_CALEXPORT_VIEW   = 'Settings.CalExport.View';       // Read Only
+    const SETTINGS_CALEXPORT_UPDATE = 'Settings.CalExport.Update';     // State Change
+    const SETTINGS_CALEXPORT_RESET  = 'Settings.CalExport.Reset';      // State Change
+    const SETTINGS_NOTIF_UPDATE     = 'Settings.Notifications.Update'; // State Change
 
-    const TEAMSPEAK_VIEW = 'TeamSpeak.View';
+    const TEAMSPEAK_VIEW = 'TeamSpeak.View'; // Read Only
 
-    const FEEDBACK_VIEW  = 'Feedback.View';
-    const FEEDBACK_POST  = 'Feedback.Post';
+    const FEEDBACK_VIEW  = 'Feedback.View';  // Read Only
+    const FEEDBACK_POST  = 'Feedback.Post';  // State Change
 }
