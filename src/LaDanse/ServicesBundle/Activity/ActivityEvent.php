@@ -26,11 +26,11 @@ class ActivityEvent extends Event
     protected $actor;
 
     /**
-     * @var \stdClass
+     * @var mixed
      */
     protected $object;
 
-    public function __construct($type, Account $actor = null, \stdClass $object = null)
+    public function __construct($type, Account $actor = null, $object = null)
     {
         $this->type = $type;
         $this->time = new \DateTime();
@@ -87,7 +87,7 @@ class ActivityEvent extends Event
     }
 
     /**
-     * @return \stdClass
+     * @return mixed
      */
     public function getObject()
     {
@@ -95,9 +95,9 @@ class ActivityEvent extends Event
     }
 
     /**
-     * @param \stdClass $object
+     * @param mixed $object
      */
-    public function setObject(\stdClass $object)
+    public function setObject($object)
     {
         $this->object = $object;
     }
