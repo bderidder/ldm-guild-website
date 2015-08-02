@@ -8,6 +8,7 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\FeedbackNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -170,6 +171,10 @@ class NotificationService
 
         $this->notificators[ActivityType::SIGNUP_EDIT]  = [
             TestNotificator::SERVICE_NAME
+        ];
+
+        $this->notificators[ActivityType::FEEDBACK_POST]  = [
+            FeedbackNotificator::SERVICE_NAME
         ];
     }
 }
