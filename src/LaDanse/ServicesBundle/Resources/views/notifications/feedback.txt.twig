@@ -1,0 +1,13 @@
+{{ data.account.displayName }} left feedback on the website.
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
+
+{{ data.activityData.feedback | raw }}
+
+You can contact {{ data.account.displayName }} at {{ data.account.email }}.
+
+
+
+You received this email because of your current notifications settings. You can view or change your
+notification settings at the following URL:
+
+{{ url('editNotifications') }}

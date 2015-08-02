@@ -1,0 +1,23 @@
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
+
+{% block notificationMessage %}
+
+    <b>{{ data.account.displayName }}</b> left feedback on the website.
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+
+    <div class="PostContent">
+
+        <blockquote>
+            <pre>{{ data.activityData.feedback | raw }}</pre>
+        </blockquote>
+
+        <p>You can contact {{ data.account.displayName }} at {{ data.account.email }}.</p>
+
+    </div>
+
+{% endblock %}
+
+{% block notificationActions %}
+
+{% endblock %}
