@@ -57,13 +57,15 @@ class FeedbackController extends LaDanseController
             if ($form->isValid())
             {
                 $this->storeFeedback($authContext->getAccount(), $formModel->getDescription());
-                $this->sendFeedback($authContext->getAccount(), $formModel->getDescription());
 
                 $this->eventDispatcher->dispatch(
                     ActivityEvent::EVENT_NAME,
                     new ActivityEvent(
                         ActivityType::FEEDBACK_POST,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
+                        $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                        array(
+                            'feedback' => $formModel->getDescription()
+                        ))
                 );
 
                 return $this->render('LaDanseSiteBundle:feedback:feedbackResult.html.twig');
@@ -101,25 +103,5 @@ class FeedbackController extends LaDanseController
         $em->persist($feedback);
 
         $em->flush();
-    }
-
-    private function sendFeedback($account, $description)
-    {
-        $toEmail = $this->container->getParameter('admin_email');
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Feedback from La Danse site')
-            ->setFrom(array('noreply@ladanse.org' => 'La Danse Macabre'))
-            ->setTo($toEmail)
-            ->setBody($this->renderView(
-                    'LaDanseSiteBundle:feedback:email.txt.twig',
-                    array('description' => $description, 'account' => $account)
-                ), 'text/plain; charset=utf-8')
-            ->addPart($this->renderView(
-                    'LaDanseSiteBundle:feedback:email.html.twig',
-                    array('description' => $description, 'account' => $account)
-                ), 'text/html; charset=utf-8');
-    
-        $this->get('mailer')->send($message);
     }
 }
