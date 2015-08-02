@@ -127,7 +127,7 @@ class EditCalExportController extends LaDanseController
 
         $calExport = $this->getExportSettings($account);
 
-        $calExport->setSecret($this->generateRandomString(25));
+        $calExport->setSecret($this->generateRandomString(25) . ".ics");
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($calExport);
