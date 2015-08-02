@@ -3,6 +3,8 @@
 namespace LaDanse\ServicesBundle\Service;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Setting;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use JMS\DiExtraBundle\Annotation as DI;
@@ -57,9 +59,10 @@ class SettingsService extends LaDanseService
 
         $settingModels = array();
 
+        /** @var Setting $setting */
         foreach($settings as $setting)
         {
-            $settingModels[] = $this->settingToDto($setting);
+            $settingModels[$setting->getName()] = $this->settingToDto($setting);
         }
 
         return $settingModels;
@@ -98,11 +101,59 @@ class SettingsService extends LaDanseService
      * a parameter are left untouched.
      * Settings that didn't exist yet are created on the fly.
      *
-     * @param $accountId
-     * @param $settings
+     * @param Account $account
+     * @param array $settings
      */
-    public function updateSettingsForAccount($accountId, $settings)
+    public function updateSettingsForAccount(Account $account, $settings)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $clonedSettings = $settings;
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $em->createQuery(
+            $this->createSQLFromTemplate('LaDanseDomainBundle:settings:selectSettingsForAccount.sql.twig')
+        );
+        $query->setParameter('accountId', $account->getId());
+        $query->setParameter('namePattern', '%');
+
+        $currentSettings = $query->getResult();
+
+        for($i = 0; $i < count($clonedSettings); $i++)
+        {
+            /** @var mixed $setting */
+            $setting = $clonedSettings[$i];
+
+            /** @var Setting $currentSetting */
+            foreach($currentSettings as $currentSetting)
+            {
+                if ($currentSetting->getName() == $setting->name)
+                {
+                    $currentSetting->setValue($setting->value);
+
+                    $clonedSettings[$i] = null;
+                }
+            }
+        }
+
+        for($i = 0; $i < count($clonedSettings); $i++)
+        {
+            /** @var mixed $setting */
+            $setting = $clonedSettings[$i];
+
+            if (!is_null($setting))
+            {
+                $newSetting = new Setting();
+
+                $newSetting->setAccount($account);
+                $newSetting->setName($setting->name);
+                $newSetting->setValue($setting->value);
+
+                $em->persist($newSetting);
+            }
+        }
+
+        $em->flush();
     }
 
     /**
@@ -111,7 +162,7 @@ class SettingsService extends LaDanseService
      * @param $accountId
      * @param string $settingNames
      */
-    public function removeSettingsForAccount($accountId, $settingNames = '')
+    public function removeSettingForAccount($accountId, $settingNames = '')
     {
     }
 
