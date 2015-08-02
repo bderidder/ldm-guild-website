@@ -10,9 +10,11 @@ class NotificationsFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('newEvents', 'checkbox', array('label' => "New event is created"))
-                ->add('changeSignedEvent', 'checkbox', array('label' => "An event I signed up for changed"))
-                ->add('signUpChange', 'checkbox', array('label' => "Someone signed up for an event I created"))
+        $builder->add('newEvents', 'checkbox', array('label' => "Change this in template"))
+                ->add('changeSignedEvent', 'checkbox', array('label' => "Change this in template"))
+                ->add('signUpChange', 'checkbox', array('label' => "Change this in template"))
+                ->add('topicCreated', 'checkbox', array('label' => "Change this in template"))
+                ->add('replyToTopic', 'checkbox', array('label' => "Change this in template"))
                 ->add('change', 'submit', array(
                     'label'  => 'save',
                     'attr'   =>  array(

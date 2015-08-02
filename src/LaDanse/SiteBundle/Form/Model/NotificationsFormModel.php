@@ -6,14 +6,20 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 
 class NotificationsFormModel
 {
-    /** @var  $newEvents boolean */
+    /** @var boolean $newEvents */
     private $newEvents;
 
-    /** @var  $changeSignedEvent boolean */
+    /** @var boolean $changeSignedEvent */
     private $changeSignedEvent;
 
-    /** @var  $signUpChange boolean */
+    /** @var boolean $signUpChange */
     private $signUpChange;
+
+    /** @var boolean $topicCreated */
+    private $topicCreated;
+
+    /** @var boolean $replyToTopic */
+    private $replyToTopic;
 
     /**
      * @param boolean $changeSignedEvent
@@ -61,6 +67,38 @@ class NotificationsFormModel
     public function getSignUpChange()
     {
         return $this->signUpChange;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getTopicCreated()
+    {
+        return $this->topicCreated;
+    }
+
+    /**
+     * @param boolean $topicCreated
+     */
+    public function setTopicCreated($topicCreated)
+    {
+        $this->topicCreated = $topicCreated;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getReplyToTopic()
+    {
+        return $this->replyToTopic;
+    }
+
+    /**
+     * @param boolean $replyToTopic
+     */
+    public function setReplyToTopic($replyToTopic)
+    {
+        $this->replyToTopic = $replyToTopic;
     }
 
     public function isValid(ErrorModel $errorModel)

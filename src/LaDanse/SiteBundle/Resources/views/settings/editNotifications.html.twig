@@ -8,14 +8,16 @@
        interest you. To avoid sending you more emails than you care for, you'll have to tell us what you are
        interested in and what not.</p>
 
-    <p>Remember: we won't send you any emails unless you allow us to (or when we really have to)!</p>
+    <p><i>Remember: we won't send you any emails unless you allow us to (or when we really have to)!</i></p>
 
     {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
 
     {{ form_start(form) }}
 
+    <h4 class="notificationSection">Events</h4>
+
     {{ form_widget(form.newEvents,
-        { 'label': 'Notify me when a new event (e.g. raid) is created' })
+        { 'label': 'Notify me when a new event is created on the calendar' })
     }}
 
     {{ form_widget(form.changeSignedEvent,
@@ -23,10 +25,20 @@
     }}
 
     {{ form_widget(form.signUpChange,
-        { 'label': 'For an event I created, notify me when something changes in the sign ups' })
+    { 'label': 'For an event I created, notify me when someone signs up or changes their sign up' })
     }}
 
-    <br/>
+    <h4 class="notificationSection">Forums</h4>
+
+    {{ form_widget(form.topicCreated,
+    { 'label': 'Notify me when a new topic is created in a forum' })
+    }}
+
+    {{ form_widget(form.replyToTopic,
+    { 'label': 'For a topic I created or replied to, notify me when someone else replies' })
+    }}
+
+    <br/><br/>
 
     {{ form_row(form.change, { 'label': 'Update' }) }}
 
@@ -43,6 +55,11 @@
         #settingsNotificationsLink
         {
             background-color: #99b433;
+        }
+
+        .notificationSection
+        {
+            margin-top: 25px;
         }
     </style>
 
