@@ -203,7 +203,7 @@ class ICalController extends LaDanseController
     protected function createICalEvent($event, $description)
     {
         $vEvent = new iCal\Event();
-        $vEvent->setSequence(microtime(true));
+        $vEvent->setSequence(floor(microtime(true)));
         $vEvent->setUniqueId($event->getId());
         $vEvent->setDtStart($event->getInviteTime());
         $vEvent->setDtEnd($event->getEndTime());
