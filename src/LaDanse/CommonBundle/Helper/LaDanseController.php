@@ -7,6 +7,7 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -123,6 +124,21 @@ class LaDanseController extends Controller
     protected function getContainerInjector()
     {
         return $this->get(ContainerInjector::SERVICE_NAME);
+    }
+
+    protected function hasFeatureToggled($featureName, $default = false)
+    {
+        if (!$this->isAuthenticated())
+        {
+            return $default;
+        }
+
+        $account = $this->getAuthenticationService()->getCurrentContext()->getAccount();
+
+        /** @var FeatureToggleService $featureToggleService */
+        $featureToggleService = $this->get(FeatureToggleService::SERVICE_NAME);
+
+        return $featureToggleService->hasAccountFeatureToggled($account, $featureName, $default);
     }
 
     /**
