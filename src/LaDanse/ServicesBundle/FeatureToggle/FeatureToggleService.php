@@ -26,6 +26,9 @@ class FeatureToggleService extends LaDanseService
      */
     public $logger;
 
+    /** @var array $cachedToggles */
+    private $cachedToggles = array();
+
     /**
      * @param ContainerInterface $container
      *
@@ -47,31 +50,18 @@ class FeatureToggleService extends LaDanseService
      */
     public function hasAccountFeatureToggled(Account $account, $featureName, $default = false)
     {
-        $em = $this->getDoctrine()->getManager();
+        $toggles = $this->getFeatureTogglesForAccount($account);
 
-        /** @var QueryBuilder $qb */
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('f')
-            ->from('LaDanseDomainBundle:FeatureToggle', 'f')
-            ->where("f.feature = ?1")
-            ->andWhere("f.toggleFor = ?2")
-            ->setParameter(1, $featureName)
-            ->setParameter(2, $account);
-
-        $query = $qb->getQuery();
-
-        $toggles = $query->getResult();
-
-        if (count($toggles) != 0)
+        /** @var FeatureToggle $toggle */
+        foreach($toggles as $toggle)
         {
-            return $default;
+            if ($toggle->getFeature() == $featureName)
+            {
+                return $toggle->getToggle();
+            }
         }
 
-        /** @var FeatureToggle $featureToggle */
-        $featureToggle = $toggles[0];
-
-        return $featureToggle->getToggle();
+        return $default;
     }
 
     /**
@@ -83,6 +73,11 @@ class FeatureToggleService extends LaDanseService
      */
     public function getFeatureTogglesForAccount(Account $account)
     {
+        if (array_key_exists($account->getId(), $this->cachedToggles))
+        {
+            return $this->cachedToggles[$account->getId()];
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         /** @var QueryBuilder $qb */
@@ -95,6 +90,8 @@ class FeatureToggleService extends LaDanseService
 
         $query = $qb->getQuery();
 
-        return $query->getResult();
+        $this->cachedToggles[$account->getId()] = $query->getResult();
+
+        return $this->cachedToggles[$account->getId()];
     }
 }
