@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Feedback;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\DomainBundle\Entity\Feedback;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -55,6 +56,7 @@ class FeedbackController extends LaDanseController
 
             if ($form->isValid())
             {
+                $this->storeFeedback($authContext->getAccount(), $formModel->getDescription());
                 $this->sendFeedback($authContext->getAccount(), $formModel->getDescription());
 
                 $this->eventDispatcher->dispatch(
@@ -84,6 +86,21 @@ class FeedbackController extends LaDanseController
             return $this->render('LaDanseSiteBundle:feedback:feedbackForm.html.twig',
                         array('form' => $form->createView()));
         }
+    }
+
+    private function storeFeedback($account, $description)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $feedback = new Feedback();
+
+        $feedback->setPostedBy($account);
+        $feedback->setPostedOn(new \DateTime());
+        $feedback->setFeedback($description);
+
+        $em->persist($feedback);
+
+        $em->flush();
     }
 
     private function sendFeedback($account, $description)
