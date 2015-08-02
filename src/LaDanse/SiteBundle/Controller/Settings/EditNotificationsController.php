@@ -3,6 +3,9 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\SettingNames;
+use LaDanse\ServicesBundle\Service\SettingsService;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -50,6 +53,8 @@ class EditNotificationsController extends LaDanseController
 
         $formModel = new NotificationsFormModel();
 
+        $this->loadSettings($formModel, $authContext->getAccount());
+
         $form = $this->createForm(new NotificationsFormType(), $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
@@ -61,6 +66,8 @@ class EditNotificationsController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors))
             {
+                $this->saveSettings($formModel, $authContext->getAccount());
+
                 $this->addToast('Notifications updated');
 
                 $this->eventDispatcher->dispatch(
@@ -84,5 +91,72 @@ class EditNotificationsController extends LaDanseController
             return $this->render('LaDanseSiteBundle:settings:editNotifications.html.twig',
                 array('form' => $form->createView()));
         }
+    }
+
+    private function loadSettings(NotificationsFormModel $settingsFormModel, Account $account)
+    {
+        /** @var SettingsService $settingsService */
+        $settingsService = $this->get(SettingsService::SERVICE_NAME);
+
+        $settings = $settingsService->getSettingsForAccount($account);
+
+        // settings for Events notifications
+        $settingsFormModel->setNewEvents(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_EVENT_CREATED, false));
+        $settingsFormModel->setChangeSignedEvent(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_EVENT_UPDATED, false));
+        $settingsFormModel->setSignUpChange(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED, false));
+
+        // settings for Forums notifications
+        $settingsFormModel->setTopicCreated(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_FORUMS_TOPIC_CREATED, false));
+        $settingsFormModel->setReplyToTopic(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_FORUMS_POST_REPLY, false));
+
+    }
+
+    private function getSetting($settings, $settingName, $defaultValue)
+    {
+        if (array_key_exists($settingName, $settings))
+        {
+            return ($settings[$settingName]->value == 1 ? true : false);
+        }
+        else
+        {
+            return $defaultValue;
+        }
+    }
+
+    private function saveSettings(NotificationsFormModel $settingsFormModel, Account $account)
+    {
+        /** @var SettingsService $settingsService */
+        $settingsService = $this->get(SettingsService::SERVICE_NAME);
+
+        $settingsService->updateSettingsForAccount(
+            $account,
+            array (
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_EVENT_CREATED,
+                    'value' => $settingsFormModel->getNewEvents() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_EVENT_UPDATED,
+                    'value' => $settingsFormModel->getChangeSignedEvent() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED,
+                    'value' => $settingsFormModel->getSignUpChange() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_FORUMS_TOPIC_CREATED,
+                    'value' => $settingsFormModel->getTopicCreated() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_FORUMS_POST_REPLY,
+                    'value' => $settingsFormModel->getReplyToTopic() ? '1' : '0'
+                )
+            )
+        );
     }
 }
