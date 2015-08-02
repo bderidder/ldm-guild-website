@@ -11,6 +11,8 @@ class NotificationTemplates
 
     const EVENT_CREATE = "eventCreate";
 
+    const FEEDBACK     = "feedback";
+
     /**
      * @param string $templatePrefix
      *
