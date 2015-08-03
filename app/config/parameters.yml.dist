@@ -18,3 +18,6 @@ parameters:
     battlenet_key:      BattleNetAPIKey
     battlenet_secret:   BattleNetAPISecret
     admin_email:        john@example.com
+    router.request_context.host: "localhost:8000"
+    router.request_context.scheme: http
+    router.request_context.base_url: ""
