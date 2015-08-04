@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Notification;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Mail\MailService;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
@@ -31,6 +32,12 @@ class NotificationService
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var MailService $mailService
+     * @DI\Inject(MailService::SERVICE_NAME)
+     */
+    public $mailService;
 
     /**
      * @var ContainerInterface $container
@@ -109,26 +116,23 @@ class NotificationService
                 )
             );
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject($mail->subject)
-                ->setFrom(array('noreply@ladanse.org' => $fromName))
-                ->setTo($mail->email)
-                ->setBody($this->renderView(
+            $this->mailService->sendMail(
+                array('noreply@ladanse.org' => $fromName),
+                $mail->email,
+                $mail->subject,
+                $this->renderView(
                     NotificationTemplates::getTxtTemplate($mail->templatePrefix),
                     array(
                         'notificationItem' => $notificationQueueItem,
                         'data'             => $mail->data
-                    )
-                ), 'text/plain; charset=utf-8')
-                ->addPart($this->renderView(
+                    )),
+                $this->renderView(
                     NotificationTemplates::getHtmlTemplate($mail->templatePrefix),
                     array(
                         'notificationItem' => $notificationQueueItem,
                         'data'             => $mail->data
-                    )
-                ), 'text/html; charset=utf-8');
-
-            $this->container->get('mailer')->send($message);
+                    ))
+            );
         }
     }
 
