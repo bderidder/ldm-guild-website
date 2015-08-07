@@ -6,10 +6,11 @@ a div.tile:hover
 
 .tile
 {
+    display: inline-block;
     height: 100%;
     background-color: rgba(75, 75, 75, .8);
     position: relative;
-    margin-left: 0px;
+    mmargin-left: 0px;
     margin-top: 15px;
 }
 

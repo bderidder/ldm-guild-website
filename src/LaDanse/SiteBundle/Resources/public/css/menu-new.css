@@ -1,3 +1,14 @@
+#menu-container-wrapper
+{
+    text-align: center;
+}
+
+#menu-container
+{
+    display: inline-block;
+    text-align: left;
+}
+
 #menu-column-list
 {
     margin-top: 30px;
@@ -24,7 +35,6 @@
 
 #menu-page-container
 {
-    width: 100%;
     padding: 0 40px 0 40px;
     overflow: hidden;
     white-space: nowrap;
@@ -38,17 +48,30 @@
     overflow: hidden;
 }
 
-div.menu-column
+#menu-container div.menu-column
 {
     vertical-align: top;
     position: inherit;
     display: inline-block;
-    width: 315px;
-    height: 600px;
     margin-left: 30px;
 }
 
-div.menu-column a
+#menu-container div.masonry-column-small
+{
+    width: 150px;
+}
+
+#menu-container div.masonry-column-normal
+{
+    width: 315px;
+}
+
+#menu-container div.masonry-column-wide
+{
+    width: 480px;
+}
+
+#menu-container div.menu-column a
 {
     color: white;
     white-space: nowrap;
