@@ -1,0 +1,378 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}La Danse Macabre{% endblock %}
+
+{% block memberPageBody %}
+
+    <div class="clearfix"></div>
+
+    <ul id="menu-column-list">
+        <li id="menu1Selector" class="selected">general</li>
+        <li id="menu2Selector">warcraft</li>
+        <li id="menu3Selector">swtor</li>
+        <li id="menu4Selector">assorted</li>
+    </ul>
+
+    <div id="menu-page-container">
+
+        <div id="menu-page-slider">
+
+            <div id="menu-page-slider2" style="position: inherit;">
+
+                <!-- general -->
+                <div class="menu-column masonry-container-normal">
+
+                    <a class="masonry-item" href="{{ path('calendarIndex') }}">
+                        <div class="tile double">
+                            {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
+                            <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="{{ path('galleryUnderConstruction') }}">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-picture-o fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>Pictures</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item"
+                            {% if auth.currentContext.authenticated %}
+                                href="{{ path('teamSpeakIndex') }}"
+                            {% else %}
+                                href="{{ path('welcomeIndex') }}"
+                            {% endif %} >
+                        <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
+                            <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="{{ path('forumIndex') }}">
+                        <div class="tile double" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div style="padding: 15px;">
+                                    <p style="font-size: 1.3em;">Forum</p>
+
+                                    <p>Discussions and announcements on all <br/>kinds of topics.</p>
+                                </div>
+                            </div>
+                            <div class="tile-content">
+                                <div style="padding: 15px;">
+                                    <p style="font-size: 1.8em;">Join the discussion!</p>
+                                </div>
+                            </div>
+                            <div class="badge-left"><i class="fa fa-comments fa-2x"></i></div>
+                            {{ render(controller('LaDanseSiteBundle:Forum/Forum:tileLabel')) }}
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="https://www.facebook.com/groups/23877201619/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="70" src="{{ asset('bundles/ladansesite/images/FB-f-Logo__blue_100.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Facebook Page</span></div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- wow -->
+                <div class="menu-column masonry-container-normal">
+
+                    <a class="masonry-item" href="{{ path('viewClaims') }}">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>My WoW Characters</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://www.icy-veins.com/wow/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_icyveins.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Icy Veins</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://www.wowhead.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="120" src="{{ asset('bundles/ladansesite/images/logo_wowhead.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Wowhead</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://wowpedia.org/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/logo_wowpedia.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Wowpedia</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="https://www.warcraftlogs.com/guilds/1922/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-heartbeat fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>Warcraft Logs</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://eu.battle.net/wow/en/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNet.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>WoW Battle.net</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://eu.battle.net/wow/en/guild/defias-brotherhood/La_Danse_Macabre/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/BattleNetAndGuildLogo.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>La Danse @ Battle.net</span></div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- swtor -->
+                <div class="menu-column">
+
+                    <a class="masonry-item" href="http://www.swtor.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="75" src="{{ asset('bundles/ladansesite/images/SWTOR_icon.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>SWTOR Home</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://dulfy.net/category/swtor/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/DulfyNet_Logo.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Dulfy</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://www.wikiswtor.com/SWTOR_Wiki" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-wikipedia-w fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>Star Wars Wiki</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://www.swtor-spy.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="80" src="{{ asset('bundles/ladansesite/images/SWTOR_Spy.jpg') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>Spy Database</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="https://torcommunity.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <img width="90" src="{{ asset('bundles/ladansesite/images/TORCommunity.png') }}" />
+                                </div>
+                            </div>
+                            <div class="label"><span>TOR Community</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://swtorconquest.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-flag fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>SWTOR Conquest</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://www.swtorevents.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-calendar fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>SWTOR Events</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://tor-decorating.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-university fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>TOR Decorating</span></div>
+                        </div>
+                    </a>
+
+                    <a class="masonry-item" href="http://tor-fashion.com/" target="_blank">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-child fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>TOR Fashion</span></div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- assorted -->
+                <div class="menu-column">
+
+                    <a class="masonry-item" href="{{ path('aboutIndex') }}">
+                        <div class="tile default" data-direction="vertical" data-delay="8000">
+                            <div class="tile-content">
+                                <div class="image">
+                                    <i class="fa fa-info fa-5x"></i>
+                                </div>
+                            </div>
+                            <div class="label"><span>About</span></div>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function()
+        {
+            var clientsServiceURL = '../teamspeak/clients';
+
+            $.when($.ajax({
+                type: "GET",
+                url: clientsServiceURL,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
+        });
+
+        $(document).ready(function()
+        {
+            var viewportWidth = $( document ).width();
+            var tileContainer = $( '#top-tile-container' );
+
+            var margin = Math.round((viewportWidth - tileContainer.width()) / 2 - 1);
+
+            tileContainer.css('margin-left', margin + 'px');
+            tileContainer.css('visibility', 'visible');
+        });
+
+    </script>
+
+    <script>
+
+        $(document).ready(function()
+        {
+            $('.menu-column').masonry({
+                columnWidth: 150,
+                gutter: 15,
+                itemSelector: '.masonry-item'
+            });
+
+        });
+
+    </script>
+
+    <script>
+
+        $(document).ready(function()
+        {
+            for(var i = 1; i <= 4; i++)
+            {
+                $( "#menu" + i + "Selector" ).click(
+                    (function(index)
+                    {
+                        return function()
+                        {
+                            slideMenu(index);
+                        };
+                    }(i))
+                );
+            }
+        });
+
+        function slideMenu(steps)
+        {
+            console.log("steps is " + steps);
+
+            var containerWidth = $( "#menu-page-container" ).width();
+
+            $( "#menu-page-slider2" ).css('left', (steps - 1) * -280);
+
+            for(var i = 1; i <= 4; i++)
+            {
+                $( "#menu" + i + "Selector").removeClass("selected");
+            }
+
+            $( "#menu" + steps + "Selector").addClass("selected");
+        }
+
+    </script>
+
+{% endblock %}
