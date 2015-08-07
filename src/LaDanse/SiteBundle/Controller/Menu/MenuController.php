@@ -49,6 +49,13 @@ class MenuController extends LaDanseController
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
-        return $this->render('LaDanseSiteBundle:menu:menu.html.twig');
+        if ($this->hasFeatureToggled('new.menu', false))
+        {
+            return $this->render('LaDanseSiteBundle:menu:menu-new.html.twig');
+        }
+        else
+        {
+            return $this->render('LaDanseSiteBundle:menu:menu.html.twig');
+        }
     }
 }
