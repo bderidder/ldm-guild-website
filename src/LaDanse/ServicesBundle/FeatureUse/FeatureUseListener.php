@@ -47,6 +47,7 @@ class FeatureUseListener
 
         $featureUse->setFeature($activity->getType());
         $featureUse->setUsedOn($activity->getTime());
+        $featureUse->setData($activity->getObject());
         $featureUse->setUsedBy($activity->getActor());
 
         $em->persist($featureUse);

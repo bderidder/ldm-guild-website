@@ -41,6 +41,13 @@ class FeatureUse
     protected $feature;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $rawData;
+
+    /**
      * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account")
@@ -97,6 +104,22 @@ class FeatureUse
     }
 
     /**
+     * @return string
+     */
+    public function getRawData()
+    {
+        return $this->rawData;
+    }
+
+    /**
+     * @param string $rawData
+     */
+    public function setRawData($rawData)
+    {
+        $this->rawData = $rawData;
+    }
+
+    /**
      * @return Account
      */
     public function getUsedBy()
@@ -110,5 +133,33 @@ class FeatureUse
     public function setUsedBy($usedBy)
     {
         $this->usedBy = $usedBy;
+    }
+
+    /**
+     * @return string
+     */
+    public function getData()
+    {
+        if ($this->rawData == NULL)
+        {
+            return NULL;
+        }
+
+        return json_decode($this->rawData);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setData($data)
+    {
+        if ($data == NULL)
+        {
+            $this->rawData = NULL;
+        }
+        else
+        {
+            $this->rawData = json_encode($data);
+        }
     }
 }
