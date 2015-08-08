@@ -369,9 +369,7 @@
 
         function slideMenu(steps)
         {
-            console.log("steps is " + steps);
-
-            var newPosition = (steps - 1) * -280;
+            var newPosition = calculateDisplacement(steps);
 
             $( "#menu-page-slider2" ).animate(
                     {
@@ -386,6 +384,36 @@
             }
 
             $( "#menu" + steps + "Selector").addClass("selected");
+        }
+
+        function calculateDisplacement(steps)
+        {
+            if (steps == 1)
+            {
+                return 0;
+            }
+
+            var menuColumns = $("#menu-page-slider2").children();
+
+            var displacement = 0;
+
+            menuColumns.each(function(i, elem)
+            {
+                if (i > (steps - 2))
+                {
+                    return;
+                }
+                else if (i == (steps - 2))
+                {
+                    displacement += $(elem).width() * 3  / 4;
+                }
+                else
+                {
+                    displacement += $(elem).width() + 30;
+                }
+            });
+
+            return -1 * displacement;
         }
 
     </script>
