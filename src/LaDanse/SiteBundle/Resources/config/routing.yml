@@ -72,3 +72,8 @@ FeedbackRouting:
     resource: "@LaDanseSiteBundle/Controller/Feedback"
     type:     annotation
     prefix:   /feedback
+
+RedirectRouting:
+    resource: "@LaDanseSiteBundle/Controller/Redirect"
+    type:     annotation
+    prefix:   /redirect
