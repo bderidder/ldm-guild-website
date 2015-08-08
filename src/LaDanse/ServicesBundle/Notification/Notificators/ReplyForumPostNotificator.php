@@ -41,6 +41,12 @@ class ReplyForumPostNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($sharedMails as $mail)
         {
+            if ($mail == $queueItem->getActivityBy()->getEmail())
+            {
+                // we don't send emails to the poster self
+                continue;
+            }
+
             $this->logger->debug(
                 sprintf("%s - sending email to %s for topic '%s'",
                     __CLASS__,

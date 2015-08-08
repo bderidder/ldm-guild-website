@@ -32,6 +32,12 @@ class CreateTopicNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($settings as $setting)
         {
+            if ($setting->account->getEmail() == $queueItem->getActivityBy()->getEmail())
+            {
+                // we don't send emails to the poster self
+                continue;
+            }
+
             /** @var mixed $data */
             $data = $queueItem->getData();
 
