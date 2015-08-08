@@ -70,4 +70,6 @@ class ActivityType
 
     const FEEDBACK_VIEW  = 'Feedback.View';  // Read Only
     const FEEDBACK_POST  = 'Feedback.Post';  // State Change
+
+    const REDIRECT = "Redirect"; // Read Only
 }
