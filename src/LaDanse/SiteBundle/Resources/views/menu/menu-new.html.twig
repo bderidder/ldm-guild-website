@@ -371,9 +371,14 @@
         {
             console.log("steps is " + steps);
 
-            var containerWidth = $( "#menu-page-container" ).width();
+            var newPosition = (steps - 1) * -280;
 
-            $( "#menu-page-slider2" ).css('left', (steps - 1) * -280);
+            $( "#menu-page-slider2" ).animate(
+                    {
+                        left: newPosition,
+                    }, 500, function() {
+                        // Animation complete.
+                    });
 
             for(var i = 1; i <= 4; i++)
             {
