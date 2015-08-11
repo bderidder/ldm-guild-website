@@ -54,7 +54,7 @@ class DeleteEventNotificator extends AbstractNotificator
 
             $context->addMail(
                 $setting->account->getEmail(),
-                "Event Delete - " . $data->event->name,
+                "Event Deleted - " . $data->event->name,
                 array(
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data

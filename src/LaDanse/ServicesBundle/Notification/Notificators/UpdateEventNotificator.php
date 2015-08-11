@@ -73,7 +73,7 @@ class UpdateEventNotificator extends AbstractNotificator
 
             $context->addMail(
                 $setting->account->getEmail(),
-                "Event Update - " . $data->event->name,
+                "Event Updated - " . $data->event->name,
                 array(
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data

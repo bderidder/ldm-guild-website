@@ -9,6 +9,7 @@ use LaDanse\ServicesBundle\Mail\MailService;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\DeleteEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\FeedbackNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
@@ -170,7 +171,7 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::EVENT_DELETE]  = [
-            TestNotificator::SERVICE_NAME
+            DeleteEventNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::SIGNUP_CREATE]  = [
