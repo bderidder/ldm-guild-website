@@ -41,12 +41,22 @@ class ReplyForumPostNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($sharedMails as $mail)
         {
-            $this->logger->info("Checking mail for " . $mail);
-            $this->logger->info("Activity was by " . $queueItem->getActivityBy()->getEmail());
+            $this->logger->debug(
+                sprintf("%s - checking mail for  %s with originator '%s'",
+                    __CLASS__,
+                    $mail,
+                    $queueItem->getActivityBy()->getEmail()
+                )
+            );
 
             if ($mail == $queueItem->getActivityBy()->getEmail())
             {
-                $this->logger->info("Not sending mail to originator of activity");
+                $this->logger->debug(
+                    sprintf("%s - not sending mail to %s",
+                        __CLASS__,
+                        $mail
+                    )
+                );
 
                 // we don't send emails to the poster self
                 continue;
