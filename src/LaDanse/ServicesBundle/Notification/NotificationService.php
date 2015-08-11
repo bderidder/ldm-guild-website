@@ -165,6 +165,10 @@ class NotificationService
             CreateEventNotificator::SERVICE_NAME
         ];
 
+        $this->notificators[ActivityType::EVENT_EDIT]  = [
+            TestNotificator::SERVICE_NAME
+        ];
+
         $this->notificators[ActivityType::EVENT_DELETE]  = [
             TestNotificator::SERVICE_NAME
         ];
