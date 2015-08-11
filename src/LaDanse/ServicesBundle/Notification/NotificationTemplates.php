@@ -10,6 +10,8 @@ class NotificationTemplates
     const TOPIC_REPLY  = "topicReply";
 
     const EVENT_CREATE = "eventCreate";
+    const EVENT_UPDATE = "eventUpdate";
+    const EVENT_DELETE = "eventDelete";
 
     const FEEDBACK     = "feedback";
 
