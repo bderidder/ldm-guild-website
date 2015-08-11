@@ -24,7 +24,7 @@ monolog:
         streamed:
             type:  stream
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
+            level: info
         buffered:
             type:    buffer
             handler: swift
@@ -33,9 +33,9 @@ monolog:
             from_email: "noreply@ladanse.org"
             to_email:   "%admin_email%"
             subject:    "An Error Occurred on La Danse website!"
-            level:      debug
+            level:      info
         ladanse:
             type:     stream
             path:     "%kernel.logs_dir%/ladanse.log"
-            level:    debug
+            level:    info
             channels: [ladanse]
