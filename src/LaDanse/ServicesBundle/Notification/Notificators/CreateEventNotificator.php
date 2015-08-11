@@ -50,7 +50,7 @@ class CreateEventNotificator extends AbstractNotificator
 
             $context->addMail(
                 $setting->account->getEmail(),
-                "New Event " . $data->event->name,
+                "New Event - " . $data->event->name,
                 array(
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
