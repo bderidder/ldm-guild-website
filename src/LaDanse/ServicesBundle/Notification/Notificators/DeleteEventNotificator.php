@@ -36,12 +36,6 @@ class DeleteEventNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($settings as $setting)
         {
-            if ($setting->account->getEmail() == $queueItem->getActivityBy()->getEmail())
-            {
-                // we don't send emails to the creator self
-                continue;
-            }
-
             /** @var mixed $data */
             $data = $queueItem->getData();
 

@@ -55,12 +55,6 @@ class UpdateEventNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($sharedMails as $mail)
         {
-            if ($mail == $queueItem->getActivityBy()->getEmail())
-            {
-                // we don't send emails to the creator self
-                continue;
-            }
-
             /** @var mixed $data */
             $data = $queueItem->getData();
 

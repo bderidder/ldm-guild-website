@@ -113,6 +113,12 @@ class NotificationService
         /** @var object $mail */
         foreach($mails as $mail)
         {
+            if ($mail == $notificationQueueItem->getActivityBy()->getEmail())
+            {
+                // we don't send emails to the originator of the activity self
+                continue;
+            }
+
             $this->logger->debug(
                 sprintf("%s - sending email to %s with subject '%s'",
                     __CLASS__,
