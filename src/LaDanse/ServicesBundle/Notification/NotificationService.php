@@ -8,11 +8,15 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Mail\MailService;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\CreateSignUpNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\DeleteEventNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\DeleteSignUpNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\FeedbackNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\UpdateEventNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\UpdateSignUpNotificator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -153,13 +157,11 @@ class NotificationService
     private function initNotificators()
     {
         $this->notificators[ActivityType::FORUM_TOPIC_CREATE] = [
-            CreateTopicNotificator::SERVICE_NAME,
-            TestNotificator::SERVICE_NAME
+            CreateTopicNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::FORUM_POST_CREATE]  = [
-            ReplyForumPostNotificator::SERVICE_NAME,
-            //AllForumPostNotificator::SERVICE_NAME
+            ReplyForumPostNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_CREATE]  = [
@@ -167,7 +169,7 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::EVENT_EDIT]  = [
-            TestNotificator::SERVICE_NAME
+            UpdateEventNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_DELETE]  = [
@@ -175,11 +177,15 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::SIGNUP_CREATE]  = [
-            TestNotificator::SERVICE_NAME
+            CreateSignUpNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::SIGNUP_EDIT]  = [
-            TestNotificator::SERVICE_NAME
+            UpdateSignUpNotificator::SERVICE_NAME
+        ];
+
+        $this->notificators[ActivityType::SIGNUP_DELETE]  = [
+            DeleteSignUpNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::FEEDBACK_POST]  = [
