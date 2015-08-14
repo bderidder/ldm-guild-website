@@ -1,0 +1,95 @@
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
+
+{% block stylesheet %}
+
+<style>
+
+    p.event-label
+    {
+        font-weight: bold;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block notificationMessage %}
+
+    <b>{{ data.account.displayName }}</b> updated the event '{{ data.activityData.oldEvent.name }}'
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+
+    <div class="PostContent">
+
+        <table cellspacing="10" >
+            <tr>
+                <td colspan="5">
+                    <p class="event-label">Before</p>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <div>
+                        {{ data.activityData.oldEvent.description }}
+                    </div>
+                </td>
+                <td align="center">
+                    <p class="event-label">When</p>
+                    <p>{{ data.activityData.oldEvent.inviteTime|date("d/m (D)") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Invite Time</p>
+                    <p>{{ data.activityData.oldEvent.inviteTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Start Time</p>
+                    <p>{{ data.activityData.oldEvent.startTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">End Time</p>
+                    <p>{{ data.activityData.oldEvent.endTime|date("H:i") }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <p class="event-label">After</p>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <div>
+                        {{ data.activityData.newEvent.description }}
+                    </div>
+                </td>
+                <td align="center">
+                    <p class="event-label">When</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Invite Time</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Start Time</p>
+                    <p>{{ data.activityData.newEvent.startTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">End Time</p>
+                    <p>{{ data.activityData.newEvent.endTime|date("H:i") }}</p>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block notificationActions %}
+
+    <a href="{{ url('viewEvent', {'id': data.activityData.newEvent.eventId} ) }}">
+        <div class="button btn-lightGreen">
+            view event
+        </div>
+    </a>
+
+{% endblock %}

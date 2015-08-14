@@ -1,0 +1,18 @@
+{{ data.account.displayName }}</b> DELETED the event '{{ data.activityData.event.name }}'
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
+
+When: {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+
+Invite Time: {{ data.activityData.event.inviteTime|date("H:i") }}
+Start Time: {{ data.activityData.event.startTime|date("H:i") }}
+
+End Time: {{ data.activityData.event.endTime|date("H:i") }}
+
+{{ data.activityData.event.description }}
+
+
+
+You received this email because of your current notifications settings. You can view or change your
+notification settings at the following URL:
+
+{{ url('editNotifications') }}

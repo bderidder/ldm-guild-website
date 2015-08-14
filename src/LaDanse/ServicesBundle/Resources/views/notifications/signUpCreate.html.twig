@@ -1,0 +1,83 @@
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
+
+{% block stylesheet %}
+
+<style>
+
+    p.event-label
+    {
+        font-weight: bold;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block notificationMessage %}
+
+    <b>{{ data.account.displayName }}</b> created a sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+
+    <div class="PostContent">
+
+        <table cellspacing="10" >
+            <tr>
+                <td align="center">
+                    <p class="event-label">Type</p>
+                    {% if data.activityData.signUp.type == "WillCome" %}
+                        <p>Will come</p>
+                    {% endif %}
+                    {% if data.activityData.signUp.type == "MightCome" %}
+                        <p>Might come</p>
+                    {% endif %}
+                    {% if data.activityData.signUp.type == "Absence" %}
+                        <p>Absence</p>
+                    {% endif %}
+                </td>
+                <td align="center">
+                    <p class="event-label">Tank</p>
+                    <p>&nbsp;
+                    {% for role in data.activityData.signUp.roles %}
+                        {% if role == "Tank" %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                    </p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Healer</p>
+                    <p>&nbsp;
+                    {% for role in data.activityData.signUp.roles %}
+                        {% if role == "Healer" %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                    </p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Damage</p>
+                    <p>&nbsp;
+                    {% for role in data.activityData.signUp.roles %}
+                        {% if role == "DPS" %}
+                            X
+                        {% endif %}
+                    {% endfor %}
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+{% endblock %}
+
+{% block notificationActions %}
+
+    <a href="{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}">
+        <div class="button btn-lightGreen">
+            view event
+        </div>
+    </a>
+
+{% endblock %}

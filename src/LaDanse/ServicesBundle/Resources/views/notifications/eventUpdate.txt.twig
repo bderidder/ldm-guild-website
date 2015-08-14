@@ -1,0 +1,33 @@
+{{ data.account.displayName }}</b> updated the event '{{ data.activityData.oldEvent.name }}'
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
+
+BEFORE
+
+When: {{ data.activityData.oldEvent.inviteTime|date("d/m (D)") }}
+
+Invite Time: {{ data.activityData.oldEvent.inviteTime|date("H:i") }}
+Start Time: {{ data.activityData.oldEvent.startTime|date("H:i") }}
+
+End Time: {{ data.activityData.oldEvent.endTime|date("H:i") }}
+
+{{ data.activityData.oldEvent.description }}
+
+AFTER
+
+When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
+
+Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i") }}
+Start Time: {{ data.activityData.newEvent.startTime|date("H:i") }}
+
+End Time: {{ data.activityData.newEvent.endTime|date("H:i") }}
+
+{{ data.activityData.newEvent.description }}
+
+{{ url('viewEvent', {'id': data.activityData.newEvent.eventId} ) }}
+
+
+
+You received this email because of your current notifications settings. You can view or change your
+notification settings at the following URL:
+
+{{ url('editNotifications') }}

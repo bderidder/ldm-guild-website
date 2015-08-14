@@ -1,0 +1,29 @@
+{ data.account.displayName }} removed sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
+
+Type:
+
+{% if data.activityData.signUp.type == "WillCome" %}
+    <p>Will come</p>
+{% endif %}
+{% if data.activityData.signUp.type == "MightCome" %}
+    <p>Might come</p>
+{% endif %}
+{% if data.activityData.signUp.type == "Absence" %}
+    <p>Absence</p>
+{% endif %}
+
+Roles:
+
+{% for role in data.activityData.signUp.roles %}
+    {{ role }}
+{% endfor %}
+
+{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}
+
+
+
+You received this email because of your current notifications settings. You can view or change your
+notification settings at the following URL:
+
+{{ url('editNotifications') }}

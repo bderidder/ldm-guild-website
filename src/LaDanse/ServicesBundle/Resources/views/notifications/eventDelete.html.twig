@@ -1,0 +1,62 @@
+{% extends 'LaDanseServicesBundle:notifications:layout.html.twig' %}
+
+{% block stylesheet %}
+
+<style>
+
+    p.event-label
+    {
+        font-weight: bold;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block notificationMessage %}
+
+    <b>{{ data.account.displayName }}</b> <font color="red">deleted</font> the event '{{ data.activityData.event.name }}'
+    <br/>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+
+    <div class="PostContent">
+
+        <table cellspacing="10" >
+            <tr>
+                <td align="center">
+                    <p class="event-label">When</p>
+                    <p>{{ data.activityData.event.inviteTime|date("d/m (D)") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Invite Time</p>
+                    <p>{{ data.activityData.event.inviteTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">Start Time</p>
+                    <p>{{ data.activityData.event.startTime|date("H:i") }}</p>
+                </td>
+                <td align="center">
+                    <p class="event-label">End Time</p>
+                    <p>{{ data.activityData.event.endTime|date("H:i") }}</p>
+                </td>
+            </tr>
+        </table>
+
+        <br/>
+        <div>
+            {{ data.activityData.event.description }}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block notificationActions %}
+
+    <a href="{{ url('calendarIndex') }}">
+        <div class="button btn-lightGreen">
+            view calendar
+        </div>
+    </a>
+
+{% endblock %}
