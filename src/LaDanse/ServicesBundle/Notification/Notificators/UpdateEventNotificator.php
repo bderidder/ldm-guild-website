@@ -67,13 +67,13 @@ class UpdateEventNotificator extends AbstractNotificator
             $this->logger->debug(
                 sprintf("%s - sending email to %s for event",
                     __CLASS__,
-                    $setting->account->getEmail()
+                    $mail
                 )
             );
 
             $context->addMail(
-                $setting->account->getEmail(),
-                "Event Updated - " . $data->event->name,
+                $mail,
+                "Event Updated - " . $data->oldEvent->name,
                 array(
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
