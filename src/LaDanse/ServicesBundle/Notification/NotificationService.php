@@ -197,5 +197,9 @@ class NotificationService
         $this->notificators[ActivityType::FEEDBACK_POST]  = [
             FeedbackNotificator::SERVICE_NAME
         ];
+
+        $this->notificators[ActivityType::SETTINGS_NOTIF_UPDATE]  = [
+            TestNotificator::SERVICE_NAME
+        ];
     }
 }
