@@ -21,6 +21,9 @@ class NotificationsFormModel
     /** @var boolean $replyToTopic */
     private $replyToTopic;
 
+    /** @var boolean $allForumPosts */
+    private $allForumPosts;
+
     /**
      * @param boolean $changeSignedEvent
      */
@@ -100,6 +103,23 @@ class NotificationsFormModel
     {
         $this->replyToTopic = $replyToTopic;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getAllForumPosts()
+    {
+        return $this->allForumPosts;
+    }
+
+    /**
+     * @param boolean $allForumPosts
+     */
+    public function setAllForumPosts($allForumPosts)
+    {
+        $this->allForumPosts = $allForumPosts;
+    }
+
 
     public function isValid(ErrorModel $errorModel)
     {

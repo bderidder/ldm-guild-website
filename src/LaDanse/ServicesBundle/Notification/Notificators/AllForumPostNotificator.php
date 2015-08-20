@@ -38,7 +38,7 @@ class AllForumPostNotificator extends AbstractNotificator
 
             $context->addMail(
                 $mail,
-                sprintf("Forums - reply in '%s'",
+                sprintf("Forums - post in '%s'",
                     $data->topicSubject
                 ),
                 array(

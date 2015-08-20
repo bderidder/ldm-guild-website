@@ -35,7 +35,11 @@
     }}
 
     {{ form_widget(form.replyToTopic,
-    { 'label': 'For a topic I created or replied to, notify me when someone else replies' })
+    { 'label': 'Notify me for a reply in a topic I replied to before' })
+    }}
+
+    {{ form_widget(form.allForumPosts,
+    { 'label': 'Notify me for any reply made in any topic, this overrides the previous setting' })
     }}
 
     <br/><br/>

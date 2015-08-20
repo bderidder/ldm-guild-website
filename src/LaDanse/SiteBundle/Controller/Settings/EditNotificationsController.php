@@ -120,7 +120,8 @@ class EditNotificationsController extends LaDanseController
             $this->getSetting($settings, SettingNames::NOTIFICATIONS_FORUMS_TOPIC_CREATED, false));
         $settingsFormModel->setReplyToTopic(
             $this->getSetting($settings, SettingNames::NOTIFICATIONS_FORUMS_POST_REPLY, false));
-
+        $settingsFormModel->setAllForumPosts(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_FORUMS_ALL_POSTS, false));
     }
 
     private function getSetting($settings, $settingName, $defaultValue)
@@ -162,6 +163,10 @@ class EditNotificationsController extends LaDanseController
                 (object) array(
                     'name' => SettingNames::NOTIFICATIONS_FORUMS_POST_REPLY,
                     'value' => $settingsFormModel->getReplyToTopic() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_FORUMS_ALL_POSTS,
+                    'value' => $settingsFormModel->getAllForumPosts() ? '1' : '0'
                 )
             )
         );

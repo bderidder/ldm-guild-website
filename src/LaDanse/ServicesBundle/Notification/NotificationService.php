@@ -167,7 +167,8 @@ class NotificationService
         ];
 
         $this->notificators[ActivityType::FORUM_POST_CREATE]  = [
-            ReplyForumPostNotificator::SERVICE_NAME
+            ReplyForumPostNotificator::SERVICE_NAME,
+            AllForumPostNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_CREATE]  = [

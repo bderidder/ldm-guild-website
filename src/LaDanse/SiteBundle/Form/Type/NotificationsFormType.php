@@ -15,6 +15,7 @@ class NotificationsFormType extends AbstractType
                 ->add('signUpChange', 'checkbox', array('label' => "Change this in template"))
                 ->add('topicCreated', 'checkbox', array('label' => "Change this in template"))
                 ->add('replyToTopic', 'checkbox', array('label' => "Change this in template"))
+                ->add('allForumPosts', 'checkbox', array('label' => "Change this in template"))
                 ->add('change', 'submit', array(
                     'label'  => 'save',
                     'attr'   =>  array(
