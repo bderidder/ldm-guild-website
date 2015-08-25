@@ -24,7 +24,7 @@ class MenuControllerTest extends MemberTestBase
         $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
-            $crawler->filter('html:contains("My Characters")')->count() > 0
+            $crawler->filter('html:contains("My WoW Characters")')->count() > 0
         );
 
         $this->assertTrue(
