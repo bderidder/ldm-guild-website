@@ -23,13 +23,11 @@
                             <p><i class="fa fa-calendar"></i> Calendar</p>
                         </div>
                     </a>
-                    {% if hasFeatureToggle("notifications") %}
                     <a class="settings-link" href="{{ path('editNotifications') }}">
-                            <div id="settingsNotificationsLink" class="settings-link-container">
-                                <p><i class="fa fa-envelope"></i> Notifications</p>
-                            </div>
-                        </a>
-                    {% endif %}
+                        <div id="settingsNotificationsLink" class="settings-link-container">
+                            <p><i class="fa fa-envelope"></i> Notifications</p>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-md-10">

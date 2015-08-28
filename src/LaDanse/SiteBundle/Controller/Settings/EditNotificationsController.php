@@ -51,13 +51,6 @@ class EditNotificationsController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-        if (!$this->hasFeatureToggled('notifications', false))
-        {
-            $this->logger->warning(__CLASS__ . ' the user did not had notifications toggle set');
-
-            return $this->redirect($this->generateUrl('welcomeSettings'));
-        }
-
         $formModel = new NotificationsFormModel();
 
         $this->loadSettings($formModel, $authContext->getAccount());
