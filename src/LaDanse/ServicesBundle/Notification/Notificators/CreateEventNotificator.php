@@ -32,9 +32,9 @@ class CreateEventNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($settings as $setting)
         {
-            if ($setting->account->getEmail() == $queueItem->getActivityBy()->getEmail())
+            if ($setting->value == 0)
             {
-                // we don't send emails to the creator self
+                // the account prefers NOT to be notified
                 continue;
             }
 
