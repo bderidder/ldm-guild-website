@@ -36,6 +36,12 @@ class DeleteEventNotificator extends AbstractNotificator
         /** @var mixed $setting */
         foreach($settings as $setting)
         {
+            if ($setting->value == 0)
+            {
+                // the account prefers NOT to be notified
+                continue;
+            }
+
             /** @var mixed $data */
             $data = $queueItem->getData();
 
