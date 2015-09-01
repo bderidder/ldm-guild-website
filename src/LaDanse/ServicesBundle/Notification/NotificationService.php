@@ -113,7 +113,7 @@ class NotificationService
         /** @var object $mail */
         foreach($mails as $mail)
         {
-            if ($mail == $notificationQueueItem->getActivityBy()->getEmail())
+            if (strcasecmp($mail->email, $notificationQueueItem->getActivityBy()->getEmail()) == 0)
             {
                 // we don't send emails to the originator of the activity self
                 continue;
