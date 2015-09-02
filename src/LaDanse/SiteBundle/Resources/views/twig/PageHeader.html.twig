@@ -1,9 +1,16 @@
-{% if backPath is defined and backPath is not null %}
-    <div style="position: absolute; left: -90px;">
-        <a href="{{ backPath  }}">
-            <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" />
-        </a>
-    </div>
-{% endif %}
+<div style="left: -90px; position: relative; overflow: hidden; margin-bottom: 30px;">
 
-<h1 style="margin-top: 13px;">{{ headerTitle }}</h1>
+    <table>
+        <tr>
+            <td style="width: 90px; vertical-align: middle;">
+                {% if backPath is defined and backPath is not null %}
+                    <a href="{{ backPath  }}">
+                        <img src="{{ asset('bundles/ladansesite/images/LeftArrow.png') }}" style="height: 70px;" />
+                    </a>
+                {% endif %}
+            </td>
+            <td style="vertical-align: middle;"><h1 style="margin: 0; padding: 0;">{{ headerTitle }}</h1></td>
+        </tr>
+    </table>
+
+</div>
