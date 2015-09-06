@@ -22,4 +22,18 @@ class TSProxyController extends LaDanseController
 
         return new JsonResponse($clients);
     }
+
+    /**
+     * @return Response
+     *
+     * @Route("/channels")
+     */
+    public function channelsAction()
+    {
+        $channelsJson = file_get_contents('http://ts.ladanse.org/TeamSpeak/rest/v1/channels');
+
+        $channels = json_decode($channelsJson);
+
+        return new JsonResponse($channels);
+    }
 }
