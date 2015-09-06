@@ -9,7 +9,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-9">
-                <p>Right now the following people are online:</p>
                 <div id="teamspeakContainer"></div>
             </div>
             <div class="col-md-3" style="text-align: center;">
@@ -67,6 +66,7 @@
 $(document).ready(function()
 {
     var clientsServiceURL = 'clients';
+    var channelsServiceURL = 'channels';
 
     $.when($.ajax({
         type: "GET",
@@ -74,41 +74,65 @@ $(document).ready(function()
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     })).then(tsPageClientsSuccessFunc, tsPageClientsErrorFunc);
+
+
+    $.when($.ajax({
+        type: "GET",
+        url: clientsServiceURL,
+        data: param = "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    }), $.ajax({
+        type: "GET",
+        url: channelsServiceURL,
+        data: param = "",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+    })).then(tsPageClientsSuccessFunc, tsPageClientsErrorFunc);
 });
 
-function tsPageClientsSuccessFunc(data, textStatus, jqXHR)
+function tsPageClientsSuccessFunc(responseClients, responseChannels)
 {
-    var clientsList = data;
+    var clientsList = responseClients[0];
+    var channelsList = responseChannels[0];
 
     // creating html string
     var htmlString = "";
 
     if (clientsList.length === 0)
     {
-        htmlString += "<div>";
-        htmlString += "  <div class='ts-top-label'>";
-        htmlString += "     <p style='font-size: 0.85em; text-align: center;'>There is nobody<br/> online now on TS</p>";
-        htmlString += "  </div>";
-        htmlString += "</div>";
-
-        $('#teamspeakContainer').append($(htmlString));
+        htmlString += '<div>There is nobody online right now</div>';
     }
     else
     {
-        htmlString = "";
-        htmlString += "<ul class='TeamSpeakClientList'>";
+        for (var i = 0; i < channelsList.length; i++) {
 
-        for (var j = 0; j < clientsList.length; j++)
-        {
-            var client = clientsList[j];
+            var channel = channelsList[i];
+            var channelId = channel.cid;
 
-            htmlString += "     <li class='TeamSpeakNickname'>" + client.client_nickname + "</li> ";
+            var clientsLi = '';
+
+            for (var j = 0; j < clientsList.length; j++) {
+
+                var client = clientsList[j];
+
+                if (client.cid === channelId) {
+                    clientsLi += '<li>' + client.client_nickname + '</li>';
+                }
+            }
+
+            if (clientsLi !== '')
+            {
+                htmlString += '<div class="channel-name">Channel - ' + channel.channel_name + '</div>';
+                htmlString += '<div class="clients-list"><ul class="clients-list">' + clientsLi + '</ul></div>';
+            }
         }
-
-        htmlString += "</ul>";
-
-        $('#teamspeakContainer').append($(htmlString));
     }
+
+    console.log(htmlString);
+
+    //appending to the div
+    $('#teamspeakContainer').html(htmlString);
 }
 
 function tsPageClientsErrorFunc(jqXHR, textStatus, errorThrown)
@@ -172,6 +196,29 @@ function tsPageClientsErrorFunc(jqXHR, textStatus, errorThrown)
         {
             font-size: 200%;
             list-style: none;
+        }
+
+        div.channel-name
+        {
+            font-size: 1.4em;
+            font-weight: bold;
+            padding: 10px 0 15px 0;
+        }
+
+        div.clients-list
+        {
+
+        }
+
+        ul.clients-list
+        {
+            list-style-type: none;
+        }
+
+        ul.clients-list li
+        {
+            font-size: 1.2em;
+            padding: 2px 0 1px 0;
         }
 
     </style>
