@@ -10,6 +10,7 @@ class CalendarDayModel extends ContainerAwareClass
     protected $date;
     protected $events;
     protected $showMonth;
+    protected $inCurrentRaidWeek;
 
     public function __construct(ContainerInjector $injector, \DateTime $date)
     {
@@ -18,6 +19,7 @@ class CalendarDayModel extends ContainerAwareClass
         $this->date = $date;
         $this->events = array();
         $this->showMonth = false;
+        $this->inCurrentRaidWeek = false;
     }
 
     /**
@@ -51,5 +53,15 @@ class CalendarDayModel extends ContainerAwareClass
     public function hasEvents()
     {
         return count($this->events) != 0;
+    }
+
+    public function setIsInCurrentRaidWeek($inCurrentRaidWeek)
+    {
+        $this->inCurrentRaidWeek = $inCurrentRaidWeek;
+    }
+
+    public function isInCurrentRaidWeek()
+    {
+        return $this->inCurrentRaidWeek;
     }
 }

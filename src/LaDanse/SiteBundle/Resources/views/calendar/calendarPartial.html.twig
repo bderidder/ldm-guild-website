@@ -33,12 +33,12 @@
 <tbody>
     {% for calendarDay in calendarDays %}
         {% if loop.index0%7 == 0 %}<tr>{% endif %}
-        <td class="calendar-cell {% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}today-calendar-cell{% endif %}">
+        <td class="calendar-cell {% if calendarDay.date|date('Y-m-d') == "today"|date('Y-m-d') %}today-calendar-cell{% endif %} {% if calendarDay.inCurrentRaidWeek %}current-raid-week{% endif %}">
             <div class="calendar-cell-container">
                 {% if calendarDay.showMonth %}
-                    <p>{{ calendarDay.date|date('M d') }}</p>
+                    <p class="{% if calendarDay.inCurrentRaidWeek %}current-raid-week{% endif %}">{{ calendarDay.date|date('M d') }}</p>
                 {% else %}
-                    <p>{{ calendarDay.date|date('d') }}</p>
+                    <p class="{% if calendarDay.inCurrentRaidWeek %}current-raid-week{% endif %}">{{ calendarDay.date|date('d') }}</p>
                 {% endif %}
                 {% if calendarDay.date|date('Y-m-d') >= "today"|date('Y-m-d') %}
                     <div class="hover-me-container">

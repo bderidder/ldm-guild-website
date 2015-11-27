@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Model\CalendarDayModel;
 use LaDanse\SiteBundle\Model\EventModel;
+use LaDanse\SiteBundle\Model\RaidWeekModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,6 +98,8 @@ class CalendarController extends LaDanseController
 
         $currentDate = clone $startDate;
 
+        $raidWeek = new RaidWeekModel(new \DateTime());
+
         // we show 28 days, that is 4 weeks
         for($i = 0; $i < 28; $i++)
         {
@@ -106,8 +109,12 @@ class CalendarController extends LaDanseController
 
             $calendarDateModel = new CalendarDayModel($this->getContainerInjector(), $date);
 
+            $calendarDateModel->setIsInCurrentRaidWeek($raidWeek->inRaidWeek($date));
+
+            // show the month in the first cell (first row, first day)
             if ($i === 0) $calendarDateModel->setShowMonth(true);
 
+            // show the month if we change month
             if ($date->format("d") === "01") $calendarDateModel->setShowMonth(true);
 
             $calendarDates[] = $calendarDateModel;

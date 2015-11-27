@@ -67,7 +67,7 @@
 
 .today-calendar-cell
 {
-    background-color: #e5e5e5;
+    background-color: lightgreen !important;
 }
 
 .table-bordered
@@ -101,4 +101,13 @@
 .calendar-cell:hover .hover-me-container
 {
 	display: block;
+}
+
+td.current-raid-week
+{
+    background-color: #CCFFCC;
+}
+
+p.current-raid-week
+{
 }
