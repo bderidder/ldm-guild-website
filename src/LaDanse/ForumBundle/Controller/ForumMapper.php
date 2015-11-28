@@ -41,10 +41,11 @@ class ForumMapper
     public function mapForum(Controller $controller, Forum $forum)
     {
         return (object)array(
-            "forumId"     => $forum->getId(),
-            "name"        => $forum->getName(),
-            "description" => $forum->getDescription(),
-            "links"       => (object)array(
+            "forumId"        => $forum->getId(),
+            "name"           => $forum->getName(),
+            "description"    => $forum->getDescription(),
+            "lastPost"       => $this->createLastPost($forum),
+            "links"          => (object)array(
                 "self"        => $controller->generateUrl('getForum', array('forumId' => $forum->getId()), true),
                 "createTopic" => $controller->generateUrl('createTopic', array('forumId' => $forum->getId()), true)
             )
@@ -85,5 +86,27 @@ class ForumMapper
         $jsonForum->topics = $jsonArray;
 
         return $jsonForum;
+    }
+
+    private function createLastPost(Forum $forum)
+    {
+        if ($forum->getLastPostPoster() != null)
+        {
+            return (object)array(
+                "date" => $forum->getLastPostDate()->format(\DateTime::ISO8601),
+                "topic" => (object)array(
+                    "id" => $forum->getLastPostTopic()->getId(),
+                    "subject" => $forum->getLastPostTopic()->getSubject()
+                ),
+                "poster" => (object)array(
+                    "id" => $forum->getLastPostPoster()->getId(),
+                    "displayName" => $forum->getLastPostPoster()->getDisplayName()
+                )
+            );
+        }
+        else
+        {
+            return null;
+        }
     }
 } 

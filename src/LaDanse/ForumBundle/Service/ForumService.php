@@ -275,6 +275,15 @@ class ForumService extends LaDanseService
 
         $topic->addPost($post);
 
+        // update last post on Forum
+        $forum->setLastPostDate($post->getPostDate());
+        $forum->setLastPostPoster($account);
+        $forum->setLastPostTopic($topic);
+
+        // update last post on Topic
+        $topic->setLastPostDate($post->getPostDate());
+        $topic->setLastPostPoster($account);
+
         $em->persist($post);
         $em->persist($topic);
         $em->flush();
@@ -374,6 +383,16 @@ class ForumService extends LaDanseService
             $post->setTopic($topic);
 
             $topic->addPost($post);
+
+            // update last post on Forum
+            $forum = $topic->getForum();
+            $forum->setLastPostDate($post->getPostDate());
+            $forum->setLastPostPoster($account);
+            $forum->setLastPostTopic($topic);
+
+            // update last post on Topic
+            $topic->setLastPostDate($post->getPostDate());
+            $topic->setLastPostPoster($account);
 
             $em->persist($post);
             $em->flush();
@@ -498,5 +517,85 @@ class ForumService extends LaDanseService
                 )
             );
         }
+    }
+
+    /**
+     * Update all last posts
+     */
+    public function updateLastPosts()
+    {
+        $doc = $this->getDoctrine();
+        $em = $doc->getManager();
+
+        $forums = $this->getAllForums();
+
+        /** @var Forum $forum */
+        foreach($forums as $forum)
+        {
+            $topics = $forum->getTopics();
+
+            /** @var Post $lastPostInForum */
+            $lastPostInForum = null;
+
+            /** @var Topic $topic */
+            foreach($topics as $topic)
+            {
+                /** @var Post $lastPostInTopic */
+                $lastPostInTopic = null;
+
+                $posts = $topic->getPosts();
+
+                /** @var Post $post */
+                foreach($posts as $post)
+                {
+                    // Update $lastPostInTopic
+                    if ($lastPostInTopic == null)
+                    {
+                        $lastPostInTopic = $post;
+                    }
+                    else if ($post->getPostDate() > $lastPostInTopic->getPostDate())
+                    {
+                        $lastPostInTopic = $post;
+                    }
+
+                    // Update $lastPostInForum
+                    if ($lastPostInForum == null)
+                    {
+                        $lastPostInForum = $post;
+                    }
+                    else if ($post->getPostDate() > $lastPostInForum->getPostDate())
+                    {
+                        $lastPostInForum = $post;
+                    }
+                }
+
+                // Update $lastPostInTopic
+                if ($lastPostInTopic != null)
+                {
+                    $topic->setLastPostDate($lastPostInTopic->getPostDate());
+                    $topic->setLastPostPoster($lastPostInTopic->getPoster());
+                }
+            }
+
+            // Update $lastPostInTopic
+            if ($lastPostInForum != null)
+            {
+                $forum->setLastPostDate($lastPostInForum->getPostDate());
+                $forum->setLastPostPoster($lastPostInForum->getPoster());
+                $forum->setLastPostTopic($lastPostInForum->getTopic());
+            }
+        }
+
+        $em->flush();
+
+        /*
+         * Iterate over all forums
+         *   Iterate over all topics
+         *     Iterate over al posts
+         *       Keep track of most recent post in topic
+         *       Keep track of most recent post in forum
+         *     Update topic last post
+         *   Update forum last post
+         */
     }
 }

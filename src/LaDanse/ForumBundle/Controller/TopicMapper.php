@@ -31,6 +31,7 @@ class TopicMapper
             "creator"    => $topic->getCreator()->getDisplayName(),
             "subject"    => $topic->getSubject(),
             "createDate" => $topic->getCreateDate()->format(\DateTime::ISO8601),
+            "lastPost"   => $this->createLastPost($topic),
             "links"      => (object)array(
                 "self"
                     => $controller->generateUrl('getPostsInTopic', array('topicId' => $topic->getId()), true),
@@ -111,5 +112,23 @@ class TopicMapper
         $topicObject->posts = $jsonArray;
 
         return $topicObject;
+    }
+
+    private function createLastPost(Topic $topic)
+    {
+        if ($topic->getLastPostPoster() != null)
+        {
+            return (object)array(
+                "date" => $topic->getLastPostDate()->format(\DateTime::ISO8601),
+                "poster" => (object)array(
+                    "id" => $topic->getLastPostPoster()->getId(),
+                    "displayName" => $topic->getLastPostPoster()->getDisplayName()
+                )
+            );
+        }
+        else
+        {
+            return null;
+        }
     }
 } 

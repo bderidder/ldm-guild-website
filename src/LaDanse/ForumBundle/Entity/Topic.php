@@ -56,6 +56,20 @@ class Topic
      * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"persist", "remove"})
      */
     protected $posts;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastPostDate", type="datetime", nullable=true)
+     */
+    private $lastPostDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account")
+     * @ORM\JoinColumn(name="lastPostPoster", referencedColumnName="id", nullable=true)
+     */
+    private $lastPostPoster;
+
     /**
      * Constructor
      */
@@ -210,5 +224,43 @@ class Topic
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastPostDate()
+    {
+        return $this->lastPostDate;
+    }
+
+    /**
+     * @param \DateTime $lastPostDate
+     * @return Forum
+     */
+    public function setLastPostDate($lastPostDate)
+    {
+        $this->lastPostDate = $lastPostDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getLastPostPoster()
+    {
+        return $this->lastPostPoster;
+    }
+
+    /**
+     * @param Account $lastPostPoster
+     * @return Forum
+     */
+    public function setLastPostPoster(Account $lastPostPoster)
+    {
+        $this->lastPostPoster = $lastPostPoster;
+
+        return $this;
     }
 }

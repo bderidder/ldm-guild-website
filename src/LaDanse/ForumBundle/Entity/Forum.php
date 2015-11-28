@@ -5,6 +5,7 @@ namespace LaDanse\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use LaDanse\DomainBundle\Entity\Account;
 
 /**
  * Forum
@@ -39,6 +40,25 @@ class Forum
     private $description;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastPostDate", type="datetime", nullable=true)
+     */
+    private $lastPostDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Topic")
+     * @ORM\JoinColumn(name="lastPostTopic", referencedColumnName="topicId", nullable=true)
+     */
+    private $lastPostTopic;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Account")
+     * @ORM\JoinColumn(name="lastPostPoster", referencedColumnName="id", nullable=true)
+     */
+    private $lastPostPoster;
+
+    /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="forum", cascade={"persist", "remove"})
      */
     protected $topics;
@@ -47,7 +67,7 @@ class Forum
      */
     public function __construct()
     {
-        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     /**
@@ -117,6 +137,63 @@ class Forum
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastPostDate()
+    {
+        return $this->lastPostDate;
+    }
+
+    /**
+     * @param \DateTime $lastPostDate
+     * @return Forum
+     */
+    public function setLastPostDate($lastPostDate)
+    {
+        $this->lastPostDate = $lastPostDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Topic
+     */
+    public function getLastPostTopic()
+    {
+        return $this->lastPostTopic;
+    }
+
+    /**
+     * @param Topic $lastPostTopic
+     * @return Forum
+     */
+    public function setLastPostTopic(Topic $lastPostTopic)
+    {
+        $this->lastPostTopic = $lastPostTopic;
+
+        return $this;
+    }
+
+    /**
+     * @return Account
+     */
+    public function getLastPostPoster()
+    {
+        return $this->lastPostPoster;
+    }
+
+    /**
+     * @param Account $lastPostPoster
+     * @return Forum
+     */
+    public function setLastPostPoster(Account $lastPostPoster)
+    {
+        $this->lastPostPoster = $lastPostPoster;
+
+        return $this;
     }
 
     /**
