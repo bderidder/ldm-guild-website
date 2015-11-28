@@ -102,6 +102,14 @@
                         <a href="#/{{ forumId }}/topics/{{ topic.topicId }}"><span><b>{{ topic.subject }}</b></span></a>
                     </div>
                     <div>
+                        <span>Created by <i>{{ topic.creator }}</i>,
+                            <span popover="{{ topic.createDate | date: 'EEE MMM d, y' }} at {{ topic.createDate | date: 'H:mm' }}"
+                                  popover-trigger="mouseenter"
+                                  popover-append-to-body="true"
+                                  popover-placement="right"
+                                  am-time-ago="topic.createDate"></span>
+                        </span>
+                        <br/>
                         <span>Last post by <i>{{ topic.lastPost.poster.displayName }}</i>,
                             <span popover="{{ topic.lastPost.date | date: 'EEE MMM d, y' }} at {{ topic.lastPost.date | date: 'H:mm' }}"
                                   popover-trigger="mouseenter"
