@@ -77,3 +77,8 @@ RedirectRouting:
     resource: "@LaDanseSiteBundle/Controller/Redirect"
     type:     annotation
     prefix:   /redirect
+
+ActivityStreamRouting:
+    resource: "@LaDanseSiteBundle/Controller/ActivityStream"
+    type:     annotation
+    prefix:   /activitystream
