@@ -6,6 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
+use LaDanse\CommonBundle\Helper\CommandExecutionContext;
 use LaDanse\ServicesBundle\Service\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
