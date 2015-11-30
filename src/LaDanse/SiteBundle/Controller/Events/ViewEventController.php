@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,9 +45,11 @@ class ViewEventController extends LaDanseController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $event = $eventService->getEventById($id);
-
-        if (null === $event)
+        try
+        {
+            $event = $eventService->getEventById($id);
+        }
+        catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in indexAction',
@@ -55,23 +58,21 @@ class ViewEventController extends LaDanseController
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }
-        else
-        {
-            $this->eventDispatcher->dispatch(
-                ActivityEvent::EVENT_NAME,
-                new ActivityEvent(
-                    ActivityType::EVENT_VIEW,
-                    $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    $event->toJson()
-                )
-            );
 
-            return $this->render(
-                'LaDanseSiteBundle:events:viewEvent.html.twig',
-                array(
-                    'isFuture' => ($event->getInviteTime() > $currentDateTime),
-                    'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()))
-            );
-        }
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::EVENT_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount(),
+                $event->toJson()
+            )
+        );
+
+        return $this->render(
+            'LaDanseSiteBundle:events:viewEvent.html.twig',
+            array(
+                'isFuture' => ($event->getInviteTime() > $currentDateTime),
+                'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()))
+        );
     }
 }
