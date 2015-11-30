@@ -3,6 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\Event\Query;
 
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
