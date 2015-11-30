@@ -94,7 +94,7 @@ class EventService extends LaDanseService
         \DateTime $startTime,
         \DateTime $endTIme)
     {
-        /** @var $createEventCommand CreateEventCommand */
+        /** @var CreateEventCommand $createEventCommand */
         $createEventCommand = $this->container->get(CreateEventCommand::SERVICE_NAME);
 
         $createEventCommand->setOrganiser($organiser);
@@ -167,7 +167,7 @@ class EventService extends LaDanseService
      */
     public function createSignUp($eventId, Account $account, $signUpType, $roles = array())
     {
-        /** @var $createSignUpCommand CreateSignUpCommand */
+        /** @var CreateSignUpCommand $createSignUpCommand */
         $createSignUpCommand = $this->container->get(CreateSignUpCommand::SERVICE_NAME);
 
         $createSignUpCommand->setEventId($eventId);
@@ -186,7 +186,7 @@ class EventService extends LaDanseService
      */
     public function updateSignUp($signUpId, SignUpFormModel $formModel)
     {
-        /** @var $updateSignUpCommand UpdateSignUpCommand */
+        /** @var UpdateSignUpCommand $updateSignUpCommand */
         $updateSignUpCommand = $this->container->get(UpdateSignUpCommand::SERVICE_NAME);
 
         $updateSignUpCommand->setSignUpId($signUpId);
