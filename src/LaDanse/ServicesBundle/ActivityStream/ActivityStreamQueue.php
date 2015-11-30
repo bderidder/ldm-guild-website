@@ -43,6 +43,13 @@ class ActivityStreamQueue
             )
         );
 
+        $activityEventFilter = new ActivityEventFilter();
+
+        if (!$activityEventFilter->isInterestingActivity($activity->getType()))
+        {
+            return;
+        }
+
         $em = $this->doctrine->getManager();
 
         $newQueueItem = new ActivityQueueItem();
