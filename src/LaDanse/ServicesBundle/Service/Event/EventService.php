@@ -13,6 +13,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
+use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -59,7 +60,7 @@ class EventService extends LaDanseService
     /**
      * Return the event with the given id
      *
-     * @param $id int id of event to retrieve
+     * @param int $id id of event to retrieve
      *
      * @throws EventDoesNotExistException if the event does not exist
      *
@@ -67,18 +68,12 @@ class EventService extends LaDanseService
      */
     public function getEventById($id)
     {
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $this->doctrine->getRepository(Event::REPOSITORY);
+        /** @var GetEventByIdQuery $getEventByIdQuery */
+        $getEventByIdQuery = $this->container->get(GetEventByIdQuery::SERVICE_NAME);
 
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
+        $getEventByIdQuery->setEventId($id);
 
-        if (is_null($event))
-        {
-            throw new EventDoesNotExistException('Event does not exist');
-        }
-
-        return $event;
+        return $getEventByIdQuery->run();
     }
 
     /**
