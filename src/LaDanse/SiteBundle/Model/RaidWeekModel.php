@@ -6,7 +6,10 @@ use LaDanse\SiteBundle\Controller\Calendar\CalendarController;
 
 class RaidWeekModel
 {
+    /** @var \DateTime $firstData */
     protected $firstDate;
+
+    /** @var \DateTime $lastDate */
     protected $lastDate;
 
     /**
