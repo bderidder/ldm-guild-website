@@ -28,7 +28,7 @@ class CalendarMonthModel
      */
     public function getStartDate()
     {
-        return $this->startDate;
+        return clone $this->startDate;
     }
 
     /**
@@ -36,7 +36,7 @@ class CalendarMonthModel
      */
     public function getEndDate()
     {
-        return $this->endDate;
+        return clone $this->endDate;
     }
 
     /**
