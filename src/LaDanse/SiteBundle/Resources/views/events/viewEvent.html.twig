@@ -116,7 +116,7 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
 											<i class="fa fa-trash-o fa-1x"></i>
 										</a>
 			                        {% endif %}
@@ -162,7 +162,7 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
 											<i class="fa fa-trash-o fa-1x"></i>
 										</a>
 			                        {% endif %}
@@ -190,7 +190,7 @@
 			                    </td>
 			                    <td>
 			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'id': event.id}) }}">
+			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
 											<i class="fa fa-trash-o fa-1x"></i>
 										</a>
 			                        {% endif %}
@@ -286,7 +286,7 @@
                     {
                         if (e) 
                         {
-                            location.assign('{{ path('removeSignUp', {'id': event.id}) }}');
+                            location.assign('{{ path('removeSignUp', {'eventId': event.id}) }}');
                         } 
                     }
                 );
