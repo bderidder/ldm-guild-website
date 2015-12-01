@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\Event\Command;
+namespace LaDanse\ServicesBundle\Service\Event;
 
 class UserAlreadySignedException extends \Exception
 {
