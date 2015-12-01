@@ -16,7 +16,7 @@ use JMS\DiExtraBundle\Annotation as DI;
  */
 class GetEventByIdQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.CreateEventCommand';
+    const SERVICE_NAME = 'LaDanse.GetEventByIdQuery';
 
     /**
      * @var $logger \Monolog\Logger
