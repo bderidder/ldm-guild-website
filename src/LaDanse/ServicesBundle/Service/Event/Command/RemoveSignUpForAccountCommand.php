@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class RemoveSignUpForAccountCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.RemoveSignUpCommand';
+    const SERVICE_NAME = 'LaDanse.RemoveSignUpForAccountCommand';
 
     /**
      * @var $logger \Monolog\Logger
