@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\SiteBundle\Model\Calendar\CalendarDayModel;
+use LaDanse\SiteBundle\Model\Calendar\CalendarMonthModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -83,12 +84,25 @@ class CalendarController extends LaDanseController
 
     public function indexPartialAction(\DateTime $showDate)
     {
-        /* @var $startDate \DateTime */
-        // fetch the Monday we should start with
-        $startDate = $this->getStartDate($showDate);
+        /** @var CalendarMonthModel $calendarMonthModel */
+        $calendarMonthModel = new CalendarMonthModel($showDate);
+
+        // create a RaidWeekModel representing the current raid week
+        /** @var RaidWeekModel $raidWeek */
+        $raidWeek = new RaidWeekModel(new \DateTime());
+
+        if (!$calendarMonthModel->containsDate($raidWeek->getFirstDate())
+            &&
+            $calendarMonthModel->containsDate($raidWeek->getLastDate()))
+        {
+            $calendarMonthModel->shiftOneWeekBack();
+        }
+
+        /* @var \DateTime $startDate */
+        $startDate = $calendarMonthModel->getStartDate();
 
         // the algoritm below needs to start on the day before, so we substract a day
-        $startDate = $startDate->sub(new \DateInterval("P1D"));
+        $startDate = $startDate->modify('-1days');
 
         $calendarDates = array();
 
@@ -98,14 +112,12 @@ class CalendarController extends LaDanseController
 
         $currentDate = clone $startDate;
 
-        $raidWeek = new RaidWeekModel(new \DateTime());
-
         // we show 28 days, that is 4 weeks
         for($i = 0; $i < 28; $i++)
         {
             $date = clone $currentDate;
 
-            $date->add(new \DateInterval("P1D"));
+            $date->modify('+1days');
 
             $calendarDateModel = new CalendarDayModel($this->getContainerInjector(), $date);
 
@@ -191,36 +203,5 @@ class CalendarController extends LaDanseController
         }
 
         return $eventModels;
-    }
-
-    private function getStartDate(\DateTime $showDate)
-    {
-        $day = date('w', $showDate->getTimestamp());
-
-        if ($day === 0)
-        {
-            // it's Sunday but in Europe we start our weeks on Monday
-            $day = 7;
-        }
-        
-        // days are not from Monday (1) to Sunday (7)
-
-        if ($day < 3)
-        {
-            // it's monday or tuesday, we need to include the previous week in our
-            // calendar to show the current raid week completely
-
-            $day = $day + 6;
-        }
-        else
-        {
-            $day = $day - 1;
-        }
-
-        $currentMonthStart = strtotime('-' . $day . ' days', $showDate->getTimestamp());
-
-        $calendarStart = date('d/m/Y', $currentMonthStart);
-
-        return \DateTime::createFromFormat("d/m/Y", $calendarStart);
     }
 }
