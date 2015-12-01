@@ -5,6 +5,8 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
@@ -42,29 +44,56 @@ class EditSignUpController extends LaDanseController
      */
     public function createAction(Request $request, $id)
     {
-    	$em = $this->getDoctrine();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(Event::REPOSITORY);
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
 
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        if (null === $event)
+        /** @var Event $event */
+        $event = null;
+
+        try
         {
-            $this->logger->warning(__CLASS__ . ' the event does not exist in indexAction', array("event id" => $id));
+            $event = $eventService->getEventById($id);
+        }
+        catch(EventDoesNotExistException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' the event does not exist in indexAction',
+                array("event" => $id)
+            );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
-        } 
+        }
 
+        /* verify that the event is not in the past */
         $currentDateTime = new \DateTime();
         if ($event->getInviteTime() <= $currentDateTime)
         {
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
 
-        $currentSignUp = $this->getCurrentUserSignUp($event);
+        /** @var SignUp $currentSignUp */
+        $currentSignUp = null;
 
-        if (!$currentSignUp)
+        try
+        {
+            $currentSignUp = $eventService->getSignUpForUser(
+                $event->getId(),
+                $account->getId()
+            );
+        }
+        catch(EventDoesNotExistException $e)
+        {
+            return $this->redirect($this->generateUrl('calendarIndex'));
+        }
+        catch(EventInThePastException $e)
+        {
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        }
+
+        if ($currentSignUp == null)
         {
             $this->logger->warning(__CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
                 array('event' => $id, 'user' => $this->getAccount()->getId()));
@@ -81,7 +110,7 @@ class EditSignUpController extends LaDanseController
 
         if ($form->isValid() && $formModel->isValid($form))
         {
-            $this->updateSignUp($currentSignUp, $formModel);
+            $eventService->updateSignUp($currentSignUp->getId(), $formModel);
 
             $this->addToast('Signup updated');
 
@@ -91,40 +120,6 @@ class EditSignUpController extends LaDanseController
         {
             return $this->render("LaDanseSiteBundle:events:editSignUp.html.twig",
                 array('event' => $event, 'form' => $form->createView()));
-        }
-    }
-
-    private function updateSignUp(SignUp $signUp, SignUpFormModel $formModel)
-    {
-        /** @var EventService $eventService */
-        $eventService = $this->get(EventService::SERVICE_NAME);
-
-        $eventService->updateSignUp($signUp->getId(), $formModel);
-    }
-
-    private function getCurrentUserSignUp(Event $event)
-    {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-        $account = $authContext->getAccount();
-
-        $em = $this->getDoctrine()->getManager();
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery('SELECT s ' .
-                                  'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
-                                  'WHERE s.event = :event AND s.account = :account');
-        $query->setParameter('account', $account->getId());
-        $query->setParameter('event', $event->getId());
-
-        $signUps = $query->getResult();
-
-        if (count($signUps) === 0)
-        {
-            return NULL;
-        }
-        else
-        {
-            return $signUps[0];
         }
     }
 }
