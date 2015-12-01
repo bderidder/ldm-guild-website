@@ -1,12 +1,12 @@
 <?php
 
-namespace LaDanse\SiteBundle\Model;
+namespace LaDanse\SiteBundle\Model\Calendar;
 
 use LaDanse\SiteBundle\Controller\Calendar\CalendarController;
 
 class RaidWeekModel
 {
-    /** @var \DateTime $firstData */
+    /** @var \DateTime $firstDate */
     protected $firstDate;
 
     /** @var \DateTime $lastDate */
@@ -80,6 +80,5 @@ class RaidWeekModel
 
         $tempLast = strtotime('+' . $deltaToEnd . ' days', $date->getTimestamp());
         $this->lastDate = \DateTime::createFromFormat("d/m/Y", date('d/m/Y', $tempLast));
-
     }
 }

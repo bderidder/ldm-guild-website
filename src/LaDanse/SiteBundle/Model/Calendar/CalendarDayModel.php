@@ -1,9 +1,10 @@
 <?php
 
-namespace LaDanse\SiteBundle\Model;
+namespace LaDanse\SiteBundle\Model\Calendar;
 
 use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
+use LaDanse\SiteBundle\Model\EventModel;
 
 class CalendarDayModel extends ContainerAwareClass
 {
