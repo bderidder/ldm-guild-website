@@ -52,4 +52,18 @@ class CalendarMonthModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($calendarMonthModel->getStartDate(),  new \DateTime('2015-11-30'));
         $this->assertEquals($calendarMonthModel->getEndDate(), new \DateTime('2015-12-27'));
     }
+
+    public function testContainsDate()
+    {
+        /** @var CalendarMonthModel $calendarMonthModel */
+        $calendarMonthModel = new CalendarMonthModel(new \DateTime('2015-12-06'));
+
+        $this->assertTrue($calendarMonthModel->containsDate(new \DateTime('2015-12-06')));
+        $this->assertTrue($calendarMonthModel->containsDate(new \DateTime('2015-11-30')));
+        $this->assertTrue($calendarMonthModel->containsDate(new \DateTime('2015-12-27')));
+        $this->assertTrue($calendarMonthModel->containsDate(new \DateTime('2015-12-15')));
+
+        $this->assertFalse($calendarMonthModel->containsDate(new \DateTime('2015-11-29')));
+        $this->assertFalse($calendarMonthModel->containsDate(new \DateTime('2015-12-28')));
+    }
 }
