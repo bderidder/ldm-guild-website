@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
@@ -36,26 +37,34 @@ class EditEventController extends LaDanseController
      */
     public function editAction(Request $request, $id)
     {
-    	$em = $this->getDoctrine()->getManager();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-    	$repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-    	$event = $repository->find($id);
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        if (null === $event)
+        /** @var Event $event */
+        $event = null;
+
+        try
         {
-            $this->logger->warning(__CLASS__ . ' the event does not exist in indexAction',
-                array("event" => $id));
+            $event = $eventService->getEventById($id);
+        }
+        catch(EventDoesNotExistException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' the event does not exist in indexAction',
+                array("event" => $id)
+            );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }
 
+        /* verify that the event is not in the past */
         $currentDateTime = new \DateTime();
         if ($event->getInviteTime() <= $currentDateTime)
         {
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
 
+        /* verify that the user can edit this particular event */
         if (!($event->getOrganiser()->getId() === $this->getAccount()->getId()))
         {
             $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction');
