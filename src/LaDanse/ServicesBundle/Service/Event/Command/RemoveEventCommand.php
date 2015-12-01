@@ -87,6 +87,17 @@ class RemoveEventCommand extends AbstractCommand
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $event = $repository->find($this->getEventId());
 
+        if ($event == null)
+        {
+            throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
+        }
+
+        $currentDateTime = new \DateTime();
+        if ($event->getInviteTime() <= $currentDateTime)
+        {
+            throw new EventInThePastException("Event is in the past and cannot be changed");
+        }
+
         $commentService->removeCommentGroup($event->getTopicId());
 
         $em->remove($event);
