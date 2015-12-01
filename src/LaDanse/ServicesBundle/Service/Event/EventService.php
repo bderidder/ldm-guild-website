@@ -4,16 +4,19 @@ namespace LaDanse\ServicesBundle\Service\Event;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
+use LaDanse\ServicesBundle\Service\Event\Query\SignUpInEventForAccountQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -208,5 +211,22 @@ class EventService extends LaDanseService
         $removeSignUpCommand->setSignUpId($signUpId);
 
         $removeSignUpCommand->run();
+    }
+
+    /**
+     * Remove the sign up the given account has on the given event
+     *
+     * @param $eventId
+     * @param $accountId
+     */
+    public function removeSignUpForAccount($eventId, $accountId)
+    {
+        /** @var RemoveSignUpForAccountCommand $removeSignUpForAccountCommand */
+        $removeSignUpForAccountCommand = $this->container->get(RemoveSignUpForAccountCommand::SERVICE_NAME);
+
+        $removeSignUpForAccountCommand->setEventId($eventId);
+        $removeSignUpForAccountCommand->setAccountId($accountId);
+
+        $removeSignUpForAccountCommand->run();
     }
 }
