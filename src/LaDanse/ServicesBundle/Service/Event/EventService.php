@@ -17,6 +17,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UserAlreadySignedException;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\SignUpInEventForAccountQuery;
+use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -228,5 +229,24 @@ class EventService extends LaDanseService
         $removeSignUpForAccountCommand->setAccountId($accountId);
 
         $removeSignUpForAccountCommand->run();
+    }
+
+    /**
+     * If it exists, return the sign up the given user has for the given event
+     *
+     * @param $eventId
+     * @param $accountId
+     *
+     * @return SignUp
+     */
+    public function getSignUpForUser($eventId, $accountId)
+    {
+        /** @var UserSignUpQuery $userSignUpQuery */
+        $userSignUpQuery = $this->container->get(UserSignUpQuery::SERVICE_NAME);
+
+        $userSignUpQuery->setEventId($eventId);
+        $userSignUpQuery->setAccountId($accountId);
+
+        return $userSignUpQuery->run();
     }
 }
