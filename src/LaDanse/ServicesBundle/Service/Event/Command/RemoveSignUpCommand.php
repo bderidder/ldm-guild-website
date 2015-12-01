@@ -7,6 +7,8 @@ use LaDanse\CommonBundle\Helper\AbstractCommand;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

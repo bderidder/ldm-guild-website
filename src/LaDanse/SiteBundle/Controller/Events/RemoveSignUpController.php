@@ -3,9 +3,9 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
-use LaDanse\ServicesBundle\Service\Event\Command\SignUpDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
