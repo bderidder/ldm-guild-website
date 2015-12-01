@@ -22,6 +22,22 @@ class RaidWeekModel
         $this->init($date);
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getFirstDate()
+    {
+        return clone $this->firstDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastDate()
+    {
+        return clone $this->lastDate;
+    }
+
     public function inRaidWeek(\DateTime $date)
     {
         return (
