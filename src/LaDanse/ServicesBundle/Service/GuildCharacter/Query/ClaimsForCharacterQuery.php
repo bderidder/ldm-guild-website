@@ -129,7 +129,7 @@ class ClaimsForCharacterQuery extends AbstractQuery
 
         if (is_null($activeVersion))
         {
-            $this->logger->info('no active version found for ' . $onDateTime->format("d/M/Y"));
+            $this->logger->debug('no active version found for ' . $onDateTime->format("d/M/Y"));
 
             return (object)array(
                 "id"       => $character->getId(),
@@ -139,7 +139,7 @@ class ClaimsForCharacterQuery extends AbstractQuery
         }
         else
         {
-            $this->logger->info('active version found for ' . $onDateTime->format("d/M/Y"));
+            $this->logger->debug('active version found for ' . $onDateTime->format("d/M/Y"));
 
             return (object)array(
                 "id"       => $character->getId(),
