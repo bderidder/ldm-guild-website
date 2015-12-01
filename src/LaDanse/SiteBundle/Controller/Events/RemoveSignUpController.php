@@ -3,20 +3,18 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\Command\SignUpDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use JMS\DiExtraBundle\Annotation as DI;
 
 /**
- * @Route("/{id}/signup")
+ * @Route("/{eventId}/signup")
 */
 class RemoveSignUpController extends LaDanseController
 {
@@ -35,67 +33,61 @@ class RemoveSignUpController extends LaDanseController
     private $eventDispatcher;
 
     /**
-     * @param $id string
+     * @param string $eventId
      *
      * @return Response
      *
      * @Route("/remove", name="removeSignUp")
      */
-    public function removeAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $em->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($id);
-
-        if (null === $event)
-        {
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        }
-
-        $currentDateTime = new \DateTime();
-        if ($event->getInviteTime() <= $currentDateTime)
-        {
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
-        }
-
-        /** @var $signUp SignUp */
-        $signUp = $this->getCurrentUserSignUp($event);
-
-        /** @var $eventService EventService */
-        $eventService = $this->get(EventService::SERVICE_NAME);
-
-        $eventService->removeSignUp($signUp->getId());
-
-        $this->addToast('Sign up removed');
-
-        return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
-    }
-
-    private function getCurrentUserSignUp(Event $event)
+    public function removeAction($eventId)
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
         $account = $authContext->getAccount();
 
-        $em = $this->getDoctrine()->getManager();
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery('SELECT s ' .
-                                  'FROM LaDanse\DomainBundle\Entity\SignUp s ' . 
-                                  'WHERE s.event = :event AND s.account = :account');
-        $query->setParameter('account', $account->getId());
-        $query->setParameter('event', $event->getId());
-
-        $signUps = $query->getResult();
-
-        if (count($signUps) === 0)
+        try
         {
-            return NULL;
+            $eventService->removeSignUpForAccount($eventId, $account->getId());
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
         }
-        else
+        catch(EventDoesNotExistException $e)
         {
-            return $signUps[0];
+            $this->logger->warning(
+                __CLASS__ . ' the event does not exist',
+                array(
+                    "event"   => $eventId,
+                    "account" => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('calendarIndex'));
+        }
+        catch(SignUpDoesNotExistException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' no sign up for this account on given event',
+                array(
+                    "event"   => $eventId,
+                    "account" => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+        }
+        catch(EventInThePastException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' given event is in the past',
+                array(
+                    "event"   => $eventId,
+                    "account" => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
         }
     }
 }
