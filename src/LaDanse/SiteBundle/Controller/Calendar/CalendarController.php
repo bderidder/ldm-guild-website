@@ -3,9 +3,9 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\SiteBundle\Model\CalendarDayModel;
+use LaDanse\SiteBundle\Model\Calendar\CalendarDayModel;
 use LaDanse\SiteBundle\Model\EventModel;
-use LaDanse\SiteBundle\Model\RaidWeekModel;
+use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
