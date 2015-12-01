@@ -3,6 +3,8 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -43,37 +45,34 @@ class RemoveEventController extends LaDanseController
      */
     public function removeAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
+        /** @var $eventService EventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $event = $repository->find($id);
-
-        if (null === $event)
+        try
         {
-            $this->logger->warning(
-                __CLASS__ . ' the event does not exist in deleteAction',
-                array("event" => $id)
-            );
-
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        }
-        else
-        {
-            $currentDateTime = new \DateTime();
-            if ($event->getInviteTime() <= $currentDateTime)
-            {
-                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
-            }
-
-            /** @var $eventService EventService */
-            $eventService = $this->get(EventService::SERVICE_NAME);
-
-            $eventService->removeEvent($event->getId());
+            $eventService->removeEvent($id);
 
             $this->addToast('Event removed');
 
             return $this->redirect($this->generateUrl('menuIndex'));
+        }
+        catch (EventDoesNotExistException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' the event does not exist in removeAction',
+                array("event id" => $id)
+            );
+
+            return $this->redirect($this->generateUrl('calendarIndex'));
+        }
+        catch(EventInThePastException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' the event is in the past in removeAction',
+                array("event id" => $id)
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
     }
 }
