@@ -3,15 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\Event\Command\EventDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Event\Command\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 

@@ -4,9 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
-use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
@@ -14,9 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
