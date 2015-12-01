@@ -75,15 +75,24 @@ class RemoveSignUpCommand extends AbstractCommand
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->doctrine->getManager();
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
+        /* @var \Doctrine\ORM\EntityRepository $repository */
         $repository = $this->doctrine->getRepository(SignUp::REPOSITORY);
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
+        /* @var SignUp $signUp */
         $signUp = $repository->find($this->getSignUpId());
 
-        $em->remove($signUp);
+        if ($signUp == null)
+        {
+            throw new SignUpDoesNotExistException("Sign up with id " . $this->getSignUpId() . ' does not exist');
+        }
 
-        $em->flush();
+        $currentDateTime = new \DateTime();
+        if ($signUp->getEvent()->getInviteTime() <= $currentDateTime)
+        {
+            throw new EventInThePastException("Event belonging to sign up is in the past and cannot be changed");
+        }
+
+        $em->remove($signUp);
 
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
@@ -95,5 +104,7 @@ class RemoveSignUpCommand extends AbstractCommand
                     'signUp' => $signUp->toJson()
                 ))
         );
+
+        $em->flush();
     }
 }
