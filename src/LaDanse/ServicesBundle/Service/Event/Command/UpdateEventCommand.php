@@ -3,6 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -172,6 +173,11 @@ class UpdateEventCommand extends AbstractCommand
 
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($this->getEventId());
+
+        if ($event == null)
+        {
+            throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
+        }
 
         $oldJson = $event->toJson();
 

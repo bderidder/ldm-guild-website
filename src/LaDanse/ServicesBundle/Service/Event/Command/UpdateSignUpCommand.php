@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Service\Event\Command;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -104,6 +105,11 @@ class UpdateSignUpCommand extends AbstractCommand
 
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $signUp = $repository->find($this->getSignUpId());
+
+        if ($signUp == null)
+        {
+            throw new SignUpDoesNotExistException('Sign up does not eixst');
+        }
 
         $oldSignUpJson = $signUp->toJson();
 
