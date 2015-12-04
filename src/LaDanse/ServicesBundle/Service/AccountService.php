@@ -6,6 +6,8 @@
 
 namespace LaDanse\ServicesBundle\Service;
 
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
@@ -40,6 +42,39 @@ class AccountService extends LaDanseService
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+    }
+
+    /**
+     * Create a new user in FOSUser
+     *
+     * @param $username
+     * @param $password
+     * @param $displayName
+     * @param $email
+     * @param $request
+     * @param $response
+     *
+     * @return Account
+     */
+    public function createAccount($username, $password, $displayName, $email, $request, $response)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+        $dispatcher = $this->get('event_dispatcher');
+
+        /* @var $user \LaDanse\DomainBundle\Entity\Account */
+        $user = $userManager->createUser();
+
+        $user->setUsername($username);
+        $user->setPlainPassword($password);
+        $user->setDisplayName($displayName);
+        $user->setEmail($email);
+        $user->setEnabled(true);
+
+        $userManager->updateUser($user);
+
+        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+        return $user;
     }
 
     /**
