@@ -6,6 +6,7 @@
 
 namespace LaDanse\ForumBundle\Service;
 
+use LaDanse\ForumBundle\Entity\Post;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
@@ -66,6 +67,7 @@ class ForumStatsService extends LaDanseService
 
         $newPosts = $this->getNewPostsSince($lastVisit);
 
+        /** @var Post $newPost */
         foreach($newPosts as $newPost)
         {
             if ($newPost->getPoster()->getId() == $account->getId())
@@ -95,6 +97,7 @@ class ForumStatsService extends LaDanseService
 
         $unreadPosts = array();
 
+        /** @var UnreadPost $unreadPost */
         foreach($queryResult as $unreadPost)
         {
             $unreadPosts[] = $unreadPost->getPost();
