@@ -12,6 +12,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
@@ -55,6 +56,19 @@ class EventService extends LaDanseService
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+    }
+
+    /**
+     * Return all events. The result is sorted by invite time (ascending).
+     *
+     * @return array
+     */
+    public function getAllEvents()
+    {
+        /** @var GetAllEventsQuery $getAllEventsQuery */
+        $getAllEventsQuery = $this->get(GetAllEventsQuery::SERVICE_NAME);
+
+        return $getAllEventsQuery->run();
     }
 
     /**
