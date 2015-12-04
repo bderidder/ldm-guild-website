@@ -3,6 +3,8 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,9 +41,16 @@ class ListClaimsPartialController extends LaDanseController
      */
     public function listAction($eventId, $accountId, $role)
     {
-        $event = $this->getEvent($eventId);
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        if (null === $event)
+        $event = null;
+
+        try
+        {
+            $event = $eventService->getEventById($eventId);
+        }
+        catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in listAction',
@@ -77,16 +86,6 @@ class ListClaimsPartialController extends LaDanseController
             'LaDanseSiteBundle:events:listClaims.html.twig',
             array('claims' => $this->getClaims($accountId, $role, $onDate))
         );
-    }
-
-    private function getEvent($eventId)
-    {
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $this->getDoctrine()->getRepository(self::EVENT_REPOSITORY);
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($eventId);
-
-        return $event;
     }
 
     private function getClaims($accountId, $role, $onDateTime)
