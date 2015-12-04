@@ -7,7 +7,7 @@
 namespace LaDanse\ServicesBundle\Command;
 
 use LaDanse\CommonBundle\Helper\CommandExecutionContext;
-use LaDanse\ServicesBundle\Service\GameDataService;
+use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Symfony\Component\Console\Input\InputInterface;
@@ -78,9 +78,12 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $context->debug("Fetching guild members from the database");
 
+        /** @var GuildCharacterService $characterService */
         $characterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
-        
+
+        /** @var GameDataService $gameDataService */
         $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
+
         $gameRaces = $gameDataService->getAllRaces();
         $gameClasses = $gameDataService->getAllClasses();
         

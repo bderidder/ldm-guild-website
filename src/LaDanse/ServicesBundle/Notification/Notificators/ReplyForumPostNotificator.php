@@ -10,7 +10,7 @@ use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\ListFunctions;
 use LaDanse\ServicesBundle\Notification\NotificationContext;
 use LaDanse\ServicesBundle\Notification\NotificationTemplates;
-use LaDanse\ServicesBundle\Service\SettingNames;
+use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 
 /**
  * @DI\Service(ReplyForumPostNotificator::SERVICE_NAME, public=true)

@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Notification;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

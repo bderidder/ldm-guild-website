@@ -7,7 +7,7 @@ use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\NotificationContext;
 use LaDanse\ServicesBundle\Notification\NotificationTemplates;
-use LaDanse\ServicesBundle\Service\SettingNames;
+use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 
 /**
  * @DI\Service(AllForumPostNotificator::SERVICE_NAME, public=true)
