@@ -7,7 +7,6 @@ use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use JMS\DiExtraBundle\Annotation as DI;
@@ -26,12 +25,6 @@ class RemoveEventController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
-
-    /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
 
     /**
      * @param string $id

@@ -4,7 +4,6 @@ namespace LaDanse\ServicesBundle\Notification\Notificators;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
-use LaDanse\DomainBundle\Entity\Setting;
 use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\NotificationContext;
 use LaDanse\ServicesBundle\Notification\NotificationTemplates;

@@ -32,6 +32,7 @@ class MailService
 
     public function sendMail($from, $to, $subject, $textPart, $htmlPart = null)
     {
+        /** @var \Swift_Mime_Message $message */
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($from)
