@@ -13,6 +13,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsQuery;
+use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsSinceQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
@@ -69,6 +70,23 @@ class EventService extends LaDanseService
         $getAllEventsQuery = $this->get(GetAllEventsQuery::SERVICE_NAME);
 
         return $getAllEventsQuery->run();
+    }
+
+    /**
+     * Returns all events whose invite time is equal to or later than the given date
+     *
+     * @param \DateTime $sinceDate
+     *
+     * @return array
+     */
+    public function getAllEventsSince(\DateTime $sinceDate)
+    {
+        /** @var GetAllEventsSinceQuery $getAllEventsSinceQuery */
+        $getAllEventsSinceQuery = $this->get(GetAllEventsSinceQuery::SERVICE_NAME);
+
+        $getAllEventsSinceQuery->setSinceDate($sinceDate);
+
+        return $getAllEventsSinceQuery->run();
     }
 
     /**
