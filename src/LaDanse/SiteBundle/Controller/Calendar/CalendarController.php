@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Model\Calendar\CalendarDayModel;
 use LaDanse\SiteBundle\Model\Calendar\CalendarMonthModel;
 use LaDanse\SiteBundle\Model\EventModel;
@@ -187,13 +188,10 @@ class CalendarController extends LaDanseController
 
     protected function getEvents($startDate, Account $currentUser)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $em->createQuery('SELECT e FROM LaDanse\DomainBundle\Entity\Event e WHERE e.inviteTime > :start ORDER BY e.inviteTime ASC');
-        $query->setParameter('start', $startDate);
-        
-        $events = $query->getResult();
+        $events = $eventService->getAllEventsSince($startDate);
 
         $eventModels = array();
 
