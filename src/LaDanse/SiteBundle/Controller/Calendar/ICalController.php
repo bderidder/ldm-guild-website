@@ -150,7 +150,7 @@ class ICalController extends LaDanseController
         /** @var SettingsService $settingsService */
         $settingsService = $this->get(SettingsService::SERVICE_NAME);
 
-        return $settingsService->getCalendarExport($secret);
+        return $settingsService->findCalendarExportBySecret($secret);
     }
 
     /**
