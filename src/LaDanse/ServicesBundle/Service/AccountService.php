@@ -9,10 +9,11 @@ namespace LaDanse\ServicesBundle\Service;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
 use LaDanse\DomainBundle\Entity\Account;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -31,6 +32,12 @@ class AccountService extends LaDanseService
      * @DI\Inject("monolog.logger.ladanse")
      */
     public $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
 
     /**
      * @param ContainerInterface $container
@@ -176,5 +183,29 @@ class AccountService extends LaDanseService
         $result = $query->getResult();
 
         return !(count($result) == 0);
+    }
+
+    public function updatePassword($username, $newPassword)
+    {
+        $userManager = $this->get('fos_user.user_manager');
+
+        /** @var Account $user */
+        $user = $userManager->findUserByUsername($username);
+
+        if ($user == null)
+        {
+            return;
+        }
+
+        $user->setPlainPassword($newPassword);
+
+        $userManager->updateUser($user);
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SETTINGS_PASSWORD_UPDATE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
     }
 }
