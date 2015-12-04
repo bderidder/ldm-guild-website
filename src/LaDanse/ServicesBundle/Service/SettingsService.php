@@ -156,6 +156,41 @@ class SettingsService extends LaDanseService
         $em->flush();
     }
 
+    public function getCalendarExport($secret)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s')
+            ->from('LaDanse\DomainBundle\Entity\CalendarExport', 's')
+            ->leftJoin('s.account', 'a')
+            ->where($qb->expr()->eq('s.secret', '?1'))
+            ->setParameter(1, $secret);
+
+        $this->logger->debug(
+            __CLASS__ . " created DQL for retrieving CalendarExport ",
+            array(
+                "query" => $qb->getDQL()
+            )
+        );
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $qb->getQuery();
+
+        $result = $query->getResult();
+
+        if (count($result) != 1)
+        {
+            return null;
+        }
+        else
+        {
+            return $result[0];
+        }
+    }
+
     /**
      * Remove settings for the given account
      *
