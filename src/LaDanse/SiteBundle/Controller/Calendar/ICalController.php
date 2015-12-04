@@ -3,6 +3,8 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommentBundle\Service\CommentService;
+use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\ServicesBundle\Service\SettingsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -123,26 +125,10 @@ class ICalController extends LaDanseController
 
     protected function getAllEvents(Account $currentUser)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('e')
-            ->from('LaDanse\DomainBundle\Entity\Event', 'e')
-            ->orderBy('e.inviteTime', 'ASC');
-
-        $this->logger->debug(
-            __CLASS__ . " created DQL for retrieving Events ",
-            array(
-                "query" => $qb->getDQL()
-            )
-        );
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $qb->getQuery();
-
-        $events = $query->getResult();
+        $events = $eventService->getAllEvents();
 
         $eventModels = array();
 
@@ -161,37 +147,10 @@ class ICalController extends LaDanseController
      */
     protected function getExportSettings($secret)
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var SettingsService $settingsService */
+        $settingsService = $this->get(SettingsService::SERVICE_NAME);
 
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('s')
-            ->from('LaDanse\DomainBundle\Entity\CalendarExport', 's')
-            ->leftJoin('s.account', 'a')
-            ->where($qb->expr()->eq('s.secret', '?1'))
-            ->setParameter(1, $secret);
-
-        $this->logger->debug(
-            __CLASS__ . " created DQL for retrieving CalendarExport ",
-            array(
-                "query" => $qb->getDQL()
-            )
-        );
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $qb->getQuery();
-
-        $result = $query->getResult();
-
-        if (count($result) != 1)
-        {
-            return null;
-        }
-        else
-        {
-            return $result[0];
-        }
+        return $settingsService->getCalendarExport($secret);
     }
 
     /**
