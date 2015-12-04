@@ -4,8 +4,8 @@ namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ServicesBundle\Service\SettingNames;
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\Settings\SettingNames;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

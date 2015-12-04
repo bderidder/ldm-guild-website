@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service;
+namespace LaDanse\ServicesBundle\Service\Settings;
 
 class SettingNames
 {

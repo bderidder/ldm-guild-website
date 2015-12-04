@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Form\Model\CalExportFormModel;
 use LaDanse\SiteBundle\Form\Type\CalExportFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

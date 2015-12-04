@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;

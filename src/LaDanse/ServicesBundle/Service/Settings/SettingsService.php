@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service;
+namespace LaDanse\ServicesBundle\Service\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
