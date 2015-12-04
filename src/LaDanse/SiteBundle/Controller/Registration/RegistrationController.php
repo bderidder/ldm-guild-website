@@ -2,9 +2,8 @@
 
 namespace LaDanse\SiteBundle\Controller\Registration;
 
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\FOSUserEvents;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\AccountService;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -12,9 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -25,12 +21,6 @@ class RegistrationController extends LaDanseController
      * @DI\Inject("monolog.logger.ladanse")
      */
     private $logger;
-
-    /**
-     * @var $eventDispatcher EventDispatcherInterface
-     * @DI\Inject("event_dispatcher")
-     */
-    private $eventDispatcher;
 
 	/**
      * @param $request Request
@@ -58,14 +48,6 @@ class RegistrationController extends LaDanseController
 
                 $this->addToast('Registration saved, you are logged in now');
 
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::ABOUT_VIEW,
-                        $user
-                    )
-                );
-
                 return $this->redirect($this->generateUrl('menuIndex'));
             }
             else
@@ -84,22 +66,16 @@ class RegistrationController extends LaDanseController
 
     private function registerUser(RegistrationFormModel $formModel, Request $request, Response $response)
     {
-        $userManager = $this->get('fos_user.user_manager');
-        $dispatcher = $this->get('event_dispatcher');
+        /** @var AccountService $accountService */
+        $accountService = $this->get(AccountService::SERVICE_NAME);
 
-        /* @var $user \LaDanse\DomainBundle\Entity\Account */
-        $user = $userManager->createUser();
-
-        $user->setUsername($formModel->getUsername());
-        $user->setPlainPassword($formModel->getPasswordOne());
-        $user->setDisplayName($formModel->getDisplayName());
-        $user->setEmail($formModel->getEmail());
-        $user->setEnabled(true);
-
-        $userManager->updateUser($user);
-
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-        return $user;
+        return $accountService->createAccount(
+            $formModel->getUsername(),
+            $formModel->getPasswordOne(),
+            $formModel->getDisplayName(),
+            $formModel->getEmail(),
+            $request,
+            $response
+        );
     }
 }
