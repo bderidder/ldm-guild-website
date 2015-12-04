@@ -4,8 +4,12 @@ namespace LaDanse\ServicesBundle\Service;
 
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\CalendarExport;
 use LaDanse\DomainBundle\Entity\Setting;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -24,6 +28,12 @@ class SettingsService extends LaDanseService
      * @DI\Inject("monolog.logger.ladanse")
      */
     public $logger;
+
+    /**
+     * @var $eventDispatcher EventDispatcherInterface
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
 
     /**
      * @param ContainerInterface $container
@@ -156,7 +166,61 @@ class SettingsService extends LaDanseService
         $em->flush();
     }
 
-    public function getCalendarExport($secret)
+    /**
+     * @param Account $account
+     *
+     * @return CalendarExport
+     */
+    public function findCalendarExportByAccount(Account $account)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('s')
+            ->from('LaDanse\DomainBundle\Entity\CalendarExport', 's')
+            ->where($qb->expr()->eq('s.account', '?1'))
+            ->setParameter(1, $account);
+
+        $this->logger->debug(
+            __CLASS__ . " created DQL for retrieving CalendarExport ",
+            array(
+                "query" => $qb->getDQL()
+            )
+        );
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $qb->getQuery();
+
+        $result = $query->getResult();
+
+        if (count($result) != 1)
+        {
+            $calExport = new CalendarExport();
+
+            $calExport->setAccount($account);
+            $calExport->setExportAbsence(true);
+            $calExport->setExportNew(true);
+            $calExport->setSecret($this->generateRandomString(25));
+
+            $em->persist($calExport);
+            $em->flush();
+
+            return $calExport;
+        }
+        else
+        {
+            return $result[0];
+        }
+    }
+
+    /**
+     * @param string $secret
+     *
+     * @return CalendarExport|null
+     */
+    public function findCalendarExportBySecret($secret)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -189,6 +253,45 @@ class SettingsService extends LaDanseService
         {
             return $result[0];
         }
+    }
+
+    public function updateCalendarExport($account, $exportAbsence, $exportNew)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $calExport = $this->findCalendarExportByAccount($account);
+
+        $calExport->setExportAbsence($exportAbsence);
+        $calExport->setExportNew($exportNew);
+
+        $em->persist($calExport);
+        $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SETTINGS_CALEXPORT_UPDATE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
+    }
+
+    public function resetCalendarExportSecret(Account $account)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $calExport = $this->findCalendarExportByAccount($account);
+
+        $calExport->setSecret($this->generateRandomString(25) . ".ics");
+
+        $em->persist($calExport);
+        $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SETTINGS_CALEXPORT_RESET,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
     }
 
     /**
@@ -230,5 +333,21 @@ class SettingsService extends LaDanseService
             'value'     => $setting->getValue(),
             'account'   => $setting->getAccount()
         );
+    }
+
+    protected function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+        $charactersLength = strlen($characters);
+
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++)
+        {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 }
