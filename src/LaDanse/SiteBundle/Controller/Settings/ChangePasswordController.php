@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\AccountService;
 use LaDanse\SiteBundle\Form\Model\PasswordFormModel;
 use LaDanse\SiteBundle\Form\Type\PasswordFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -28,7 +29,7 @@ class ChangePasswordController extends LaDanseController
      * @var $eventDispatcher EventDispatcherInterface
      * @DI\Inject("event_dispatcher")
      */
-    private $eventDispatcher;
+    public $eventDispatcher;
 
 	/**
      * @param $request Request
@@ -61,16 +62,12 @@ class ChangePasswordController extends LaDanseController
 
             if ($form->isValid() && $formModel->isValid($errors, $form))
             {
-                $this->changePassword($authContext->getAccount()->getUsername(), $formModel->getPasswordOne());
+                /** @var AccountService $accountService */
+                $accountService = $this->get(AccountService::SERVICE_NAME);
+
+                $accountService->updatePassword($authContext->getAccount()->getUsername(), $formModel->getPasswordOne());
 
                 $this->addToast('Password changed');
-
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::SETTINGS_PASSWORD_UPDATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
-                );
 
                 return $this->redirect($this->generateUrl('menuIndex'));
             }
@@ -93,21 +90,5 @@ class ChangePasswordController extends LaDanseController
             return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
                 array('form' => $form->createView()));
         }
-    }
-
-    private function changePassword($username, $newPassword)
-    {
-        $userManager = $this->get('fos_user.user_manager');
-
-        $user = $userManager->findUserByUsername($username);
-
-        if ($user == null)
-        {
-            return;
-        }
-
-        $user->setPlainPassword($newPassword);
-
-        $userManager->updateUser($user);
     }
 }
