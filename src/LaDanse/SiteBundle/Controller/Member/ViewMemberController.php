@@ -11,6 +11,7 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class ViewMemberController extends LaDanseController
 {
@@ -27,6 +28,10 @@ class ViewMemberController extends LaDanseController
     private $eventDispatcher;
 
     /**
+     * @param string $accountId
+     *
+     * @return Response
+     *
      * @Route("/{accountId}", name="viewMember")
      */
     public function viewAction($accountId)
