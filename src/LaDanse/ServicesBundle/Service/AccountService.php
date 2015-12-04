@@ -114,6 +114,13 @@ class AccountService extends LaDanseService
         $account->setEmail($email);
 
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::SETTINGS_PROFILE_UPDATE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
     }
 
     /**

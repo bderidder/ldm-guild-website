@@ -72,12 +72,7 @@ class EditProfileController extends LaDanseController
 
                $this->addToast('Profile updated');
 
-                $this->eventDispatcher->dispatch(
-                    ActivityEvent::EVENT_NAME,
-                    new ActivityEvent(
-                        ActivityType::SETTINGS_PROFILE_UPDATE,
-                        $this->getAuthenticationService()->getCurrentContext()->getAccount())
-                );
+
 
                return $this->redirect($this->generateUrl('editProfile'));
             }
