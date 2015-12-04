@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use LaDanse\ServicesBundle\Service\AccountService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
-use LaDanse\ServicesBundle\Service\SettingsService;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 
 use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\ForumStatsService;
@@ -103,7 +103,7 @@ class LaDanseController extends Controller
     }
 
     /**
-     * @return \LaDanse\ServicesBundle\Service\SettingsService
+     * @return \LaDanse\ServicesBundle\Service\Settings\SettingsService
      */
     protected function getSettingsService()
     {
