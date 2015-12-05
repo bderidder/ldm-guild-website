@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Mail;
+namespace LaDanse\ServicesBundle\Service\Mail;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\MailSend;

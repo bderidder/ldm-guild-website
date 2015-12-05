@@ -5,7 +5,7 @@ namespace LaDanse\ServicesBundle\Notification;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-use LaDanse\ServicesBundle\Mail\MailService;
+use LaDanse\ServicesBundle\Service\Mail\MailService;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateSignUpNotificator;
