@@ -9,6 +9,7 @@ namespace LaDanse\DomainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
@@ -119,10 +120,10 @@ class Claim
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return Claim
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -132,7 +133,7 @@ class Claim
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {
@@ -142,10 +143,10 @@ class Claim
     /**
      * Set character
      *
-     * @param \LaDanse\DomainBundle\Entity\Character $character
+     * @param Character $character
      * @return Claim
      */
-    public function setCharacter(\LaDanse\DomainBundle\Entity\Character $character)
+    public function setCharacter(Character $character)
     {
         $this->character = $character;
 
@@ -155,7 +156,7 @@ class Claim
     /**
      * Get character
      *
-     * @return \LaDanse\DomainBundle\Entity\Character 
+     * @return Character
      */
     public function getCharacter()
     {
@@ -165,10 +166,10 @@ class Claim
     /**
      * Add roles
      *
-     * @param \LaDanse\DomainBundle\Entity\PlaysRole $roles
+     * @param PlaysRole $roles
      * @return Claim
      */
-    public function addRole(\LaDanse\DomainBundle\Entity\PlaysRole $roles)
+    public function addRole(PlaysRole $roles)
     {
         $this->roles[] = $roles;
 
@@ -178,9 +179,9 @@ class Claim
     /**
      * Remove roles
      *
-     * @param \LaDanse\DomainBundle\Entity\PlaysRole $roles
+     * @param PlaysRole $roles
      */
-    public function removeRole(\LaDanse\DomainBundle\Entity\PlaysRole $roles)
+    public function removeRole(PlaysRole $roles)
     {
         $this->roles->removeElement($roles);
     }
@@ -188,7 +189,7 @@ class Claim
     /**
      * Get roles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getRoles()
     {
@@ -209,7 +210,6 @@ class Claim
             {
                 return true;
             }
-
         }
 
         return false;

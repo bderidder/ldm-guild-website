@@ -134,10 +134,10 @@ class CharacterVersion
     /**
      * Set character
      *
-     * @param \LaDanse\DomainBundle\Entity\Character $character
+     * @param Character $character
      * @return CharacterVersion
      */
-    public function setCharacter(\LaDanse\DomainBundle\Entity\Character $character)
+    public function setCharacter(Character $character)
     {
         $this->character = $character;
 
@@ -147,7 +147,7 @@ class CharacterVersion
     /**
      * Get character
      *
-     * @return \LaDanse\DomainBundle\Entity\Character 
+     * @return Character
      */
     public function getCharacter()
     {

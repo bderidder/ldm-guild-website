@@ -3,6 +3,7 @@
 namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -131,10 +132,10 @@ class Character
     /**
      * Add versions
      *
-     * @param \LaDanse\DomainBundle\Entity\CharacterVersion $versions
+     * @param CharacterVersion $versions
      * @return Character
      */
-    public function addVersion(\LaDanse\DomainBundle\Entity\CharacterVersion $versions)
+    public function addVersion(CharacterVersion $versions)
     {
         $this->versions[] = $versions;
 
@@ -144,9 +145,9 @@ class Character
     /**
      * Remove versions
      *
-     * @param \LaDanse\DomainBundle\Entity\CharacterVersion $versions
+     * @param CharacterVersion $versions
      */
-    public function removeVersion(\LaDanse\DomainBundle\Entity\CharacterVersion $versions)
+    public function removeVersion(CharacterVersion $versions)
     {
         $this->versions->removeElement($versions);
     }
@@ -154,7 +155,7 @@ class Character
     /**
      * Get versions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getVersions()
     {

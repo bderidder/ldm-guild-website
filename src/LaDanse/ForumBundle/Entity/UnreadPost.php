@@ -63,10 +63,10 @@ class UnreadPost
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return UnreadPost
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -76,7 +76,7 @@ class UnreadPost
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {
@@ -86,10 +86,10 @@ class UnreadPost
     /**
      * Set post
      *
-     * @param \LaDanse\ForumBundle\Entity\Post $post
+     * @param Post $post
      * @return UnreadPost
      */
-    public function setPost(\LaDanse\ForumBundle\Entity\Post $post)
+    public function setPost(Post $post)
     {
         $this->post = $post;
 
@@ -99,7 +99,7 @@ class UnreadPost
     /**
      * Get post
      *
-     * @return \LaDanse\ForumBundle\Entity\Post 
+     * @return Post
      */
     public function getPost()
     {

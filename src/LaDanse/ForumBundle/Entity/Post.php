@@ -122,10 +122,10 @@ class Post
     /**
      * Set poster
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $poster
+     * @param Account $poster
      * @return Post
      */
-    public function setPoster(\LaDanse\DomainBundle\Entity\Account $poster = null)
+    public function setPoster(Account $poster = null)
     {
         $this->poster = $poster;
 
@@ -135,7 +135,7 @@ class Post
     /**
      * Get poster
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getPoster()
     {
@@ -145,10 +145,10 @@ class Post
     /**
      * Set topic
      *
-     * @param \LaDanse\ForumBundle\Entity\Topic $topic
+     * @param Topic $topic
      * @return Post
      */
-    public function setTopic(\LaDanse\ForumBundle\Entity\Topic $topic = null)
+    public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
 
@@ -158,7 +158,7 @@ class Post
     /**
      * Get topic
      *
-     * @return \LaDanse\ForumBundle\Entity\Topic 
+     * @return Topic
      */
     public function getTopic()
     {

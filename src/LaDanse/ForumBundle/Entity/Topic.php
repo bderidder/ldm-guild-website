@@ -5,6 +5,8 @@ namespace LaDanse\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use LaDanse\DomainBundle\Entity\Account;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Topic
@@ -73,7 +75,7 @@ class Topic
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -148,10 +150,10 @@ class Topic
     /**
      * Set creator
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $creator
+     * @param Account $creator
      * @return Topic
      */
-    public function setCreator(\LaDanse\DomainBundle\Entity\Account $creator)
+    public function setCreator(Account $creator)
     {
         $this->creator = $creator;
 
@@ -161,7 +163,7 @@ class Topic
     /**
      * Get creator
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getCreator()
     {
@@ -171,10 +173,10 @@ class Topic
     /**
      * Set forum
      *
-     * @param \LaDanse\ForumBundle\Entity\Forum $forum
+     * @param Forum $forum
      * @return Topic
      */
-    public function setForum(\LaDanse\ForumBundle\Entity\Forum $forum = null)
+    public function setForum(Forum $forum = null)
     {
         $this->forum = $forum;
 
@@ -194,10 +196,10 @@ class Topic
     /**
      * Add posts
      *
-     * @param \LaDanse\ForumBundle\Entity\Post $posts
+     * @param Post $posts
      * @return Topic
      */
-    public function addPost(\LaDanse\ForumBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -207,9 +209,9 @@ class Topic
     /**
      * Remove posts
      *
-     * @param \LaDanse\ForumBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\LaDanse\ForumBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -217,7 +219,7 @@ class Topic
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getPosts()
     {

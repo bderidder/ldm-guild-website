@@ -80,10 +80,10 @@ class PlaysRole
     /**
      * Set claim
      *
-     * @param \LaDanse\DomainBundle\Entity\Claim $claim
+     * @param Claim $claim
      * @return PlaysRole
      */
-    public function setClaim(\LaDanse\DomainBundle\Entity\Claim $claim)
+    public function setClaim(Claim $claim)
     {
         $this->claim = $claim;
 
@@ -93,7 +93,7 @@ class PlaysRole
     /**
      * Get claim
      *
-     * @return \LaDanse\DomainBundle\Entity\Claim 
+     * @return Claim
      */
     public function getClaim()
     {

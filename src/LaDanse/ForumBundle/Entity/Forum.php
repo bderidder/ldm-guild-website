@@ -5,6 +5,7 @@ namespace LaDanse\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use LaDanse\DomainBundle\Entity\Account;
 
 /**
@@ -199,10 +200,10 @@ class Forum
     /**
      * Add topics
      *
-     * @param \LaDanse\ForumBundle\Entity\Topic $topics
+     * @param Topic $topics
      * @return Forum
      */
-    public function addTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
+    public function addTopic(Topic $topics)
     {
         $this->topics[] = $topics;
 
@@ -212,9 +213,9 @@ class Forum
     /**
      * Remove topics
      *
-     * @param \LaDanse\ForumBundle\Entity\Topic $topics
+     * @param Topic $topics
      */
-    public function removeTopic(\LaDanse\ForumBundle\Entity\Topic $topics)
+    public function removeTopic(Topic $topics)
     {
         $this->topics->removeElement($topics);
     }
@@ -222,7 +223,7 @@ class Forum
     /**
      * Get topics
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getTopics()
     {

@@ -86,10 +86,10 @@ class ForumLastVisit
     /**
      * Set account
      *
-     * @param \LaDanse\DomainBundle\Entity\Account $account
+     * @param Account $account
      * @return ForumLastVisit
      */
-    public function setAccount(\LaDanse\DomainBundle\Entity\Account $account)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
 
@@ -99,7 +99,7 @@ class ForumLastVisit
     /**
      * Get account
      *
-     * @return \LaDanse\DomainBundle\Entity\Account 
+     * @return Account
      */
     public function getAccount()
     {
