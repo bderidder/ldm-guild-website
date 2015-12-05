@@ -42,7 +42,7 @@ class ForumLastVisit
     /**
      * Set id
      *
-     * @param guid $id
+     * @param string $id
      * @return ForumLastVisit
      */
     public function setId($id)
@@ -55,7 +55,7 @@ class ForumLastVisit
     /**
      * Get id
      *
-     * @return guid 
+     * @return string
      */
     public function getId()
     {
