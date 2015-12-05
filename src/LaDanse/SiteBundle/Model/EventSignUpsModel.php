@@ -94,6 +94,8 @@ class EventSignUpsModel extends ContainerAwareClass
                 return true;
             }
         }
+
+        return false;
     }
 
     public function getCurrentUserMightCome()
@@ -106,6 +108,8 @@ class EventSignUpsModel extends ContainerAwareClass
                 return true;
             }
         }
+
+        return false;
     }
 
     public function getCurrentUserComes()

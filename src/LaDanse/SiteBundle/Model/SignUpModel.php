@@ -73,7 +73,7 @@ class SignUpModel extends ContainerAwareClass
      */
     public function getWillCome()
     {
-        return ($this->signUpType === SignupType::WILLCOME);
+        return ($this->signUpType === SignUpType::WILLCOME);
     }
 
     /**
@@ -81,7 +81,7 @@ class SignUpModel extends ContainerAwareClass
      */
     public function getMightCome()
     {
-        return ($this->signUpType === SignupType::MIGHTCOME);
+        return ($this->signUpType === SignUpType::MIGHTCOME);
     }
 
     /**
@@ -89,7 +89,7 @@ class SignUpModel extends ContainerAwareClass
      */
     public function getAbsent()
     {
-        return ($this->signUpType === SignupType::ABSENCE);
+        return ($this->signUpType === SignUpType::ABSENCE);
     }
 
     /**
