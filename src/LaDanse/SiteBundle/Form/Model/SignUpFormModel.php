@@ -2,11 +2,12 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormInterface;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\DomainBundle\Entity\Role;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class SignUpFormModel
 {
@@ -51,6 +52,9 @@ class SignUpFormModel
      */
     public function getRoles()
     {
+        // we add this dummy statement to trigger a proper use import of the type
+        Role::DPS;
+
         return $this->roles;
     }
 
