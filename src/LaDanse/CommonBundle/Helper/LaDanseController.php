@@ -7,7 +7,7 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ServicesBundle\FeatureToggle\FeatureToggleService;
+use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

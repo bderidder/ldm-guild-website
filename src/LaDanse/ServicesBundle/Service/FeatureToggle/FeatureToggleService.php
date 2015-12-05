@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\FeatureToggle;
+namespace LaDanse\ServicesBundle\Service\FeatureToggle;
 
 use Doctrine\ORM\QueryBuilder;
 use LaDanse\CommonBundle\Helper\LaDanseService;

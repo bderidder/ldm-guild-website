@@ -2,7 +2,7 @@
 
 namespace LaDanse\SiteBundle\Twig;
 
-use LaDanse\ServicesBundle\FeatureToggle\FeatureToggleService;
+use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
