@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service;
+namespace LaDanse\ServicesBundle\Service\Feedback;
 
 use LaDanse\DomainBundle\Entity\Feedback;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;

@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Feedback;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\FeedbackService;
+use LaDanse\ServicesBundle\Service\Feedback\FeedbackService;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
