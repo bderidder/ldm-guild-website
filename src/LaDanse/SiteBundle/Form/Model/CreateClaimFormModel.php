@@ -4,7 +4,6 @@ namespace LaDanse\SiteBundle\Form\Model;
 
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Symfony\Component\Validator\Constraints as Assert;
-use LaDanse\DomainBundle\Entity\Role;
 
 class CreateClaimFormModel
 {

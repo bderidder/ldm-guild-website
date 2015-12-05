@@ -16,12 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ViewMemberController extends LaDanseController
 {
     /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
-    /**
      * @var $eventDispatcher EventDispatcherInterface
      * @DI\Inject("event_dispatcher")
      */

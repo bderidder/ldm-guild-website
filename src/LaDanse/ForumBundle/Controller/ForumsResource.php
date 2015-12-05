@@ -110,7 +110,7 @@ class ForumsResource extends LaDanseController
     {
         try
         {
-            $forum = $this->getForumService()->getForum($forumId);
+            $this->getForumService()->getForum($forumId);
         }
         catch (ForumDoesNotExistException $e)
         {

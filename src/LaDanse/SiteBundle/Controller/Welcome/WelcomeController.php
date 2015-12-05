@@ -10,12 +10,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 
 class WelcomeController extends LaDanseController
 {
-    /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
 	/**
      * @return Response
      *

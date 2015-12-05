@@ -6,7 +6,6 @@
 
 namespace LaDanse\ForumBundle\Command;
 
-use LaDanse\CommonBundle\Helper\CommandExecutionContext;
 use LaDanse\ForumBundle\Service\ForumService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use \Symfony\Component\Console\Input\InputInterface;
@@ -37,11 +36,6 @@ class UpdateLastPostCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $context = new CommandExecutionContext(
-            $input,
-            $output
-        );
-
         /** @var ForumService $forumService */
         $forumService = $this->getContainer()->get(ForumService::SERVICE_NAME);
 

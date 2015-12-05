@@ -15,12 +15,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 class AboutController extends LaDanseController
 {
     /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
-    /**
      * @var $eventDispatcher EventDispatcherInterface
      * @DI\Inject("event_dispatcher")
      */

@@ -41,6 +41,7 @@ class MailService
 
         if (!is_null($htmlPart))
         {
+            /** @noinspection PhpUndefinedMethodInspection */
             $message->addPart($htmlPart, 'text/html; charset=utf-8');
         }
 

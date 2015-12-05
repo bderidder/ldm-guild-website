@@ -16,12 +16,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 class EditClaimController extends LaDanseController
 {
     /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
-    /**
      * @param $request Request
      * @param $claimId string
      *

@@ -311,7 +311,9 @@ class ForumService extends LaDanseService
     }
 
     /**
-     * @param $topicId
+     * @param Account $account
+     * @param string $topicId
+     *
      * @throws TopicDoesNotExistException
      */
     public function removeTopic(Account $account, $topicId)

@@ -3,7 +3,6 @@
 namespace LaDanse\SiteBundle\Controller\Feedback;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\DomainBundle\Entity\Feedback;
 use LaDanse\ServicesBundle\Service\FeedbackService;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
@@ -20,12 +19,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 
 class FeedbackController extends LaDanseController
 {
-    /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
     /**
      * @var $eventDispatcher EventDispatcherInterface
      * @DI\Inject("event_dispatcher")

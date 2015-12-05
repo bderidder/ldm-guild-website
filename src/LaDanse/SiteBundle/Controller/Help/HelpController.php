@@ -10,15 +10,10 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class HelpController extends LaDanseController
 {
-    /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
     /**
      * @var $eventDispatcher EventDispatcherInterface
      * @DI\Inject("event_dispatcher")
@@ -27,6 +22,8 @@ class HelpController extends LaDanseController
 
 	/**
      * @Route("/", name="helpIndex")
+     *
+     * @return Response
      */
     public function indexAction()
     {

@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 
-use LaDanse\ForumBundle\Entity\Topic;
-
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
 /**
