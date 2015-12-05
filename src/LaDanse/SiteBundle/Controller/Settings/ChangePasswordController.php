@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\SiteBundle\Form\Model\PasswordFormModel;
 use LaDanse\SiteBundle\Form\Type\PasswordFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

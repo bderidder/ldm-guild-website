@@ -11,7 +11,7 @@ use LaDanse\ServicesBundle\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 
@@ -111,7 +111,7 @@ class LaDanseController extends Controller
     }
 
     /**
-     * @return \LaDanse\ServicesBundle\Service\AccountService
+     * @return \LaDanse\ServicesBundle\Service\Account\AccountService
      */
     protected function getAccountService()
     {

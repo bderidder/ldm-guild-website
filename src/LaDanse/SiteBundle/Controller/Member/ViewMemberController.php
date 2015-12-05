@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Member;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\Account\AccountService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

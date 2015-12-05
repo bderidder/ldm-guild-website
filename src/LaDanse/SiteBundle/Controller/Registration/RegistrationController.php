@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Registration;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

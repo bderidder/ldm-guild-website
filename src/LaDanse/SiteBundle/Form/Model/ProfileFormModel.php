@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Form\Model;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ServicesBundle\Service\AccountService;
+use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
