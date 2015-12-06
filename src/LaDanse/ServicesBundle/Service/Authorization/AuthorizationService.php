@@ -6,14 +6,8 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\CommonBundle\Helper\LaDanseService;
-use LaDanse\DomainBundle\Entity\Account;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
@@ -33,6 +27,12 @@ class AuthorizationService extends LaDanseService
      */
     public $logger;
 
+    /** @var PolicyCatalog */
+    private $policyCatalog;
+
+    /** @var ResourceFinder */
+    private $resourceFinder;
+
     /**
      * @param ContainerInterface $container
      *
@@ -43,6 +43,9 @@ class AuthorizationService extends LaDanseService
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+
+        $this->policyCatalog = new PolicyCatalog();
+        $this->resourceFinder = new ResourceFinder($this->container);
     }
 
     /**
@@ -50,18 +53,77 @@ class AuthorizationService extends LaDanseService
      *
      * @param $subject
      * @param $action
-     * @param $resource
+     * @param ResourceReference $resource
      *
      * @return bool
+     *
+     * @throws CannotEvaluateException
      */
-    public function isAuthorized($subject, $action, $resource)
+    public function evaluate($subject, $action, ResourceReference $resource)
     {
-        /*
-         * Step 1. Gather relevant policies based on $action and $resource
-         * Step 2. Evaluate policies
-         * Step 3. Return the produced authorization result
-         */
+        $evaluationCtx = new EvaluationCtx(
+            $subject,
+            $action,
+            $resource,
+            $this->resourceFinder
+        );
 
-        return false;
+        $matchedPolicy = null;
+
+        try
+        {
+            $matchedPolicy = $this->findMatchingPolicy($this->policyCatalog->getPolicies(), $evaluationCtx);
+        }
+        catch(AuthorizationException $e)
+        {
+            $this->logger->error(
+                'Could not properly find a matching policy',
+                array('exception' => $e)
+            );
+
+            throw new CannotEvaluateException('Cannot evaluate', 0, $e);
+        }
+
+        try
+        {
+            return $matchedPolicy->evaluate($evaluationCtx);
+        }
+        catch(AuthorizationException $e)
+        {
+            $this->logger->error(
+                'Could not properly evaluate matching policy',
+                array('exception' => $e)
+            );
+
+            throw new CannotEvaluateException('Cannot evaluate', 0, $e);
+        }
+    }
+
+    private function findMatchingPolicy(array $policies, EvaluationCtx $evaluationCtx)
+    {
+        $matchedPolicy = null;
+
+        /** @var PolicyTreeElement $policy */
+        foreach($policies as $policy)
+        {
+            if ($policy->match($evaluationCtx))
+            {
+                if ($matchedPolicy == null)
+                {
+                    $matchedPolicy = $policy;
+                }
+                else
+                {
+                    throw new TooManyPoliciesMatchException('more than one top policy matched the evaluation context');
+                }
+            }
+        }
+
+        if ($matchedPolicy == null)
+        {
+            throw new NoMatchingPolicyFoundException('No matching top policy found');
+        }
+
+        return $matchedPolicy;
     }
 }
