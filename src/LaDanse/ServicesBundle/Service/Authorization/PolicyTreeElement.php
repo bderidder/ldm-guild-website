@@ -2,7 +2,9 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-class PolicyTreeElement
+abstract class PolicyTreeElement
 {
+    abstract public function match(EvaluationCtx $evaluationCt);
 
+    abstract public function evaluate(EvaluationCtx $evaluationCtx);
 }
