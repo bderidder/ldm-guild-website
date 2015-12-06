@@ -2,7 +2,6 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-class AbstractPolicy extends PolicyTreeElement
+abstract class AbstractPolicy extends PolicyTreeElement
 {
-
 }

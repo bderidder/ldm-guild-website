@@ -2,7 +2,6 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-class Rule extends PolicyTreeElement
+abstract class Rule extends PolicyTreeElement
 {
-
 }
