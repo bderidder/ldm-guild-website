@@ -7,6 +7,10 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceReference;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -124,6 +128,23 @@ class LaDanseController extends Controller
     protected function getContainerInjector()
     {
         return $this->get(ContainerInjector::SERVICE_NAME);
+    }
+
+    /**
+     * @param SubjectReference $subject
+     * @param string $action
+     * @param ResourceReference $resource
+     *
+     * @return bool
+     *
+     * @throws CannotEvaluateException
+     */
+    protected function isAuthorized(SubjectReference $subject, $action, ResourceReference $resource)
+    {
+        /** @var AuthorizationService $authzService */
+        $authzService = $this->get(AuthorizationService::SERVICE_NAME);
+
+        return $authzService->evaluate($subject, $action, $resource);
     }
 
     protected function hasFeatureToggled($featureName, $default = false)
