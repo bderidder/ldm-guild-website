@@ -5,6 +5,9 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
@@ -65,9 +68,12 @@ class EditEventController extends LaDanseController
         }
 
         /* verify that the user can edit this particular event */
-        if (!($event->getOrganiser()->getId() === $this->getAccount()->getId()))
+        if (!$this->isAuthorized(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_EDIT,
+            new ResourceByValue(Event::class, $event->getId(), $event)))
         {
-            $this->logger->warning(__CLASS__ . ' the user is not the organiser of the event in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
 
         	return $this->redirect($this->generateUrl('calendarIndex'));
         }
