@@ -51,15 +51,15 @@ class AuthorizationService extends LaDanseService
     /**
      * Verify if $subject is authorized to perform $action on $resource
      *
-     * @param $subject
-     * @param $action
+     * @param SubjectReference $subject
+     * @param string $action
      * @param ResourceReference $resource
      *
      * @return bool
      *
      * @throws CannotEvaluateException
      */
-    public function evaluate($subject, $action, ResourceReference $resource)
+    public function evaluate(SubjectReference $subject, $action, ResourceReference $resource)
     {
         $evaluationCtx = new EvaluationCtx(
             $subject,
