@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Client;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class LaDanseTestBase extends WebTestCase
+abstract class LaDanseTestBase extends WebTestCase
 {
     /**
      * @param $client Client
@@ -26,8 +26,5 @@ class LaDanseTestBase extends WebTestCase
      *
      * @return string
      */
-    protected function getUrl(Client $client, $parameters = array())
-    {
-        return '';
-    }
+    abstract protected function getUrl(Client $client, $parameters = array());
 }

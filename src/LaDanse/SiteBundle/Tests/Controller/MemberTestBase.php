@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 
-class MemberTestBase extends LaDanseTestBase
+abstract class MemberTestBase extends LaDanseTestBase
 {
     /**
      * Test if the welcome page shows the "more information" button
@@ -64,10 +64,5 @@ class MemberTestBase extends LaDanseTestBase
                 'html:contains("displayName: \'' . AccountConst::USER1_DISPLAY . '\'")'
             )->count() == 1
         );
-    }
-
-    protected function getUrl(Client $client, $parameters = array())
-    {
-        return '';
     }
 }

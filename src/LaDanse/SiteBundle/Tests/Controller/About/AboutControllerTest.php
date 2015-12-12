@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Tests\Controller\About;
 use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
 
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use Symfony\Bundle\FrameworkBundle\Client;
 
 class AboutControllerTest extends LaDanseTestBase
 {
@@ -42,7 +43,7 @@ class AboutControllerTest extends LaDanseTestBase
         );
     }
 
-    protected function getUrl($client)
+    protected function getUrl(Client $client, $parameters = array())
     {
         return $this->generateUrl($client, 'aboutIndex');
     }

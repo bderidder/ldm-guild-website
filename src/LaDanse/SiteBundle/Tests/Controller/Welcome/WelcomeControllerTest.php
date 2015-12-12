@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Tests\Controller\Welcome;
 
 use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
@@ -68,7 +69,7 @@ class WelcomeControllerTest extends LaDanseTestBase
         $this->assertRegExp('/\/menu\/$/', $client->getResponse()->headers->get('location'));
     }
 
-    protected function getUrl($client)
+    protected function getUrl(Client $client, $parameters = array())
     {
         return $this->generateUrl($client, "welcomeIndex");
     }

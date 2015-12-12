@@ -2,6 +2,8 @@
 
 namespace LaDanse\SiteBundle\Tests\Controller\Calendar;
 
+use Symfony\Bundle\FrameworkBundle\Client;
+
 use LaDanse\SiteBundle\Tests\Controller\MemberTestBase;
 
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
@@ -32,7 +34,7 @@ class CalendarControllerTest extends MemberTestBase
         );
     }
 
-    protected function getUrl($client)
+    protected function getUrl(Client $client, $parameters = array())
     {
         return $this->generateUrl($client, "calendarIndex");
     }
