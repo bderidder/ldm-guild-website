@@ -18,9 +18,14 @@ class RouterSmokeTest extends LaDanseTestBase
     {
         $client = self::createClient();
         $client->followRedirects();
-        $client->request('GET', $url);
+
+        $crawler = $client->request('GET', $url);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
+
+        $this->assertTrue(
+            $crawler->filter('html:contains("Don\'t have a La Danse account?")')->count() == 0
+        );
     }
 
     /**
@@ -72,23 +77,23 @@ class RouterSmokeTest extends LaDanseTestBase
     public function authenticatedUrlProvider()
     {
         return array(
-            array('/calendar/'),
-            array('/events/'),
+            array('/calendar'),
+            array('/events'),
             array('/settings/password'),
             array('/settings/calExport'),
             array('/settings/resetSecret'),
             array('/settings/notifications'),
             array('/settings/profile'),
-            array('/settings/'),
+            array('/settings'),
             array('/claims/create'),
-            array('/claims/'),
+            array('/claims'),
             array('/teamspeak/clients'),
             array('/teamspeak/channels'),
-            array('/teamspeak/'),
-            array('/gallery/'),
-            array('/forum/'),
-            array('/help/'),
-            array('/menu/'),
+            array('/teamspeak'),
+            array('/gallery'),
+            array('/forum'),
+            array('/help'),
+            array('/menu'),
             array('/feedback/create')
         );
     }
