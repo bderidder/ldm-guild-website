@@ -2,12 +2,10 @@
 
 namespace LaDanse\SiteBundle\Tests\Functional;
 
-use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
-
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use LaDanse\SiteBundle\Tests\Controller\AccountConst;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class RouterSmokeTest extends LaDanseTestBase
+class RouterSmokeTest extends WebTestCase
 {
     /**
      * @param string $url
