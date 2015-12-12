@@ -26,11 +26,13 @@ class CalendarControllerTest extends MemberTestBase
         $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
-            $crawler->filter('html:contains("Can\'t find the event you were looking for?")')->count() > 0
+            $crawler->filter('html:contains("Can\'t find the event you were looking for?")')->count() > 0,
+            'Did not contain string "Can\'t find the event you were looking for?"'
         );
 
         $this->assertTrue(
-            $crawler->filter('html:contains("sunday")')->count() > 0
+            $crawler->filter('html:contains("sunday")')->count() > 0,
+            'Did not contain string "sunday"'
         );
     }
 
