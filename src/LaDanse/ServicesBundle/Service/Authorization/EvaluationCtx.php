@@ -64,7 +64,7 @@ class EvaluationCtx
         }
         catch(\Exception $e)
         {
-            throw new UnresolvableResourceException('Exception while trying to retrieve resource value');
+            throw new UnresolvableResourceException('Exception while trying to retrieve resource value', 0, $e);
         }
     }
 }
