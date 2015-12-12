@@ -30,19 +30,32 @@ security:
             security: false
 
     access_control:
-        - { path: ^/login$,        role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register,      role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/calendar/ical, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/calendar,      role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/events,        role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/settings,      role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/claims,        role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/teamspeak,     role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/gallery,       role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/forum,         role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/help,          role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/menu,          role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/feedback,      role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/,              role: ROLE_NO_ACCESS }
+        - { path: ^/js,             role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/css,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_wdt,           role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profile,       role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_configurator,  role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/images,         role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,         role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/registration,   role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/privacy,        role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/about,          role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,      role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/calendar/ical,  role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$,              role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile,        role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/calendar,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/events,         role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/settings,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/claims,         role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/teamspeak,      role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/gallery,        role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/forum,          role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/help,           role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/menu,           role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/feedback,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/services,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/redirect,       role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/,               role: ROLE_NO_ACCESS }
 
