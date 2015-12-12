@@ -22,15 +22,25 @@ class MenuControllerTest extends MemberTestBase
             )
         );
 
-        $crawler = $client->request('GET', $this->getUrl($client));
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("My WoW Characters")')->count() > 0
-        );
+        try
+        {
+            $crawler = $client->request('GET', $this->getUrl($client));
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("Pictures")')->count() > 0
-        );
+            $this->assertTrue(
+                $crawler->filter('html:contains("My WoW Characters")')->count() > 0
+            );
+
+            $this->assertTrue(
+                $crawler->filter('html:contains("Pictures")')->count() > 0
+            );
+        }
+        catch(\Exception $e)
+        {
+            $this->fail('Exception while executing request ' . $e->getMessage());
+        }
     }
 
     protected function getUrl(Client $client, $parameters = array())

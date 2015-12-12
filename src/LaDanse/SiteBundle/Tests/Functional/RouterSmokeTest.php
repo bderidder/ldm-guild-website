@@ -15,7 +15,9 @@ class RouterSmokeTest extends WebTestCase
     public function testAnonymousPageIsSuccessful($url)
     {
         $client = self::createClient();
-        $client->followRedirects();
+
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
         $crawler = $client->request('GET', $url);
 
@@ -40,7 +42,9 @@ class RouterSmokeTest extends WebTestCase
                 'PHP_AUTH_PW'   => AccountConst::USER1_PASSWORD,
             )
         );
-        $client->followRedirects();
+
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
         $client->request('GET', $url);
 
@@ -55,7 +59,9 @@ class RouterSmokeTest extends WebTestCase
     public function testAuthenticatedPageIsFailed($url)
     {
         $client = self::createClient();
-        $client->followRedirects();
+
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
         $client->request('GET', $url);
 

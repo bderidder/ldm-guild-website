@@ -22,6 +22,9 @@ class ViewClaimsControllerTest extends MemberTestBase
             )
         );
 
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
+
         $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(

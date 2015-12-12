@@ -49,7 +49,8 @@ abstract class MemberTestBase extends LaDanseTestBase
             )
         );
 
-        $client->followRedirects();
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
         $crawler = $client->request('GET', $this->getUrl($client));
 

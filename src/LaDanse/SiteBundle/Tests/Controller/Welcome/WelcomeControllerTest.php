@@ -19,11 +19,21 @@ class WelcomeControllerTest extends LaDanseTestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', $this->getUrl($client));
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("more information")')->count() > 0
-        );
+        try
+        {
+            $crawler = $client->request('GET', $this->getUrl($client));
+
+            $this->assertTrue(
+                $crawler->filter('html:contains("more information")')->count() > 0
+            );
+        }
+        catch(\Exception $e)
+        {
+            $this->fail('Exception while executing request ' . $e->getMessage());
+        }
     }
 
     /**
@@ -36,15 +46,25 @@ class WelcomeControllerTest extends LaDanseTestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', $this->getUrl($client));
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("login or register")')->count() > 0
-        );
+        try
+        {
+            $crawler = $client->request('GET', $this->getUrl($client));
 
-        $this->assertTrue(
-            $crawler->filter('html:contains("member section")')->count() == 0
-        );
+            $this->assertTrue(
+                $crawler->filter('html:contains("login or register")')->count() > 0
+            );
+
+            $this->assertTrue(
+                $crawler->filter('html:contains("member section")')->count() == 0
+            );
+        }
+        catch (\Exception $e)
+        {
+            $this->fail('Exception while executing request ' . $e->getMessage());
+        }
     }
 
     /**
@@ -62,9 +82,14 @@ class WelcomeControllerTest extends LaDanseTestBase
             )
         );
 
+        $client->followRedirects(false);
+
         $client->request('GET', $this->getUrl($client));
 
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
+        $this->assertTrue(
+            $client->getResponse() instanceof RedirectResponse,
+            'Response was not a redirect response'
+        );
 
         $this->assertRegExp('/\/menu\/$/', $client->getResponse()->headers->get('location'));
     }

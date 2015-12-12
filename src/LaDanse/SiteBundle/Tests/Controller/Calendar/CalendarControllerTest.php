@@ -23,7 +23,15 @@ class CalendarControllerTest extends MemberTestBase
             )
         );
 
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
+
         $crawler = $client->request('GET', $this->getUrl($client));
+
+        $this->assertTrue(
+            $client->getResponse()->isSuccessful(),
+            'Request was not succesful'
+        );
 
         $this->assertTrue(
             $crawler->filter('html:contains("Can\'t find the event you were looking for?")')->count() > 0,

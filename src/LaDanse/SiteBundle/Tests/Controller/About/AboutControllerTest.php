@@ -16,6 +16,9 @@ class AboutControllerTest extends LaDanseTestBase
     {
         $client = static::createClient();
 
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
+
         $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
@@ -36,10 +39,19 @@ class AboutControllerTest extends LaDanseTestBase
             )
         );
 
+        $client->followRedirects(true);
+        $client->setMaxRedirects(5);
+
         $crawler = $client->request('GET', $this->getUrl($client));
 
         $this->assertTrue(
-            $crawler->filter('html:contains("About La Danse Macabre")')->count() > 0
+            $client->getResponse()->isSuccessful(),
+            'Request was not succesful'
+        );
+
+        $this->assertTrue(
+            $crawler->filter('html:contains("About La Danse Macabre")')->count() > 0,
+            'Response did not contain string "About La Danse Macabre"'
         );
     }
 
