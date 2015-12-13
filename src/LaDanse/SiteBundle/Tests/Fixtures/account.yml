@@ -1,0 +1,7 @@
+LaDanse\DomainBundle\Entity\Account:
+    mainAccount:
+        username: 'mainTestUser'
+        displayName: <firstName()> <lastName()>
+        plainPassword: 'test'
+        enabled: true
+        email: <email()>
