@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

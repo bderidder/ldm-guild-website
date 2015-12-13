@@ -1,10 +1,10 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller\Claims;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller\Claims;
 
-use LaDanse\SiteBundle\Tests\Controller\MemberTestBase;
+use LaDanse\SiteBundle\Tests\Functional\Controller\MemberTestBase;
 
-use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 class ViewClaimsControllerTest extends MemberTestBase

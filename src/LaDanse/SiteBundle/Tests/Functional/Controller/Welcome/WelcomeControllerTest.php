@@ -1,12 +1,12 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller\Welcome;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller\Welcome;
 
-use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
+use LaDanse\SiteBundle\Tests\Functional\Controller\LaDanseTestBase;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
 
 class WelcomeControllerTest extends LaDanseTestBase
 {

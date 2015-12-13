@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller;
 
 /**
  * Constants for Basic Auth in test cases

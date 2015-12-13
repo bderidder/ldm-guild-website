@@ -1,12 +1,12 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller\Calendar;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller\Calendar;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 
-use LaDanse\SiteBundle\Tests\Controller\MemberTestBase;
+use LaDanse\SiteBundle\Tests\Functional\Controller\MemberTestBase;
 
-use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
 
 class CalendarControllerTest extends MemberTestBase
 {

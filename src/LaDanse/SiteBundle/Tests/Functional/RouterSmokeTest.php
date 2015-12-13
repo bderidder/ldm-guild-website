@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
 
 class RouterSmokeTest extends WebTestCase
 {

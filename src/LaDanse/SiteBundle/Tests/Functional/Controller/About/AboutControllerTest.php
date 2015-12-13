@@ -1,10 +1,10 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Controller\About;
+namespace LaDanse\SiteBundle\Tests\Functional\Controller\About;
 
-use LaDanse\SiteBundle\Tests\Controller\LaDanseTestBase;
+use LaDanse\SiteBundle\Tests\Functional\Controller\LaDanseTestBase;
 
-use LaDanse\SiteBundle\Tests\Controller\AccountConst;
+use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 class AboutControllerTest extends LaDanseTestBase

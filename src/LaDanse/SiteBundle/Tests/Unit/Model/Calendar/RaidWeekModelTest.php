@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Tests\Model\Calendar;
+namespace LaDanse\SiteBundle\Tests\Unit\Model\Calendar;
 
 use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;
 
