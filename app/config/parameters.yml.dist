@@ -1,23 +1,49 @@
 # This file is auto-generated during the composer install
 parameters:
+
+    # Default database settings
     database_driver:    pdo_mysql
     database_host:      127.0.0.1
     database_port:      3306
     database_name:      database
     database_user:      dbuser
     database_password:  password
+
+    # Database settings for the TEST environment
+    test_database_driver:    pdo_mysql
+    test_database_host:      127.0.0.1
+    test_database_port:      3306
+    test_database_name:      database
+    test_database_user:      dbuser
+    test_database_password:  password
+
+    # Mailer settings
     mailer_transport:   smtp
     mailer_host:        127.0.0.1
     mailer_port: 	25
     mailer_user:        null
     mailer_password:    null
+
+    # I18N settings
     locale:             en
+
+    # Secret to generate a proper token for forms
     secret:             ThisTokenIsNotSoSecretChangeIt
-    nodejs_binary_path: /usr/bin/node
-    nodejs_module_path: ["C:\\Users\\bderidder\\AppData\\Roaming\\npm\\node_modules",]
+
+    # Nodejs settings for bootstrap and assetic
+    nodejs_binary_path: FullPathToNode
+    nodejs_module_path:
+        - /usr/local/lib/node_modules
+        - /usr/lib/node_modules
+
+    # Battle Net settings for Armory integration
     battlenet_key:      BattleNetAPIKey
     battlenet_secret:   BattleNetAPISecret
+
+    # Email address of administrator
     admin_email:        john@example.com
+
+    # Router settings to guarantee correct URLs in emails
     router.request_context.host: "localhost:8000"
     router.request_context.scheme: http
     router.request_context.base_url: ""
