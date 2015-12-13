@@ -33,7 +33,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "phake/phake": "@stable"
+        "phake/phake": "@stable",
+        "liip/functional-test-bundle": "^1.3",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "nelmio/alice": "^2.1"
     },
     "scripts": {
         "post-install-cmd": [
