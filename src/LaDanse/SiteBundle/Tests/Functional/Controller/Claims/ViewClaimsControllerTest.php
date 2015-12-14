@@ -2,30 +2,32 @@
 
 namespace LaDanse\SiteBundle\Tests\Functional\Controller\Claims;
 
-use LaDanse\SiteBundle\Tests\Functional\Controller\MemberTestBase;
+use LaDanse\DomainBundle\Entity\Account;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
-use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
-use Symfony\Bundle\FrameworkBundle\Client;
-
-class ViewClaimsControllerTest extends MemberTestBase
+class ViewClaimsControllerTest extends WebTestCase
 {
     /**
      * @return void
      */
     public function testMember()
     {
-        $client = static::createClient(
+        $fixtures = $this->loadFixtureFiles(array(
+            '@LaDanseSiteBundle/Tests/Fixtures/account.yml'
+        ));
+
+        /** @var Account $account */
+        $account = $fixtures['mainAccount'];
+
+        $client = static::makeClient(
             array(),
             array(
-                'PHP_AUTH_USER' => AccountConst::USER1_USERNAME,
-                'PHP_AUTH_PW'   => AccountConst::USER1_PASSWORD,
+                'PHP_AUTH_USER' => $account->getUsername(),
+                'PHP_AUTH_PW'   => 'test',
             )
         );
 
-        $client->followRedirects(true);
-        $client->setMaxRedirects(5);
-
-        $crawler = $client->request('GET', $this->getUrl($client));
+        $crawler = $client->request('GET', '/claims/');
 
         $this->assertTrue(
             $crawler->filter('html:contains("Below you can find the list of")')->count() == 1
@@ -34,10 +36,5 @@ class ViewClaimsControllerTest extends MemberTestBase
         $this->assertTrue(
             $crawler->filter('html:contains("add a character")')->count() == 1
         );
-    }
-
-    protected function getUrl(Client $client, $parameters = array())
-    {
-        return $this->generateUrl($client, "viewClaims");
     }
 }

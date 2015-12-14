@@ -2,8 +2,8 @@
 
 namespace LaDanse\SiteBundle\Tests\Functional;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
+use LaDanse\DomainBundle\Entity\Account;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class RouterSmokeTest extends WebTestCase
 {
@@ -14,7 +14,7 @@ class RouterSmokeTest extends WebTestCase
      */
     public function testAnonymousPageIsSuccessful($url)
     {
-        $client = self::createClient();
+        $client = self::makeClient();
 
         $client->followRedirects(true);
         $client->setMaxRedirects(5);
@@ -35,11 +35,18 @@ class RouterSmokeTest extends WebTestCase
      */
     public function testAuthenticatedPageIsSuccessful($url)
     {
-        $client = static::createClient(
+        $fixtures = $this->loadFixtureFiles(array(
+            '@LaDanseSiteBundle/Tests/Fixtures/account.yml'
+        ));
+
+        /** @var Account $account */
+        $account = $fixtures['mainAccount'];
+
+        $client = static::makeClient(
             array(),
             array(
-                'PHP_AUTH_USER' => AccountConst::USER1_USERNAME,
-                'PHP_AUTH_PW'   => AccountConst::USER1_PASSWORD,
+                'PHP_AUTH_USER' => $account->getUsername(),
+                'PHP_AUTH_PW'   => 'test',
             )
         );
 
@@ -58,7 +65,7 @@ class RouterSmokeTest extends WebTestCase
      */
     public function testAuthenticatedPageIsFailed($url)
     {
-        $client = self::createClient();
+        $client = self::makeClient();
 
         $client->followRedirects(true);
         $client->setMaxRedirects(5);

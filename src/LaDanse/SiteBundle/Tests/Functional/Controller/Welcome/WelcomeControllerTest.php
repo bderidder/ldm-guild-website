@@ -2,13 +2,11 @@
 
 namespace LaDanse\SiteBundle\Tests\Functional\Controller\Welcome;
 
-use LaDanse\SiteBundle\Tests\Functional\Controller\LaDanseTestBase;
-use Symfony\Bundle\FrameworkBundle\Client;
+use LaDanse\DomainBundle\Entity\Account;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-use LaDanse\SiteBundle\Tests\Functional\Controller\AccountConst;
-
-class WelcomeControllerTest extends LaDanseTestBase
+class WelcomeControllerTest extends WebTestCase
 {
     /**
      * Test if the welcome page shows the "more information" button
@@ -17,14 +15,14 @@ class WelcomeControllerTest extends LaDanseTestBase
      */
     public function testMoreInformationButton()
     {
-        $client = static::createClient();
+        $client = static::makeClient();
 
         $client->followRedirects(true);
         $client->setMaxRedirects(5);
 
         try
         {
-            $crawler = $client->request('GET', $this->getUrl($client));
+            $crawler = $client->request('GET', '/');
 
             $this->assertTrue(
                 $crawler->filter('html:contains("more information")')->count() > 0
@@ -44,14 +42,14 @@ class WelcomeControllerTest extends LaDanseTestBase
      */
     public function testGuest()
     {
-        $client = static::createClient();
+        $client = static::makeClient();
 
         $client->followRedirects(true);
         $client->setMaxRedirects(5);
 
         try
         {
-            $crawler = $client->request('GET', $this->getUrl($client));
+            $crawler = $client->request('GET', '/');
 
             $this->assertTrue(
                 $crawler->filter('html:contains("login or register")')->count() > 0
@@ -74,17 +72,24 @@ class WelcomeControllerTest extends LaDanseTestBase
      */
     public function testMember()
     {
-        $client = static::createClient(
+        $fixtures = $this->loadFixtureFiles(array(
+            '@LaDanseSiteBundle/Tests/Fixtures/account.yml'
+        ));
+
+        /** @var Account $account */
+        $account = $fixtures['mainAccount'];
+
+        $client = static::makeClient(
             array(),
             array(
-                'PHP_AUTH_USER' => AccountConst::USER1_USERNAME,
-                'PHP_AUTH_PW'   => AccountConst::USER1_PASSWORD,
+                'PHP_AUTH_USER' => $account->getUsername(),
+                'PHP_AUTH_PW'   => 'test',
             )
         );
 
         $client->followRedirects(false);
 
-        $client->request('GET', $this->getUrl($client));
+        $client->request('GET', '/');
 
         $this->assertTrue(
             $client->getResponse() instanceof RedirectResponse,
@@ -92,10 +97,5 @@ class WelcomeControllerTest extends LaDanseTestBase
         );
 
         $this->assertRegExp('/\/menu\/$/', $client->getResponse()->headers->get('location'));
-    }
-
-    protected function getUrl(Client $client, $parameters = array())
-    {
-        return $this->generateUrl($client, "welcomeIndex");
     }
 }
