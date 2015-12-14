@@ -16,6 +16,7 @@ class TSProxyController extends LaDanseController
      */
     public function clientsAction()
     {
+        // TO DO - switch to Curl and use a timeout
         $clientsJson = file_get_contents('http://ts.ladanse.org/TeamSpeak/rest/v1/clients');
 
         $clients = json_decode($clientsJson);
@@ -30,6 +31,7 @@ class TSProxyController extends LaDanseController
      */
     public function channelsAction()
     {
+        // TO DO - switch to Curl and use a timeout
         $channelsJson = file_get_contents('http://ts.ladanse.org/TeamSpeak/rest/v1/channels');
 
         $channels = json_decode($channelsJson);
