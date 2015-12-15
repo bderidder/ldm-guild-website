@@ -5,6 +5,9 @@ namespace LaDanse\SiteBundle\Tests\Functional\Controller\Feedback;
 use LaDanse\DomainBundle\Entity\Account;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * @group FunctionalTest
+ */
 class FeedbackControllerTest extends WebTestCase
 {
     /**

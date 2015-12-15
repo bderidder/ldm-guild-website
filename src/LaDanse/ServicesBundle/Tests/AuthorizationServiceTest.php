@@ -14,6 +14,9 @@ use LaDanse\ServicesBundle\Service\Authorization\UnresolvableResourceException;
 use LaDanse\ServicesBundle\Service\Authorization\NoMatchingPolicyFoundException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @group UnitTest
+ */
 class AuthorizationServiceTest extends KernelTestCase
 {
     /** @var AuthorizationService */

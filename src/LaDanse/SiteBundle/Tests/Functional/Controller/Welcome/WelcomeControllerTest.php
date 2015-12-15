@@ -6,6 +6,9 @@ use LaDanse\DomainBundle\Entity\Account;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
+/**
+ * @group FunctionalTest
+ */
 class WelcomeControllerTest extends WebTestCase
 {
     /**

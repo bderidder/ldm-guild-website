@@ -5,6 +5,9 @@ namespace LaDanse\SiteBundle\Tests\Functional\Controller\Privacy;
 use LaDanse\DomainBundle\Entity\Account;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * @group FunctionalTest
+ */
 class PrivacyControllerTest extends WebTestCase
 {
     /**

@@ -5,6 +5,9 @@ namespace LaDanse\SiteBundle\Tests\Functional\Controller\Menu;
 use LaDanse\DomainBundle\Entity\Account;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
+/**
+ * @group FunctionalTest
+ */
 class MenuControllerTest extends WebTestCase
 {
     /**

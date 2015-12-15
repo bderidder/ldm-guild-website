@@ -4,6 +4,9 @@ namespace LaDanse\SiteBundle\Tests\Unit\Model\Calendar;
 
 use LaDanse\SiteBundle\Model\Calendar\CalendarMonthModel;
 
+/**
+ * @group UnitTest
+ */
 class CalendarMonthModelTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructorMonday()

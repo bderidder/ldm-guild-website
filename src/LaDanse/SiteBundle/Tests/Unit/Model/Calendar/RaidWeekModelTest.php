@@ -4,6 +4,9 @@ namespace LaDanse\SiteBundle\Tests\Unit\Model\Calendar;
 
 use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;
 
+/**
+ * @group UnitTest
+ */
 class RaidWeekModelTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructorMonday()
