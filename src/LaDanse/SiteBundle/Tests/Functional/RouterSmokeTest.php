@@ -103,7 +103,6 @@ class RouterSmokeTest extends WebTestCase
             array('/teamspeak'),
             array('/gallery'),
             array('/forum'),
-            array('/help'),
             array('/menu'),
             array('/feedback/create')
         );
