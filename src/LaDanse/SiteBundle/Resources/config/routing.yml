@@ -43,11 +43,6 @@ ForumRouting:
     type:     annotation
     prefix:   /forum
 
-HelpRouting:
-    resource: "@LaDanseSiteBundle/Controller/Help"
-    type:     annotation
-    prefix:   /help
-
 RegistrationRouting:
     resource: "@LaDanseSiteBundle/Controller/Registration"
     type:     annotation
