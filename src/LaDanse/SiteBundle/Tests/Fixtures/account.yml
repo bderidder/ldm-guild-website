@@ -5,3 +5,9 @@ LaDanse\DomainBundle\Entity\Account:
         plainPassword: 'test'
         enabled: true
         email: <email()>
+    user{1..4}:
+        username: user<current()>
+        displayName: <firstName()> <lastName()>
+        plainPassword: 'test'
+        enabled: true
+        email: <email()>
