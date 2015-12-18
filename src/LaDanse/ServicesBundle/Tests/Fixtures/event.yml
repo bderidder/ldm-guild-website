@@ -1,0 +1,9 @@
+LaDanse\DomainBundle\Entity\Event:
+    event1:
+        name: 'Some Event'
+        description: 'Some Description'
+        inviteTIme: <dateTimeThisMonth()>
+        startTime: <dateTimeThisMonth()>
+        endTime: <dateTimeThisMonth()>
+        organiser: '@mainAccount'
+        topicId: 'test'
