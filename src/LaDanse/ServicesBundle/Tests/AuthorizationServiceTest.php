@@ -12,12 +12,12 @@ use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
 use LaDanse\ServicesBundle\Service\Authorization\UnresolvableResourceException;
 use LaDanse\ServicesBundle\Service\Authorization\NoMatchingPolicyFoundException;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * @group UnitTest
  */
-class AuthorizationServiceTest extends KernelTestCase
+class AuthorizationServiceTest extends WebTestCase
 {
     /** @var AuthorizationService */
     private $authzService;
@@ -32,12 +32,20 @@ class AuthorizationServiceTest extends KernelTestCase
     {
         self::bootKernel();
 
+        $fixtures = $this->loadFixtureFiles(array(
+            '@LaDanseSiteBundle/Tests/Fixtures/account.yml',
+            '@LaDanseServicesBundle/Tests/Fixtures/event.yml'
+        ));
+
+        /** @var Event $event1 */
+        $event1 = $fixtures['event1'];
+
         $this->authzService = static::$kernel->getContainer()
             ->get(AuthorizationService::SERVICE_NAME);
 
         $this->mockAccount = \Phake::mock(Account::class);
 
-        \Phake::when($this->mockAccount)->getId()->thenReturn(1);
+        \Phake::when($this->mockAccount)->getId()->thenReturn($event1->getId());
     }
 
     public function testPoliciesFound()
