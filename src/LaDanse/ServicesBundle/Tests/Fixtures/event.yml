@@ -2,8 +2,8 @@ LaDanse\DomainBundle\Entity\Event:
     event1:
         name: 'Some Event'
         description: 'Some Description'
-        inviteTIme: <dateTimeThisMonth()>
-        startTime: <dateTimeThisMonth()>
-        endTime: <dateTimeThisMonth()>
+        inviteTIme: <dateTimeBetween('now', '+50 days')>
+        startTime: <dateTimeBetween('now', '+50 days')>
+        endTime: <dateTimeBetween('now', '+50 days')>
         organiser: '@mainAccount'
         topicId: 'test'
