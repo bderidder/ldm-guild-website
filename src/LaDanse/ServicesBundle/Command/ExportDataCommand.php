@@ -70,7 +70,7 @@ class ExportDataCommand extends ContainerAwareCommand
         /** @var Entity\Event $event */
         foreach($events as $event)
         {
-            $jsonEvents[] = DTO\Event\EventAggregateFactory::create($event);
+            $jsonEvents[] = DTO\Event\EventFactory::create($event);
         }
 
         /** @var DTO\Event\Event $jsonEvent */
