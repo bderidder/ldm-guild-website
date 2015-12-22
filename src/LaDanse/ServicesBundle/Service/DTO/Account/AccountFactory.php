@@ -6,6 +6,11 @@ use LaDanse\DomainBundle\Entity as Entity;
 
 class AccountFactory
 {
+    /**
+     * @param Entity\Account $account
+     *
+     * @return Account
+     */
     public static function create(Entity\Account $account)
     {
         $factory = new AccountFactory();
