@@ -77,6 +77,6 @@ class NewGetEventQuery extends AbstractQuery
             throw new EventDoesNotExistException('Event does not exist');
         }
 
-        return DTO\Event\EventAggregateFactory::create($event);
+        return DTO\Event\EventFactory::create($event);
     }
 }
