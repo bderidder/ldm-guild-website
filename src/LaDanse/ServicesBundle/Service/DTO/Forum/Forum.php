@@ -44,7 +44,7 @@ class Forum
     public function __construct($id,
                                 $name,
                                 $description,
-                                $topicEntries)
+                                array $topicEntries = null)
     {
         $this->id = $id;
         $this->name = $name;
