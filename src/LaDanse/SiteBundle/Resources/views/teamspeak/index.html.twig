@@ -63,18 +63,10 @@
 
 <script>
 
-$(document).ready(function()
+function refreshTeamSpeak()
 {
     var clientsServiceURL = 'clients';
     var channelsServiceURL = 'channels';
-
-    $.when($.ajax({
-        type: "GET",
-        url: clientsServiceURL,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json"
-    })).then(tsPageClientsSuccessFunc, tsPageClientsErrorFunc);
-
 
     $.when($.ajax({
         type: "GET",
@@ -89,6 +81,12 @@ $(document).ready(function()
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     })).then(tsPageClientsSuccessFunc, tsPageClientsErrorFunc);
+}
+
+$(document).ready(function()
+{
+    refreshTeamSpeak();
+    setInterval(refreshTeamSpeak, 30 * 1000);
 });
 
 function tsPageClientsSuccessFunc(responseClients, responseChannels)
@@ -129,8 +127,6 @@ function tsPageClientsSuccessFunc(responseClients, responseChannels)
         }
     }
 
-    console.log(htmlString);
-
     //appending to the div
     $('#teamspeakContainer').html(htmlString);
 }
@@ -149,7 +145,7 @@ function tsPageClientsErrorFunc(jqXHR, textStatus, errorThrown)
     errorString += "</div>";
 
     //appending to the div
-    $('#teamspeakContainer').append($(errorString));
+    $('#teamspeakContainer').html($(errorString));
 }
 
 </script>
