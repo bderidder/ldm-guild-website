@@ -2,6 +2,8 @@ function tsClientsSuccessFunc(data, textStatus, jqXHR)
 {
     var clientsList = data;
 
+    $('#teamspeakTile').empty();
+
     // creating html string
     var htmlString = "";
 
@@ -42,6 +44,8 @@ function tsClientsSuccessFunc(data, textStatus, jqXHR)
             $('#teamspeakTile').append($(htmlString));
         }
     }
+
+    $('#teamspeakTile').append("<div class=\"label\"><i class=\"fa fa-headphones fa-2x\"></i></div>");
 
     $('#teamspeakTile').removeClass('tile').addClass('tile');
 
