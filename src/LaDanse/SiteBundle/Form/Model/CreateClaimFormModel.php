@@ -2,11 +2,19 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CreateClaimFormModel
 {
+    /**
+     * This is only here to make sure the "use" for Role remains in there
+     *
+     * @var Role $dummy
+     */
+    private $dummy;
+
 	private $character;
     private $roles;
 
