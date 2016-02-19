@@ -1,0 +1,29 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Guildmeet 2016 - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Guildmeet 2016') }}
+
+    <div class="staticText">
+
+        <p>On July 15, 16 and 17 There will be a guildmeet in the summer in Sweden where people can meet each
+            other in real life! More information on location and other details will follow soon.</p>
+
+        <p>In the meantime you can tell us if you can come or not here:</p>
+
+        <ul>
+            <li><a href="https://www.facebook.com/groups/ladanse.guild/permalink/10153765717701620/?qa_ref=qd" target="_blank">On our Facebook page</a></li>
+            <li>In the calendar:
+                <ul>
+                    <li><a href="{{ path('viewEvent', {'id': 158}) }}">July 15</a></li>
+                    <li><a href="{{ path('viewEvent', {'id': 159}) }}">July 16</a></li>
+                    <li><a href="{{ path('viewEvent', {'id': 160}) }}">July 17</a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+
+{% endblock %}
