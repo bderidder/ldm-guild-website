@@ -77,3 +77,9 @@ ActivityStreamRouting:
     resource: "@LaDanseSiteBundle/Controller/ActivityStream"
     type:     annotation
     prefix:   /activitystream
+
+GuildMeet:
+    path: /guildmeet
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    LaDanseSiteBundle:static:guildmeet.html.twig
