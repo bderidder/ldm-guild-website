@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\Menu;
 
+use Doctrine\Common\Cache\Cache;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -49,6 +50,16 @@ class MenuController extends LaDanseController
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
-        return $this->render('LaDanseSiteBundle:menu:menu.html.twig');
+        /** @var Cache $cacheService */
+        $cacheService = $this->get('cache');
+
+        $items = $cacheService->fetch('wowhead.rss');
+
+        return $this->render(
+            'LaDanseSiteBundle:menu:menu.html.twig',
+            array(
+                "wowheadNews" => $items
+            )
+        );
     }
 }
