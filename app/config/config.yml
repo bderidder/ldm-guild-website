@@ -123,3 +123,6 @@ services:
           - { name: kernel.event_subscriber }
   fos_user.doctrine_registry:
       alias: doctrine
+  cache:
+      class: Doctrine\Common\Cache\FilesystemCache
+      arguments: [ "%kernel.cache_dir%" ]
