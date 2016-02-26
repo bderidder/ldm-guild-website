@@ -20,10 +20,9 @@
             </div>
 
             <ul id="menu-column-list">
-                <li id="menu1Selector" class="selected">general</li>
-                <li id="menu2Selector">warcraft</li>
-                <li id="menu3Selector">swtor</li>
-                <li id="menu4Selector">assorted</li>
+                <li id="menu1Selector" class="selected">site</li>
+                <li id="menu2Selector">resources</li>
+                {% if wowheadNews is defined and wowheadNews|length > 0 %}<li id="menu3Selector">news</li>{% endif %}
             </ul>
 
             <div id="menu-page-container">
@@ -33,7 +32,7 @@
                     <div id="menu-page-slider2" style="position: inherit;">
 
                         <!-- general -->
-                        <div class="menu-column masonry-column-normal">
+                        <div class="menu-column menu-column-tiles masonry-column-normal">
 
                             <a class="masonry-item" href="{{ path('calendarIndex') }}">
                                 <div class="tile double">
@@ -94,10 +93,21 @@
                                 </div>
                             </a>
 
+                            <a class="masonry-item" href="{{ path('aboutIndex') }}">
+                                <div class="tile default" data-direction="vertical" data-delay="8000">
+                                    <div class="tile-content">
+                                        <div class="image">
+                                            <i class="fa fa-info fa-5x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="label"><span>About</span></div>
+                                </div>
+                            </a>
+
                         </div>
 
                         <!-- wow -->
-                        <div class="menu-column masonry-column-normal">
+                        <div class="menu-column menu-column-tiles masonry-column-normal">
 
                             <a class="masonry-item" href="{{ path('viewClaims') }}">
                                 <div class="tile default" data-direction="vertical" data-delay="8000">
@@ -189,134 +199,24 @@
 
                         </div>
 
-                        <!-- swtor -->
-                        <div class="menu-column masonry-column-normal">
+                        <div class="menu-column menu-news">
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://www.swtor.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <img width="75" src="{{ asset('bundles/ladansesite/images/SWTOR_icon.png') }}" />
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>SWTOR Home</span></div>
-                                </div>
-                            </a>
+                            {% if wowheadNews is defined and wowheadNews|length > 0 %}
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://dulfy.net/category/swtor/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <img width="90" src="{{ asset('bundles/ladansesite/images/DulfyNet_Logo.png') }}" />
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>Dulfy</span></div>
-                                </div>
-                            </a>
+                            <div style="width: 400px;">
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://www.wikiswtor.com/SWTOR_Wiki" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-wikipedia-w fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>Star Wars Wiki</span></div>
-                                </div>
-                            </a>
+                                {% for item in wowheadNews %}
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://www.swtor-spy.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <img width="80" src="{{ asset('bundles/ladansesite/images/SWTOR_Spy.jpg') }}" />
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>Spy Database</span></div>
-                                </div>
-                            </a>
+                                    <p><a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
+                                        <br/>
+                                        <span class="news-timestamp">{{ item.pubDate }}</span>
+                                    </p>
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "https://torcommunity.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <img width="90" src="{{ asset('bundles/ladansesite/images/TORCommunity.png') }}" />
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>TOR Community</span></div>
-                                </div>
-                            </a>
+                                {% endfor %}
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://swtorconquest.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-flag fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>SWTOR Conquest</span></div>
-                                </div>
-                            </a>
+                            </div>
 
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://www.swtorevents.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-calendar fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>SWTOR Events</span></div>
-                                </div>
-                            </a>
-
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://swtorcartel.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-eur fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>SWTOR Cartel</span></div>
-                                </div>
-                            </a>
-
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://tor-decorating.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-university fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>TOR Decorating</span></div>
-                                </div>
-                            </a>
-
-                            <a class="masonry-item" href="{{ path('redirect', {'url': "http://tor-fashion.com/" }) }}" target="_blank">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-child fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>TOR Fashion</span></div>
-                                </div>
-                            </a>
-
-                        </div>
-
-                        <!-- assorted -->
-                        <div class="menu-column masonry-column-small">
-
-                            <a class="masonry-item" href="{{ path('aboutIndex') }}">
-                                <div class="tile default" data-direction="vertical" data-delay="8000">
-                                    <div class="tile-content">
-                                        <div class="image">
-                                            <i class="fa fa-info fa-5x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="label"><span>About</span></div>
-                                </div>
-                            </a>
+                            {% endif %}
 
                         </div>
 
@@ -375,7 +275,7 @@
 
         $(document).ready(function()
         {
-            $('.menu-column').masonry({
+            $('.menu-column-tiles').masonry({
                 columnWidth: 150,
                 gutter: 15,
                 itemSelector: '.masonry-item'
