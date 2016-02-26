@@ -69,14 +69,20 @@ function tsClientsErrorFunc(jqXHR, textStatus, errorThrown)
     console.log("Error fetching online TS people " + textStatus);
     console.log(errorThrown);
 
+    $('#teamspeakTile').empty();
+
     var errorString = '';
 
     errorString += "<div>";
     errorString += "  <div class='ts-top-label'>";
-    errorString += "     <p style='font-size: 0.85em; text-align: center;'>We are sorry but there was a problem fetching the list of online people</p>";
+    errorString += "     <p style='font-size: 0.85em; text-align: center;'>We are sorry but there<br/>was a problem fetching<br/>the list of people online</p>";
     errorString += "  </div>";
     errorString += "</div>";
 
     //appending to the div
     $('#teamspeakTile').append($(errorString));
+
+    $('#teamspeakTile').append("<div class=\"label\"><i class=\"fa fa-headphones fa-2x\"></i></div>");
+
+    $('#teamspeakTile').removeClass('tile').addClass('tile');
 }
