@@ -30,7 +30,6 @@
 #menu-column-list li.selected
 {
     color: black;
-    ffont-weight: bold;
     font-weight: normal;
 }
 
@@ -57,6 +56,33 @@
     margin-left: 30px;
 }
 
+#menu-container div.menu-news
+{
+    overflow: scroll !important;
+    white-space: normal !important;
+    margin-top: 15px;
+}
+
+#menu-container div.menu-news p
+{
+    font-family: 'Segoe UI', 'Open Sans', sans-serif, serif;
+    font-size: 16px;
+    color: black;
+    font-weight: 300;
+}
+
+#menu-container div.menu-news p span.news-timestamp
+{
+    font-size: 12px;
+    color: gray;
+    font-weight: 200;
+}
+
+#menu-container div.menu-news p a
+{
+    color: black;
+}
+
 #menu-container div.masonry-column-small
 {
     width: 150px;
@@ -72,7 +98,7 @@
     width: 480px;
 }
 
-#menu-container div.menu-column a
+#menu-container div.menu-column-tiles a
 {
     color: white;
     white-space: nowrap;
