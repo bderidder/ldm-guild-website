@@ -201,11 +201,11 @@
 
                         <div class="menu-column menu-news">
 
-                            <p class="news-title">wowhead news</p>
-
                             {% if wowheadNews is defined and wowheadNews|length > 0 %}
 
-                            <div style="width: 400px;">
+                                <p class="news-title">wowhead news</p>
+
+                                <div style="width: 400px;">
 
                                 {% for item in wowheadNews %}
 
@@ -216,7 +216,7 @@
 
                                 {% endfor %}
 
-                            </div>
+                                </div>
 
                             {% endif %}
 
