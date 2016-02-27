@@ -201,13 +201,15 @@
 
                         <div class="menu-column menu-news">
 
+                            <p class="news-title">wowhead news</p>
+
                             {% if wowheadNews is defined and wowheadNews|length > 0 %}
 
                             <div style="width: 400px;">
 
                                 {% for item in wowheadNews %}
 
-                                    <p><a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
+                                    <p class="news-item"><a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
                                         <br/>
                                         <span class="news-timestamp">{{ item.pubDate }}</span>
                                     </p>
