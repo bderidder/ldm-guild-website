@@ -58,7 +58,7 @@
 
 #menu-container div.menu-news
 {
-    overflow: scroll !important;
+    overflow: visible !important;
     white-space: normal !important;
     margin-top: 15px;
 }
