@@ -39,7 +39,12 @@ assetic:
     use_controller: true
 
 swiftmailer:
-    transport: "%mailer_transport%"
+    transport:  "%mailer_transport%"
+    encryption: "%mailer_encryption%"
+    host:       "%mailer_host%"
+    port:       "%mailer_port%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
     spool:
         type: file
         path: "%kernel.root_dir%/spool"
