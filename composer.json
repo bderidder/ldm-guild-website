@@ -29,7 +29,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "coderspotting/toast-message": "dev-master",
         "eluceo/ical": "*",
-        "curl/curl": "^1.3"
+        "curl/curl": "^1.3",
+        "trt/swift-css-inliner-bundle": "^0.4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
