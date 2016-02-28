@@ -19,8 +19,9 @@ parameters:
 
     # Mailer settings
     mailer_transport:   smtp
+    mailer_encryption:  tls
     mailer_host:        127.0.0.1
-    mailer_port: 	25
+    mailer_port: 	    25
     mailer_user:        null
     mailer_password:    null
 
@@ -44,6 +45,6 @@ parameters:
     admin_email:        john@example.com
 
     # Router settings to guarantee correct URLs in emails
-    router.request_context.host: "localhost:8000"
-    router.request_context.scheme: http
+    router.request_context.host:     "localhost:8000"
+    router.request_context.scheme:   http
     router.request_context.base_url: ""
