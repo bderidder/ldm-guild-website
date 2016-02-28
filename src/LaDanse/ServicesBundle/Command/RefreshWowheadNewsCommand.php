@@ -91,7 +91,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
     {
         $curl = new Curl();
 
-        curl_setopt($curl->curl, CURLOPT_TIMEOUT_MS, 1000);
+        curl_setopt($curl->curl, CURLOPT_TIMEOUT_MS, 10000);
 
         $curl->get($url);
 
