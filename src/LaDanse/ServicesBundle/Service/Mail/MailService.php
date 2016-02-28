@@ -4,6 +4,7 @@ namespace LaDanse\ServicesBundle\Service\Mail;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\MailSend;
+use Trt\SwiftCssInlinerBundle\Plugin\CssInlinerPlugin;
 
 /**
  * @DI\Service(MailService::SERVICE_NAME, public=true)
@@ -30,20 +31,18 @@ class MailService
      */
     public $swiftMailer;
 
-    public function sendMail($from, $to, $subject, $textPart, $htmlPart = null)
+    public function sendMail($from, $to, $subject, $htmlPart)
     {
         /** @var \Swift_Mime_Message $message */
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
-            ->setBody($textPart, 'text/plain; charset=utf-8');
+            ->setBody($htmlPart, 'text/html');
 
-        if (!is_null($htmlPart))
-        {
-            /** @noinspection PhpUndefinedMethodInspection */
-            $message->addPart($htmlPart, 'text/html; charset=utf-8');
-        }
+        $message->getHeaders()->addTextHeader(
+            CssInlinerPlugin::CSS_HEADER_KEY_AUTODETECT
+        );
 
         $this->swiftMailer->send($message);
 
