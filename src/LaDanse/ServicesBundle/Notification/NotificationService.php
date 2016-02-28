@@ -95,6 +95,8 @@ class NotificationService
 
     private function sendMailsFromContext(NotificationQueueItem $notificationQueueItem, NotificationContext $context)
     {
+        $kernel = $this->container->get('kernel');
+
         if ($context->mailCount() == 0)
         {
             $this->logger->debug(
@@ -113,7 +115,9 @@ class NotificationService
         /** @var object $mail */
         foreach($mails as $mail)
         {
-            if (strcasecmp($mail->email, $notificationQueueItem->getActivityBy()->getEmail()) == 0)
+            if ((strcasecmp($mail->email, $notificationQueueItem->getActivityBy()->getEmail()) == 0)
+                &&
+                (strcasecmp($kernel->getEnvironment(), 'dev') != 0))
             {
                 // we don't send emails to the originator of the activity self
                 continue;
@@ -131,12 +135,6 @@ class NotificationService
                 array('noreply@ladanse.org' => $fromName),
                 $mail->email,
                 $mail->subject,
-                $this->renderView(
-                    NotificationTemplates::getTxtTemplate($mail->templatePrefix),
-                    array(
-                        'notificationItem' => $notificationQueueItem,
-                        'data'             => $mail->data
-                    )),
                 $this->renderView(
                     NotificationTemplates::getHtmlTemplate($mail->templatePrefix),
                     array(
