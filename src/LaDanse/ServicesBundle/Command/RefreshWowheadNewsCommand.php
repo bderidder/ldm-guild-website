@@ -102,6 +102,8 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
             $context->error("Error while downloading XML " . $errorCode);
 
             $curl->close();
+
+            return null;
         }
         else
         {
