@@ -99,12 +99,19 @@ fos_user:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    port:      "%mailer_port%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport:  "%mailer_transport%"
+    encryption: "%mailer_encryption%"
+    host:       "%mailer_host%"
+    port:       "%mailer_port%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
     spool:     { type: memory }
+
+trt_swift_css_inliner:
+    inliner_class: TijsVerkoyen\CssToInlineStyles\CssToInlineStyles
+    cleanup: false
+    strip_original_style_tags: false
+    exclude_media_queries: true
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations
