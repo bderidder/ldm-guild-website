@@ -66,22 +66,23 @@
 #menu-container div.menu-news p.news-item
 {
     font-family: 'Segoe UI', 'Open Sans', sans-serif, serif;
-    font-size: 16px;
+    font-size: 18px;
     color: black;
     font-weight: 300;
+    padding-bottom: 15px;
 }
 
 #menu-container div.menu-news p.news-title
 {
     font-family: 'Segoe UI', 'Open Sans', sans-serif, serif;
-    font-size: 26px;
+    font-size: 30px;
     color: black;
     font-weight: bold;
 }
 
 #menu-container div.menu-news p span.news-timestamp
 {
-    font-size: 12px;
+    font-size: 14px;
     color: gray;
     font-weight: 200;
 }
