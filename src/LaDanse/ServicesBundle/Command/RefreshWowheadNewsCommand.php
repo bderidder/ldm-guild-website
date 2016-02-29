@@ -78,7 +78,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
             $count++;
 
-            if ($count <= 10)
+            if ($count <= 5)
             {
                 $items[] = $item;
             }
