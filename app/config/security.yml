@@ -21,10 +21,18 @@ security:
             logout:       true
             anonymous:    true
             remember_me:
-                        key:      "%secret%"
-                        lifetime: 31536000 # 365 days in seconds
-                        path:     /
-                        domain:   ~ # Defaults to the current domain from $_SERVER
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+            oauth:
+                resource_owners:
+                    battlenet: "/oauth/login/check-battlenet"
+                login_path:   "/oauth/login"
+                use_forward:  false
+                failure_path: "/oauth/login"
+                oauth_user_provider:
+                    service: LaDanse.SocialConnectProvider
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -61,5 +69,6 @@ security:
         - { path: ^/services,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/redirect,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 

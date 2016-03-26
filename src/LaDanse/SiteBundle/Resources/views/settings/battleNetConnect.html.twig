@@ -1,0 +1,33 @@
+{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+
+{% block settingsPanel %}
+
+	<h1>Battle.net Account Connect</h1>
+
+    <p>Enter a new password. Make sure the password is sufficiently strong, we will check that for you!</p>
+
+    <p>We encourage you to use a Password Manager to automatically generate a strong password and help
+    remembering it for you. <a href="{{ path('redirect', {'url': 'http://en.wikipedia.org/wiki/List_of_password_managers' }) }}" target="_blank">Here is a list of password managers</a>.</p>
+
+    <p>For your own safety we strongly discourage you to use a password you also use on other sites. If this
+       site ever would get hacked it is your responsibility if your other accounts on those sites are also hacked!</p>
+
+    <br/>
+
+    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #battleNetConnectLink
+        {
+            background-color: #99b433;
+        }
+    </style>
+
+{% endblock %}
