@@ -1,0 +1,4 @@
+EventRouting:
+    resource: "@LaDanseRestBundle/Controller/Events"
+    type:     annotation
+    prefix:   /api/events
