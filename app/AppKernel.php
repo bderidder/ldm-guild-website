@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new LaDanse\ServicesBundle\LaDanseServicesBundle(),
             new CoderSpotting\Bundle\ToastMessageBundle\CoderSpottingToastMessageBundle(),
             new LaDanse\BootstrapBundle\LaDanseBootstrapBundle(),
+            new LaDanse\RestBundle\LaDanseRestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
