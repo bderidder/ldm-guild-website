@@ -18,6 +18,8 @@ class SocialConnect
     const REPOSITORY = 'LaDanseDomainBundle:SocialConnect';
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,19 +27,46 @@ class SocialConnect
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $resource;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $resourceId;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $accessToken;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $refreshToken;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    protected $connectTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastRefreshTime;
 
     /**
      * @ORM\ManyToOne(targetEntity="Account")
@@ -107,6 +136,54 @@ class SocialConnect
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    /**
+     * @param string $refreshToken
+     */
+    public function setRefreshToken($refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getConnectTime()
+    {
+        return $this->connectTime;
+    }
+
+    /**
+     * @param \DateTime $connectTime
+     */
+    public function setConnectTime(\DateTime $connectTime)
+    {
+        $this->connectTime = $connectTime;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastRefreshTime()
+    {
+        return $this->lastRefreshTime;
+    }
+
+    /**
+     * @param \DateTime $lastRefreshTime
+     */
+    public function setLastRefreshTime(\DateTime $lastRefreshTime)
+    {
+        $this->lastRefreshTime = $lastRefreshTime;
     }
 
     /**
