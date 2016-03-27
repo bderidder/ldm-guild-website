@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service;
+namespace LaDanse\ServicesBundle\Service\SocialConnect;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 use HWI\Bundle\OAuthBundle\Connect\AccountConnectorInterface;
@@ -129,17 +129,17 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
         }
         else
         {
-            $this->logger->info(__CLASS__ . ' we found an existing SocialConnect ' . $result[0]->getAccount()->getUsername());
+            /** @var SocialConnect $socialConnect */
+            $socialConnect = $result[0];
 
-            return $result[0]->getAccount();
+            $this->logger->info(__CLASS__ . ' we found an existing SocialConnect ' . $socialConnect->getAccount()->getUsername());
+
+            return $socialConnect->getAccount();
         }
 
-        //$this->logger->info('response   ' . $response->response);
-        $this->logger->info('oAuthToken ' . $response->oAuthToken);
+        $this->logger->info('oAuthToken ' . $response->getOAuthToken());
 
-        $paths = $response->getPaths();
-
-        foreach($response->response as $path)
+        foreach($response->getResponse() as $path)
         {
             $this->logger->info('path element > ' . var_export($path));
         }
