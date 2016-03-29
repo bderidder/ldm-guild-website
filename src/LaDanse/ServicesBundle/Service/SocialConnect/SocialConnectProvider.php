@@ -109,17 +109,19 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
 
         if (count($result) == 0)
         {
-            $this->logger->info(__CLASS__ . ' we found no SocialConnect for ' . $username . ' at ' . $response->getResourceOwner()->getName());
+            $this->logger->info(__CLASS__ . sprintf(' we found no SocialConnect for %s at %s', $username, $response->getResourceOwner()->getName()));
 
             if ($authContext->isAuthenticated() && !(null === $username))
             {
-                $this->logger->info(__CLASS__ . 'tThe user is already authenticated as ' . $authContext->getAccount()->getUsername());
+                $this->logger->info(__CLASS__ . sprintf(' the user is already authenticated as %s, creating SocialConnect ', $authContext->getAccount()->getUsername()));
 
                 $socialConnect = new SocialConnect();
                 $socialConnect->setAccount($authContext->getAccount());
                 $socialConnect->setResource($response->getResourceOwner()->getName());
                 $socialConnect->setResourceId($response->getUsername());
                 $socialConnect->setAccessToken($response->getAccessToken());
+                $socialConnect->setRefreshToken($response->getRefreshToken());
+                $socialConnect->setConnectTime(new \DateTime());
 
                 $this->doctrine->getManager()->persist($socialConnect);
                 $this->doctrine->getManager()->flush();
@@ -132,7 +134,7 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
             /** @var SocialConnect $socialConnect */
             $socialConnect = $result[0];
 
-            $this->logger->info(__CLASS__ . ' we found an existing SocialConnect ' . $socialConnect->getAccount()->getUsername());
+            $this->logger->info(__CLASS__ . sprintf(' we found an existing SocialConnect %s', $socialConnect->getAccount()->getUsername()));
 
             return $socialConnect->getAccount();
         }
@@ -144,7 +146,7 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
             $this->logger->info('path element > ' . var_export($path));
         }
 
-        throw new AccountNotLinkedException(sprintf("User '%s' not found and no user currently authenticated", $username));
+        throw new AccountNotLinkedException(sprintf("Resource '%s' not found and no user currently authenticated", $response->getResourceOwner()->getName()));
     }
 
     /**
@@ -164,6 +166,8 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
         $socialConnect->setResource($response->getResourceOwner()->getName());
         $socialConnect->setResourceId($response->getUsername());
         $socialConnect->setAccessToken($response->getAccessToken());
+        $socialConnect->setRefreshToken($response->getRefreshToken());
+        $socialConnect->setConnectTime(new \DateTime());
 
         $this->doctrine->getManager()->persist($socialConnect);
         $this->doctrine->getManager()->flush();
