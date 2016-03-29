@@ -1,0 +1,22 @@
+div.faq
+{
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px dashed grey;
+}
+
+div.faq p.header
+{
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+div.faq p.question
+{
+    font-weight: 500;
+}
+
+div.faq p.answer
+{
+
+}

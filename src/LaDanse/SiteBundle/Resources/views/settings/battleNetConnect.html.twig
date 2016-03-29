@@ -6,9 +6,91 @@
 
     <br/>
 
-   <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}" class="connect">connect</a>
+{% if (not isConnected) %}
 
-    {% include 'LaDanseSiteBundle:common:formErrorsPartial.html.twig' %}
+    <div class="well">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <i class="fa fa-chain-broken fa-5x"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <p>You have not connected your Battle.net account to this website.</p>
+
+                    <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}"
+                       class="btn btn-primary">Connect with Battle.net</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% else %}
+
+    <div class="well">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <i class="fa fa-chain fa-5x"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <p>Your Battle.net account is connected to this website.</p>
+
+                    <a href="{{ path('verifyBattlenet') }}"
+                       class="btn btn-success">Verify Connection</a>
+
+                    <a href="{{ path('disconnectBattlenet') }}"
+                       class="btn btn-warning">Disconnect from Battle.net</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+    <div class="faq">
+
+    <p class="header">Frequently Asked Questions</p>
+
+    <p class="question">Is this secure? Will you be able to access my WoW account in this way?</p>
+
+    <p class="answer">
+        This is secure. Even when you connect your account, the website cannot log into the game in your nae,
+        it cannot create, change or delete characters, it cannot pretend to be you on the WoW forums.
+        The only thing the website can do is fetching the list of your WoW characters.
+    </p>
+
+    <p class="question">When I connect my account, what will you do with it?</p>
+
+    <p class="answer">
+        When you connect your account to this website, you are authorizing this website to retrieve
+        information on your WoW characters. That is exactly what we will do. Instead of having to claim
+        your characters manually, the website will do that automatically for you.
+    </p>
+
+    <p class="question">I connected my account and now I changed my mind, can I disconnect again?</p>
+
+    <p class="answer">
+        You can disconnect your account by either selecting "Disconnect" above or by visiting
+        <a href="https://eu.battle.net/account/management/authorizations.html"
+           target="_blank">this page on Battle.net</a>
+        and select "Disconnect" for the La Danse Guild Website application.
+    </p>
+
+    </div>
 
 {% endblock %}
 

@@ -1,0 +1,66 @@
+{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+
+{% block settingsPanel %}
+
+	<h1>Battle.net Account Connect Verification</h1>
+
+    <br/>
+
+    <p>
+        Below you can see the result of a few tests. If any of the tests fail, we suggest to return to the previous
+        page, disconnect your account and reconnect it.
+    </p>
+
+    <div class="well" style="padding-left: 25px">
+
+        {% if verification.connected %}
+            <p><i class="fa fa-check" style="color: green"></i> The site has an access token on file for your account</p>
+        {% else %}
+            <p><i class="fa fa-times" style="color: red"></i> The site has no access token on file, you will have to
+                <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">give us permission</a> first
+            </p>
+        {% endif %}
+
+        {% if verification.connected %}
+
+            {% if verification.accessTokenExpired %}
+                <p><i class="fa fa-times" style="color: red"></i> The access token has expired, you will have to
+                    <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">refresh this token</a>
+                </p>
+            {% else %}
+                <p><i class="fa fa-check" style="color: green"></i> The access token is still valid, it will expire on {{ verification.expirationDate|date("d/m/Y h:i") }}</p>
+            {% endif %}
+
+            {% if not verification.accessTokenExpired %}
+
+                {% if verification.charactersLoaded %}
+                    <p><i class="fa fa-check" style="color: green"></i> The site could request a list of your characters</p>
+                {% else %}
+                    <p><i class="fa fa-times" style="color: red"></i> The site could not request a list of your characters.
+                        You can try to <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">refresh the access token</a>.
+                    </p>
+                {% endif %}
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+    <p><a href="{{ path('battleNetConnect') }}">Back to Battle.net Account Connect</a>.</p>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #battleNetConnectLink
+        {
+            background-color: #99b433;
+        }
+    </style>
+
+{% endblock %}
