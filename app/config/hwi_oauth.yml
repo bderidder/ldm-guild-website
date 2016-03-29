@@ -35,6 +35,6 @@ hwi_oauth:
                     use_bearer_authorization: false
                 paths:
                     identifier: id
-                    nickname: id
-                    realname: id
+                    nickname: battletag
+                    realname: battletag
 
