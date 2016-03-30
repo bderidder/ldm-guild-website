@@ -71,5 +71,9 @@ class ActivityType
     const FEEDBACK_VIEW  = 'Feedback.View';  // Read Only
     const FEEDBACK_POST  = 'Feedback.Post';  // State Change
 
+    const BATTLENET_OAUTH_VIEW       = 'Battlenet.OAuth.View';       // Read Only
+    const BATTLENET_OAUTH_VERIFY     = 'Battlenet.OAuth.Verify';     // Read Only
+    const BATTLENET_OAUTH_DISCONNECT = 'Battlenet.OAuth.Disconnect'; // State Change
+
     const REDIRECT = "Redirect"; // Read Only
 }

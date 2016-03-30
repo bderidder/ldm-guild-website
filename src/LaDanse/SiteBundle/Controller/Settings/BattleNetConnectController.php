@@ -6,6 +6,8 @@ use GuzzleHttp\Exception\ClientException;
 use Depotwarehouse\OAuth2\Client\Provider\WowProvider;
 use GuzzleHttp\Client;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
 use LaDanse\SiteBundle\Model\BattlenetVerificationModel;
@@ -58,8 +60,12 @@ class BattleNetConnectController extends LaDanseController
 
         $isConnected = $this->socialConnectService->isAccountConnected($account);
 
-        /** @var SettingsService $settingsService */
-        $settingsService = $this->get(SettingsService::SERVICE_NAME);
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::BATTLENET_OAUTH_VIEW,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
 
         return $this->render(
             'LaDanseSiteBundle:settings:battleNetConnect.html.twig',
@@ -83,6 +89,13 @@ class BattleNetConnectController extends LaDanseController
 
         $this->socialConnectService->disconnectAccount($account);
 
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::BATTLENET_OAUTH_DISCONNECT,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
+
         return $this->redirectToRoute('battleNetConnect');
     }
 
@@ -95,6 +108,13 @@ class BattleNetConnectController extends LaDanseController
      */
     public function verifyBattlenetAction(Request $request)
     {
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::BATTLENET_OAUTH_VERIFY,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
+
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
         $account = $authContext->getAccount();
