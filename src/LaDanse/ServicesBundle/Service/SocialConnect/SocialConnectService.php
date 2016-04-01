@@ -8,6 +8,8 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
+use LaDanse\ServicesBundle\Service\SocialConnect\Query\GetAccessTokenForAccountQuery;
+use LaDanse\ServicesBundle\Service\SocialConnect\Query\IsAccountConnectedQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -48,27 +50,12 @@ class SocialConnectService extends LaDanseService
      */
     public function isAccountConnected(Account $account)
     {
-        $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
+        /** @var IsAccountConnectedQuery $isAccountConnectedQuery */
+        $isAccountConnectedQuery = $this->get(IsAccountConnectedQuery::SERVICE_NAME);
 
-        $socialConnects = $repo->findBy(array('account' => $account));
+        $isAccountConnectedQuery->setAccount($account);
 
-        return count($socialConnects) == 1;
-    }
-
-    /**
-     * @param Account $account
-     */
-    public function disconnectAccount(Account $account)
-    {
-        $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
-
-        $socialConnects = $repo->findBy(array('account' => $account));
-
-        if (count($socialConnects) == 1)
-        {
-            $this->doctrine->getManager()->remove($socialConnects[0]);
-            $this->doctrine->getManager()->flush();
-        }
+        return $isAccountConnectedQuery->run();
     }
 
     /**
@@ -78,16 +65,12 @@ class SocialConnectService extends LaDanseService
      */
     public function getAccessTokenForAccount(Account $account)
     {
-        $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
+        /** @var GetAccessTokenForAccountQuery $getAccessTokenForAccountQuery */
+        $getAccessTokenForAccountQuery = $this->get(GetAccessTokenForAccountQuery::SERVICE_NAME);
 
-        $socialConnects = $repo->findBy(array('account' => $account));
+        $getAccessTokenForAccountQuery->setAccount($account);
 
-        if (count($socialConnects) == 1)
-        {
-            return $socialConnects[0]->getAccessToken();
-        }
-
-        return null;
+        return $getAccessTokenForAccountQuery->run();
     }
 
     /**
@@ -97,13 +80,10 @@ class SocialConnectService extends LaDanseService
      */
     public function verifyAccountConnection(Account $account)
     {
-        /** @var SocialConnectService $socialConnectService */
-        $socialConnectService = $this->get(SocialConnectService::SERVICE_NAME);
-
         $checkTokenUrl = 'https://eu.battle.net/oauth/check_token';
         $charactersUrl = 'https://eu.api.battle.net/wow/user/characters';
 
-        $accessToken = $socialConnectService->getAccessTokenForAccount($account);
+        $accessToken = $this->getAccessTokenForAccount($account);
 
         $verificationReport = new VerificationReport();
 
@@ -182,5 +162,21 @@ class SocialConnectService extends LaDanseService
         }
 
         return $verificationReport;
+    }
+
+    /**
+     * @param Account $account
+     */
+    public function disconnectAccount(Account $account)
+    {
+        $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
+
+        $socialConnects = $repo->findBy(array('account' => $account));
+
+        if (count($socialConnects) == 1)
+        {
+            $this->doctrine->getManager()->remove($socialConnects[0]);
+            $this->doctrine->getManager()->flush();
+        }
     }
 }
