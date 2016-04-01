@@ -1,8 +1,8 @@
 <?php
 
-namespace LaDanse\SiteBundle\Model;
+namespace LaDanse\ServicesBundle\Service\SocialConnect;
 
-class BattlenetVerificationModel
+class VerificationReport
 {
     /** @var bool */
     private $connected;
@@ -29,7 +29,7 @@ class BattlenetVerificationModel
 
     /**
      * @param boolean $connected
-     * @return BattlenetVerificationModel
+     * @return VerificationReport
      */
     public function setConnected($connected)
     {
@@ -47,7 +47,7 @@ class BattlenetVerificationModel
 
     /**
      * @param boolean $checkAccessToken
-     * @return BattlenetVerificationModel
+     * @return VerificationReport
      */
     public function setCheckAccessToken($checkAccessToken)
     {
@@ -65,7 +65,7 @@ class BattlenetVerificationModel
 
     /**
      * @param boolean $accessTokenExpired
-     * @return BattlenetVerificationModel
+     * @return VerificationReport
      */
     public function setAccessTokenExpired($accessTokenExpired)
     {
@@ -83,7 +83,7 @@ class BattlenetVerificationModel
 
     /**
      * @param \DateTime $expirationDate
-     * @return BattlenetVerificationModel
+     * @return VerificationReport
      */
     public function setExpirationDate($expirationDate)
     {
@@ -101,7 +101,7 @@ class BattlenetVerificationModel
 
     /**
      * @param boolean $charactersLoaded
-     * @return BattlenetVerificationModel
+     * @return VerificationReport
      */
     public function setCharactersLoaded($charactersLoaded)
     {
