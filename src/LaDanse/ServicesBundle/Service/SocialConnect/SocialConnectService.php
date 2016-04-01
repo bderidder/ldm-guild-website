@@ -2,13 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\SocialConnect;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\MailSend;
 use LaDanse\DomainBundle\Entity\SocialConnect;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Trt\SwiftCssInlinerBundle\Plugin\CssInlinerPlugin;
 
 /**
  * @DI\Service(SocialConnectService::SERVICE_NAME, public=true)
@@ -93,10 +93,94 @@ class SocialConnectService extends LaDanseService
     /**
      * @param Account $account
      *
-     * @return bool
+     * @return VerificationReport
      */
     public function verifyAccountConnection(Account $account)
     {
-        return false;
+        /** @var SocialConnectService $socialConnectService */
+        $socialConnectService = $this->get(SocialConnectService::SERVICE_NAME);
+
+        $checkTokenUrl = 'https://eu.battle.net/oauth/check_token';
+        $charactersUrl = 'https://eu.api.battle.net/wow/user/characters';
+
+        $accessToken = $socialConnectService->getAccessTokenForAccount($account);
+
+        $verificationReport = new VerificationReport();
+
+        if ($accessToken == null)
+        {
+            $verificationReport->setConnected(false);
+        }
+        else
+        {
+            $verificationReport->setConnected(true);
+
+            try
+            {
+                $client = new Client();
+
+                $response = $client->get($checkTokenUrl, array(
+                    'query' => array('token' => $accessToken)
+                ));
+
+                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
+
+                $jsonBody = $response->getBody();
+
+                $checkAccessToken = json_decode($jsonBody);
+
+                if (!property_exists($checkAccessToken, 'exp'))
+                {
+                    $verificationReport->setCheckAccessToken(false);
+                }
+                else
+                {
+                    $verificationReport->setCheckAccessToken(true);
+
+                    $expirationDate = new \DateTime();
+                    $expirationDate->setTimestamp($checkAccessToken->exp);
+
+                    $verificationReport->setExpirationDate($expirationDate);
+                }
+            }
+            catch(ClientException $e)
+            {
+                $verificationReport->setCheckAccessToken(false);
+
+                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token failure " . $e->getMessage());
+            }
+
+            try
+            {
+                $client = new Client();
+
+                $response = $client->get($charactersUrl, array(
+                    'query' => array('access_token' => $accessToken)
+                ));
+
+                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters success " . $response->getBody());
+
+                $jsonBody = $response->getBody();
+
+                $checkAccessToken = json_decode($jsonBody);
+
+                if (!property_exists($checkAccessToken, 'characters'))
+                {
+                    $verificationReport->setCharactersLoaded(false);
+                }
+                else
+                {
+                    $verificationReport->setCharactersLoaded(true);
+                }
+            }
+            catch(ClientException $e)
+            {
+                $verificationReport->setCharactersLoaded(false);
+
+                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters failure " . $e->getMessage());
+            }
+        }
+
+        return $verificationReport;
     }
 }
