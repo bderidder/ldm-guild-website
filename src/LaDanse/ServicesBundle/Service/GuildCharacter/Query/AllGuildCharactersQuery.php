@@ -131,7 +131,9 @@ class AllGuildCharactersQuery extends AbstractQuery
                 "race"     => (object)array(
                     "id"   => $activeVersion->getGameRace()->getId(),
                     "name" => $activeVersion->getGameRace()->getName()
-                )
+                ),
+                "realm"    => $character->getRealm(),
+                "guild"    => $activeVersion->getGuild()
             );
         }
     }

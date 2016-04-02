@@ -2,28 +2,22 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
-
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForCharacterQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
-
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndClaimCommand;
-
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @DI\Service(GuildCharacterService::SERVICE_NAME, public=true)
@@ -105,25 +99,6 @@ class GuildCharacterService extends LaDanseService
         $claimsForAccountQuery->setOnDateTime($onDateTime);
 
         return $claimsForAccountQuery->run();
-    }
-
-    /**
-     * Returns all claims for a given account that are active on the given $onDateTime
-     *
-     * @param $characterName
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return array
-     */
-    public function getClaimsForCharacter($characterName, \DateTime $onDateTime = null)
-    {
-        /** @var $claimsForCharacterQuery ClaimsForCharacterQuery */
-        $claimsForCharacterQuery = $this->get(ClaimsForCharacterQuery::SERVICE_NAME);
-
-        $claimsForCharacterQuery->setCharacterName($characterName);
-        $claimsForCharacterQuery->setOnDateTime($onDateTime);
-
-        return $claimsForCharacterQuery->run();
     }
 
     /**
@@ -229,8 +204,10 @@ class GuildCharacterService extends LaDanseService
      * @param int $level
      * @param GameRace $gameRace
      * @param GameClass $gameClass
+     * @param string $guild
+     * @param string $realm
      */
-    public function createCharacter($name, $level, GameRace $gameRace, GameClass $gameClass)
+    public function createCharacter($name, $level, GameRace $gameRace, GameClass $gameClass, $guild, $realm)
     {
         /** @var $createCharacterCommand CreateCharacterCommand */
         $createCharacterCommand = $this->get(CreateCharacterCommand::SERVICE_NAME);
@@ -239,6 +216,8 @@ class GuildCharacterService extends LaDanseService
         $createCharacterCommand->setLevel($level);
         $createCharacterCommand->setGameRace($gameRace);
         $createCharacterCommand->setGameClass($gameClass);
+        $createCharacterCommand->setRealm($realm);
+        $createCharacterCommand->setGuild($guild);
 
         $createCharacterCommand->run();
     }
@@ -251,8 +230,9 @@ class GuildCharacterService extends LaDanseService
      * @param int $level
      * @param GameRace $gameRace
      * @param GameClass $gameClass
+     * @param string $guild
      */
-    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass)
+    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass, $guild)
     {
         /** @var $updateCharacterCommand UpdateCharacterCommand */
         $updateCharacterCommand = $this->get(UpdateCharacterCommand::SERVICE_NAME);
@@ -262,6 +242,7 @@ class GuildCharacterService extends LaDanseService
         $updateCharacterCommand->setLevel($level);
         $updateCharacterCommand->setGameRace($gameRace);
         $updateCharacterCommand->setGameClass($gameClass);
+        $updateCharacterCommand->setGuild($guild);
 
         $updateCharacterCommand->run();
     }

@@ -28,6 +28,13 @@ class Character
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    protected $realm;
+
+    /**
      * @ORM\Column(type="datetime", length=255, nullable=false)
      */
     protected $fromTime;
@@ -81,6 +88,22 @@ class Character
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRealm()
+    {
+        return $this->realm;
+    }
+
+    /**
+     * @param string $realm
+     */
+    public function setRealm($realm)
+    {
+        $this->realm = $realm;
     }
 
     /**

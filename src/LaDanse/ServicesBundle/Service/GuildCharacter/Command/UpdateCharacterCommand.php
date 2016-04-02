@@ -52,6 +52,8 @@ class UpdateCharacterCommand extends AbstractCommand
     private $gameRace;
     /** @var $gameClass GameClass */
     private $gameClass;
+    /** @var string $guild */
+    private $guild;
 
     /**
      * @param ContainerInterface $container
@@ -145,6 +147,22 @@ class UpdateCharacterCommand extends AbstractCommand
         $this->gameClass = $gameClass;
     }
 
+    /**
+     * @return string
+     */
+    public function getGuild()
+    {
+        return $this->guild;
+    }
+
+    /**
+     * @param string $guild
+     */
+    public function setGuild($guild)
+    {
+        $this->guild = $guild;
+    }
+
     protected function validateInput()
     {
 
@@ -184,6 +202,7 @@ class UpdateCharacterCommand extends AbstractCommand
         $version->setFromTime($updateInstant);
         $version->setGameClass($this->getGameClass());
         $version->setGameRace($this->getGameRace());
+        $version->setGuild($this->getGuild());
 
         $em->persist($character);
         $em->persist($version);

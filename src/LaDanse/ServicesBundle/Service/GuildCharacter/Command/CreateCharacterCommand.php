@@ -50,6 +50,10 @@ class CreateCharacterCommand extends AbstractCommand
     private $gameRace;
     /** @var $gameClass GameClass */
     private $gameClass;
+    /** @var string $guild */
+    private $guild;
+    /** @var string $realm */
+    private $realm;
 
     /**
      * @param ContainerInterface $container
@@ -127,6 +131,38 @@ class CreateCharacterCommand extends AbstractCommand
         $this->gameClass = $gameClass;
     }
 
+    /**
+     * @return string
+     */
+    public function getGuild()
+    {
+        return $this->guild;
+    }
+
+    /**
+     * @param string $guild
+     */
+    public function setGuild($guild)
+    {
+        $this->guild = $guild;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRealm()
+    {
+        return $this->realm;
+    }
+
+    /**
+     * @param string $realm
+     */
+    public function setRealm($realm)
+    {
+        $this->realm = $realm;
+    }
+
     protected function validateInput()
     {
 
@@ -141,6 +177,7 @@ class CreateCharacterCommand extends AbstractCommand
         $character = new Character();
         $character->setName($this->getName());
         $character->setFromTime($importInstant);
+        $character->setRealm($this->getRealm());
 
         $version = new CharacterVersion();
         $version->setCharacter($character);
@@ -148,6 +185,7 @@ class CreateCharacterCommand extends AbstractCommand
         $version->setFromTime($importInstant);
         $version->setGameClass($this->getGameClass());
         $version->setGameRace($this->getGameRace());
+        $version->setGuild($this->getGuild());
 
         $em->persist($character);
         $em->persist($version);

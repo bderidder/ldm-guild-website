@@ -237,7 +237,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $armoryCharacter->name,
             $armoryCharacter->level,
             $gameRace,
-            $gameClass
+            $gameClass,
+            'La Danse Macabre'
         );
     }
 
@@ -255,7 +256,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $armoryCharacter->name,
             $armoryCharacter->level,
             $gameRace,
-            $gameClass
+            $gameClass,
+            'La Danse Macabre',
+            'Defias Brotherhood'
         );
     }
 
