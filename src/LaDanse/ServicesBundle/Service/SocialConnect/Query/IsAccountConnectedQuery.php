@@ -7,6 +7,7 @@ use LaDanse\CommonBundle\Helper\AbstractQuery;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @DI\Service(IsAccountConnectedQuery::SERVICE_NAME, public=true, scope="prototype")
@@ -29,6 +30,18 @@ class IsAccountConnectedQuery extends AbstractQuery
 
     /** @var Account */
     private $account;
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+    }
 
     /**
      * @param Account $account

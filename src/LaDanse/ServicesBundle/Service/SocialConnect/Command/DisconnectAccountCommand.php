@@ -1,20 +1,21 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\SocialConnect\Query;
+namespace LaDanse\ServicesBundle\Service\SocialConnect\Command;
 
-use LaDanse\CommonBundle\Helper\AbstractQuery;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
+
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(GetAccessTokenForAccountQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(DisconnectAccountCommand::SERVICE_NAME, public=true, scope="prototype")
  */
-class GetAccessTokenForAccountQuery extends AbstractQuery
+class DisconnectAccountCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.GetAccessTokenForAccountQuery';
-
+    const SERVICE_NAME = 'LaDanse.DisconnectAccountCommand';
     /**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
@@ -22,12 +23,18 @@ class GetAccessTokenForAccountQuery extends AbstractQuery
     public $logger;
 
     /**
-     * @var $doctrine \Doctrine\Bundle\DoctrineBundle\Registry
+     * @var EventDispatcherInterface $eventDispatcher
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
+
+    /**
+     * @var $logger \Doctrine\Bundle\DoctrineBundle\Registry
      * @DI\Inject("doctrine")
      */
     public $doctrine;
 
-    /** @var Account */
+    /** @var Account $account */
     private $account;
 
     /**
@@ -55,7 +62,7 @@ class GetAccessTokenForAccountQuery extends AbstractQuery
         return ($this->account != null);
     }
 
-    protected function runQuery()
+    protected function runCommand()
     {
         $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
 
@@ -63,9 +70,8 @@ class GetAccessTokenForAccountQuery extends AbstractQuery
 
         if (count($socialConnects) == 1)
         {
-            return $socialConnects[0]->getAccessToken();
+            $this->doctrine->getManager()->remove($socialConnects[0]);
+            $this->doctrine->getManager()->flush();
         }
-
-        return null;
     }
 }

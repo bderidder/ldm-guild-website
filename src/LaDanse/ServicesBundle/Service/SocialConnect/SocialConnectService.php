@@ -2,14 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\SocialConnect;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\SocialConnect;
+use LaDanse\ServicesBundle\Service\SocialConnect\Command\DisconnectAccountCommand;
 use LaDanse\ServicesBundle\Service\SocialConnect\Query\GetAccessTokenForAccountQuery;
 use LaDanse\ServicesBundle\Service\SocialConnect\Query\IsAccountConnectedQuery;
+use LaDanse\ServicesBundle\Service\SocialConnect\Query\VerifyAccountConnectionQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -80,88 +79,12 @@ class SocialConnectService extends LaDanseService
      */
     public function verifyAccountConnection(Account $account)
     {
-        $checkTokenUrl = 'https://eu.battle.net/oauth/check_token';
-        $charactersUrl = 'https://eu.api.battle.net/wow/user/characters';
+        /** @var VerifyAccountConnectionQuery $verifyAccountConnectionCommand */
+        $verifyAccountConnectionCommand = $this->get(VerifyAccountConnectionQuery::SERVICE_NAME);
 
-        $accessToken = $this->getAccessTokenForAccount($account);
+        $verifyAccountConnectionCommand->setAccount($account);
 
-        $verificationReport = new VerificationReport();
-
-        if ($accessToken == null)
-        {
-            $verificationReport->setConnected(false);
-        }
-        else
-        {
-            $verificationReport->setConnected(true);
-
-            try
-            {
-                $client = new Client();
-
-                $response = $client->get($checkTokenUrl, array(
-                    'query' => array('token' => $accessToken)
-                ));
-
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
-
-                $jsonBody = $response->getBody();
-
-                $checkAccessToken = json_decode($jsonBody);
-
-                if (!property_exists($checkAccessToken, 'exp'))
-                {
-                    $verificationReport->setCheckAccessToken(false);
-                }
-                else
-                {
-                    $verificationReport->setCheckAccessToken(true);
-
-                    $expirationDate = new \DateTime();
-                    $expirationDate->setTimestamp($checkAccessToken->exp);
-
-                    $verificationReport->setExpirationDate($expirationDate);
-                }
-            }
-            catch(ClientException $e)
-            {
-                $verificationReport->setCheckAccessToken(false);
-
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token failure " . $e->getMessage());
-            }
-
-            try
-            {
-                $client = new Client();
-
-                $response = $client->get($charactersUrl, array(
-                    'query' => array('access_token' => $accessToken)
-                ));
-
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters success " . $response->getBody());
-
-                $jsonBody = $response->getBody();
-
-                $checkAccessToken = json_decode($jsonBody);
-
-                if (!property_exists($checkAccessToken, 'characters'))
-                {
-                    $verificationReport->setCharactersLoaded(false);
-                }
-                else
-                {
-                    $verificationReport->setCharactersLoaded(true);
-                }
-            }
-            catch(ClientException $e)
-            {
-                $verificationReport->setCharactersLoaded(false);
-
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters failure " . $e->getMessage());
-            }
-        }
-
-        return $verificationReport;
+        return $verifyAccountConnectionCommand->run();
     }
 
     /**
@@ -169,14 +92,11 @@ class SocialConnectService extends LaDanseService
      */
     public function disconnectAccount(Account $account)
     {
-        $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
+        /** @var DisconnectAccountCommand $disconnectAccountCommand */
+        $disconnectAccountCommand = $this->get(DisconnectAccountCommand::SERVICE_NAME);
 
-        $socialConnects = $repo->findBy(array('account' => $account));
+        $disconnectAccountCommand->setAccount($account);
 
-        if (count($socialConnects) == 1)
-        {
-            $this->doctrine->getManager()->remove($socialConnects[0]);
-            $this->doctrine->getManager()->flush();
-        }
+        $disconnectAccountCommand->run();
     }
 }
