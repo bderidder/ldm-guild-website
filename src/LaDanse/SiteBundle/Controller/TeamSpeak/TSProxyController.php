@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\TeamSpeak;
 
+use GuzzleHttp\Client;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,28 +32,26 @@ class TSProxyController extends LaDanseController
 
     private function getJsonFromUrl($url)
     {
-        $curl = new \Curl\Curl();
+        $client = new Client();
 
-        curl_setopt($curl->curl, CURLOPT_TIMEOUT_MS, 1000);
-
-        $curl->get($url);
-
-        if ($curl->error)
+        try
         {
-            $errorCode = $curl->error_code;
+            $response = $client->request('GET', $url, ['timeout' => 2]); // time out of 2 seconds
 
-            $curl->close();
+            if ($response->getStatusCode() != 200)
+            {
+                return new Response("Error " . $response->getStatusCode(), 500);
+            }
+            else
+            {
+                $json = json_decode($response->getBody());
 
-            return new Response("Error " . $errorCode, 500);
+                return new JsonResponse($json);
+            }
         }
-        else
+        catch(\Exception $e)
         {
-            $jsonResponse = $curl->response;
-            $curl->close();
-
-            $json = json_decode($jsonResponse);
-
-            return new JsonResponse($json);
+            return new Response("Error " . $e->getMessage(), 500);
         }
     }
 }
