@@ -6,11 +6,11 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
+use GuzzleHttp\Client;
 use LaDanse\CommonBundle\Helper\CommandExecutionContext;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Output\OutputInterface;
-use \Curl\Curl;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class RefreshWowheadNewsCommand
@@ -89,28 +89,28 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
     private function getXMLFromUrl(CommandExecutionContext $context, $url)
     {
-        $curl = new Curl();
+        $client = new Client();
 
-        curl_setopt($curl->curl, CURLOPT_TIMEOUT_MS, 10000);
-
-        $curl->get($url);
-
-        if ($curl->error)
+        try
         {
-            $errorCode = $curl->error_code;
+            $response = $client->request('GET', $url, ['timeout' => 10]); // time out of 10 seconds
 
-            $context->error("Error while downloading XML " . $errorCode);
+            if ($response->getStatusCode() != 200)
+            {
+                $context->error("Statuscode was not 200 but " . $response->getStatusCode());
 
-            $curl->close();
+                return null;
+            }
+            else
+            {
+                return $response->getBody();
+            }
+        }
+        catch(\Exception $e)
+        {
+            $context->error("Got exception while retrieving XML " . $e->getMessage());
 
             return null;
-        }
-        else
-        {
-            $xmlResponse = $curl->response;
-            $curl->close();
-
-            return $xmlResponse;
         }
     }
 }
