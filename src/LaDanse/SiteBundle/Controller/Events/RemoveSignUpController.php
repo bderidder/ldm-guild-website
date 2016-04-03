@@ -2,15 +2,15 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
-use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{eventId}/signup")

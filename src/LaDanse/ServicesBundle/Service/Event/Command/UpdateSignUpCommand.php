@@ -2,20 +2,20 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
-use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractCommand;
-
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
+
+use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(UpdateSignUpCommand::SERVICE_NAME, public=true, scope="prototype")

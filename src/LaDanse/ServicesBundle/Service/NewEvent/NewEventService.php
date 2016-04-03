@@ -2,13 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\NewEvent;
 
-use LaDanse\CommonBundle\Helper\LaDanseService;
-
 use JMS\DiExtraBundle\Annotation as DI;
+
+use LaDanse\CommonBundle\Helper\LaDanseService;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\NewEvent\Query\NewGetEventQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(NewEventService::SERVICE_NAME, public=true, scope="prototype")

@@ -7,7 +7,7 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\SiteBundle\Security\AuthenticationService;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -15,8 +15,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package LaDanse\CommonBundle\Helper
  */
-class LaDanseService extends ContainerAware
+class LaDanseService
 {
+    use ContainerAwareTrait;
+
     /**
      * @param ContainerInterface $container
      */

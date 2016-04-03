@@ -2,7 +2,7 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -10,8 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package LaDanse\CommonBundle\Helper
  */
-abstract class AbstractQuery extends ContainerAware
+abstract class AbstractQuery
 {
+    use ContainerAwareTrait;
+
     /**
      * @param ContainerInterface $container
      */

@@ -2,9 +2,9 @@
 
 namespace LaDanse\ServicesBundle\Activity;
 
-use Symfony\Component\EventDispatcher\Event;
-
 use LaDanse\DomainBundle\Entity\Account;
+
+use Symfony\Component\EventDispatcher\Event;
 
 class ActivityEvent extends Event
 {

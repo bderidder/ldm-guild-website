@@ -2,17 +2,17 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Event\EventService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Response;
-
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+use Symfony\Component\HttpFoundation\Response;
 
 class ListClaimsPartialController extends LaDanseController
 {

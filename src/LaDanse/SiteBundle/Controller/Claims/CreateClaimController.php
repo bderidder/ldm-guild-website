@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\Claims;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
@@ -9,9 +10,8 @@ use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class CreateClaimController extends LaDanseController
 {

@@ -6,16 +6,16 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ForumBundle\Service\PostDoesNotExistException;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use Symfony\Component\HttpFoundation\Request;
 
-use LaDanse\ForumBundle\Service\PostDoesNotExistException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/posts")

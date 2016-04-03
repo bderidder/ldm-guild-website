@@ -4,8 +4,8 @@ namespace LaDanse\ServicesBundle\FeatureUse;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\DomainBundle\Entity\FeatureUse;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
 /**
  * @DI\Service(FeatureUseListener::SERVICE_NAME, public=true)

@@ -2,10 +2,10 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use LaDanse\ServicesBundle\Service\Authorization\ResourceFinders\ResourceFinderModule;
-use LaDanse\ServicesBundle\Service\Authorization\ResourceFinders\EventFinderModule;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceFinders\EventFinderModule;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceFinders\ResourceFinderModule;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ResourceFinder
 {

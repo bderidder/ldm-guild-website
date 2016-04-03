@@ -18,6 +18,7 @@ class EventModel extends ContainerAwareClass
     protected $startTime;
     protected $endTime;
     protected $lastModifiedTime;
+    protected $organiser;
     protected $signUpsModel;
     protected $isOrganiser;
     protected $topicId;

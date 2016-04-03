@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
@@ -12,9 +13,8 @@ use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use LaDanse\SiteBundle\Form\Type\SignUpFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/{id}/signup")

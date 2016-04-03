@@ -6,9 +6,9 @@
 
 namespace LaDanse\CommentBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use LaDanse\CommentBundle\Entity\Comment;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class CommentMapper

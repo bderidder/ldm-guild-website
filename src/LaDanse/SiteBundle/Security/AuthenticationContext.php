@@ -2,10 +2,10 @@
 
 namespace LaDanse\SiteBundle\Security;
 
-use LaDanse\CommonBundle\Helper\ContainerAwareClass;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\ContainerAwareClass;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class SettingsService

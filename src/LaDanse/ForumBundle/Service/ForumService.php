@@ -6,22 +6,22 @@
 
 namespace LaDanse\ForumBundle\Service;
 
-use LaDanse\DomainBundle\Entity\Account;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
-use LaDanse\ForumBundle\Entity\Forum;
-use LaDanse\ForumBundle\Entity\Topic;
-use LaDanse\ForumBundle\Entity\Post;
+use LaDanse\DomainBundle\Entity\Account;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ForumBundle\Entity\Forum;
+use LaDanse\ForumBundle\Entity\Post;
+use LaDanse\ForumBundle\Entity\Topic;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class ForumService

@@ -5,7 +5,7 @@ namespace LaDanse\CommonBundle\Helper;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 use LaDanse\SiteBundle\Security\AuthenticationService;
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -13,8 +13,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package LaDanse\CommonBundle\Helper
  */
-abstract class AbstractCommand extends ContainerAware
+abstract class AbstractCommand
 {
+    use ContainerAwareTrait;
+
     /**
      * @param ContainerInterface $container
      */

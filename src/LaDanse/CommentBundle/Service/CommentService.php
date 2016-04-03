@@ -6,14 +6,14 @@
 
 namespace LaDanse\CommentBundle\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use LaDanse\CommonBundle\Helper\LaDanseService;
-
-use LaDanse\CommentBundle\Entity\CommentGroup;
 use LaDanse\CommentBundle\Entity\Comment;
 
+use LaDanse\CommentBundle\Entity\CommentGroup;
+
+use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\CommonBundle\Helper\ResourceHelper;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class CommentService

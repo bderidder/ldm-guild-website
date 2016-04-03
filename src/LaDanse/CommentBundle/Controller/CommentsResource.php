@@ -6,19 +6,19 @@
 
 namespace LaDanse\CommentBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
+use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
+
+use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\CommonBundle\Helper\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\CommonBundle\Helper\ResourceHelper;
-
-use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
-use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
 
 /**
  * @Route("/")

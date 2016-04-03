@@ -2,14 +2,14 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Query;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractQuery;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractQuery;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @DI\Service(GetEventByIdQuery::SERVICE_NAME, public=true, scope="prototype")

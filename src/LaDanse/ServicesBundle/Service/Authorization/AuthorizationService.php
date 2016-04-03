@@ -6,10 +6,10 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AuthorizationService

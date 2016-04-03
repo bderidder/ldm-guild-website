@@ -6,6 +6,8 @@ use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
@@ -20,7 +22,7 @@ class CreateClaimFormType extends AbstractType
 
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('roles', 'choice', array(
+		$builder->add('roles', ChoiceType::class, array(
     				'choices'   => array(
     					Role::TANK   => 'Tank',
     					Role::HEALER => 'Healer',
@@ -28,11 +30,11 @@ class CreateClaimFormType extends AbstractType
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
-		        ->add('character', 'choice', array(
+		        ->add('character', ChoiceType::class, array(
                     'choices' => $this->getUnclaimedChoices(),
                     'expanded'  => false,
                     'multiple'  => false))
-                ->add('save', 'submit', array(
+                ->add('save', SubmitType::class, array(
                     'label'  => 'save',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
@@ -42,7 +44,7 @@ class CreateClaimFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
 	{
 		return 'NewClaimForm';
 	}

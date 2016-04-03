@@ -2,13 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\NewEvent\Query;
 
-use LaDanse\DomainBundle\Entity as Entity;
-use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use LaDanse\CommonBundle\Helper\AbstractQuery;
-
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractQuery;
+use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @DI\Service(NewGetEventQuery::SERVICE_NAME, public=true, scope="prototype")

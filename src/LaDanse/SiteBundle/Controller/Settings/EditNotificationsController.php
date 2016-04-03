@@ -2,22 +2,22 @@
 
 namespace LaDanse\SiteBundle\Controller\Settings;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 class EditNotificationsController extends LaDanseController
 {

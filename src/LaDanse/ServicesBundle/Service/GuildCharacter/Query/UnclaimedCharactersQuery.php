@@ -2,12 +2,12 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use JMS\DiExtraBundle\Annotation as DI;
 
 use LaDanse\CommonBundle\Helper\AbstractQuery;
 use LaDanse\DomainBundle\Entity\Character;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @DI\Service(UnclaimedCharactersQuery::SERVICE_NAME, public=true, scope="prototype")

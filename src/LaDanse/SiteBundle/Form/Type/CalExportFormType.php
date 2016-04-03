@@ -3,6 +3,8 @@
 namespace LaDanse\SiteBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -10,10 +12,10 @@ class CalExportFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('exportSignUp', 'checkbox', array('label' => "dummy label", 'disabled' => true))
-                ->add('exportAbsence', 'checkbox', array('label' => "dummy label"))
-                ->add('exportNew', 'checkbox', array('label' => "dummy label"))
-                ->add('change', 'submit', array(
+        $builder->add('exportSignUp', CheckboxType::class, array('label' => "dummy label", 'disabled' => true))
+                ->add('exportAbsence', CheckboxType::class, array('label' => "dummy label"))
+                ->add('exportNew', CheckboxType::class, array('label' => "dummy label"))
+                ->add('change', SubmitType::class, array(
                     'label'  => 'save',
                     'attr'   =>  array(
                         'class'   => 'btn-primary')
@@ -28,7 +30,7 @@ class CalExportFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'EditCalExport';
     }

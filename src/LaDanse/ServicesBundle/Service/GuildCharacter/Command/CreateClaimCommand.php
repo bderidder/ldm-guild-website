@@ -2,21 +2,21 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Character;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
+
 use LaDanse\DomainBundle\Entity\Role;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractCommand;
-
-use LaDanse\DomainBundle\Entity\Character;
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Activity\ActivityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(CreateClaimCommand::SERVICE_NAME, public=true, scope="prototype")

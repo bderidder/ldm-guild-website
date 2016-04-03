@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\Registration;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
@@ -9,9 +10,8 @@ use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegistrationController extends LaDanseController
 {

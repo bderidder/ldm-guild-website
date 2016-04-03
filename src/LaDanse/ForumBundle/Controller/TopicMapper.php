@@ -6,9 +6,9 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use LaDanse\ForumBundle\Entity\Topic;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class TopicMapper

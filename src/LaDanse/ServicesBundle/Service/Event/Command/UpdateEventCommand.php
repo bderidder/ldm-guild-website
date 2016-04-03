@@ -2,17 +2,17 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\AbstractCommand;
-
+use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(UpdateEventCommand::SERVICE_NAME, public=true, scope="prototype")

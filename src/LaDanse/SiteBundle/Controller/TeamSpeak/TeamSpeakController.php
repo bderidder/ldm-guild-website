@@ -2,15 +2,15 @@
 
 namespace LaDanse\SiteBundle\Controller\TeamSpeak;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
-use Symfony\Component\HttpFoundation\Response;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class TeamSpeakController extends LaDanseController
 {

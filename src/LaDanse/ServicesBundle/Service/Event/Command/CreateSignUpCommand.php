@@ -2,22 +2,22 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
-use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
-use LaDanse\ServicesBundle\Service\Event\UserAlreadySignedException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractCommand;
-
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+
+use LaDanse\ServicesBundle\Service\Event\UserAlreadySignedException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(CreateSignUpCommand::SERVICE_NAME, public=true, scope="prototype")

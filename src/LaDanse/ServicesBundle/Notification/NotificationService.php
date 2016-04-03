@@ -5,7 +5,6 @@ namespace LaDanse\ServicesBundle\Notification;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-use LaDanse\ServicesBundle\Service\Mail\MailService;
 use LaDanse\ServicesBundle\Notification\Notificators\AllForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateSignUpNotificator;
@@ -17,6 +16,7 @@ use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\UpdateEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\UpdateSignUpNotificator;
+use LaDanse\ServicesBundle\Service\Mail\MailService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

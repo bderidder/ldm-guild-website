@@ -6,12 +6,12 @@ use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
+use LaDanse\ServicesBundle\Service\Authorization\NoMatchingPolicyFoundException;
 use LaDanse\ServicesBundle\Service\Authorization\NullResourceReference;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceById;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
-use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
 use LaDanse\ServicesBundle\Service\Authorization\UnresolvableResourceException;
-use LaDanse\ServicesBundle\Service\Authorization\NoMatchingPolicyFoundException;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**

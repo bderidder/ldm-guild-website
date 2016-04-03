@@ -6,15 +6,15 @@
 
 namespace LaDanse\ServicesBundle\Service\Feedback;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Feedback;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use LaDanse\CommonBundle\Helper\LaDanseService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Class FeedbackService

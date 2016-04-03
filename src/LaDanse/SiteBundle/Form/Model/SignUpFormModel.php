@@ -2,9 +2,9 @@
 
 namespace LaDanse\SiteBundle\Form\Model;
 
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use LaDanse\DomainBundle\Entity\Role;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;

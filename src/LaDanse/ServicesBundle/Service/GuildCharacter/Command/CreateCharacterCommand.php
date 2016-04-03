@@ -2,20 +2,20 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
+use LaDanse\DomainBundle\Entity\Character;
 use LaDanse\DomainBundle\Entity\CharacterVersion;
 use LaDanse\DomainBundle\Entity\GameClass;
+
 use LaDanse\DomainBundle\Entity\GameRace;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractCommand;
-
-use LaDanse\DomainBundle\Entity\Character;
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Activity\ActivityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(CreateCharacterCommand::SERVICE_NAME, public=true, scope="prototype")

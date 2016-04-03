@@ -2,22 +2,22 @@
 
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Model\Calendar\CalendarDayModel;
 use LaDanse\SiteBundle\Model\Calendar\CalendarMonthModel;
-use LaDanse\SiteBundle\Model\EventModel;
 use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;
+use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
-use LaDanse\DomainBundle\Entity\Account;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 class CalendarController extends LaDanseController
 {

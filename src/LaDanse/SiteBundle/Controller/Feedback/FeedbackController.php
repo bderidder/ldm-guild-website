@@ -2,20 +2,20 @@
 
 namespace LaDanse\SiteBundle\Controller\Feedback;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Feedback\FeedbackService;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 class FeedbackController extends LaDanseController
 {

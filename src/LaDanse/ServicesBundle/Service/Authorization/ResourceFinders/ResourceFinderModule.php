@@ -2,8 +2,8 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization\ResourceFinders;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\CommonBundle\Helper\LaDanseService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class ResourceFinderModule extends LaDanseService
 {

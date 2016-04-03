@@ -8,14 +8,14 @@ namespace LaDanse\ServicesBundle\Service\Account;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class AccountService

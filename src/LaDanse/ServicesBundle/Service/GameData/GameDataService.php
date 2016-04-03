@@ -6,12 +6,12 @@
 
 namespace LaDanse\ServicesBundle\Service\GameData;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class GameDataService

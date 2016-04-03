@@ -2,18 +2,18 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommentBundle\Service\CommentService;
+use LaDanse\CommonBundle\Helper\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\CommonBundle\Helper\AbstractCommand;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @DI\Service(RemoveEventCommand::SERVICE_NAME, public=true, scope="prototype")

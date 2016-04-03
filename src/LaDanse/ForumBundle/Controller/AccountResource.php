@@ -6,13 +6,13 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use LaDanse\CommonBundle\Helper\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/account")

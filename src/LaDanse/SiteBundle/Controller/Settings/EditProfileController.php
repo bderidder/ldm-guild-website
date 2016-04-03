@@ -2,19 +2,19 @@
 
 namespace LaDanse\SiteBundle\Controller\Settings;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\SiteBundle\Form\Model\ProfileFormModel;
 use LaDanse\SiteBundle\Form\Type\ProfileFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 class EditProfileController extends LaDanseController
 {

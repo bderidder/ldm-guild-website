@@ -2,12 +2,12 @@
 
 namespace LaDanse\ServicesBundle\Service\Event\Query;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\AbstractQuery;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(UserSignUpQuery::SERVICE_NAME, public=true, scope="prototype")

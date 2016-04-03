@@ -2,28 +2,28 @@
 
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
+use Eluceo\iCal\Component as iCal;
+use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommentBundle\Entity\Comment;
 use LaDanse\CommentBundle\Service\CommentService;
-use LaDanse\ServicesBundle\Service\Event\EventService;
-use LaDanse\ServicesBundle\Service\Settings\SettingsService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Response;
-
 use LaDanse\CommonBundle\Helper\LaDanseController;
-
-use LaDanse\DomainBundle\Entity\CalendarExport;
 use LaDanse\DomainBundle\Entity\Account;
 
-use LaDanse\CommentBundle\Entity\Comment;
-
-use LaDanse\SiteBundle\Model\EventModel;
+use LaDanse\DomainBundle\Entity\CalendarExport;
 
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
-use Eluceo\iCal\Component as iCal;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\Settings\SettingsService;
+
+use LaDanse\SiteBundle\Model\EventModel;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+use Symfony\Component\HttpFoundation\Response;
 
 class ICalController extends LaDanseController
 {

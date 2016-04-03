@@ -6,9 +6,9 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use LaDanse\ForumBundle\Entity\Post;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Class PostMapper

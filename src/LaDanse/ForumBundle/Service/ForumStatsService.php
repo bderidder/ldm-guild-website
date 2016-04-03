@@ -6,17 +6,17 @@
 
 namespace LaDanse\ForumBundle\Service;
 
-use LaDanse\ForumBundle\Entity\Post;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use LaDanse\CommonBundle\Helper\LaDanseService;
-
 use LaDanse\DomainBundle\Entity\Account;
 
+use LaDanse\ForumBundle\Controller\ResourceHelper;
+
 use LaDanse\ForumBundle\Entity\ForumLastVisit;
+
+use LaDanse\ForumBundle\Entity\Post;
 use LaDanse\ForumBundle\Entity\UnreadPost;
 
-use LaDanse\ForumBundle\Controller\ResourceHelper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class ForumStatisService

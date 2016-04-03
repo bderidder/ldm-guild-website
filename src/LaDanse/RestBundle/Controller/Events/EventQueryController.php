@@ -7,14 +7,10 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\DTO\Events\EventDto;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class EventQueryController extends Controller
 {
@@ -34,11 +30,6 @@ class EventQueryController extends Controller
         /** @var \DateTime $startOnDate */
         $startOnDate = $this->getStartOnDate($request->query->get('startOn'));
 
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-
         $events = $eventService->getAllEvents();
 
         $result = array();
@@ -54,8 +45,6 @@ class EventQueryController extends Controller
             $result[] = $eventDto;
         }
 
-        $jsonContent = $serializer->serialize($result, 'json');
-
         return new JsonResponse($result);
     }
 
@@ -66,6 +55,6 @@ class EventQueryController extends Controller
             return new \DateTime();
         }
 
-
+        return $pStartOnDate;
     }
 }

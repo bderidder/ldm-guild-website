@@ -2,14 +2,14 @@
 
 namespace LaDanse\SiteBundle\Controller\Gallery;
 
-use LaDanse\CommonBundle\Helper\LaDanseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
+use LaDanse\ServicesBundle\Activity\ActivityType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class UnderConstructionController extends LaDanseController

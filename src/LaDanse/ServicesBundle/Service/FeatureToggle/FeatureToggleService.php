@@ -3,12 +3,12 @@
 namespace LaDanse\ServicesBundle\Service\FeatureToggle;
 
 use Doctrine\ORM\QueryBuilder;
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\FeatureToggle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class SettingsService

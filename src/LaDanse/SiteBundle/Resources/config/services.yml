@@ -1,11 +1,11 @@
 services:
     LaDanse.TwigHeaderAndBack:
-        class: "LaDanse\SiteBundle\Twig\TwigHeaderAndBackExtension"
+        class: 'LaDanse\SiteBundle\Twig\TwigHeaderAndBackExtension'
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
     LaDanse.TwigFeatureToggle:
-        class: "LaDanse\SiteBundle\Twig\TwigFeatureToggleExtension"
+        class: 'LaDanse\SiteBundle\Twig\TwigFeatureToggleExtension'
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }

@@ -2,11 +2,11 @@
 
 namespace LaDanse\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
-use LaDanse\DomainBundle\Entity\Account;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use LaDanse\DomainBundle\Entity\Account;
 
 /**
  * Topic

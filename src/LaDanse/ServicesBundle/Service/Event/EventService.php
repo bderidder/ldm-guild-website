@@ -2,28 +2,28 @@
 
 namespace LaDanse\ServicesBundle\Service\Event;
 
+use \Doctrine\Bundle\DoctrineBundle\Registry;
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsSinceQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
+
 use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
+
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use \Doctrine\Bundle\DoctrineBundle\Registry;
-
-use LaDanse\DomainBundle\Entity\Event;
-
-use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Class EventService

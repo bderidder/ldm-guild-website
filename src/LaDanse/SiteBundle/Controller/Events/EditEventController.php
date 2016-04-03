@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -16,9 +17,8 @@ use LaDanse\SiteBundle\Model\ErrorModel;
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\HttpFoundation\Response;
 
 class EditEventController extends LaDanseController
 {
