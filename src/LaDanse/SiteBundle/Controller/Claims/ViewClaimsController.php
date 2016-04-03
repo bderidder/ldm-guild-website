@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -21,13 +22,20 @@ class ViewClaimsController extends LaDanseController
     private $eventDispatcher;
 
     /**
+     * @var SocialConnectService $socialConnectService
+     * @DI\Inject(SocialConnectService::SERVICE_NAME)
+     */
+    private $socialConnectService;
+
+    /**
      * @Route("/", name="viewClaims")
      *
      * @return Response
      */
     public function viewAction()
     {
-        $accountId = $this->getAccount()->getId();
+        $account = $this->getAccount();
+        $accountId = $account->getId();
 
         $claimModel = (object)array(
             "accountId" => $accountId,
@@ -43,7 +51,10 @@ class ViewClaimsController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:claims:viewClaims.html.twig',
-            array('claimModel' => $claimModel)
+            array(
+                'claimModel'  => $claimModel,
+                'isConnected' => $this->socialConnectService->isAccountConnected($account)
+            )
         );
     }
 }

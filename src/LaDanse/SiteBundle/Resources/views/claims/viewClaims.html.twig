@@ -41,6 +41,8 @@
         <th class="center-td" style="width: 75px">Damage</th>
         <th></th> <!-- class -->
         <th></th> <!-- race -->
+        <th class="center-td">Guild</th>
+        <th class="center-td">Realm</th>
         <th style="width: 50px"><!-- edit link --></th>
     </tr>
     {% if claimModel.claims|length == 0 %}
@@ -65,6 +67,8 @@
                 </td>
                 <td>{{ claim.character.class.name }}</td>
                 <td>{{ claim.character.race.name }}</td>
+                <td>{{ claim.character.guild }}</td>
+                <td>{{ claim.character.realm }} </td>
                 <td>
                 	<span class="claimEditRemoveLinks">
                     	<a href="{{ path('editClaim', {'claimId': claim.id}) }}">
@@ -80,6 +84,10 @@
     {% endif %}
 	</table>
 
-    <a class="btn btn-primary" href="{{ path('createClaim') }}">add a character</a>
+    {% if isConnected %}
+        <a class="btn btn-primary" href="{{ path('createClaim') }}">refresh from armory</a>
+    {% else %}
+        <a class="btn btn-primary" href="{{ path('createClaim') }}">add a character</a>
+    {% endif %}
 
 {% endblock %}

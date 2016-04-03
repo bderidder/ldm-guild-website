@@ -146,6 +146,8 @@ class ClaimsForAccountQuery extends AbstractQuery
                 "fromTime" => $character->getFromTime(),
                 "name"     => $character->getName(),
                 "level"    => $activeVersion->getLevel(),
+                "guild"    => $activeVersion->getGuild(),
+                "realm"    => $character->getRealm(),
                 "class"    => (object)array(
                     "id"   => $activeVersion->getGameClass()->getId(),
                     "name" => $activeVersion->getGameClass()->getName()
