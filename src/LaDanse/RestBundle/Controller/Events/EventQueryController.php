@@ -4,7 +4,7 @@ namespace LaDanse\RestBundle\Controller\Events;
 
 use LaDanse\CommonBundle\Helper\JsonResponse;
 use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\ServicesBundle\DTO\Events\EventDto;
+use LaDanse\ServicesBundle\Service\DTO\Event\EventFactory;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -34,15 +34,12 @@ class EventQueryController extends Controller
 
         $result = array();
 
+        $factory = new EventFactory();
+
         /** @var Event $event */
         foreach($events as $event)
         {
-            $eventDto = new EventDto();
-
-            $eventDto->setName($event->getName())
-                ->setDescription($event->getDescription());
-
-            $result[] = $eventDto;
+            $result[] = $factory->create($event);
         }
 
         return new JsonResponse($result);

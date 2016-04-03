@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bavo
- * Date: 02/04/16
- * Time: 15:25
- */
 
-namespace LaDanse\ServicesBundle\DTO\Character;
-
+namespace LaDanse\ServicesBundle\Service\DTO\Character;
 
 class CharacterDto
 {

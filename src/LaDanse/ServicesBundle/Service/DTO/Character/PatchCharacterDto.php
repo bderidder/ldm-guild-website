@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\DTO\Character;
+namespace LaDanse\ServicesBundle\Service\DTO\Character;
 
 class PatchCharacterDto
 {
