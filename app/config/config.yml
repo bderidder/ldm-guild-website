@@ -115,7 +115,7 @@ trt_swift_css_inliner:
     exclude_media_queries: true
 
 doctrine_migrations:
-    dir_name: %kernel.root_dir%/DoctrineMigrations
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
     namespace: LaDanseDomain\Migrations
     table_name: migration_versions
     name: La Danse Website Migrations
