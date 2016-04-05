@@ -171,6 +171,6 @@ class LaDanseController extends Controller
     {
         $toastService = $this->container->get('CoderSpotting.ToastMessage');
 
-        $toastService->addToast($message);
+        $toastService->addSuccessToast($message);
     }
 }
