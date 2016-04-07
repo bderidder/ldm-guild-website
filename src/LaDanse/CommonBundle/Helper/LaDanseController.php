@@ -6,7 +6,6 @@
 
 namespace LaDanse\CommonBundle\Helper;
 
-use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\ForumStatsService;
@@ -96,14 +95,6 @@ class LaDanseController extends Controller
     protected function getForumStatsService()
     {
         return $this->get(ForumStatsService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\CommentBundle\Service\CommentService
-     */
-    protected function getCommentService()
-    {
-        return $this->get(CommentService::SERVICE_NAME);
     }
 
     /**

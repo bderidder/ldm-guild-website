@@ -9,6 +9,7 @@ namespace LaDanse\CommentBundle\Controller;
 use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
 use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
 
+use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\CommonBundle\Helper\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,7 +39,10 @@ class CommentsResource extends LaDanseController
     {
         try
         {
-            $group = $this->getCommentService()->getCommentGroup($groupId);
+            /** @var CommentService $commentService */
+            $commentService = $this->get(CommentService::SERVICE_NAME);
+
+            $group = $commentService->getCommentGroup($groupId);
         }
         catch (CommentGroupDoesNotExistException $e)
         {
@@ -87,7 +91,10 @@ class CommentsResource extends LaDanseController
 
         try
         {
-            $this->getCommentService()->createComment($groupId, $authContext->getAccount(), $jsonObject->message);
+            /** @var CommentService $commentService */
+            $commentService = $this->get(CommentService::SERVICE_NAME);
+
+            $commentService->createComment($groupId, $authContext->getAccount(), $jsonObject->message);
         }
         catch (CommentGroupDoesNotExistException $e)
         {
@@ -123,7 +130,10 @@ class CommentsResource extends LaDanseController
 
         try
         {
-            $comment = $this->getCommentService()->getComment($commentId);
+            /** @var CommentService $commentService */
+            $commentService = $this->get(CommentService::SERVICE_NAME);
+
+            $comment = $commentService->getComment($commentId);
         }
         catch (CommentDoesNotExistException $e)
         {
@@ -149,7 +159,10 @@ class CommentsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getCommentService()->updateComment($commentId, $jsonObject->message);
+        /** @var CommentService $commentService */
+        $commentService = $this->get(CommentService::SERVICE_NAME);
+
+        $commentService->updateComment($commentId, $jsonObject->message);
 
         $jsonObject = (object)array(
             "status" => "OK"
