@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\SiteBundle\Form\Model\EditClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\EditClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -25,7 +26,10 @@ class EditClaimController extends LaDanseController
      */
     public function editAction(Request $request, $claimId)
     {
-    	$claimModel = $this->getGuildCharacterService()->getClaimForId($claimId);
+        /** @var GuildCharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+
+    	$claimModel = $guildCharacterService->getClaimForId($claimId);
 
         $formModel = new EditClaimFormModel($claimModel);
 
@@ -85,6 +89,9 @@ class EditClaimController extends LaDanseController
             }
         }
 
-        $this->getGuildCharacterService()->updateClaim($claimId, $tank, $healer, $dps);    
+        /** @var GuildCharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+
+        $guildCharacterService->updateClaim($claimId, $tank, $healer, $dps);
     }    
 }

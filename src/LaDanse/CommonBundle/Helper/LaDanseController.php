@@ -16,7 +16,6 @@ use LaDanse\ServicesBundle\Service\Authorization\ResourceReference;
 
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
@@ -71,14 +70,6 @@ class LaDanseController extends Controller
     protected function getAuthenticationService()
     {
         return $this->get(AuthenticationService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService
-     */
-    protected function getGuildCharacterService()
-    {
-        return $this->get(GuildCharacterService::SERVICE_NAME);
     }
 
     /**

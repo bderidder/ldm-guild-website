@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
@@ -84,6 +85,9 @@ class CreateClaimController extends LaDanseController
             }
         }
 
-        $this->getGuildCharacterService()->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
+        /** @var GuildCharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+
+        $guildCharacterService->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
     }    
 }

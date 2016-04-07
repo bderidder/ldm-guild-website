@@ -8,6 +8,7 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
 use LaDanse\ServicesBundle\Service\Account\AccountService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -42,9 +43,12 @@ class ViewMemberController extends LaDanseController
             return $this->redirect($this->generateUrl('menuIndex'));
         }
 
+        /** @var GuildCharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+
         $claimModel = (object)array(
             "accountId" => $accountId,
-            "claims"    => $this->getGuildCharacterService()->getClaimsForAccount($accountId)
+            "claims"    => $guildCharacterService->getClaimsForAccount($accountId)
         );
 
         $this->eventDispatcher->dispatch(

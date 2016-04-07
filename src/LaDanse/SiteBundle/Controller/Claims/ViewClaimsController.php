@@ -7,6 +7,7 @@ use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
+use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -34,12 +35,15 @@ class ViewClaimsController extends LaDanseController
      */
     public function viewAction()
     {
+        /** @var GuildCharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        
         $account = $this->getAccount();
         $accountId = $account->getId();
 
         $claimModel = (object)array(
             "accountId" => $accountId,
-            "claims"    => $this->getGuildCharacterService()->getClaimsForAccount($accountId)
+            "claims"    => $guildCharacterService->getClaimsForAccount($accountId)
         );
 
         $this->eventDispatcher->dispatch(
