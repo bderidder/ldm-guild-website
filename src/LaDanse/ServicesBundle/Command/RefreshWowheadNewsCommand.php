@@ -7,7 +7,7 @@
 namespace LaDanse\ServicesBundle\Command;
 
 use GuzzleHttp\Client;
-use LaDanse\CommonBundle\Helper\CommandExecutionContext;
+use LaDanse\ServicesBundle\Common\CommandExecutionContext;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

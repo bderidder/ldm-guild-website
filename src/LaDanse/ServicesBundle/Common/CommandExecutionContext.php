@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\ServicesBundle\Common;
 
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Output\OutputInterface;
