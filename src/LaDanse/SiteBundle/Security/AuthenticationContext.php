@@ -3,17 +3,17 @@
 namespace LaDanse\SiteBundle\Security;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class SettingsService
+ * Class AuthenticationContext
  * @package LaDanse\ServicesBundle\Service
  *
  * @DI\Service(AuthenticationContext::SERVICE_NAME, public=true)
  */
-class AuthenticationContext extends ContainerAwareClass
+class AuthenticationContext extends LaDanseService
 {
     const SERVICE_NAME = 'LaDanse.AuthenticationContext';
 

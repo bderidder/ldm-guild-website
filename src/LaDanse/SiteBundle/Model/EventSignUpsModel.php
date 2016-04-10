@@ -2,19 +2,19 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class EventSignUpsModel
  * @package LaDanse\SiteBundle\Model
  */
-class EventSignUpsModel extends ContainerAwareClass
+class EventSignUpsModel
 {
-    const SIGNUP_REPOSITORY = 'LaDanseDomainBundle:SignUp';
+    use ContainerAwareTrait;
 
     protected $eventId;
     protected $signUps;
@@ -42,7 +42,7 @@ class EventSignUpsModel extends ContainerAwareClass
      */
     public function __construct(ContainerInjector $injector, Event $event, Account $currentUser)
     {
-        parent::__construct($injector->getContainer());
+        $this->setContainer($injector->getContainer());
 
         $this->eventId = $event->getId();
 

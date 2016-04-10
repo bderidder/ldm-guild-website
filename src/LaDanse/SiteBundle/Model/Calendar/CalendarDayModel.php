@@ -2,12 +2,14 @@
 
 namespace LaDanse\SiteBundle\Model\Calendar;
 
-use LaDanse\CommonBundle\Helper\ContainerAwareClass;
 use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\SiteBundle\Model\EventModel;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-class CalendarDayModel extends ContainerAwareClass
+class CalendarDayModel
 {
+    use ContainerAwareTrait;
+
     protected $date;
     protected $events;
     protected $showMonth;
@@ -15,7 +17,7 @@ class CalendarDayModel extends ContainerAwareClass
 
     public function __construct(ContainerInjector $injector, \DateTime $date)
     {
-        parent::__construct($injector->getContainer());
+        $this->setContainer($injector->getContainer());
 
         $this->date = $date;
         $this->events = array();
