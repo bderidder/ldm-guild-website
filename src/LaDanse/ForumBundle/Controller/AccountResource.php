@@ -7,6 +7,7 @@
 namespace LaDanse\ForumBundle\Controller;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ForumBundle\Service\ForumStatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -41,7 +42,9 @@ class AccountResource extends LaDanseController
         }
 
         $account = $authContext->getAccount();
-        $statsService = $this->getForumStatsService();
+
+        /** @var ForumStatsService $statsService */
+        $statsService = $this->get(ForumStatsService::SERVICE_NAME);
 
         $unreadPosts = $statsService->getUnreadPostsForAccount($account);
 

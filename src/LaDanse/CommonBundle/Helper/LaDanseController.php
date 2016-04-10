@@ -7,18 +7,14 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceReference;
-
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
-
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -69,14 +65,6 @@ class LaDanseController extends Controller
     protected function getAuthenticationService()
     {
         return $this->get(AuthenticationService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\ForumBundle\Service\ForumStatsService
-     */
-    protected function getForumStatsService()
-    {
-        return $this->get(ForumStatsService::SERVICE_NAME);
     }
 
     /**

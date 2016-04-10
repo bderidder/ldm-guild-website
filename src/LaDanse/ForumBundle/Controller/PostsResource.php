@@ -8,6 +8,7 @@ namespace LaDanse\ForumBundle\Controller;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\ForumBundle\Service\ForumService;
+use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ForumBundle\Service\PostDoesNotExistException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -140,7 +141,9 @@ class PostsResource extends LaDanseController
         }
 
         $account = $authContext->getAccount();
-        $statsService = $this->getForumStatsService();
+
+        /** @var ForumStatsService $statsService */
+        $statsService = $this->get(ForumStatsService::SERVICE_NAME);
 
         $statsService->markPostAsRead($account, $postId);
 

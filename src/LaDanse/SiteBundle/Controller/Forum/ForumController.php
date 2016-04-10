@@ -4,6 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Forum;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -61,7 +62,9 @@ class ForumController extends LaDanseController
         }
 
         $account = $authContext->getAccount();
-        $statsService = $this->getForumStatsService();
+
+        /** @var ForumStatsService $statsService */
+        $statsService = $this->get(ForumStatsService::SERVICE_NAME);
 
         $unreadPosts = $statsService->getUnreadPostsForAccount($account);
 
