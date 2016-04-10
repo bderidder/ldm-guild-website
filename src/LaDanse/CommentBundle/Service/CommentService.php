@@ -10,9 +10,8 @@ use LaDanse\CommentBundle\Entity\Comment;
 
 use LaDanse\CommentBundle\Entity\CommentGroup;
 
-use LaDanse\CommonBundle\Helper\ResourceHelper;
-
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Common\UUIDUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -65,7 +64,7 @@ class CommentService extends LaDanseService
         $doc = $this->getDoctrine();
         $em = $doc->getManager();
 
-        $groupId = ResourceHelper::createUUID();
+        $groupId = UUIDUtils::createUUID();
         
         $group = new CommentGroup();
 
@@ -152,7 +151,7 @@ class CommentService extends LaDanseService
         {
             $comment = new Comment();
 
-            $comment->setId(ResourceHelper::createUUID());
+            $comment->setId(UUIDUtils::createUUID());
             $comment->setPostDate(new \DateTime());
             $comment->setPoster($account);
             $comment->setMessage($message);

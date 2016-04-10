@@ -41,14 +41,6 @@ class ResourceHelper
     }
 
     /**
-     * @return string
-     */
-    public static function createUUID()
-    {
-        return md5(uniqid());
-    }
-
-    /**
      * @param $request
      * @param $response
      */
