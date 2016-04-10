@@ -7,6 +7,7 @@
 namespace LaDanse\ForumBundle\Controller;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,9 +34,12 @@ class TopicsResource extends LaDanseController
      */
     public function getTopicAction(Request $request, $topicId)
     {
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         try
         {
-            $topic = $this->getForumService()->getTopic($topicId);
+            $topic = $forumService->getTopic($topicId);
         }
         catch (TopicDoesNotExistException $e)
         {
@@ -82,9 +86,12 @@ class TopicsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         try
         {
-            $this->getForumService()->createPost(
+            $forumService->createPost(
                 $authContext->getAccount(),
                 $topicId,
                 $jsonObject->message);
@@ -119,11 +126,14 @@ class TopicsResource extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         $topic = null;
 
         try
         {
-            $topic = $this->getForumService()->getTopic($topicId);
+            $topic = $forumService->getTopic($topicId);
         }
         catch (TopicDoesNotExistException $e)
         {
@@ -149,7 +159,7 @@ class TopicsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getForumService()->updateTopic(
+        $forumService->updateTopic(
             $authContext->getAccount(),
             $topicId,
             $jsonObject->subject

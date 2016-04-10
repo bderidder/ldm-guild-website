@@ -9,6 +9,7 @@ namespace LaDanse\ForumBundle\Controller;
 use LaDanse\CommonBundle\Helper\LaDanseController;
 use LaDanse\ForumBundle\Service\ForumDoesNotExistException;
 
+use LaDanse\ForumBundle\Service\ForumService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,7 +35,10 @@ class ForumsResource extends LaDanseController
      */
     public function getForumList()
     {
-        $forums = $this->getForumService()->getAllForums();
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
+        $forums = $forumService->getAllForums();
 
         $forumMapper = new ForumMapper();
 
@@ -51,7 +55,10 @@ class ForumsResource extends LaDanseController
      */
     public function getActivityForForums()
     {
-        $posts = $this->getForumService()->getActivityForForums();
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
+        $posts = $forumService->getActivityForForums();
 
         $postMapper = new PostMapper();
 
@@ -76,9 +83,12 @@ class ForumsResource extends LaDanseController
      */
     public function getForumForIdAction(Request $request, $forumId)
     {
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         try
         {
-            $forum = $this->getForumService()->getForum($forumId);
+            $forum = $forumService->getForum($forumId);
         }
         catch (ForumDoesNotExistException $e)
         {
@@ -108,9 +118,12 @@ class ForumsResource extends LaDanseController
      */
     public function getActivityForForum(Request $request, $forumId)
     {
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         try
         {
-            $this->getForumService()->getForum($forumId);
+            $forumService->getForum($forumId);
         }
         catch (ForumDoesNotExistException $e)
         {
@@ -122,7 +135,7 @@ class ForumsResource extends LaDanseController
             );
         }
 
-        $posts = $this->getForumService()->getActivityForForum($forumId);
+        $posts = $forumService->getActivityForForum($forumId);
 
         $postMapper = new PostMapper();
 
@@ -166,7 +179,10 @@ class ForumsResource extends LaDanseController
 
         try
         {
-            $this->getForumService()->createTopicInForum(
+            /** @var ForumService $forumService */
+            $forumService = $this->get(ForumService::SERVICE_NAME);
+
+            $forumService->createTopicInForum(
                 $authContext->getAccount(),
                 $forumId,
                 $jsonObject->subject,

@@ -7,7 +7,6 @@
 namespace LaDanse\CommonBundle\Helper;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
@@ -70,14 +69,6 @@ class LaDanseController extends Controller
     protected function getAuthenticationService()
     {
         return $this->get(AuthenticationService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\ForumBundle\Service\ForumService
-     */
-    protected function getForumService()
-    {
-        return $this->get(ForumService::SERVICE_NAME);
     }
 
     /**

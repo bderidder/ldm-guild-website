@@ -7,6 +7,7 @@
 namespace LaDanse\ForumBundle\Controller;
 
 use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\PostDoesNotExistException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,9 +34,12 @@ class PostsResource extends LaDanseController
      */
     public function getPostAction(Request $request, $postId)
     {
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         try
         {
-            $post = $this->getForumService()->getPost($postId);
+            $post = $forumService->getPost($postId);
         }
         catch (PostDoesNotExistException $e)
         {
@@ -67,11 +71,14 @@ class PostsResource extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
+        /** @var ForumService $forumService */
+        $forumService = $this->get(ForumService::SERVICE_NAME);
+
         $post = null;
 
         try
         {
-            $post = $this->getForumService()->getPost($postId);
+            $post = $forumService->getPost($postId);
         }
         catch (PostDoesNotExistException $e)
         {
@@ -97,7 +104,7 @@ class PostsResource extends LaDanseController
 
         $jsonObject = json_decode($jsonData);
 
-        $this->getForumService()->updatePost(
+        $forumService->updatePost(
             $authContext->getAccount(),
             $postId,
             $jsonObject->message);
