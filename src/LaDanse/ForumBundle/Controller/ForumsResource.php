@@ -6,7 +6,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use LaDanse\SiteBundle\Common\LaDanseController;
+use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ForumBundle\Service\ForumDoesNotExistException;
 
 use LaDanse\ForumBundle\Service\ForumService;
@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("/forums")
  */
-class ForumsResource extends LaDanseController
+class ForumsResource extends AbstractRestController
 {
     /**
      * @return Response

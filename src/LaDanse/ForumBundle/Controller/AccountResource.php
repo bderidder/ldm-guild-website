@@ -6,7 +6,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use LaDanse\SiteBundle\Common\LaDanseController;
+use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ForumBundle\Service\ForumStatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/account")
  */
-class AccountResource extends LaDanseController
+class AccountResource extends AbstractRestController
 {
     /**
      * @return Response

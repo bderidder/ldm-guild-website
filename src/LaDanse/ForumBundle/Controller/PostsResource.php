@@ -6,7 +6,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use LaDanse\SiteBundle\Common\LaDanseController;
+use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ForumBundle\Service\PostDoesNotExistException;
@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/posts")
  */
-class PostsResource extends LaDanseController
+class PostsResource extends AbstractRestController
 {
     /**
      * @param Request $request

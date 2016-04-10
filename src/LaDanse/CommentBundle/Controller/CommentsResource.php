@@ -10,7 +10,7 @@ use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
 use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
 
 use LaDanse\CommentBundle\Service\CommentService;
-use LaDanse\SiteBundle\Common\LaDanseController;
+use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\CommonBundle\Helper\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/")
  */
-class CommentsResource extends LaDanseController
+class CommentsResource extends AbstractRestController
 {
     /**
      * @param Request $request

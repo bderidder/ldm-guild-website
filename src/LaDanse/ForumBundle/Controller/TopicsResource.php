@@ -6,7 +6,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use LaDanse\SiteBundle\Common\LaDanseController;
+use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/topics")
  */
-class TopicsResource extends LaDanseController
+class TopicsResource extends AbstractRestController
 {
     /**
      * @param Request $request
