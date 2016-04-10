@@ -7,10 +7,10 @@
 namespace LaDanse\RestBundle\Controller\Comments;
 
 use LaDanse\RestBundle\Controller\Comments\CommentGroupMapper;
-use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
-use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Comments\CommentDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Comments\CommentGroupDoesNotExistException;
 
-use LaDanse\CommentBundle\Service\CommentService;
+use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

@@ -5,7 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Comments\Comment;
-use LaDanse\CommentBundle\Service\CommentService;
+use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
 

@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommentBundle\Service;
+namespace LaDanse\ServicesBundle\Service\Comments;
 
 use LaDanse\DomainBundle\Entity\Comments\Comment;
 
@@ -14,10 +14,12 @@ use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Common\UUIDUtils;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 /**
  * Class CommentService
  *
- * @package LaDanse\ForumBundle\Service
+ * @DI\Service(CommentService::SERVICE_NAME, public=true)
  */
 class CommentService extends LaDanseService
 {
@@ -25,6 +27,10 @@ class CommentService extends LaDanseService
 
     /**
      * @param ContainerInterface $container
+     *
+     * @DI\InjectParams({
+     *     "container" = @DI\Inject("service_container")
+     * })
      */
     public function __construct(ContainerInterface $container)
     {

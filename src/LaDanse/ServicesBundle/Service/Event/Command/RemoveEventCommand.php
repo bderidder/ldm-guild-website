@@ -3,7 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommentBundle\Service\CommentService;
+use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;

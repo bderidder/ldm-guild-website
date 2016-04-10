@@ -4,13 +4,13 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommentBundle\Service;
+namespace LaDanse\ServicesBundle\Service\Comments;
 
 /**
- * Class CommentGroupDoesNotExistException
+ * Class CommentDoesNotExistException
  * @package LaDanse\ForumBundle\Service
  */
-class CommentGroupDoesNotExistException extends \Exception
+class CommentDoesNotExistException extends \Exception
 {
     /**
      * @param string $message
