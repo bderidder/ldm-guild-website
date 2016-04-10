@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Registration;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;

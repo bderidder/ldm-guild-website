@@ -10,7 +10,7 @@ use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
 use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
 
 use LaDanse\CommentBundle\Service\CommentService;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\CommonBundle\Helper\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 

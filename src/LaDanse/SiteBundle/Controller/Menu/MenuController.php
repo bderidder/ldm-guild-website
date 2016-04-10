@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Menu;
 
 use Doctrine\Common\Cache\Cache;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 

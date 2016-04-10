@@ -6,7 +6,7 @@
 
 namespace LaDanse\ForumBundle\Controller;
 
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ForumBundle\Service\ForumService;
 use LaDanse\ForumBundle\Service\TopicDoesNotExistException;
 

@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Forum;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ForumBundle\Service\ForumStatsService;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 

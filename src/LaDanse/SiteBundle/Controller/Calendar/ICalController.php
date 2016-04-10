@@ -6,7 +6,7 @@ use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommentBundle\Entity\Comment;
 use LaDanse\CommentBundle\Service\CommentService;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
 
 use LaDanse\DomainBundle\Entity\CalendarExport;

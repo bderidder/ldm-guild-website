@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;

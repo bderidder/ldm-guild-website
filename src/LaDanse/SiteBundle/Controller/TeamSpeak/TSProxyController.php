@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\TeamSpeak;
 
 use GuzzleHttp\Client;
-use LaDanse\CommonBundle\Helper\LaDanseController;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
