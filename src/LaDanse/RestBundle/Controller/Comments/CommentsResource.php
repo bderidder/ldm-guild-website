@@ -4,8 +4,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommentBundle\Controller;
+namespace LaDanse\RestBundle\Controller\Comments;
 
+use LaDanse\RestBundle\Controller\Comments\CommentGroupMapper;
 use LaDanse\CommentBundle\Service\CommentDoesNotExistException;
 use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
 

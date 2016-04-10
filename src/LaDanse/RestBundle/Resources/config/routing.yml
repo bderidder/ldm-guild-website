@@ -2,3 +2,8 @@ EventRouting:
     resource: "@LaDanseRestBundle/Controller/Events"
     type:     annotation
     prefix:   /api/events
+
+CommentRestRouting:
+    resource: "@LaDanseRestBundle/Controller/Comments"
+    type:     annotation
+    prefix:   /services/comment

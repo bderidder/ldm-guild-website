@@ -4,10 +4,11 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommentBundle\Controller;
+namespace LaDanse\RestBundle\Controller\Comments;
 
 use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 
+use LaDanse\RestBundle\Controller\Comments\CommentMapper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
