@@ -46,4 +46,4 @@ hwi_oauth_login:
     prefix:   /oauth/login
 
 battlenet_login:
-    pattern: /oauth/login/check-battlenet
+    path: /oauth/login/check-battlenet
