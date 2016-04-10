@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\ServicesBundle\Common;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;

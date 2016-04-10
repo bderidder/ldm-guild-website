@@ -3,7 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\NewEvent\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\AbstractQuery;
+use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
