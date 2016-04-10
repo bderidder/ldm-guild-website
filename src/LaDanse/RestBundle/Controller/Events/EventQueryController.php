@@ -2,8 +2,8 @@
 
 namespace LaDanse\RestBundle\Controller\Events;
 
-use LaDanse\CommonBundle\Helper\JsonResponse;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\ServicesBundle\Service\DTO\Event\EventFactory;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

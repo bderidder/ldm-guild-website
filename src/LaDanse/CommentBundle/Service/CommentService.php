@@ -10,9 +10,9 @@ use LaDanse\CommentBundle\Entity\Comment;
 
 use LaDanse\CommentBundle\Entity\CommentGroup;
 
-use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\CommonBundle\Helper\ResourceHelper;
 
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

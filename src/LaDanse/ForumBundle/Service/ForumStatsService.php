@@ -6,7 +6,6 @@
 
 namespace LaDanse\ForumBundle\Service;
 
-use LaDanse\CommonBundle\Helper\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 
 use LaDanse\ForumBundle\Controller\ResourceHelper;
@@ -16,6 +15,7 @@ use LaDanse\ForumBundle\Entity\ForumLastVisit;
 use LaDanse\ForumBundle\Entity\Post;
 use LaDanse\ForumBundle\Entity\UnreadPost;
 
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

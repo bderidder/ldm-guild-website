@@ -4,8 +4,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\ServicesBundle\Common;
 
+use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;

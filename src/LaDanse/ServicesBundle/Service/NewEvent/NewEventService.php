@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Service\NewEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-use LaDanse\CommonBundle\Helper\LaDanseService;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\NewEvent\Query\NewGetEventQuery;

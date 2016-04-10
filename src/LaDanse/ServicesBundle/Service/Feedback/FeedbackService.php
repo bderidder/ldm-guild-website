@@ -7,7 +7,7 @@
 namespace LaDanse\ServicesBundle\Service\Feedback;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\LaDanseService;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Feedback;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
