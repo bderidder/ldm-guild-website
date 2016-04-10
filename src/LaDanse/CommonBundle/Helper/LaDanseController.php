@@ -13,7 +13,6 @@ use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceReference;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
-use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
