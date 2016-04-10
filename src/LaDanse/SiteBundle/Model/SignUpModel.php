@@ -2,17 +2,13 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class SignUpModel
 {
-    use ContainerAwareTrait;
-
     protected $signUpType;
     protected $signedAsTank = false;
     protected $signedAsHealer = false;
@@ -20,16 +16,14 @@ class SignUpModel
     protected $currentUser = false;
     protected $account;
 
-    public function __construct(ContainerInjector $injector, SignUp $signUp, Account $currentUser)
+    public function __construct(SignUp $signUp, Account $currentUser)
     {
-        $this->setContainer($injector->getContainer());
-
         if ($signUp->getAccount()->getId() === $currentUser->getId())
         {
             $this->currentUser = true;
         }
 
-        $this->account = new AccountModel($injector, $signUp->getAccount());
+        $this->account = new AccountModel($signUp->getAccount());
 
         $this->signUpType = $signUp->getType();
 

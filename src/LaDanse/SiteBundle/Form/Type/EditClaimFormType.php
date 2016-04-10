@@ -2,7 +2,6 @@
 
 namespace LaDanse\SiteBundle\Form\Type;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Role;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -12,13 +11,6 @@ use Symfony\Component\Validator\Constraints;
 
 class EditClaimFormType extends AbstractType
 {
-    protected $container;
-
-    public function __construct(ContainerInjector $injector)
-    {
-        $this->container = $injector->getContainer();
-    }
-
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('roles', ChoiceType::class, array(

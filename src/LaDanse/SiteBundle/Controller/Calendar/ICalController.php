@@ -134,7 +134,7 @@ class ICalController extends LaDanseController
 
         foreach($events as $event)
         {
-            $eventModels[] = new EventModel($this->getContainerInjector(), $event, $currentUser);
+            $eventModels[] = new EventModel($event, $currentUser);
         }
 
         return $eventModels;

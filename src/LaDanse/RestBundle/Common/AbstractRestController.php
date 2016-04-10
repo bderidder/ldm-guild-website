@@ -6,7 +6,6 @@
 
 namespace LaDanse\RestBundle\Common;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
@@ -73,14 +72,6 @@ class AbstractRestController extends Controller
     protected function getAccountService()
     {
         return $this->get(AccountService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\CommonBundle\Helper\ContainerInjector
-     */
-    protected function getContainerInjector()
-    {
-        return $this->get(ContainerInjector::SERVICE_NAME);
     }
 
     /**

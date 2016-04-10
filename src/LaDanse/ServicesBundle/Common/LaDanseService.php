@@ -6,7 +6,6 @@
 
 namespace LaDanse\ServicesBundle\Common;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,14 +69,6 @@ class LaDanseService
     protected function getDoctrine()
     {
         return $this->container->get('doctrine');
-    }
-
-    /**
-     * @return \LaDanse\CommonBundle\Helper\ContainerInjector
-     */
-    protected function getContainerInjector()
-    {
-        return $this->container->get(ContainerInjector::SERVICE_NAME);
     }
 
     protected function get($serviceName)

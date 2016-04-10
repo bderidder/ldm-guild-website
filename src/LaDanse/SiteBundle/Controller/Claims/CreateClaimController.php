@@ -29,7 +29,7 @@ class CreateClaimController extends LaDanseController
 
         $formModel = new CreateClaimFormModel();
 
-        $form = $this->createForm(new CreateClaimFormType($this->getContainerInjector()), $formModel, 
+        $form = $this->createForm(new CreateClaimFormType($this->container), $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

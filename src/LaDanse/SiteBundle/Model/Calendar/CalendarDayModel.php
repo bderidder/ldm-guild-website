@@ -2,9 +2,9 @@
 
 namespace LaDanse\SiteBundle\Model\Calendar;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\SiteBundle\Model\EventModel;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CalendarDayModel
 {
@@ -15,9 +15,9 @@ class CalendarDayModel
     protected $showMonth;
     protected $inCurrentRaidWeek;
 
-    public function __construct(ContainerInjector $injector, \DateTime $date)
+    public function __construct(ContainerInterface $container, \DateTime $date)
     {
-        $this->setContainer($injector->getContainer());
+        $this->setContainer($container);
 
         $this->date = $date;
         $this->events = array();

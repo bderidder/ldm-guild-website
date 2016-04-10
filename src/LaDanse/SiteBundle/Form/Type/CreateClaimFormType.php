@@ -2,9 +2,10 @@
 
 namespace LaDanse\SiteBundle\Form\Type;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,11 +14,11 @@ use Symfony\Component\Validator\Constraints;
 
 class CreateClaimFormType extends AbstractType
 {
-    protected $container;
+    use ContainerAwareTrait;
 
-    public function __construct(ContainerInjector $injector)
+    public function __construct(ContainerInterface $container)
     {
-        $this->container = $injector->getContainer();
+        $this->setContainer($container);
     }
 
 	public function buildForm(FormBuilderInterface $builder, array $options)

@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ViewEventController extends LaDanseController
 {
-	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
-
-    /**
+	/**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
      */
@@ -72,7 +70,7 @@ class ViewEventController extends LaDanseController
             'LaDanseSiteBundle:events:viewEvent.html.twig',
             array(
                 'isFuture' => ($event->getInviteTime() > $currentDateTime),
-                'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()))
+                'event' => new EventModel($event, $this->getAccount()))
         );
     }
 }

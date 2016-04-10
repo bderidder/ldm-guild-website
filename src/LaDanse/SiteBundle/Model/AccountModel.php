@@ -2,22 +2,16 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class AccountModel
 {
-    use ContainerAwareTrait;
-
     protected $id;
     protected $name;
     protected $displayName;
 
-    public function __construct(ContainerInjector $injector, Account $account)
+    public function __construct(Account $account)
     {
-        $this->setContainer($injector->getContainer());
-    
         $this->id = $account->getId();
         $this->name = $account->getUsername();
         $this->displayName = $account->getDisplayName();

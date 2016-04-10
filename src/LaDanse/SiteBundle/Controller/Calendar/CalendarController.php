@@ -120,7 +120,7 @@ class CalendarController extends LaDanseController
 
             $date->modify('+1days');
 
-            $calendarDateModel = new CalendarDayModel($this->getContainerInjector(), $date);
+            $calendarDateModel = new CalendarDayModel($this->container, $date);
 
             $calendarDateModel->setIsInCurrentRaidWeek($raidWeek->inRaidWeek($date));
 
@@ -197,7 +197,7 @@ class CalendarController extends LaDanseController
 
         foreach($events as $event)
         {
-            $eventModels[] = new EventModel($this->getContainerInjector(), $event, $currentUser);
+            $eventModels[] = new EventModel($event, $currentUser);
         }
 
         return $eventModels;

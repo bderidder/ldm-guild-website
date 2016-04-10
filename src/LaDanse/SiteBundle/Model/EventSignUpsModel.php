@@ -2,11 +2,9 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Class EventSignUpsModel
@@ -14,8 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  */
 class EventSignUpsModel
 {
-    use ContainerAwareTrait;
-
     protected $eventId;
     protected $signUps;
     protected $organiser;
@@ -36,14 +32,11 @@ class EventSignUpsModel
     protected $mightComeDPSCount = 0;
 
     /**
-     * @param ContainerInjector $injector
      * @param Event $event
      * @param Account $currentUser
      */
-    public function __construct(ContainerInjector $injector, Event $event, Account $currentUser)
+    public function __construct(Event $event, Account $currentUser)
     {
-        $this->setContainer($injector->getContainer());
-
         $this->eventId = $event->getId();
 
         $signUps = $event->getSignUps();
@@ -53,7 +46,7 @@ class EventSignUpsModel
         /* @var $signUp \LaDanse\DomainBundle\Entity\SignUp */
         foreach($signUps as &$signUp)
         {
-            $signUpModel = new SignUpModel($injector, $signUp, $currentUser);
+            $signUpModel = new SignUpModel($signUp, $currentUser);
 
             if ($signUp->getAccount()->getId() === $currentUser->getId())
             {

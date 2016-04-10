@@ -2,15 +2,11 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\CommonBundle\Helper\ContainerInjector;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class EventModel
 {
-    use ContainerAwareTrait;
-
     protected $id;
     protected $name;
     protected $description;
@@ -23,10 +19,8 @@ class EventModel
     protected $isOrganiser;
     protected $topicId;
 
-    public function __construct(ContainerInjector $injector, Event $event, Account $currentUser)
+    public function __construct(Event $event, Account $currentUser)
     {
-        $this->setContainer($injector->getContainer());
-
         $this->id = $event->getId();
         $this->name = $event->getName();
         $this->description = $event->getDescription();
@@ -35,10 +29,10 @@ class EventModel
         $this->startTime = $event->getStartTime();
         $this->endTime = $event->getEndTime();
         $this->lastModifiedTime = $event->getLastModifiedTime();
-        $this->organiser = new AccountModel($injector, $event->getOrganiser());
+        $this->organiser = new AccountModel($event->getOrganiser());
         $this->topicId = $event->getTopicId();
 
-        $this->signUpsModel = new EventSignUpsModel($injector, $event, $currentUser);
+        $this->signUpsModel = new EventSignUpsModel($event, $currentUser);
 
         $this->calculateEditable($event, $currentUser);
     }

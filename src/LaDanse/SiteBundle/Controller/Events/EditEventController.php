@@ -102,7 +102,7 @@ class EditEventController extends LaDanseController
             else
             {
                 return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-                        array('event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()),
+                        array('event' => new EventModel($event, $this->getAccount()),
                               'form' => $form->createView(),
                               'errors' => $errors));    
             }
@@ -112,7 +112,7 @@ class EditEventController extends LaDanseController
         	return $this->render(
                 'LaDanseSiteBundle:events:editEvent.html.twig',
                 array(
-                    'event' => new EventModel($this->getContainerInjector(), $event, $this->getAccount()),
+                    'event' => new EventModel($event, $this->getAccount()),
                     'form' => $form->createView()
                 )
             );
