@@ -6,7 +6,7 @@
 
 namespace LaDanse\CommentBundle\Controller;
 
-use LaDanse\CommentBundle\Entity\CommentGroup;
+use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -49,8 +49,8 @@ class CommentGroupMapper
         usort(
             $comments,
             function ($a, $b) {
-                /** @var $a \LaDanse\CommentBundle\Entity\Comment */
-                /** @var $b \LaDanse\CommentBundle\Entity\COmment */
+                /** @var $a \LaDanse\DomainBundle\Entity\Comments\Comment */
+                /** @var $b \LaDanse\DomainBundle\Entity\Comments\COmment */
 
                 return $a->getPostDate() < $b->getPostDate();
             }

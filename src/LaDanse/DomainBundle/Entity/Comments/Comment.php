@@ -1,9 +1,10 @@
 <?php
 
-namespace LaDanse\CommentBundle\Entity;
+namespace LaDanse\DomainBundle\Entity\Comments;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 use LaDanse\DomainBundle\Entity\Account;
 
 /**
@@ -14,7 +15,7 @@ use LaDanse\DomainBundle\Entity\Account;
  */
 class Comment
 {
-    const REPOSITORY = 'LaDanseCommentBundle:Comment';
+    const REPOSITORY = 'LaDanseDomainBundle:Comments\Comment';
 
     /**
      * @var integer
@@ -45,7 +46,7 @@ class Comment
     private $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LaDanse\CommentBundle\Entity\CommentGroup", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\Comments\CommentGroup", inversedBy="comments")
      * @ORM\JoinColumn(name="groupId", referencedColumnName="groupId", nullable=true)
      */
     private $group;
@@ -145,7 +146,7 @@ class Comment
     /**
      * Get CommentGroup
      *
-     * @return \LaDanse\CommentBundle\Entity\CommentGroup
+     * @return \LaDanse\DomainBundle\Entity\Comments\CommentGroup
      */
     public function getGroup()
     {

@@ -6,7 +6,7 @@
 
 namespace LaDanse\CommentBundle\Controller;
 
-use LaDanse\CommentBundle\Entity\Comment;
+use LaDanse\DomainBundle\Entity\Comments\Comment;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

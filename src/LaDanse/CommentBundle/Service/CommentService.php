@@ -6,9 +6,9 @@
 
 namespace LaDanse\CommentBundle\Service;
 
-use LaDanse\CommentBundle\Entity\Comment;
+use LaDanse\DomainBundle\Entity\Comments\Comment;
 
-use LaDanse\CommentBundle\Entity\CommentGroup;
+use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Common\UUIDUtils;
@@ -140,7 +140,7 @@ class CommentService extends LaDanseService
         $em = $doc->getManager();
         $groupRepo = $doc->getRepository(CommentGroup::REPOSITORY);
 
-        /* @var $group \LaDanse\CommentBundle\Entity\CommentGroup */
+        /* @var $group \LaDanse\DomainBundle\Entity\Comments\CommentGroup */
         $group = $groupRepo->find($groupId);
 
         if (null === $group)

@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommentBundle\Entity\Comment;
+use LaDanse\DomainBundle\Entity\Comments\Comment;
 use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
@@ -197,8 +197,8 @@ class ICalController extends LaDanseController
         usort(
             $comments,
             function ($a, $b) {
-                /** @var $a \LaDanse\CommentBundle\Entity\Comment */
-                /** @var $b \LaDanse\CommentBundle\Entity\COmment */
+                /** @var $a \LaDanse\DomainBundle\Entity\Comments\Comment */
+                /** @var $b \LaDanse\DomainBundle\Entity\Comments\COmment */
 
                 return $a->getPostDate() < $b->getPostDate();
             }

@@ -1,10 +1,11 @@
 <?php
 
-namespace LaDanse\CommentBundle\Entity;
+namespace LaDanse\DomainBundle\Entity\Comments;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
+use LaDanse\DomainBundle\Entity\Comments\Comment;
 
 
 /**
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CommentGroup
 {
-    const REPOSITORY = 'LaDanseCommentBundle:CommentGroup';
+    const REPOSITORY = 'LaDanseDomainBundle:Comments\CommentGroup';
 
     /**
      * @var integer
