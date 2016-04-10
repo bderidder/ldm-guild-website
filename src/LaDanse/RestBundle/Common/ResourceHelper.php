@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\RestBundle\Common;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

@@ -11,7 +11,7 @@ use LaDanse\CommentBundle\Service\CommentGroupDoesNotExistException;
 
 use LaDanse\CommentBundle\Service\CommentService;
 use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\CommonBundle\Helper\ResourceHelper;
+use LaDanse\RestBundle\Common\ResourceHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
