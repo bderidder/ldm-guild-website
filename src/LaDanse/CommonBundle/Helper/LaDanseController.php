@@ -68,14 +68,6 @@ class LaDanseController extends Controller
     }
 
     /**
-     * @return \LaDanse\ServicesBundle\Service\Settings\SettingsService
-     */
-    protected function getSettingsService()
-    {
-        return $this->get(SettingsService::SERVICE_NAME);
-    }
-
-    /**
      * @return \LaDanse\ServicesBundle\Service\Account\AccountService
      */
     protected function getAccountService()
