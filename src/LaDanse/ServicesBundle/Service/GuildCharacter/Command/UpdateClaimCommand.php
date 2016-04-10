@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
 use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\AbstractCommand;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;

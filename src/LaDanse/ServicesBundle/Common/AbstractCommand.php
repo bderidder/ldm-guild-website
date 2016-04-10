@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\ServicesBundle\Common;
 
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\SiteBundle\Security\AuthenticationContext;

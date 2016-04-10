@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\CommentBundle\Service\CommentService;
-use LaDanse\CommonBundle\Helper\AbstractCommand;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 

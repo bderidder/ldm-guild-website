@@ -3,7 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\CommonBundle\Helper\AbstractCommand;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;

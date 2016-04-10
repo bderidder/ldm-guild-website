@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Service\SocialConnect\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-use LaDanse\CommonBundle\Helper\AbstractCommand;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
 use Symfony\Component\DependencyInjection\ContainerInterface;
