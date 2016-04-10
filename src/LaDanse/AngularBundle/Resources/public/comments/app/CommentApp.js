@@ -12,7 +12,7 @@ commentsApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: '/bundles/ladansecomment/angular/partials/CommentsViews.html',
+                templateUrl: '/bundles/ladanseangular/comments/partials/CommentsViews.html',
                 controller: 'CommentGroupCtrl'
             });
     }]
@@ -22,7 +22,7 @@ var commentControllers = angular.module('commentControllers', ['ngRoute', 'ngRes
 
 commentsApp.directive('commentEditorTemplate', function() {
     return {
-        templateUrl: '/bundles/ladansecomment/angular/partials/CommentEditor.html',
+        templateUrl: '/bundles/ladanseangular/comments/partials/CommentEditor.html',
     };
 });
 

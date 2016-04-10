@@ -10,10 +10,6 @@ la_danse_forum:
     resource: "@LaDanseForumBundle/Resources/config/routing.yml"
     prefix:   /
 
-la_danse_comments:
-    resource: "@LaDanseCommentBundle/Resources/config/routing.yml"
-    prefix:   /
-
 la_danse_rest:
     resource: "@LaDanseRestBundle/Resources/config/routing.yml"
     prefix:   /

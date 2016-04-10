@@ -28,11 +28,11 @@ class AppKernel extends Kernel
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\ForumBundle\LaDanseForumBundle(),
-            new LaDanse\CommentBundle\LaDanseCommentBundle(),
             new LaDanse\ServicesBundle\LaDanseServicesBundle(),
             new CoderSpotting\Bundle\ToastMessageBundle\CoderSpottingToastMessageBundle(),
             new LaDanse\BootstrapBundle\LaDanseBootstrapBundle(),
             new LaDanse\RestBundle\LaDanseRestBundle(),
+            new LaDanse\AngularBundle\LaDanseAngularBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
