@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\CommonBundle\Helper;
+namespace LaDanse\RestBundle\Common;
 
 use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\HttpFoundation\Response;
