@@ -31,8 +31,5 @@ doctrine:
         #user:     "%test_database_user%"
         #password: "%test_database_password%"
         driver:   pdo_sqlite
-        path:     %kernel.cache_dir%/test.db
+        path:     "%kernel.cache_dir%/test.db"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver, add the path in parameters.yml
-        # e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        # path:     "%database_path%"
