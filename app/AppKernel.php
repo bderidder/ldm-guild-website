@@ -27,7 +27,6 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
-            new LaDanse\ForumBundle\LaDanseForumBundle(),
             new LaDanse\ServicesBundle\LaDanseServicesBundle(),
             new CoderSpotting\Bundle\ToastMessageBundle\CoderSpottingToastMessageBundle(),
             new LaDanse\BootstrapBundle\LaDanseBootstrapBundle(),

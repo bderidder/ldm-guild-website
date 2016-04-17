@@ -3,6 +3,11 @@ EventRouting:
     type:     annotation
     prefix:   /api/events
 
+ForumRouting:
+    resource: "@LaDanseRestBundle/Controller/Forum"
+    type:     annotation
+    prefix:   /services/forum
+
 CommentRestRouting:
     resource: "@LaDanseRestBundle/Controller/Comments"
     type:     annotation

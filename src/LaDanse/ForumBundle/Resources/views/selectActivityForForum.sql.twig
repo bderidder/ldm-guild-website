@@ -1,7 +1,0 @@
-SELECT p, t, f
-FROM LaDanse\ForumBundle\Entity\Post p
-	LEFT JOIN p.topic t
-	LEFT JOIN t.forum f
-WHERE
-	(f.id = :forumId)
-ORDER BY p.postDate DESC

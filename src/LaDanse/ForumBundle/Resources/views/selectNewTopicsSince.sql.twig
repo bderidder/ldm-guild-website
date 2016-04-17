@@ -1,5 +1,0 @@
-SELECT t, f
-FROM LaDanse\ForumBundle\Entity\Topic t
-	LEFT JOIN t.forum f
-WHERE
-	(t.createDate > :sinceDateTime)

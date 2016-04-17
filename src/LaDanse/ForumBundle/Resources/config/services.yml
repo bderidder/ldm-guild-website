@@ -1,7 +1,0 @@
-parameters:
-    ForumStatsService.class: LaDanse\ForumBundle\Service\ForumStatsService
-
-services:
-    LaDanse.ForumStatsService:
-        class: "%ForumStatsService.class%"
-        arguments: ['@service_container']

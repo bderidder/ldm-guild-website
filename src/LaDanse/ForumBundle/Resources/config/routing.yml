@@ -1,4 +1,0 @@
-CalendarRouting:
-    resource: "@LaDanseForumBundle/Controller"
-    type:     annotation
-    prefix:   /services/forum

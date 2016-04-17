@@ -1,9 +1,0 @@
-SELECT u, p, t, f
-FROM LaDanse\ForumBundle\Entity\UnreadPost u
-	LEFT JOIN u.post p
-	LEFT JOIN p.topic t
-	LEFT JOIN t.forum f
-WHERE
-	(u.account = :forAccount)
-	AND
-	(p.poster != :forAccount)

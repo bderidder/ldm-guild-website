@@ -8,14 +8,14 @@ use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 
 class ForumFactory
 {
-    public static function create(ForumEntity\Forum $forum)
+    public static function create(DomainEntity\Forum\Forum $forum)
     {
         $factory = new ForumFactory();
 
         return $factory->createForum($forum);
     }
 
-    private function createForum(ForumEntity\Forum $forum)
+    private function createForum(DomainEntity\Forum\Forum $forum)
     {
         return new Forum(
             $forum->getId(),
@@ -24,11 +24,11 @@ class ForumFactory
             $this->createTopicEntries($forum));
     }
 
-    private Function createTopicEntries(ForumEntity\Forum $forum)
+    private Function createTopicEntries(DomainEntity\Forum\Forum $forum)
     {
         $topicEntries = array();
 
-        /** @var ForumEntity\Topic $topic */
+        /** @var \LaDanse\DomainBundle\Entity\Forum\Topic $topic */
         foreach($forum->getTopics() as $topic)
         {
             $topicEntries[] = new TopicEntry(
