@@ -105,6 +105,8 @@ class EditNotificationsController extends LaDanseController
             $this->getSetting($settings, SettingNames::NOTIFICATIONS_EVENT_CREATED, false));
         $settingsFormModel->setChangeSignedEvent(
             $this->getSetting($settings, SettingNames::NOTIFICATIONS_EVENT_UPDATED, false));
+        $settingsFormModel->setEventToday(
+            $this->getSetting($settings, SettingNames::NOTIFICATIONS_EVENT_TODAY, false));
         $settingsFormModel->setSignUpChange(
             $this->getSetting($settings, SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED, false));
 
@@ -144,6 +146,10 @@ class EditNotificationsController extends LaDanseController
                 (object) array(
                     'name' => SettingNames::NOTIFICATIONS_EVENT_UPDATED,
                     'value' => $settingsFormModel->getChangeSignedEvent() ? '1' : '0'
+                ),
+                (object) array(
+                    'name' => SettingNames::NOTIFICATIONS_EVENT_TODAY,
+                    'value' => $settingsFormModel->getEventToday() ? '1' : '0'
                 ),
                 (object) array(
                     'name' => SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED,

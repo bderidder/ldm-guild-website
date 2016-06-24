@@ -14,6 +14,7 @@ class NotificationsFormType extends AbstractType
     {
         $builder->add('newEvents', CheckboxType::class, array('label' => "Change this in template"))
                 ->add('changeSignedEvent', CheckboxType::class, array('label' => "Change this in template"))
+                ->add('eventToday', CheckboxType::class, array('label' => "Change this in template"))
                 ->add('signUpChange', CheckboxType::class, array('label' => "Change this in template"))
                 ->add('topicCreated', CheckboxType::class, array('label' => "Change this in template"))
                 ->add('replyToTopic', CheckboxType::class, array('label' => "Change this in template"))

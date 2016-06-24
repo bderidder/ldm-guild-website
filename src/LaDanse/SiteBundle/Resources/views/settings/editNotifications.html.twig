@@ -24,6 +24,10 @@
         { 'label': 'Notify me when an event I signed up for, is changed' })
     }}
 
+    {{ form_widget(form.eventToday,
+    { 'label': 'Notify me on the morning of an event I signed up for' })
+    }}
+
     {{ form_widget(form.signUpChange,
     { 'label': 'For an event I created, notify me when someone signs up or changes their sign up' })
     }}

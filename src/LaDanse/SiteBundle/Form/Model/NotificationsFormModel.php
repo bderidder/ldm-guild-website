@@ -12,6 +12,9 @@ class NotificationsFormModel
     /** @var boolean $changeSignedEvent */
     private $changeSignedEvent;
 
+    /** @var boolean $eventToday */
+    private $eventToday;
+
     /** @var boolean $signUpChange */
     private $signUpChange;
 
@@ -38,6 +41,22 @@ class NotificationsFormModel
     public function getChangeSignedEvent()
     {
         return $this->changeSignedEvent;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getEventToday()
+    {
+        return $this->eventToday;
+    }
+
+    /**
+     * @param boolean $eventToday
+     */
+    public function setEventToday($eventToday)
+    {
+        $this->eventToday = $eventToday;
     }
 
     /**
