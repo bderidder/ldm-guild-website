@@ -17,7 +17,6 @@
 
     {% stylesheets filter='cssrewrite'
         'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
-        'bundles/coderspottingtoastmessage/css/*'
         'bundles/ladansesite/css/*'
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -102,9 +101,11 @@
     <!--CDN link for the latest TweenMax-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 
-{% javascripts '@CoderSpottingToastMessageBundle/Resources/public/js/*'
-'@LaDanseBootstrapBundle/Resources/public/js/*'
-'@LaDanseSiteBundle/Resources/public/js/*' %}
+{% javascripts
+    '@CoderSpottingToastMessageBundle/Resources/public/js/*'
+    '@LaDanseBootstrapBundle/Resources/public/js/*'
+    '@LaDanseSiteBundle/Resources/public/js/*'
+%}
 <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
