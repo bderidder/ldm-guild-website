@@ -47,7 +47,7 @@ class EventTodayNotificator extends AbstractNotificator
 
         $sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
 
-        /** @var mixed $setting */
+        /** @var string $mail */
         foreach($sharedMails as $mail)
         {
             /** @var mixed $data */
