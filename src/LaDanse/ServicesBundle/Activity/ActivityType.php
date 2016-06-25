@@ -20,6 +20,8 @@ class ActivityType
     const EVENT_CREATE  = 'Event.Create';  // State Change
     const EVENT_LIST    = 'Event.List';    // Read Only
 
+    const EVENT_TODAY   = 'Event.Today';    // Read Only
+
     const SIGNUP_CREATE = 'Signup.Create'; // State Change
     const SIGNUP_EDIT   = 'Signup.Edit';   // State Change
     const SIGNUP_DELETE = 'Signup.Delete'; // State Change
