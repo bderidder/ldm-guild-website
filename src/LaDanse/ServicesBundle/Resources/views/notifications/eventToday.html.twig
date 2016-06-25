@@ -15,8 +15,9 @@
 
 {% block notificationMessage %}
 
-    <b>Don't forget, the event '{{ data.activityData.event.name }}' you signed up for is TODAY!</b>
-    <br/>
+    <p style="font-size: 2em; font-weight: bold">Reminder</p>
+
+    <p>Don't forget, the event '{{ data.activityData.event.name }}' you signed up for is TODAY!</p>
 
     <div class="PostContent">
 
@@ -54,7 +55,7 @@
 
     <a href="{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}">
         <div class="button btn-lightGreen">
-            view event
+            manage my signup
         </div>
     </a>
 

@@ -25,11 +25,15 @@
     }}
 
     {{ form_widget(form.eventToday,
-    { 'label': 'Notify me on the morning of an event I signed up for' })
+    { 'label': 'Remind me on the day of an event I signed up for' })
     }}
 
+    <h4 class="notificationSection">Event Organiser</h4>
+
+    <p>The following notifications are only relevant for organisers of events.</p>
+
     {{ form_widget(form.signUpChange,
-    { 'label': 'For an event I created, notify me when someone signs up or changes their sign up' })
+    { 'label': 'Notify me when someone signs up or changes their sign up' })
     }}
 
     <h4 class="notificationSection">Forums</h4>

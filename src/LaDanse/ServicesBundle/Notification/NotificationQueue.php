@@ -100,10 +100,9 @@ class NotificationQueue
         foreach($items as $item)
         {
             $this->logger->debug(
-                sprintf("%s - processing notification '%s' for %s on %s",
+                sprintf("%s - processing notification '%s' on %s",
                     __CLASS__,
                     $item->getActivityType(),
-                    $item->getActivityBy()->getDisplayName(),
                     $item->getActivityOn()->format("d/m/Y h:i:s")
                 )
             );

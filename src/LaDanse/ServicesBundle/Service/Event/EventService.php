@@ -10,6 +10,7 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
@@ -276,5 +277,16 @@ class EventService extends LaDanseService
         $userSignUpQuery->setAccountId($accountId);
 
         return $userSignUpQuery->run();
+    }
+
+    /**
+     * Create notification events for all events that happen today
+     */
+    public function notifyEventsToday()
+    {
+        /** @var NotifyEventTodayCommand $notifyEventTodayCommand */
+        $notifyEventTodayCommand = $this->container->get(NotifyEventTodayCommand::SERVICE_NAME);
+
+        $notifyEventTodayCommand->run();
     }
 }

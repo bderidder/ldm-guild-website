@@ -11,6 +11,7 @@ use LaDanse\ServicesBundle\Notification\Notificators\CreateSignUpNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\DeleteEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\DeleteSignUpNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\EventTodayNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\FeedbackNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\TestNotificator;
@@ -108,14 +109,23 @@ class NotificationService
             return;
         }
 
-        $fromName = $notificationQueueItem->getActivityBy()->getDisplayName() . " (La Danse)";
+        if ($notificationQueueItem->getActivityBy() != null)
+        {
+            $fromName = $notificationQueueItem->getActivityBy()->getDisplayName() . " (La Danse)";
+        }
+        else
+        {
+            $fromName = "La Danse Website";
+        }
 
         $mails = $context->getMails();
 
         /** @var object $mail */
         foreach($mails as $mail)
         {
-            if ((strcasecmp($mail->email, $notificationQueueItem->getActivityBy()->getEmail()) == 0)
+            if ($notificationQueueItem->getActivityBy() != null
+                &&
+                (strcasecmp($mail->email, $notificationQueueItem->getActivityBy()->getEmail()) == 0)
                 &&
                 (strcasecmp($kernel->getEnvironment(), 'dev') != 0))
             {
@@ -179,6 +189,10 @@ class NotificationService
 
         $this->notificators[ActivityType::EVENT_DELETE]  = [
             DeleteEventNotificator::SERVICE_NAME
+        ];
+
+        $this->notificators[ActivityType::EVENT_TODAY]  = [
+            EventTodayNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::SIGNUP_CREATE]  = [

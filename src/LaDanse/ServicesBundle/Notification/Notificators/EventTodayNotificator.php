@@ -43,7 +43,7 @@ class EventTodayNotificator extends AbstractNotificator
         /** @var mixed $data */
         $data = $queueItem->getData();
 
-        $mailsSignUps = $this->getEmailsFromSignUps($data->oldEvent->eventId);
+        $mailsSignUps = $this->getEmailsFromSignUps($data->event->eventId);
 
         $sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
 
@@ -62,7 +62,7 @@ class EventTodayNotificator extends AbstractNotificator
 
             $context->addMail(
                 $mail,
-                "Reminder ... '" . $data->event->name . "'' is today!",
+                "Reminder ... '" . $data->event->name . "' is today!",
                 array(
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
