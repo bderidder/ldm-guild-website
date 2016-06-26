@@ -9,3 +9,5 @@ php app/console server:run
 
 # Create symlinks to assets
 php app/console assets:install web --symlink
+
+clear ; php app/console ladanse:notifyEventToday ; php app/console ladanse:queue:notifications --process ; php app/console swiftmailer:spool:send
