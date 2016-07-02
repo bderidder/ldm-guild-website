@@ -48,3 +48,5 @@ parameters:
     router.request_context.host:     "localhost:8000"
     router.request_context.scheme:   http
     router.request_context.base_url: ""
+
+    bower_bin: /usr/bin/bower
