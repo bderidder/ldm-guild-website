@@ -127,3 +127,4 @@ sp_bower:
     nest_dependencies: false
   bundles:
     LaDanseSiteBundle: ~
+    LaDanseAngularBundle: ~

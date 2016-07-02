@@ -1,0 +1,20 @@
+{
+  "name": "ladanse-angular",
+  "description": "La Danse Angular website front end",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CoderSpotting/ladanse-angular",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "html5-boilerplate": "~5.2.0",
+    "angulargrid": "0.6.0",
+    "jquery": ">=2.2.0",
+    "jquery.scrollbar": "0.2.10",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3"
+  }
+}

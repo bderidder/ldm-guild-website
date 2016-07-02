@@ -30,6 +30,8 @@ class ActivityType
 
     const ABOUT_VIEW    = 'About.View';    // Read Only
 
+    const ANGULAR_VIEW  = 'Angular.View';  // Read Only
+
     const GALLERY_VIEW  = 'Gallery.View';  // Read Only
 
     const CHARACTER_CREATE = "Character.Create"; // State Change
