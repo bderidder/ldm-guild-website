@@ -123,7 +123,7 @@ services:
       arguments: [ "%kernel.cache_dir%" ]
 
 sp_bower:
-  bin: "%bower_bin%" # Optional
+  bin: "%bower_binary_path%"
   assetic:
     nest_dependencies: false
   bundles:

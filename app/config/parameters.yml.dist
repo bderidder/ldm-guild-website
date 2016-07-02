@@ -49,4 +49,4 @@ parameters:
     router.request_context.scheme:   http
     router.request_context.base_url: ""
 
-    bower_bin: /usr/bin/bower
+    bower_binary_path: /usr/bin/bower
