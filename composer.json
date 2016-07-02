@@ -31,7 +31,8 @@
         "eluceo/ical": "^0.9",
         "trt/swift-css-inliner-bundle": "^0.4",
         "hwi/oauth-bundle": "~0.4",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "sp/bower-bundle": "^0.11.0"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable",

@@ -6,14 +6,18 @@
 
     {# all CSS must be in the header to speed up rendering #}
 
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
-
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
           rel="stylesheet">
 
-    <link href="//cdn.jsdelivr.net/qtip2/2.2.1/jquery.qtip.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui-TEMP.min.css" rel="stylesheet">
 
-    <link href="//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.css" rel="stylesheet">
+    {% stylesheets filter='cssrewrite'
+        "bundles/ladansesite/components/textAngular/dist/textAngular.css"
+        "bundles/ladansesite/components/font-awesome/css/font-awesome.min.css"
+        "bundles/ladansesite/components/qtip2/jquery.qtip.min.css"
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
 
     {% stylesheets filter='cssrewrite'
         'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
@@ -80,23 +84,29 @@
 
 {# all Javascript is moved to the rear of the document to speed up rendering #}
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    {% javascripts
+        "bundles/ladansesite/components/jquery/dist/jquery.min.js"
+        "bundles/ladansesite/components/jquery-ui/jquery-ui.js"
+        "bundles/ladansesite/components/qtip2/jquery.qtip.min.js"
+        "bundles/ladansesite/components/moment/min/moment.min.js"
+        "bundles/ladansesite/components/moment/locale/en-gb.js"
+        "bundles/ladansesite/components/angular/angular.min.js"
+        "bundles/ladansesite/components/angular-animate/angular-animate.min.js"
+        "bundles/ladansesite/components/angular-route/angular-route.min.js"
+        "bundles/ladansesite/components/angular-resource/angular-resource.min.js"
+        "bundles/ladansesite/components/angular-sanitize/angular-sanitize.min.js"
+        "bundles/ladansesite/components/angular-moment/angular-moment.min.js"
+        "bundles/ladansesite/components/angular-inview/angular-inview.js"
+        "bundles/ladansesite/components/rangy/rangy-core.min.js"
+        "bundles/ladansesite/components/rangy/rangy-selectionsaverestore.min.js"
+        "bundles/ladansesite/components/textAngular/dist/textAngular.js"
+        "bundles/ladansesite/components/textAngular/dist/textAngular-sanitize.js"
+        "bundles/ladansesite/components/textAngular/dist/textAngularSetup.js"
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/moment.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.6.0/lang/en-gb.js"></script>
-
-    <script src="//cdn.jsdelivr.net/qtip2/2.2.1/jquery.qtip.min.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-animate.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-resource.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-sanitize.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/textAngular/1.2.2/textAngular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.8.3/angular-moment.min.js"></script>
 
     <!--CDN link for the latest TweenMax-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
