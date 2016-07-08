@@ -11,7 +11,15 @@
 
 {% block memberPageCenteredBody %}
 
+    {% if hasFeatureToggle('guildRoster') %}
+
+    {{ renderHeader('Guild Member - ' ~ member.displayName, path('viewRoster')) }}
+
+    {% else %}
+
     {{ renderHeader('Guild Member - ' ~ member.displayName) }}
+
+    {% endif %}
     
 	<p>Below you can find the list of characters this member currently has a claim over and what roles they want to perform with them.</p>
 

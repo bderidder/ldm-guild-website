@@ -60,7 +60,6 @@ security:
         - { path: ^/events,         role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/settings,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/claims,         role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/member,         role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/teamspeak,      role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/gallery,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/forum,          role: IS_AUTHENTICATED_REMEMBERED }
@@ -70,6 +69,7 @@ security:
         - { path: ^/services,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/redirect,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/roster,         role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 

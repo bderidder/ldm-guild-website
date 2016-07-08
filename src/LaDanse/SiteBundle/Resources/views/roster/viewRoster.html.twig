@@ -1,0 +1,27 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Who Is Who - La Danse Macabre{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Who Is Who') }}
+
+    <div class="panel panel-default">
+        <!-- List group -->
+        <ul class="list-group">
+            {% for account in accounts %}
+                <li class="list-group-item">
+                    <a href="{{ path('viewMember', {'accountId': account.id} ) }}">{{ account.displayName }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

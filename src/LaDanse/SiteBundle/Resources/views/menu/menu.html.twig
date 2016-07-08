@@ -120,6 +120,19 @@
                                 </div>
                             </a>
 
+                            {% if hasFeatureToggle('guildRoster') %}
+                            <a class="masonry-item" href="{{ path('viewRoster') }}">
+                                <div class="tile default" data-direction="vertical" data-delay="8000">
+                                    <div class="tile-content">
+                                        <div class="image">
+                                            <i class="fa fa-th fa-5x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="label"><span>Who Is Who</span></div>
+                                </div>
+                            </a>
+                            {% endif %}
+
                             <a class="masonry-item" href="{{ path('redirect', {'url': "http://www.icy-veins.com/wow/" }) }}" target="_blank">
                                 <div class="tile default" data-direction="vertical" data-delay="8000">
                                     <div class="tile-content">

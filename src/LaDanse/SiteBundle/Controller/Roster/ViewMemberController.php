@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller\Member;
+namespace LaDanse\SiteBundle\Controller\Roster;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\SiteBundle\Common\LaDanseController;
@@ -59,7 +59,7 @@ class ViewMemberController extends LaDanseController
         );
 
         return $this->render(
-            'LaDanseSiteBundle:member:viewMember.html.twig',
+            'LaDanseSiteBundle:roster:viewMember.html.twig',
             array(
                 'member' => $account,
                 'claimModel' => $claimModel

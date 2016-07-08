@@ -8,6 +8,7 @@ namespace LaDanse\ServicesBundle\Service\Account;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Model\UserManager;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
@@ -214,5 +215,23 @@ class AccountService extends LaDanseService
                 ActivityType::SETTINGS_PASSWORD_UPDATE,
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
+    }
+
+    public function getAllActiveAccounts()
+    {
+        /** @var UserManager $userManager */
+        $userManager = $this->get('fos_user.user_manager');
+
+        $traversable = $userManager->findUsers();
+
+        $result = array();
+
+        /** @var Account $user */
+        foreach($traversable as $user)
+        {
+            $result[] = $user;
+        }
+
+        return $result;
     }
 }
