@@ -14,6 +14,26 @@ class Version20160407202058 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z01", "Applications", "Applications from aspiring members")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z02", "General", "General and publicly available information on the guild")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z03", "Info from the officers", "Information from Officers, make sure to read them!")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z04", "Member introductions", "Member introduction and post links to profile pages")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z05", "Other games", "Discussions on other games played by guild members")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z06", "Off topic", "Anything that does not belong in any other forum")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z07", "General", "General posts on PvE")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z08", "Raid tactics", "Discussions on tactics to succeed in raids")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z09", "Dungeons HC/CM", "Discussions on 5-man dungeons")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z10", "Raids", "General discussions on raids")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z11", "Raid rules", "Discussion on La Danse rules for raiding")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z12", "General", "General posts on PvP")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z13", "Arena", "Discussions on Arenas and related topics")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z14", "Rated Battlegrounds", "Discussons on RBGs and related topics")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z15", "World PvP", "Discussions on World PvP and related topics")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z16", "Role Playing", "Role Playing related posts, including stories and similar")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z17", "Events", "Announcement and discussions on guild events")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z18", "Active Concerns", "Officer discussion on current concerns")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z19", "Recruitments information", "Officer discussion on new applications")');
+        $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z20", "La Danse Website", "Announcements and discussions on the website")');
         $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z21", "The Walled City", "Kargath, Butcher and Brackenspore")');
         $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z22", "Arcane Sanctum", "Tectus, Twin Ogron and Ko\'ragh")');
         $this->addSql('INSERT INTO Forum (forumId, name, description) VALUES ("3908cb8b86657cdaf71b020ed0115z23", "Imperator", "Imperator Mor\'gok")');
@@ -35,6 +55,26 @@ class Version20160407202058 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z01"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z02"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z03"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z04"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z05"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z06"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z07"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z08"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z09"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z10"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z11"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z12"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z13"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z14"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z15"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z16"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z17"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z18"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z19"');
+        $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z20"');
         $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z21"');
         $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z22"');
         $this->addSql('DELETE FROM Forum WHERE forumId="3908cb8b86657cdaf71b020ed0115z23"');
