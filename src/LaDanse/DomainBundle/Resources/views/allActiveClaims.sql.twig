@@ -1,0 +1,8 @@
+SELECT cc, gc, a
+FROM LaDanse\DomainBundle\Entity\Claim cc
+	JOIN cc.account a
+	JOIN cc.character gc
+WHERE
+	cc.endTime IS NULL
+	AND
+	cc.fromTime <= :onDateTime

@@ -13,15 +13,19 @@
 
     {{ renderHeader('Who Is Who') }}
 
-    <div class="panel panel-default">
-        <!-- List group -->
-        <ul class="list-group">
-            {% for account in accounts %}
-                <li class="list-group-item">
-                    <a href="{{ path('viewMember', {'accountId': account.id} ) }}">{{ account.displayName }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% for claim in claims %}
+    <a href="{{ path('viewMember', {'accountId': claim.id} ) }}"
+       class="characterAndClaimsWell">
+        <div class="well well-sm characterAndClaimsWell">
+            <p class="accountDisplayName">{{ claim.displayName }}</p>
+            <p class="claimsList">
+                Characters claimed: 
+                {% for character in claim.claims %}
+                <span>{{ character }}</span>
+                {% endfor %}
+            </p>
+        </div>
+    </a>
+    {% endfor %}
 
 {% endblock %}

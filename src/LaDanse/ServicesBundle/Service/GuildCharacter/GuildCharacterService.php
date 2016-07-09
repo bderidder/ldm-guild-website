@@ -12,6 +12,7 @@ use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateClaimCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllActiveClaimsQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
@@ -80,6 +81,19 @@ class GuildCharacterService extends LaDanseService
         $guildCharacterQuery->setOnDateTime($onDateTime);
 
         return $guildCharacterQuery->run();
+    }
+
+    /**
+     * Returns all guild character claims that are currently active
+     *
+     * @return array
+     */
+    public function getAllActiveClaims()
+    {
+        /** @var AllActiveClaimsQuery $allActiveClaimsQuery */
+        $allActiveClaimsQuery = $this->get(AllActiveClaimsQuery::SERVICE_NAME);
+
+        return $allActiveClaimsQuery->run();
     }
 
     /**
