@@ -2,9 +2,9 @@ composer.phar
 
 *.sublime-*
 
-/var/
-!var/cache/.gitkeep
-!var/logs/.gitkeep
+/var/**
+!/var/cache/.gitkeep
+!/var/logs/.gitkeep
 /app/config/parameters.yml
 /phpunit.xml
 /vendor/
@@ -13,7 +13,6 @@ composer.phar
 /app/config/parameters.yml
 
 /vendor/
-/bin/
 /composer.phar
 web/css/*
 web/js/*
