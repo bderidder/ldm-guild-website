@@ -24,6 +24,7 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+    assets: ~
 
 # Twig Configuration
 twig:
@@ -54,7 +55,7 @@ assetic:
         less:
             node: "%nodejs_binary_path%"
             node_paths: "%nodejs_module_path%"
-            apply_to: "\.less$"
+            apply_to: ".less$"
 
 # Doctrine Configuration
 doctrine:

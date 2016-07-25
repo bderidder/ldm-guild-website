@@ -2,18 +2,16 @@ composer.phar
 
 *.sublime-*
 
-bin/doctrine
-bin/doctrine.php
-bin/phpunit
-
-/web/bundles/
-/app/bootstrap.php.cache
-/app/cache/*
+/var/
+!var/cache/.gitkeep
+!var/logs/.gitkeep
 /app/config/parameters.yml
-/app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-/build/
+/phpunit.xml
+/vendor/
+/web/bundles/
+
+/app/config/parameters.yml
+
 /vendor/
 /bin/
 /composer.phar
