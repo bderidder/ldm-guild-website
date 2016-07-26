@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class EditCalExportController extends LaDanseController
 {
@@ -83,7 +84,7 @@ class EditCalExportController extends LaDanseController
                 return $this->render('LaDanseSiteBundle:settings:editCalExport.html.twig',
                     array(
                         'form' => $form->createView(),
-                        'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), true)
+                        'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), UrlGeneratorInterface::ABSOLUTE_URL)
                     )
                 );
             }
@@ -100,7 +101,7 @@ class EditCalExportController extends LaDanseController
             return $this->render('LaDanseSiteBundle:settings:editCalExport.html.twig',
                 array(
                     'form' => $form->createView(),
-                    'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), true)
+                    'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), UrlGeneratorInterface::ABSOLUTE_URL)
                 )
             );
         }
