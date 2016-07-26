@@ -3,12 +3,12 @@
 namespace LaDanse\ServicesBundle\Service\Settings;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\CalendarExport;
 use LaDanse\DomainBundle\Entity\Setting;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

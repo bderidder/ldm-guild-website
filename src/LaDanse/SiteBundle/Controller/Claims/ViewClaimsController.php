@@ -3,12 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+
 use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

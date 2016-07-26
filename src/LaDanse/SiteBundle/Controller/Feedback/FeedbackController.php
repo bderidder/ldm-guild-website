@@ -3,10 +3,10 @@
 namespace LaDanse\SiteBundle\Controller\Feedback;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Feedback\FeedbackService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\FeedbackFormModel;
 use LaDanse\SiteBundle\Form\Type\FeedbackFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

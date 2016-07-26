@@ -3,12 +3,12 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

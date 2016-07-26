@@ -3,8 +3,8 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\HttpFoundation\Response;

@@ -3,11 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Model\Calendar\CalendarDayModel;
 use LaDanse\SiteBundle\Model\Calendar\CalendarMonthModel;
 use LaDanse\SiteBundle\Model\Calendar\RaidWeekModel;

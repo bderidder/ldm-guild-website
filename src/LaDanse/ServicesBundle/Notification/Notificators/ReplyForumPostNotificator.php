@@ -3,13 +3,13 @@
 namespace LaDanse\ServicesBundle\Notification\Notificators;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\DomainBundle\Entity\Forum\Post;
-use LaDanse\ServicesBundle\Service\Forum\ForumService;
+use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\ListFunctions;
 use LaDanse\ServicesBundle\Notification\NotificationContext;
 use LaDanse\ServicesBundle\Notification\NotificationTemplates;
+use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 
 /**

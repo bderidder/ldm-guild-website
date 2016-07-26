@@ -4,9 +4,9 @@ namespace LaDanse\ServicesBundle\Service\FeatureToggle;
 
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\FeatureToggle;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

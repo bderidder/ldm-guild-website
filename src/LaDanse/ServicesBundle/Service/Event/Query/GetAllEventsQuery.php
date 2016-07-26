@@ -3,8 +3,8 @@
 namespace LaDanse\ServicesBundle\Service\Event\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Common\AbstractQuery;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

@@ -4,9 +4,9 @@ namespace LaDanse\ServicesBundle\Service\SocialConnect\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 
-use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

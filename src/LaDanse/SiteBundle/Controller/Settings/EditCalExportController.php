@@ -3,10 +3,10 @@
 namespace LaDanse\SiteBundle\Controller\Settings;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\CalExportFormModel;
 use LaDanse\SiteBundle\Form\Type\CalExportFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

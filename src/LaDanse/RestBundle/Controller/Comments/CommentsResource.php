@@ -6,13 +6,13 @@
 
 namespace LaDanse\RestBundle\Controller\Comments;
 
-use LaDanse\RestBundle\Controller\Comments\CommentGroupMapper;
-use LaDanse\ServicesBundle\Service\Comments\CommentDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Comments\CommentGroupDoesNotExistException;
-
-use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\ResourceHelper;
+use LaDanse\RestBundle\Controller\Comments\CommentGroupMapper;
+
+use LaDanse\ServicesBundle\Service\Comments\CommentDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Comments\CommentGroupDoesNotExistException;
+use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

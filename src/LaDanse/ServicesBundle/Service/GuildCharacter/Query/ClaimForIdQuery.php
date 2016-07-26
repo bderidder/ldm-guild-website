@@ -3,12 +3,12 @@
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\DomainBundle\Entity\Character;
-
 use LaDanse\DomainBundle\Entity\Claim;
 
 use LaDanse\DomainBundle\Entity\Role;
+
+use LaDanse\ServicesBundle\Common\AbstractQuery;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

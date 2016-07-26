@@ -6,8 +6,8 @@
 
 namespace LaDanse\RestBundle\Controller\Forum;
 
-use LaDanse\RestBundle\Controller\Forum\TopicMapper;
 use LaDanse\DomainBundle\Entity\Forum\Post;
+use LaDanse\RestBundle\Controller\Forum\TopicMapper;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

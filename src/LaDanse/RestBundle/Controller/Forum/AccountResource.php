@@ -6,8 +6,8 @@
 
 namespace LaDanse\RestBundle\Controller\Forum;
 
-use LaDanse\RestBundle\Controller\Forum\PostMapper;
 use LaDanse\RestBundle\Common\AbstractRestController;
+use LaDanse\RestBundle\Controller\Forum\PostMapper;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 

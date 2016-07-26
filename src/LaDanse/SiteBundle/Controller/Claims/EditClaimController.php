@@ -3,9 +3,9 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EditClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\EditClaimFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

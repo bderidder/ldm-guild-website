@@ -4,8 +4,8 @@ namespace LaDanse\DomainBundle\Entity\Comments;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 
 /**
  * Post

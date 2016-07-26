@@ -3,8 +3,8 @@
 namespace LaDanse\ServicesBundle\Service\SocialConnect;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\SocialConnect\Command\DisconnectAccountCommand;
 use LaDanse\ServicesBundle\Service\SocialConnect\Query\GetAccessTokenForAccountQuery;
 use LaDanse\ServicesBundle\Service\SocialConnect\Query\IsAccountConnectedQuery;

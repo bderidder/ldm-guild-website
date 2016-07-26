@@ -4,10 +4,10 @@ namespace LaDanse\ServicesBundle\Service\Event;
 
 use \Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;

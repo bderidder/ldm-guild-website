@@ -10,10 +10,10 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserManager;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

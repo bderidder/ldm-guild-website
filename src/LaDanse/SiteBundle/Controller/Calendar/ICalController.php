@@ -4,19 +4,19 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Comments\Comment;
-use LaDanse\ServicesBundle\Service\Comments\CommentService;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
-
 use LaDanse\DomainBundle\Entity\CalendarExport;
-
+use LaDanse\DomainBundle\Entity\Comments\Comment;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
+
 use LaDanse\ServicesBundle\Activity\ActivityType;
 
+use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
+
+use LaDanse\SiteBundle\Common\LaDanseController;
 
 use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

@@ -3,9 +3,9 @@
 namespace LaDanse\ServicesBundle\Service\GuildCharacter;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
+use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;

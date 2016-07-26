@@ -6,9 +6,9 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use LaDanse\ServicesBundle\Service\Event\EventService;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Output\OutputInterface;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 /**

@@ -6,15 +6,15 @@
 
 namespace LaDanse\ServicesBundle\Service\Comments;
 
+use JMS\DiExtraBundle\Annotation as DI;
+
 use LaDanse\DomainBundle\Entity\Comments\Comment;
 
 use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
-
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Common\UUIDUtils;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use JMS\DiExtraBundle\Annotation as DI;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class CommentService

@@ -6,13 +6,13 @@
 
 namespace LaDanse\RestBundle\Controller\Forum;
 
+use LaDanse\RestBundle\Common\AbstractRestController;
+use LaDanse\RestBundle\Controller\Forum\ForumMapper;
 use LaDanse\RestBundle\Controller\Forum\PostMapper;
 use LaDanse\RestBundle\Controller\Forum\ResourceHelper;
-use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\ServicesBundle\Service\Forum\ForumDoesNotExistException;
 
+use LaDanse\ServicesBundle\Service\Forum\ForumDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
-use LaDanse\RestBundle\Controller\Forum\ForumMapper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

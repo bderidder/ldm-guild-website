@@ -4,12 +4,12 @@ namespace LaDanse\SiteBundle\Controller\Roster;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use LaDanse\ServicesBundle\Service\Account\AccountService;
+
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Model\Roster\AccountAndClaims;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

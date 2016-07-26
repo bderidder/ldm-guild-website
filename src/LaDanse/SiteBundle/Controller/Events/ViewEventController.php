@@ -3,11 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Model\EventModel;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

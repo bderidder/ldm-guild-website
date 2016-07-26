@@ -3,12 +3,12 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Common\AbstractCommand;
 
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 

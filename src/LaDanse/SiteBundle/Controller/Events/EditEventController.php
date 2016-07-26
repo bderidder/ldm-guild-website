@@ -4,13 +4,13 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;

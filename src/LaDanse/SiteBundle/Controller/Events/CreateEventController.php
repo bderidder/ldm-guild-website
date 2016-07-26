@@ -4,9 +4,9 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
