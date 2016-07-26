@@ -53,3 +53,5 @@ app/Resources/mopa_remote_update.sqlite
 
 /src/LaDanse/SiteBundle/Resources/public/components/
 /src/LaDanse/AngularBundle/Resources/public/components/
+/src/LaDanse/AngularBundle/Resources/config/bower/.bowerrc
+/src/LaDanse/SiteBundle/Resources/config/bower/.bowerrc
