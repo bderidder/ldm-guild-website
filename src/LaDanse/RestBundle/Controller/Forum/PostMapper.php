@@ -10,6 +10,7 @@ use LaDanse\DomainBundle\Entity\Forum\Post;
 use LaDanse\RestBundle\Controller\Forum\TopicMapper;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class PostMapper
@@ -19,12 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class PostMapper
 {
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Post $post
      *
      * @return object
      */
-    public function mapPost(Controller $controller, Post $post)
+    public function mapPost(UrlGeneratorInterface $generator, Post $post)
     {
         return (object)array(
             "postId"   => $post->getId(),
@@ -33,24 +34,24 @@ class PostMapper
             "message"  => $post->getMessage(),
             "postDate" => $post->getPostDate()->format(\DateTime::ISO8601),
             "links"    => (object)array(
-                "self"   => $controller->generateUrl('getPost', array('postId' => $post->getId()), true),
-                "update" => $controller->generateUrl('updatePost', array('postId' => $post->getId()), true)
+                "self"   => $generator->generate('getPost', array('postId' => $post->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+                "update" => $generator->generate('updatePost', array('postId' => $post->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Post $post
      *
      * @return object
      */
-    public function mapPostAndTopic(Controller $controller, Post $post)
+    public function mapPostAndTopic(UrlGeneratorInterface $generator, Post $post)
     {
-        $jsonPost = $this->mapPost($controller, $post);
+        $jsonPost = $this->mapPost($generator, $post);
 
         $topicMapper = new TopicMapper();
-        $jsonForum = $topicMapper->mapTopicAndForum($controller, $post->getTopic());
+        $jsonForum = $topicMapper->mapTopicAndForum($generator, $post->getTopic());
 
         $jsonPost->topic = $jsonForum;
 
@@ -58,19 +59,19 @@ class PostMapper
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param array $posts
      *
      * @return object
      */
-    public function mapPostsAndTopic(Controller $controller, $posts)
+    public function mapPostsAndTopic(UrlGeneratorInterface $generator, $posts)
     {
         $jsonPosts = array();
 
         /** @var Post $post */
         foreach($posts as $post)
         {
-            $jsonPosts[] = $this->mapPostAndTopic($controller, $post);
+            $jsonPosts[] = $this->mapPostAndTopic($generator, $post);
         }
 
         return $jsonPosts;

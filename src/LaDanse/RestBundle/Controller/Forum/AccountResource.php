@@ -54,7 +54,7 @@ class AccountResource extends AbstractRestController
         $jsonObject = (object)array(
             "accountId"   => $account->getId(),
             "displayName" => $account->getDisplayName(),
-            "unreadPosts" => $postMapper->mapPostsAndTopic($this, $unreadPosts),
+            "unreadPosts" => $postMapper->mapPostsAndTopic($this->get('router'), $unreadPosts),
             "links"       => (object)array(
                 "self"  => $this->generateUrl('getUnreadForAccount', array(), true)
             )

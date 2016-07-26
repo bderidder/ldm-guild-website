@@ -55,7 +55,7 @@ class TopicsResource extends AbstractRestController
 
         $topicMapper = new TopicMapper();
 
-        $jsonObject = $topicMapper->mapTopicAndPosts($this, $topic);
+        $jsonObject = $topicMapper->mapTopicAndPosts($this->get('router'), $topic);
 
         return new JsonResponse($jsonObject);
     }

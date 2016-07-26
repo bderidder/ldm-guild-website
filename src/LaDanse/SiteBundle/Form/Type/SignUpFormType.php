@@ -19,8 +19,7 @@ class SignUpFormType extends AbstractType
     					'Tank'   => Role::TANK,
     					'Healer' => Role::HEALER,
     					'Damage' => Role::DPS),
-                    'choices_as_values' => true,
-    				'expanded'	=> true,
+                    'expanded'	=> true,
     				'multiple'	=> true
 				))
 		        ->add('type', ChoiceType::class, array(
@@ -28,8 +27,7 @@ class SignUpFormType extends AbstractType
                         'Will come'   => SignUpType::WILLCOME,
                         'Might come'  => SignUpType::MIGHTCOME,
                         'Can\'t come' => SignUpType::ABSENCE),
-                    'choices_as_values' => true,
-    				'expanded'	=> true,
+                    'expanded'	=> true,
     				'multiple'	=> false
 				))
                 ->add('save', SubmitType::class, array(

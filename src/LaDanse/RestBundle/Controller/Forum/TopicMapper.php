@@ -11,6 +11,7 @@ use LaDanse\DomainBundle\Entity\Forum\Topic;
 use LaDanse\RestBundle\Controller\Forum\ForumMapper;
 use LaDanse\RestBundle\Controller\Forum\PostMapper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class TopicMapper
@@ -20,12 +21,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class TopicMapper
 {
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Topic $topic
      *
      * @return object
      */
-    public function mapTopic(Controller $controller, Topic $topic)
+    public function mapTopic(UrlGeneratorInterface $generator, Topic $topic)
     {
         return (object)array(
             "topicId"    => $topic->getId(),
@@ -36,25 +37,25 @@ class TopicMapper
             "lastPost"   => $this->createLastPost($topic),
             "links"      => (object)array(
                 "self"
-                    => $controller->generateUrl('getPostsInTopic', array('topicId' => $topic->getId()), true),
+                    => $generator->generate('getPostsInTopic', array('topicId' => $topic->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
                 "createPostInTopic"
-                    => $controller->generateUrl('createPostInTopic', array('topicId' => $topic->getId()), true)
+                    => $generator->generate('createPostInTopic', array('topicId' => $topic->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Topic $topic
      *
      * @return object
      */
-    public function mapTopicAndForum(Controller $controller, Topic $topic)
+    public function mapTopicAndForum(UrlGeneratorInterface $generator, Topic $topic)
     {
-        $jsonTopic = $this->mapTopic($controller, $topic);
+        $jsonTopic = $this->mapTopic($generator, $topic);
 
         $forumMapper = new ForumMapper();
-        $jsonForum = $forumMapper->mapForum($controller, $topic->getForum());
+        $jsonForum = $forumMapper->mapForum($generator, $topic->getForum());
 
         $jsonTopic->forum = $jsonForum;
 
@@ -62,33 +63,33 @@ class TopicMapper
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param array $topics
      *
-     * @return object
+     * @return array
      */
-    public function mapTopicsAndForum(Controller $controller, $topics)
+    public function mapTopicsAndForum(UrlGeneratorInterface $generator, $topics)
     {
         $jsonTopics = array();
 
         /** @var Topic $topic */
         foreach($topics as $topic)
         {
-            $jsonTopics[] = $this->mapTopicAndForum($controller, $topic);
+            $jsonTopics[] = $this->mapTopicAndForum($generator, $topic);
         }
 
         return $jsonTopics;
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Topic $topic
      *
      * @return object
      */
-    public function mapTopicAndPosts(Controller $controller, Topic $topic)
+    public function mapTopicAndPosts(UrlGeneratorInterface $generator, Topic $topic)
     {
-        $topicObject = $this->mapTopic($controller, $topic);
+        $topicObject = $this->mapTopic($generator, $topic);
 
         $posts = $topic->getPosts()->getValues();
 
@@ -108,7 +109,7 @@ class TopicMapper
 
         foreach ($posts as $post)
         {
-            $jsonArray[] = $postMapper->mapPost($controller, $post);
+            $jsonArray[] = $postMapper->mapPost($generator, $post);
         }
 
         $topicObject->posts = $jsonArray;

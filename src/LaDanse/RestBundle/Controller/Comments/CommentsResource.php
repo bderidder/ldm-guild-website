@@ -57,7 +57,7 @@ class CommentsResource extends AbstractRestController
 
         $groupMapper = new CommentGroupMapper();
 
-        $jsonObject = $groupMapper->mapGroupAndComments($this, $group);
+        $jsonObject = $groupMapper->mapGroupAndComments($this->get('router'), $group);
 
         return new JsonResponse($jsonObject);
     }

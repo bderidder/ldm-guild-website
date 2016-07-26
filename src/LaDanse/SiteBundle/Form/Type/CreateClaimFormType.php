@@ -18,13 +18,11 @@ class CreateClaimFormType extends AbstractType
                         'Tank'   => Role::TANK,
                         'Healer' => Role::HEALER,
                         'Damage' => Role::DPS),
-                    'choices_as_values' => true,
-    				'expanded'	=> true,
+                    'expanded'	=> true,
     				'multiple'	=> true
 				))
 		        ->add('character', ChoiceType::class, array(
                     'choices' => $options['unclaimedChars'],
-                    'choices_as_values' => true,
                     'expanded'  => false,
                     'multiple'  => false))
                 ->add('save', SubmitType::class, array(

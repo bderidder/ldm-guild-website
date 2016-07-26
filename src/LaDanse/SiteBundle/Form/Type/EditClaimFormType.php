@@ -18,8 +18,7 @@ class EditClaimFormType extends AbstractType
                         'Tank'   => Role::TANK,
                         'Healer' => Role::HEALER,
                         'Damage' => Role::DPS),
-                    'choices_as_values' => true,
-    				'expanded'	=> true,
+                    'expanded'	=> true,
     				'multiple'	=> true
 				))
             ->add('save', SubmitType::class, array(

@@ -10,6 +10,7 @@ use LaDanse\DomainBundle\Entity\Comments\CommentGroup;
 
 use LaDanse\RestBundle\Controller\Comments\CommentMapper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class CommentGroupMapper
@@ -19,31 +20,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class CommentGroupMapper
 {
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param CommentGroup $group
      *
      * @return object
      */
-    public function mapGroup(Controller $controller, CommentGroup $group)
+    public function mapGroup(UrlGeneratorInterface $generator, CommentGroup $group)
     {
         return (object)array(
             "groupId"   => $group->getId(),
             "createDate" => $group->getCreateDate()->format(\DateTime::ISO8601),
             "links"    => (object)array(
-                "self"   => $controller->generateUrl('getCommentsInGroup', array('groupId' => $group->getId()), true)
+                "self"   => $generator->generate('getCommentsInGroup', array('groupId' => $group->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
 
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param CommentGroup $group
      *
      * @return object
      */
-    public function mapGroupAndComments(Controller $controller, CommentGroup $group)
+    public function mapGroupAndComments(UrlGeneratorInterface $generator, CommentGroup $group)
     {
-        $groupObject = $this->mapGroup($controller, $group);
+        $groupObject = $this->mapGroup($generator, $group);
 
         $comments = $group->getComments()->getValues();
 
@@ -63,7 +64,7 @@ class CommentGroupMapper
 
         foreach ($comments as $comment)
         {
-            $jsonArray[] = $commentMapper->mapComment($controller, $comment);
+            $jsonArray[] = $commentMapper->mapComment($generator, $comment);
         }
 
         $groupObject->comments = $jsonArray;

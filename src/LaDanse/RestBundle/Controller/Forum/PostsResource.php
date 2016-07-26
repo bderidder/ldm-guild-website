@@ -56,7 +56,7 @@ class PostsResource extends AbstractRestController
 
         $postMapper = new PostMapper();
 
-        $jsonObject = $postMapper->mapPost($this, $post);
+        $jsonObject = $postMapper->mapPost($this->get('router'), $post);
 
         return new JsonResponse($jsonObject);
     }

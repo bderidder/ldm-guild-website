@@ -45,7 +45,7 @@ class ForumsResource extends AbstractRestController
 
         $forumMapper = new ForumMapper();
 
-        $jsonObject = $forumMapper->mapForums($this, $forums);
+        $jsonObject = $forumMapper->mapForums($this->get('router'), $forums);
 
         return new JsonResponse($jsonObject);
     }
@@ -66,7 +66,7 @@ class ForumsResource extends AbstractRestController
         $postMapper = new PostMapper();
 
         $jsonObject = (object)array(
-            "posts"   => $postMapper->mapPostsAndTopic($this, $posts),
+            "posts"   => $postMapper->mapPostsAndTopic($this->get('router'), $posts),
             "links"   => (object)array(
                 "self"  => $this->generateUrl('getActivityForForums', array(), true)
             )
@@ -105,7 +105,7 @@ class ForumsResource extends AbstractRestController
 
         $forumMapper = new ForumMapper();
 
-        $jsonObject = $forumMapper->mapForumAndTopics($this, $forum);
+        $jsonObject = $forumMapper->mapForumAndTopics($this->get('router'), $forum);
 
         return new JsonResponse($jsonObject);
     }
@@ -143,7 +143,7 @@ class ForumsResource extends AbstractRestController
         $postMapper = new PostMapper();
 
         $jsonObject = (object)array(
-            "posts"   => $postMapper->mapPostsAndTopic($this, $posts),
+            "posts"   => $postMapper->mapPostsAndTopic($this->get('router'), $posts),
             "links"   => (object)array(
                 "self"  => $this->generateUrl('getActivityForForum', array('forumId' => $forumId), true)
             )

@@ -9,6 +9,7 @@ namespace LaDanse\RestBundle\Controller\Comments;
 use LaDanse\DomainBundle\Entity\Comments\Comment;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class CommentMapper
@@ -18,12 +19,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class CommentMapper
 {
     /**
-     * @param Controller $controller
+     * @param UrlGeneratorInterface $generator
      * @param Comment $comment
      *
      * @return object
      */
-    public function mapComment(Controller $controller, Comment $comment)
+    public function mapComment(UrlGeneratorInterface $generator, Comment $comment)
     {
         return (object)array(
             "postId"   => $comment->getId(),
@@ -32,7 +33,7 @@ class CommentMapper
             "message"  => $comment->getMessage(),
             "postDate" => $comment->getPostDate()->format(\DateTime::ISO8601),
             "links"    => (object)array(
-                "update" => $controller->generateUrl('updateComment', array('commentId' => $comment->getId()), true)
+                "update" => $generator->generate('updateComment', array('commentId' => $comment->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
             )
         );
     }
