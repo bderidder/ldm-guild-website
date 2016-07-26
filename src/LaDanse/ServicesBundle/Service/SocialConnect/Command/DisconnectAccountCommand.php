@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(DisconnectAccountCommand::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(DisconnectAccountCommand::SERVICE_NAME, public=true, shared=false)
  */
 class DisconnectAccountCommand extends AbstractCommand
 {

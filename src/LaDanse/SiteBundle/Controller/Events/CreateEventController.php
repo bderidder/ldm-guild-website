@@ -61,7 +61,7 @@ class CreateEventController extends LaDanseController
         $formModel->setEndTime(new DateTime('22:00'));
 
         $form = $this->createForm(
-            new EventFormType(),
+            EventFormType::class,
             $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => ''))
         );

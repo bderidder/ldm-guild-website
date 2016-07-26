@@ -26,7 +26,7 @@ class RegistrationController extends LaDanseController
     {
         $formModel = new RegistrationFormModel();
 
-        $form = $this->createForm(new RegistrationFormType(), $formModel,
+        $form = $this->createForm(RegistrationFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

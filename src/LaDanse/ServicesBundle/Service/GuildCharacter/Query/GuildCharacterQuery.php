@@ -11,7 +11,7 @@ use LaDanse\ServicesBundle\Common\AbstractQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(GuildCharacterQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(GuildCharacterQuery::SERVICE_NAME, public=true, shared=false)
  */
 class GuildCharacterQuery extends AbstractQuery
 {

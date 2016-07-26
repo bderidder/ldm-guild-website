@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(VerifyAccountConnectionQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(VerifyAccountConnectionQuery::SERVICE_NAME, public=true, shared=false)
  */
 class VerifyAccountConnectionQuery extends AbstractQuery
 {

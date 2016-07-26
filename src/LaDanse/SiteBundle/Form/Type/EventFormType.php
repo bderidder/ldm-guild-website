@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +19,7 @@ class EventFormType extends AbstractType
                 	'label' => "Name"
                 	))
 		        ->add('description', TextareaType::class)
-		        ->add('date', 'date', array(
+		        ->add('date', DateType::class, array(
 		        	'widget' => 'single_text',
 		        	'format' => 'EEE dd-MM-yyyy',
 					'attr' => array('class' => 'date')))

@@ -10,7 +10,7 @@ use LaDanse\ServicesBundle\Common\AbstractQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(IsAccountConnectedQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(IsAccountConnectedQuery::SERVICE_NAME, public=true, shared=false)
  */
 class IsAccountConnectedQuery extends AbstractQuery
 {

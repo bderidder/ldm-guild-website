@@ -35,6 +35,7 @@ nbproject/
 .project
 .settings/
 *.sublime-*
+/.rules
 
 # envvars
 bin/envvars

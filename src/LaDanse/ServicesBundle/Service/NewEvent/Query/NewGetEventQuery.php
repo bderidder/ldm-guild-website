@@ -11,7 +11,7 @@ use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(NewGetEventQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(NewGetEventQuery::SERVICE_NAME, public=true, shared=false)
  */
 class NewGetEventQuery extends AbstractQuery
 {

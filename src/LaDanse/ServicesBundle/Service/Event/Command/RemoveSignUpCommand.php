@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(RemoveSignUpCommand::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(RemoveSignUpCommand::SERVICE_NAME, public=true, shared=false)
  */
 class RemoveSignUpCommand extends AbstractCommand
 {

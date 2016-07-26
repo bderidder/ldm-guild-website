@@ -16,17 +16,19 @@ class SignUpFormType extends AbstractType
 	{
 		$builder->add('roles', ChoiceType::class, array(
     				'choices'   => array(
-    					Role::TANK   => 'Tank',
-    					Role::HEALER => 'Healer',
-    					Role::DPS    => 'Damage'),
+    					'Tank'   => Role::TANK,
+    					'Healer' => Role::HEALER,
+    					'Damage' => Role::DPS),
+                    'choices_as_values' => true,
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
 		        ->add('type', ChoiceType::class, array(
     				'choices'   => array(
-    					SignUpType::WILLCOME  => 'Will come',
-    					SignUpType::MIGHTCOME => 'Might come',
-						SignUpType::ABSENCE => 'Can\'t come'),
+                        'Will come'   => SignUpType::WILLCOME,
+                        'Might come'  => SignUpType::MIGHTCOME,
+                        'Can\'t come' => SignUpType::ABSENCE),
+                    'choices_as_values' => true,
     				'expanded'	=> true,
     				'multiple'	=> false
 				))

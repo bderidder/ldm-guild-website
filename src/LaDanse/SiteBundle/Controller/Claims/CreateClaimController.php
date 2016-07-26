@@ -29,8 +29,13 @@ class CreateClaimController extends LaDanseController
 
         $formModel = new CreateClaimFormModel();
 
-        $form = $this->createForm(new CreateClaimFormType($this->container), $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+        $form = $this->createForm(
+            CreateClaimFormType::class,
+            $formModel,
+            array(
+                'attr' => array('class' => 'form-horizontal', 'novalidate' => ''),
+                'unclaimedChars' => $this->getUnclaimedChoices())
+        );
 
         if ($request->getMethod() == 'POST')
         {
@@ -89,5 +94,20 @@ class CreateClaimController extends LaDanseController
         $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
 
         $guildCharacterService->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
-    }    
+    }
+
+    private function getUnclaimedChoices()
+    {
+        $unclaimedChars = $this->container->get(GuildCharacterService::SERVICE_NAME)->getUnclaimedCharacters();
+
+        $choices = array();
+
+        foreach($unclaimedChars as $unclaimedChar)
+        {
+            //$choices[$unclaimedChar->id] = $unclaimedChar->name;
+            $choices[$unclaimedChar->name] = $unclaimedChar->id;
+        }
+
+        return $choices;
+    }
 }

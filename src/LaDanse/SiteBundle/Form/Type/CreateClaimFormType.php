@@ -3,36 +3,28 @@
 namespace LaDanse\SiteBundle\Form\Type;
 
 use LaDanse\DomainBundle\Entity\Role;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateClaimFormType extends AbstractType
 {
-    use ContainerAwareTrait;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->setContainer($container);
-    }
-
-	public function buildForm(FormBuilderInterface $builder, array $options)
+   public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('roles', ChoiceType::class, array(
     				'choices'   => array(
-    					Role::TANK   => 'Tank',
-    					Role::HEALER => 'Healer',
-    					Role::DPS    => 'Damage'),
+                        'Tank'   => Role::TANK,
+                        'Healer' => Role::HEALER,
+                        'Damage' => Role::DPS),
+                    'choices_as_values' => true,
     				'expanded'	=> true,
     				'multiple'	=> true
 				))
 		        ->add('character', ChoiceType::class, array(
-                    'choices' => $this->getUnclaimedChoices(),
+                    'choices' => $options['unclaimedChars'],
+                    'choices_as_values' => true,
                     'expanded'  => false,
                     'multiple'  => false))
                 ->add('save', SubmitType::class, array(
@@ -50,17 +42,15 @@ class CreateClaimFormType extends AbstractType
 		return 'NewClaimForm';
 	}
 
-    private function getUnclaimedChoices()
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $unclaimedChars = $this->container->get(GuildCharacterService::SERVICE_NAME)->getUnclaimedCharacters();
-
-        $choices = array();
-
-        foreach($unclaimedChars as $unclaimedChar)
-        {
-            $choices[$unclaimedChar->id] = $unclaimedChar->name;
-        }
-
-        return $choices;
+        $resolver->setDefaults(
+            array(
+                'unclaimedChars' => null,
+            )
+        );
     }
 }

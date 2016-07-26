@@ -33,7 +33,7 @@ class EditClaimController extends LaDanseController
 
         $formModel = new EditClaimFormModel($claimModel);
 
-        $form = $this->createForm(new EditClaimFormType(), $formModel,
+        $form = $this->createForm(EditClaimFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

@@ -11,7 +11,7 @@ use LaDanse\ServicesBundle\Service\NewEvent\Query\NewGetEventQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(NewEventService::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(NewEventService::SERVICE_NAME, public=true, shared=false)
  */
 class NewEventService extends LaDanseService
 {

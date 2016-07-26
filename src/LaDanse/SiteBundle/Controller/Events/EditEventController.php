@@ -80,7 +80,7 @@ class EditEventController extends LaDanseController
         
         $formModel = $this->entityToModel($event);
 
-        $form = $this->createForm(new EventFormType(), $formModel, 
+        $form = $this->createForm(EventFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

@@ -34,7 +34,7 @@ class AuthenticationContext extends LaDanseService
      */
     public function isAuthenticated()
     {
-        return (true === $this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
+        return (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
     }
 
     /**
@@ -44,7 +44,7 @@ class AuthenticationContext extends LaDanseService
     {
         if ($this->isAuthenticated())
         {
-            return $this->get('security.context')->getToken()->getUser()->getId();
+            return $this->get('security.token_storage')->getToken()->getUser()->getId();
         }
         else
         {
@@ -57,6 +57,6 @@ class AuthenticationContext extends LaDanseService
      */
     public function getAccount()
     {
-        return $this->get('security.context')->getToken()->getUser();
+        return $this->get('security.token_storage')->getToken()->getUser();
     }
 }

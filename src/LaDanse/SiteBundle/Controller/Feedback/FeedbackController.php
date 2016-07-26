@@ -39,7 +39,7 @@ class FeedbackController extends LaDanseController
         $formModel = new FeedbackFormModel();
         $formModel->setDescription('');
 
-        $form = $this->createForm(new FeedbackFormType(), $formModel, 
+        $form = $this->createForm(FeedbackFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

@@ -5,7 +5,7 @@ namespace LaDanse\ServicesBundle\Notification;
 use JMS\DiExtraBundle\Annotation as DI;
 
 /**
- * @DI\Service(NotificationContext::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(NotificationContext::SERVICE_NAME, public=true, shared=false)
  */
 class NotificationContext
 {

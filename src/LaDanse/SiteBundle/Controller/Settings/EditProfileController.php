@@ -56,7 +56,7 @@ class EditProfileController extends LaDanseController
         $formModel->setLogin($account->getUsername());
         $formModel->setEmail($account->getEmail());
 
-        $form = $this->createForm(new ProfileFormType(), $formModel,
+        $form = $this->createForm(ProfileFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

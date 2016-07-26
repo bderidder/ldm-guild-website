@@ -55,7 +55,7 @@ class EditNotificationsController extends LaDanseController
 
         $this->loadSettings($formModel, $authContext->getAccount());
 
-        $form = $this->createForm(new NotificationsFormType(), $formModel,
+        $form = $this->createForm(NotificationsFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

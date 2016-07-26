@@ -15,9 +15,10 @@ class EditClaimFormType extends AbstractType
 	{
 		$builder->add('roles', ChoiceType::class, array(
     				'choices'   => array(
-    					Role::TANK   => 'Tank',
-    					Role::HEALER => 'Healer',
-    					Role::DPS    => 'Damage'),
+                        'Tank'   => Role::TANK,
+                        'Healer' => Role::HEALER,
+                        'Damage' => Role::DPS),
+                    'choices_as_values' => true,
     				'expanded'	=> true,
     				'multiple'	=> true
 				))

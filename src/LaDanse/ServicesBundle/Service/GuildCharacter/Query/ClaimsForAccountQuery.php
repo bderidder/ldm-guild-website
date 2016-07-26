@@ -13,7 +13,7 @@ use LaDanse\ServicesBundle\Common\AbstractQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(ClaimsForAccountQuery::SERVICE_NAME, public=true, scope="prototype")
+ * @DI\Service(ClaimsForAccountQuery::SERVICE_NAME, public=true, shared=false)
  */
 class ClaimsForAccountQuery extends AbstractQuery
 {

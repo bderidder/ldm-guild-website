@@ -51,7 +51,7 @@ class ChangePasswordController extends LaDanseController
 
         $formModel = new PasswordFormModel();
 
-        $form = $this->createForm(new PasswordFormType(), $formModel,
+        $form = $this->createForm(PasswordFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')

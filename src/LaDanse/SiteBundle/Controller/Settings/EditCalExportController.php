@@ -61,7 +61,7 @@ class EditCalExportController extends LaDanseController
         $formModel->setExportNew($calExport->getExportNew());
         $formModel->setExportAbsence($calExport->getExportAbsence());
 
-        $form = $this->createForm(new CalExportFormType(), $formModel,
+        $form = $this->createForm(CalExportFormType::class, $formModel,
             array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
 
         if ($request->getMethod() == 'POST')
