@@ -1,26 +1,22 @@
-composer.phar
 
-*.sublime-*
-
-/var/**
+## In 3.0 cache and logs reside in /var
+/var/
 !/var/cache/.gitkeep
 !/var/logs/.gitkeep
-/app/config/parameters.yml
-/phpunit.xml
+
+## Vendor files are pulling in using composer
 /vendor/
+
+## Ignore files in /web that are copied over at runtime
+/web/assetic/
 /web/bundles/
+/web/css/*
+/web/js/*
+/web/images/*
+/web/compiled/
 
-/app/config/parameters.yml
-
-/vendor/
-/composer.phar
-web/css/*
-web/js/*
-web/images/*
-
+## Spool files are temporary
 /app/spool
-
-TestCommand.php
 
 ## generic files to ignore
 *~
@@ -38,6 +34,7 @@ nbproject/
 .buildpath
 .project
 .settings/
+*.sublime-*
 
 # envvars
 bin/envvars
@@ -45,16 +42,13 @@ bin/envvars
 # to have the possibility to have an own htaccess e.g. with protection (as on prod)
 web/.htaccess
 
-# ignore compiled files (see config.yml assetic: read_from)
-web/compiled/
-
 # ignore parameters so everone can have its own
-app/config/parameters.yml
+/app/config/parameters.yml
 
 # ignore MopaRemoteUpdateBundle bin files
 bin/post-composer.sh
 bin/envvars.default
 app/Resources/mopa_remote_update.sqlite
+
 /src/LaDanse/SiteBundle/Resources/public/components/
-/web/assetic/
 /src/LaDanse/AngularBundle/Resources/public/components/
