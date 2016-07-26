@@ -4,12 +4,12 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fda4200ae821bb812c1dc59add2c323c",
-    "content-hash": "3865b1a437a73a1ff68720be991b0165",
+    "hash": "f985848ae46cb9ec460b453934a0a40d",
+    "content-hash": "7c9176a7d5b7da090ab74e716e5b1d24",
     "packages": [
         {
             "name": "coderspotting/toast-message",
-            "version": "dev-master",
+            "version": "1.0",
             "target-dir": "CoderSpotting/Bundle/ToastMessageBundle",
             "source": {
                 "type": "git",
@@ -5803,7 +5803,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
-        "coderspotting/toast-message": 20,
         "phpunit/phpunit": 0,
         "phake/phake": 0,
         "liip/functional-test-bundle": 0,

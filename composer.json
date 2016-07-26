@@ -35,7 +35,7 @@
     "friendsofsymfony/rest-bundle": "~1.4",
     "craue/formflow-bundle": "~2.1",
     "friendsofsymfony/user-bundle": "~2.0@dev",
-    "coderspotting/toast-message": "dev-master",
+    "coderspotting/toast-message": "~1.0",
     "eluceo/ical": "^0.9",
     "trt/swift-css-inliner-bundle": "^0.4",
     "hwi/oauth-bundle": "~0.4",
