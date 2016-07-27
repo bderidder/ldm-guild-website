@@ -37,6 +37,7 @@
     "friendsofsymfony/user-bundle": "~2.0@dev",
     "coderspotting/toast-message": "~1.0",
     "eluceo/ical": "^0.9",
+    "yohang/finite": "^1.1",
     "trt/swift-css-inliner-bundle": "^0.4",
     "hwi/oauth-bundle": "~0.5@dev",
     "guzzlehttp/guzzle": "^6.2",
