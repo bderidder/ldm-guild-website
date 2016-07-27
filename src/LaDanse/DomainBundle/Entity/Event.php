@@ -9,13 +9,14 @@ namespace LaDanse\DomainBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
+use Finite\StatefulInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Event")
  * @ORM\HasLifecycleCallbacks
  */
-class Event
+class Event implements StatefulInterface
 {
     const REPOSITORY = 'LaDanseDomainBundle:Event';
 
@@ -81,6 +82,13 @@ class Event
      * @ORM\JoinColumn(name="organiserId", referencedColumnName="id", nullable=false)
      */
     protected $organiser;
+
+    /**
+     * @var string $state
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $state;
 
     /**
      * Constructor
@@ -323,6 +331,24 @@ class Event
     public function getTopicId()
     {
         return $this->topicId;
+    }
+
+    /**
+     * Get state
+     *
+     * @param string $state
+     */
+    public function setFiniteState($state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFiniteState()
+    {
+        return $this->state;
     }
 
     public function toJson()
