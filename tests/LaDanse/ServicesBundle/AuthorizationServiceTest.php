@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Tests;
+namespace Tests\LaDanse\ServicesBundle;
 
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
@@ -33,8 +33,8 @@ class AuthorizationServiceTest extends WebTestCase
         self::bootKernel();
 
         $fixtures = $this->loadFixtureFiles(array(
-            '@LaDanseSiteBundle/Tests/Fixtures/account.yml',
-            '@LaDanseServicesBundle/Tests/Fixtures/event.yml'
+            'tests/LaDanse/SiteBundle/Fixtures/account.yml',
+            'tests/LaDanse/ServicesBundle/Fixtures/event.yml'
         ));
 
         /** @var Event $event1 */
