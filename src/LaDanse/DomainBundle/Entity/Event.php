@@ -7,9 +7,10 @@
 namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\ORM\Mapping as ORM;
 use Finite\StatefulInterface;
+use Finite\StateMachine\StateMachineInterface;
+use LaDanse\DomainBundle\FSM\EventStateMachine;
 
 /**
  * @ORM\Entity
@@ -90,12 +91,18 @@ class Event implements StatefulInterface
      */
     private $state;
 
+    private $stateMachine;
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->signUps = new ArrayCollection();
+
+        $sm = EventStateMachine::create();
+        $sm->setObject($this);
+        $sm->initialize();
     }
 
     /**
@@ -349,6 +356,14 @@ class Event implements StatefulInterface
     public function getFiniteState()
     {
         return $this->state;
+    }
+
+    /**
+     * @return StateMachineInterface
+     */
+    public function getStateMachine()
+    {
+        return $this->stateMachine;
     }
 
     public function toJson()

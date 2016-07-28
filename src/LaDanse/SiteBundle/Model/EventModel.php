@@ -18,6 +18,7 @@ class EventModel
     protected $signUpsModel;
     protected $isOrganiser;
     protected $topicId;
+    protected $state;
 
     public function __construct(Event $event, Account $currentUser)
     {
@@ -31,6 +32,7 @@ class EventModel
         $this->lastModifiedTime = $event->getLastModifiedTime();
         $this->organiser = new AccountModel($event->getOrganiser());
         $this->topicId = $event->getTopicId();
+        $this->state = $event->getFiniteState();
 
         $this->signUpsModel = new EventSignUpsModel($event, $currentUser);
 
@@ -115,6 +117,22 @@ class EventModel
     public function getTopicId()
     {
         return $this->topicId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
     }
 
     /**
