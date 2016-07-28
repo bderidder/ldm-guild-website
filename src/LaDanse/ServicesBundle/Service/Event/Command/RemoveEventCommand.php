@@ -10,9 +10,7 @@ use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

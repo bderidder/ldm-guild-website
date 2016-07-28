@@ -7,18 +7,13 @@
 namespace LaDanse\RestBundle\Controller\Forum;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\RestBundle\Controller\Forum\PostMapper;
-use LaDanse\RestBundle\Controller\Forum\ResourceHelper;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
-
 use LaDanse\ServicesBundle\Service\Forum\PostDoesNotExistException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**

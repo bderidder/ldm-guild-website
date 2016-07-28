@@ -3,7 +3,6 @@
 namespace LaDanse\ServicesBundle\Service\DTO\Forum;
 
 use LaDanse\DomainBundle\Entity as DomainEntity;
-use LaDanse\ForumBundle\Entity as ForumEntity;
 use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 
 class ForumFactory

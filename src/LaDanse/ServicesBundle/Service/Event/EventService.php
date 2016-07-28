@@ -2,7 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\Event;
 
-use \Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
@@ -19,11 +19,8 @@ use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsSinceQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
-
 use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
-
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

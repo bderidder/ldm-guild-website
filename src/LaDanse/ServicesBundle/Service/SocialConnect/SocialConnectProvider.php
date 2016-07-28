@@ -10,12 +10,9 @@ use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
-
 use Symfony\Component\PropertyAccess\PropertyAccess;
-
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**

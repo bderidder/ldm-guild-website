@@ -3,7 +3,6 @@
 namespace LaDanse\ServicesBundle\FeatureUse;
 
 use JMS\DiExtraBundle\Annotation as DI;
-
 use LaDanse\DomainBundle\Entity\FeatureUse;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 

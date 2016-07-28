@@ -3,7 +3,6 @@
 namespace LaDanse\ServicesBundle\Service\NewEvent;
 
 use JMS\DiExtraBundle\Annotation as DI;
-
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;

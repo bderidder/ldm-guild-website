@@ -6,12 +6,12 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Output\OutputInterface;
 use LaDanse\ServicesBundle\Common\CommandExecutionContext;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class RefreshGuildMembersCommand

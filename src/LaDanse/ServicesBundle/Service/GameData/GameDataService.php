@@ -10,7 +10,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
 use LaDanse\ServicesBundle\Common\LaDanseService;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

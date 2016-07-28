@@ -4,12 +4,10 @@ namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
-
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

@@ -63,7 +63,10 @@ class GetAccessTokenForAccountQuery extends AbstractQuery
 
         if (count($socialConnects) == 1)
         {
-            return $socialConnects[0]->getAccessToken();
+            $firstSocialConnect = $socialConnects[0];
+
+            /** @var SocialConnect $firstSocialConnect */
+            return $firstSocialConnect->getAccessToken();
         }
 
         return null;

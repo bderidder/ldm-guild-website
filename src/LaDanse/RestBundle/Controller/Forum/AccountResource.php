@@ -7,13 +7,10 @@
 namespace LaDanse\RestBundle\Controller\Forum;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\RestBundle\Controller\Forum\PostMapper;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**

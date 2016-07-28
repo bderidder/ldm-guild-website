@@ -7,10 +7,6 @@
 namespace LaDanse\RestBundle\Controller\Forum;
 
 use LaDanse\DomainBundle\Entity\Forum\Topic;
-
-use LaDanse\RestBundle\Controller\Forum\ForumMapper;
-use LaDanse\RestBundle\Controller\Forum\PostMapper;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**

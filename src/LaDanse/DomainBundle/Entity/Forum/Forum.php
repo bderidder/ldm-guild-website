@@ -3,11 +3,9 @@
 namespace LaDanse\DomainBundle\Entity\Forum;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Forum\Topic;
 
 /**
  * Forum

@@ -3,17 +3,11 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use LaDanse\ServicesBundle\Common\AbstractCommand;
-
-
-use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

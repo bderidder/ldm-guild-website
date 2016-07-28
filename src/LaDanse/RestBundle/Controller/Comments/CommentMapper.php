@@ -7,8 +7,6 @@
 namespace LaDanse\RestBundle\Controller\Comments;
 
 use LaDanse\DomainBundle\Entity\Comments\Comment;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**

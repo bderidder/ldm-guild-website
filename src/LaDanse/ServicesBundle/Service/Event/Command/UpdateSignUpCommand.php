@@ -9,12 +9,9 @@ use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
-
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
-
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

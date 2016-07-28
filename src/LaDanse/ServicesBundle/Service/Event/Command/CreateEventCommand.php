@@ -7,14 +7,11 @@ use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use LaDanse\ServicesBundle\Common\AbstractCommand;
-
-
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 
 /**
  * @DI\Service(CreateEventCommand::SERVICE_NAME, public=true, shared=false)

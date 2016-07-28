@@ -9,7 +9,6 @@ namespace LaDanse\ServicesBundle\Service\Authorization\ResourceFinders;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

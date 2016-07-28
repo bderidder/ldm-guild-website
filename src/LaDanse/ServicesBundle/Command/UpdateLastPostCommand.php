@@ -6,10 +6,10 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Output\OutputInterface;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class UpdateLastPostCommand

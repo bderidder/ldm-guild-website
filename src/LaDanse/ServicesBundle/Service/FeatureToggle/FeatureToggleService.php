@@ -7,7 +7,6 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\FeatureToggle;
 use LaDanse\ServicesBundle\Common\LaDanseService;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

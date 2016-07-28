@@ -11,12 +11,9 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
-
 use LaDanse\ServicesBundle\Service\Event\UserAlreadySignedException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

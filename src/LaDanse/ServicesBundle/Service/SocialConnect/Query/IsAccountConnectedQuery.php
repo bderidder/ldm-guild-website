@@ -3,7 +3,6 @@
 namespace LaDanse\ServicesBundle\Service\SocialConnect\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
-
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SocialConnect;
 use LaDanse\ServicesBundle\Common\AbstractQuery;

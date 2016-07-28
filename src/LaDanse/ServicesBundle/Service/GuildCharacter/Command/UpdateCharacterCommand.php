@@ -7,14 +7,10 @@ use LaDanse\DomainBundle\Entity\Character;
 use LaDanse\DomainBundle\Entity\CharacterVersion;
 use LaDanse\DomainBundle\Entity\GameClass;
 use LaDanse\DomainBundle\Entity\GameRace;
-
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
-
 use LaDanse\ServicesBundle\Activity\ActivityType;
-
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

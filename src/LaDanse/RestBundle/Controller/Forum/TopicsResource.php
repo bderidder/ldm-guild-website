@@ -7,17 +7,12 @@
 namespace LaDanse\RestBundle\Controller\Forum;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\RestBundle\Controller\Forum\ResourceHelper;
-use LaDanse\RestBundle\Controller\Forum\TopicMapper;
-
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Forum\TopicDoesNotExistException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**

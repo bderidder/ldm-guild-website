@@ -3,9 +3,7 @@
 namespace LaDanse\DomainBundle\Entity\Forum;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Forum\Post;
 
 /**
  * UnreadPost

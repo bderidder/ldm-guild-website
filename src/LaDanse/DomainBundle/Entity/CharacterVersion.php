@@ -73,7 +73,7 @@ class CharacterVersion
      * Set fromTime
      *
      * @param \DateTime $fromTime
-     * @return Character
+     * @return CharacterVersion
      */
     public function setFromTime($fromTime)
     {
@@ -96,7 +96,7 @@ class CharacterVersion
      * Set endTime
      *
      * @param \DateTime $endTime
-     * @return Character
+     * @return CharacterVersion
      */
     public function setEndTime($endTime)
     {

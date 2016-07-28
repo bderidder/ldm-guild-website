@@ -4,7 +4,6 @@ namespace LaDanse\ServicesBundle\Notification;
 
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
-
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use Symfony\Component\Console\Output\OutputInterface;
