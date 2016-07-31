@@ -5,17 +5,17 @@ parameters:
     database_driver:    pdo_mysql
     database_host:      127.0.0.1
     database_port:      3306
-    database_name:      database
-    database_user:      dbuser
-    database_password:  password
+    database_name:      LaDanseDB
+    database_user:      root
+    database_password:  null
 
     # Database settings for the TEST environment
     test_database_driver:    pdo_mysql
     test_database_host:      127.0.0.1
     test_database_port:      3306
-    test_database_name:      database
-    test_database_user:      dbuser
-    test_database_password:  password
+    test_database_name:      LaDanseDB
+    test_database_user:      root
+    test_database_password:  null
 
     # Mailer settings
     mailer_transport:   smtp
