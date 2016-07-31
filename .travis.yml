@@ -1,0 +1,26 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+  - hhvm
+
+services:
+    - mysql
+
+before_script:
+    - cp app/config/parameters.yml.dist app/config/parameters.yml
+    - composer self-update
+    - composer install --dev --no-interaction --prefer-source
+    - bin/console doctrine:database:create --env=test --no-interaction --quiet
+    - bin/console doctrine:migrations:migrate --env=test --allow-no-migration --no-interaction --quiet
+    - bin/console sp:bower:install --env=test --no-debug
+    - bin/console cache:warmup --env=test --quiet
+
+script:
+    - ./bin/phpspec run -fpretty --verbose
+    - ./bin/behat  --no-snippets --no-paths --verbose
+
+matrix:
+    allow_failures:
+          - php: hhvm
