@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -17,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class RemoveSignUpController extends LaDanseController
 {
-    const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
-
     /**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
@@ -77,6 +76,31 @@ class RemoveSignUpController extends LaDanseController
                 array(
                     "event"   => $eventId,
                     "account" => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+        }
+        catch(NotAuthorizedException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' currently logged in user is not allowed to remove this sign up',
+                array(
+                    "event"   => $eventId,
+                    "account" => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+        }
+        catch(\Exception $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' unexpected error',
+                array(
+                    "throwable" => $e,
+                    "event"     => $eventId,
+                    "account"   => $account->getId()
                 )
             );
 

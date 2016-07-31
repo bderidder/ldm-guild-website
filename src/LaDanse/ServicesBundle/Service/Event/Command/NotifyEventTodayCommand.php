@@ -4,6 +4,7 @@ namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
@@ -65,6 +66,7 @@ class NotifyEventTodayCommand extends AbstractCommand
             ->from('LaDanse\DomainBundle\Entity\Event', 'e')
             ->where('e.inviteTime >= :startToday')
             ->andWhere('e.inviteTime <= :endToday')
+            ->andWhere('e.state == \'' . EventStateMachine::CONFIRMED . '\'' )
             ->orderBy('e.inviteTime', 'ASC');
 
         $qb->setParameter('startToday', $startToday)

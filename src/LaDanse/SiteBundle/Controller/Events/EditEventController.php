@@ -22,9 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EditEventController extends LaDanseController
 {
-	const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
-
-    /**
+	/**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
      */
@@ -40,6 +38,9 @@ class EditEventController extends LaDanseController
      */
     public function editAction(Request $request, $id)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
+
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
@@ -58,6 +59,19 @@ class EditEventController extends LaDanseController
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
+        }
+        catch(\Exception $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' unexpected error',
+                array(
+                    "throwable" => $e,
+                    "event"     => $id,
+                    "account"   => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
 
         /* verify that the event is not in the past */

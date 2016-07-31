@@ -59,6 +59,11 @@
     background-color: #ce607e;
 }
 
+.event-Cancelled
+{
+    background-color: rgb(155, 155, 155);
+}
+
 .event-notSigned
 {
     background-color: rgb(65,100, 160);

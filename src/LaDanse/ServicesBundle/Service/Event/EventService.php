@@ -8,6 +8,9 @@ use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
+use LaDanse\ServicesBundle\Service\Event\Command\CancelEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\ConfirmEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
@@ -166,6 +169,44 @@ class EventService extends LaDanseService
         $updateEventCommand->setEndTime($endTIme);
 
         $updateEventCommand->run();
+    }
+
+    /**
+     * Confirm an event that is in Pending state
+     *
+     * @param int $eventId
+     *
+     * @throws NotAuthorizedException when the currently logged in user is not allowed this action
+     * @throws EventInvalidStateChangeException the event does not allow this state change right now
+     * @throws EventDoesNotExistException $eventId does not point to an existing event
+     */
+    public function confirmEvent($eventId)
+    {
+        /** @var ConfirmEventCommand $confirmEventCommand */
+        $confirmEventCommand = $this->container->get(ConfirmEventCommand::SERVICE_NAME);
+
+        $confirmEventCommand->setEventId($eventId);
+
+        $confirmEventCommand->run();
+    }
+
+    /**
+     * Cancel an event that is in Pending state
+     *
+     * @param int $eventId
+     *
+     * @throws NotAuthorizedException when the currently logged in user is not allowed this action
+     * @throws EventInvalidStateChangeException the event does not allow this state change right now
+     * @throws EventDoesNotExistException $eventId does not point to an existing event
+     */
+    public function cancelEvent($eventId)
+    {
+        /** @var CancelEventCommand $cancelEventCommand */
+        $cancelEventCommand = $this->container->get(CancelEventCommand::SERVICE_NAME);
+
+        $cancelEventCommand->setEventId($eventId);
+
+        $cancelEventCommand->run();
     }
 
     /**

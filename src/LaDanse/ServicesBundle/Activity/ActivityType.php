@@ -14,11 +14,13 @@ class ActivityType
     const CALENDAR_VIEW = 'Calendar.View'; // Read Only
     const CALENDAR_ICAL = 'Calendar.iCal'; // Read Only
 
-    const EVENT_VIEW    = 'Event.View';    // Read Only
-    const EVENT_EDIT    = 'Event.Edit';    // State Change
-    const EVENT_DELETE  = 'Event.Delete';  // State Change
-    const EVENT_CREATE  = 'Event.Create';  // State Change
-    const EVENT_LIST    = 'Event.List';    // Read Only
+    const EVENT_VIEW     = 'Event.View';     // Read Only
+    const EVENT_EDIT     = 'Event.Edit';     // State Change
+    const EVENT_DELETE   = 'Event.Delete';   // State Change
+    const EVENT_CREATE   = 'Event.Create';   // State Change
+    const EVENT_CONFIRM  = 'Event.Confirm';  // State Change
+    const EVENT_CANCEL   = 'Event.Cancel';   // State Change
+    const EVENT_LIST     = 'Event.List';     // Read Only
 
     const EVENT_TODAY   = 'Event.Today';    // Read Only
 

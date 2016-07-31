@@ -8,6 +8,7 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -92,6 +93,17 @@ class RemoveSignUpCommand extends AbstractCommand
         if ($signUp->getEvent()->getInviteTime() <= $currentDateTime)
         {
             throw new EventInThePastException("Event belonging to sign up is in the past and cannot be changed");
+        }
+
+        $event = $signUp->getEvent();
+
+        $fsm = $event->getStateMachine();
+
+        if (!($fsm->getCurrentState() == 'Pending' || $fsm->getCurrentState() == 'Confirmed'))
+        {
+            throw new EventInvalidStateChangeException(
+                'The event is not in Pending or Confirmed state, sign-up removals are not allowed'
+            );
         }
 
         $em->remove($signUp);

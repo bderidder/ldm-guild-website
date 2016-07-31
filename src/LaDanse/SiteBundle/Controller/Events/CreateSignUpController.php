@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 */
 class CreateSignUpController extends LaDanseController
 {
-    const EVENT_REPOSITORY = 'LaDanseDomainBundle:Event';
-
     /**
      * @var $logger \Monolog\Logger
      * @DI\Inject("monolog.logger.ladanse")
@@ -37,6 +35,9 @@ class CreateSignUpController extends LaDanseController
      */
     public function createAction(Request $request, $eventId)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
+
         /** @var $eventService EventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
@@ -54,6 +55,19 @@ class CreateSignUpController extends LaDanseController
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
+        }
+        catch(\Throwable $t)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' unexpected error',
+                array(
+                    "throwable" => $t,
+                    "event"     => $eventId,
+                    "account"   => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
         }
 
         $formModel = new SignUpFormModel();
@@ -109,6 +123,9 @@ class CreateSignUpController extends LaDanseController
      */
     public function createAbsenceAction($eventId)
     {
+        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        $account = $authContext->getAccount();
+
         /** @var $eventService EventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 

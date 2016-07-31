@@ -14,6 +14,7 @@
     <span class="event-container event-mightCome">might come</span>
     <span class="event-container event-absent">absent</span>
     <span class="event-container event-notSigned">you haven't signed yet</span>
+    <span class="event-container event-Cancelled">cancelled event</span>
 </div>
 
 <br/>
@@ -59,11 +60,21 @@
                                 event-mightCome
                             {% elseif event.signUps.currentUserAbsent %}
                                 event-absent
-                            {% else %}
+                            {% elseif event.state == "Pending" or event.state == "Confirmed" %}
                                 event-notSigned
+                            {% endif %}
+                            {% if event.state == "Cancelled" %}
+                                event-Cancelled
                             {% endif %}
                             ">
                             <small>
+                                {% if event.state == "Pending" %}
+                                    <i class="fa fa-question" aria-hidden="true"></i>
+                                {% elseif event.state == "Cancelled" %}
+                                    {# nothing for Cancelled state #}
+                                {% elseif event.state == "Confirmed" %}
+                                    <i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
+                                {% endif %}
                                 {{ event.inviteTime|date("H:i") }} {{ event.name }}
                             </small>
                         </div>

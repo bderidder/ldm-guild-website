@@ -13,9 +13,15 @@ class EventStateMachine
     const CANCELLED   = "Cancelled";
     const NOTHAPPENED = "NotHappened";
     const HAPPENED    = "Happened";
-    const EVENTPASSED = "EventPassed";
     const DELETED     = "Deleted";
     const ARCHIVED    = "Archived";
+
+    const TR_CONFIRM = "confirm";
+    const TR_CANCEL = "cancel";
+    const TR_CONFIRM_HAPPENED = "confirmHappened";
+    const TR_CONFIRM_NOT_HAPPENED = "confirmNotHappened";
+    const TR_ARCHIVE = "archive";
+    const TR_DELETE = "delete";
 
     /**
      * @return StateMachine
@@ -30,22 +36,20 @@ class EventStateMachine
         $sm->addState(EventStateMachine::CANCELLED);
         $sm->addState(EventStateMachine::NOTHAPPENED);
         $sm->addState(EventStateMachine::HAPPENED);
-        $sm->addState(EventStateMachine::EVENTPASSED);
         $sm->addState(new State(EventStateMachine::DELETED, StateInterface::TYPE_FINAL));
         $sm->addState(new State(EventStateMachine::ARCHIVED, StateInterface::TYPE_FINAL));
 
         // Define transitions
-        $sm->addTransition('confirm',            EventStateMachine::PENDING,     EventStateMachine::CONFIRMED);
-        $sm->addTransition('cancel',             EventStateMachine::PENDING,     EventStateMachine::CANCELLED);
-        $sm->addTransition('cancel',             EventStateMachine::CONFIRMED,   EventStateMachine::CANCELLED);
-        $sm->addTransition('confirmHappened',    EventStateMachine::CONFIRMED,   EventStateMachine::HAPPENED);
-        $sm->addTransition('confirmNotHappened', EventStateMachine::CONFIRMED,   EventStateMachine::NOTHAPPENED);
-        $sm->addTransition('timePassed',         EventStateMachine::PENDING,     EventStateMachine::EVENTPASSED);
-        $sm->addTransition('timePassed',         EventStateMachine::CANCELLED,   EventStateMachine::EVENTPASSED);
-        $sm->addTransition('archive',            EventStateMachine::EVENTPASSED, EventStateMachine::ARCHIVED);
-        $sm->addTransition('archive',            EventStateMachine::NOTHAPPENED, EventStateMachine::ARCHIVED);
-        $sm->addTransition('archive',            EventStateMachine::HAPPENED,    EventStateMachine::ARCHIVED);
-        $sm->addTransition('delete',             EventStateMachine::PENDING,     EventStateMachine::DELETED);
+        $sm->addTransition(EventStateMachine::TR_CONFIRM,              EventStateMachine::PENDING,     EventStateMachine::CONFIRMED);
+        $sm->addTransition(EventStateMachine::TR_CANCEL,               EventStateMachine::PENDING,     EventStateMachine::CANCELLED);
+        $sm->addTransition(EventStateMachine::TR_CANCEL,               EventStateMachine::CONFIRMED,   EventStateMachine::CANCELLED);
+        $sm->addTransition(EventStateMachine::TR_CONFIRM_HAPPENED,     EventStateMachine::CONFIRMED,   EventStateMachine::HAPPENED);
+        $sm->addTransition(EventStateMachine::TR_CONFIRM_NOT_HAPPENED, EventStateMachine::CONFIRMED,   EventStateMachine::NOTHAPPENED);
+        $sm->addTransition(EventStateMachine::TR_ARCHIVE,              EventStateMachine::PENDING,     EventStateMachine::ARCHIVED);
+        $sm->addTransition(EventStateMachine::TR_ARCHIVE,              EventStateMachine::CANCELLED,   EventStateMachine::ARCHIVED);
+        $sm->addTransition(EventStateMachine::TR_ARCHIVE,              EventStateMachine::NOTHAPPENED, EventStateMachine::ARCHIVED);
+        $sm->addTransition(EventStateMachine::TR_ARCHIVE,              EventStateMachine::HAPPENED,    EventStateMachine::ARCHIVED);
+        $sm->addTransition(EventStateMachine::TR_DELETE,               EventStateMachine::PENDING,     EventStateMachine::DELETED);
 
         return $sm;
     }

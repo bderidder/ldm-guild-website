@@ -4,10 +4,12 @@ namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
@@ -16,11 +18,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(UpdateEventCommand::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(CancelEventCommand::SERVICE_NAME, public=true, shared=false)
  */
-class UpdateEventCommand extends AbstractCommand
+class CancelEventCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.UpdateEventCommand';
+    const SERVICE_NAME = 'LaDanse.CancelEventCommand';
 
     /**
      * @var $logger \Monolog\Logger
@@ -48,16 +50,6 @@ class UpdateEventCommand extends AbstractCommand
 
     /** @var int $eventId */
     private $eventId;
-    /** @var string $name */
-    private $name;
-    /** @var string $description */
-    private $description;
-    /** @var \DateTime $inviteTime */
-    private $inviteTime;
-    /** @var \DateTime $startTime */
-    private $startTime;
-    /** @var \DateTime $endTime */
-    private $endTime;
 
     /**
      * @param ContainerInterface $container
@@ -87,86 +79,6 @@ class UpdateEventCommand extends AbstractCommand
         $this->eventId = $eventId;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getInviteTime()
-    {
-        return $this->inviteTime;
-    }
-
-    /**
-     * @param \DateTime $inviteTime
-     */
-    public function setInviteTime($inviteTime)
-    {
-        $this->inviteTime = $inviteTime;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getStartTime()
-    {
-        return $this->startTime;
-    }
-
-    /**
-     * @param \DateTime $startTime
-     */
-    public function setStartTime($startTime)
-    {
-        $this->startTime = $startTime;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getEndTime()
-    {
-        return $this->endTime;
-    }
-
-    /**
-     * @param \DateTime $endTime
-     */
-    public function setEndTime($endTime)
-    {
-        $this->endTime = $endTime;
-    }
-
     protected function validateInput()
     {
     }
@@ -186,46 +98,44 @@ class UpdateEventCommand extends AbstractCommand
             throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
         }
 
-        $fsm = $event->getStateMachine();
-
-        if (!($fsm->getCurrentState() == 'Pending' || $fsm->getCurrentState() == 'Confirmed'))
-        {
-            throw new EventInvalidStateChangeException(
-                'The event is not in Pending or Confirmed state, updated are not allowed'
-            );
-        }
-
         /* verify that the user can edit this particular event */
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
-            ActivityType::EVENT_EDIT,
+            ActivityType::EVENT_CONFIRM,
             new ResourceByValue(Event::class, $event->getId(), $event)))
         {
-            $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
+            $this->logger->warning(__CLASS__ . ' the user is not authorized to cancel event',
+                array(
+                    "account" => $this->getAccount()->getId(),
+                    "event" => $this->getEventId()
+                )
+            );
 
-            // throw exception
+            throw new NotAuthorizedException("Current user is not allowed to cancel event");
         }
 
-        $oldJson = $event->toJson();
+        if ($event->getStateMachine()->can(EventStateMachine::TR_CANCEL))
+        {
+            $event->getStateMachine()->apply(EventStateMachine::TR_CANCEL);
+        }
+        else
+        {
+            throw new EventInvalidStateChangeException('The event does not allow the Cancel transition in this state');
+        }
 
-        $event->setName($this->getName());
-        $event->setDescription($this->getDescription());
-        $event->setInviteTime($this->getInviteTime());
-        $event->setStartTime($this->getStartTime());
-        $event->setEndTime($this->getEndTime());
+        $eventJson = $event->toJson();
 
-        $this->logger->info(__CLASS__ . ' updating event');
+        $this->logger->info(__CLASS__ . ' cancelling event');
 
         $em->flush();
 
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
-                ActivityType::EVENT_EDIT,
+                ActivityType::EVENT_CANCEL,
                 $this->getAccount(),
                 array(
-                    'oldEvent' => $oldJson,
-                    'newEvent' => $event->toJson()
+                    'event' => $eventJson
                 )
             )
         );

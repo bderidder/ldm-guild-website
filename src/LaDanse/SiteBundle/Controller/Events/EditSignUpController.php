@@ -5,6 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -85,6 +86,19 @@ class EditSignUpController extends LaDanseController
         {
             return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
         }
+        catch(\Exception $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' unexpected error',
+                array(
+                    "throwable" => $e,
+                    "event"     => $id,
+                    "account"   => $account->getId()
+                )
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        }
 
         if ($currentSignUp == null)
         {
@@ -103,11 +117,43 @@ class EditSignUpController extends LaDanseController
 
         if ($form->isValid() && $formModel->isValid($form))
         {
-            $eventService->updateSignUp($currentSignUp->getId(), $formModel);
+            try
+            {
+                $eventService->updateSignUp($currentSignUp->getId(), $formModel);
 
-            $this->addToast('Signup updated');
+                $this->addToast('Signup updated');
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            }
+            catch(EventInThePastException $e)
+            {
+                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            }
+            catch(NotAuthorizedException $e)
+            {
+                $this->logger->warning(
+                    __CLASS__ . ' currently logged in user is not allowed to remove this event',
+                    array(
+                        "event"   => $id,
+                        "account" => $account->getId()
+                    )
+                );
+
+                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            }
+            catch(\Exception $e)
+            {
+                $this->logger->warning(
+                    __CLASS__ . ' unexpected error',
+                    array(
+                        "throwable" => $e,
+                        "event"     => $id,
+                        "account"   => $account->getId()
+                    )
+                );
+
+                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            }
         }
         else
         {

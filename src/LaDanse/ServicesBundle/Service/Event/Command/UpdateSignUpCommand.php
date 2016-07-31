@@ -9,6 +9,7 @@ use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -100,12 +101,23 @@ class UpdateSignUpCommand extends AbstractCommand
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $em->getRepository(SignUp::REPOSITORY);
 
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
+        /* @var SignUp $signUp */
         $signUp = $repository->find($this->getSignUpId());
 
         if ($signUp == null)
         {
             throw new SignUpDoesNotExistException('Sign up does not eixst');
+        }
+
+        $event = $signUp->getEvent();
+
+        $fsm = $event->getStateMachine();
+
+        if (!($fsm->getCurrentState() == 'Pending' || $fsm->getCurrentState() == 'Confirmed'))
+        {
+            throw new EventInvalidStateChangeException(
+                'The event is not in Pending or Confirmed state, sign-up updates are not allowed'
+            );
         }
 
         $oldSignUpJson = $signUp->toJson();

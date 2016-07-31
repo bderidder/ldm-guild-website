@@ -6,15 +6,42 @@
 
     {{ renderHeader(event.name, path('calendarIndex', {'showDate': event.startTime|date("Ymd") })) }}
 
-	{% if (not isFuture) %}
-		<div class="alert alert-danger">
+    {# EVENT PASSED #}
+	{% if not isFuture %}
+		<div class="alert alert-warning">
 			<div style="text-align: center; font-size: 150%">
-				This event is in the past!<br/>
-				Nothing can be changed, you can only comment.
+				This event is in the past! You can only comment.
 			</div>
 		</div>
-	{% endif %}
+	{% else %}
 
+        {# PENDING #}
+        {% if (event.state == 'Pending') %}
+            <div class="alert alert-info event-state-container">
+                <div class="state-icon"><i class="fa fa-question fa-2x" aria-hidden="true"></i></div>
+                <div class="state-text">This event is still pending ...</div>
+            </div>
+        {% endif %}
+
+        {# CONFIRMED #}
+        {% if (event.state == 'Confirmed') %}
+            <div class="alert alert-success event-state-container">
+                <div class="state-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i></div>
+                <div class="state-text">This event has been confirmed!</div>
+            </div>
+        {% endif %}
+
+        {# CANCELLED #}
+        {% if (event.state == 'Cancelled') %}
+            <div class="alert alert-danger event-state-container">
+                <div class="state-icon"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div>
+                <div class="state-text">This event has been cancelled. You can only comment.</div>
+            </div>
+        {% endif %}
+
+    {% endif %}
+
+    {# Render description, invite time ... in a horizontal table #}
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
             <div class="col-md-4">
@@ -52,6 +79,8 @@
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
             <div class="col-md-7">
+
+                {% if (event.state == 'Pending' or event.state == 'Confirmed') %}
 
 			    <h4>Sign Ups</h4>
 
@@ -219,7 +248,7 @@
 			    
 			    {# no sign ups, invite the user to make one or inform about absence #}
 			    {% elseif isFuture %}
-			        <p>There are no sign ups yet.</p>
+			        <p>There are no sign ups yet. Be the first to sign up or inform us of your absence.</p>
 
 			        <p>
 			            <a class="btn btn-success" href="{{ path('createSignUp', {'eventId': event.id}) }}">sign up</a>
@@ -227,17 +256,33 @@
 			        </p>
 				{% else %}
 					<p>There were no sign ups.</p>
-
 			    {% endif %}
 
-			    {# if the currently logged in user is the organiser, edit and delete options are shown #}
-			    {% if event.isOrganiser and auth.currentContext.authenticated and isFuture %}
-			        <p>As an organiser you can edit this event or delete it.</p> 
+                {% endif %}
 
-			        <p>
-			            <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
-			            <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
-			        </p>
+			    {# if the currently logged in user is the organiser, edit and delete options are shown #}
+			    {% if event.isOrganiser and auth.currentContext.authenticated and isFuture and (event.state == 'Pending' or event.state == 'Confirmed') %}
+                    <div style="margin-top: 50px;">
+                        <h4>Event Management</h4>
+                        <div style="float: left;">
+                            <p>
+                                {% if event.state == 'Pending' or event.state == 'Confirmed' %}
+                                    <a class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
+                                {% endif %}
+                                {% if event.state == 'Pending' %}
+                                    <a class="btn btn-success" href="{{ path('confirmEvent', {'id': event.id}) }}">confirm event</a>
+                                    <a class="btn btn-warning" href="{{ path('cancelEvent', {'id': event.id}) }}">cancel event</a>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div style="float: right;">
+                            <p>
+                                {% if event.state == 'Pending' %}
+                                    <a id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
 			    {% endif %}
 
 		    </div>
@@ -256,6 +301,35 @@
 		</div>
 
 	</div>
+
+    <div class="faq">
+
+        <p class="header">Frequently Asked Questions</p>
+
+        <p class="question">What does 'Pending', 'Confirmed' and 'Cancelled' mean?</p>
+
+        <p class="answer">
+            An event goes through different states to help our members better manage their online time.
+        </p>
+        <p class="answer">
+            When an event is created, it enters the <strong>Pending</strong> state. This means that we allow people
+            time to sign up or inform us of their absence. A short time before the event is supposed to take place,
+            typically 4 - 12 hours up front, the event organiser decides if the event will take place or not.
+            If sufficient people signed up, the event organiser will <strong>Confirm</strong> the event, otherwise
+            (s)he will <strong>Cancel</strong> the event.
+        </p>
+        <p class="answer">
+            This is to avoid having people turn up for an event that will most likely not take place.
+        </p>
+
+        <p class="question">Can I be notified when an event is confirmed or cancelled?</p>
+
+        <p class="answer">
+            Yes, you can receive an email when an event you signed up for is confirmed or cancelled. You can
+            <a href="{{ path('editNotifications') }}">configure your notification settings here</a>.
+        </p>
+
+    </div>
     
 {% endblock %}
 

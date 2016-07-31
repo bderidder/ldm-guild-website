@@ -8,6 +8,7 @@ namespace LaDanse\ServicesBundle\Service\Authorization;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\Authorization\Policies\PolicyCatalog;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

@@ -154,3 +154,25 @@ div.post
     padding-top: 10px;
     padding-right: 30px;
 }
+
+div.event-state-container
+{
+    font-size: 150%;
+    overflow: auto;
+    position: relative;
+}
+
+div.event-state-container > div.state-icon
+{
+    text-align: center;
+    float: left;
+    width: 10%;
+    line-height: 45px;
+}
+
+div.event-state-container > div.state-text
+{
+    float: left;
+    width: 89%;
+    line-height: 45px;
+}

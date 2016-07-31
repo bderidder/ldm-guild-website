@@ -12,6 +12,7 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\UserAlreadySignedException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -160,6 +161,15 @@ class CreateSignUpCommand extends AbstractCommand
         }
 
         $this->setCachedEvent($event);
+
+        $fsm = $event->getStateMachine();
+
+        if (!($fsm->getCurrentState() == 'Pending' || $fsm->getCurrentState() == 'Confirmed'))
+        {
+            throw new EventInvalidStateChangeException(
+                'The event is not in Pending or Confirmed state, sign-up creation is not allowed'
+            );
+        }
 
         if ($this->isCurrentUserSigned($event))
         {

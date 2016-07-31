@@ -100,9 +100,22 @@ class Event implements StatefulInterface
     {
         $this->signUps = new ArrayCollection();
 
-        $sm = EventStateMachine::create();
-        $sm->setObject($this);
-        $sm->initialize();
+        $this->initStateMachine();
+    }
+
+    private function initStateMachine()
+    {
+        $this->stateMachine = EventStateMachine::create();
+        $this->stateMachine->setObject($this);
+        $this->stateMachine->initialize();
+    }
+
+    /**
+     * @ORM\PostLoad
+     */
+    public function doPostLoad()
+    {
+        $this->initStateMachine();
     }
 
     /**
