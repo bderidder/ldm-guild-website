@@ -13,6 +13,9 @@ class NotificationTemplates
     const EVENT_UPDATE = "eventUpdate";
     const EVENT_DELETE = "eventDelete";
 
+    const EVENT_CONFIRMED = "eventConfirmed";
+    const EVENT_CANCELLED = "eventCancelled";
+
     const EVENT_TODAY = "eventToday";
 
     const SIGNUP_CREATE = "signUpCreate";

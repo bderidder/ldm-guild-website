@@ -11,6 +11,8 @@ use LaDanse\ServicesBundle\Notification\Notificators\CreateSignUpNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\CreateTopicNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\DeleteEventNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\DeleteSignUpNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\EventCancellationNotificator;
+use LaDanse\ServicesBundle\Notification\Notificators\EventConfirmationNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\EventTodayNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\FeedbackNotificator;
 use LaDanse\ServicesBundle\Notification\Notificators\ReplyForumPostNotificator;
@@ -189,6 +191,14 @@ class NotificationService
 
         $this->notificators[ActivityType::EVENT_DELETE]  = [
             DeleteEventNotificator::SERVICE_NAME
+        ];
+
+        $this->notificators[ActivityType::EVENT_CONFIRM]  = [
+            EventConfirmationNotificator::SERVICE_NAME
+        ];
+
+        $this->notificators[ActivityType::EVENT_CANCEL]  = [
+            EventCancellationNotificator::SERVICE_NAME
         ];
 
         $this->notificators[ActivityType::EVENT_TODAY]  = [

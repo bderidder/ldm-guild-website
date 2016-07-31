@@ -15,7 +15,7 @@
 
 {% block notificationMessage %}
 
-    <b>{{ data.account.displayName }}</b> created a sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+    <b>{{ data.account.displayName }}</b> updated sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
     <br/>
     <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
 

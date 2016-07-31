@@ -388,7 +388,8 @@ class Event implements StatefulInterface
             'inviteTime'  => $this->inviteTime->format(\DateTime::ISO8601),
             'startTime'   => $this->startTime->format(\DateTime::ISO8601),
             'endTime'     => $this->endTime->format(\DateTime::ISO8601),
-            'organiserId' => $this->organiser->getId()
+            'organiserId' => $this->organiser->getId(),
+            'state'       => $this->state
         );
     }
 }
