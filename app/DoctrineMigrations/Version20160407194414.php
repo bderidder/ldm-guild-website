@@ -12,7 +12,9 @@ class Version20160407194414 extends AbstractMigration
      */
     public function up(Schema $schema)
     {
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf(
+            $this->connection->getDatabasePlatform()->getName() != 'mysql',
+            'Migration can only be executed safely on \'mysql\'. got ' . $this->connection->getDatabasePlatform()->getName());
 
         $this->addSql('CREATE TABLE Account (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(255) NOT NULL, username_canonical VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, email_canonical VARCHAR(255) NOT NULL, enabled TINYINT(1) NOT NULL, salt VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, last_login DATETIME DEFAULT NULL, locked TINYINT(1) NOT NULL, expired TINYINT(1) NOT NULL, expires_at DATETIME DEFAULT NULL, confirmation_token VARCHAR(255) DEFAULT NULL, password_requested_at DATETIME DEFAULT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', credentials_expired TINYINT(1) NOT NULL, credentials_expire_at DATETIME DEFAULT NULL, displayName VARCHAR(32) NOT NULL, UNIQUE INDEX UNIQ_B28B6F3892FC23A8 (username_canonical), UNIQUE INDEX UNIQ_B28B6F38A0D96FBF (email_canonical), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ActivityQueueItem (id INT AUTO_INCREMENT NOT NULL, activityType VARCHAR(255) NOT NULL, activityOn DATETIME NOT NULL, rawData LONGTEXT DEFAULT NULL, processedOn DATETIME DEFAULT NULL, activityBy INT DEFAULT NULL, INDEX IDX_8A274BCA93C757EE (activityBy), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
