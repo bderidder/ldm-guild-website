@@ -13,10 +13,10 @@ before_script:
     - mysqladmin create LaDanseDB -u root
     - composer self-update
     - composer install --dev --no-interaction --prefer-source
-    - bin/console doctrine:database:create --env=test --no-interaction --quiet
-    - bin/console doctrine:migrations:migrate --env=test --allow-no-migration --no-interaction --quiet
+    - bin/console doctrine:database:create --env=test --no-interaction
+    - bin/console doctrine:migrations:migrate --env=test --allow-no-migration --no-interaction
     - bin/console sp:bower:install --env=test --no-debug
-    - bin/console cache:warmup --env=test --quiet
+    - bin/console cache:warmup --env=test
 
 script:
     - ./bin/phpspec run -fpretty --verbose
