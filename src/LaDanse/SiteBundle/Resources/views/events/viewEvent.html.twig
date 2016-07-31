@@ -7,7 +7,7 @@
     {{ renderHeader(event.name, path('calendarIndex', {'showDate': event.startTime|date("Ymd") })) }}
 
     {# EVENT PASSED #}
-	{% if not isFuture %}
+	{% if (not isFuture) and event.state != 'Cancelled' %}
 		<div class="alert alert-warning">
 			<div style="text-align: center; font-size: 150%">
 				This event is in the past! You can only comment.
