@@ -66,7 +66,7 @@ class NotifyEventTodayCommand extends AbstractCommand
             ->from('LaDanse\DomainBundle\Entity\Event', 'e')
             ->where('e.inviteTime >= :startToday')
             ->andWhere('e.inviteTime <= :endToday')
-            ->andWhere('e.state == \'' . EventStateMachine::CONFIRMED . '\'' )
+            ->andWhere('e.state = \'' . EventStateMachine::CONFIRMED . '\'' )
             ->orderBy('e.inviteTime', 'ASC');
 
         $qb->setParameter('startToday', $startToday)
