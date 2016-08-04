@@ -6,4 +6,5 @@ LaDanse\DomainBundle\Entity\Event:
         startTime: <dateTimeBetween('now', '+50 days')>
         endTime: <dateTimeBetween('now', '+50 days')>
         organiser: '@mainAccount'
+        state: 'Pending'
         topicId: 'test'

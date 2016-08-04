@@ -25,6 +25,9 @@ class AuthorizationServiceTest extends WebTestCase
     /** @var Account */
     private $mockAccount;
 
+    /** @var Event $event1 */
+    private $event1;
+
     /**
      * {@inheritDoc}
      */
@@ -37,15 +40,15 @@ class AuthorizationServiceTest extends WebTestCase
             'tests/LaDanse/ServicesBundle/Fixtures/event.yml'
         ));
 
-        /** @var Event $event1 */
-        $event1 = $fixtures['event1'];
+        $this->event1 = $fixtures['event1'];
+        $mainAccount = $fixtures['mainAccount'];
 
         $this->authzService = static::$kernel->getContainer()
             ->get(AuthorizationService::SERVICE_NAME);
 
         $this->mockAccount = \Phake::mock(Account::class);
 
-        \Phake::when($this->mockAccount)->getId()->thenReturn($event1->getId());
+        \Phake::when($this->mockAccount)->getId()->thenReturn($mainAccount->getId());
     }
 
     public function testPoliciesFound()
@@ -53,7 +56,7 @@ class AuthorizationServiceTest extends WebTestCase
         $evalResult = $this->authzService->evaluate(
             new SubjectReference($this->mockAccount),
             ActivityType::EVENT_EDIT,
-            new ResourceById(Event::class, 1)
+            new ResourceById(Event::class,  $this->event1->getId())
         );
 
         $this->assertTrue($evalResult);
