@@ -58,6 +58,13 @@ class Event
     protected $endTime;
 
     /**
+     * @SerializedName("state")
+     *
+     * @var string
+     */
+    protected $state;
+
+    /**
      * @SerializedName("commentGroupRef")
      *
      * @var CommentGroupReference
@@ -81,6 +88,7 @@ class Event
      * @param \DateTime $inviteTime
      * @param \DateTime $startTime
      * @param \DateTime $endTime
+     * @param string $state
      * @param CommentGroupReference $commentGroup
      * @param array $signUps
      */
@@ -91,6 +99,7 @@ class Event
                                 \DateTime $inviteTime,
                                 \DateTime $startTime,
                                 \DateTime $endTime,
+                                $state,
                                 CommentGroupReference $commentGroup,
                                 array $signUps)
     {
@@ -101,6 +110,7 @@ class Event
         $this->inviteTime = $inviteTime;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->state = $state;
         $this->commentGroup = $commentGroup;
         $this->signUps = $signUps;
     }
@@ -159,6 +169,22 @@ class Event
     public function getEndTime()
     {
         return $this->endTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state)
+    {
+        $this->state = $state;
     }
 
     /**

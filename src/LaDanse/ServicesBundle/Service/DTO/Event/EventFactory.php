@@ -40,6 +40,7 @@ class EventFactory
             $event->getInviteTime(),
             $event->getStartTime(),
             $event->getEndTime(),
+            $event->getFiniteState(),
             new CommentGroupReference($event->getTopicId()),
             $signUpDtos
         );

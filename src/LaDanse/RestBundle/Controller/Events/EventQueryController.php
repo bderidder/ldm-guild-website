@@ -6,6 +6,7 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\ServicesBundle\Service\DTO\Event\EventFactory;
 use LaDanse\ServicesBundle\Service\Event\EventService;
+use LaDanse\ServicesBundle\Service\NewEvent\NewEventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,6 +44,25 @@ class EventQueryController extends Controller
         }
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $eventId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}")
+     * @Method({"GET","HEAD"})
+     */
+    public function queryEventById(Request $request, $eventId)
+    {
+        /** @var NewEventService $eventService */
+        $eventService = $this->get(NewEventService::SERVICE_NAME);
+
+        $event = $eventService->getEventById($eventId);
+
+        return new JsonResponse($event);
     }
 
     private function getStartOnDate($pStartOnDate)
