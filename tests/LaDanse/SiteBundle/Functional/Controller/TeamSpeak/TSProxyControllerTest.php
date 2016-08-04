@@ -7,6 +7,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 /**
  * @group FunctionalTest
+ * @group OnlineTest
  */
 class TSProxyControllerTest extends WebTestCase
 {
