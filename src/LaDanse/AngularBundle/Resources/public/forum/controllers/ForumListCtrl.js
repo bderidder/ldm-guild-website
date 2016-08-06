@@ -1,9 +1,14 @@
 forumControllers.controller('ForumListCtrl',
-    function ($scope, $routeParams, $rootScope, $http, forumService)
+    function ($scope, $routeParams, $rootScope, $http, $anchorScroll, forumService)
     {
         $scope.initForumListCtrl = function()
         {
             $scope.refreshTopics();
+        };
+
+        $scope.scrollTo = function (anchorId)
+        {
+            $anchorScroll(anchorId);
         };
 
         $scope.getForum = function(forumId)

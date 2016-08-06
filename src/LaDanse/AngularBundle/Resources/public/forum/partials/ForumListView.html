@@ -68,15 +68,41 @@
             background: linear-gradient(rgba(249, 249, 249, 0), rgb(249, 249, 249));
         }
 
+        a.TopOfPage
+        {
+            color: black;
+        }
+
+        div.BookmarkHeader
+        {
+            font-size: 1.2em;
+        }
+
     </style>
 
     <div ng-controller="HeaderCtrl"
          ng-init="initHeaderCtrl('Forums', null)"
+         id="TopOfPage"
          header-template>
     </div>
 
     <div ng-if="isForumLoaded"
          class="container-fluid forum-container">
+
+        <div class="row header-row">
+
+            <div class="col-md-12 BookmarkHeader">
+
+                <a href="" ng-click="scrollTo('PublicForums')">Public Forums</a> |
+                <a href="" ng-click="scrollTo('GeneralForums')">General Forums</a> |
+                <a href="" ng-click="scrollTo('PvEForums')">PvE Forums</a> |
+                <a href="" ng-click="scrollTo('RaidTactics')">Raid Tactics</a> |
+                <a href="" ng-click="scrollTo('PvPForums')">PvP Forums</a> |
+                <a href="" ng-click="scrollTo('RolePlayingAndEvents')">Role Playing & Events</a>
+
+            </div>
+
+        </div>
 
         <div class="row header-row">
 
@@ -125,7 +151,7 @@
 
             <div class="col-md-12">
 
-                <h4>Public Forums</h4>
+                <h4 id="PublicForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Public Forums</h4>
 
             </div>
 
@@ -150,7 +176,7 @@
 
             <div class="col-md-12">
 
-                <h4>General Forums</h4>
+                <h4 id="GeneralForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> General Forums</h4>
 
             </div>
 
@@ -223,7 +249,7 @@
 
             <div class="col-md-12">
 
-                <h4>PvE Forums</h4>
+                <h4 id="PvEForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> PvE Forums</h4>
 
             </div>
 
@@ -296,7 +322,7 @@
 
             <div class="col-md-12">
 
-                <h4>Raid Tactics</h4>
+                <h4 id="RaidTactics"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Raid Tactics</h4>
 
             </div>
 
@@ -474,7 +500,7 @@
 
             <div class="col-md-12">
 
-                <h4>PvP Forums</h4>
+                <h4 id="PvPForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> PvP Forums</h4>
 
             </div>
 
@@ -532,7 +558,7 @@
 
             <div class="col-md-12">
 
-                <h4>Role Playing &amp; Events Forums</h4>
+                <h4 id="RolePlayingAndEvents"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Role Playing &amp; Events Forums</h4>
 
             </div>
 
