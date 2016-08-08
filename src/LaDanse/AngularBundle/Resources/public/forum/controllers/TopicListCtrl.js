@@ -1,4 +1,4 @@
-forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $rootScope, forumService) {
+forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $rootScope, $location, forumService) {
 
     $scope.initTopicListCtrl = function(topic)
     {
@@ -15,6 +15,11 @@ forumControllers.controller('TopicListCtrl', function ($scope, $routeParams, $ro
         forumService.markTopicAsRead($scope.topic.topicId);
 
         $scope.updateRecentlyUpdated();
+    }
+
+    $scope.switchToTopic = function(forumId)
+    {
+        $location.path('/' + forumId + '/topics/' + $scope.topic.topicId);
     }
 
     $scope.updateRecentlyUpdated = function()

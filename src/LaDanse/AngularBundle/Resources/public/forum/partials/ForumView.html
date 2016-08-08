@@ -46,6 +46,95 @@
             }
         </style>
 
+        <style>
+
+            table.TopicListTable
+            {
+                width: 100%;
+                color: black;
+            }
+
+            table.TopicListTable tbody tr
+            {
+                border-top: rgb(175, 175, 175) 1px solid;
+                cursor: pointer;
+            }
+
+            table.TopicListTable thead th
+            {
+                padding: 10px 0 10px 0;
+                font-size: 1.4em;
+            }
+
+            table.TopicListTable tbody td
+            {
+                padding: 5px 0 5px 0;
+                font-size: 1.1em;
+            }
+
+            table.TopicListTable tbody tr:hover
+            {
+                background-color: rgba(150, 200, 150, 0.7)
+            }
+
+            table.TopicListTable tbody td a
+            {
+                color: black;
+            }
+
+            table.TopicListTable tbody td.StickyHeader
+            {
+                text-align: center;
+                color: darkgreen;
+            }
+
+            table.TopicListTable tbody td.ReadHeader
+            {
+                text-align: center;
+            }
+
+            table.TopicListTable tbody td.TopicHeader
+            {
+                padding: 0 10px 0 10px;
+            }
+
+            table.TopicListTable tbody td.LastPostHeader
+            {
+                font-size: 1.1em;
+            }
+
+            table.TopicListTable tbody td.CreatedByHeader
+            {
+                font-size: 1.1em;
+            }
+
+            table.TopicListTable .StickyHeader
+            {
+                width: 4%;
+            }
+
+            table.TopicListTable .ReadHeader
+            {
+                width: 4%;
+            }
+
+            table.TopicListTable .TopicHeader
+            {
+                width: 50%;
+            }
+
+            table.TopicListTable .LastPostHeader
+            {
+                width: 20%;
+            }
+
+            table.TopicListTable .CreatedByHeader
+            {
+                width: 20%;
+            }
+
+        </style>
+
         <div ng-controller="AddTopicCtrl"
              ng-init="initAddTopicCtrl()"
              class="addTopicBox"
@@ -75,22 +164,32 @@
 
         </div>
 
-        <br/>
+        <br>
 
         <div ng-if="topics.length == 0">
             <p>There are not topics yet in this forum. Why not be the first to create one?</p>
         </div>
 
-        <div ng-repeat="topic in topics">
-
-            <div ng-controller="TopicListCtrl"
-                 ng-init="initTopicListCtrl(topic)"
-                 ng-cloak
-                 class="well topicBox"
-                 ng-class="{topicBoxUpdated: isRecentlyUpdated}">
-
-                <div class="postContainer">
-                    <div>
+        <table class="TopicListTable">
+            <thead>
+                <tr class="TopicListHeader">
+                    <th class="StickyHeader"></th>
+                    <th class="ReadHeader"></th>
+                    <th class="TopicHeader"></th>
+                    <th class="LastPostHeader">Last Post</th>
+                    <th class="CreatedByHeader">Created By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="topic in topics"
+                    ng-controller="TopicListCtrl"
+                    ng-init="initTopicListCtrl(topic)"
+                    ng-click="switchToTopic(forumId)"
+                    ng-cloak>
+                    <td class="StickyHeader">
+                        <!-- <i class="fa fa-thumb-tack" aria-hidden="true"></i> -->
+                    </td>
+                    <td class="ReadHeader">
                         <i ng-if="isRecentlyUpdated"
                            ng-click="markTopicAsReadClicked()"
                            class="fa fa-star clickable"
@@ -99,30 +198,34 @@
                            popover-trigger="mouseenter"
                            popover-append-to-body="true"
                            popover-placement="bottom"></i>
-                        <a href="#/{{ forumId }}/topics/{{ topic.topicId }}"><span><b>{{ topic.subject }}</b></span></a>
-                    </div>
-                    <div>
-                        <span>Created by <i>{{ topic.creator }}</i>,
-                            <span popover="{{ topic.createDate | date: 'EEE MMM d, y' }} at {{ topic.createDate | date: 'H:mm' }}"
-                                  popover-trigger="mouseenter"
-                                  popover-append-to-body="true"
-                                  popover-placement="right"
-                                  am-time-ago="topic.createDate"></span>
-                        </span>
-                        <br/>
-                        <span>Last post by <i>{{ topic.lastPost.poster.displayName }}</i>,
-                            <span popover="{{ topic.lastPost.date | date: 'EEE MMM d, y' }} at {{ topic.lastPost.date | date: 'H:mm' }}"
-                                  popover-trigger="mouseenter"
-                                  popover-append-to-body="true"
-                                  popover-placement="right"
-                                  am-time-ago="topic.lastPost.date"></span>
-                        </span>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+                        <i ng-if="!isRecentlyUpdated"
+                           style="color: rgb(150, 150, 150);"
+                           class="fa fa-star-o" aria-hidden="true"></i>
+                    </td>
+                    <td class="TopicHeader">
+                        <span>{{ topic.subject }}</span>
+                    </td>
+                    <td class="LastPostHeader">
+                        <span>{{ topic.lastPost.poster.displayName }}<br/>
+                                <i><span popover="{{ topic.lastPost.date | date: 'EEE MMM d, y' }} at {{ topic.lastPost.date | date: 'H:mm' }}"
+                                      popover-trigger="mouseenter"
+                                      popover-append-to-body="true"
+                                      popover-placement="right"
+                                      am-time-ago="topic.lastPost.date"></span></i>
+                            </span>
+                    </td>
+                    <td class="CreatedByHeader">
+                        <span>{{ topic.creator }}<br/>
+                                <i><span popover="{{ topic.createDate | date: 'EEE MMM d, y' }} at {{ topic.createDate | date: 'H:mm' }}"
+                                      popover-trigger="mouseenter"
+                                      popover-append-to-body="true"
+                                      popover-placement="right"
+                                      am-time-ago="topic.createDate"></span></i>
+                            </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 
