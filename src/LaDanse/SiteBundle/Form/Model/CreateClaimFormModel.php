@@ -13,7 +13,8 @@ class CreateClaimFormModel
      *
      * @var Role $dummy
      */
-    private $dummy;
+    private /** @noinspection PhpUnusedPrivateFieldInspection */
+        $dummy;
 
 	private $character;
     private $roles;

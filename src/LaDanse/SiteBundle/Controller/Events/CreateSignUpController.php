@@ -123,9 +123,6 @@ class CreateSignUpController extends LaDanseController
      */
     public function createAbsenceAction($eventId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-        $account = $authContext->getAccount();
-
         /** @var $eventService EventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 

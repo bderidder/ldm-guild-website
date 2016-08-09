@@ -2,24 +2,14 @@
 
 namespace LaDanse\SiteBundle\Controller\Events;
 
-use DateTime;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
-use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
-use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Common\LaDanseController;
-use LaDanse\SiteBundle\Form\Model\EventFormModel;
-use LaDanse\SiteBundle\Form\Type\EventFormType;
-use LaDanse\SiteBundle\Model\ErrorModel;
-use LaDanse\SiteBundle\Model\EventModel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class EditStateEventController extends LaDanseController

@@ -64,9 +64,9 @@ class BattleNetConnectController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:settings:battleNetConnect.html.twig',
-            array(
+            [
                 "isConnected" => $isConnected
-            ));
+            ]);
     }
 
     /**
@@ -119,8 +119,8 @@ class BattleNetConnectController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:settings:battleNetVerify.html.twig',
-            array(
+            [
                 "verification" => $verificationReport
-            ));
+            ]);
     }
 }

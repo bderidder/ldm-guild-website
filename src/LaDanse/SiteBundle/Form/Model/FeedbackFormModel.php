@@ -12,7 +12,7 @@ class FeedbackFormModel
      * Set description
      *
      * @param string $description
-     * @return EventFormModel
+     * @return FeedbackFormModel
      */
     public function setDescription($description)
     {

@@ -59,7 +59,7 @@ class PostMapper
      * @param UrlGeneratorInterface $generator
      * @param array $posts
      *
-     * @return object
+     * @return array
      */
     public function mapPostsAndTopic(UrlGeneratorInterface $generator, $posts)
     {

@@ -3,9 +3,6 @@
 namespace LaDanse\ServicesBundle\Service\Authorization\Policies;
 
 use LaDanse\ServicesBundle\Activity\ActivityType;
-use LaDanse\ServicesBundle\Service\Authorization\Policies\CreatorCanChangeEventStateRule;
-use LaDanse\ServicesBundle\Service\Authorization\Policies\CreatorCanEditEventRule;
-use LaDanse\ServicesBundle\Service\Authorization\Policies\OfficerCanEditEventRule;
 use LaDanse\ServicesBundle\Service\Authorization\PolicySet;
 
 class PolicyCatalog
