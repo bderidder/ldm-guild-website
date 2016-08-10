@@ -55,16 +55,21 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             return;
         }
        
-        $armoryNames = array();
+        $armoryNames = [];
 
         foreach($armoryGuild->members as $entry)
         {
-            $armoryNames[] = (object) array(
-                "name"  => $entry->character->name,
-                "class" => $entry->character->class,
-                "race"  => $entry->character->race,
-                "level" => $entry->character->level
-            );
+            if (property_exists($entry->character, "guild"))    // we have seen JSON where "guild" was not present
+            {
+                $armoryNames[] = (object) [
+                    "name"  => $entry->character->name,
+                    "class" => $entry->character->class,
+                    "race"  => $entry->character->race,
+                    "level" => $entry->character->level,
+                    "guild" => $entry->character->guild,
+                    "realm" => $entry->character->realm
+                ];
+            }
         }
 
         usort(
@@ -214,7 +219,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             return true;
         }
 
-        if (strcmp($dbCharacter->name, $armoryCharacter->name) != 0)
+        if (strcmp($dbCharacter->realm, $armoryCharacter->realm) != 0)
         {
             return true;
         }
@@ -238,7 +243,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $armoryCharacter->level,
             $gameRace,
             $gameClass,
-            'La Danse Macabre'
+            $armoryCharacter->guild,
+            $armoryCharacter->realm
         );
     }
 
@@ -257,8 +263,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $armoryCharacter->level,
             $gameRace,
             $gameClass,
-            'La Danse Macabre',
-            'Defias Brotherhood'
+            $armoryCharacter->guild,
+            $armoryCharacter->realm
         );
     }
 

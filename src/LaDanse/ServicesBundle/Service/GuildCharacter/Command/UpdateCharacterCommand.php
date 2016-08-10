@@ -50,6 +50,8 @@ class UpdateCharacterCommand extends AbstractCommand
     private $gameClass;
     /** @var string $guild */
     private $guild;
+    /** @var string $realm */
+    private $realm;
 
     /**
      * @param ContainerInterface $container
@@ -159,6 +161,22 @@ class UpdateCharacterCommand extends AbstractCommand
         $this->guild = $guild;
     }
 
+    /**
+     * @return string
+     */
+    public function getRealm(): string
+    {
+        return $this->realm;
+    }
+
+    /**
+     * @param string $realm
+     */
+    public function setRealm(string $realm)
+    {
+        $this->realm = $realm;
+    }
+
     protected function validateInput()
     {
 
@@ -200,6 +218,8 @@ class UpdateCharacterCommand extends AbstractCommand
         $version->setGameRace($this->getGameRace());
         $version->setGuild($this->getGuild());
 
+        $character->setRealm($this->getRealm());
+
         $em->persist($character);
         $em->persist($version);
         $em->flush();
@@ -209,12 +229,12 @@ class UpdateCharacterCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::CHARACTER_UPDATE,
                 null,
-                array(
+                [
                     'oldName'   => $oldCharacter->getName(),
                     'oldLevel'  => $oldCharacterVersion->getLevel(),
                     'newName'   => $this->getName(),
                     'newLevel'  => $this->getLevel()
-                )
+                ]
             )
         );
     }

@@ -245,8 +245,9 @@ class GuildCharacterService extends LaDanseService
      * @param GameRace $gameRace
      * @param GameClass $gameClass
      * @param string $guild
+     * @param string $realm
      */
-    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass, $guild)
+    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass, $guild, $realm)
     {
         /** @var $updateCharacterCommand UpdateCharacterCommand */
         $updateCharacterCommand = $this->get(UpdateCharacterCommand::SERVICE_NAME);
@@ -257,6 +258,7 @@ class GuildCharacterService extends LaDanseService
         $updateCharacterCommand->setGameRace($gameRace);
         $updateCharacterCommand->setGameClass($gameClass);
         $updateCharacterCommand->setGuild($guild);
+        $updateCharacterCommand->setRealm($realm);
 
         $updateCharacterCommand->run();
     }
