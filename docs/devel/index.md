@@ -97,28 +97,57 @@ php bin/console doctrine:migrations:migrate --env=dev --allow-no-migration --no-
 
 The options given have the following meaning
 
-`--env=dev` instructs Symfony to run the command using the development environment settings
-`--allow-no-migration` do not complain if the database is already up-to-date and no migrations have to be executed
-`--no-interaction` do not ask for confirmation, just execute the migrations when needed
+- `--env=dev` instructs Symfony to run the command using the development environment settings
+- `--allow-no-migration` do not complain if the database is already up-to-date and no migrations have to be executed
+- `--no-interaction` do not ask for confirmation, just execute the migrations when needed
 
 Doctrine Migrations adds the table `migration_versions` to the database to keep track of which migrations have been installed and which haven't.
 
-### Install Assets
-
-To be written.
-
-A more in-depth explanation of how composer works and why we are running this particular command can be found [here](assetic.md).
-
-- Install web assets
-- Dump assets
-
 ### Install Bower Packages
 
-To be written.
+The website project is configured to use Bower to install and update external CSS and Javascript libraries. Bower is for CSS and Javascript what Composer is for PHP.
+
+The project depends on an external package that integraties Bower managed libraries into Symfony: [Sp:BowerBundle](https://github.com/Spea/SpBowerBundle/).
+
+There are two `bower.json` files provided in the project:
+
+- `src/LaDanse/AngularBundle/Resources/config/bower/bower.json`
+- `src/LaDanse/SiteBundle/Resources/config/bower/bower.json`
+
+To download and install all the Bower dependencies in the correct location, run the following command:
+
+~~~~
+php bin/console sp:bower:install --env=dev --no-debug
+~~~~
+
+### Install Assets
+
+Symfony uses the [Assetic](https://symfony.com/doc/current/assetic/asset_management.html) library to handle requets for static resources like images, stylesheets and javascript files. Among the features offered by Assetic is to apply filters before serving the content. Typical filters include URL rewriting in CSS or minimizing CSS and javascript.
+
+There is a [separate page on Assetic](assetic.md) to gives some more explanation about this library and the reason why we have to run the command below.
+
+Run the following command to apply configured filters on all static resources and dump the resulting content in the right location.
+
+~~~~
+php bin/console assetic:dump --env=dev --no-debug
+~~~~
+
+Running the Website
+-------------------
+
+With all the setup done above we are now ready to run the website for real. You can do this by running the following command from a terminal:
+
+~~~~
+php bin/console server:run
+~~~~
+
+You should now be able to visit the site on [http://localhost:8000/]() .
+
+Elsewhere in this guide we shall configure PHPStorm to be able to run the above command from within the IDE.
 
 Additional Setup
 ----------------
 
 ### Configure PHPStorm
 
-To be written.
+There is a [dedicated guide](phpstorm.md) to configuring PHPStorm for this project.
