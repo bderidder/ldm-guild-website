@@ -82,4 +82,4 @@ Note that this command does not return immediately as it has to watch for change
 
 When we start a development session we can now simply run the above command in a separate terminal and we don't have to care anymore about dumping the assets manually.
 
-Elsewhere in this guide we shall see how you can automate this in PHPStorm.
+In our [guide to configure PHPStorm](phpstorm.md) you can see how you can automate this.
