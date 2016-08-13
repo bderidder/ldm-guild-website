@@ -28,7 +28,7 @@ monolog:
             channels: [ladanse]
 
 assetic:
-    use_controller: true
+    use_controller: false
 
 swiftmailer:
     transport:  "%mailer_transport%"

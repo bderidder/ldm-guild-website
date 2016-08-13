@@ -42,7 +42,7 @@ jms_di_extra:
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
-    use_controller: true
+    use_controller: false
     bundles:
         - LaDanseSiteBundle
         - LaDanseBootstrapBundle
