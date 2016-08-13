@@ -160,3 +160,21 @@ Additional Setup
 ### Configure PHPStorm
 
 There is a [dedicated guide](phpstorm.md) to configuring PHPStorm for this project.
+
+### Update Guild Members
+
+To update the list of guild members you need to configure a BattleNet API Key in the `app/config/parameters.yml` file. You can now run the folowing command each time you want to update the stored guild members:
+
+~~~~
+php bin/console ladanse:refreshGuildMembers --env=dev
+~~~~
+
+### Update Wowhead News
+
+The website shows the latest Wowhead news on the menu page. To load this news you have to run the following command:
+
+~~~~
+php bin/console ladanse:refreshWowheadNews --env=dev
+~~~~
+
+You will have to rerun this command if you want to update the news or when you have cleared the cache (either by running `cache:clear` or by deleting the folder in `var/cache/`).
