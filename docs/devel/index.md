@@ -135,15 +135,24 @@ php bin/console assetic:dump --env=dev --no-debug
 Running the Website
 -------------------
 
-With all the setup done above we are now ready to run the website for real. You can do this by running the following command from a terminal:
+With all the setup done above we are now ready to run the website for real. You can do this by running the following commands from a terminal:
 
 ~~~~
+php bin/console assetic:dump --env=dev
 php bin/console server:run
 ~~~~
 
+We first dump all assets before we run the server.
+
 You should now be able to visit the site on [http://localhost:8000/]() .
 
-Elsewhere in this guide we shall configure PHPStorm to be able to run the above command from within the IDE.
+If you are updating the HTML Twig files, CSS, Javascript or any other static assets you also need to run the following command in a separate terminal:
+
+~~~~
+php bin/console assetic:watch --env=dev
+~~~~
+
+Elsewhere in this guide we shall configure PHPStorm to run the above commands from within the IDE.
 
 Additional Setup
 ----------------
