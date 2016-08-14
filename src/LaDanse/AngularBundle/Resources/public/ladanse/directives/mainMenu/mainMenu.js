@@ -8,7 +8,7 @@ angular.module('LaDanseApp')
             controller: 'MainMenuCtrl',
             controllerAs: 'mainMenu',
             scope: true,
-            templateUrl: '../bundles/ladanseangular/new/directives/mainMenu/mainMenu.html'
+            templateUrl: '../bundles/ladanseangular/ladanse/directives/mainMenu/mainMenu.html'
         };
     })
 

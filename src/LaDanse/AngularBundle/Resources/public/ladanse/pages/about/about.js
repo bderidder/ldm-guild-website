@@ -4,7 +4,7 @@ angular.module('LaDanseApp.about', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/about', {
-    templateUrl: '../bundles/ladanseangular/new/pages/about/about.html',
+    templateUrl: '../bundles/ladanseangular/ladanse/pages/about/about.html',
     controller: 'AboutCtrl'
   });
 }])

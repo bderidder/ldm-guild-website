@@ -4,7 +4,7 @@ angular.module('LaDanseApp.pictures', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/pictures', {
-    templateUrl: '../bundles/ladanseangular/new/pages/pictures/pictures.html',
+    templateUrl: '../bundles/ladanseangular/ladanse/pages/pictures/pictures.html',
     controller: 'PicturesCtrl'
   });
 }])

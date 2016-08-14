@@ -4,7 +4,7 @@ angular.module('LaDanseApp.calendar', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/calendar', {
-    templateUrl: '../bundles/ladanseangular/new/pages/calendar/calendar.html',
+    templateUrl: '../bundles/ladanseangular/ladanse/pages/calendar/calendar.html',
     controller: 'CalendarCtrl'
   });
 }])

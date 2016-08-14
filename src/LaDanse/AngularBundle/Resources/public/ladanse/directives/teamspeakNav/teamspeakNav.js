@@ -8,7 +8,7 @@ angular.module('LaDanseApp')
             controller: 'TeamspeakNavCtrl',
             controllerAs: 'teamspeakNav',
             scope: true,
-            templateUrl: '../bundles/ladanseangular/new/directives/teamspeakNav/teamspeakNav.html'
+            templateUrl: '../bundles/ladanseangular/ladanse/directives/teamspeakNav/teamspeakNav.html'
         };
     })
 

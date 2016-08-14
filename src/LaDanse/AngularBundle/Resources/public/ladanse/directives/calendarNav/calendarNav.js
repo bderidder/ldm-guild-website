@@ -8,7 +8,7 @@ angular.module('LaDanseApp')
             controller: 'CalendarNavCtrl',
             controllerAs: 'calendarNav',
             scope: true,
-            templateUrl: '../bundles/ladanseangular/new/directives/calendarNav/calendarNav.html'
+            templateUrl: '../bundles/ladanseangular/ladanse/directives/calendarNav/calendarNav.html'
         };
     })
 

@@ -4,7 +4,7 @@ angular.module('LaDanseApp.activityStream', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/activityStream', {
-    templateUrl: '../bundles/ladanseangular/new/pages/activityStream/activityStream.html',
+    templateUrl: '../bundles/ladanseangular/ladanse/pages/activityStream/activityStream.html',
     controller: 'ActivityStreamCtrl'
   });
 }])
