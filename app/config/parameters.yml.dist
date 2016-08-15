@@ -50,5 +50,3 @@ parameters:
     router.request_context.base_url: ""
 
     bower_binary_path: /usr/bin/bower
-
-    analyticsAccountId: UA-abcd-e

@@ -7,7 +7,7 @@ class AppKernel extends Kernel
 {
     public function registerBundles()
     {
-        $bundles = [
+        $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new Trt\SwiftCssInlinerBundle\TrtSwiftCssInlinerBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Sp\BowerBundle\SpBowerBundle(),
-            new AntiMattr\GoogleBundle\GoogleBundle(),
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\ServicesBundle\LaDanseServicesBundle(),
@@ -34,9 +33,9 @@ class AppKernel extends Kernel
             new LaDanse\BootstrapBundle\LaDanseBootstrapBundle(),
             new LaDanse\RestBundle\LaDanseRestBundle(),
             new LaDanse\AngularBundle\LaDanseAngularBundle(),
-        ];
+        );
 
-        if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

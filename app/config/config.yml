@@ -130,20 +130,3 @@ sp_bower:
   bundles:
     LaDanseSiteBundle: ~
     LaDanseAngularBundle: ~
-
-google:
-    analytics:
-        enhanced_ecommerce: false
-        session_auto_started: true
-        trackers:
-            default:
-                name: LaDanseGoogleAnalytics
-                accountId: "%analyticsAccountId%"
-                domain: .ladanse.org
-                setSiteSpeedSampleRate: 5
-                allowAnchor: true
-                allowHash: true
-                includeNamePrefix: false
-                plugins:
-                    - 'linkid'
-        whitelist: [ 'q', 'utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign' ]
