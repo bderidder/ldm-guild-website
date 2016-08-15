@@ -44,15 +44,15 @@
     {# Render description, invite time ... in a horizontal table #}
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <p class="event-label">Organised by {{ event.organiser.displayName }}</p>
                 <p>{{ event.description }}</p>
             </div>
             
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="event-label-container">
                     <p class="event-label">When</p>
-                    <p>{{ event.inviteTime|date("d/m (D)") }}</p>
+                    <p>{{ event.inviteTime|date("d/m (D)") }}, <span id="relativeStartTime"></span></p>
                 </div>
             </div>
             <div class="col-md-2">
@@ -349,6 +349,17 @@
     {% javascripts '@LaDanseAngularBundle/Resources/public/comments/controllers/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <script type="application/javascript">
+        $(document).ready(function()
+        {
+            var eventStartDate = "{{ event.inviteTime|date("Y-m-j H:i") }}";
+
+            var relativeStart = moment(eventStartDate, "YYYY-MM-DD HH:mm").fromNow();
+
+            $("#relativeStartTime").text(relativeStart);
+        });
+    </script>
 
     <script type="application/javascript">
         $(document).ready(function()
