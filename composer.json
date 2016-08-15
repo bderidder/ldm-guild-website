@@ -41,7 +41,8 @@
     "trt/swift-css-inliner-bundle": "^0.4",
     "hwi/oauth-bundle": "~0.5@dev",
     "guzzlehttp/guzzle": "^6.2",
-    "sp/bower-bundle": "^0.12@dev"
+    "sp/bower-bundle": "^0.12@dev",
+    "antimattr/google-bundle": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "@stable",
