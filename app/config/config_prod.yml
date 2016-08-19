@@ -2,8 +2,9 @@ imports:
     - { resource: config.yml }
 
 framework:
-    cookie_secure: true
-    cookie_httponly: true
+    session:
+        cookie_secure: true
+        cookie_httponly: true
 
 monolog:
     channels: ["ladanse"]
