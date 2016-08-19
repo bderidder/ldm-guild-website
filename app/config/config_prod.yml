@@ -3,7 +3,7 @@ imports:
 
 framework:
     session:
-        cookie_secure: true
+        cookie_secure: "%secure_cookies%"
         cookie_httponly: true
 
 monolog:
