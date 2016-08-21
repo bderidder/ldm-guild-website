@@ -1,54 +1,56 @@
 # This file is auto-generated during the composer install
 parameters:
 
-    # Default database settings
-    database_driver:    pdo_mysql
-    database_host:      127.0.0.1
-    database_port:      3306
-    database_name:      LaDanseDB
-    database_user:      root
-    database_password:  null
+    # main database connection parameters (note that it must be a MySQL database)
+        database_driver: pdo_mysql
+        database_host: 127.0.0.1
+        database_port: 3306
+        database_name: databasename
+        database_user: username
+        database_password: password
 
-    # Database settings for the TEST environment
-    test_database_driver:    pdo_mysql
-    test_database_host:      127.0.0.1
-    test_database_port:      3306
-    test_database_name:      LaDanseDB
-    test_database_user:      root
-    test_database_password:  null
+        # test database connection parameters (note that it must be a MySQL database)
+        test_database_driver: pdo_mysql
+        test_database_host: 127.0.0.1
+        test_database_port: 3306
+        test_database_name: testdatabasename
+        test_database_user: username
+        test_database_password: password
 
-    # Mailer settings
-    mailer_transport:   smtp
-    mailer_encryption:  tls
-    mailer_host:        127.0.0.1
-    mailer_port: 	    25
-    mailer_user:        null
-    mailer_password:    null
+        # mailer connection parameters
+        mailer_transport: smtp
+        mailer_encryption: null
+        mailer_host: smtp.example.com
+        mailer_port: 25
+        mailer_user: username
+        mailer_password: password
 
-    # I18N settings
-    locale:             en
+        # default locale for the server
+        locale: en
 
-    # Secret to generate a proper token for forms
-    secret:             ThisTokenIsNotSoSecretChangeIt
+        # random secret for protecting resources like the remember_me cookie
+        secret: ThisIsNotSoSecret
 
-    # Nodejs settings for bootstrap and assetic
-    nodejs_binary_path: FullPathToNode
-    nodejs_module_path:
-        - /usr/local/lib/node_modules
-        - /usr/lib/node_modules
+        # nodejs binary and module paths
+        nodejs_binary_path: /full/path/to/node
+        nodejs_module_path:
+            - /usr/local/lib/node_modules
+            - /home/user/node_modules
 
-    # Battle Net settings for Armory integration
-    battlenet_key:      BattleNetAPIKey
-    battlenet_secret:   BattleNetAPISecret
+        # full path to bower binary
+        bower_binary_path: /full/path/to/bower
 
-    # Email address of administrator
-    admin_email:        john@example.com
+        # battlenet API key and secret for calls to the Armory and OAuth
+        battlenet_key: key
+        battlenet_secret: secret
 
-    # Router settings to guarantee correct URLs in emails
-    router.request_context.host:     "localhost:8000"
-    router.request_context.scheme:   http
-    router.request_context.base_url: ""
+        # email address to use for errors and feedback
+        admin_email: admin@example.com
 
-    bower_binary_path: /usr/bin/bower
+        # default router request properties when not available (e.g. run from commands)
+        router.request_context.host: 'localhost:8000'
+        router.request_context.scheme: http
+        router.request_context.base_url: ''
 
-    secure_cookies: false
+        # boolean flag stating if cookies can only be send over HTTPS (when true) or also over HTTP (when false)
+        secure_cookies: false
