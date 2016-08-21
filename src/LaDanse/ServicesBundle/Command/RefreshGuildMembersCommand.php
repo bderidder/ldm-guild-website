@@ -59,7 +59,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         foreach($armoryGuild->members as $entry)
         {
-            if (property_exists($entry->character, "guild"))    // we have seen JSON where "guild" was not present
+            if (property_exists($entry->character, "guild")
+                &&
+                property_exists($entry->character, "realm"))    // we have seen JSON where "guild" or "realm" was not present
             {
                 $armoryNames[] = (object) [
                     "name"  => $entry->character->name,
