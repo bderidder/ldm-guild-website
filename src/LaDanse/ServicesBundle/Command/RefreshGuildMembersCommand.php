@@ -59,9 +59,10 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         foreach($armoryGuild->members as $entry)
         {
-            if (property_exists($entry->character, "guild")
+            // we have seen JSON where not all properties were present
+            if (property_exists($entry, "character")
                 &&
-                property_exists($entry->character, "realm"))    // we have seen JSON where "guild" or "realm" was not present
+                $this->verifyProperties($entry->character, ['name', 'class', 'race', 'level', 'guild', 'realm']))
             {
                 $armoryNames[] = (object) [
                     "name"  => $entry->character->name,
@@ -358,5 +359,17 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
             return null;
         }
+    }
+
+    private function verifyProperties($object, $propertyNames)
+    {
+        $hasAllProperties = true;
+
+        foreach($propertyNames as $propertyName)
+        {
+            $hasAllProperties = $hasAllProperties && property_exists($object, $propertyName);
+        }
+
+        return $hasAllProperties;
     }
 }
