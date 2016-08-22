@@ -84,22 +84,22 @@ class AllActiveClaimsQuery extends AbstractQuery
         {
             $this->logger->info('active version found for ' . $onDateTime->format("d/M/Y"));
 
-            return (object)array(
+            return (object) [
                 "id"       => $character->getId(),
                 "fromTime" => $character->getFromTime(),
                 "name"     => $character->getName(),
                 "level"    => $activeVersion->getLevel(),
                 "guild"    => $activeVersion->getGuild(),
                 "realm"    => $character->getRealm(),
-                "class"    => (object)array(
+                "class"    => (object)[
                     "id"   => $activeVersion->getGameClass()->getId(),
                     "name" => $activeVersion->getGameClass()->getName()
-                ),
-                "race"     => (object)array(
+                ],
+                "race"     => (object)[
                     "id"   => $activeVersion->getGameRace()->getId(),
                     "name" => $activeVersion->getGameRace()->getName()
-                )
-            );
+                ]
+            ];
         }
     }
 
@@ -111,13 +111,13 @@ class AllActiveClaimsQuery extends AbstractQuery
      */
     protected function claimToDto(Claim $claim, \DateTime $onDateTime)
     {
-        return (object)array(
+        return (object) [
             "id"          => $claim->getId(),
             "character"   => $this->characterToDto($claim->getCharacter(), $onDateTime),
             "fromTime"    => $claim->getFromTime(),
             "playsTank"   => $claim->containsRole(Role::TANK, $onDateTime),
             "playsHealer" => $claim->containsRole(Role::HEALER, $onDateTime),
             "playsDPS"    => $claim->containsRole(Role::DPS, $onDateTime),
-        );
+        ];
     }
 }

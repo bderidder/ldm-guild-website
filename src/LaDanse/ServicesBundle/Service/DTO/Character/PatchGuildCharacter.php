@@ -2,7 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\Character;
 
-class PatchCharacterDto
+class PatchGuildCharacter
 {
     /** @var string */
     protected $name;

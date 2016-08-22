@@ -122,6 +122,8 @@ class GuildCharacterService extends LaDanseService
      * @param \DateTime $onDateTime if left null, the current date and time is used
      *
      * @return mixed
+     *
+     * @deprecated
      */
     public function getClaimForId($claimId, \DateTime $onDateTime = null)
     {
