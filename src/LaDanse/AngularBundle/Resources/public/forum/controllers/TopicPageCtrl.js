@@ -26,6 +26,7 @@ forumControllers.controller('TopicPageCtrl',
                 });
         };
 
+        // DEPRECATED
         $scope.toggleShowRead = function()
         {
             $scope.showRead = !$scope.showRead;

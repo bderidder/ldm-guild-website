@@ -59,12 +59,6 @@
                             ng-click="markAllAsReadClicked()">mark all as read
                     </button>
                     <span>&nbsp;</span>
-                    <button ng-if="hasUnreadItems && !showRead" type="button" class="btn btn-success"
-                            ng-click="toggleShowRead()">show read items
-                    </button>
-                    <button ng-if="hasUnreadItems && showRead" type="button" class="btn btn-success"
-                            ng-click="toggleShowRead()">hide read items
-                    </button>
                     <button ng-if="hasUnreadItems" type="button" class="btn btn-info"
                             ng-click="scrollToFirstUnread()">jump to unread
                     </button>
