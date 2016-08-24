@@ -53,7 +53,7 @@
                  ng-cloak>
 
                 <span ng-if="collapsed">
-                    <button class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
+                    <button class="btn btn-info" ng-click="showButtonClicked()">add reply</button>
                     <span>&nbsp;</span>
                     <button ng-if="hasUnreadItems" type="button" class="btn btn-warning"
                             ng-click="markAllAsReadClicked()">mark all as read
@@ -64,6 +64,9 @@
                     </button>
                     <button ng-if="hasUnreadItems && showRead" type="button" class="btn btn-success"
                             ng-click="toggleShowRead()">hide read items
+                    </button>
+                    <button ng-if="hasUnreadItems" type="button" class="btn btn-info"
+                            ng-click="scrollToFirstUnread()">jump to unread
                     </button>
                 </span>
 
@@ -81,7 +84,8 @@
         <div ng-repeat="post in posts"
              ng-controller="PostCtrl"
              ng-init="initPostCtrl(post)"
-             class="postRepeat">
+             class="postRepeat"
+             ng-attr-id="{{ 'Post_' + post.id }}">
 
             <div ng-if="showRead || isNew"
                  class="row postRow"
@@ -140,7 +144,7 @@
         </div>
 
         <div class="row"
-                ng-if="posts.length > 0">
+             ng-if="posts.length > 0">
 
             <div ng-controller="AddPostCtrl"
                  ng-init="initAddPostCtrl()"
@@ -148,7 +152,7 @@
                  ng-cloak>
 
                     <span ng-if="collapsed">
-                        <button class="btn btn-info" ng-click="showButtonClicked()">Add A Reply</button>
+                        <button class="btn btn-info" ng-click="showButtonClicked()">add reply</button>
                     </span>
 
                 <div ng-if="!collapsed">
