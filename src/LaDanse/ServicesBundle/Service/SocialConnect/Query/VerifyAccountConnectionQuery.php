@@ -94,7 +94,10 @@ class VerifyAccountConnectionQuery extends AbstractQuery
                     [
                         'query' => ['token' => $accessToken],
                         'debug' => true,
-                        'connect_timeout' => 10
+                        'connect_timeout' => 10,
+                        'curl' => [
+                            CURLOPT_SSLVERSION => 6
+                        ]
                     ]
                 );
 
@@ -134,7 +137,10 @@ class VerifyAccountConnectionQuery extends AbstractQuery
                     [
                         'query' => ['access_token' => $accessToken],
                         'debug' => true,
-                        'connect_timeout' => 10
+                        'connect_timeout' => 10,
+                        'curl' => [
+                            CURLOPT_SSLVERSION => 6
+                        ]
                     ]
                 );
 
