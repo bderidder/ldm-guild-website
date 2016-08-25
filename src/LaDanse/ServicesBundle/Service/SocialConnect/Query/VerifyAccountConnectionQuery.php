@@ -93,7 +93,7 @@ class VerifyAccountConnectionQuery extends AbstractQuery
                     $checkTokenUrl,
                     [
                         'query' => ['token' => $accessToken],
-                        'debug' => true,
+                        'debug' => false,
                         'connect_timeout' => 10,
                         'curl' => [
                             CURLOPT_SSLVERSION => 6
@@ -136,7 +136,7 @@ class VerifyAccountConnectionQuery extends AbstractQuery
                     $charactersUrl,
                     [
                         'query' => ['access_token' => $accessToken],
-                        'debug' => true,
+                        'debug' => false,
                         'connect_timeout' => 10,
                         'curl' => [
                             CURLOPT_SSLVERSION => 6
