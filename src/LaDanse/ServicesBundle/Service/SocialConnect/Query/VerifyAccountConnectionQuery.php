@@ -89,9 +89,14 @@ class VerifyAccountConnectionQuery extends AbstractQuery
             {
                 $client = new Client();
 
-                $response = $client->get($checkTokenUrl, array(
-                    'query' => array('token' => $accessToken)
-                ));
+                $response = $client->get(
+                    $checkTokenUrl,
+                    [
+                        'query' => ['token' => $accessToken],
+                        'debug' => true,
+                        'connect_timeout' => 10
+                    ]
+                );
 
                 $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
 
@@ -124,9 +129,14 @@ class VerifyAccountConnectionQuery extends AbstractQuery
             {
                 $client = new Client();
 
-                $response = $client->get($charactersUrl, array(
-                    'query' => array('access_token' => $accessToken)
-                ));
+                $response = $client->get(
+                    $charactersUrl,
+                    [
+                        'query' => ['access_token' => $accessToken],
+                        'debug' => true,
+                        'connect_timeout' => 10
+                    ]
+                );
 
                 $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters success " . $response->getBody());
 
