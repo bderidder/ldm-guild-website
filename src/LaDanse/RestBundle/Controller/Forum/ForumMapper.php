@@ -21,12 +21,12 @@ class ForumMapper
             $jsonForums[] = $this->mapForum($generator, $forum);
         }
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "forums"  => $jsonForums,
-            "links"   => (object)array(
-                "self"        => $generator->generate('getForumList', array(), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+            "links"   => (object)[
+                "self"        => $generator->generate('getForumList', [], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
 
         return $jsonObject;
     }
@@ -39,16 +39,16 @@ class ForumMapper
      */
     public function mapForum(UrlGeneratorInterface $generator, Forum $forum)
     {
-        return (object)array(
+        return (object)[
             "forumId"        => $forum->getId(),
             "name"           => $forum->getName(),
             "description"    => $forum->getDescription(),
             "lastPost"       => $this->createLastPost($forum),
-            "links"          => (object)array(
-                "self"        => $generator->generate('getForum', array('forumId' => $forum->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
-                "createTopic" => $generator->generate('createTopic', array('forumId' => $forum->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+            "links"          => (object)[
+                "self"        => $generator->generate('getForum', ['forumId' => $forum->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+                "createTopic" => $generator->generate('createTopic', ['forumId' => $forum->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
     }
 
     /**
@@ -63,17 +63,17 @@ class ForumMapper
 
         usort(
             $topics,
-            function ($a, $b) {
+            function ($a, $b)
+            {
                 /** @var $a \LaDanse\DomainBundle\Entity\Forum\Topic */
                 /** @var $b \LaDanse\DomainBundle\Entity\Forum\Topic */
-
-                return $a->getCreateDate() < $b->getCreateDate();
+                return $a->getLastPostDate() < $b->getLastPostDate();
             }
         );
 
         $topicMapper = new TopicMapper();
 
-        $jsonArray = array();
+        $jsonArray = [];
 
         foreach ($topics as $topic)
         {
@@ -91,17 +91,17 @@ class ForumMapper
     {
         if ($forum->getLastPostPoster() != null)
         {
-            return (object)array(
+            return (object)[
                 "date" => $forum->getLastPostDate()->format(\DateTime::ISO8601),
-                "topic" => (object)array(
+                "topic" => (object)[
                     "id" => $forum->getLastPostTopic()->getId(),
                     "subject" => $forum->getLastPostTopic()->getSubject()
-                ),
-                "poster" => (object)array(
+                ],
+                "poster" => (object)[
                     "id" => $forum->getLastPostPoster()->getId(),
                     "displayName" => $forum->getLastPostPoster()->getDisplayName()
-                )
-            );
+                ]
+            ];
         }
         else
         {

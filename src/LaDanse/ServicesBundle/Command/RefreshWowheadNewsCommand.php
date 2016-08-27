@@ -20,6 +20,8 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 {
     const WOWHEAD_RSS_URL = "http://www.wowhead.com/news&rss";
 
+    const GET_TIMEOUT = 20; // seconds of timeout
+
     /**
      * @return void
      */
@@ -93,7 +95,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
         try
         {
-            $response = $client->request('GET', $url, ['timeout' => 10]); // time out of 10 seconds
+            $response = $client->request('GET', $url, ['timeout' => RefreshWowheadNewsCommand::GET_TIMEOUT]);
 
             if ($response->getStatusCode() != 200)
             {

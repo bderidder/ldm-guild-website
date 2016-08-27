@@ -1,5 +1,5 @@
 forumControllers.controller('TopicPageCtrl',
-    function($scope, $routeParams, $rootScope, $http, forumService)
+    function($scope, $routeParams, $rootScope, $http, $anchorScroll, forumService)
     {
         $scope.forumId = $routeParams.forumId;
         $scope.topicId = $routeParams.topicId;
@@ -26,6 +26,7 @@ forumControllers.controller('TopicPageCtrl',
                 });
         };
 
+        // DEPRECATED
         $scope.toggleShowRead = function()
         {
             $scope.showRead = !$scope.showRead;
@@ -51,6 +52,30 @@ forumControllers.controller('TopicPageCtrl',
                     $scope.hasUnreadItems = lastChangesModel.hasTopicChanged($scope.topicId);
                 });
         }
+
+        $scope.scrollToFirstUnread = function ()
+        {
+            if ($scope.hasUnreadItems)
+            {
+                forumService.getChangesForUser()
+                    .then(function(lastChangesModel)
+                    {
+                        for (var i = 0; i < $scope.posts.length; i++)
+                        {
+                            var post = $scope.posts[i];
+
+                            if (lastChangesModel.isPostNew(post.postId))
+                            {
+                                console.log('Jumping to Post_' + post.postId);
+
+                                $anchorScroll("Post_" + post.postId);
+
+                                return;
+                            }
+                        }
+                    });
+            }
+        };
 
         $scope.refreshPosts = function()
         {

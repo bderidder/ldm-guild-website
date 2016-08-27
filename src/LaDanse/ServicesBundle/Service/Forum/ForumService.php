@@ -142,7 +142,7 @@ class ForumService extends LaDanseService
         }
         else
         {
-            $result = array();
+            $result = [];
 
             $topics = $forum->getTopics();
 
