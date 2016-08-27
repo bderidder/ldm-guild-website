@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\DTO\MasterData;
+namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
 class PatchGuild
 {

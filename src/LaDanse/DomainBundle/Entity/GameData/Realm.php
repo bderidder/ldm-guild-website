@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\DomainBundle\Entity;
+namespace LaDanse\DomainBundle\Entity\GameData;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Realm
 {
-    const REPOSITORY = 'LaDanseDomainBundle:Realm';
+    const REPOSITORY = 'LaDanseDomainBundle:GameData\Realm';
 
     /**
      * @ORM\Column(type="guid")

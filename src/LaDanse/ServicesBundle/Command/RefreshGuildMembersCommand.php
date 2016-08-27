@@ -6,8 +6,8 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use LaDanse\DomainBundle\Entity\MasterData\GameRace;
-use LaDanse\DomainBundle\Entity\MasterData\GameClass;
+use LaDanse\DomainBundle\Entity\GameData\GameRace;
+use LaDanse\DomainBundle\Entity\GameData\GameClass;
 use LaDanse\ServicesBundle\Common\CommandExecutionContext;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;

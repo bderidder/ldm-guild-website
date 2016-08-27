@@ -3,8 +3,8 @@
 namespace LaDanse\DomainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use LaDanse\DomainBundle\Entity\MasterData\GameClass;
-use LaDanse\DomainBundle\Entity\MasterData\GameRace;
+use LaDanse\DomainBundle\Entity\GameData\GameClass;
+use LaDanse\DomainBundle\Entity\GameData\GameRace;
 
 /**
  * @ORM\Entity
@@ -43,13 +43,13 @@ class CharacterVersion
     protected $level;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\MasterData\GameClass")
+     * @ORM\ManyToOne(targetEntity="\LaDanse\DomainBundle\Entity\GameData\GameClass")
      * @ORM\JoinColumn(name="gameClassId", referencedColumnName="id", nullable=false)
      */
     protected $gameClass;
 
     /**
-     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\MasterData\GameRace")
+     * @ORM\ManyToOne(targetEntity="\LaDanse\DomainBundle\Entity\GameData\GameRace")
      * @ORM\JoinColumn(name="gameRaceId", referencedColumnName="id", nullable=false)
      */
     protected $gameRace;

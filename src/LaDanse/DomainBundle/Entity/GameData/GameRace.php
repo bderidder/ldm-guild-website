@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\DomainBundle\Entity\MasterData;
+namespace LaDanse\DomainBundle\Entity\GameData;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GameRace
 {
-    const REPOSITORY = 'LaDanseDomainBundle:MasterData\GameRace';
+    const REPOSITORY = 'LaDanseDomainBundle:GameData\GameRace';
 
     /**
      * @ORM\Column(type="guid")

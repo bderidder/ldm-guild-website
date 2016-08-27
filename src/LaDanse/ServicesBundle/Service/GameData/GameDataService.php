@@ -7,14 +7,13 @@
 namespace LaDanse\ServicesBundle\Service\GameData;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\MasterData\GameClass;
-use LaDanse\DomainBundle\Entity\MasterData\GameRace;
+use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class GameDataService
- * @package LaDanse\ServicesBundle\Service
  *
  * @DI\Service(GameDataService::SERVICE_NAME, public=true)
  */
@@ -41,22 +40,62 @@ class GameDataService extends LaDanseService
     }
 
     /**
-     * @return array|\LaDanse\DomainBundle\Entity\MasterData\GameClass[]|\LaDanse\DomainBundle\Entity\MasterData\GameRace[]
+     * @return Entity\GameData\GameRace[]
      */
     public function getAllRaces()
     {
         $em = $this->getDoctrine()->getManager();
 
-        return $em->getRepository(GameRace::REPOSITORY)->findAll();
+        return $em->getRepository(Entity\GameData\GameRace::REPOSITORY)->findAll();
     }
 
     /**
-     * @return array|\LaDanse\DomainBundle\Entity\MasterData\GameClass[]
+     * @return Entity\GameData\GameClass[]
      */
     public function getAllClasses()
     {
         $em = $this->getDoctrine()->getManager();
 
-        return $em->getRepository(GameClass::REPOSITORY)->findAll();
+        return $em->getRepository(Entity\GameData\GameClass::REPOSITORY)->findAll();
+    }
+
+    public function getAllGuilds() : array
+    {
+
+    }
+
+    public function createGuild(DTO\GameData\PatchGuild $patchGuild) : DTO\GameData\Guild
+    {
+
+    }
+
+    public function updateGuild(string $guildId, DTO\GameData\PatchGuild $patchGuild)
+    {
+
+    }
+
+    public function removeGuild(string $guildId)
+    {
+
+    }
+
+    public function getAllRealms() : array
+    {
+
+    }
+
+    public function createRealm(DTO\GameData\PatchRealm $patchRealm) : DTO\GameData\Realm
+    {
+
+    }
+
+    public function updateRealm(string $realmId, DTO\GameData\PatchRealm $patchRealm)
+    {
+
+    }
+
+    public function reamoveRealm(string $realmId)
+    {
+
     }
 }

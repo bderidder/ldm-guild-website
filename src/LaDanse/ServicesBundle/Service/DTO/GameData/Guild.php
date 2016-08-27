@@ -6,7 +6,7 @@
  * Time: 17:39
  */
 
-namespace LaDanse\ServicesBundle\Service\DTO\MasterData;
+namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
 
 use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;

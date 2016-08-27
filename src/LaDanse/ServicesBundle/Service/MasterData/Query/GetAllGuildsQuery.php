@@ -51,7 +51,7 @@ class GetAllGuildsQuery extends AbstractQuery
         $qb = $em->createQueryBuilder();
 
         $qb->select('e')
-            ->from('LaDanse\DomainBundle\Entity\Guild', 'g')
+            ->from('LaDanse\DomainBundle\Entity\GameData\Guild', 'g')
             ->orderBy('g.name', 'ASC');
 
         $this->logger->debug(
@@ -64,7 +64,7 @@ class GetAllGuildsQuery extends AbstractQuery
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
 
-        $query->setFetchMode('LaDanse\DomainBundle\Entity\Realm', "realm", ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode('LaDanse\DomainBundle\Entity\GameData\Realm', "realm", ClassMetadata::FETCH_EAGER);
 
         $guilds = $query->getResult();
     }
