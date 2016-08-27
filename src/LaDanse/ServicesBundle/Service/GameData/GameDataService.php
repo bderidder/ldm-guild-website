@@ -7,8 +7,8 @@
 namespace LaDanse\ServicesBundle\Service\GameData;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\GameClass;
-use LaDanse\DomainBundle\Entity\GameRace;
+use LaDanse\DomainBundle\Entity\MasterData\GameClass;
+use LaDanse\DomainBundle\Entity\MasterData\GameRace;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -41,7 +41,7 @@ class GameDataService extends LaDanseService
     }
 
     /**
-     * @return array|\LaDanse\DomainBundle\Entity\GameClass[]|\LaDanse\DomainBundle\Entity\GameRace[]
+     * @return array|\LaDanse\DomainBundle\Entity\MasterData\GameClass[]|\LaDanse\DomainBundle\Entity\MasterData\GameRace[]
      */
     public function getAllRaces()
     {
@@ -51,7 +51,7 @@ class GameDataService extends LaDanseService
     }
 
     /**
-     * @return array|\LaDanse\DomainBundle\Entity\GameClass[]
+     * @return array|\LaDanse\DomainBundle\Entity\MasterData\GameClass[]
      */
     public function getAllClasses()
     {

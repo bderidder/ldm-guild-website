@@ -6,6 +6,8 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
+use LaDanse\DomainBundle\Entity\MasterData\GameRace;
+use LaDanse\DomainBundle\Entity\MasterData\GameClass;
 use LaDanse\ServicesBundle\Common\CommandExecutionContext;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
@@ -52,7 +54,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         {
             $context->error("Could not get Armory information");
 
-            return;
+            return -1;
         }
        
         $armoryNames = [];
@@ -198,6 +200,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
             $armoryIndex++;
         }
+
+        return 0;
     }
 
     /**
@@ -273,40 +277,44 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
     /**
      * @param $gameRaces
-     * @param $gameRaceId
-     * @return \LaDanse\DomainBundle\Entity\GameRace|null
+     * @param $gameRaceArmoryId
+     * @return GameRace|null
+     * @throws \Exception
      */
-    protected function getGameRace($gameRaces, $gameRaceId)
+    protected function getGameRace($gameRaces, $gameRaceArmoryId)
     {
-        /* @var $gameRace \LaDanse\DomainBundle\Entity\GameRace */
+        /* @var GameRace $gameRace */
         foreach($gameRaces as $gameRace)
         {
-            if ($gameRace->getId() == $gameRaceId)
+            if ($gameRace->getArmoryId() == $gameRaceArmoryId)
             {
                 return $gameRace;
             }
         }
 
-        return null;
+        throw new \Exception("Could not find a GameRace instance for armory id " . $gameRaceArmoryId);
     }
 
     /**
-     * @param $gameClasses
-     * @param $gameClassId
-     * @return \LaDanse\DomainBundle\Entity\GameClass|null
+     * @param array $gameClasses
+     * @param int $gameClassArmoryId
+     *
+     * @return GameClass|null
+     *
+     * @throws \Exception
      */
-    protected function getGameClass($gameClasses, $gameClassId)
+    protected function getGameClass($gameClasses, $gameClassArmoryId)
     {
-        /* @var $gameClass \LaDanse\DomainBundle\Entity\GameClass */
+        /* @var GameClass $gameClass */
         foreach($gameClasses as $gameClass)
         {
-            if ($gameClass->getId() == $gameClassId)
+            if ($gameClass->getArmoryId() == $gameClassArmoryId)
             {
                 return $gameClass;
             }
         }
 
-        return null;
+        throw new \Exception("Could not find a GameClass instance for armory id " . $gameClassArmoryId);
     }
 
     /**
