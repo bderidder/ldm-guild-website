@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\MasterData\Query;
+namespace LaDanse\ServicesBundle\Service\GameData\Query;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
