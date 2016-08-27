@@ -10,11 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="GameRace")
+ * @ORM\Table(name="GameFaction")
  */
-class GameRace
+class GameFaction
 {
-    const REPOSITORY = 'LaDanseDomainBundle:GameData\GameRace';
+    const REPOSITORY = 'LaDanseDomainBundle:GameData\GameFaction';
 
     /**
      * @ORM\Column(type="guid")
@@ -40,14 +40,6 @@ class GameRace
     protected $name;
 
     /**
-     * @var GameFaction $faction the faction of this race
-     *
-     * @ORM\ManyToOne(targetEntity="GameFaction")
-     * @ORM\JoinColumn(name="faction", referencedColumnName="id", nullable=false)
-     */
-    protected $faction;
-
-    /**
      * @return string
      */
     public function getId(): string
@@ -57,9 +49,9 @@ class GameRace
 
     /**
      * @param string $id
-     * @return GameRace
+     * @return GameFaction
      */
-    public function setId(string $id): GameRace
+    public function setId(string $id): GameFaction
     {
         $this->id = $id;
         return $this;
@@ -75,9 +67,9 @@ class GameRace
 
     /**
      * @param int $armoryId
-     * @return GameRace
+     * @return GameFaction
      */
-    public function setArmoryId(int $armoryId): GameRace
+    public function setArmoryId(int $armoryId): GameFaction
     {
         $this->armoryId = $armoryId;
         return $this;
@@ -93,13 +85,11 @@ class GameRace
 
     /**
      * @param string $name
-     * @return GameRace
+     * @return GameFaction
      */
-    public function setName(string $name): GameRace
+    public function setName(string $name): GameFaction
     {
         $this->name = $name;
         return $this;
     }
-
-
 }
