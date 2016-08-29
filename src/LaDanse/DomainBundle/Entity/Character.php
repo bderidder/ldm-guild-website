@@ -5,6 +5,7 @@ namespace LaDanse\DomainBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LaDanse\DomainBundle\Entity\GameData\Realm;
 
 /**
  * @ORM\Entity
@@ -27,9 +28,10 @@ class Character
     protected $name;
 
     /**
-     * @var string
+     * @var Realm $realm
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\ManyToOne(targetEntity="LaDanse\DomainBundle\Entity\GameData\Realm")
+     * @ORM\JoinColumn(name="realm", referencedColumnName="id", nullable=false)
      */
     protected $realm;
 
@@ -90,19 +92,21 @@ class Character
     }
 
     /**
-     * @return string
+     * @return Realm
      */
-    public function getRealm()
+    public function getRealm(): Realm
     {
         return $this->realm;
     }
 
     /**
-     * @param string $realm
+     * @param Realm $realm
+     * @return Character
      */
-    public function setRealm($realm)
+    public function setRealm(Realm $realm): Character
     {
         $this->realm = $realm;
+        return $this;
     }
 
     /**

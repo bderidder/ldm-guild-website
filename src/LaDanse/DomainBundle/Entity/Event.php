@@ -14,7 +14,7 @@ use LaDanse\DomainBundle\FSM\EventStateMachine;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Event")
+ * @ORM\Table(name="Event", options={"collate":"utf8mb4_unicode_ci", "charset":"utf8mb4", "engine":"InnoDB"})
  * @ORM\HasLifecycleCallbacks
  */
 class Event implements StatefulInterface

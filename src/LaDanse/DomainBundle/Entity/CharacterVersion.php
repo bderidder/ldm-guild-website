@@ -55,13 +55,6 @@ class CharacterVersion
     protected $gameRace;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $guild;
-
-    /**
      * Get id
      *
      * @return integer 
