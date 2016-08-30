@@ -98,7 +98,8 @@
                 <a href="" ng-click="scrollTo('PvEForums')">PvE Forums</a> |
                 <a href="" ng-click="scrollTo('RaidTactics')">Raid Tactics</a> |
                 <a href="" ng-click="scrollTo('PvPForums')">PvP Forums</a> |
-                <a href="" ng-click="scrollTo('RolePlayingAndEvents')">Role Playing & Events</a>
+                <a href="" ng-click="scrollTo('RolePlayingAndEvents')">Role Playing & Events</a> |
+                <a href="" ng-click="scrollTo('OldRaids')">Old Raids</a>
 
             </div>
 
@@ -328,6 +329,125 @@
 
         </div>
 
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z34')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4 id="PvPForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> PvP Forums</h4>
+
+            </div>
+
+        </div>
+
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z12')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z13')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z14')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z15')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4 id="RolePlayingAndEvents"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Role Playing &amp; Events Forums</h4>
+
+            </div>
+
+        </div>
+
+        <div class="row forum-row">
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z16')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div ng-controller="ForumItemCtrl"
+                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z17')"
+                     class="forumBox"
+                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
+                     forum-item-template>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row header-row">
+
+            <div class="col-md-12">
+
+                <h4 id="OldRaids"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Old Raids</h4>
+
+            </div>
+
+        </div>
+
         <div class="row subheader-row">
 
             <div class="col-md-12"><b>Highmaul</b><br/></div>
@@ -487,100 +607,6 @@
 
                 <div ng-controller="ForumItemCtrl"
                      ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z32')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row header-row">
-
-            <div class="col-md-12">
-
-                <h4 id="PvPForums"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> PvP Forums</h4>
-
-            </div>
-
-        </div>
-
-        <div class="row forum-row">
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z12')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z13')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z14')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z15')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="row header-row">
-
-            <div class="col-md-12">
-
-                <h4 id="RolePlayingAndEvents"><a href="" ng-click="scrollTo('TopOfPage')" class="TopOfPage"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></a> Role Playing &amp; Events Forums</h4>
-
-            </div>
-
-        </div>
-
-        <div class="row forum-row">
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z16')"
-                     class="forumBox"
-                     ng-class="{forumBoxUpdated: isRecentlyUpdated}"
-                     forum-item-template>
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div ng-controller="ForumItemCtrl"
-                     ng-init="initForumItemCtrl('3908cb8b86657cdaf71b020ed0115z17')"
                      class="forumBox"
                      ng-class="{forumBoxUpdated: isRecentlyUpdated}"
                      forum-item-template>
