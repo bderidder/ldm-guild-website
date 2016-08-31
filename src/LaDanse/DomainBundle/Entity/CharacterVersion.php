@@ -203,22 +203,6 @@ class CharacterVersion
     }
 
     /**
-     * @return string
-     */
-    public function getGuild()
-    {
-        return $this->guild;
-    }
-
-    /**
-     * @param string $guild
-     */
-    public function setGuild($guild)
-    {
-        $this->guild = $guild;
-    }
-
-    /**
      * Return true if the given date is within the period of this version
      *
      * @param \DateTime $onDateTime
