@@ -10,6 +10,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\GameData\Query\GetAllGuildsQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -61,7 +62,10 @@ class GameDataService extends LaDanseService
 
     public function getAllGuilds() : array
     {
-        throw new \Exception("Not yet implemented");
+        /** @var GetAllGuildsQuery $getAllGuildsQuery */
+        $getAllGuildsQuery = $this->get(GetAllGuildsQuery::SERVICE_NAME);
+
+        return $getAllGuildsQuery->run();
     }
 
     public function createGuild(DTO\GameData\PatchGuild $patchGuild) : string
