@@ -2,14 +2,25 @@
 
 namespace LaDanseDomain\Migrations;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20160829194233 extends AbstractMigration
+class Version20160829194233 extends AbstractMigration implements ContainerAwareInterface
 {
+    /** @var ContainerInterface $container */
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param Schema $schema
      */
@@ -52,6 +63,23 @@ class Version20160829194233 extends AbstractMigration
         $this->addSql('ALTER TABLE migration_versions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
         $this->addSql('SET FOREIGN_KEY_CHECKS = 1');
+    }
+
+    /**
+     * @param Schema $schema
+     */
+    public function postUp(Schema $schema)
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
+        /** @var Connection $conn */
+        $conn = $this->container->get('database_connection');
+
+        $databaseName = $conn->getDatabase();
+
+        $updateStmt = $conn->prepare("ALTER SCHEMA " . $databaseName . " DEFAULT CHARACTER SET utf8mb4  DEFAULT COLLATE utf8mb4_unicode_ci");
+        $updateStmt->execute();
     }
 
     /**
