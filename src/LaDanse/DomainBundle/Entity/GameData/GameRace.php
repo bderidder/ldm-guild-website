@@ -101,5 +101,21 @@ class GameRace
         return $this;
     }
 
+    /**
+     * @return GameFaction
+     */
+    public function getFaction(): GameFaction
+    {
+        return $this->faction;
+    }
 
+    /**
+     * @param GameFaction $faction
+     * @return GameRace
+     */
+    public function setFaction(GameFaction $faction): GameRace
+    {
+        $this->faction = $faction;
+        return $this;
+    }
 }

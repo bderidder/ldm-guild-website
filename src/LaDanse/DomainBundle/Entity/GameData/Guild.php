@@ -31,4 +31,58 @@ class Guild
      * @ORM\JoinColumn(name="realm", referencedColumnName="id", nullable=false)
      */
     protected $realm;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return Guild
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return Guild
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Realm
+     */
+    public function getRealm(): Realm
+    {
+        return $this->realm;
+    }
+
+    /**
+     * @param Realm $realm
+     * @return Guild
+     */
+    public function setRealm(Realm $realm): Guild
+    {
+        $this->realm = $realm;
+        return $this;
+    }
 }
