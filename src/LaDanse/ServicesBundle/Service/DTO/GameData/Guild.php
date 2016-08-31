@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bavo
- * Date: 21/08/16
- * Time: 17:39
- */
 
 namespace LaDanse\ServicesBundle\Service\DTO\GameData;
-
 
 use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
 
