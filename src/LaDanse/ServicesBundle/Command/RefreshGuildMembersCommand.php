@@ -94,8 +94,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
 
-        $gameRaces = $gameDataService->getAllRaces();
-        $gameClasses = $gameDataService->getAllClasses();
+        $gameRaces = $gameDataService->getAllGameRaces();
+        $gameClasses = $gameDataService->getAllGameClasses();
         
         $dbNames = $characterService->getAllGuildCharacters();
 

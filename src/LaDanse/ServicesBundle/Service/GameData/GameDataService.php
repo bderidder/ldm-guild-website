@@ -42,7 +42,7 @@ class GameDataService extends LaDanseService
     /**
      * @return Entity\GameData\GameRace[]
      */
-    public function getAllRaces()
+    public function getAllGameRaces()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -52,7 +52,7 @@ class GameDataService extends LaDanseService
     /**
      * @return Entity\GameData\GameClass[]
      */
-    public function getAllClasses()
+    public function getAllGameClasses()
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -61,41 +61,41 @@ class GameDataService extends LaDanseService
 
     public function getAllGuilds() : array
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
-    public function createGuild(DTO\GameData\PatchGuild $patchGuild) : DTO\GameData\Guild
+    public function createGuild(DTO\GameData\PatchGuild $patchGuild) : string
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
     public function updateGuild(string $guildId, DTO\GameData\PatchGuild $patchGuild)
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
     public function removeGuild(string $guildId)
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
     public function getAllRealms() : array
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
-    public function createRealm(DTO\GameData\PatchRealm $patchRealm) : DTO\GameData\Realm
+    public function createRealm(DTO\GameData\PatchRealm $patchRealm) : string
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
     public function updateRealm(string $realmId, DTO\GameData\PatchRealm $patchRealm)
     {
-
+        throw new \Exception("Not yet implemented");
     }
 
-    public function reamoveRealm(string $realmId)
+    public function removeRealm(string $realmId)
     {
-
+        throw new \Exception("Not yet implemented");
     }
 }
