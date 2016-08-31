@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Service\GameData\Query;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
+use LaDanse\ServicesBundle\Service\DTO\GameData\GuildMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -67,5 +68,7 @@ class GetAllGuildsQuery extends AbstractQuery
         $query->setFetchMode('LaDanse\DomainBundle\Entity\GameData\Realm', "realm", ClassMetadata::FETCH_EAGER);
 
         $guilds = $query->getResult();
+
+        return GuildMapper::mapArray($guilds);
     }
 }
