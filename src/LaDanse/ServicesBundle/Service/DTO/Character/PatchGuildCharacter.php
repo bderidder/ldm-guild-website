@@ -2,21 +2,53 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\Character;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ExclusionPolicy("none")
+ */
 class PatchGuildCharacter
 {
-    /** @var string */
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("name")
+     * @Assert\NotBlank()
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var StringReference
+     * @Type(StringReference::class)
+     * @Assert\NotNull()
+     */
     protected $guild;
 
-    /** @var int */
+    /**
+     * @var int
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 110,
+     *      minMessage = "The level of a character must be between 1 and 110",
+     *      maxMessage = "The level of a character must be between 1 and 110"
+     * )
+     */
     protected $level;
 
-    /** @var string */
+    /**
+     * @var StringReference
+     * @Assert\NotNull()
+     */
     protected $gameClass;
 
-    /** @var string */
+    /**
+     * @var StringReference
+     * @Assert\NotNull()
+     */
     protected $gameRace;
 
     /**

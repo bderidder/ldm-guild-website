@@ -5,7 +5,7 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
-use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 
 /**
  * @ExclusionPolicy("none")
@@ -27,8 +27,8 @@ class Guild
     private $name;
 
     /**
-     * @var RealmReference
-     * @Type(RealmReference::class)
+     * @var StringReference
+     * @Type(StringReference::class)
      * @SerializedName("realmReference")
      */
     private $realmReference;
@@ -70,18 +70,18 @@ class Guild
     }
 
     /**
-     * @return RealmReference
+     * @return StringReference
      */
-    public function getRealmReference(): RealmReference
+    public function getRealmReference(): StringReference
     {
         return $this->realmReference;
     }
 
     /**
-     * @param RealmReference $realmReference
+     * @param StringReference $realmReference
      * @return Guild
      */
-    public function setRealmReference(RealmReference $realmReference): Guild
+    public function setRealmReference(StringReference $realmReference): Guild
     {
         $this->realmReference = $realmReference;
         return $this;

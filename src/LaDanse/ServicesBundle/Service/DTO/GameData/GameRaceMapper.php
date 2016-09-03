@@ -4,8 +4,7 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO\MapperException;
-use LaDanse\ServicesBundle\Service\DTO\Reference\GameFactionReference;
-use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 
 class GameRaceMapper
 {
@@ -20,11 +19,9 @@ class GameRaceMapper
         $dtoGameRace->setId($gameRace->getId());
         $dtoGameRace->setArmoryId($gameRace->getId());
         $dtoGameRace->setName($gameRace->getName());
-
-        $gameFactionReference = new GameFactionReference();
-        $gameFactionReference->setId($gameRace->getFaction()->getId());
-
-        $dtoGameRace->setGameFactionReference($gameFactionReference);
+        $dtoGameRace->setGameFactionReference(
+            new StringReference($gameRace->getFaction()->getId())
+        );
 
         return $dtoGameRace;
     }

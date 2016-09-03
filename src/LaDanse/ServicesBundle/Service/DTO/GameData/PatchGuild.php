@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,10 +22,11 @@ class PatchGuild
     private $name;
 
     /**
-     * @var string
-     * @Type("string")
+     * @var StringReference
+     * @Type(StringReference::class)
      * @SerializedName("realmId")
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Valid()
      */
     private $realmId;
 
@@ -47,18 +49,18 @@ class PatchGuild
     }
 
     /**
-     * @return string
+     * @return StringReference
      */
-    public function getRealmId(): string
+    public function getRealmId(): StringReference
     {
         return $this->realmId;
     }
 
     /**
-     * @param string $realmId
+     * @param StringReference $realmId
      * @return PatchGuild
      */
-    public function setRealmId(string $realmId): PatchGuild
+    public function setRealmId(StringReference $realmId): PatchGuild
     {
         $this->realmId = $realmId;
         return $this;

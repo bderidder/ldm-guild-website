@@ -5,7 +5,7 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
-use LaDanse\ServicesBundle\Service\DTO\Reference\GameFactionReference;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 
 /**
  * @ExclusionPolicy("none")
@@ -34,8 +34,8 @@ class GameRace
     protected $name;
 
     /**
-     * @var GameFactionReference
-     * @Type(GameFactionReference::class)
+     * @var StringReference
+     * @Type(StringReference::class)
      * @SerializedName("gameFactionReference")
      */
     protected $gameFactionReference;
@@ -95,18 +95,18 @@ class GameRace
     }
 
     /**
-     * @return GameFactionReference
+     * @return StringReference
      */
-    public function getGameFactionReference(): GameFactionReference
+    public function getGameFactionReference(): StringReference
     {
         return $this->gameFactionReference;
     }
 
     /**
-     * @param GameFactionReference $gameFactionReference
+     * @param StringReference $gameFactionReference
      * @return GameRace
      */
-    public function setGameFactionReference(GameFactionReference $gameFactionReference): GameRace
+    public function setGameFactionReference(StringReference $gameFactionReference): GameRace
     {
         $this->gameFactionReference = $gameFactionReference;
         return $this;

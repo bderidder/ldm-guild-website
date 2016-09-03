@@ -4,7 +4,7 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO\MapperException;
-use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 
 class GuildMapper
 {
@@ -18,11 +18,9 @@ class GuildMapper
 
         $dtoGuild->setId($guild->getId());
         $dtoGuild->setName($guild->getName());
-
-        $dtoRealmReference = new RealmReference();
-        $dtoRealmReference->setId($guild->getRealm()->getId());
-
-        $dtoGuild->setRealmReference($dtoRealmReference);
+        $dtoGuild->setRealmReference(
+            new StringReference($guild->getRealm()->getId())
+        );
 
         return $dtoGuild;
     }

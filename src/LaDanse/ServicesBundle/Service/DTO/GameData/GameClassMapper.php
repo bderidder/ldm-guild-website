@@ -4,7 +4,6 @@ namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO\MapperException;
-use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
 
 class GameClassMapper
 {
