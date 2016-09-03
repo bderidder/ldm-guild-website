@@ -17,7 +17,7 @@ class GameRaceMapper
         $dtoGameRace = new GameRace();
 
         $dtoGameRace->setId($gameRace->getId());
-        $dtoGameRace->setArmoryId($gameRace->getId());
+        $dtoGameRace->setArmoryId($gameRace->getArmoryId());
         $dtoGameRace->setName($gameRace->getName());
         $dtoGameRace->setGameFactionReference(
             new StringReference($gameRace->getFaction()->getId())

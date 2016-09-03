@@ -16,7 +16,7 @@ class GameClassMapper
         $dtoGameClass = new GameClass();
 
         $dtoGameClass->setId($gameClass->getId());
-        $dtoGameClass->setArmoryId($gameClass->getId());
+        $dtoGameClass->setArmoryId($gameClass->getArmoryId());
         $dtoGameClass->setName($gameClass->getName());
 
         return $dtoGameClass;
