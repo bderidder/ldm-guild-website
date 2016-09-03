@@ -57,9 +57,6 @@ class GuildCharacter
      */
     protected $gameRaceReference;
 
-    /** @var Claim */
-    //protected $claim;
-
     /**
      * @return int
      */
