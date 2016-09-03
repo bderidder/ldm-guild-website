@@ -2,17 +2,35 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
 use LaDanse\ServicesBundle\Service\DTO\Reference\RealmReference;
 
+/**
+ * @ExclusionPolicy("none")
+ */
 class Guild
 {
-    /** @var string */
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("id")
+     */
     private $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("name")
+     */
     private $name;
 
-    /** @var RealmReference */
+    /**
+     * @var RealmReference
+     * @Type(RealmReference::class)
+     * @SerializedName("realmReference")
+     */
     private $realmReference;
 
     /**

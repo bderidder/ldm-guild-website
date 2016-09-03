@@ -139,5 +139,7 @@ class CancelEventCommand extends AbstractCommand
                 )
             )
         );
+
+        return null;
     }
 }

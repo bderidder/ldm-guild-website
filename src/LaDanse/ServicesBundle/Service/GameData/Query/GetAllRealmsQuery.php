@@ -2,18 +2,17 @@
 
 namespace LaDanse\ServicesBundle\Service\GameData\Query;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
-use LaDanse\ServicesBundle\Service\DTO\GameData\GuildMapper;
+use LaDanse\ServicesBundle\Service\DTO\GameData\RealmMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(GetAllGuildsQuery::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(GetAllRealmsQuery::SERVICE_NAME, public=true, shared=false)
  */
-class GetAllGuildsQuery extends AbstractQuery
+class GetAllRealmsQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.GetAllGuildsQuery';
+    const SERVICE_NAME = 'LaDanse.GetAllRealmsQuery';
 
     /**
      * @var $logger \Monolog\Logger
@@ -52,11 +51,11 @@ class GetAllGuildsQuery extends AbstractQuery
         $qb = $em->createQueryBuilder();
 
         $qb->select('g')
-            ->from('LaDanse\DomainBundle\Entity\GameData\Guild', 'g')
+            ->from('LaDanse\DomainBundle\Entity\GameData\Realm', 'g')
             ->orderBy('g.name', 'ASC');
 
         $this->logger->debug(
-            __CLASS__ . " created DQL for retrieving Guilds ",
+            __CLASS__ . " created DQL for retrieving Realms ",
             [
                 "query" => $qb->getDQL()
             ]
@@ -65,10 +64,8 @@ class GetAllGuildsQuery extends AbstractQuery
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
 
-        $query->setFetchMode('LaDanse\DomainBundle\Entity\GameData\Realm', "realm", ClassMetadata::FETCH_EAGER);
+        $Realms = $query->getResult();
 
-        $guilds = $query->getResult();
-
-        return GuildMapper::mapArray($guilds);
+        return RealmMapper::mapArray($Realms);
     }
 }

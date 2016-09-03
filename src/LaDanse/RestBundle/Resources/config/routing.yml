@@ -12,3 +12,8 @@ CommentRestRouting:
     resource: "@LaDanseRestBundle/Controller/Comments"
     type:     annotation
     prefix:   /services/comment
+
+GameDataRestRouting:
+    resource: "@LaDanseRestBundle/Controller/GameData"
+    type:     annotation
+    prefix:   /services/gamedata

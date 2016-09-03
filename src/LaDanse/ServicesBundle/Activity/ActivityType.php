@@ -82,4 +82,8 @@ class ActivityType
     const BATTLENET_OAUTH_DISCONNECT = 'Battlenet.OAuth.Disconnect'; // State Change
 
     const REDIRECT = "Redirect"; // Read Only
+
+    const REALM_CREATE = "Realm.Create"; // State Change
+
+    const GUILD_CREATE = "Guild.Create"; // State Change
 }

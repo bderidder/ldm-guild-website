@@ -24,6 +24,8 @@ class GameRaceMapper
         $gameFactionReference = new GameFactionReference();
         $gameFactionReference->setId($gameRace->getFaction()->getId());
 
+        $dtoGameRace->setGameFactionReference($gameFactionReference);
+
         return $dtoGameRace;
     }
 

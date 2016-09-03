@@ -5,23 +5,23 @@ namespace LaDanse\ServicesBundle\Service\DTO\Reference;
 class RealmReference
 {
     /** @var string */
-    private $realmId;
+    private $id;
 
     /**
      * @return string
      */
-    public function getRealmId(): string
+    public function getId(): string
     {
-        return $this->realmId;
+        return $this->id;
     }
 
     /**
      * @param string $realmId
      * @return RealmReference
      */
-    public function setRealmId(string $realmId): RealmReference
+    public function setId(string $realmId): RealmReference
     {
-        $this->realmId = $realmId;
+        $this->id = $realmId;
         return $this;
     }
 }

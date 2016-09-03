@@ -48,5 +48,21 @@ class PolicyCatalog
                 new CreatorCanChangeEventStateRule()
             )
         );
+
+        $this->topPolicies[] = new PolicySet(
+            'Game Data Policy Set - Realm',
+            ActivityType::REALM_CREATE,
+            array(
+                new AllCanCreateGameDataRule()
+            )
+        );
+
+        $this->topPolicies[] = new PolicySet(
+            'Game Data Policy Set - Guild',
+            ActivityType::GUILD_CREATE,
+            array(
+                new AllCanCreateGameDataRule()
+            )
+        );
     }
 }

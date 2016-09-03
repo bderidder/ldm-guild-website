@@ -2,6 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Common;
 
+use JMS\Serializer\SerializerBuilder;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\SiteBundle\Security\AuthenticationContext;
 use LaDanse\SiteBundle\Security\AuthenticationService;
@@ -53,7 +54,7 @@ abstract class AbstractCommand
     {
         $this->validateInput();
 
-        $this->runCommand();
+        return $this->runCommand();
     }
 
     /**
@@ -82,6 +83,12 @@ abstract class AbstractCommand
         }
 
         return null;
+    }
+
+    protected function serializeToJson($object)
+    {
+        $serializer = SerializerBuilder::create()->build();
+        return $serializer->serialize($object, 'json');
     }
 
     abstract protected function validateInput();

@@ -2,12 +2,27 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
+
+/**
+ * @ExclusionPolicy("none")
+ */
 class Realm
 {
-    /** @var string */
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("id")
+     */
     private $id;
 
-    /** @var string */
+    /**
+     * @var string
+     * @Type("string")
+     * @SerializedName("name")
+     */
     private $name;
 
     /**

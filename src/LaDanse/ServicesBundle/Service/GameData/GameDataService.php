@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
  * @link     https://github.com/bderidder/ldm-guild-website
@@ -7,10 +8,15 @@
 namespace LaDanse\ServicesBundle\Service\GameData;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\GameData\Command\PostGuildCommand;
+use LaDanse\ServicesBundle\Service\GameData\Command\PostRealmCommand;
+use LaDanse\ServicesBundle\Service\GameData\Query\GetAllGameClassesQuery;
+use LaDanse\ServicesBundle\Service\GameData\Query\GetAllGameFactionsQuery;
+use LaDanse\ServicesBundle\Service\GameData\Query\GetAllGameRacesQuery;
 use LaDanse\ServicesBundle\Service\GameData\Query\GetAllGuildsQuery;
+use LaDanse\ServicesBundle\Service\GameData\Query\GetAllRealmsQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -41,23 +47,33 @@ class GameDataService extends LaDanseService
     }
 
     /**
-     * @return Entity\GameData\GameRace[]
+     * @return DTO\GameData\GameRace[]
      */
     public function getAllGameRaces()
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var GetAllGuildsQuery $getAllGameRacesQuery */
+        $getAllGameRacesQuery = $this->get(GetAllGameRacesQuery::SERVICE_NAME);
 
-        return $em->getRepository(Entity\GameData\GameRace::REPOSITORY)->findAll();
+        return $getAllGameRacesQuery->run();
     }
 
     /**
-     * @return Entity\GameData\GameClass[]
+     * @return DTO\GameData\GameClass[]
      */
     public function getAllGameClasses()
     {
-        $em = $this->getDoctrine()->getManager();
+        /** @var GetAllGameClassesQuery $getAllGameClassesQuery */
+        $getAllGameClassesQuery = $this->get(GetAllGameClassesQuery::SERVICE_NAME);
 
-        return $em->getRepository(Entity\GameData\GameClass::REPOSITORY)->findAll();
+        return $getAllGameClassesQuery->run();
+    }
+
+    public function getAllGameFactions() : array
+    {
+        /** @var GetAllGameFactionsQuery $getAllGameFactionsQuery */
+        $getAllGameFactionsQuery = $this->get(GetAllGameFactionsQuery::SERVICE_NAME);
+
+        return $getAllGameFactionsQuery->run();
     }
 
     public function getAllGuilds() : array
@@ -68,37 +84,53 @@ class GameDataService extends LaDanseService
         return $getAllGuildsQuery->run();
     }
 
-    public function createGuild(DTO\GameData\PatchGuild $patchGuild) : string
+    public function postGuild(DTO\GameData\PatchGuild $patchGuild) : DTO\GameData\Guild
+    {
+        /** @var PostGuildCommand $postGuildCommand */
+        $postGuildCommand = $this->get(PostGuildCommand::SERVICE_NAME);
+
+        $postGuildCommand->setPatchGuild($patchGuild);
+
+        return $postGuildCommand->run();
+    }
+
+    public function patchGuild(string $guildId, DTO\GameData\PatchGuild $patchGuild)
     {
         throw new \Exception("Not yet implemented");
     }
 
-    public function updateGuild(string $guildId, DTO\GameData\PatchGuild $patchGuild)
+    public function deleteGuild(string $guildId)
     {
         throw new \Exception("Not yet implemented");
     }
 
-    public function removeGuild(string $guildId)
-    {
-        throw new \Exception("Not yet implemented");
-    }
-
+    /**
+     * @return DTO\GameData\Realm[]
+     */
     public function getAllRealms() : array
     {
-        throw new \Exception("Not yet implemented");
+        /** @var GetAllRealmsQuery $getAllRealmsQuery */
+        $getAllRealmsQuery = $this->get(GetAllRealmsQuery::SERVICE_NAME);
+
+        return $getAllRealmsQuery->run();
     }
 
-    public function createRealm(DTO\GameData\PatchRealm $patchRealm) : string
+    public function postRealm(DTO\GameData\PatchRealm $patchRealm) : DTO\GameData\Realm
+    {
+        /** @var PostRealmCommand $postRealmCommand */
+        $postRealmCommand = $this->get(PostRealmCommand::SERVICE_NAME);
+
+        $postRealmCommand->setPatchRealm($patchRealm);
+
+        return $postRealmCommand->run();
+    }
+
+    public function patchRealm(string $realmId, DTO\GameData\PatchRealm $patchRealm)
     {
         throw new \Exception("Not yet implemented");
     }
 
-    public function updateRealm(string $realmId, DTO\GameData\PatchRealm $patchRealm)
-    {
-        throw new \Exception("Not yet implemented");
-    }
-
-    public function removeRealm(string $realmId)
+    public function deleteRealm(string $realmId)
     {
         throw new \Exception("Not yet implemented");
     }

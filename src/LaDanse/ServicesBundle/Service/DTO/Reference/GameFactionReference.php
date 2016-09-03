@@ -4,22 +4,22 @@ namespace LaDanse\ServicesBundle\Service\DTO\Reference;
 
 class GameFactionReference
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return GameFactionReference
      */
-    public function setId(int $id): GameFactionReference
+    public function setId(string $id): GameFactionReference
     {
         $this->id = $id;
         return $this;

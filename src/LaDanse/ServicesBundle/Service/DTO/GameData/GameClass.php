@@ -2,20 +2,33 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\GameData;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Type;
+
+/**
+ * @ExclusionPolicy("none")
+ */
 class GameClass
 {
     /**
      * @var string $id
+     * @Type("string")
+     * @SerializedName("id")
      */
     protected $id;
 
     /**
      * @var integer $armoryId
+     * @Type("integer")
+     * @SerializedName("armoryId")
      */
     protected $armoryId;
 
     /**
      * @var string $name
+     * @Type("string")
+     * @SerializedName("name")
      */
     protected $name;
 
