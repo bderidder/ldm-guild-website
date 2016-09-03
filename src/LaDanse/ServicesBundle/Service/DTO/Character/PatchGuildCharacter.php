@@ -22,13 +22,6 @@ class PatchGuildCharacter
     protected $name;
 
     /**
-     * @var StringReference
-     * @Type(StringReference::class)
-     * @Assert\NotNull()
-     */
-    protected $guild;
-
-    /**
      * @var int
      * @Assert\Range(
      *      min = 1,
@@ -41,93 +34,118 @@ class PatchGuildCharacter
 
     /**
      * @var StringReference
+     * @Type(StringReference::class)
+     * @SerializedName("guildReference")
      * @Assert\NotNull()
+     * @Assert\Valid()
+     */
+    protected $guildReference;
+
+    /**
+     * @var StringReference
+     * @Type(StringReference::class)
+     * @SerializedName("gameClass")
+     * @Assert\NotNull()
+     * @Assert\Valid()
      */
     protected $gameClass;
 
     /**
      * @var StringReference
+     * @Type(StringReference::class)
+     * @SerializedName("gameRace")
      * @Assert\NotNull()
+     * @Assert\Valid()
      */
     protected $gameRace;
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * @param string $name
+     * @return PatchGuildCharacter
      */
-    public function setName($name)
+    public function setName(string $name): PatchGuildCharacter
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGuild()
-    {
-        return $this->guild;
-    }
-
-    /**
-     * @param string $guild
-     */
-    public function setGuild($guild)
-    {
-        $this->guild = $guild;
+        return $this;
     }
 
     /**
      * @return int
      */
-    public function getLevel()
+    public function getLevel(): int
     {
         return $this->level;
     }
 
     /**
      * @param int $level
+     * @return PatchGuildCharacter
      */
-    public function setLevel($level)
+    public function setLevel(int $level): PatchGuildCharacter
     {
         $this->level = $level;
+        return $this;
     }
 
     /**
-     * @return string
+     * @return StringReference
      */
-    public function getGameClass()
+    public function getGuildReference(): StringReference
+    {
+        return $this->guildReference;
+    }
+
+    /**
+     * @param StringReference $guildReference
+     * @return PatchGuildCharacter
+     */
+    public function setGuildReference(StringReference $guildReference): PatchGuildCharacter
+    {
+        $this->guildReference = $guildReference;
+        return $this;
+    }
+
+    /**
+     * @return StringReference
+     */
+    public function getGameClass(): StringReference
     {
         return $this->gameClass;
     }
 
     /**
-     * @param string $gameClass
+     * @param StringReference $gameClass
+     * @return PatchGuildCharacter
      */
-    public function setGameClass($gameClass)
+    public function setGameClass(StringReference $gameClass): PatchGuildCharacter
     {
         $this->gameClass = $gameClass;
+        return $this;
     }
 
     /**
-     * @return string
+     * @return StringReference
      */
-    public function getGameRace()
+    public function getGameRace(): StringReference
     {
         return $this->gameRace;
     }
 
     /**
-     * @param string $gameRace
+     * @param StringReference $gameRace
+     * @return PatchGuildCharacter
      */
-    public function setGameRace($gameRace)
+    public function setGameRace(StringReference $gameRace): PatchGuildCharacter
     {
         $this->gameRace = $gameRace;
+        return $this;
     }
 }
