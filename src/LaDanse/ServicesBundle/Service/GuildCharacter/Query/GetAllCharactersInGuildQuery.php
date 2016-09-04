@@ -16,11 +16,11 @@ use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 
 /**
- * @DI\Service(NewGetAllCharactersQuery::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(GetAllCharactersInGuildQuery::SERVICE_NAME, public=true, shared=false)
  */
-class NewGetAllCharactersQuery extends AbstractQuery
+class GetAllCharactersInGuildQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.NewGetAllCharactersQuery';
+    const SERVICE_NAME = 'LaDanse.GetAllCharactersInGuildQuery';
 
     /**
      * @var $logger \Monolog\Logger
@@ -62,9 +62,9 @@ class NewGetAllCharactersQuery extends AbstractQuery
 
     /**
      * @param DTO\Reference\StringReference $guildReference
-     * @return NewGetAllCharactersQuery
+     * @return GetAllCharactersInGuildQuery
      */
-    public function setGuildReference(DTO\Reference\StringReference $guildReference): NewGetAllCharactersQuery
+    public function setGuildReference(DTO\Reference\StringReference $guildReference): GetAllCharactersInGuildQuery
     {
         $this->guildReference = $guildReference;
         return $this;
@@ -80,9 +80,9 @@ class NewGetAllCharactersQuery extends AbstractQuery
 
     /**
      * @param \DateTime $onDateTime
-     * @return NewGetAllCharactersQuery
+     * @return GetAllCharactersInGuildQuery
      */
-    public function setOnDateTime(\DateTime $onDateTime): NewGetAllCharactersQuery
+    public function setOnDateTime(\DateTime $onDateTime): GetAllCharactersInGuildQuery
     {
         $this->onDateTime = $onDateTime;
         return $this;

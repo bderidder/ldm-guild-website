@@ -35,7 +35,7 @@ class CharacterResource extends AbstractRestController
         /** @var GuildCharacterService $characterService */
         $characterService = $this->get(GuildCharacterService::SERVICE_NAME);
 
-        $characters = $characterService->newGetAllGuildCharacters(
+        $characters = $characterService->getAllCharactersInGuild(
             new StringReference($guildId)
         );
 
