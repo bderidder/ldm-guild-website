@@ -6,7 +6,6 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
@@ -17,11 +16,11 @@ use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 
 /**
- * @DI\Service(NewGetAllGuildCharactersQuery::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(NewGetAllCharactersQuery::SERVICE_NAME, public=true, shared=false)
  */
-class NewGetAllGuildCharactersQuery extends AbstractQuery
+class NewGetAllCharactersQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.NewGetAllGuildCharactersQuery';
+    const SERVICE_NAME = 'LaDanse.NewGetAllCharactersQuery';
 
     /**
      * @var $logger \Monolog\Logger
@@ -63,9 +62,9 @@ class NewGetAllGuildCharactersQuery extends AbstractQuery
 
     /**
      * @param DTO\Reference\StringReference $guildReference
-     * @return NewGetAllGuildCharactersQuery
+     * @return NewGetAllCharactersQuery
      */
-    public function setGuildReference(DTO\Reference\StringReference $guildReference): NewGetAllGuildCharactersQuery
+    public function setGuildReference(DTO\Reference\StringReference $guildReference): NewGetAllCharactersQuery
     {
         $this->guildReference = $guildReference;
         return $this;
@@ -81,9 +80,9 @@ class NewGetAllGuildCharactersQuery extends AbstractQuery
 
     /**
      * @param \DateTime $onDateTime
-     * @return NewGetAllGuildCharactersQuery
+     * @return NewGetAllCharactersQuery
      */
-    public function setOnDateTime(\DateTime $onDateTime): NewGetAllGuildCharactersQuery
+    public function setOnDateTime(\DateTime $onDateTime): NewGetAllCharactersQuery
     {
         $this->onDateTime = $onDateTime;
         return $this;

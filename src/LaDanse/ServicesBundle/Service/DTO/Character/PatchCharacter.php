@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ExclusionPolicy("none")
  */
-class PatchGuildCharacter
+class PatchCharacter
 {
     /**
      * @var string
@@ -69,9 +69,9 @@ class PatchGuildCharacter
 
     /**
      * @param string $name
-     * @return PatchGuildCharacter
+     * @return PatchCharacter
      */
-    public function setName(string $name): PatchGuildCharacter
+    public function setName(string $name): PatchCharacter
     {
         $this->name = $name;
         return $this;
@@ -87,9 +87,9 @@ class PatchGuildCharacter
 
     /**
      * @param int $level
-     * @return PatchGuildCharacter
+     * @return PatchCharacter
      */
-    public function setLevel(int $level): PatchGuildCharacter
+    public function setLevel(int $level): PatchCharacter
     {
         $this->level = $level;
         return $this;
@@ -105,9 +105,9 @@ class PatchGuildCharacter
 
     /**
      * @param StringReference $guildReference
-     * @return PatchGuildCharacter
+     * @return PatchCharacter
      */
-    public function setGuildReference(StringReference $guildReference): PatchGuildCharacter
+    public function setGuildReference(StringReference $guildReference): PatchCharacter
     {
         $this->guildReference = $guildReference;
         return $this;
@@ -123,9 +123,9 @@ class PatchGuildCharacter
 
     /**
      * @param StringReference $gameClass
-     * @return PatchGuildCharacter
+     * @return PatchCharacter
      */
-    public function setGameClass(StringReference $gameClass): PatchGuildCharacter
+    public function setGameClass(StringReference $gameClass): PatchCharacter
     {
         $this->gameClass = $gameClass;
         return $this;
@@ -141,9 +141,9 @@ class PatchGuildCharacter
 
     /**
      * @param StringReference $gameRace
-     * @return PatchGuildCharacter
+     * @return PatchCharacter
      */
-    public function setGameRace(StringReference $gameRace): PatchGuildCharacter
+    public function setGameRace(StringReference $gameRace): PatchCharacter
     {
         $this->gameRace = $gameRace;
         return $this;
