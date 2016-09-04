@@ -13,7 +13,7 @@ use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 /**
  * @ExclusionPolicy("none")
  */
-class GuildCharacter
+class Character
 {
     /**
      * @var integer
@@ -67,9 +67,9 @@ class GuildCharacter
 
     /**
      * @param int $id
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setId(int $id): GuildCharacter
+    public function setId(int $id): Character
     {
         $this->id = $id;
         return $this;
@@ -85,9 +85,9 @@ class GuildCharacter
 
     /**
      * @param string $name
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setName(string $name): GuildCharacter
+    public function setName(string $name): Character
     {
         $this->name = $name;
         return $this;
@@ -103,9 +103,9 @@ class GuildCharacter
 
     /**
      * @param int $level
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setLevel(int $level): GuildCharacter
+    public function setLevel(int $level): Character
     {
         $this->level = $level;
         return $this;
@@ -121,9 +121,9 @@ class GuildCharacter
 
     /**
      * @param StringReference $guildReference
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setGuildReference(StringReference $guildReference): GuildCharacter
+    public function setGuildReference(StringReference $guildReference): Character
     {
         $this->guildReference = $guildReference;
         return $this;
@@ -139,9 +139,9 @@ class GuildCharacter
 
     /**
      * @param StringReference $realmReference
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setRealmReference(StringReference $realmReference): GuildCharacter
+    public function setRealmReference(StringReference $realmReference): Character
     {
         $this->realmReference = $realmReference;
         return $this;
@@ -157,9 +157,9 @@ class GuildCharacter
 
     /**
      * @param StringReference $gameClassReference
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setGameClassReference(StringReference $gameClassReference): GuildCharacter
+    public function setGameClassReference(StringReference $gameClassReference): Character
     {
         $this->gameClassReference = $gameClassReference;
         return $this;
@@ -175,9 +175,9 @@ class GuildCharacter
 
     /**
      * @param StringReference $gameRaceReference
-     * @return GuildCharacter
+     * @return Character
      */
-    public function setGameRaceReference(StringReference $gameRaceReference): GuildCharacter
+    public function setGameRaceReference(StringReference $gameRaceReference): Character
     {
         $this->gameRaceReference = $gameRaceReference;
         return $this;
