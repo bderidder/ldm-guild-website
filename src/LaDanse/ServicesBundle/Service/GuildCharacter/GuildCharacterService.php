@@ -18,7 +18,7 @@ use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\NewGetAllGuildCharactersQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\NewGetAllCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -76,8 +76,8 @@ class GuildCharacterService extends LaDanseService
      */
     public function newGetAllGuildCharacters(StringReference $guildReference, \DateTime $onDateTime = null)
     {
-        /** @var NewGetAllGuildCharactersQuery $query */
-        $query = $this->get(NewGetAllGuildCharactersQuery::SERVICE_NAME);
+        /** @var NewGetAllCharactersQuery $query */
+        $query = $this->get(NewGetAllCharactersQuery::SERVICE_NAME);
 
         if ($onDateTime == null)
         {
