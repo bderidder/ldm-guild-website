@@ -7,6 +7,7 @@ use LaDanse\DomainBundle\Entity\GameData\GameClass;
 use LaDanse\DomainBundle\Entity\GameData\GameRace;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CharacterSessionImpl;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
@@ -307,5 +308,28 @@ class CharacterService extends LaDanseService
         $endCharacterCommand->setCharacterId($characterId);
 
         $endCharacterCommand->run();
+    }
+
+    public function createCharacterSession(StringReference $originId) : CharacterSession
+    {
+        /** @var CharacterSessionImpl $characterSessionImpl */
+        $characterSessionImpl = $this->get(CharacterSessionImpl::SERVICE_NAME);
+
+        return $characterSessionImpl->startSession();
+    }
+
+    public function endCharacterSession(CharacterSession $characterSession) : CharacterService
+    {
+        if (!($characterSession instanceof CharacterSessionImpl))
+        {
+            throw new \Exception("Unknown implementation for CharacterSession");
+        }
+
+        /** @var CharacterSessionImpl $characterSessionImpl */
+        $characterSessionImpl = $characterSession;
+
+        $characterSessionImpl->endSession();
+
+        return $this;
     }
 }
