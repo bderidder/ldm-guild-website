@@ -10,7 +10,7 @@ use LaDanse\DomainBundle\Entity\GameData\GameRace;
 use LaDanse\DomainBundle\Entity\GameData\GameClass;
 use LaDanse\ServicesBundle\Common\CommandExecutionContext;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -88,8 +88,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $context->debug("Fetching guild members from the database");
 
-        /** @var GuildCharacterService $characterService */
-        $characterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $characterService */
+        $characterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
 
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
@@ -209,7 +209,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      */
     protected function endCharacter($characterId)
     {
-        $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
+        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
 
         $guildCharacterService->endCharacter($characterId);
     }
@@ -242,7 +242,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      */
     protected function updateCharacter($id, $armoryCharacter, $gameRace, $gameClass)
     {
-        $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
+        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
 
         $guildCharacterService->updateCharacter(
             $id,
@@ -262,8 +262,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      */
     protected function importCharacter($armoryCharacter, $gameRace, $gameClass)
     {
-        /** @var $guildCharacterService GuildCharacterService */
-        $guildCharacterService = $this->getContainer()->get(GuildCharacterService::SERVICE_NAME);
+        /** @var $guildCharacterService CharacterService */
+        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
 
         $guildCharacterService->createCharacter(
             $armoryCharacter->name,

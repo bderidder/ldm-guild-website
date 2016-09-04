@@ -7,7 +7,7 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,8 +91,8 @@ class ListClaimsPartialController extends LaDanseController
 
     private function getClaims($accountId, $role, $onDateTime)
     {
-        /** @var GuildCharacterService $guildCharacterService */
-        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
 
         $claims = $guildCharacterService->getClaimsForAccount($accountId, $onDateTime);
 

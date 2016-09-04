@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -20,8 +20,8 @@ class RemoveClaimController extends LaDanseController
      */
     public function removeAction($claimId)
     {
-        /** @var GuildCharacterService $guildCharacterService */
-        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
 
         $guildCharacterService->endClaim($claimId);
 

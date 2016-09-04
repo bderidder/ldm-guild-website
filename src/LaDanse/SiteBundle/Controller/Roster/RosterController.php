@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Roster;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Model\Roster\AccountAndClaims;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,8 +19,8 @@ class RosterController extends LaDanseController
      */
     public function viewAction()
     {
-        /** @var GuildCharacterService $guildCharacterService */
-        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
 
         $claims = $guildCharacterService->getAllActiveClaims();
 

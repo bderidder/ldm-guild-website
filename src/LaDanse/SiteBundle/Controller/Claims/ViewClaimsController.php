@@ -5,7 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 
 use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
 use LaDanse\SiteBundle\Common\LaDanseController;
@@ -35,8 +35,8 @@ class ViewClaimsController extends LaDanseController
      */
     public function viewAction()
     {
-        /** @var GuildCharacterService $guildCharacterService */
-        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
         
         $account = $this->getAccount();
         $accountId = $account->getId();

@@ -10,7 +10,7 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +32,8 @@ class CharacterResource extends AbstractRestController
      */
     public function getAllCharacters(Request $request, $guildId)
     {
-        /** @var GuildCharacterService $characterService */
-        $characterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $characterService */
+        $characterService = $this->get(CharacterService::SERVICE_NAME);
 
         $characters = $characterService->getAllCharactersInGuild(
             new StringReference($guildId)

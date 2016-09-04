@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Role;
-use LaDanse\ServicesBundle\Service\GuildCharacter\GuildCharacterService;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\CreateClaimFormModel;
 use LaDanse\SiteBundle\Form\Type\CreateClaimFormType;
@@ -90,15 +90,15 @@ class CreateClaimController extends LaDanseController
             }
         }
 
-        /** @var GuildCharacterService $guildCharacterService */
-        $guildCharacterService = $this->get(GuildCharacterService::SERVICE_NAME);
+        /** @var CharacterService $guildCharacterService */
+        $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
 
         $guildCharacterService->createClaim($accountId, $formModel->getCharacter(), $tank, $healer, $dps);    
     }
 
     private function getUnclaimedChoices()
     {
-        $unclaimedChars = $this->container->get(GuildCharacterService::SERVICE_NAME)->getUnclaimedCharacters();
+        $unclaimedChars = $this->container->get(CharacterService::SERVICE_NAME)->getUnclaimedCharacters();
 
         $choices = array();
 

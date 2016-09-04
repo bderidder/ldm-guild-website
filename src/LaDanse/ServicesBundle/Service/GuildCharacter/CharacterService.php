@@ -23,11 +23,11 @@ use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(GuildCharacterService::SERVICE_NAME, public=true)
+ * @DI\Service(CharacterService::SERVICE_NAME, public=true)
  */
-class GuildCharacterService extends LaDanseService
+class CharacterService extends LaDanseService
 {
-    const SERVICE_NAME = 'LaDanse.GuildCharacterService';
+    const SERVICE_NAME = 'LaDanse.CharacterService';
 
     /**
      * @var $logger \Monolog\Logger
@@ -54,6 +54,8 @@ class GuildCharacterService extends LaDanseService
      * @param \DateTime $onDateTime if left null, the current date and time is used
      *
      * @return mixed
+     *
+     * @deprecated use getAllCharactersInGuild() instead
      */
     public function getAllGuildCharacters(\DateTime $onDateTime = null)
     {
