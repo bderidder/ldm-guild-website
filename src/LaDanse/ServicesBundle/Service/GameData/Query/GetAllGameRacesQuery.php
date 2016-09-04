@@ -2,9 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\GameData\Query;
 
-use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\GameData\GameFaction;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\ServicesBundle\Service\DTO\GameData\GameRaceMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
