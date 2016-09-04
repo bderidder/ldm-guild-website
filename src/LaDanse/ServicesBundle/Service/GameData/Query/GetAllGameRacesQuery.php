@@ -4,6 +4,7 @@ namespace LaDanse\ServicesBundle\Service\GameData\Query;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity\GameData\GameFaction;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\ServicesBundle\Service\DTO\GameData\GameRaceMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -51,8 +52,9 @@ class GetAllGameRacesQuery extends AbstractQuery
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('g')
+        $qb->select('g', 'faction')
             ->from('LaDanse\DomainBundle\Entity\GameData\GameRace', 'g')
+            ->join('g.faction', 'faction')
             ->orderBy('g.name', 'ASC');
 
         $this->logger->debug(
@@ -64,8 +66,6 @@ class GetAllGameRacesQuery extends AbstractQuery
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
-
-        $query->setFetchMode('LaDanse\DomainBundle\Entity\GameData\GameFaction', "faction", ClassMetadata::FETCH_EAGER);
 
         $gameRaces = $query->getResult();
 
