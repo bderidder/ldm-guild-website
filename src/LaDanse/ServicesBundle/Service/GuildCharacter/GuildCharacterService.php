@@ -6,6 +6,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\GameData\GameClass;
 use LaDanse\DomainBundle\Entity\GameData\GameRace;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
@@ -17,6 +18,7 @@ use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\NewGetAllGuildCharactersQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -61,6 +63,31 @@ class GuildCharacterService extends LaDanseService
         $allGuildCharactersQuery->setOnDateTime($onDateTime);
 
         return $allGuildCharactersQuery->run();
+    }
+
+    /**
+     * Returns an array of all characters in the guild
+     * Properties are taken as valid on the given $onDateTime
+     *
+     * @param StringReference $guildReference
+     * @param \DateTime $onDateTime if left null, the current date and time is used
+     *
+     * @return mixed
+     */
+    public function newGetAllGuildCharacters(StringReference $guildReference, \DateTime $onDateTime = null)
+    {
+        /** @var NewGetAllGuildCharactersQuery $query */
+        $query = $this->get(NewGetAllGuildCharactersQuery::SERVICE_NAME);
+
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
+
+        $query->setGuildReference($guildReference);
+        $query->setOnDateTime($onDateTime);
+
+        return $query->run();
     }
 
     /**

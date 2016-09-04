@@ -17,3 +17,8 @@ GameDataRestRouting:
     resource: "@LaDanseRestBundle/Controller/GameData"
     type:     annotation
     prefix:   /services/gamedata
+
+CharacterRestRouting:
+    resource: "@LaDanseRestBundle/Controller/Character"
+    type:     annotation
+    prefix:   /services/characters
