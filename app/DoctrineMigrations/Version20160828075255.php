@@ -224,24 +224,4 @@ class Version20160828075255 extends AbstractMigration implements ContainerAwareI
     {
         throw new \Exception("Migration the schema 'down' is not supported");
     }
-
-    protected function addItemIfNotExists(array $list, string $item)
-    {
-        $found = false;
-
-        for($i = 0; $i < count($list); $i++)
-        {
-            if ($list[$i] == $item)
-            {
-                $found = true;
-            }
-        }
-
-        if (!$found)
-        {
-            $list[] = $item;
-
-            $this->write("Adding " . $item);
-        }
-    }
 }
