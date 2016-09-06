@@ -3,24 +3,14 @@
 namespace LaDanse\ServicesBundle\Service\GuildCharacter;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\GameData\GameClass;
-use LaDanse\DomainBundle\Entity\GameData\GameRace;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\DTO\Character\Character;
+use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
+use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CharacterSessionImpl;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateClaimCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\EndClaimCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UpdateClaimCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllActiveClaimsQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\AllGuildCharactersQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimForIdQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\ClaimsForAccountQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GuildCharacterQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateGuildSyncSessionCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetAllCharactersInGuildQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\UnclaimedCharactersQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -49,35 +39,15 @@ class CharacterService extends LaDanseService
     }
 
     /**
-     * Returns an array of all characters in the guild
-     * Properties are taken as valid on the given $onDateTime
-     *
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return mixed
-     *
-     * @deprecated use getAllCharactersInGuild() instead
-     */
-    public function getAllGuildCharacters(\DateTime $onDateTime = null)
-    {
-        /** @var $allGuildCharactersQuery AllGuildCharactersQuery */
-        $allGuildCharactersQuery = $this->get(AllGuildCharactersQuery::SERVICE_NAME);
-
-        $allGuildCharactersQuery->setOnDateTime($onDateTime);
-
-        return $allGuildCharactersQuery->run();
-    }
-
-    /**
-     * Returns an array of all characters in the guild
-     * Properties are taken as valid on the given $onDateTime
+     * Returns an array of all characters who were in the guild on $onDateTime
+     * Properties are taken as valid on $onDateTime
      *
      * @param StringReference $guildReference
      * @param \DateTime $onDateTime if left null, the current date and time is used
      *
-     * @return mixed
+     * @return array
      */
-    public function getAllCharactersInGuild(StringReference $guildReference, \DateTime $onDateTime = null)
+    public function getAllCharactersInGuild(StringReference $guildReference, \DateTime $onDateTime = null) : array
     {
         /** @var GetAllCharactersInGuildQuery $query */
         $query = $this->get(GetAllCharactersInGuildQuery::SERVICE_NAME);
@@ -94,230 +64,121 @@ class CharacterService extends LaDanseService
     }
 
     /**
-     * Returns the properties of the character with given $characterId
-     * Properties are taken as valid on the given $onDateTime
-     *
-     * @param $characterId
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return mixed
-     */
-    public function getGuildCharacter($characterId, \DateTime $onDateTime = null)
-    {
-        /** @var $guildCharacterQuery GuildCharacterQuery */
-        $guildCharacterQuery = $this->get(GuildCharacterQuery::SERVICE_NAME);
-
-        $guildCharacterQuery->setCharacterId($characterId);
-        $guildCharacterQuery->setOnDateTime($onDateTime);
-
-        return $guildCharacterQuery->run();
-    }
-
-    /**
-     * Returns all guild character claims that are currently active
-     *
-     * @return array
-     */
-    public function getAllActiveClaims()
-    {
-        /** @var AllActiveClaimsQuery $allActiveClaimsQuery */
-        $allActiveClaimsQuery = $this->get(AllActiveClaimsQuery::SERVICE_NAME);
-
-        return $allActiveClaimsQuery->run();
-    }
-
-    /**
-     * Returns all claims for a given account that are active on the given $onDateTime
-     *
-     * @param $accountId
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return array
-     */
-    public function getClaimsForAccount($accountId, \DateTime $onDateTime = null)
-    {
-        /** @var $claimsForAccountQuery ClaimsForAccountQuery */
-        $claimsForAccountQuery = $this->get(ClaimsForAccountQuery::SERVICE_NAME);
-
-        $claimsForAccountQuery->setAccountId($accountId);
-        $claimsForAccountQuery->setOnDateTime($onDateTime);
-
-        return $claimsForAccountQuery->run();
-    }
-
-    /**
-     * Return the claim with given id
-     *
-     * @param $claimId
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return mixed
-     *
-     * @deprecated
-     */
-    public function getClaimForId($claimId, \DateTime $onDateTime = null)
-    {
-        /** @var $claimForIdQuery ClaimForIdQuery */
-        $claimForIdQuery = $this->get(ClaimForIdQuery::SERVICE_NAME);
-
-        $claimForIdQuery->setClaimId($claimId);
-        $claimForIdQuery->setOnDateTime($onDateTime);
-
-        return $claimForIdQuery->run();
-    }
-
-    /**
-     * Return all characters that are not claimed at the given date and time.
-     * Returns an empty array when no such characters exist.
-     *
-     * @param \DateTime $onDateTime if left null, the current date and time is used
-     *
-     * @return mixed
-     */
-    public function getUnclaimedCharacters(\DateTime $onDateTime = null)
-    {
-        /** @var $unclaimedCharactersQuery UnclaimedCharactersQuery */
-        $unclaimedCharactersQuery = $this->get(UnclaimedCharactersQuery::SERVICE_NAME);
-
-        $unclaimedCharactersQuery->setOnDateTime($onDateTime);
-
-        return $unclaimedCharactersQuery->run();
-    }
-
-    /**
-     * Create a new claim for the given $characterId with the values supplied
-     *
      * @param int $accountId
+     *
+     * @return array
+     */
+    public function getAllCharactersClaimedByAccount(integer $accountId) : array
+    {
+    }
+
+    /**
+     * @param array $keywords
+     * @param \DateTime|null $onDateTime
+     *
+     * @return array
+     */
+    public function getCharactersByKeywords(array $keywords, \DateTime $onDateTime = null) : array
+    {
+    }
+
+    /**
+     * @param CharacterSession $characterSession
+     * @param PatchCharacter $patchCharacter
+     *
+     * @return Character
+     */
+    public function postCharacter(
+        CharacterSession $characterSession,
+        PatchCharacter $patchCharacter) : Character
+    {
+    }
+
+    /**
+     * @param CharacterSession $characterSession
      * @param int $characterId
-     * @param bool $playsTank
-     * @param bool $playsHealer
-     * @param bool $playsDPS
+     * @param PatchCharacter $patchCharacter
+     *
+     * @return Character
      */
-    public function createClaim($accountId, $characterId, $playsTank, $playsHealer, $playsDPS)
+    public function patchCharacter(
+        CharacterSession $characterSession,
+        integer $characterId,
+        PatchCharacter $patchCharacter) : Character
     {
-        /** @var $createClaimCommand CreateClaimCommand */
-        $createClaimCommand = $this->get(CreateClaimCommand::SERVICE_NAME);
-
-        $createClaimCommand->setAccountId($accountId);
-        $createClaimCommand->setCharacterId($characterId);
-        $createClaimCommand->setPlaysTank($playsTank);
-        $createClaimCommand->setPlaysHealer($playsHealer);
-        $createClaimCommand->setPlaysDPS($playsDPS);
-
-        $createClaimCommand->run();
     }
 
     /**
-     * Update the existing claim with id $claimId
-     *
-     * @param int $claimId
-     * @param bool $playsTank
-     * @param bool $playsHealer
-     * @param bool $playsDPS
-     */
-    public function updateClaim($claimId, $playsTank, $playsHealer, $playsDPS)
-    {
-        /** @var $updateClaimCommand UpdateClaimCommand */
-        $updateClaimCommand = $this->get(UpdateClaimCommand::SERVICE_NAME);
-
-        $updateClaimCommand->setClaimId($claimId);
-        $updateClaimCommand->setPlaysTank($playsTank);
-        $updateClaimCommand->setPlaysHealer($playsHealer);
-        $updateClaimCommand->setPlaysDPS($playsDPS);
-
-        $updateClaimCommand->run();
-    }
-
-    /**
-     * End the claim with the given $claimId
-     *
-     * @param int $claimId
-     */
-    public function endClaim($claimId)
-    {
-        /** @var $endClaimCommand EndClaimCommand */
-        $endClaimCommand = $this->get(EndClaimCommand::SERVICE_NAME);
-
-        $endClaimCommand->setClaimId($claimId);
-
-        $endClaimCommand->run();
-    }
-
-    /**
-     * Create a new character with the given name, level, race and class.
-     *
-     * @param string $name
-     * @param int $level
-     * @param GameRace $gameRace
-     * @param GameClass $gameClass
-     * @param string $guild
-     * @param string $realm
-     */
-    public function createCharacter($name, $level, GameRace $gameRace, GameClass $gameClass, $guild, $realm)
-    {
-        /** @var $createCharacterCommand CreateCharacterCommand */
-        $createCharacterCommand = $this->get(CreateCharacterCommand::SERVICE_NAME);
-
-        $createCharacterCommand->setName($name);
-        $createCharacterCommand->setLevel($level);
-        $createCharacterCommand->setGameRace($gameRace);
-        $createCharacterCommand->setGameClass($gameClass);
-        $createCharacterCommand->setRealm($realm);
-        $createCharacterCommand->setGuild($guild);
-
-        $createCharacterCommand->run();
-    }
-
-    /**
-     * Update an existing character with $characterId with the given name, level, race and class.
-     *
-     * @param int $characterId
-     * @param string $name
-     * @param int $level
-     * @param GameRace $gameRace
-     * @param GameClass $gameClass
-     * @param string $guild
-     * @param string $realm
-     */
-    public function updateCharacter($characterId, $name, $level, GameRace $gameRace, GameClass $gameClass, $guild, $realm)
-    {
-        /** @var $updateCharacterCommand UpdateCharacterCommand */
-        $updateCharacterCommand = $this->get(UpdateCharacterCommand::SERVICE_NAME);
-
-        $updateCharacterCommand->setCharacterId($characterId);
-        $updateCharacterCommand->setName($name);
-        $updateCharacterCommand->setLevel($level);
-        $updateCharacterCommand->setGameRace($gameRace);
-        $updateCharacterCommand->setGameClass($gameClass);
-        $updateCharacterCommand->setGuild($guild);
-        $updateCharacterCommand->setRealm($realm);
-
-        $updateCharacterCommand->run();
-    }
-
-    /**
-     * End the given character with $characterId
-     *
+     * @param CharacterSession $characterSession
      * @param int $characterId
      */
-    public function endCharacter($characterId)
+    public function deleteCharacter(CharacterSession $characterSession, integer $characterId)
     {
-        /** @var $endCharacterCommand EndCharacterCommand */
-        $endCharacterCommand = $this->get(EndCharacterCommand::SERVICE_NAME);
-
-        $endCharacterCommand->setCharacterId($characterId);
-
-        $endCharacterCommand->run();
     }
 
-    public function createCharacterSession(StringReference $originId) : CharacterSession
+    /**
+     * @param int $characterId
+     * @param PatchClaim $patchClaim
+     *
+     * @return Character
+     */
+    public function postClaim(integer $characterId, PatchClaim $patchClaim) : Character
     {
-        /** @var CharacterSessionImpl $characterSessionImpl */
-        $characterSessionImpl = $this->get(CharacterSessionImpl::SERVICE_NAME);
-
-        return $characterSessionImpl->startSession();
     }
 
+    /**
+     * @param integer $characterId
+     * @param PatchClaim $patchClaim
+     *
+     * @return Character
+     */
+    public function putClaim(integer $characterId, PatchClaim $patchClaim) : Character
+    {
+    }
+
+    /**
+     * @param integer $characterId
+     *
+     * @return Character
+     */
+    public function deleteClaim(integer $characterId): Character
+    {
+    }
+
+    /**
+     * @param StringReference $guildId
+     *
+     * @return CharacterSession
+     */
+    public function createGuildSyncSession(StringReference $guildId) : CharacterSession
+    {
+        /** @var CreateGuildSyncSessionCommand $cmd */
+        $cmd = $this->get(CreateGuildSyncSessionCommand::SERVICE_NAME);
+
+        $cmd->setGuildId($guildId);
+
+        return $cmd->run();
+    }
+
+    /**
+     * @param integer $accountId
+     *
+     * @return CharacterSession
+     *
+     * @throws \Exception
+     */
+    public function createWoWProfileSyncSession(integer $accountId) : CharacterSession
+    {
+        throw new \Exception("This method is not yet implemented");
+    }
+
+    /**
+     * @param CharacterSession $characterSession
+     *
+     * @return CharacterService
+     *
+     * @throws \Exception
+     */
     public function endCharacterSession(CharacterSession $characterSession) : CharacterService
     {
         if (!($characterSession instanceof CharacterSessionImpl))

@@ -6,9 +6,13 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
+use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSource;
+use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSyncSession;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterSession;
+use LaDanse\ServicesBundle\Service\GuildCharacter\InvalidSessionStatException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(CharacterSessionImpl::SERVICE_NAME, public=true)
@@ -20,6 +24,36 @@ class CharacterSessionImpl implements CharacterSession
     use ContainerAwareTrait;
 
     /**
+     * @var \Monolog\Logger $logger
+     * @DI\Inject("monolog.logger.ladanse")
+     */
+    public $logger;
+
+    /**
+     * @var EventDispatcherInterface $eventDispatcher
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
+
+    /**
+     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+     * @DI\Inject("doctrine")
+     */
+    public $doctrine;
+
+    /** @var CharacterSource $characterSource */
+    private $characterSource;
+
+    /** @var CharacterSyncSession $syncSession */
+    private $syncSession;
+
+    /** @var string $sessionState */
+    private $sessionState;
+
+    /** @var array $logMessages */
+    private $logMessages;
+
+    /**
      * @param ContainerInterface $container
      *
      * @DI\InjectParams({
@@ -29,20 +63,68 @@ class CharacterSessionImpl implements CharacterSession
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
+
+        $this->sessionState = 'CONSTRUCTED';
     }
 
-    public function startSession() : CharacterSessionImpl
+    /**
+     * @return CharacterSource
+     */
+    public function getCharacterSource(): CharacterSource
     {
-        return $this;
+        return $this->characterSource;
+    }
+
+    public function startSession(CharacterSource $characterSource) : CharacterSessionImpl
+    {
+        if ($this->sessionState != 'CONSTRUCTED')
+        {
+            throw new InvalidSessionStatException(
+                "Session is not in state CONSTRUCTED but in state " . $this->sessionState
+            );
+        }
+
+        $this->characterSource = $characterSource;
+
+        $em = $this->doctrine->getManager();
+
+        $this->syncSession = new CharacterSyncSession();
+        $this->syncSession->setFromTime(new \DateTime());
+        $this->syncSession->setCharacterSource($characterSource);
+
+        $em->persist($this->syncSession);
+
+        $this->sessionState = 'STARTED';
     }
 
     public function endSession() : CharacterSessionImpl
     {
-        return $this;
+        if ($this->sessionState != 'STARTED')
+        {
+            throw new InvalidSessionStatException(
+                "Session is not in state STARTED but in state " . $this->sessionState
+            );
+        }
+
+        $em = $this->doctrine->getManager();
+
+        $this->syncSession->setEndTime(new \DateTime());
+        $this->syncSession->setLog(json_encode($this->logMessages));
+
+        $em->flush();
+
+        $this->sessionState = 'ENDED';
     }
 
     public function addMessage(string $message)
     {
-        // TODO: Implement addMessage() method.
+        if ($this->sessionState != 'STARTED')
+        {
+            throw new InvalidSessionStatException(
+                "Session is not in state STARTED but in state " . $this->sessionState
+            );
+        }
+
+        $this->logMessages[] = $message;
     }
 }
