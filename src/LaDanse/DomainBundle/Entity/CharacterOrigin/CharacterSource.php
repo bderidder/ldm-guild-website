@@ -27,13 +27,6 @@ abstract class CharacterSource
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
-     *
-     * @var string $name
-     */
-    protected $name;
-
-    /**
      * @return string
      */
     public function getId(): string
@@ -48,24 +41,6 @@ abstract class CharacterSource
     public function setId(string $id): CharacterSource
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     * @return CharacterSource
-     */
-    public function setName(string $name): CharacterSource
-    {
-        $this->name = $name;
         return $this;
     }
 }
