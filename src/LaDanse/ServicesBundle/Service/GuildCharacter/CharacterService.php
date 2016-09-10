@@ -10,6 +10,8 @@ use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CharacterSessionImpl;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateGuildSyncSessionCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PatchCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PostCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetAllCharactersInGuildQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -39,6 +41,22 @@ class CharacterService extends LaDanseService
     }
 
     /**
+     * @param int $characterId
+     * @param \DateTime|null $onDateTime
+     *
+     * @return Character|null
+     */
+    public function getCharacterById(int $characterId, \DateTime $onDateTime = null)
+    {
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
+
+        return null;
+    }
+
+    /**
      * Returns an array of all characters who were in the guild on $onDateTime
      * Properties are taken as valid on $onDateTime
      *
@@ -47,15 +65,15 @@ class CharacterService extends LaDanseService
      *
      * @return array
      */
-    public function getAllCharactersInGuild(StringReference $guildReference, \DateTime $onDateTime = null) : array
+    public function getAllCharactersInGuild(StringReference $guildReference, \DateTime $onDateTime = null)
     {
-        /** @var GetAllCharactersInGuildQuery $query */
-        $query = $this->get(GetAllCharactersInGuildQuery::SERVICE_NAME);
-
         if ($onDateTime == null)
         {
             $onDateTime = new \DateTime();
         }
+
+        /** @var GetAllCharactersInGuildQuery $query */
+        $query = $this->get(GetAllCharactersInGuildQuery::SERVICE_NAME);
 
         $query->setGuildReference($guildReference);
         $query->setOnDateTime($onDateTime);
@@ -65,11 +83,16 @@ class CharacterService extends LaDanseService
 
     /**
      * @param int $accountId
+     * @param \DateTime $onDateTime
      *
      * @return array
      */
-    public function getAllCharactersClaimedByAccount(integer $accountId) : array
+    public function getAllCharactersClaimedByAccount(int $accountId, \DateTime $onDateTime = null) : array
     {
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
     }
 
     /**
@@ -80,6 +103,10 @@ class CharacterService extends LaDanseService
      */
     public function getCharactersByKeywords(array $keywords, \DateTime $onDateTime = null) : array
     {
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
     }
 
     /**
@@ -90,8 +117,15 @@ class CharacterService extends LaDanseService
      */
     public function postCharacter(
         CharacterSession $characterSession,
-        PatchCharacter $patchCharacter) : Character
+        PatchCharacter $patchCharacter)
     {
+        /** @var PostCharacterCommand $cmd */
+        $cmd = $this->get(PostCharacterCommand::SERVICE_NAME);
+
+        $cmd->setCharacterSession($characterSession)
+            ->setPatchCharacter($patchCharacter);
+
+        return $cmd->run();
     }
 
     /**
@@ -103,16 +137,24 @@ class CharacterService extends LaDanseService
      */
     public function patchCharacter(
         CharacterSession $characterSession,
-        integer $characterId,
-        PatchCharacter $patchCharacter) : Character
+        int $characterId,
+        PatchCharacter $patchCharacter)
     {
+        /** @var PatchCharacterCommand $cmd */
+        $cmd = $this->get(PatchCharacterCommand::SERVICE_NAME);
+
+        $cmd->setCharacterSession($characterSession)
+            ->setCharacterId($characterId)
+            ->setPatchCharacter($patchCharacter);
+
+        return $cmd->run();
     }
 
     /**
      * @param CharacterSession $characterSession
      * @param int $characterId
      */
-    public function deleteCharacter(CharacterSession $characterSession, integer $characterId)
+    public function deleteCharacter(CharacterSession $characterSession, int $characterId)
     {
     }
 
@@ -122,26 +164,26 @@ class CharacterService extends LaDanseService
      *
      * @return Character
      */
-    public function postClaim(integer $characterId, PatchClaim $patchClaim) : Character
+    public function postClaim(int $characterId, PatchClaim $patchClaim) : Character
     {
     }
 
     /**
-     * @param integer $characterId
+     * @param int $characterId
      * @param PatchClaim $patchClaim
      *
      * @return Character
      */
-    public function putClaim(integer $characterId, PatchClaim $patchClaim) : Character
+    public function putClaim(int $characterId, PatchClaim $patchClaim) : Character
     {
     }
 
     /**
-     * @param integer $characterId
+     * @param int $characterId
      *
      * @return Character
      */
-    public function deleteClaim(integer $characterId): Character
+    public function deleteClaim(int $characterId): Character
     {
     }
 
@@ -161,13 +203,13 @@ class CharacterService extends LaDanseService
     }
 
     /**
-     * @param integer $accountId
+     * @param int $accountId
      *
      * @return CharacterSession
      *
      * @throws \Exception
      */
-    public function createWoWProfileSyncSession(integer $accountId) : CharacterSession
+    public function createWoWProfileSyncSession(int $accountId) : CharacterSession
     {
         throw new \Exception("This method is not yet implemented");
     }

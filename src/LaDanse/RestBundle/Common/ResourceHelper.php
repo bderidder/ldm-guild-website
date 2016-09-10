@@ -6,8 +6,6 @@
 
 namespace LaDanse\RestBundle\Common;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
-
 /**
  * Class ResourceHelper
  * @package LaDanse\ForumBundle\Controller
@@ -23,12 +21,12 @@ class ResourceHelper
      */
     public static function createErrorResponse($request, $httpStatusCode, $errorMessage, $headers = array())
     {
-        $jsonObject = (object)array(
-                "errorId"      => $httpStatusCode,
-                "errorMessage" => $errorMessage
-            );
+        $errorResponse = new ErrorResponse();
+        $errorResponse
+            ->setErrorCode($httpStatusCode)
+            ->setErrorMessage($errorMessage);
 
-        $response = new JsonResponse($jsonObject, $httpStatusCode);
+        $response = new JsonResponse($errorResponse, $httpStatusCode);
 
         foreach ($headers as $header => $value)
         {
@@ -86,5 +84,29 @@ class ResourceHelper
     static public function startsWith($mainstring, $substring)
     {
         return $substring === "" || strpos($mainstring, $substring) === 0;
+    }
+
+    static public function object($object)
+    {
+        if ($object != null)
+        {
+            return $object;
+        }
+        else
+        {
+            return (object)[];
+        }
+    }
+
+    static public function array($array)
+    {
+        if ($array != null)
+        {
+            return $array;
+        }
+        else
+        {
+            return [];
+        }
     }
 }

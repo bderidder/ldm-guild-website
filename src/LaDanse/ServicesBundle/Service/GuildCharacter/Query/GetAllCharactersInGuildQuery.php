@@ -14,7 +14,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 
-
 /**
  * @DI\Service(GetAllCharactersInGuildQuery::SERVICE_NAME, public=true, shared=false)
  */

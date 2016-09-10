@@ -6,6 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
+use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSource;
 use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSyncSession;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterSession;
@@ -15,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(CharacterSessionImpl::SERVICE_NAME, public=true)
+ * @DI\Service(CharacterSessionImpl::SERVICE_NAME, public=true, shared=false)
  */
 class CharacterSessionImpl implements CharacterSession
 {
@@ -95,6 +96,8 @@ class CharacterSessionImpl implements CharacterSession
         $em->persist($this->syncSession);
 
         $this->sessionState = 'STARTED';
+
+        return $this;
     }
 
     public function endSession() : CharacterSessionImpl
@@ -114,9 +117,11 @@ class CharacterSessionImpl implements CharacterSession
         $em->flush();
 
         $this->sessionState = 'ENDED';
+
+        return $this;
     }
 
-    public function addMessage(string $message)
+    public function addMessage(string $message) : CharacterSession
     {
         if ($this->sessionState != 'STARTED')
         {
@@ -126,5 +131,7 @@ class CharacterSessionImpl implements CharacterSession
         }
 
         $this->logMessages[] = $message;
+
+        return $this;
     }
 }

@@ -11,6 +11,7 @@ use LaDanse\DomainBundle\Entity\CharacterOrigin\GuildSync;
 use LaDanse\DomainBundle\Entity\GameData\Guild;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
+use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -101,16 +102,26 @@ class CreateGuildSyncSessionCommand extends AbstractCommand
         /** @var GuildSync $guildSync */
         $guildSync = null;
 
-        if (count($sources) != 1)
+        if (count($sources) == 0)
         {
             $guildSync = new GuildSync();
             $guildSync->setGuild($em->getReference(Guild::class, $this->getGuildId()));
 
             $em->persist($guildSync);
         }
-        else
+        else if (count($sources) == 1)
         {
             $guildSync = $sources[0];
+        }
+        else
+        {
+            throw new ServiceException(
+                sprintf(
+                    "Found multiple GuildSync instances for the guild %s",
+                    $this->getGuildId()
+                ),
+                400
+            );
         }
 
         /** @var CharacterSessionImpl $characterSessionImpl */

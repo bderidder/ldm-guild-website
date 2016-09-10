@@ -8,5 +8,5 @@ namespace LaDanse\ServicesBundle\Service\GuildCharacter;
 
 interface CharacterSession
 {
-    public function addMessage(string $message);
+    public function addMessage(string $message) : CharacterSession;
 }
