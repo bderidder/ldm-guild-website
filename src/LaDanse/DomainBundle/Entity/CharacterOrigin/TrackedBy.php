@@ -40,7 +40,7 @@ class TrackedBy
 
     /**
      * @ORM\ManyToOne(targetEntity=Character::class)
-     * @ORM\JoinColumn(name="character", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="`character`", referencedColumnName="id", nullable=false)
      *
      * @var Character $character
      */

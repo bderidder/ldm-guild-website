@@ -42,7 +42,7 @@ class InGuild
      * @var Character $character
      *
      * @ORM\ManyToOne(targetEntity="Character")
-     * @ORM\JoinColumn(name="character", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="`character`", referencedColumnName="id", nullable=false)
      */
     protected $character;
 
