@@ -116,14 +116,11 @@ class PostCharacterCommand extends AbstractCommand
         $characterSessionImpl = $this->getCharacterSession();
 
         /**
-         * TODO
-         *
          * check if character already exists (name + realm as combined unique key)
          *  if it already exists
          *      verify if the characterSource isn't already tracking this character
          *          if it is already being tracked, throw exception as it should do a PUT and not a POST
-         *          if it is not being tracked, add tracker
-         *      define a delta and update character
+         *          if it is not being tracked, add tracker and update
          *  if it does not exist
          *      create character and add tracker
          */
