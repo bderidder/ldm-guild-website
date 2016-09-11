@@ -11,7 +11,8 @@ use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CharacterSessionImpl;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateGuildSyncSessionCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PatchCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PostCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\TrackCharacterCommand;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UntrackCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetAllCharactersInGuildQuery;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetCharacterByIdQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -122,12 +123,12 @@ class CharacterService extends LaDanseService
      *
      * @return Character
      */
-    public function postCharacter(
+    public function trackCharacter(
         CharacterSession $characterSession,
         PatchCharacter $patchCharacter)
     {
-        /** @var PostCharacterCommand $cmd */
-        $cmd = $this->get(PostCharacterCommand::SERVICE_NAME);
+        /** @var TrackCharacterCommand $cmd */
+        $cmd = $this->get(TrackCharacterCommand::SERVICE_NAME);
 
         $cmd->setCharacterSession($characterSession)
             ->setPatchCharacter($patchCharacter);
@@ -161,8 +162,15 @@ class CharacterService extends LaDanseService
      * @param CharacterSession $characterSession
      * @param int $characterId
      */
-    public function deleteCharacter(CharacterSession $characterSession, int $characterId)
+    public function untrackCharacter(CharacterSession $characterSession, int $characterId)
     {
+        /** @var UntrackCharacterCommand $cmd */
+        $cmd = $this->get(UntrackCharacterCommand::SERVICE_NAME);
+
+        $cmd->setCharacterSession($characterSession);
+        $cmd->setCharacterId($characterId);
+
+        $cmd->run();
     }
 
     /**
