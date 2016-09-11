@@ -13,6 +13,7 @@ use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateGuildSyncSession
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PatchCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PostCharacterCommand;
 use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetAllCharactersInGuildQuery;
+use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetCharacterByIdQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -53,7 +54,13 @@ class CharacterService extends LaDanseService
             $onDateTime = new \DateTime();
         }
 
-        return null;
+        /** @var GetCharacterByIdQuery $query */
+        $query = $this->get(GetCharacterByIdQuery::SERVICE_NAME);
+
+        $query->setCharacterId($characterId)
+              ->setOnDateTime($onDateTime);
+
+        return $query->run();
     }
 
     /**
