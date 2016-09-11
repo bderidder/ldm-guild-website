@@ -17,25 +17,32 @@ class CharacterMapper
      * @param Entity\GameData\Guild $guild
      * @return Character
      */
-    public static function mapSingle(Entity\CharacterVersion $characterVersion, Entity\GameData\Guild $guild) : Character
+    public static function mapSingle(Entity\CharacterVersion $characterVersion, $guild) : Character
     {
         $dto = new Character();
 
-        $dto->setId($characterVersion->getId());
+        $dto->setId($characterVersion->getCharacter()->getId());
         $dto->setName($characterVersion->getCharacter()->getName());
         $dto->setLevel($characterVersion->getLevel());
+
         $dto->setRealmReference(
             new StringReference($characterVersion->getCharacter()->getRealm()->getId())
         );
-        $dto->setGuildReference(
-            new StringReference($guild->getId())
-        );
+
         $dto->setGameRaceReference(
             new StringReference($characterVersion->getGameRace()->getId())
         );
+
         $dto->setGameClassReference(
             new StringReference($characterVersion->getGameClass()->getId())
         );
+
+        if ($guild != null)
+        {
+            $dto->setGuildReference(
+                new StringReference($guild->getId())
+            );
+        }
 
         return $dto;
     }
@@ -46,7 +53,7 @@ class CharacterMapper
      * @return array
      * @throws MapperException
      */
-    public static function mapArray(array $characterVersions, Entity\GameData\Guild $guild) : array
+    public static function mapArray(array $characterVersions, $guild) : array
     {
         $dtoArray = [];
 
