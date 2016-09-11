@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
+namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Character;
@@ -10,11 +10,11 @@ use LaDanse\ServicesBundle\Common\AbstractQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(ClaimForIdQuery::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(ClaimsForAccountQuery::SERVICE_NAME, public=true, shared=false)
  */
-class ClaimForIdQuery extends AbstractQuery
+class ClaimsForAccountQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.ClaimForIdQuery';
+    const SERVICE_NAME = 'LaDanse.ClaimsForAccountQuery';
 
     /**
      * @var $logger \Monolog\Logger
@@ -28,8 +28,8 @@ class ClaimForIdQuery extends AbstractQuery
      */
     public $doctrine;
 
-    /** @var $claimId int */
-    private $claimId;
+    /** @var $accountId int */
+    private $accountId;
 
     /** @var $onDateTime \DateTime */
     private $onDateTime;
@@ -51,17 +51,17 @@ class ClaimForIdQuery extends AbstractQuery
     /**
      * @return int
      */
-    public function getClaimId()
+    public function getAccountId()
     {
-        return $this->claimId;
+        return $this->accountId;
     }
 
     /**
-     * @param int $claimId
+     * @param int $accountId
      */
-    public function setClaimId($claimId)
+    public function setAccountId($accountId)
     {
-        $this->claimId = $claimId;
+        $this->accountId = $accountId;
     }
 
     /**
@@ -97,22 +97,21 @@ class ClaimForIdQuery extends AbstractQuery
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectActiveClaim.sql.twig')
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForAccount.sql.twig')
         );
-        $query->setParameter('claimId', $this->getClaimId());
+        $query->setParameter('accountId', $this->getAccountId());
+        $query->setParameter('onDateTime', $this->getOnDateTime());
 
         $claims = $query->getResult();
 
-        if (count($claims) == 0)
+        $claimsModels = array();
+
+        foreach($claims as $claim)
         {
-            return null;
+            $claimsModels[] = $this->claimToDto($claim, $this->getOnDateTime());
         }
 
-        $claim = $claims[0];
-
-        $claimsModel = $this->claimToDto($claim, $this->getOnDateTime());
-
-        return $claimsModel;
+        return $claimsModels;
     }
 
     /**
@@ -144,6 +143,8 @@ class ClaimForIdQuery extends AbstractQuery
                 "fromTime" => $character->getFromTime(),
                 "name"     => $character->getName(),
                 "level"    => $activeVersion->getLevel(),
+                "guild"    => $activeVersion->getGuild(),
+                "realm"    => $character->getRealm(),
                 "class"    => (object)array(
                     "id"   => $activeVersion->getGameClass()->getId(),
                     "name" => $activeVersion->getGameClass()->getName()

@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter;
+namespace LaDanse\ServicesBundle\Service\Character;
 
 interface CharacterSession
 {

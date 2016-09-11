@@ -3,7 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Claims;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

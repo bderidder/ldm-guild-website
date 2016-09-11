@@ -4,15 +4,15 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
+namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Common\ServiceException;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterSession;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterSession;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use LaDanse\DomainBundle\Entity as Entity;

@@ -4,13 +4,13 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
+namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSource;
 use LaDanse\DomainBundle\Entity\CharacterOrigin\CharacterSyncSession;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterSession;
-use LaDanse\ServicesBundle\Service\GuildCharacter\InvalidSessionStatException;
+use LaDanse\ServicesBundle\Service\Character\CharacterSession;
+use LaDanse\ServicesBundle\Service\Character\InvalidSessionStatException;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

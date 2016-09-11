@@ -1,18 +1,20 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
+namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Character;
+use LaDanse\DomainBundle\Entity\Claim;
+use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @DI\Service(UnclaimedCharactersQuery::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(ClaimsForCharacterQuery::SERVICE_NAME, public=true, shared=false)
  */
-class UnclaimedCharactersQuery extends AbstractQuery
+class ClaimsForCharacterQuery extends AbstractQuery
 {
-    const SERVICE_NAME = 'LaDanse.UnclaimedCharactersQuery';
+    const SERVICE_NAME = 'LaDanse.ClaimsForCharacterQuery';
 
     /**
      * @var $logger \Monolog\Logger
@@ -25,6 +27,9 @@ class UnclaimedCharactersQuery extends AbstractQuery
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /** @var $characterName string */
+    private $characterName;
 
     /** @var $onDateTime \DateTime */
     private $onDateTime;
@@ -41,6 +46,22 @@ class UnclaimedCharactersQuery extends AbstractQuery
         parent::__construct($container);
 
         $this->setOnDateTime(null);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCharacterName()
+    {
+        return $this->characterName;
+    }
+
+    /**
+     * @param string $characterName
+     */
+    public function setCharacterName($characterName)
+    {
+        $this->characterName = $characterName;
     }
 
     /**
@@ -68,7 +89,7 @@ class UnclaimedCharactersQuery extends AbstractQuery
     {
         if ($this->getOnDateTime() == null)
         {
-            // when not set, initialize to current moment
+            // when not set, initialize to right now
             $this->setOnDateTime(new \DateTime());
         }
 
@@ -76,31 +97,21 @@ class UnclaimedCharactersQuery extends AbstractQuery
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $em->createQuery(
-            $this->createSQLFromTemplate('LaDanseDomainBundle::selectUnclaimedCharacters.sql.twig')
+            $this->createSQLFromTemplate('LaDanseDomainBundle::selectClaimsForCharacter.sql.twig')
         );
+        $query->setParameter('characterName', $this->getCharacterName());
         $query->setParameter('onDateTime', $this->getOnDateTime());
 
-        $characters = $query->getResult();
+        $claims = $query->getResult();
 
-        return $this->charactersToDtoArray($characters, $this->getOnDateTime());
-    }
+        $claimsModels = array();
 
-    /**
-     * @param $characters
-     * @param \DateTime $onDateTime
-     *
-     * @return array
-     */
-    protected function charactersToDtoArray($characters, \DateTime $onDateTime)
-    {
-        $charactersDto = array();
-
-        foreach($characters as $character)
+        foreach($claims as $claim)
         {
-            $charactersDto[] = $this->characterToDto($character, $onDateTime);
+            $claimsModels[] = $this->claimToDto($claim, $this->getOnDateTime());
         }
 
-        return $charactersDto;
+        return $claimsModels;
     }
 
     /**
@@ -115,7 +126,7 @@ class UnclaimedCharactersQuery extends AbstractQuery
 
         if (is_null($activeVersion))
         {
-            $this->logger->info('no active version found for ' . $onDateTime->format("d/M/Y"));
+            $this->logger->debug('no active version found for ' . $onDateTime->format("d/M/Y"));
 
             return (object)array(
                 "id"       => $character->getId(),
@@ -125,7 +136,7 @@ class UnclaimedCharactersQuery extends AbstractQuery
         }
         else
         {
-            $this->logger->info('active version found for ' . $onDateTime->format("d/M/Y"));
+            $this->logger->debug('active version found for ' . $onDateTime->format("d/M/Y"));
 
             return (object)array(
                 "id"       => $character->getId(),
@@ -142,5 +153,23 @@ class UnclaimedCharactersQuery extends AbstractQuery
                 )
             );
         }
+    }
+
+    /**
+     * @var $claim Claim
+     * @var $onDateTime \DateTime
+     *
+     * @return object
+     */
+    protected function claimToDto(Claim $claim, \DateTime $onDateTime)
+    {
+        return (object)array(
+            "id"          => $claim->getId(),
+            "character"   => $this->characterToDto($claim->getCharacter(), $onDateTime),
+            "fromTime"    => $claim->getFromTime(),
+            "playsTank"   => $claim->containsRole(Role::TANK, $onDateTime),
+            "playsHealer" => $claim->containsRole(Role::HEALER, $onDateTime),
+            "playsDPS"    => $claim->containsRole(Role::DPS, $onDateTime),
+        );
     }
 }

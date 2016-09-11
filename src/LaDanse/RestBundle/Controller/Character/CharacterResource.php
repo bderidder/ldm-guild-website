@@ -12,7 +12,7 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;

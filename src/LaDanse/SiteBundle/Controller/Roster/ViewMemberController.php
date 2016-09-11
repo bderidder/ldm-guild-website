@@ -7,7 +7,7 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

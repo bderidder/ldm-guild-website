@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
+namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Character;

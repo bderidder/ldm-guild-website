@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
+namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;

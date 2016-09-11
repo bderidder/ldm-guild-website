@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
+namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\CharacterOrigin\GuildSync;

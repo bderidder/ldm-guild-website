@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter;
+namespace LaDanse\ServicesBundle\Service\Character;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
@@ -8,13 +8,13 @@ use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CharacterSessionImpl;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\CreateGuildSyncSessionCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\PatchCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\TrackCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Command\UntrackCharacterCommand;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetAllCharactersInGuildQuery;
-use LaDanse\ServicesBundle\Service\GuildCharacter\Query\GetCharacterByIdQuery;
+use LaDanse\ServicesBundle\Service\Character\Command\CharacterSessionImpl;
+use LaDanse\ServicesBundle\Service\Character\Command\CreateGuildSyncSessionCommand;
+use LaDanse\ServicesBundle\Service\Character\Command\PatchCharacterCommand;
+use LaDanse\ServicesBundle\Service\Character\Command\TrackCharacterCommand;
+use LaDanse\ServicesBundle\Service\Character\Command\UntrackCharacterCommand;
+use LaDanse\ServicesBundle\Service\Character\Query\GetAllCharactersInGuildQuery;
+use LaDanse\ServicesBundle\Service\Character\Query\GetCharacterByIdQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

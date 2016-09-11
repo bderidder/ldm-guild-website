@@ -4,12 +4,11 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Service\GuildCharacter\Query;
+namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
-use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\DomainBundle\Entity as Entity;

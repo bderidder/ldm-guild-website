@@ -5,7 +5,7 @@ namespace LaDanse\SiteBundle\Controller\Claims;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
 
 use LaDanse\ServicesBundle\Service\SocialConnect\SocialConnectService;
 use LaDanse\SiteBundle\Common\LaDanseController;

@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Roster;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
+use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Model\Roster\AccountAndClaims;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
