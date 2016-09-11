@@ -19,11 +19,11 @@ use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
- * @DI\Service(PostCharacterCommand::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(TrackCharacterCommand::SERVICE_NAME, public=true, shared=false)
  */
-class PostCharacterCommand extends AbstractCommand
+class TrackCharacterCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.PostCharacterCommand';
+    const SERVICE_NAME = 'LaDanse.TrackCharacterCommand';
 
     /**
      * @var $logger \Monolog\Logger
@@ -71,9 +71,9 @@ class PostCharacterCommand extends AbstractCommand
 
     /**
      * @param CharacterSession $characterSession
-     * @return PostCharacterCommand
+     * @return TrackCharacterCommand
      */
-    public function setCharacterSession(CharacterSession $characterSession): PostCharacterCommand
+    public function setCharacterSession(CharacterSession $characterSession): TrackCharacterCommand
     {
         $this->characterSession = $characterSession;
         return $this;
@@ -89,9 +89,9 @@ class PostCharacterCommand extends AbstractCommand
 
     /**
      * @param DTO\Character\PatchCharacter $patchCharacter
-     * @return PostCharacterCommand
+     * @return TrackCharacterCommand
      */
-    public function setPatchCharacter(DTO\Character\PatchCharacter $patchCharacter): PostCharacterCommand
+    public function setPatchCharacter(DTO\Character\PatchCharacter $patchCharacter): TrackCharacterCommand
     {
         $this->patchCharacter = $patchCharacter;
         return $this;
