@@ -7,8 +7,11 @@
 namespace LaDanse\ServicesBundle\Service\GuildCharacter\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity\InGuild;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
+use LaDanse\ServicesBundle\Common\ServiceException;
+use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterService;
 use LaDanse\ServicesBundle\Service\GuildCharacter\CharacterSession;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -130,12 +133,49 @@ class PatchCharacterCommand extends AbstractCommand
 
     protected function runCommand()
     {
+        // create a shared $fromTime since we might need it often below
+        $fromTime = new \DateTime();
+
+        $em = $this->doctrine->getManager();
+
         /** @var CharacterSessionImpl $characterSessionImpl */
         $characterSessionImpl = $this->getCharacterSession();
 
+        // verify if the characterSource actually tracks this character
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('trackedBy')
+            ->from(Entity\CharacterOrigin\TrackedBy::class, 'trackedBy')
+            ->join(Entity\CharacterOrigin\CharacterSource::class, 'characterSource')
+            ->where('trackedBy.character = ?1')
+            ->andWhere('trackedBy.characterSource = ?2')
+            ->andWhere('trackedBy.fromTime IS NOT NULL')
+            ->andWhere('trackedBy.endTime IS NULL')
+            ->setParameter(
+                1,
+                $em->getReference(Entity\Character::class, $this->getCharacterId())
+            )
+            ->setParameter(2, $characterSessionImpl->getCharacterSource());
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $qb->getQuery();
+
+        $trackedBys = $query->getResult();
+
+        if (count($trackedBys) == 0)
+        {
+            throw new ServiceException(
+                sprintf(
+                    "The character %s is not being tracked by current characterSource, use POST to create it",
+                    $this->getCharacterId()
+                ),
+                400
+            );
+        }
+
         /**
-         * TODO
-         *
          * check if character already exists (name + realm as combined unique key)
          *  if it already exists
          *      verify if the characterSource isn't already tracking this character
@@ -146,47 +186,197 @@ class PatchCharacterCommand extends AbstractCommand
          *      create character and add tracker
          */
 
-        // create a shared $fromTime since we will need it often below
-        $fromTime = new \DateTime();
-
-        $em = $this->doctrine->getManager();
-
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('c')
-            ->from(Entity\Character::class, 'c')
-            ->join('c.realm', 'realm')
-            ->where('c.name = ?1')
-            ->andWhere('realm.id = ?2')
-            ->setParameter(1, $this->getPatchCharacter()->getName())
-            ->setParameter(
-                2,
-                $em->getReference(Entity\GameData\Realm::class, $this->getPatchCharacter()->getRealmReference()->getId()                )
-            );
+        $qb->select('charVersion', 'char', 'gameRace', 'gameClass', 'realm')
+            ->from(Entity\CharacterVersion::class, 'charVersion')
+            ->join('charVersion.character', 'char')
+            ->join('charVersion.gameRace', 'gameRace')
+            ->join('charVersion.gameClass', 'gameClass')
+            ->join('char.realm', 'realm')
+            ->where('char.id = ?1')
+            ->andWhere('char.fromTime IS NOT NULL')
+            ->andWhere('char.endTime IS NULL')
+            ->andWhere('charVersion.fromTime IS NOT NULL')
+            ->andWhere('charVersion.endTime IS NULL')
+            ->setParameter(1, $this->getCharacterId());
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
 
-        $characters = $query->getResult();
+        $characterVersions = $query->getResult();
 
-        if (count($characters) == 0)
+        if (count($characterVersions) == 0)
         {
             // character does not yet exist, should never happen
+
+            throw new ServiceException(
+                sprintf(
+                    "An active character with id %s was not found, use POST to create it",
+                    $this->getCharacterId()
+                ),
+                400
+            );
         }
-        elseif(count($characters) != 1)
+        elseif(count($characterVersions) != 1)
         {
             // this should never happen, we cannot have two characters with the same name on the same realm
 
-            throw new \Exception(
-                "Two characters with the same name on the same realm found",
-                [
-                    "name"  => $this->getPatchCharacter()->getName(),
-                    "realm" => $this->getPatchCharacter()->getRealmReference()->getId()
-                ]
+            throw new ServiceException(
+                sprintf(
+                    "Multiple characters with the id %s found",
+                    $this->getCharacterId()
+                ),
+                500
             );
         }
 
-        return null;
+        /** @var Entity\CharacterVersion $currentCharacterVersion */
+        $currentCharacterVersion = $characterVersions[0];
+
+        /*
+         * Verify that there is no attempt to change immutable fields
+         */
+
+        if ($currentCharacterVersion->getCharacter()->getName() != $this->getPatchCharacter()->getName()
+            ||
+            $currentCharacterVersion->getCharacter()->getRealm()->getId()
+                != $this->getPatchCharacter()->getRealmReference()->getId())
+        {
+            throw new ServiceException(
+                sprintf(
+                    "Attempt to change name or realm on character with id %s",
+                    $this->getCharacterId()
+                ),
+                400
+            );
+        }
+
+        /*
+         * Fields to compare:
+         *
+         * - in CharacterVersion
+         *      - level
+         *      - gameClass
+         *      - gameRace
+         * - in Character
+         *      - Guild
+         */
+
+        // check if we need to make a new CharacterVersion
+
+        if ($currentCharacterVersion->getLevel() != $this->getPatchCharacter()->getLevel()
+            ||
+            $currentCharacterVersion->getGameRace()->getId() != $this->getPatchCharacter()->getGameRaceReference()->getId()
+            ||
+            $currentCharacterVersion->getGameClass()->getId() != $this->getPatchCharacter()->getGameClassReference()->getId())
+        {
+            $currentCharacterVersion->setEndTime($fromTime);
+
+            $newCharacterVersion = new Entity\CharacterVersion();
+
+            $newCharacterVersion->setCharacter($currentCharacterVersion->getCharacter());
+            $newCharacterVersion->setLevel($this->getPatchCharacter()->getLevel());
+            $newCharacterVersion->setFromTime($fromTime);
+            $newCharacterVersion->setGameRace(
+                $em->getReference(
+                    Entity\GameData\GameRace::class,
+                    $this->getPatchCharacter()->getGameRaceReference()->getId()
+                )
+            );
+            $newCharacterVersion->setGameClass(
+                $em->getReference(
+                    Entity\GameData\GameClass::class,
+                    $this->getPatchCharacter()->getGameClassReference()->getId()
+                )
+            );
+
+            $em->persist($newCharacterVersion);
+            $em->flush();
+        }
+
+        // check if we need to change the guild association
+
+        // TODO
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('inGuild', 'guild')
+            ->from(Entity\InGuild::class, 'inGuild')
+            ->join('inGuild.guild', 'guild')
+            ->where('inGuild.character = ?1')
+            ->andWhere('inGuild.fromTime IS NOT NULL')
+            ->andWhere('inGuild.endTime IS NULL')
+            ->setParameter(1, $currentCharacterVersion->getCharacter());
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $qb->getQuery();
+
+        $inGuilds = $query->getResult();
+
+        if (count($inGuilds) == 0)
+        {
+            // the character is currently not in a guild, verify if it should be
+
+            if ($this->getPatchCharacter()->getGuildReference() != null)
+            {
+                $newInGuild = new InGuild();
+                $newInGuild->setFromTime($fromTime);
+                $newInGuild->setCharacter($currentCharacterVersion->getCharacter());
+                $newInGuild->setGuild(
+                    $em->getReference(
+                        Entity\GameData\Guild::class,
+                        $this->getPatchCharacter()->getGuildReference()->getId()
+                    )
+                );
+
+                $em->persist($newInGuild);
+                $em->flush();
+            }
+        }
+        elseif (count($inGuilds) == 1)
+        {
+            // the character is currently in a guild, verify if it needs to change
+
+            /** @var InGuild $inGuild */
+            $inGuild = $inGuilds[0];
+
+            if ($inGuild->getGuild()->getId() != $this->getPatchCharacter()->getGuildReference()->getId())
+            {
+                $inGuild->setEndTime($fromTime);
+
+                $newInGuild = new InGuild();
+                $newInGuild->setFromTime($fromTime);
+                $newInGuild->setCharacter($currentCharacterVersion->getCharacter());
+                $newInGuild->setGuild(
+                    $em->getReference(
+                        Entity\GameData\Guild::class,
+                        $this->getPatchCharacter()->getGuildReference()->getId()
+                    )
+                );
+
+                $em->persist($newInGuild);
+                $em->flush();
+            }
+        }
+        else
+        {
+            // according to the database the character is in two guilds at the same time, this is an error
+
+            throw new ServiceException(
+                sprintf(
+                    "Two active inGuilds for character %s ",
+                    $this->getCharacterId()
+                ),
+                500
+            );
+        }
+
+        /** @var CharacterService $characterService */
+        $characterService = $this->container->get(CharacterService::SERVICE_NAME);
+
+        return $characterService->getCharacterById($this->getCharacterId());
     }
 }
