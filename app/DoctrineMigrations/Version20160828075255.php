@@ -130,11 +130,14 @@ class Version20160828075255 extends AbstractMigration implements ContainerAwareI
 
         // set the realm of all guilds to "Defias Brotherhood"
 
-        $defiasId = $usedRealms['Defias Brotherhood'];
+        if (array_key_exists('Defias Brotherhood', $usedRealms))
+        {
+            $defiasId = $usedRealms['Defias Brotherhood'];
 
-        $insertStmt = $conn->prepare("UPDATE Guild SET realm = :realm");
-        $insertStmt->bindValue("realm", $defiasId);
-        $insertStmt->execute();
+            $insertStmt = $conn->prepare("UPDATE Guild SET realm = :realm");
+            $insertStmt->bindValue("realm", $defiasId);
+            $insertStmt->execute();
+        }
 
         $conn->executeUpdate("ALTER TABLE GuildCharacterVersion DROP COLUMN guild");
 

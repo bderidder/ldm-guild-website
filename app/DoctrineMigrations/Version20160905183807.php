@@ -63,7 +63,8 @@ class Version20160905183807 extends AbstractMigration implements ContainerAwareI
 
         if ($stmt->rowCount() != 1)
         {
-            // exit with error
+            // nothing to do in this migration
+            return;
         }
 
         $row = $stmt->fetch();
