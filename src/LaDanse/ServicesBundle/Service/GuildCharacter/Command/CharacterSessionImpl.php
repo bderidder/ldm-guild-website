@@ -94,6 +94,7 @@ class CharacterSessionImpl implements CharacterSession
         $this->syncSession->setCharacterSource($characterSource);
 
         $em->persist($this->syncSession);
+        $em->flush();
 
         $this->sessionState = 'STARTED';
 
