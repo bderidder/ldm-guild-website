@@ -298,8 +298,6 @@ class PatchCharacterCommand extends AbstractCommand
 
         // check if we need to change the guild association
 
-        // TODO
-
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
@@ -343,7 +341,12 @@ class PatchCharacterCommand extends AbstractCommand
             /** @var InGuild $inGuild */
             $inGuild = $inGuilds[0];
 
-            if ($inGuild->getGuild()->getId() != $this->getPatchCharacter()->getGuildReference()->getId())
+            if ($this->getPatchCharacter()->getGuildReference() == null)
+            {
+                $inGuild->setEndTime($fromTime);
+                $em->flush();
+            }
+            else if ($inGuild->getGuild()->getId() != $this->getPatchCharacter()->getGuildReference()->getId())
             {
                 $inGuild->setEndTime($fromTime);
 
