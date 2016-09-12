@@ -53,6 +53,18 @@ class Claim
     protected $roles;
 
     /**
+     * @var string
+     * @ORM\Column(type="text", length=1024, nullable=true)
+     */
+    protected $comment;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $raider = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -212,5 +224,41 @@ class Claim
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment(): string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     * @return Claim
+     */
+    public function setComment(string $comment): Claim
+    {
+        $this->comment = $comment;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRaider(): bool
+    {
+        return $this->raider;
+    }
+
+    /**
+     * @param boolean $raider
+     * @return Claim
+     */
+    public function setRaider(bool $raider): Claim
+    {
+        $this->raider = $raider;
+        return $this;
     }
 }
