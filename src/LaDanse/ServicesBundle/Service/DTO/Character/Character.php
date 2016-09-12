@@ -58,6 +58,12 @@ class Character
     protected $gameRaceReference;
 
     /**
+     * @var Claim
+     * @SerializedName("claim")
+     */
+    protected $claim;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -180,6 +186,24 @@ class Character
     public function setGameRaceReference(StringReference $gameRaceReference): Character
     {
         $this->gameRaceReference = $gameRaceReference;
+        return $this;
+    }
+
+    /**
+     * @return Claim
+     */
+    public function getClaim(): Claim
+    {
+        return $this->claim;
+    }
+
+    /**
+     * @param Claim $claim
+     * @return Character
+     */
+    public function setClaim(Claim $claim): Character
+    {
+        $this->claim = $claim;
         return $this;
     }
 }
