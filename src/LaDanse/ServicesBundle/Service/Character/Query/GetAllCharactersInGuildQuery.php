@@ -155,7 +155,7 @@ class GetAllCharactersInGuildQuery extends AbstractQuery
             ->add('where',
                 $qb->expr()->andX(
                     $qb->expr()->in(
-                        'characterVersion.id',
+                        'characterVersion.character',
                         $innerQb->select('innerCharacter.id')
                             ->from(Entity\InGuild::class, 'inGuild')
                             ->join('inGuild.character', 'innerCharacter')
