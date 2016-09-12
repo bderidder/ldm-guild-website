@@ -6,9 +6,16 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
-use LaDanse\DomainBundle\Entity\GameData\GameRace;
-use LaDanse\DomainBundle\Entity\GameData\GameClass;
 use LaDanse\ServicesBundle\Common\CommandExecutionContext;
+use LaDanse\ServicesBundle\Service\DTO\Character\Character;
+use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
+use LaDanse\ServicesBundle\Service\DTO\GameData\GameClass;
+use LaDanse\ServicesBundle\Service\DTO\GameData\GameRace;
+use LaDanse\ServicesBundle\Service\DTO\GameData\Guild;
+use LaDanse\ServicesBundle\Service\DTO\GameData\PatchGuild;
+use LaDanse\ServicesBundle\Service\DTO\GameData\PatchRealm;
+use LaDanse\ServicesBundle\Service\DTO\GameData\Realm;
+use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -24,6 +31,11 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     const BATTLENET_API_URL =
         "https://eu.api.battle.net/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members&locale=en_GB&apikey=";
 
+    private $gameRaces;
+    private $gameClasses;
+    private $guilds;
+    private $realms;
+
     /**
      * @return void
      */
@@ -34,6 +46,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             ->setDescription('Refresh guild members from the armory')
         ;
     }
+
 
     /**
      * @param InputInterface $input
@@ -48,7 +61,35 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             $output
         );
 
-        $armoryGuild = $this->getArmoryObjects($context);
+        $this->loadGameData();
+
+        $this->syncGuild($context, 'La Danse Macabre', 'Defias Brotherhood');
+        $this->syncGuild($context, 'La Danse Macabre', 'Darkmoon Faire');
+
+        return 0;
+    }
+
+    private function loadGameData()
+    {
+        /** @var GameDataService $gameDataService */
+        $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
+
+        $this->gameRaces   = $gameDataService->getAllGameRaces();
+        $this->gameClasses = $gameDataService->getAllGameClasses();
+        $this->guilds      = $gameDataService->getAllGuilds();
+        $this->realms      = $gameDataService->getAllRealms();
+    }
+
+    private function syncGuild(CommandExecutionContext $context, string $guildName, string $realmName)
+    {
+        /** @var CharacterService $characterService */
+        $characterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
+
+        $realm = $this->getRealmFromName($realmName);
+
+        $guild = $this->getGuildFromName($guildName, $realm->getId());
+
+        $armoryGuild = $this->getArmoryObjects($context, $guild, $realm);
 
         if (is_null($armoryGuild))
         {
@@ -61,7 +102,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         foreach($armoryGuild->members as $entry)
         {
-            // we have seen JSON where not all properties were present
+            // we have seen JSON from the Armory where not all properties were present
             if (property_exists($entry, "character")
                 &&
                 $this->verifyProperties($entry->character, ['name', 'class', 'race', 'level', 'guild', 'realm']))
@@ -79,7 +120,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         usort(
             $armoryNames,
-            function ($a, $b) {
+            function ($a, $b)
+            {
                 return strcmp($a->name, $b->name);
             }
         );
@@ -87,131 +129,208 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         // second we fetch all the currently active guild member from the database
 
         $context->debug("Fetching guild members from the database");
-
-        /** @var CharacterService $characterService */
-        $characterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
-
-        /** @var GameDataService $gameDataService */
-        $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
-
-        $gameRaces = $gameDataService->getAllGameRaces();
-        $gameClasses = $gameDataService->getAllGameClasses();
         
-        $dbNames = $characterService->getAllGuildCharacters();
+        $characterDtos = $characterService->getAllCharactersInGuild(
+            new StringReference($guild->getId())
+        );
 
-        $context->debug("Number of members in database " . count($dbNames));
+        $context->debug("Number of members in database " . count($characterDtos));
 
         usort(
-            $dbNames,
-            function ($a, $b) {
-                return strcmp($a->name, $b->name);
+            $characterDtos,
+            function ($a, $b)
+            {
+                /** @var Character $a */
+                /** @var Character $b */
+                return strcmp($a->getName(), $b->getName());
             }
         );
 
-        // below we use a classical algoritm that calculates the difference
-        // between two sorted lists, acting accordingly on any difference found
+        // below we use a classical algoritm that calculates the difference between two sorted lists
 
-        $context->debug("Comparing both lists ...");
+        $guildSyncSession = $characterService->createGuildSyncSession(
+            new StringReference($guild->getId())
+        );
 
-        $dbIndex = 0;
-        $armoryIndex = 0;
-
-        while(($dbIndex < count($dbNames) && ($armoryIndex < count($armoryNames))))
+        try
         {
-            $dbName = $dbNames[$dbIndex]->name;
-            $armoryName = $armoryNames[$armoryIndex]->name;
+            $context->debug("Comparing both lists ...");
 
-            if (strcmp($dbName, $armoryName) == 0)
-            {
-                // if character is the same as the next character from armory, do nothing
-                $context->info("Character already in our database " . $dbName);
+            $dbIndex = 0;
+            $armoryIndex = 0;
 
-                if ($this->hasCharacterChanged($dbNames[$dbIndex], $armoryNames[$armoryIndex]))
-                {
-                    $context->info(
-                        "Character changed in Armory, updating " . $dbName . " " . $dbNames[$dbIndex]->id
-                    );
+            while (($dbIndex < count($characterDtos) && ($armoryIndex < count($armoryNames)))) {
+                /** @var Character $currentCharacterDto */
+                $currentCharacterDto = $characterDtos[$dbIndex];
+                $dbName = $currentCharacterDto->getName();
 
-                    $this->updateCharacter(
-                        $dbNames[$dbIndex]->id,
-                        $armoryNames[$armoryIndex],
-                        $this->getGameRace($gameRaces, $armoryNames[$armoryIndex]->race),
-                        $this->getGameClass($gameClasses, $armoryNames[$armoryIndex]->class)
-                    );
+                $currentArmoryRecord = $armoryNames[$armoryIndex];
+                $armoryName = $currentArmoryRecord->name;
+
+                $context->info("Comparing database " . $dbName . " with Armory " . $armoryName);
+
+                if (strcmp($dbName, $armoryName) == 0) {
+                    // if character is the same as the next character from armory, do nothing
+                    $context->info("Character already in our database " . $dbName);
+
+                    if ($this->hasCharacterChanged($currentCharacterDto, $currentArmoryRecord)) {
+                        $context->info(
+                            "Character changed in Armory, updating " . $dbName . " " . $currentCharacterDto->getId()
+                        );
+
+                        $guildSyncSession->addMessage(
+                            "Character changed in Armory, updating " . $dbName . " " . $currentCharacterDto->getId()
+                        );
+
+                        $patchCharacter = new PatchCharacter();
+                        $patchCharacter
+                            ->setName($currentCharacterDto->getName())
+                            ->setLevel($currentArmoryRecord->level)
+                            ->setGameClassReference(
+                                new StringReference($this->getGameClassFromArmoryId($currentArmoryRecord->class)->getId())
+                            )
+                            ->setGameRaceReference(
+                                new StringReference($this->getGameRaceFromArmoryId($currentArmoryRecord->race)->getId())
+                            )
+                            ->setRealmReference(
+                                new StringReference($this->getRealmFromName($currentArmoryRecord->realm)->getId())
+                            )
+                            ->setGuildReference(
+                                new StringReference($guild->getId())
+                            );
+
+                        $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
+                    }
+
+                    $armoryIndex++;
+                    $dbIndex++;
+                } elseif (strcmp($dbName, $armoryName) < 0) {
+                    // if character comes before the current character from armory, it means
+                    // the character isn't in the guild any more, end it
+
+                    $context->info("Character is not in the guild anymore " . $dbName);
+
+                    $guildSyncSession->addMessage("Character is not in the guild anymore " . $dbName);
+
+                    $patchCharacter = new PatchCharacter();
+                    $patchCharacter
+                        ->setName($currentCharacterDto->getName())
+                        ->setLevel($currentArmoryRecord->level)
+                        ->setGameClassReference(
+                            new StringReference($this->getGameClassFromArmoryId($currentArmoryRecord->class)->getId())
+                        )
+                        ->setGameRaceReference(
+                            new StringReference($this->getGameRaceFromArmoryId($currentArmoryRecord->race)->getId())
+                        )
+                        ->setRealmReference(
+                            new StringReference($this->getRealmFromName($currentArmoryRecord->realm)->getId())
+                        );
+
+                    $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
+
+                    $characterService->untrackCharacter($guildSyncSession, $currentCharacterDto->getId());
+
+                    $dbIndex++;
+                } else {
+                    // if character comes after the current character from armory, it means
+                    // the armory has new characters, import them
+
+                    $context->info("Character is not yet in database, importing " . $armoryName);
+
+                    $guildSyncSession->addMessage("Character is not yet in database, importing " . $armoryName);
+
+                    $patchCharacter = new PatchCharacter();
+                    $patchCharacter
+                        ->setName($currentArmoryRecord->name)
+                        ->setLevel($currentArmoryRecord->level)
+                        ->setGameClassReference(
+                            new StringReference($this->getGameClassFromArmoryId($currentArmoryRecord->class)->getId())
+                        )
+                        ->setGameRaceReference(
+                            new StringReference($this->getGameRaceFromArmoryId($currentArmoryRecord->race)->getId())
+                        )
+                        ->setRealmReference(
+                            new StringReference($this->getRealmFromName($currentArmoryRecord->realm)->getId())
+                        )
+                        ->setGuildReference(
+                            new StringReference($guild->getId())
+                        );
+
+                    $characterService->trackCharacter($guildSyncSession, $patchCharacter);
+
+                    $armoryIndex++;
                 }
+            }
 
-                $armoryIndex++;
+            // if we have any left overs, they are characters in the database
+            // that are not in the guild anymore, let's end them
+            while ($dbIndex < count($characterDtos)) {
+                /** @var Character $currentCharacterDto */
+                $currentCharacterDto = $characterDtos[$dbIndex];
+
+                $context->info("Character is not in the guild anymore, ending " . $currentCharacterDto->getName());
+
+                $guildSyncSession->addMessage("Character is not in the guild anymore, ending " . $currentCharacterDto->getName());
+
+                $patchCharacter = new PatchCharacter();
+                $patchCharacter
+                    ->setName($currentCharacterDto->getName())
+                    ->setLevel($currentCharacterDto->getLevel())
+                    ->setGameClassReference($currentCharacterDto->getGameClassReference())
+                    ->setGameRaceReference($currentCharacterDto->getGameClassReference())
+                    ->setRealmReference($currentCharacterDto->getRealmReference());
+
+                $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
+
+                $characterService->untrackCharacter($guildSyncSession, $currentCharacterDto->getId());
+
                 $dbIndex++;
             }
-            elseif (strcmp($dbName, $armoryName) < 0)
-            {
-                // if character comes before the current character from armory, it means
-                // the character isn't in the guild any more, end it
-                $context->info("Character is not in the guild anymore " . $dbName);
 
-                $this->endCharacter($dbNames[$dbIndex]->id);
+            // if we have any left overs, they are all characters in the guild
+            // according to the Armory but that are not yet in the database,
+            // let's add them
+            while ($armoryIndex < count($armoryNames)) {
+                $currentArmoryRecord = $armoryNames[$armoryIndex];
+                $armoryName = $currentArmoryRecord->name;
 
-                $dbIndex++;
-            }
-            else
-            {
-                // if character comes after the current character from armory, it means
-                // the armory has new characters, import them
                 $context->info("Character is not yet in database, importing " . $armoryName);
 
-                $this->importCharacter(
-                    $armoryNames[$armoryIndex],
-                    $this->getGameRace($gameRaces, $armoryNames[$armoryIndex]->race),
-                    $this->getGameClass($gameClasses, $armoryNames[$armoryIndex]->class)
-                );
+                $guildSyncSession->addMessage("Character is not yet in database, importing " . $armoryName);
+
+                $patchCharacter = new PatchCharacter();
+                $patchCharacter
+                    ->setName($currentArmoryRecord->name)
+                    ->setLevel($currentArmoryRecord->level)
+                    ->setGameClassReference(
+                        new StringReference($this->getGameClassFromArmoryId($currentArmoryRecord->class)->getId())
+                    )
+                    ->setGameRaceReference(
+                        new StringReference($this->getGameRaceFromArmoryId($currentArmoryRecord->race)->getId())
+                    )
+                    ->setRealmReference(
+                        new StringReference($this->getRealmFromName($currentArmoryRecord->realm)->getId())
+                    )
+                    ->setGuildReference(
+                        new StringReference($guild->getId())
+                    );
+
+                $characterService->trackCharacter($guildSyncSession, $patchCharacter);
 
                 $armoryIndex++;
             }
         }
-
-        // if we have any left overs, they are characters in the database
-        // that are not anymore in the guild, let's end them
-        while($dbIndex < count($dbNames))
+        catch(\Exception $exception)
         {
-            $dbName = $dbNames[$dbIndex]->name;
-
-            $context->info("Character is not in the guild anymore, ending " . $dbName);
-
-            $this->endCharacter($dbNames[$dbIndex]->id);
-
-            $dbIndex++;
+            $guildSyncSession->addMessage("Caught exception - " . $exception->getMessage());
+        }
+        finally
+        {
+            $characterService->endCharacterSession($guildSyncSession);
         }
 
-        // if we have any left overs, they are all characters in the guild
-        // according to the Armory but that are not yet in the database,
-        // let's add them
-        while($armoryIndex < count($armoryNames))
-        {
-            $armoryName = $armoryNames[$armoryIndex]->name;
-
-            // the amory has new characters, import it
-            $context->info("Character is not yet in database, importing " . $armoryName);
-
-            $this->importCharacter(
-                $armoryNames[$armoryIndex],
-                $this->getGameRace($gameRaces, $armoryNames[$armoryIndex]->race),
-                $this->getGameClass($gameClasses, $armoryNames[$armoryIndex]->class)
-            );
-
-            $armoryIndex++;
-        }
 
         return 0;
-    }
-
-    /**
-     * @param $characterId
-     */
-    protected function endCharacter($characterId)
-    {
-        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
-
-        $guildCharacterService->endCharacter($characterId);
     }
 
     /**
@@ -219,14 +338,24 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      * @param $armoryCharacter
      * @return bool
      */
-    protected function hasCharacterChanged($dbCharacter, $armoryCharacter)
+    protected function hasCharacterChanged(Character $dbCharacter, $armoryCharacter)
     {
-        if ($dbCharacter->level != $armoryCharacter->level)
+        if ($dbCharacter->getLevel() != $armoryCharacter->level)
         {
             return true;
         }
 
-        if (strcmp($dbCharacter->realm, $armoryCharacter->realm) != 0)
+        if (strcmp($dbCharacter->getRealmReference(), $this->getRealmFromName($armoryCharacter->realm)->getId()) != 0)
+        {
+            return true;
+        }
+
+        if (strcmp($dbCharacter->getGameClassReference(), $this->getGameClassFromArmoryId($armoryCharacter->class)->getId()) != 0)
+        {
+            return true;
+        }
+
+        if (strcmp($dbCharacter->getGameRaceReference(), $this->getGameRaceFromArmoryId($armoryCharacter->race)->getId()) != 0)
         {
             return true;
         }
@@ -235,103 +364,27 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param $id
-     * @param $armoryCharacter
-     * @param $gameRace
-     * @param $gameClass
-     */
-    protected function updateCharacter($id, $armoryCharacter, $gameRace, $gameClass)
-    {
-        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
-
-        $guildCharacterService->updateCharacter(
-            $id,
-            $armoryCharacter->name,
-            $armoryCharacter->level,
-            $gameRace,
-            $gameClass,
-            $armoryCharacter->guild,
-            $armoryCharacter->realm
-        );
-    }
-
-    /**
-     * @param $armoryCharacter
-     * @param $gameRace
-     * @param $gameClass
-     */
-    protected function importCharacter($armoryCharacter, $gameRace, $gameClass)
-    {
-        /** @var $guildCharacterService CharacterService */
-        $guildCharacterService = $this->getContainer()->get(CharacterService::SERVICE_NAME);
-
-        $guildCharacterService->createCharacter(
-            $armoryCharacter->name,
-            $armoryCharacter->level,
-            $gameRace,
-            $gameClass,
-            $armoryCharacter->guild,
-            $armoryCharacter->realm
-        );
-    }
-
-    /**
-     * @param $gameRaces
-     * @param $gameRaceArmoryId
-     * @return GameRace|null
-     * @throws \Exception
-     */
-    protected function getGameRace($gameRaces, $gameRaceArmoryId)
-    {
-        /* @var GameRace $gameRace */
-        foreach($gameRaces as $gameRace)
-        {
-            if ($gameRace->getArmoryId() == $gameRaceArmoryId)
-            {
-                return $gameRace;
-            }
-        }
-
-        throw new \Exception("Could not find a GameRace instance for armory id " . $gameRaceArmoryId);
-    }
-
-    /**
-     * @param array $gameClasses
-     * @param int $gameClassArmoryId
-     *
-     * @return GameClass|null
-     *
-     * @throws \Exception
-     */
-    protected function getGameClass($gameClasses, $gameClassArmoryId)
-    {
-        /* @var GameClass $gameClass */
-        foreach($gameClasses as $gameClass)
-        {
-            if ($gameClass->getArmoryId() == $gameClassArmoryId)
-            {
-                return $gameClass;
-            }
-        }
-
-        throw new \Exception("Could not find a GameClass instance for armory id " . $gameClassArmoryId);
-    }
-
-    /**
      * @param CommandExecutionContext $context
+     * @param Guild $guild
+     * @param Realm $realm
      *
-     * @return object|null
+     * @return null|array
      */
-    protected function getArmoryObjects(CommandExecutionContext $context)
+    protected function getArmoryObjects(CommandExecutionContext $context, Guild $guild, Realm $realm)
     {
+        $armoryUrl = "https://eu.api.battle.net/wow/guild/"
+            . rawurlencode($realm->getName())
+            . "/"
+            . rawurlencode($guild->getName())
+            . "?fields=members&locale=en_GB&apikey="
+            . $this->getContainer()->getParameter("battlenet_key");
+
         try
         {
-            $context->debug("Fetching guild members from the Armory");
+            $context->info("Fetching guild members from the Armory");
+            $context->info("Armory URL " . $armoryUrl);
 
-            $apiKey = $this->getContainer()->getParameter("battlenet_key");
-            $fullUrl = RefreshGuildMembersCommand::BATTLENET_API_URL . $apiKey;
-
-            $json = file_get_contents($fullUrl);
+            $json = file_get_contents($armoryUrl);
 
             $context->debug("Armory returned " . $json);
 
@@ -380,4 +433,106 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         return $hasAllProperties;
     }
+
+    /**
+     * @param int $armoryId
+     * @return GameClass
+     * @throws \Exception
+     */
+    private function getGameClassFromArmoryId(int $armoryId)
+    {
+        foreach($this->gameClasses as $gameClass)
+        {
+            /** @var GameClass $gameClass */
+
+            if ($armoryId == $gameClass->getArmoryId())
+            {
+                return $gameClass;
+            }
+        }
+
+        throw new \Exception("Could not find GameClass for Armory id " . $armoryId);
+    }
+
+    /**
+     * @param int $armoryId
+     * @return GameRace
+     * @throws \Exception
+     */
+    private function getGameRaceFromArmoryId(int $armoryId)
+    {
+        foreach($this->gameRaces as $gameRace)
+        {
+            /** @var GameRace $gameRace */
+
+            if ($armoryId == $gameRace->getArmoryId())
+            {
+                return $gameRace;
+            }
+        }
+
+        throw new \Exception("Could not find GameRace for Armory id " . $armoryId);
+    }
+
+    /**
+     * @param string $realmName
+     * @return Realm|null
+     */
+    private function getRealmFromName(string $realmName)
+    {
+        foreach($this->realms as $realm)
+        {
+            /** @var Realm $realm */
+
+            if ($realmName == $realm->getName())
+            {
+                return $realm;
+            }
+        }
+
+        /** @var GameDataService $gameDataService */
+        $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
+
+        $patchRealm = new PatchRealm();
+        $patchRealm->setName($realmName);
+
+        $realmDto = $gameDataService->postRealm($patchRealm);
+
+        $this->realms[] = $realmDto;
+
+        return $realmDto;
+    }
+
+    /**
+     * @param string $guildName
+     * @param string $realmId
+     * @return Guild|null
+     */
+    private function getGuildFromName(string $guildName, string $realmId)
+    {
+        foreach($this->guilds as $guild)
+        {
+            /** @var Guild $guild */
+
+            if (($guildName == $guild->getName())
+                && ($guild->getRealmReference()->getId() == $realmId))
+            {
+                return $guild;
+            }
+        }
+
+        /** @var GameDataService $gameDataService */
+        $gameDataService = $this->getContainer()->get(GameDataService::SERVICE_NAME);
+
+        $patchGuild = new PatchGuild();
+        $patchGuild->setName($guildName);
+        $patchGuild->setRealmId(new StringReference($realmId));
+
+        $guildDto = $gameDataService->postGuild($patchGuild);
+
+        $this->guilds[] = $guildDto;
+
+        return $guildDto;
+    }
 }
+
