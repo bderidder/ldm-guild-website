@@ -65,6 +65,7 @@ class CharacterSessionImpl implements CharacterSession
     {
         $this->setContainer($container);
 
+        $this->logMessages = [];
         $this->sessionState = 'CONSTRUCTED';
     }
 
