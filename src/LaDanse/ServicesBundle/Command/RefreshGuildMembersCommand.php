@@ -127,7 +127,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 /** @var ArmoryObject $a */
                 /** @var ArmoryObject $b */
-                return strcmp($a->getName(), $b->getName());
+                return $this->compareCharacters($a->getName(), $a->getRealmName(), $b->getName(), $b->getRealmName());
             }
         );
 
@@ -147,7 +147,13 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 /** @var Character $a */
                 /** @var Character $b */
-                return strcmp($a->getName(), $b->getName());
+                //return strcmp($a->getName(), $b->getName());
+                return $this->compareCharacters(
+                    $a->getName(),
+                    $this->getRealmFromId($a->getRealmReference()->getId())->getName(),
+                    $b->getName(),
+                    $this->getRealmFromId($b->getRealmReference()->getId())->getName()
+                );
             }
         );
 
@@ -168,26 +174,42 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 /** @var Character $currentCharacterDto */
                 $currentCharacterDto = $characterDtos[$dbIndex];
-                $dbName = $currentCharacterDto->getName();
 
                 /** @var ArmoryObject $currentArmoryObject */
                 $currentArmoryObject = $armoryObjects[$armoryIndex];
-                $armoryName = $currentArmoryObject->getName();
 
-                $context->info("Comparing database " . $dbName . " with Armory " . $armoryName);
+                $context->info(
+                    "Comparing database "
+                    . $currentCharacterDto->getName()
+                    . " with Armory "
+                    . $currentArmoryObject->getName()
+                );
 
-                if (strcmp($dbName, $armoryName) == 0)
+                $charCompareResult = $this->compareCharacters(
+                    $currentCharacterDto->getName(),
+                    $this->getRealmFromId($currentCharacterDto->getRealmReference()->getId())->getName(),
+                    $currentArmoryObject->getName(),
+                    $currentArmoryObject->getRealmName()
+                );
+
+                if ($charCompareResult == 0)
                 {
                     // if character is the same as the next character from armory, do nothing
-                    $context->info("Character already in our database " . $dbName);
+                    $context->info("Character already in our database " . $currentCharacterDto->getName());
 
                     if ($this->hasCharacterChanged($currentCharacterDto, $currentArmoryObject)) {
                         $context->info(
-                            "Character changed in Armory, updating " . $dbName . " " . $currentCharacterDto->getId()
+                            "Character changed in Armory, updating "
+                            . $currentCharacterDto->getName()
+                            . " "
+                            . $currentCharacterDto->getId()
                         );
 
                         $guildSyncSession->addMessage(
-                            "Character changed in Armory, updating " . $dbName . " " . $currentCharacterDto->getId()
+                            "Character changed in Armory, updating "
+                            . $currentCharacterDto->getName()
+                            . " "
+                            . $currentCharacterDto->getId()
                         );
 
                         $patchCharacter = new PatchCharacter();
@@ -213,14 +235,14 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                     $armoryIndex++;
                     $dbIndex++;
                 }
-                elseif (strcmp($dbName, $armoryName) < 0)
+                elseif ($charCompareResult < 0)
                 {
                     // if character comes before the current character from armory, it means
                     // the character isn't in the guild any more, end it
 
-                    $context->info("Character is not in the guild anymore " . $dbName);
+                    $context->info("Character is not in the guild anymore " . $currentCharacterDto->getName());
 
-                    $guildSyncSession->addMessage("Character is not in the guild anymore " . $dbName);
+                    $guildSyncSession->addMessage("Character is not in the guild anymore " . $currentCharacterDto->getName());
 
                     $patchCharacter = new PatchCharacter();
                     $patchCharacter
@@ -247,9 +269,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                     // if character comes after the current character from armory, it means
                     // the armory has new characters, import them
 
-                    $context->info("Character is not yet in database, importing " . $armoryName);
+                    $context->info("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
-                    $guildSyncSession->addMessage("Character is not yet in database, importing " . $armoryName);
+                    $guildSyncSession->addMessage("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
                     $patchCharacter = new PatchCharacter();
                     $patchCharacter
@@ -306,11 +328,10 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             while ($armoryIndex < count($armoryObjects))
             {
                 $currentArmoryObject = $armoryObjects[$armoryIndex];
-                $armoryName = $currentArmoryObject->getName();
 
-                $context->info("Character is not yet in database, importing " . $armoryName);
+                $context->info("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
-                $guildSyncSession->addMessage("Character is not yet in database, importing " . $armoryName);
+                $guildSyncSession->addMessage("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
                 $patchCharacter = new PatchCharacter();
                 $patchCharacter
@@ -345,6 +366,14 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
 
         return 0;
+    }
+
+    protected function compareCharacters(string $charOneName, string $charOneRealm, string $charTwoName, string $charTwoRealm)
+    {
+        $charOneCombinedName = $charOneName . "-" . $charOneRealm;
+        $charTwoCombinedName = $charTwoName . "-" . $charTwoRealm;
+
+        return strcmp($charOneCombinedName, $charTwoCombinedName);
     }
 
     /**
@@ -515,6 +544,25 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         $this->realms[] = $realmDto;
 
         return $realmDto;
+    }
+
+    /**
+     * @param string $realmId
+     * @return Realm|null
+     */
+    private function getRealmFromId(string $realmId)
+    {
+        foreach($this->realms as $realm)
+        {
+            /** @var Realm $realm */
+
+            if ($realmId == $realm->getId())
+            {
+                return $realm;
+            }
+        }
+
+        return null;
     }
 
     /**
