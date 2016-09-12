@@ -126,6 +126,9 @@ class PostRealmCommand extends AbstractCommand
         }
 
         /* verify that the user is allowed to create a realm */
+        /*
+         * Disable until we have proper support for Commands.
+         *
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::REALM_CREATE,
@@ -140,6 +143,7 @@ class PostRealmCommand extends AbstractCommand
 
             throw new NotAuthorizedException("Current user is not allowed to create a new realm", 401);
         }
+         */
 
         $newRealm = new Entity\GameData\Realm();
 
@@ -150,6 +154,9 @@ class PostRealmCommand extends AbstractCommand
 
         $dtoRealm = RealmMapper::mapSingle($newRealm);
 
+        /*
+         * Disable until we have proper support for Commands.
+         *
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
@@ -160,6 +167,7 @@ class PostRealmCommand extends AbstractCommand
                 ]
             )
         );
+        */
 
         return $dtoRealm;
     }

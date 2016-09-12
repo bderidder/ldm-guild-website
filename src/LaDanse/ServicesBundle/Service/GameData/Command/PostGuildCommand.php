@@ -137,6 +137,9 @@ class PostGuildCommand extends AbstractCommand
         }
 
         /* verify that the user is allowed to create a guild */
+        /*
+         * Disable until we have proper support for Commands.
+         *
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::REALM_CREATE,
@@ -150,6 +153,7 @@ class PostGuildCommand extends AbstractCommand
 
             throw new NotAuthorizedException("Current user is not allowed to create a new realm", 401);
         }
+        */
 
         $realmRepo = $em->getRepository(Entity\GameData\Realm::REPOSITORY);
 
@@ -173,6 +177,8 @@ class PostGuildCommand extends AbstractCommand
 
         $dtoGuild = GuildMapper::mapSingle($newGuild);
 
+        /*
+         * Disable until we have proper support for Commands.
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
@@ -183,6 +189,7 @@ class PostGuildCommand extends AbstractCommand
                 ]
             )
         );
+        */
 
         return $dtoGuild;
     }
