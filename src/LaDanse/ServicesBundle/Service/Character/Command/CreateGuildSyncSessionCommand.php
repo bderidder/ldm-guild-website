@@ -104,6 +104,8 @@ class CreateGuildSyncSessionCommand extends AbstractCommand
 
         if (count($sources) == 0)
         {
+            // there is no GuildSync yet for this guild, create it on the fly
+
             $guildSync = new GuildSync();
             $guildSync->setGuild($em->getReference(Guild::class, $this->getGuildId()));
 
@@ -120,7 +122,7 @@ class CreateGuildSyncSessionCommand extends AbstractCommand
                     "Found multiple GuildSync instances for the guild %s",
                     $this->getGuildId()
                 ),
-                400
+                500
             );
         }
 
