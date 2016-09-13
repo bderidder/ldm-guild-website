@@ -229,7 +229,7 @@ class Claim
     /**
      * @return string
      */
-    public function getComment(): string
+    public function getComment()
     {
         return $this->comment;
     }

@@ -12,12 +12,6 @@ use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 class Claim
 {
     /**
-     * @var int
-     * @SerializedName("id")
-     */
-    private $claimId;
-
-    /**
      * @var AccountReference
      * @SerializedName("accountReference")
      */
@@ -40,24 +34,6 @@ class Claim
      * @SerializedName("raider")
      */
     protected $raider = false;
-
-    /**
-     * @return int
-     */
-    public function getClaimId(): int
-    {
-        return $this->claimId;
-    }
-
-    /**
-     * @param int $claimId
-     * @return Claim
-     */
-    public function setClaimId(int $claimId): Claim
-    {
-        $this->claimId = $claimId;
-        return $this;
-    }
 
     /**
      * @return AccountReference
@@ -98,7 +74,7 @@ class Claim
     /**
      * @return string
      */
-    public function getComment(): string
+    public function getComment()
     {
         return $this->comment;
     }
@@ -107,7 +83,7 @@ class Claim
      * @param string $comment
      * @return Claim
      */
-    public function setComment(string $comment): Claim
+    public function setComment($comment): Claim
     {
         $this->comment = $comment;
         return $this;

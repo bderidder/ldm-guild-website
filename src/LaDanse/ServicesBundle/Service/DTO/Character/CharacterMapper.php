@@ -7,7 +7,9 @@
 namespace LaDanse\ServicesBundle\Service\DTO\Character;
 
 use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Service\Character\Query\ClaimHydrator;
 use LaDanse\ServicesBundle\Service\DTO\MapperException;
+use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 
 class CharacterMapper
@@ -15,9 +17,17 @@ class CharacterMapper
     /**
      * @param Entity\CharacterVersion $characterVersion
      * @param Entity\GameData\Guild $guild
+     * @param ClaimHydrator $claimHydrator
+     *
      * @return Character
+     *
+     * @internal param Entity\Claim $claim
+     *
      */
-    public static function mapSingle(Entity\CharacterVersion $characterVersion, $guild) : Character
+    public static function mapSingle(
+        Entity\CharacterVersion $characterVersion,
+        $guild,
+        ClaimHydrator $claimHydrator) : Character
     {
         $dto = new Character();
 
@@ -44,16 +54,39 @@ class CharacterMapper
             );
         }
 
+        if ($claimHydrator->hasBeenClaimed($characterVersion->getCharacter()->getId()))
+        {
+            $claim = $claimHydrator->getClaim($characterVersion->getCharacter()->getId());
+
+            $claimDto = new Claim();
+            $claimDto
+                ->setComment($claim->getComment())
+                ->setAccountReference(
+                    new AccountReference(
+                        $claim->getAccount()->getId(),
+                        $claim->getAccount()->getDisplayName()
+                    )
+                )
+                ->setRaider($claim->isRaider())
+                ->setRoles($claimHydrator->getClaimedRoles($characterVersion->getCharacter()->getId()));
+
+            $dto->setClaim($claimDto);
+        }
+
         return $dto;
     }
 
     /**
      * @param array $characterVersions
      * @param Entity\GameData\Guild $guild
+     * @param ClaimHydrator $claimHydrator
+     *
      * @return array
+     *
      * @throws MapperException
+     *
      */
-    public static function mapArray(array $characterVersions, $guild) : array
+    public static function mapArray(array $characterVersions, $guild, ClaimHydrator $claimHydrator) : array
     {
         $dtoArray = [];
 
@@ -65,7 +98,10 @@ class CharacterMapper
             }
 
             /** @var Entity\CharacterVersion $characterVersion */
-            $dtoArray[] = CharacterMapper::mapSingle($characterVersion, $guild);
+            $dtoArray[] = CharacterMapper::mapSingle(
+                $characterVersion,
+                $guild,
+                $claimHydrator);
         }
 
         return $dtoArray;

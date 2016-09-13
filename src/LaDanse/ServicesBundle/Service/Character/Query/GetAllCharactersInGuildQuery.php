@@ -193,6 +193,22 @@ class GetAllCharactersInGuildQuery extends AbstractQuery
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
 
-        return DTO\Character\CharacterMapper::mapArray($query->getResult(), $guild);
+        $characterVersions = $query->getResult();
+
+        $characterIds = [];
+
+        foreach($characterVersions as $characterVersion)
+        {
+            /** @var Entity\CharacterVersion $characterVersion */
+
+            $characterIds[] = $characterVersion->getCharacter()->getId();
+        }
+
+        /** @var ClaimHydrator $claimHydrator */
+        $claimHydrator = $this->container->get(ClaimHydrator::SERVICE_NAME);
+        $claimHydrator->setCharacterIds($characterIds);
+        $claimHydrator->setOnDateTime($this->getOnDateTime());
+
+        return DTO\Character\CharacterMapper::mapArray($characterVersions, $guild, $claimHydrator);
     }
 }

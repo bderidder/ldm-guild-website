@@ -181,6 +181,12 @@ class GetCharacterByIdQuery extends AbstractQuery
             $guild = $inGuild->getGuild();
         }
 
-        return DTO\Character\CharacterMapper::mapSingle($characterVersion, $guild);
+        /** @var ClaimHydrator $claimHydrator */
+        $claimHydrator = $this->container->get(ClaimHydrator::SERVICE_NAME);
+        $claimHydrator->setCharacterIds([$this->getCharacterId()]);
+        $claimHydrator->setOnDateTime($this->getOnDateTime());
+
+
+        return DTO\Character\CharacterMapper::mapSingle($characterVersion, $guild, $claimHydrator);
     }
 }
