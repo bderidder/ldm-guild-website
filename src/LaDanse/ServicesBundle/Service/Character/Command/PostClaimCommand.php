@@ -214,7 +214,7 @@ class PostClaimCommand extends AbstractCommand
      *
      * @throws ServiceException
      */
-    protected function persistPlaysRoles($em, $fromTime, $claim) : void
+    protected function persistPlaysRoles($em, $fromTime, $claim)
     {
         $isDps = false;
         $isHealer = false;
