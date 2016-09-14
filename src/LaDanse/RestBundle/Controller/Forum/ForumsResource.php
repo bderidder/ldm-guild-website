@@ -9,11 +9,14 @@ namespace LaDanse\RestBundle\Controller\Forum;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ServicesBundle\Service\Forum\ForumDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
+use LaDanse\SiteBundle\Security\AuthenticationService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * Class ForumsResource
@@ -24,6 +27,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ForumsResource extends AbstractRestController
 {
+    /**
+     * @DI\Inject("monolog.logger.ladanse")
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
     /**
      * @return Response
      *
@@ -59,12 +68,12 @@ class ForumsResource extends AbstractRestController
 
         $postMapper = new PostMapper();
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "posts"   => $postMapper->mapPostsAndTopic($this->get('router'), $posts),
-            "links"   => (object)array(
-                "self"  => $this->generateUrl('getActivityForForums', array(), true)
-            )
-        );
+            "links"   => (object)[
+                "self"  => $this->generateUrl('getActivityForForums', [], true)
+            ]
+        ];
 
         return new JsonResponse($jsonObject);
     }
@@ -93,7 +102,7 @@ class ForumsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -128,7 +137,7 @@ class ForumsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -136,12 +145,12 @@ class ForumsResource extends AbstractRestController
 
         $postMapper = new PostMapper();
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "posts"   => $postMapper->mapPostsAndTopic($this->get('router'), $posts),
-            "links"   => (object)array(
-                "self"  => $this->generateUrl('getActivityForForum', array('forumId' => $forumId), true)
-            )
-        );
+            "links"   => (object)[
+                "self"  => $this->generateUrl('getActivityForForum', ['forumId' => $forumId], true)
+            ]
+        ];
 
         return new JsonResponse($jsonObject);
     }
@@ -157,15 +166,17 @@ class ForumsResource extends AbstractRestController
      */
     public function createTopicAction(Request $request, $forumId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in calendarIndex');
 
-            $jsonObject = (object)array(
+            $jsonObject = (object)[
                 "status" => "must be authenticated"
-            );
+            ];
 
             return new JsonResponse($jsonObject);
         }
@@ -192,7 +203,7 @@ class ForumsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 

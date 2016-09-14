@@ -9,17 +9,26 @@ namespace LaDanse\RestBundle\Controller\Forum;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Forum\TopicDoesNotExistException;
+use LaDanse\SiteBundle\Security\AuthenticationService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @Route("/topics")
  */
 class TopicsResource extends AbstractRestController
 {
+    /**
+     * @DI\Inject("monolog.logger.ladanse")
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
     /**
      * @param Request $request
      * @param string $topicId
@@ -44,7 +53,7 @@ class TopicsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -66,15 +75,17 @@ class TopicsResource extends AbstractRestController
      */
     public function createPostInTopicAction(Request $request, $topicId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in createPost');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in createPost');
 
-            $jsonObject = (object)array(
+            $jsonObject = (object)[
                 "status" => "must be authenticated"
-            );
+            ];
 
             return new JsonResponse($jsonObject);
         }
@@ -99,13 +110,13 @@ class TopicsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "status" => "post created in topic"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }
@@ -121,7 +132,9 @@ class TopicsResource extends AbstractRestController
      */
     public function updateTopicAction(Request $request, $topicId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         /** @var ForumService $forumService */
         $forumService = $this->get(ForumService::SERVICE_NAME);
@@ -138,7 +151,7 @@ class TopicsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -148,7 +161,7 @@ class TopicsResource extends AbstractRestController
                 $request,
                 Response::HTTP_FORBIDDEN,
                 'Not allowed',
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -162,9 +175,9 @@ class TopicsResource extends AbstractRestController
             $jsonObject->subject
         );
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "posts" => "test"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }

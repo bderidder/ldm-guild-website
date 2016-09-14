@@ -10,17 +10,26 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 use LaDanse\ServicesBundle\Service\Forum\PostDoesNotExistException;
+use LaDanse\SiteBundle\Security\AuthenticationService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @Route("/posts")
  */
 class PostsResource extends AbstractRestController
 {
+    /**
+     * @DI\Inject("monolog.logger.ladanse")
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
     /**
      * @param Request $request
      * @param string $postId
@@ -45,7 +54,7 @@ class PostsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -67,7 +76,9 @@ class PostsResource extends AbstractRestController
      */
     public function updatePostAction(Request $request, $postId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         /** @var ForumService $forumService */
         $forumService = $this->get(ForumService::SERVICE_NAME);
@@ -84,7 +95,7 @@ class PostsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -94,7 +105,7 @@ class PostsResource extends AbstractRestController
                 $request,
                 Response::HTTP_FORBIDDEN,
                 'Not allowed',
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -107,9 +118,9 @@ class PostsResource extends AbstractRestController
             $postId,
             $jsonObject->message);
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "posts" => "test"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }
@@ -124,15 +135,17 @@ class PostsResource extends AbstractRestController
      */
     public function markPostAsReadAction($postId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in markPostAsRead');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in markPostAsRead');
 
-            $jsonObject = (object)array(
+            $jsonObject = (object)[
                 "status" => "must be authenticated"
-            );
+            ];
 
             return new JsonResponse($jsonObject);
         }
@@ -144,9 +157,9 @@ class PostsResource extends AbstractRestController
 
         $statsService->markPostAsRead($account, $postId);
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "status" => "200"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }

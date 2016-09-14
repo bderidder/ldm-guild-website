@@ -8,16 +8,25 @@ namespace LaDanse\RestBundle\Controller\Forum;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
+use LaDanse\SiteBundle\Security\AuthenticationService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @Route("/account")
  */
 class AccountResource extends AbstractRestController
 {
+    /**
+     * @DI\Inject("monolog.logger.ladanse")
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
     /**
      * @return Response
      *
@@ -26,15 +35,17 @@ class AccountResource extends AbstractRestController
      */
     public function getUnreadForAccount()
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in getChangesForAccount');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in getUnreadForAccount');
 
-            $jsonObject = (object)array(
+            $jsonObject = (object)[
                 "status" => "must be authenticated"
-            );
+            ];
 
             return new JsonResponse($jsonObject);
         }
@@ -48,14 +59,14 @@ class AccountResource extends AbstractRestController
 
         $postMapper = new PostMapper();
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "accountId"   => $account->getId(),
             "displayName" => $account->getDisplayName(),
             "unreadPosts" => $postMapper->mapPostsAndTopic($this->get('router'), $unreadPosts),
-            "links"       => (object)array(
-                "self"  => $this->generateUrl('getUnreadForAccount', array(), true)
-            )
-        );
+            "links"       => (object)[
+                "self"  => $this->generateUrl('getUnreadForAccount', [], true)
+            ]
+        ];
 
         return new JsonResponse($jsonObject);
     }

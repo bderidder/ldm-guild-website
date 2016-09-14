@@ -11,17 +11,26 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Service\Comments\CommentDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Comments\CommentGroupDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
+use LaDanse\SiteBundle\Security\AuthenticationService;
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use JMS\DiExtraBundle\Annotation as DI;
 
 /**
  * @Route("/")
  */
 class CommentsResource extends AbstractRestController
 {
+    /**
+     * @DI\Inject("monolog.logger.ladanse")
+     * @var LoggerInterface $logger
+     */
+    private $logger;
+
     /**
      * @param Request $request
      * @param string $groupId
@@ -46,7 +55,7 @@ class CommentsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -68,15 +77,17 @@ class CommentsResource extends AbstractRestController
      */
     public function createCommentAction(Request $request, $groupId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         if (!$authContext->isAuthenticated())
         {
-            $this->getLogger()->warning(__CLASS__ . ' the user was not authenticated in createComment');
+            $this->logger->warning(__CLASS__ . ' the user was not authenticated in createComment');
 
-            $jsonObject = (object)array(
+            $jsonObject = (object)[
                 "status" => "must be authenticated"
-            );
+            ];
 
             return new JsonResponse($jsonObject);
         }
@@ -98,13 +109,13 @@ class CommentsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "status" => "comment created in group"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }
@@ -120,7 +131,9 @@ class CommentsResource extends AbstractRestController
      */
     public function updateCommentAction(Request $request, $commentId)
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+        $authContext = $authenticationService->getCurrentContext();
 
         $comment = null;
 
@@ -137,7 +150,7 @@ class CommentsResource extends AbstractRestController
                 $request,
                 Response::HTTP_NOT_FOUND,
                 $e->getMessage(),
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -147,7 +160,7 @@ class CommentsResource extends AbstractRestController
                 $request,
                 Response::HTTP_FORBIDDEN,
                 'Not allowed',
-                array("Allow" => "GET")
+                ["Allow" => "GET"]
             );
         }
 
@@ -160,9 +173,9 @@ class CommentsResource extends AbstractRestController
 
         $commentService->updateComment($commentId, $jsonObject->message);
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "status" => "OK"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }
