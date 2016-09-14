@@ -6,7 +6,6 @@
 
 namespace LaDanse\RestBundle\Controller\GameData;
 
-use JMS\Serializer\SerializerBuilder;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
@@ -47,44 +46,13 @@ class RealmResource extends AbstractRestController
      */
     public function postRealm(Request $request)
     {
-        $serializer = SerializerBuilder::create()->build();
-
-        try
-        {
-            $patchRealm = $serializer->deserialize(
-                $request->getContent(),
-                PatchRealm::class,
-                'json'
-            );
-
-            $validator = $this->get('validator');
-            $errors = $validator->validate($patchRealm);
-
-            if (count($errors) > 0)
-            {
-                $errorsString = (string) $errors;
-
-                return ResourceHelper::createErrorResponse(
-                    $request,
-                    400,
-                    $errorsString
-                );
-            }
-        }
-        catch(\Exception $exception)
-        {
-            return ResourceHelper::createErrorResponse(
-                $request,
-                400,
-                $exception->getMessage()
-            );
-        }
-
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
 
         try
         {
+            $patchRealm = $this->getDtoFromContent($request, PatchRealm::class);
+
             $dtoRealm = $gameDataService->postRealm($patchRealm);
 
             return new JsonResponse($dtoRealm);

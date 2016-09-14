@@ -6,7 +6,6 @@
 
 namespace LaDanse\RestBundle\Controller\GameData;
 
-use JMS\Serializer\SerializerBuilder;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
@@ -47,44 +46,13 @@ class GuildResource extends AbstractRestController
      */
     public function postGuild(Request $request)
     {
-        $serializer = SerializerBuilder::create()->build();
-
-        try
-        {
-            $patchGuild = $serializer->deserialize(
-                $request->getContent(),
-                PatchGuild::class,
-                'json'
-            );
-
-            $validator = $this->get('validator');
-            $errors = $validator->validate($patchGuild);
-
-            if (count($errors) > 0)
-            {
-                $errorsString = (string) $errors;
-
-                return ResourceHelper::createErrorResponse(
-                    $request,
-                    400,
-                    $errorsString
-                );
-            }
-        }
-        catch(\Exception $exception)
-        {
-            return ResourceHelper::createErrorResponse(
-                $request,
-                400,
-                $exception->getMessage()
-            );
-        }
-
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
 
         try
         {
+            $patchGuild = $this->getDtoFromContent($request, PatchGuild::class);
+
             $dtoGuild = $gameDataService->postGuild($patchGuild);
 
             return new JsonResponse($dtoGuild);

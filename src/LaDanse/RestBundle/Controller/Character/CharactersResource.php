@@ -6,7 +6,6 @@
 
 namespace LaDanse\RestBundle\Controller\Character;
 
-use JMS\Serializer\SerializerBuilder;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
@@ -29,51 +28,50 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="postClaim")
-     * @Method({"POST"})
+     * @Route("/{characterId}", name="getCharacter")
+     * @Method({"GET"})
      */
-    public function postClaimAction(Request $request, $characterId)
+    public function getCharacter(Request $request, $characterId)
     {
-        $accountId = $this->getAccount()->getId();
-
-        $serializer = SerializerBuilder::create()->build();
-
-        try
-        {
-            $patchClaim = $serializer->deserialize(
-                $request->getContent(),
-                PatchClaim::class,
-                'json'
-            );
-
-            $validator = $this->get('validator');
-            $errors = $validator->validate($patchClaim);
-
-            if (count($errors) > 0)
-            {
-                $errorsString = (string) $errors;
-
-                return ResourceHelper::createErrorResponse(
-                    $request,
-                    400,
-                    $errorsString
-                );
-            }
-        }
-        catch(\Exception $exception)
-        {
-            return ResourceHelper::createErrorResponse(
-                $request,
-                400,
-                $exception->getMessage()
-            );
-        }
-
         /** @var CharacterService $characterService */
         $characterService = $this->get(CharacterService::SERVICE_NAME);
 
         try
         {
+            $characterDto = $characterService->getCharacterById($characterId);
+
+            return new JsonResponse(ResourceHelper::array($characterDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $characterId
+     *
+     * @return Response
+     *
+     * @Route("/{characterId}/claim", name="postClaim")
+     * @Method({"POST"})
+     */
+    public function postClaimAction(Request $request, $characterId)
+    {
+        try
+        {
+            $accountId = $this->getAccount()->getId();
+
+            $patchClaim = $this->getDtoFromContent($request, PatchClaim::class);
+
+            /** @var CharacterService $characterService */
+            $characterService = $this->get(CharacterService::SERVICE_NAME);
+
             $characterDto = $characterService->postClaim($characterId, $accountId, $patchClaim);
 
             return new JsonResponse(ResourceHelper::array($characterDto));
@@ -87,4 +85,6 @@ class CharactersResource extends AbstractRestController
             );
         }
     }
+
+
 }

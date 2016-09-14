@@ -6,7 +6,9 @@
 
 namespace LaDanse\RestBundle\Common;
 
+use JMS\Serializer\SerializerBuilder;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
@@ -15,6 +17,7 @@ use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\FeatureToggle\FeatureToggleService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class LaDanseController
@@ -24,21 +27,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AbstractRestController extends Controller
 {
     /**
-     * @return \Symfony\Bridge\Monolog\Logger
-     */
-    protected function getLogger()
-    {
-        return $this->get('logger');
-    }
-
-    /**
      * Returns true if the current request is authenticated, false otherwise
      *
      * @return bool
      */
     protected function isAuthenticated()
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+
+        $authContext = $authenticationService->getCurrentContext();
 
         return $authContext->isAuthenticated();
     }
@@ -50,28 +48,15 @@ class AbstractRestController extends Controller
      */
     protected function getAccount()
     {
+        /** @var AuthenticationService $authenticationService */
+        $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);
+
         if ($this->isAuthenticated())
         {
-            return $this->getAuthenticationService()->getCurrentContext()->getAccount();
+            return $authenticationService->getCurrentContext()->getAccount();
         }
 
         return null;
-    }
-
-    /**
-     * @return \LaDanse\SiteBundle\Security\AuthenticationService
-     */
-    protected function getAuthenticationService()
-    {
-        return $this->get(AuthenticationService::SERVICE_NAME);
-    }
-
-    /**
-     * @return \LaDanse\ServicesBundle\Service\Account\AccountService
-     */
-    protected function getAccountService()
-    {
-        return $this->get(AccountService::SERVICE_NAME);
     }
 
     /**
@@ -98,7 +83,7 @@ class AbstractRestController extends Controller
             return $default;
         }
 
-        $account = $this->getAuthenticationService()->getCurrentContext()->getAccount();
+        $account = $this->getAccount();
 
         /** @var FeatureToggleService $featureToggleService */
         $featureToggleService = $this->get(FeatureToggleService::SERVICE_NAME);
@@ -107,14 +92,44 @@ class AbstractRestController extends Controller
     }
 
     /**
-     * Convenience method to add a toast message to the request/session
+     * @param Request $request
+     * @param string $dtoClass
      *
-     * @param $message string
+     * @return object
+     *
+     * @throws ServiceException
      */
-    protected function addToast($message)
+    protected function getDtoFromContent(Request $request, string $dtoClass)
     {
-        $toastService = $this->container->get('CoderSpotting.ToastMessage');
+        $serializer = SerializerBuilder::create()->build();
 
-        $toastService->addSuccessToast($message);
+        $jsonDto = null;
+
+        try
+        {
+            $jsonDto = $serializer->deserialize(
+                $request->getContent(),
+                $dtoClass,
+                'json'
+            );
+        }
+        catch (\Exception $exception)
+        {
+            throw new ServiceException($exception->getMessage(), 400);
+        }
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($jsonDto);
+
+        if (count($errors) > 0)
+        {
+            $errorsString = (string)$errors;
+
+            throw new ServiceException($errorsString, 400);
+        }
+        else
+        {
+            return $jsonDto;
+        }
     }
 }
