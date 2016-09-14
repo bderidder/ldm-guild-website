@@ -74,7 +74,7 @@ class CharactersResource extends AbstractRestController
 
             $characterDto = $characterService->postClaim($characterId, $accountId, $patchClaim);
 
-            return new JsonResponse(ResourceHelper::array($characterDto));
+            return new JsonResponse(ResourceHelper::object($characterDto));
         }
         catch(ServiceException $serviceException)
         {
@@ -86,5 +86,65 @@ class CharactersResource extends AbstractRestController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $characterId
+     *
+     * @return Response
+     *
+     * @Route("/{characterId}/claim", name="putClaimAction")
+     * @Method({"PUT"})
+     */
+    public function putClaimAction(Request $request, $characterId)
+    {
+        try
+        {
+            $patchClaim = $this->getDtoFromContent($request, PatchClaim::class);
 
+            /** @var CharacterService $characterService */
+            $characterService = $this->get(CharacterService::SERVICE_NAME);
+
+            $characterDto = $characterService->putClaim($characterId, $patchClaim);
+
+            return new JsonResponse(ResourceHelper::object($characterDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $characterId
+     *
+     * @return Response
+     *
+     * @Route("/{characterId}/claim", name="deleteClaimAction")
+     * @Method({"DELETE"})
+     */
+    public function deleteClaimAction(Request $request, $characterId)
+    {
+        try
+        {
+            /** @var CharacterService $characterService */
+            $characterService = $this->get(CharacterService::SERVICE_NAME);
+
+            $characterDto = $characterService->deleteClaim($characterId);
+
+            return new JsonResponse(ResourceHelper::object($characterDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
 }
