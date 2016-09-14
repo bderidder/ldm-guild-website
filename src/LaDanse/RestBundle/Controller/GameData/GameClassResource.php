@@ -24,7 +24,7 @@ class GameClassResource extends AbstractRestController
      * @Route("", name="getAllGameClasses")
      * @Method({"GET"})
      */
-    public function getAllGuilds()
+    public function getAllGameClasses()
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);

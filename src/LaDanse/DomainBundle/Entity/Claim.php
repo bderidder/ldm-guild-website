@@ -235,10 +235,10 @@ class Claim
     }
 
     /**
-     * @param string $comment
+     * @param string|null $comment
      * @return Claim
      */
-    public function setComment(string $comment): Claim
+    public function setComment($comment): Claim
     {
         $this->comment = $comment;
         return $this;
