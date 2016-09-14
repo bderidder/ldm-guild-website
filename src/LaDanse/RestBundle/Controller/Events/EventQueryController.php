@@ -33,14 +33,12 @@ class EventQueryController extends Controller
 
         $events = $eventService->getAllEvents();
 
-        $result = array();
-
-        $factory = new EventFactory();
+        $result = [];
 
         /** @var Event $event */
         foreach($events as $event)
         {
-            $result[] = $factory->create($event);
+            $result[] = EventFactory::create($event);
         }
 
         return new JsonResponse($result);
