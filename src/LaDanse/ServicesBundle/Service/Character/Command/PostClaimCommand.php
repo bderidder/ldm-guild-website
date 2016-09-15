@@ -6,6 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Service\Character\Command;
 
+use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
@@ -131,7 +132,7 @@ class PostClaimCommand extends AbstractCommand
         // create a shared $fromTime since we will need it often below
         $fromTime = new \DateTime();
 
-        /** @var \Doctrine\Common\Persistence\ObjectManager $em */
+        /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
 
         /*
