@@ -8,15 +8,10 @@ namespace LaDanse\ServicesBundle\Service\GameData\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
-use LaDanse\ServicesBundle\Common\InvalidInputException;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
-use LaDanse\ServicesBundle\Activity\ActivityEvent;
-use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
-use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
-use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
-use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\DTO\GameData\GuildMapper;
 use LaDanse\ServicesBundle\Service\GameData\GuildAlreadyExistsException;
 use LaDanse\ServicesBundle\Service\GameData\RealmDoesNotExistException;

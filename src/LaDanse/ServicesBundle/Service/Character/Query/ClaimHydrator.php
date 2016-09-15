@@ -7,12 +7,7 @@
 namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\InGuild;
-use LaDanse\ServicesBundle\Common\AbstractQuery;
-use LaDanse\ServicesBundle\Common\ServiceException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\DomainBundle\Entity as Entity;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(ClaimHydrator::SERVICE_NAME, public=true, shared=false)
