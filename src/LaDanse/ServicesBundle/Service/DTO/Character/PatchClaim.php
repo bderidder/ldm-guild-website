@@ -37,7 +37,7 @@ class PatchClaim
      * @Type("array<string>")
      * @SerializedName("roles")
      */
-    private $roles;
+    private $roles = [];
 
     /**
      * @return string|null
@@ -78,7 +78,7 @@ class PatchClaim
     /**
      * @return array
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         return $this->roles;
     }
