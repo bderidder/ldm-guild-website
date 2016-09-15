@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Service\Character;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
+use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
@@ -201,6 +202,13 @@ class CharacterService extends LaDanseService
      */
     public function putClaim(int $characterId, PatchClaim $patchClaim)
     {
+        /** @var PutClaimCommand $cmd */
+        $cmd = $this->get(PutClaimCommand::SERVICE_NAME);
+
+        $cmd->setCharacterId($characterId);
+        $cmd->setPatchClaim($patchClaim);
+
+        return $cmd->run();
     }
 
     /**

@@ -64,5 +64,15 @@ class PolicyCatalog
                 new AllCanCreateGameDataRule()
             )
         );
+
+        $this->topPolicies[] = new PolicySet(
+            'Character Set - Claim',
+            ActivityType::CLAIM_EDIT,
+            array(
+                new ClaimerCanEditClaimRule()
+            )
+        );
+
+
     }
 }
