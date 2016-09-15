@@ -131,6 +131,7 @@ class PostClaimCommand extends AbstractCommand
         // create a shared $fromTime since we will need it often below
         $fromTime = new \DateTime();
 
+        /** @var \Doctrine\Common\Persistence\ObjectManager $em */
         $em = $this->doctrine->getManager();
 
         /*
