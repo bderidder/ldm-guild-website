@@ -16,9 +16,14 @@ CommentRestRouting:
 GameDataRestRouting:
     resource: "@LaDanseRestBundle/Controller/GameData"
     type:     annotation
-    prefix:   /services/gamedata
+    prefix:   /api/gamedata
+
+GuildRestRouting:
+    resource: "@LaDanseRestBundle/Controller/Guild"
+    type:     annotation
+    prefix:   /api/guilds
 
 CharacterRestRouting:
     resource: "@LaDanseRestBundle/Controller/Character"
     type:     annotation
-    prefix:   /services
+    prefix:   /api/characters

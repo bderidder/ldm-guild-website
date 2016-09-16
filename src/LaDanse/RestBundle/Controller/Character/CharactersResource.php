@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/characters")
+ * @Route("/")
  */
 class CharactersResource extends AbstractRestController
 {

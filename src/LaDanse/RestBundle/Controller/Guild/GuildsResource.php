@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\RestBundle\Controller\Character;
+namespace LaDanse\RestBundle\Controller\Guild;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/guilds")
+ * @Route("/")
  */
 class GuildsResource extends AbstractRestController
 {
