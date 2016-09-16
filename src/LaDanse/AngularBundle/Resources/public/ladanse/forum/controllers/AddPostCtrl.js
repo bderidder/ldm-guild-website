@@ -1,4 +1,9 @@
-forumControllers.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
 
     $scope.maxLength = 32768;
     $scope.collapsed = true;
@@ -24,7 +29,7 @@ forumControllers.controller('AddPostCtrl', function ($scope, $rootScope, $http) 
 
     $scope.savePostEditor = function(postValue)
     {
-        $http.post('../services/forum/topics/' + $scope.topicId + "/posts",
+        $http.post('/services/forum/topics/' + $scope.topicId + "/posts",
             {
                 message: postValue
             }).

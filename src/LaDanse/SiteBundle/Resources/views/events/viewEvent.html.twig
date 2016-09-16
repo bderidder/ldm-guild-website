@@ -290,9 +290,13 @@
 		    <div class="col-md-5">
 
 			    {# placeholder for comments, content is supplied by Angular application #}
-			    <div ng-app="CommentsApp">
+			    <div ng-app="LaDanseApp">
 
-			        <div ng-view></div>
+			        <div ng-view>
+                        <div ng-controller="RedirectCtrl"
+                             ng-init="redirect('/comments')">
+                        </div>
+                    </div>
 
 			    </div>
 
@@ -342,11 +346,15 @@
         var commentGroupId = '{{ event.topicId }}';
     </script>
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/comments/app/*.js' %}
+    {% javascripts
+    '@LaDanseAngularBundle/Resources/public/ladanse/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/comments/app/*.js'
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/comments/controllers/*.js' %}
+    {% javascripts '@LaDanseAngularBundle/Resources/public/ladanse/comments/controllers/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

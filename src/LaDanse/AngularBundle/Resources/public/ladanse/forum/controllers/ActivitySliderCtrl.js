@@ -1,4 +1,9 @@
-forumControllers.controller('ActivitySliderCtrl',
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('ActivitySliderCtrl',
     function($scope, $rootScope, $timeout, forumService)
     {
         $scope.counter = {};

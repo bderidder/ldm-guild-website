@@ -1,4 +1,9 @@
-forumControllers.controller('ForumPageCtrl',
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('ForumPageCtrl',
     function ($scope, $routeParams, $rootScope, $http)
     {
         $scope.forumId = $routeParams.forumId;
@@ -15,7 +20,7 @@ forumControllers.controller('ForumPageCtrl',
 
         $scope.refreshTopics = function()
         {
-            $http.get('../services/forum/forums/' + $scope.forumId).success(function(data) {
+            $http.get('/services/forum/forums/' + $scope.forumId).success(function(data) {
                 $scope.name = data.name;
                 $scope.topics = data.topics;
                 $scope.isForumLoaded = true;

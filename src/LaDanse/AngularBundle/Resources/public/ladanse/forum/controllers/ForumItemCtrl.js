@@ -1,4 +1,9 @@
-forumControllers.controller('ForumItemCtrl',
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('ForumItemCtrl',
     function($scope, $routeParams, $rootScope, $http, forumService)
     {
         $scope.initForumItemCtrl = function(forumId)
@@ -19,7 +24,7 @@ forumControllers.controller('ForumItemCtrl',
 
         $scope.refreshActivity = function()
         {
-            $http.get('../services/forum/forums/' + $scope.forumId + "/activity").success(function(data) {
+            $http.get('/services/forum/forums/' + $scope.forumId + "/activity").success(function(data) {
                 $scope.recentPosts = data.posts;
             });
         }

@@ -1,4 +1,9 @@
-forumControllers.controller('PostCtrl',
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('PostCtrl',
     function($scope, $routeParams, $rootScope, $http, $timeout, forumService)
     {
         $scope.isEditing = false;
@@ -82,7 +87,7 @@ forumControllers.controller('PostCtrl',
         {
             $scope.post.message = postValue;
 
-            $http.post('../services/forum/posts/' + $scope.post.postId,
+            $http.post('/services/forum/posts/' + $scope.post.postId,
                 {
                     message: postValue
                 }).

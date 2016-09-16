@@ -1,4 +1,4 @@
-forumApp.service(
+forumSubApp.service(
     'forumService',
     function($http, $log, $q)
     {
@@ -28,7 +28,7 @@ forumApp.service(
 
         forumServiceInstance.fetchActivityData = function()
         {
-            $http.get('../services/forum/forums/activity')
+            $http.get('/services/forum/forums/activity')
                 .success(function(data)
                 {
                     forumServiceInstance.activityModel = new ActivityModel(data.posts);
@@ -61,7 +61,7 @@ forumApp.service(
 
         forumServiceInstance.fetchChangesForUser = function()
         {
-            $http.get('../services/forum/account/unread')
+            $http.get('/services/forum/account/unread')
                 .success(function(data)
                 {
                     forumServiceInstance.changesForUserModel = new LastChangesModel(data.unreadPosts);
@@ -80,7 +80,7 @@ forumApp.service(
         {
             forumServiceInstance.changesForUserModel.markPostAsRead(postId);
 
-            $http.get('../services/forum/posts/' + postId + '/markRead');
+            $http.get('/services/forum/posts/' + postId + '/markRead');
         }
 
         forumServiceInstance.markTopicAsRead = function(topicId)

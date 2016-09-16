@@ -49,7 +49,7 @@ commentControllers.controller('CommentCtrl', function ($scope, $rootScope, $http
         $scope.editing = false;
         $scope.currentEdited.controller = null;
 
-        $http.post('../services/comment/comments/' + $scope.comment.postId,
+        $http.post('/services/comment/comments/' + $scope.comment.postId,
             {
                 message: newValue.trim()
             }).

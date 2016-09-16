@@ -4,7 +4,7 @@
 
 {% block memberPageCenteredBody %}
 
-    <div ng-app="ForumApp">
+    <div ng-app="LaDanseApp">
 
         <div ng-view></div>
 
@@ -14,19 +14,23 @@
 
 {% block javascript %}
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/forum/app/*.js' %}
+    {% javascripts
+    '@LaDanseAngularBundle/Resources/public/ladanse/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/comments/app/*.js'
+    %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/forum/services/*.js' %}
+    {% javascripts '@LaDanseAngularBundle/Resources/public/ladanse/forum/services/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/forum/models/*.js' %}
+    {% javascripts '@LaDanseAngularBundle/Resources/public/ladanse/forum/models/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    {% javascripts '@LaDanseAngularBundle/Resources/public/forum/controllers/*.js' %}
+    {% javascripts '@LaDanseAngularBundle/Resources/public/ladanse/forum/controllers/*.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

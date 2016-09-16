@@ -1,4 +1,9 @@
-forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
 
     $scope.newSubject = {};
     $scope.newText = {};
@@ -42,7 +47,7 @@ forumControllers.controller('AddTopicCtrl', function ($scope, $rootScope, $http)
             return;
         }
 
-        $http.post('../services/forum/forums/' + $scope.forumId + "/topics",
+        $http.post('/services/forum/forums/' + $scope.forumId + "/topics",
             {
                 subject: subjectValue.trim(),
                 text: textValue.trim()

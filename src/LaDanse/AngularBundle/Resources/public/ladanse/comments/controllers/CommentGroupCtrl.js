@@ -12,7 +12,7 @@ commentControllers.controller('CommentGroupCtrl', function ($scope, $rootScope, 
 
     $scope.refreshPosts = function()
     {
-        $http.get('../services/comment/groups/' + $scope.groupId).success(function(data) {
+        $http.get('/services/comment/groups/' + $scope.groupId).success(function(data) {
             $scope.comments = data.comments;
         });
     }

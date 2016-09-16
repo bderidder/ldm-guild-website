@@ -110,7 +110,7 @@
             <div class="col-md-12">
 
                 <h4>Latest Posts <span style="font-size: 0.7em; font-weight: normal;">
-                    (<a href="#/latestposts">view all</a>)</span></h4>
+                    (<a href="#/forums/latestposts">view all</a>)</span></h4>
 
             </div>
 
@@ -122,7 +122,7 @@
                 <div class="activity">
 
                     <div ng-controller="ActivitySliderCtrl"
-                         ng-init="initActivitySliderCtrl('../services/forum/forums/activity')"
+                         ng-init="initActivitySliderCtrl('/services/forum/forums/activity')"
                          class="slider">
                         <div ng-repeat="post in posts"
                              ng-hide="!isCurrentSlideIndex($index)"
@@ -130,9 +130,9 @@
                             <div style="padding: 10px;">
                                 <div>
                                     <b>{{ post.poster }}</b> posted in&nbsp;
-                                    <i><a href="#/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{
+                                    <i><a href="#/forums/{{ post.topic.forum.forumId }}/topics/{{ post.topic.topicId }}">{{
                                         post.topic.subject }}</a></i>&nbsp;
-                                    (<a href="#/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>)
+                                    (<a href="#/forums/{{ post.topic.forum.forumId }}">{{ post.topic.forum.name }}</a>)
                                 </div>
                                 <div style="font-size: 0.8em;"
                                      am-time-ago="post.postDate"></div>

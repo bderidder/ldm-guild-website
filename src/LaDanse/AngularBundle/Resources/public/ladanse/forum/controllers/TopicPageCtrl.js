@@ -1,4 +1,9 @@
-forumControllers.controller('TopicPageCtrl',
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
+forumSubApp.controller('TopicPageCtrl',
     function($scope, $routeParams, $rootScope, $http, $anchorScroll, forumService)
     {
         $scope.forumId = $routeParams.forumId;
@@ -79,7 +84,7 @@ forumControllers.controller('TopicPageCtrl',
 
         $scope.refreshPosts = function()
         {
-            $http.get('../services/forum/topics/' + $scope.topicId).success(function(data) {
+            $http.get('/services/forum/topics/' + $scope.topicId).success(function(data) {
                 $scope.topicId = data.topicId;
                 $scope.createorId = data.creatorId;
                 $scope.creator = data.creator;

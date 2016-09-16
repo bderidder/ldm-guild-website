@@ -21,13 +21,13 @@
         {% endstylesheets %}
 
         {% stylesheets filter='cssrewrite'
-        "bundles/ladanseangular/ladanse/less/ladanse.less"
+        "bundles/ladanseangular/new/less/ladanse.less"
         %}
         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
         {% endstylesheets %}
 
         {% javascripts
-        "bundles/ladanseangular/ladanse/js/vendor/modernizr-2.8.3.min.js"
+        "bundles/ladanseangular/new/js/vendor/modernizr-2.8.3.min.js"
         %}
         <script src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -52,7 +52,7 @@
             </div>
             <div class="top-bar-left-container"
                  style="margin-left: 30px">
-                <img src="{{ asset('bundles/ladanseangular/ladanse/img/logos/GuildLogo.png') }}" style="height: 70px; padding-top: 10px;">
+                <img src="{{ asset('bundles/ladanseangular/new/img/logos/GuildLogo.png') }}" style="height: 70px; padding-top: 10px;">
             </div>
             <div class="top-bar-left-container"
                  style="font-size: 1.7em; color: white; line-height: 60px; margin-left: 5px;">
@@ -99,10 +99,10 @@
     {% endjavascripts %}
 
     {% javascripts
-    "bundles/ladanseangular/ladanse/app.js"
-    "bundles/ladanseangular/ladanse/pages/*/*.js"
-    "bundles/ladanseangular/ladanse/directives/*/*.js"
-    "bundles/ladanseangular/ladanse/js/*.js"
+    "bundles/ladanseangular/new/app.js"
+    "bundles/ladanseangular/new/pages/*/*.js"
+    "bundles/ladanseangular/new/directives/*/*.js"
+    "bundles/ladanseangular/new/js/*.js"
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
