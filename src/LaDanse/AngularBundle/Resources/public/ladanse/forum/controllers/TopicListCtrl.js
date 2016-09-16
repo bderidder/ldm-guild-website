@@ -24,7 +24,7 @@ forumSubApp.controller('TopicListCtrl', function ($scope, $routeParams, $rootSco
 
     $scope.switchToTopic = function(forumId)
     {
-        $location.path('/' + forumId + '/topics/' + $scope.topic.topicId);
+        $location.path('/forums/' + forumId + '/topics/' + $scope.topic.topicId);
     }
 
     $scope.updateRecentlyUpdated = function()
