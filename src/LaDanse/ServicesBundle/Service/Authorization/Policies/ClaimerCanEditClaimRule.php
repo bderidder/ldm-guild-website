@@ -15,7 +15,10 @@ class ClaimerCanEditClaimRule extends Rule
 {
     public function match(EvaluationCtx $evaluationCt)
     {
-        return $evaluationCt->getAction() == ActivityType::CLAIM_EDIT;
+        return
+            $evaluationCt->getAction() == ActivityType::CLAIM_EDIT
+            ||
+            $evaluationCt->getAction() == ActivityType::CLAIM_REMOVE;
     }
 
     public function evaluate(EvaluationCtx $evaluationCtx)
