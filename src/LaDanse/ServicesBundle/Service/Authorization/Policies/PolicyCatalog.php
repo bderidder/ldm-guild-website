@@ -73,6 +73,12 @@ class PolicyCatalog
             )
         );
 
-
+        $this->topPolicies[] = new PolicySet(
+            'Character Set - Claim',
+            ActivityType::CLAIM_REMOVE,
+            array(
+                new ClaimerCanEditClaimRule()
+            )
+        );
     }
 }
