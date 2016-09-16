@@ -4,6 +4,7 @@ namespace LaDanse\ServicesBundle\Service\Character;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Common\LaDanseService;
+use LaDanse\ServicesBundle\Service\Character\Command\DeleteClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
@@ -218,6 +219,12 @@ class CharacterService extends LaDanseService
      */
     public function deleteClaim(int $characterId): Character
     {
+        /** @var DeleteClaimCommand $cmd */
+        $cmd = $this->get(DeleteClaimCommand::SERVICE_NAME);
+
+        $cmd->setCharacterId($characterId);
+
+        return $cmd->run();
     }
 
     /**
