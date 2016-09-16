@@ -9,7 +9,8 @@ var ladanseApp = angular.module('LaDanseApp',
         'angularMoment',
         'angular-inview',
         'ForumSubApp',
-        'CommentsSubApp'
+        'CommentsSubApp',
+        'CharactersSubApp'
     ]
 );
 
@@ -39,6 +40,10 @@ ladanseApp.config(['$routeProvider',
             .when('/comments', {
                 templateUrl: '/bundles/ladanseangular/ladanse/comments/partials/CommentsViews.html',
                 controller: 'CommentGroupCtrl'
+            })
+            .when('/characters', {
+                templateUrl: '/bundles/ladanseangular/ladanse/characters/partials/CharactersView.html',
+                controller: 'CharactersViewCtrl'
             });
     }]);
 
@@ -53,5 +58,9 @@ ladanseApp.controller('RedirectCtrl', function ($scope, $location)
     else if (fullUrl.includes('/events'))
     {
         $location.path('/comments');
+    }
+    else if (fullUrl.includes('/characters'))
+    {
+        $location.path('/characters');
     }
 });

@@ -71,6 +71,7 @@ security:
         - { path: ^/redirect,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/roster,         role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/characters,     role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 

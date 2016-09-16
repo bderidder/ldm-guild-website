@@ -78,6 +78,11 @@ ActivityStreamRouting:
     type:     annotation
     prefix:   /activitystream
 
+CharactersRouting:
+    resource: "@LaDanseSiteBundle/Controller/Characters"
+    type:     annotation
+    prefix:   /characters
+
 GuildMeet:
     path: /guildmeet
     defaults:
