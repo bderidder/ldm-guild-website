@@ -168,7 +168,7 @@ class ActivityQueueItem
             return NULL;
         }
 
-        return json_decode($this->rawData);
+        return json_decode($this->rawData, false, 512, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -182,7 +182,7 @@ class ActivityQueueItem
         }
         else
         {
-            $this->rawData = json_encode($data);
+            $this->rawData = json_encode($data, JSON_UNESCAPED_UNICODE);
         }
     }
 }
