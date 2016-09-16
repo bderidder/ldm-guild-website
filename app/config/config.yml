@@ -130,3 +130,5 @@ sp_bower:
   bundles:
     LaDanseSiteBundle: ~
     LaDanseAngularBundle: ~
+
+nelmio_api_doc: ~
