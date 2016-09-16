@@ -38,7 +38,8 @@ class MailService
             ->setSubject($subject)
             ->setFrom($from)
             ->setTo($to)
-            ->setBody($htmlPart, 'text/html');
+            ->setCharset('utf-8')
+            ->setBody($htmlPart, 'text/html', 'utf-8');
 
         $message->getHeaders()->addTextHeader(
             CssInlinerPlugin::CSS_HEADER_KEY_AUTODETECT
