@@ -27,3 +27,8 @@ CharacterRestRouting:
     resource: "@LaDanseRestBundle/Controller/Character"
     type:     annotation
     prefix:   /api/characters
+
+QueriesRestRouting:
+    resource: "@LaDanseRestBundle/Controller/Queries"
+    type:     annotation
+    prefix:   /api/queries
