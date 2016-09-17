@@ -204,11 +204,11 @@ class GetAllCharactersInGuildQuery extends AbstractQuery
             $characterIds[] = $characterVersion->getCharacter()->getId();
         }
 
-        /** @var ClaimHydrator $claimHydrator */
-        $claimHydrator = $this->container->get(ClaimHydrator::SERVICE_NAME);
-        $claimHydrator->setCharacterIds($characterIds);
-        $claimHydrator->setOnDateTime($this->getOnDateTime());
+        /** @var CharacterHydrator $characterHydrator */
+        $characterHydrator = $this->container->get(CharacterHydrator::SERVICE_NAME);
+        $characterHydrator->setCharacterIds($characterIds);
+        $characterHydrator->setOnDateTime($this->getOnDateTime());
 
-        return DTO\Character\CharacterMapper::mapArray($characterVersions, $guild, $claimHydrator);
+        return DTO\Character\CharacterMapper::mapArray($characterVersions, $characterHydrator);
     }
 }
