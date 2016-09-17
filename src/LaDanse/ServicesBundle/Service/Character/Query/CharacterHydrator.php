@@ -10,11 +10,11 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
 
 /**
- * @DI\Service(ClaimHydrator::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(CharacterHydrator::SERVICE_NAME, public=true, shared=false)
  */
-class ClaimHydrator
+class CharacterHydrator
 {
-    const SERVICE_NAME = 'LaDanse.ClaimHydrator';
+    const SERVICE_NAME = 'LaDanse.CharacterHydrator';
 
     /**
      * @var $logger \Monolog\Logger
@@ -43,6 +43,9 @@ class ClaimHydrator
     /** @var array $playsRoles */
     private $playsRoles;
 
+    /** @var array $inGuilds */
+    private $inGuilds;
+
     /**
      * @return array
      */
@@ -53,9 +56,9 @@ class ClaimHydrator
 
     /**
      * @param array $characterIds
-     * @return ClaimHydrator
+     * @return CharacterHydrator
      */
-    public function setCharacterIds(array $characterIds): ClaimHydrator
+    public function setCharacterIds(array $characterIds): CharacterHydrator
     {
         $this->characterIds = $characterIds;
         return $this;
@@ -71,9 +74,9 @@ class ClaimHydrator
 
     /**
      * @param \DateTime $onDateTime
-     * @return ClaimHydrator
+     * @return CharacterHydrator
      */
-    public function setOnDateTime(\DateTime $onDateTime): ClaimHydrator
+    public function setOnDateTime(\DateTime $onDateTime): CharacterHydrator
     {
         $this->onDateTime = $onDateTime;
         return $this;
@@ -134,6 +137,24 @@ class ClaimHydrator
         return $roles;
     }
 
+    public function getGuild(int $characterId)
+    {
+        $this->init();
+
+        $inGuild = null;
+
+        foreach($this->inGuilds as $inGuild)
+        {
+            /** @var Entity\InGuild $inGuild */
+            if ($inGuild->getCharacter()->getId() == $characterId)
+            {
+                return $inGuild;
+            }
+        }
+
+        return null;
+    }
+
     private function init()
     {
         if ($this->initialized)
@@ -143,6 +164,7 @@ class ClaimHydrator
         {
             $this->claims = [];
             $this->playsRoles = [];
+            $this->inGuilds = [];
             $this->initialized = true;
 
             return;
@@ -229,6 +251,38 @@ class ClaimHydrator
         $query = $qb->getQuery();
 
         $this->playsRoles = $query->getResult();
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('inGuild', 'guild')
+            ->from(Entity\InGuild::class, 'inGuild')
+            ->join('inGuild.guild', 'guild')
+            ->join('inGuild.character', 'character')
+            ->add('where',
+                $qb->expr()->andX(
+                    $qb->expr()->in(
+                        'character.id',
+                        $this->getCharacterIds()
+                    ),
+                    $qb->expr()->orX(
+                        $qb->expr()->andX(
+                            $qb->expr()->lte('inGuild.fromTime', '?1'),
+                            $qb->expr()->gt('inGuild.endTime', '?1')
+                        ),
+                        $qb->expr()->andX(
+                            $qb->expr()->lte('inGuild.fromTime', '?1'),
+                            $qb->expr()->isNull('inGuild.endTime')
+                        )
+                    )
+                )
+            )
+            ->setParameter(1, $this->getOnDateTime());
+
+        /* @var $query \Doctrine\ORM\Query */
+        $query = $qb->getQuery();
+
+        $this->inGuilds = $query->getResult();
 
         $this->initialized = true;
     }
