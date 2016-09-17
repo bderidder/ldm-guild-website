@@ -141,52 +141,12 @@ class GetCharacterByIdQuery extends AbstractQuery
         /** @var Entity\CharacterVersion $characterVersion */
         $characterVersion = $characterVersions[0];
 
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('inGuild', 'guild')
-            ->from(Entity\InGuild::class, 'inGuild')
-            ->join('inGuild.guild', 'guild')
-            ->add('where',
-                $qb->expr()->andX(
-                    $qb->expr()->eq('inGuild.character', '?1'),
-                    $qb->expr()->orX(
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('inGuild.fromTime', '?2'),
-                            $qb->expr()->gt('inGuild.endTime', '?2')
-                        ),
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('inGuild.fromTime', '?2'),
-                            $qb->expr()->isNull('inGuild.endTime')
-                        )
-                    )
-                )
-            )
-            ->setParameter(1, $this->getCharacterId())
-            ->setParameter(2, $this->getOnDateTime());
-
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $qb->getQuery();
-
-        $inGuilds = $query->getResult();
-
-        /** @var Entity\GameData\Guild $guild */
-        $guild = null;
-
-        if (count($inGuilds) == 1)
-        {
-            /** @var InGuild $inGuild */
-            $inGuild = $inGuilds[0];
-
-            $guild = $inGuild->getGuild();
-        }
-
-        /** @var ClaimHydrator $claimHydrator */
-        $claimHydrator = $this->container->get(ClaimHydrator::SERVICE_NAME);
-        $claimHydrator->setCharacterIds([$this->getCharacterId()]);
-        $claimHydrator->setOnDateTime($this->getOnDateTime());
+        /** @var CharacterHydrator $characterHydrator */
+        $characterHydrator = $this->container->get(CharacterHydrator::SERVICE_NAME);
+        $characterHydrator->setCharacterIds([$this->getCharacterId()]);
+        $characterHydrator->setOnDateTime($this->getOnDateTime());
 
 
-        return DTO\Character\CharacterMapper::mapSingle($characterVersion, $guild, $claimHydrator);
+        return DTO\Character\CharacterMapper::mapSingle($characterVersion, $characterHydrator);
     }
 }
