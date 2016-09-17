@@ -7,6 +7,7 @@ use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Character\Command\DeleteClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
+use LaDanse\ServicesBundle\Service\Character\Query\CharactersClaimedByAccountQuery;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
@@ -98,12 +99,20 @@ class CharacterService extends LaDanseService
      *
      * @return array
      */
-    public function getAllCharactersClaimedByAccount(int $accountId, \DateTime $onDateTime = null) : array
+    public function getCharactersClaimedByAccount(int $accountId, \DateTime $onDateTime = null) : array
     {
         if ($onDateTime == null)
         {
             $onDateTime = new \DateTime();
         }
+
+        /** @var CharactersClaimedByAccountQuery $query */
+        $query = $this->get(CharactersClaimedByAccountQuery::SERVICE_NAME);
+
+        $query->setAccountId($accountId);
+        $query->setOnDateTime($onDateTime);
+
+        return $query->run();
     }
 
     /**
