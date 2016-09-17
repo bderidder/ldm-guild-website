@@ -4,59 +4,56 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\RestBundle\Controller\Guild;
+namespace LaDanse\RestBundle\Controller\Queries;
 
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
-use LaDanse\ServicesBundle\Service\DTO\GameData\PatchGuild;
+use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
-use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuildsResource extends AbstractRestController
+/**
+ * @Route("/")
+ */
+class CharactersInGuildQuery extends AbstractRestController
 {
     /**
      * @param Request $request
      *
      * @return Response
      *
-     * @Route("/", name="getAllGuilds")
+     * @Route("/charactersInGuild", name="getCharactersInGuild")
      * @Method({"GET"})
      */
-    public function getAllGuilds(Request $request)
+    public function getCharactersInGuild(Request $request)
     {
-        /** @var GameDataService $characterService */
-        $gameDataService = $this->get(GameDataService::SERVICE_NAME);
+        $guildId = $request->query->get('guildId');
 
-        $guildsDto = $gameDataService->getAllGuilds();
+        if ($guildId == null)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                400,
+                "guildId not found in query parameters or has invalid value"
+            );
+        }
 
-        return new JsonResponse(ResourceHelper::array($guildsDto));
-    }
-
-    /**
-     * @param Request $request
-     * @return Response
-     * @Route("/", name="postGuild")
-     * @Method({"POST"})
-     */
-    public function postGuild(Request $request)
-    {
-        /** @var GameDataService $gameDataService */
-        $gameDataService = $this->get(GameDataService::SERVICE_NAME);
+        /** @var CharacterService $characterService */
+        $characterService = $this->get(CharacterService::SERVICE_NAME);
 
         try
         {
-            $patchGuild = $this->getDtoFromContent($request, PatchGuild::class);
+            $characterDtos = $characterService->getAllCharactersInGuild(
+                new StringReference($guildId)
+            );
 
-            $dtoGuild = $gameDataService->postGuild($patchGuild);
-
-            return new JsonResponse(ResourceHelper::object($dtoGuild));
+            return new JsonResponse(ResourceHelper::array($characterDtos));
         }
         catch(ServiceException $serviceException)
         {
