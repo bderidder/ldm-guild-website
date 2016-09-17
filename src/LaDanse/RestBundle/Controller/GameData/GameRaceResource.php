@@ -21,7 +21,7 @@ class GameRaceResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("", name="getAllGameRaces")
+     * @Route("/", name="getAllGameRaces")
      * @Method({"GET"})
      */
     public function getAllGuilds()

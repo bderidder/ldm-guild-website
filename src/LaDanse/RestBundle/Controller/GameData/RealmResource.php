@@ -25,7 +25,7 @@ class RealmResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("", name="getAllRealms")
+     * @Route("/", name="getAllRealms")
      * @Method({"GET"})
      */
     public function getAllRealms()
@@ -41,7 +41,7 @@ class RealmResource extends AbstractRestController
     /**
      * @param Request $request
      * @return Response
-     * @Route("", name="postRealm")
+     * @Route("/", name="postRealm")
      * @Method({"POST"})
      */
     public function postRealm(Request $request)
