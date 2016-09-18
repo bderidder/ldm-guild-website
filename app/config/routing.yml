@@ -43,3 +43,7 @@ hwi_oauth_login:
 
 battlenet_login:
     path: /oauth/login/check-battlenet
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

@@ -13,6 +13,7 @@ use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,10 @@ use Symfony\Component\HttpFoundation\Response;
 class CharactersInGuildQuery extends AbstractRestController
 {
     /**
+     * @ApiDoc(
+     *  description="Find all characters that are members of the given guild"
+     * )
+     *
      * @param Request $request
      *
      * @return Response
