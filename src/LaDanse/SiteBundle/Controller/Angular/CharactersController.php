@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\SiteBundle\Controller\Characters;
+namespace LaDanse\SiteBundle\Controller\Angular;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
@@ -25,7 +25,7 @@ class CharactersController extends LaDanseController
     private $logger;
 
     /**
-     * @Route("/", name="charactersIndex")
+     * @Route("/characters", name="charactersIndex")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -40,7 +40,11 @@ class CharactersController extends LaDanseController
             return $this->redirect($this->generateUrl('welcomeIndex'));
         }
 
-
-        return $this->render("LaDanseSiteBundle:characters:characters.html.twig");
+        return $this->render(
+            'LaDanseSiteBundle:angular:angular.html.twig',
+            [
+                'pageTitle' => 'My Characters'
+            ]
+        );
     }
 }

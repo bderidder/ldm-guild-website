@@ -1,6 +1,10 @@
 <?php
+/**
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
 
-namespace LaDanse\SiteBundle\Controller\Forum;
+namespace LaDanse\SiteBundle\Controller\Angular;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
@@ -27,7 +31,7 @@ class ForumController extends LaDanseController
     private $eventDispatcher;
 
     /**
-     * @Route("/", name="forumIndex")
+     * @Route("/forum", name="forumIndex")
      */
     public function indexAction()
     {
@@ -47,7 +51,12 @@ class ForumController extends LaDanseController
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
-        return $this->render("LaDanseSiteBundle:forum:forum.html.twig");
+        return $this->render(
+            'LaDanseSiteBundle:angular:angular.html.twig',
+            [
+                'pageTitle' => 'Forum'
+            ]
+        );
     }
 
     public function tileLabelAction()

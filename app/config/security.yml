@@ -63,15 +63,13 @@ security:
         - { path: ^/claims,         role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/teamspeak,      role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/gallery,        role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/forum,          role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/help,           role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/menu,           role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/feedback,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/services,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/redirect,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/roster,         role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/characters,     role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/app,            role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 

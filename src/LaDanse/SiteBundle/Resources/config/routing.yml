@@ -18,11 +18,6 @@ SettingsRouting:
     type:     annotation
     prefix:   /settings
 
-ClaimsRouting:
-    resource: "@LaDanseSiteBundle/Controller/Claims"
-    type:     annotation
-    prefix:   /claims
-
 TeamSpeakRouting:
     resource: "@LaDanseSiteBundle/Controller/TeamSpeak"
     type:     annotation
@@ -32,11 +27,6 @@ GalleryRouting:
     resource: "@LaDanseSiteBundle/Controller/Gallery"
     type:     annotation
     prefix:   /gallery
-
-ForumRouting:
-    resource: "@LaDanseSiteBundle/Controller/Forum"
-    type:     annotation
-    prefix:   /forum
 
 RegistrationRouting:
     resource: "@LaDanseSiteBundle/Controller/Registration"
@@ -63,10 +53,10 @@ FeedbackRouting:
     type:     annotation
     prefix:   /feedback
 
-RosterRouting:
-    resource: "@LaDanseSiteBundle/Controller/Roster"
+AngularRouting:
+    resource: "@LaDanseSiteBundle/Controller/Angular"
     type:     annotation
-    prefix:   /roster
+    prefix:   /app
 
 RedirectRouting:
     resource: "@LaDanseSiteBundle/Controller/Redirect"
@@ -77,11 +67,6 @@ ActivityStreamRouting:
     resource: "@LaDanseSiteBundle/Controller/ActivityStream"
     type:     annotation
     prefix:   /activitystream
-
-CharactersRouting:
-    resource: "@LaDanseSiteBundle/Controller/Characters"
-    type:     annotation
-    prefix:   /characters
 
 GuildMeet:
     path: /guildmeet
