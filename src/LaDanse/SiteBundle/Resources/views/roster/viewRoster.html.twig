@@ -1,31 +1,41 @@
 {% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
 
-{% block title %}Who Is Who - La Danse Macabre{% endblock %}
-
-{% block javascript %}
-
-    {# make sure that any other content of this tag is rendered as well #}
-    {{ parent() }}
-
-{% endblock %}
+{% block title %}Roster - La Danse Macabre{% endblock %}
 
 {% block memberPageCenteredBody %}
 
-    {{ renderHeader('Who Is Who') }}
+    <div ng-app="LaDanseApp">
 
-    {% for claim in claims %}
-    <a href="{{ path('viewMember', {'accountId': claim.id} ) }}"
-       class="characterAndClaimsWell">
-        <div class="well well-sm characterAndClaimsWell">
-            <p class="accountDisplayName">{{ claim.displayName }}</p>
-            <p class="claimsList">
-                Characters claimed:
-                {% for character in claim.claims %}
-                <span>{{ character }}</span>
-                {% endfor %}
-            </p>
-        </div>
-    </a>
-    {% endfor %}
+        <div ng-view></div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {% javascripts
+    '@LaDanseAngularBundle/Resources/public/ladanse/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/comments/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/characters/app/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/roster/app/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
+    '@LaDanseAngularBundle/Resources/public/ladanse/roster/controllers/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/services/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/models/*.js'
+    '@LaDanseAngularBundle/Resources/public/ladanse/forum/controllers/*.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 {% endblock %}

@@ -3,6 +3,6 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-charactersControllers.controller('CharactersViewCtrl', function ($scope, $rootScope, $http) {
+rosterControllers.controller('RosterViewCtrl', function ($scope, $rootScope, $http) {
 
 });

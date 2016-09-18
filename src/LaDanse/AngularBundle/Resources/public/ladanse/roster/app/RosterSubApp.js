@@ -3,14 +3,14 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-var charactersSubApp = angular.module('CharactersSubApp',
+var rosterSubApp = angular.module('RosterSubApp',
     [
         'ngRoute',
         'ngResource',
         'ui.bootstrap',
         'angularMoment',
-        'charactersControllers'
+        'rosterControllers'
     ]
 );
 
-var charactersControllers = angular.module('charactersControllers', ['ngRoute', 'ngResource']);
+var rosterControllers = angular.module('rosterControllers', ['ngRoute', 'ngResource']);

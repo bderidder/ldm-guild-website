@@ -10,7 +10,8 @@ var ladanseApp = angular.module('LaDanseApp',
         'angular-inview',
         'ForumSubApp',
         'CommentsSubApp',
-        'CharactersSubApp'
+        'CharactersSubApp',
+        'RosterSubApp'
     ]
 );
 
@@ -44,7 +45,10 @@ ladanseApp.config(['$routeProvider',
             .when('/characters', {
                 templateUrl: '/bundles/ladanseangular/ladanse/characters/partials/CharactersView.html',
                 controller: 'CharactersViewCtrl'
-            });
+            }).when('/roster', {
+            templateUrl: '/bundles/ladanseangular/ladanse/roster/partials/RosterView.html',
+            controller: 'RosterViewCtrl'
+        });
     }]);
 
 ladanseApp.controller('RedirectCtrl', function ($scope, $location)
@@ -62,5 +66,9 @@ ladanseApp.controller('RedirectCtrl', function ($scope, $location)
     else if (fullUrl.includes('/characters'))
     {
         $location.path('/characters');
+    }
+    else if (fullUrl.includes('/roster'))
+    {
+        $location.path('/roster');
     }
 });
