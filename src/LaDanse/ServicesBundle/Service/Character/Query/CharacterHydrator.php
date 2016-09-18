@@ -86,6 +86,11 @@ class CharacterHydrator
     {
         $this->init();
 
+        if ($this->claims == null)
+        {
+            return false;
+        }
+
         foreach($this->claims as $claim)
         {
             /** @var Entity\Claim $claim */
@@ -107,6 +112,11 @@ class CharacterHydrator
     {
         $this->init();
 
+        if ($this->claims == null)
+        {
+            return null;
+        }
+
         foreach($this->claims as $claim)
         {
             /** @var Entity\Claim $claim */
@@ -122,6 +132,11 @@ class CharacterHydrator
     public function getClaimedRoles(int $characterId) : array
     {
         $this->init();
+
+        if ($this->playsRoles == null)
+        {
+            return [];
+        }
 
         $roles = [];
 
@@ -140,6 +155,11 @@ class CharacterHydrator
     public function getGuild(int $characterId)
     {
         $this->init();
+
+        if ($this->inGuilds == null)
+        {
+            return null;
+        }
 
         $inGuild = null;
 
