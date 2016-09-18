@@ -35,15 +35,6 @@ class ForumController extends LaDanseController
      */
     public function indexAction()
     {
-        $authContext = $this->getAuthenticationService()->getCurrentContext();
-
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in forumUnderConstruction');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
