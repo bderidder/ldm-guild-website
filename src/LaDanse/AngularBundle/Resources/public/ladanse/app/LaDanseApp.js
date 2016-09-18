@@ -45,10 +45,12 @@ ladanseApp.config(['$routeProvider',
             .when('/characters', {
                 templateUrl: '/bundles/ladanseangular/ladanse/characters/partials/CharactersView.html',
                 controller: 'CharactersViewCtrl'
-            }).when('/roster', {
-            templateUrl: '/bundles/ladanseangular/ladanse/roster/partials/RosterView.html',
-            controller: 'RosterViewCtrl'
-        });
+            })
+            .when('/roster', {
+                templateUrl: '/bundles/ladanseangular/ladanse/roster/partials/RosterView.html',
+                controller: 'RosterViewCtrl'
+            }
+        );
     }]);
 
 ladanseApp.controller('RedirectCtrl', function ($scope, $location)
