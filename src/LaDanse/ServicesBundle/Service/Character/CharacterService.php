@@ -7,6 +7,7 @@ use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Character\Command\DeleteClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
+use LaDanse\ServicesBundle\Service\Character\Query\CharactersByKeywordsQuery;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersClaimedByAccountQuery;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
@@ -116,17 +117,26 @@ class CharacterService extends LaDanseService
     }
 
     /**
-     * @param array $keywords
+     * @param string $keywords
      * @param \DateTime|null $onDateTime
      *
      * @return array
      */
-    public function getCharactersByKeywords(array $keywords, \DateTime $onDateTime = null) : array
+    public function getCharactersByKeywords(string $keywords, \DateTime $onDateTime = null) : array
     {
         if ($onDateTime == null)
         {
             $onDateTime = new \DateTime();
         }
+
+        /** @var CharactersByKeywordsQuery $query */
+        $query = $this->get(CharactersByKeywordsQuery::SERVICE_NAME);
+
+        $query
+            ->setOnDateTime($onDateTime)
+            ->setKeywords($keywords);
+
+        return $query->run();
     }
 
     /**
