@@ -1,3 +1,8 @@
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
 var COMMENTS_MODULE_NAME = 'Comments';
 
 var ladanseApp = GetLaDanseApp();
@@ -12,11 +17,11 @@ commentsModule.config(
                 .state('comments', {
                     url: '/comments',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/comments/partials/Comments.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/comments/partials/Comments.html'
                 })
                 .state('comments.home', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/comments/partials/CommentsView.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/comments/partials/CommentsView.html'
                 });
         }
     ]
@@ -24,6 +29,6 @@ commentsModule.config(
 
 commentsModule.directive('commentEditorTemplate', function() {
     return {
-        templateUrl: '/bundles/ladanseangular/ladanse/comments/partials/CommentEditor.html',
+        templateUrl: '/bundles/ladanseangular/ladanse/modules/comments/partials/CommentEditor.html',
     };
 });

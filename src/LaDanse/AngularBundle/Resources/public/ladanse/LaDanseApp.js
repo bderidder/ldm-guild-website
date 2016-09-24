@@ -1,3 +1,8 @@
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
 var LADANSE_APP_NAME = "LaDanseApp";
 
 var ladanseApp = angular.module(LADANSE_APP_NAME,
@@ -90,27 +95,3 @@ ladanseApp.config(
         }
     ]
 )
-
-/*
-ladanseApp.config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: '/bundles/ladanseangular/ladanse/app/RedirectView.html',
-                controller: 'RedirectCtrl'
-            })
-            .when('/comments', {
-                templateUrl: '/bundles/ladanseangular/ladanse/comments/partials/CommentsViews.html',
-                controller: 'CommentGroupCtrl'
-            })
-            .when('/characters', {
-                templateUrl: '/bundles/ladanseangular/ladanse/characters/partials/CharactersView.html',
-                controller: 'CharactersViewCtrl'
-            })
-            .when('/roster', {
-                templateUrl: '/bundles/ladanseangular/ladanse/roster/partials/RosterView.html',
-                controller: 'RosterViewCtrl'
-            }
-        );
-    }]);
-    */

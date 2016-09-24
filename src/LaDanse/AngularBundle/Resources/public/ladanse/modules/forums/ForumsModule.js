@@ -1,3 +1,8 @@
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+
 var FORUMS_MODULE_NAME = 'Forums';
 
 var ladanseApp = GetLaDanseApp();
@@ -12,23 +17,23 @@ forumsModule.config(
                 .state('forums', {
                     url: '/forums',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/forum/partials/Forums.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/Forums.html'
                 })
                 .state('forums.list', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/forum/partials/ForumListView.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/ForumListView.html'
                 })
                 .state('forums.latestposts', {
                     url: '/latestposts',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/forum/partials/LatestPostsView.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/LatestPostsView.html'
                 })
                 .state('forums.forum', {
                     url: '/{forumId}',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/forum/partials/ForumView.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/ForumView.html'
                 })
                 .state('forums.topic', {
                     url: '/{forumId}/topics/{topicId}',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/forum/partials/TopicView.html'
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/TopicView.html'
                 });
         }
     ]
@@ -36,19 +41,19 @@ forumsModule.config(
 
 forumsModule.directive('postEditorTemplate', function() {
     return {
-        templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/PostEditor.html',
+        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/PostEditor.html',
     };
 });
 
 forumsModule.directive('headerTemplate', function() {
     return {
-        templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/HeaderView.html',
+        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/HeaderView.html',
     };
 });
 
 forumsModule.directive('forumItemTemplate', function() {
     return {
-        templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/ForumItemView.html',
+        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/ForumItemView.html',
     };
 });
 
