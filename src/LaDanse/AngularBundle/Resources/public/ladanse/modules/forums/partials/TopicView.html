@@ -1,5 +1,7 @@
 <div ng-controller="TopicPageCtrl" ng-init="initTopicPageCtrl()" ng-cloak>
 
+    <page-header title="{{ subject }}" url="{{ '#/forums/' + forumId }}"></page-header>
+
     <style>
 
         .postBox img {
@@ -33,17 +35,6 @@
 
     <div ng-if="isTopicLoaded"
          class="container-fluid topicContainer">
-
-        <div class="row">
-
-            <div ng-controller="HeaderCtrl"
-                 ng-init="initHeaderCtrl(subject, '#/forums/' + forumId)"
-                 ng-if="isTopicLoaded"
-                 class="col-md-12"
-                 header-template>
-            </div>
-
-        </div>
 
         <div class="row">
 

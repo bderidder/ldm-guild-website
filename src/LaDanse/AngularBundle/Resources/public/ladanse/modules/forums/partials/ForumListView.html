@@ -1,3 +1,5 @@
+<page-header title="Forums" url=""></page-header>
+
 <div ng-controller="ForumListCtrl" ng-init="initForumListCtrl()" ng-cloak>
 
     <style>
@@ -79,12 +81,6 @@
         }
 
     </style>
-
-    <div ng-controller="HeaderCtrl"
-         ng-init="initHeaderCtrl('Forums', null)"
-         id="TopOfPage"
-         header-template>
-    </div>
 
     <div ng-if="isForumLoaded"
          class="container-fluid forum-container">

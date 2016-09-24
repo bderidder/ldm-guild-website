@@ -17,11 +17,11 @@ commentsModule.config(
                 .state('comments', {
                     url: '/comments',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/comments/partials/Comments.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/comments/partials/Comments.html')
                 })
                 .state('comments.home', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/comments/partials/CommentsView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/comments/partials/CommentsView.html')
                 });
         }
     ]
@@ -29,6 +29,6 @@ commentsModule.config(
 
 commentsModule.directive('commentEditorTemplate', function() {
     return {
-        templateUrl: '/bundles/ladanseangular/ladanse/modules/comments/partials/CommentEditor.html',
+        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/comments/partials/CommentEditor.html'),
     };
 });

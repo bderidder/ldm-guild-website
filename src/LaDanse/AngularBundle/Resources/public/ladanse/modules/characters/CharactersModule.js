@@ -17,11 +17,11 @@ charactersModule.config(
                 .state('characters', {
                     url: '/characters',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/characters/partials/Characters.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/characters/partials/Characters.html')
                 })
                 .state('characters.home', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/characters/partials/CharactersView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/characters/partials/CharactersView.html')
                 });
         }
     ]

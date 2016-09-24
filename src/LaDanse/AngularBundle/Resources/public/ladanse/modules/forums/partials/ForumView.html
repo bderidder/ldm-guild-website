@@ -2,10 +2,7 @@
 
     <div ng-if="isForumLoaded">
 
-        <div ng-controller="HeaderCtrl"
-             ng-init="initHeaderCtrl(name, '#/forums')"
-             header-template>
-        </div>
+        <page-header title="{{ name }}" url="#/forums"></page-header>
 
         <style>
             .addTopicBox span.subjectTooLong

@@ -17,11 +17,11 @@ rosterModule.config(
                 .state('roster', {
                     url: '/roster',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/roster/partials/Roster.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/Roster.html')
                 })
                 .state('roster.home', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/roster/partials/RosterView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/RosterView.html')
                 });
         }
     ]

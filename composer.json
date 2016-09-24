@@ -42,7 +42,8 @@
     "hwi/oauth-bundle": "~0.5@dev",
     "guzzlehttp/guzzle": "^6.2",
     "sp/bower-bundle": "^0.12@dev",
-    "nelmio/api-doc-bundle": "^2.13"
+    "nelmio/api-doc-bundle": "^2.13",
+    "friendsofsymfony/jsrouting-bundle": "^1.6"
   },
   "require-dev": {
     "phpunit/phpunit": "@stable",

@@ -17,45 +17,27 @@ forumsModule.config(
                 .state('forums', {
                     url: '/forums',
                     abstract: true,
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/Forums.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/forums/partials/Forums.html')
                 })
                 .state('forums.list', {
                     url: '',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/ForumListView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/forums/partials/ForumListView.html')
                 })
                 .state('forums.latestposts', {
                     url: '/latestposts',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/LatestPostsView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/forums/partials/LatestPostsView.html')
                 })
                 .state('forums.forum', {
                     url: '/{forumId}',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/ForumView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/forums/partials/ForumView.html')
                 })
                 .state('forums.topic', {
                     url: '/{forumId}/topics/{topicId}',
-                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/modules/forums/partials/TopicView.html'
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/forums/partials/TopicView.html')
                 });
         }
     ]
 );
-
-forumsModule.directive('postEditorTemplate', function() {
-    return {
-        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/PostEditor.html',
-    };
-});
-
-forumsModule.directive('headerTemplate', function() {
-    return {
-        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/HeaderView.html',
-    };
-});
-
-forumsModule.directive('forumItemTemplate', function() {
-    return {
-        templateUrl: '/bundles/ladanseangular/ladanse/modules/forums/partials/ForumItemView.html',
-    };
-});
 
 forumsModule.animation('.slide-animation', function()
 {
