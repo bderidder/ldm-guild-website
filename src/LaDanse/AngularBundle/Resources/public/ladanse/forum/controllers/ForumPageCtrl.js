@@ -3,10 +3,12 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('ForumPageCtrl',
-    function ($scope, $routeParams, $rootScope, $http)
+var app = angular.module('LaDanseApp');
+
+app.controller('ForumPageCtrl',
+    function ($scope, $rootScope, $http)
     {
-        $scope.forumId = $routeParams.forumId;
+        $scope.forumId = $rootScope.$state.params.forumId;
 
         $scope.name = '';
         $scope.topics = [];

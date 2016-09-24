@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('PostEditorCtrl', function ($scope, $rootScope) {
+var app = angular.module('LaDanseApp');
+
+app.controller('PostEditorCtrl', function ($scope, $rootScope) {
 
     $scope.maxLength = 32768;
 

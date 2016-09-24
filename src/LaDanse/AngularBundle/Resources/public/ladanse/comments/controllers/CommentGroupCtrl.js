@@ -1,4 +1,6 @@
-commentControllers.controller('CommentGroupCtrl', function ($scope, $rootScope, $http) {
+var commentsModule = GetAngularModule(COMMENTS_MODULE_NAME);
+
+commentsModule.controller('CommentGroupCtrl', function ($scope, $rootScope, $http) {
 
     $scope.comments = [];
     $scope.groupId = 0;

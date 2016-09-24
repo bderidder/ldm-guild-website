@@ -1,4 +1,6 @@
-commentControllers.controller('CommentEditorCtrl', function ($scope, $rootScope, $http) {
+var commentsModule = GetAngularModule(COMMENTS_MODULE_NAME);
+
+commentsModule.controller('CommentEditorCtrl', function ($scope, $rootScope, $http) {
 
     $scope.message = "";
     $scope.characterUsage = "0/0";
@@ -11,6 +13,11 @@ commentControllers.controller('CommentEditorCtrl', function ($scope, $rootScope,
         $scope.cancelCallback = cancelCallback;
         $scope.$watch('message', $scope.updateCharacterUsage);
     };
+
+    $scope.isTooMuchText = function()
+    {
+        return $scope.message.length > $scope.maxLength;
+    }
 
     $scope.updateCharacterUsage = function()
     {

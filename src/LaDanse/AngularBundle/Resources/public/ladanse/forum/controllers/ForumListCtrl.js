@@ -3,8 +3,10 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('ForumListCtrl',
-    function ($scope, $routeParams, $rootScope, $http, $anchorScroll, forumService)
+var app = angular.module('LaDanseApp');
+
+app.controller('ForumListCtrl',
+    function ($scope, $rootScope, $http, $anchorScroll, forumService)
     {
         $scope.initForumListCtrl = function()
         {

@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('TopicListCtrl', function ($scope, $routeParams, $rootScope, $location, forumService) {
+var app = angular.module('LaDanseApp');
+
+app.controller('TopicListCtrl', function ($scope, $rootScope, $location, forumService) {
 
     $scope.initTopicListCtrl = function(topic)
     {

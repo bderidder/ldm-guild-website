@@ -3,6 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-charactersControllers.controller('CharactersViewCtrl', function ($scope, $rootScope, $http) {
+var charactersModule = GetAngularModule(CHARACTERS_MODULE_NAME);
+
+charactersModule.controller('CharactersViewCtrl', function ($scope, $rootScope, $http)
+{
 
 });

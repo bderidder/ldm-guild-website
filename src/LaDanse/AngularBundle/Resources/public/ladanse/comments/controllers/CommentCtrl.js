@@ -1,4 +1,6 @@
-commentControllers.controller('CommentCtrl', function ($scope, $rootScope, $http) {
+var commentsModule = GetAngularModule(COMMENTS_MODULE_NAME);
+
+commentsModule.controller('CommentCtrl', function ($scope, $rootScope, $http) {
 
     $scope.editing = false;
     $scope.editedValue = "";

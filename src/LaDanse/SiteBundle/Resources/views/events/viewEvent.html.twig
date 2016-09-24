@@ -292,11 +292,7 @@
 			    {# placeholder for comments, content is supplied by Angular application #}
 			    <div ng-app="LaDanseApp">
 
-			        <div ng-view>
-                        <div ng-controller="RedirectCtrl"
-                             ng-init="redirect('/comments')">
-                        </div>
-                    </div>
+			        <div ui-view></div>
 
 			    </div>
 

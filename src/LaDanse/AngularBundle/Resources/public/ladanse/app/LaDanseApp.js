@@ -1,42 +1,103 @@
-var ladanseApp = angular.module('LaDanseApp',
+var LADANSE_APP_NAME = "LaDanseApp";
+
+var ladanseApp = angular.module(LADANSE_APP_NAME,
     [
-        'ngRoute',
+        'LaDanseApp.Forums',
+        'LaDanseApp.Characters',
+        'LaDanseApp.Comments',
+        'LaDanseApp.Roster',
         'ngResource',
         'ui.bootstrap',
         'ngSanitize',
         'textAngular',
         'ngAnimate',
+        'ui.router',
         'angularMoment',
         'angular-inview',
-        'ForumSubApp',
-        'CommentsSubApp',
-        'CharactersSubApp',
-        'RosterSubApp'
+        'monospaced.elastic'
     ]
 );
 
+function GetLaDanseApp()
+{
+    return angular.module(LADANSE_APP_NAME);
+}
+
+function GetFQAngularModuleName(moduleName)
+{
+    return 'LaDanseApp.' + moduleName;
+}
+
+function CreateAngularModule(moduleName)
+{
+    return angular.module(GetFQAngularModuleName(moduleName),
+        [
+            'ui.router'
+        ]
+    );
+}
+
+function GetAngularModule(moduleName)
+{
+    return angular.module(GetFQAngularModuleName(moduleName));
+}
+
+ladanseApp.run(
+    [   '$rootScope', '$state', '$stateParams',
+        function ($rootScope,   $state,   $stateParams)
+        {
+            $rootScope.$state = $state;
+            $rootScope.$stateParams = $stateParams;
+        }
+    ]
+);
+
+ladanseApp.config(
+    [   '$stateProvider', '$urlRouterProvider',
+        function ($stateProvider,   $urlRouterProvider)
+        {
+            $urlRouterProvider.otherwise(function($injector, $location)
+            {
+                var fullUrl = $location.absUrl();
+
+                if (fullUrl.includes('/forum'))
+                {
+                    return '/forums';
+                }
+                else if (fullUrl.includes('/events'))
+                {
+                    return '/comments';
+                }
+                else if (fullUrl.includes('/characters'))
+                {
+                    return '/characters';
+                }
+                else if (fullUrl.includes('/roster'))
+                {
+                    return '/roster';
+                }
+
+                return "/ShouldNeverHappen";
+            });
+
+            $stateProvider.state(
+                "ShouldNeverHappen",
+                {
+                    url: "/ShouldNeverHappen",
+                    templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/route/ShouldNeverHappen.html'
+                }
+            )
+        }
+    ]
+)
+
+/*
 ladanseApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: '/bundles/ladanseangular/ladanse/app/RedirectView.html',
                 controller: 'RedirectCtrl'
-            })
-            .when('/forums', {
-                templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/ForumListView.html',
-                controller: 'ForumListCtrl'
-            })
-            .when('/forums/latestposts', {
-                templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/LatestPostsView.html',
-                controller: 'LatestPostsPageCtrl'
-            })
-            .when('/forums/:forumId', {
-                templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/ForumView.html',
-                controller: 'ForumPageCtrl'
-            })
-            .when('/forums/:forumId/topics/:topicId', {
-                templateUrl: '/bundles/ladanseangular/ladanse/forum/partials/TopicView.html',
-                controller: 'TopicPageCtrl'
             })
             .when('/comments', {
                 templateUrl: '/bundles/ladanseangular/ladanse/comments/partials/CommentsViews.html',
@@ -52,25 +113,4 @@ ladanseApp.config(['$routeProvider',
             }
         );
     }]);
-
-ladanseApp.controller('RedirectCtrl', function ($scope, $location)
-{
-    var fullUrl = $location.absUrl();
-
-    if (fullUrl.includes('/forum'))
-    {
-        $location.path('/forums');
-    }
-    else if (fullUrl.includes('/events'))
-    {
-        $location.path('/comments');
-    }
-    else if (fullUrl.includes('/characters'))
-    {
-        $location.path('/characters');
-    }
-    else if (fullUrl.includes('/roster'))
-    {
-        $location.path('/roster');
-    }
-});
+    */

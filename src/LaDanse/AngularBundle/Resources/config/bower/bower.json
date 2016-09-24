@@ -15,6 +15,7 @@
     "jquery": ">=2.2.0",
     "jquery.scrollbar": "0.2.10",
     "bootstrap": "^3.3.6",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "angular-ui-router": "^0.3.1"
   }
 }

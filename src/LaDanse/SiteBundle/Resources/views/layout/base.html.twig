@@ -83,6 +83,13 @@
 
 {# all Javascript is moved to the rear of the document to speed up rendering #}
 
+    <script type="application/javascript">
+
+        var BASEPATH = "{{ asset('') }}";
+        var BUNDLE_BASEPATH = "{{ asset('bundles') }}";
+
+    </script>
+
     {% javascripts
         "bundles/ladansesite/components/jquery/dist/jquery.min.js"
         "bundles/ladansesite/components/jquery-ui/jquery-ui.js"
@@ -101,6 +108,8 @@
         "bundles/ladansesite/components/textAngular/dist/textAngular.js"
         "bundles/ladansesite/components/textAngular/dist/textAngular-sanitize.js"
         "bundles/ladansesite/components/textAngular/dist/textAngularSetup.js"
+        "bundles/ladansesite/components/angular-ui-router/release/angular-ui-router.js"
+        "bundles/ladansesite/components/angular-elastic/elastic.js"
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

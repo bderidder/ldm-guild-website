@@ -1,4 +1,6 @@
-forumSubApp.service(
+var app = angular.module('LaDanseApp');
+
+app.service(
     'forumService',
     function($http, $log, $q)
     {

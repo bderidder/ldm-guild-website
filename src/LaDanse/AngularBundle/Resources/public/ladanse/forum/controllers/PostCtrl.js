@@ -3,8 +3,10 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('PostCtrl',
-    function($scope, $routeParams, $rootScope, $http, $timeout, forumService)
+var app = angular.module('LaDanseApp');
+
+app.controller('PostCtrl',
+    function($scope, $rootScope, $http, $timeout, forumService)
     {
         $scope.isEditing = false;
         $scope.isNew = false;

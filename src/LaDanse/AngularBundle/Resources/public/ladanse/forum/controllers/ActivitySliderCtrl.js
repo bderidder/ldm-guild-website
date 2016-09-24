@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('ActivitySliderCtrl',
+var app = angular.module('LaDanseApp');
+
+app.controller('ActivitySliderCtrl',
     function($scope, $rootScope, $timeout, forumService)
     {
         $scope.counter = {};

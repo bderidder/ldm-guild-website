@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
+var app = angular.module('LaDanseApp');
+
+app.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
 
     $scope.maxLength = 32768;
     $scope.collapsed = true;

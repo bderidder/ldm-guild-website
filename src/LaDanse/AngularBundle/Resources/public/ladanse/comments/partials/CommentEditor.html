@@ -3,10 +3,14 @@
           style="width: 100%;"
           esc-key="escapePressed()"
           enter-key="enterPressed()"
+          msd-elastic="\n"
+          ng-class="{tooMuchText: message.length > maxLength}"
           ng-model="message"></textarea>
 <div style="float: left;">
     <p style="font-size: 80%;">(press escape to cancel, enter to save)</p>
 </div>
 <div style="float: right;">
-    <p id="length_{{ comment.postId }}" style="font-size: 80%;">{{ characterUsage }}</p>
+    <p id="length_{{ comment.postId }}"
+       style="font-size: 80%;"
+       ng-class="{tooMuchText: message.length > maxLength}">{{ characterUsage }}</p>
 </div>

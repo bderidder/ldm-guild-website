@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('LatestPostsPageCtrl',
+var app = angular.module('LaDanseApp');
+
+app.controller('LatestPostsPageCtrl',
     function($scope, forumService)
     {
         $scope.initLatestPostsPageCtrl = function()

@@ -3,6 +3,8 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-rosterControllers.controller('RosterViewCtrl', function ($scope, $rootScope, $http) {
+var rosterModule = GetAngularModule(ROSTER_MODULE_NAME);
+
+rosterModule.controller('RosterViewCtrl', function ($scope, $rootScope, $http) {
 
 });

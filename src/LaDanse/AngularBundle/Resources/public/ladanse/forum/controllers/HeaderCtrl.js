@@ -3,8 +3,10 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('HeaderCtrl',
-    function($scope, $routeParams, $rootScope, $http)
+var app = angular.module('LaDanseApp');
+
+app.controller('HeaderCtrl',
+    function($scope, $rootScope, $http)
     {
         $scope.initHeaderCtrl = function(headerText, headerURL)
         {

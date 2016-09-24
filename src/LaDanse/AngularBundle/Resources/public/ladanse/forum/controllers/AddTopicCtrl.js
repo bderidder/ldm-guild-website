@@ -3,7 +3,9 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-forumSubApp.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
+var app = angular.module('LaDanseApp');
+
+app.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
 
     $scope.newSubject = {};
     $scope.newText = {};

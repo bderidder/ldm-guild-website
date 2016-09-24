@@ -1,5 +1,19 @@
 <div class="CommentContainer" ng-controller="CommentGroupCtrl" ng-init="initCommentGroupCtrl()" ng-cloak>
 
+    <style>
+
+        textarea.tooMuchText
+        {
+            background-color: lightcoral;
+        }
+
+        p.tooMuchText
+        {
+            color: red;
+        }
+
+    </style>
+
     <!--
     <div class="CommentsTitle">
         <h4>{{ comments.length }} Comments</h4>

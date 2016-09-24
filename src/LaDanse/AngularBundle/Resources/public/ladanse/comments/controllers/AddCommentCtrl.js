@@ -1,4 +1,6 @@
-commentControllers.controller('AddCommentCtrl', function ($scope, $rootScope, $http) {
+var commentsModule = GetAngularModule(COMMENTS_MODULE_NAME);
+
+commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http) {
 
     $scope.message = "";
     $scope.visible = true;
