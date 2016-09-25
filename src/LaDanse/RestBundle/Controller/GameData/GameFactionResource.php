@@ -26,7 +26,7 @@ class GameFactionResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="getAllGameFactions")
+     * @Route("/", name="getAllGameFactions", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getAllGameFactions()

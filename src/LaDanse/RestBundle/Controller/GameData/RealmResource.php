@@ -30,7 +30,7 @@ class RealmResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="getAllRealms")
+     * @Route("/", name="getAllRealms", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getAllRealms()

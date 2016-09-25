@@ -31,7 +31,7 @@ class GuildsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="getAllGuilds")
+     * @Route("/", name="getAllGuilds", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getAllGuilds(Request $request)

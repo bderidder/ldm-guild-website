@@ -26,7 +26,7 @@ class GameClassResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="getAllGameClasses")
+     * @Route("/", name="getAllGameClasses", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getAllGameClasses()
