@@ -12,6 +12,18 @@
 
 {% endblock %}
 
+{% block stylesheet %}
+
+    {{ parent() }}
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/ladanseangular/css/ladanse.less'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+{% endblock %}
+
 {% block javascript %}
 
     {{ include('LaDanseAngularBundle::javascript.html.twig') }}
