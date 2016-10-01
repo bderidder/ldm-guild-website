@@ -9,7 +9,6 @@ rosterModule.directive('characterSearchBox', function()
 {
     return {
         restrict: 'E',
-        replace: true,
         controller: 'CharacterSearchBoxCtrl',
         controllerAs: 'ctrl',
         scope: {

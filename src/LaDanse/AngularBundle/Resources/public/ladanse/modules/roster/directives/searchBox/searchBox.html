@@ -1,14 +1,8 @@
-<div class="searchContainer">
-
-    <style>
-        div.searchContainer
-        {
-            border: 1px solid darkgrey;
-            padding: 20px 0 20px 0;
-        }
-    </style>
+<div id="searchContainer">
 
     <form>
+
+        <div style="position: relative;">
 
         <div class="container-fluid" ng-show="!ctrl.advancedSearch">
             <div class="row">
@@ -44,11 +38,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <button class="btn btn-success" ng-click="ctrl.searchButtonClicked()">Search</button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-info pull-right" ng-click="ctrl.toggleSearchScope()">advanced search</button>
                 </div>
             </div>
         </div>
@@ -132,12 +123,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <button class="btn btn-success" ng-click="ctrl.searchButtonClicked()">Search</button>
                 </div>
-                <div class="col-md-6">
-                    <button class="btn btn-info pull-right" ng-click="ctrl.toggleSearchScope()">simple search</button>
-                </div>
+            </div>
+        </div>
+
+            </div>
+
+        <div class="toggleContainer" ng-show="!ctrl.advancedSearch">
+            <div ng-click="ctrl.toggleSearchScope()" class="searchToggle">
+                <i class="fa fa-caret-down" aria-hidden="true"></i> expand search <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div class="toggleContainer" ng-show="ctrl.advancedSearch">
+            <div ng-click="ctrl.toggleSearchScope()" class="searchToggle">
+                <i class="fa fa-caret-up" aria-hidden="true"></i> simplify search <i class="fa fa-caret-up" aria-hidden="true"></i>
             </div>
         </div>
 

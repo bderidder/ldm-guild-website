@@ -1,9 +1,16 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
 <div>
 
-    <character-search-box callback="ctrl.searchCallback" visible="ctrl.message"></character-search-box>
+    <div style="position: relative">
+        <character-search-box callback="ctrl.searchCallback" visible="ctrl.message"></character-search-box>
+    </div>
 
-    <br/>
-
-    <p>{{ ctrl.searchCriteria }}</p>
+    <div>
+        <p>{{ ctrl.searchCriteria }}</p>
+    </div>
 
 </div>

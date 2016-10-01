@@ -9,7 +9,6 @@ rosterModule.directive('rosterView', function()
 {
     return {
         restrict: 'E',
-        replace: true,
         controller: 'RosterViewCtrl',
         controllerAs: 'ctrl',
         scope: {},
