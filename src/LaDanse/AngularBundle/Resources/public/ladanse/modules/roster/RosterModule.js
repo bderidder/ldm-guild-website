@@ -22,6 +22,10 @@ rosterModule.config(
                 .state('roster.home', {
                     url: '',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/RosterView.html')
+                })
+                .state('roster.member', {
+                    url: '/{accountId}',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/RosterMember.html')
                 });
         }
     ]
