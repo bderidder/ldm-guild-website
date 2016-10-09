@@ -38,6 +38,11 @@ html, body
     padding-top: 15px;
 }
 
+th.center-th
+{
+    text-align: center;
+}
+
 td.center-td
 {
     text-align: center;

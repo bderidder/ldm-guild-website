@@ -1,0 +1,67 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<waiting-spinner show="!ctrl.initialized"></waiting-spinner>
+
+<div ng-if="ctrl.initialized">
+
+    <table class="table table-hover" style="width: auto;">
+        <thead>
+        <tr>
+            <th></th> <!-- name -->
+            <th></th> <!-- level -->
+            <th class="center-th" style="width: 75px">Tank</th>
+            <th class="center-th" style="width: 75px">Healer</th>
+            <th class="center-th" style="width: 75px">Damage</th>
+            <th></th> <!-- class -->
+            <th></th> <!-- race -->
+            <th>Realm</th>
+            <th>Guild</th>
+            <th style="width: 50px"><!-- edit link --></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="ctrl.claimedCharacters.length == 0">
+            <td colspan="8">
+                <i>You haven't claimed any characters yet.</i>
+            </td>
+        </tr>
+        <tr class="claimRow" ng-repeat="character in ctrl.claimedCharacters track by $index">
+            <td>
+                <a target="_blank"
+                   href="http://eu.battle.net/wow/en/character/{{ character.realm.getNormalizedName() }}/{{ character.name }}/simple"
+                   ng-if="character.level >= 10">{{ character.name }}</a>
+                <span ng-if="character.level < 10">{{ character.name }}</span>
+            <td class="center-td">{{ character.level }}</td>
+            <td class="center-td">
+                <span ng-if="character.claim && character.claim.hasRole('Tank')">
+                    <i class="fa fa-times fa-1x text-success"></i>
+                </span>
+            </td>
+            <td class="center-td">
+                <span ng-if="character.claim && character.claim.hasRole('Healer')">
+                    <i class="fa fa-times fa-1x text-success"></i>
+                </span>
+            </td>
+            <td class="center-td">
+                <span ng-if="character.claim && character.claim.hasRole('DPS')">
+                    <i class="fa fa-times fa-1x text-success"></i>
+                </span>
+            </td>
+            <td>{{ character.gameClass.name }}</td>
+            <td>{{ character.gameRace.name }}</td>
+            <td>{{ character.realm.name }}</td>
+            <td>{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></td>
+            <td>
+                	<span class="claimEditRemoveLinks">
+                    	<a href="{{ path('editClaim', {'claimId': claim.id}) }}"><i class="fa fa-pencil fa-1x"></i></a>
+                    	<a href="#"><i class="fa fa-trash-o fa-1x"></i></a>
+                	</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
