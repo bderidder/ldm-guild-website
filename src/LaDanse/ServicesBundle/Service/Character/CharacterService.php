@@ -7,11 +7,13 @@ use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Character\Command\DeleteClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
+use LaDanse\ServicesBundle\Service\Character\Query\CharactersByCriteriaQuery;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersByKeywordsQuery;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersClaimedByAccountQuery;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
+use LaDanse\ServicesBundle\Service\DTO\Character\SearchCriteria;
 use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use LaDanse\ServicesBundle\Service\Character\Command\CharacterSessionImpl;
 use LaDanse\ServicesBundle\Service\Character\Command\CreateGuildSyncSessionCommand;
@@ -135,6 +137,29 @@ class CharacterService extends LaDanseService
         $query
             ->setOnDateTime($onDateTime)
             ->setKeywords($keywords);
+
+        return $query->run();
+    }
+
+    /**
+     * @param SearchCriteria $searchCriteria
+     * @param \DateTime|null $onDateTime
+     *
+     * @return array
+     */
+    public function getCharactersByCriteria(SearchCriteria $searchCriteria, \DateTime $onDateTime = null) : array
+    {
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
+
+        /** @var CharactersByCriteriaQuery $query */
+        $query = $this->get(CharactersByCriteriaQuery::SERVICE_NAME);
+
+        $query
+            ->setOnDateTime($onDateTime)
+            ->setSearchCriteria($searchCriteria);
 
         return $query->run();
     }
