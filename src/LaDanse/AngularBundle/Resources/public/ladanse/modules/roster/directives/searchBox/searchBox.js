@@ -51,8 +51,6 @@ rosterModule.directive('characterSearchBox', function()
             return ctrl.race;
         },ctrl.raceUpdated);
 
-        ctrl.gameDataModel = gameDataService.getGameData();
-
         ctrl.toggleSearchScope = function()
         {
             console.log("Class - " + ctrl.class);
