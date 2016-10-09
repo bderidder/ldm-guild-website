@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{% block title %}La Danse - Welcome{% endblock %}</title>
 
@@ -13,6 +14,8 @@
         "bundles/ladansesite/components/textAngular/dist/textAngular.css"
         "bundles/ladansesite/components/font-awesome/css/font-awesome.min.css"
         "bundles/ladansesite/components/qtip2/jquery.qtip.min.css"
+        "bundles/ladanseangular/components/ng-dialog/css/ngDialog.min.css"
+        "bundles/ladanseangular/components/ng-dialog/css/ngDialog-theme-default.css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
@@ -32,7 +35,7 @@
 
         body
         {
-            background-image: url('{{ asset('bundles/ladansesite/images/wallpaper-illidan.jpg') }}');
+            background-image: url('{{ asset('bundles/ladansesite/images/wallpaper-illidan-85.jpg') }}');
         }
 
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -113,6 +116,7 @@
         "bundles/ladansesite/components/textAngular/dist/textAngularSetup.js"
         "bundles/ladansesite/components/angular-ui-router/release/angular-ui-router.js"
         "bundles/ladansesite/components/angular-elastic/elastic.js"
+        "bundles/ladanseangular/components/ng-dialog/js/ngDialog.min.js"
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
