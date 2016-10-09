@@ -33,7 +33,7 @@ class CharactersByKeywordsQuery extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/charactersByKeywords", name="getCharactersByKeywords")
+     * @Route("/charactersByKeywords", name="getCharactersByKeywords", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getCharactersByKeywords(Request $request)

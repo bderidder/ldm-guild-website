@@ -33,7 +33,7 @@ class CharactersInGuildQuery extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/charactersInGuild", name="getCharactersInGuild")
+     * @Route("/charactersInGuild", name="getCharactersInGuild", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getCharactersInGuild(Request $request)
