@@ -126,7 +126,7 @@ class CharactersByKeywordsQuery extends AbstractQuery
                     )
                 )
             )
-            ->setMaxResults(20)
+            ->setMaxResults(50)
             ->setParameter('onDateTime', $this->getOnDateTime())
             ->setParameter('keywords', '%' . $this->getKeywords() . '%');
 
