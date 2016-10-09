@@ -149,6 +149,7 @@ class CharactersClaimedByAccountQuery extends AbstractQuery
                     )
                 )
             )
+            ->addOrderBy('character.name')
             ->setParameter('onDateTime', $this->getOnDateTime())
             ->setParameter('account', $em->getReference(Entity\Account::class, $this->getAccountId()));
 
