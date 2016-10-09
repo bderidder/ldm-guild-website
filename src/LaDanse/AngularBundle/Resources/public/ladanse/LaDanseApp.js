@@ -3,6 +3,8 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
+'use strict';
+
 var LADANSE_APP_NAME = "LaDanseApp";
 
 var ladanseApp = angular.module(LADANSE_APP_NAME,
@@ -19,7 +21,8 @@ var ladanseApp = angular.module(LADANSE_APP_NAME,
         'ui.router',
         'angularMoment',
         'angular-inview',
-        'monospaced.elastic'
+        'monospaced.elastic',
+        'ngDialog'
     ]
 );
 
@@ -49,7 +52,7 @@ function GetAngularModule(moduleName)
 
 ladanseApp.run(
     [   '$rootScope', '$state', '$stateParams',
-        function ($rootScope,   $state,   $stateParams)
+        function ($rootScope, $state, $stateParams)
         {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
@@ -58,12 +61,15 @@ ladanseApp.run(
 );
 
 ladanseApp.config(
-    [   '$stateProvider', '$urlRouterProvider',
-        function ($stateProvider,   $urlRouterProvider)
+    [   '$stateProvider', '$urlRouterProvider', '$locationProvider',
+        function ($stateProvider, $urlRouterProvider, $locationProvider)
         {
-            $urlRouterProvider.otherwise(function($injector, $location)
+            $locationProvider.html5Mode(false);
+            $locationProvider.hashPrefix('');
+
+            $urlRouterProvider.otherwise(function($injector)
             {
-                var fullUrl = $location.absUrl();
+                var fullUrl = window.location.href;
 
                 if (fullUrl.includes('/forum'))
                 {
