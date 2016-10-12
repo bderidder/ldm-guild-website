@@ -9,8 +9,12 @@
         <character-search-box callback="ctrl.searchCallback" visible="ctrl.message"></character-search-box>
     </div>
 
-    <div>
-        <p>{{ ctrl.searchCriteria }}</p>
+    <div ng-if="!ctrl.searchResult">
+        There are no search results yet.
+    </div>
+
+    <div ng-if="ctrl.searchResult">
+        <search-result search-result="ctrl.searchResult"></search-result>
     </div>
 
 </div>

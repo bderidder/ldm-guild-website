@@ -1,0 +1,52 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<div class="MyCharactersContainer">
+
+    <p>{{ ctrl.characters.length }} characters in search result.</p>
+
+    <table class="table"
+           style="width: 100%;"
+           ng-class="{'table-hover': !ctrl.editedCharacter}">
+        <thead>
+            <tr>
+                <th class="center-th"></th> <!-- claimed -->
+                <th>Name</th> <!-- name -->
+                <th></th> <!-- level -->
+                <th></th> <!-- class -->
+                <th></th> <!-- race -->
+                <th>Realm</th>
+                <th>Guild</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-if="ctrl.characters.length == 0">
+            <td colspan="11">
+                <i>There are no characters in the search result.</i>
+            </td>
+        </tr>
+        </tbody>
+        <tbody ng-repeat="character in ctrl.characters track by $index">
+            <tr class="claimRow">
+                <td>
+                    <i class="fa fa-link"
+                       aria-hidden="true"
+                       style="color: darkolivegreen;"
+                       ng-if="character.claim"></i>
+                </td>
+                <td>
+                    <span style="font-weight: bold;">{{ character.name }}</span>
+                </td>
+                <td class="center-td">{{ character.level }}</td>
+
+                <td>{{ character.gameClass.name }}</td>
+                <td>{{ character.gameRace.name }}</td>
+                <td>{{ character.realm.name }}</td>
+                <td><span ng-if="character.guild">{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></span></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
