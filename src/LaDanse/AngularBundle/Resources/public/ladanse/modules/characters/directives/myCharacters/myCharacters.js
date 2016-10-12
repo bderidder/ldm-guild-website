@@ -5,9 +5,9 @@
 
 "use strict";
 
-var rosterModule = GetAngularModule(ROSTER_MODULE_NAME)
+var charactersModule = GetAngularModule(CHARACTERS_MODULE_NAME);
 
-rosterModule.directive('myCharacters', function()
+charactersModule.directive('myCharacters', function()
 {
     return {
         restrict: 'E',
@@ -26,6 +26,25 @@ rosterModule.directive('myCharacters', function()
     ctrl.claimedCharactersData = null;
 
     ctrl.claimedCharacters = null;
+
+    ctrl.editedCharacter = null;
+
+    ctrl.editCharacter = function(characterId)
+    {
+        if (!ctrl.editedCharacter)
+        {
+            ctrl.editedCharacter = characterId;
+        }
+        else
+        {
+            ctrl.cancelEditMode();
+        }
+    }
+
+    ctrl.cancelEditMode = function()
+    {
+        ctrl.editedCharacter = null;
+    }
 
     ctrl.initData = function()
     {
@@ -46,7 +65,7 @@ rosterModule.directive('myCharacters', function()
 
     ctrl.fetchData = function()
     {
-        var restUrl = Routing.generate('getCharactersClaimedByAccount', {'accountId': 1});
+        var restUrl = Routing.generate('getCharactersClaimedByAccount', {'accountId': currentAccount.id});
 
         gameDataService.getGameData()
             .then(function(gameDataModel)
@@ -61,6 +80,63 @@ rosterModule.directive('myCharacters', function()
                 ctrl.claimedCharactersData = claimedCharacters;
                 ctrl.verifyData();
             });
+    };
+
+    ctrl.updateClaim = function(updateModel)
+    {
+        var jsonData = {};
+        jsonData.comment = updateModel.comment;
+        jsonData.raider = updateModel.raider;
+
+        var roles = [];
+        updateModel.playsTank ? roles.push('Tank') : null;
+        updateModel.playsHealer ? roles.push('Healer') : null;
+        updateModel.playsDPS ? roles.push('DPS') : null;
+
+        jsonData.roles = roles;
+
+        var restUrl = Routing.generate('putClaim', {'characterId': ctrl.editedCharacter});
+
+        $http.put(restUrl, jsonData)
+            .success(function()
+            {
+                ctrl.fetchData();
+                ctrl.cancelEditMode();
+            })
+            .error(function()
+            {
+                ctrl.cancelEditMode();
+            });
+    };
+
+    ctrl.removeClaim = function()
+    {
+        var restUrl = Routing.generate('deleteClaim', {'characterId': ctrl.editedCharacter});
+
+        $http.delete(restUrl)
+            .success(function()
+            {
+                ctrl.fetchData();
+                ctrl.cancelEditMode();
+            })
+            .error(function()
+            {
+                ctrl.cancelEditMode();
+            });
+    };
+
+    ctrl.editCallback = {};
+    ctrl.editCallback.update = function(updateModel)
+    {
+        ctrl.updateClaim(updateModel);
+    };
+    ctrl.editCallback.cancel = function()
+    {
+        ctrl.cancelEditMode();
+    };
+    ctrl.editCallback.remove = function()
+    {
+        ctrl.removeClaim();
     };
 
     ctrl.fetchData();

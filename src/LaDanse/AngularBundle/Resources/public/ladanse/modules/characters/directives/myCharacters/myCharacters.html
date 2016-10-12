@@ -5,62 +5,81 @@
 
 <waiting-spinner show="!ctrl.initialized"></waiting-spinner>
 
-<div ng-if="ctrl.initialized">
+<div ng-if="ctrl.initialized" class="MyCharactersContainer">
 
-    <table class="table table-hover" style="width: auto;">
+    <p>Go to <a href="#/roster">roster</a> to search for characters you can claim as yours.</p>
+
+    <table class="table"
+           style="width: auto;"
+           ng-class="{'table-hover': !ctrl.editedCharacter}">
         <thead>
-        <tr>
-            <th></th> <!-- name -->
-            <th></th> <!-- level -->
-            <th class="center-th" style="width: 75px">Tank</th>
-            <th class="center-th" style="width: 75px">Healer</th>
-            <th class="center-th" style="width: 75px">Damage</th>
-            <th></th> <!-- class -->
-            <th></th> <!-- race -->
-            <th>Realm</th>
-            <th>Guild</th>
-            <th style="width: 50px"><!-- edit link --></th>
-        </tr>
+            <tr>
+                <th class="center-th"></th> <!-- raider -->
+                <th></th> <!-- name -->
+                <th></th> <!-- level -->
+                <th class="center-th" style="width: 75px">Tank</th>
+                <th class="center-th" style="width: 75px">Healer</th>
+                <th class="center-th" style="width: 75px">Damage</th>
+                <th></th> <!-- class -->
+                <th></th> <!-- race -->
+                <th>Realm</th>
+                <th>Guild</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-if="ctrl.claimedCharacters.length == 0">
+            <tr ng-if="ctrl.claimedCharacters.length == 0">
             <td colspan="8">
                 <i>You haven't claimed any characters yet.</i>
             </td>
         </tr>
-        <tr class="claimRow" ng-repeat="character in ctrl.claimedCharacters track by $index">
-            <td>
-                <a target="_blank"
-                   href="http://eu.battle.net/wow/en/character/{{ character.realm.getNormalizedName() }}/{{ character.name }}/simple"
-                   ng-if="character.level >= 10">{{ character.name }}</a>
-                <span ng-if="character.level < 10">{{ character.name }}</span>
-            <td class="center-td">{{ character.level }}</td>
-            <td class="center-td">
-                <span ng-if="character.claim && character.claim.hasRole('Tank')">
-                    <i class="fa fa-times fa-1x text-success"></i>
-                </span>
-            </td>
-            <td class="center-td">
-                <span ng-if="character.claim && character.claim.hasRole('Healer')">
-                    <i class="fa fa-times fa-1x text-success"></i>
-                </span>
-            </td>
-            <td class="center-td">
-                <span ng-if="character.claim && character.claim.hasRole('DPS')">
-                    <i class="fa fa-times fa-1x text-success"></i>
-                </span>
-            </td>
-            <td>{{ character.gameClass.name }}</td>
-            <td>{{ character.gameRace.name }}</td>
-            <td>{{ character.realm.name }}</td>
-            <td>{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></td>
-            <td>
-                	<span class="claimEditRemoveLinks">
-                    	<a href="{{ path('editClaim', {'claimId': claim.id}) }}"><i class="fa fa-pencil fa-1x"></i></a>
-                    	<a href="#"><i class="fa fa-trash-o fa-1x"></i></a>
-                	</span>
-            </td>
-        </tr>
+        </tbody>
+        <tbody ng-repeat="character in ctrl.claimedCharacters track by $index">
+            <!-- TR row in case the character is not being edited -->
+            <tr class="claimRow"
+                ng-if="ctrl.editedCharacter != character.id"
+                ng-click="ctrl.editCharacter(character.id)">
+                <td>
+                    <i class="fa fa-star"
+                       aria-hidden="true"
+                       style="color: red;"
+                       ng-if="character.claim && character.claim.raider"></i>
+                </td>
+                <td>
+                    <span style="font-weight: bold;">{{ character.name }}</span>
+                </td>
+                <td class="center-td">{{ character.level }}</td>
+                <td class="center-td">
+                    <span ng-if="character.claim && character.claim.hasRole('Tank')">
+                        <i class="fa fa-times fa-1x text-success"></i>
+                    </span>
+                </td>
+                <td class="center-td">
+                    <span ng-if="character.claim && character.claim.hasRole('Healer')">
+                        <i class="fa fa-times fa-1x text-success"></i>
+                    </span>
+                </td>
+                <td class="center-td">
+                    <span ng-if="character.claim && character.claim.hasRole('DPS')">
+                        <i class="fa fa-times fa-1x text-success"></i>
+                    </span>
+                </td>
+                <td>{{ character.gameClass.name }}</td>
+                <td>{{ character.gameRace.name }}</td>
+                <td>{{ character.realm.name }}</td>
+                <td>{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></td>
+                <td><i class="fa fa-comment-o"
+                       aria-hidden="true"
+                       ng-if="character.claim && character.claim.comment && character.claim.comment.length > 0"></i></td>
+            </tr>
+            <!-- TR row in case the character is being edited -->
+            <tr ng-if="ctrl.editedCharacter == character.id">
+                <td colspan="11">
+                    <edit-claim
+                            character="character"
+                            callback="ctrl.editCallback"></edit-claim>
+                </td>
+            </tr>
         </tbody>
     </table>
 
