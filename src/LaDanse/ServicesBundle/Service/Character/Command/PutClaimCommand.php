@@ -278,7 +278,7 @@ class PutClaimCommand extends AbstractCommand
         foreach($claim->getRoles() as $playsRole)
         {
             // remember if the role is currently active (present and endTime not set)
-            if ($playsRole->isRole($roleName))
+            if ($playsRole->isRole($roleName) && ($playsRole->getEndTime() == null))
             {
                 $alreadyPlaysRole = true;
             }
@@ -296,7 +296,7 @@ class PutClaimCommand extends AbstractCommand
         {
             // if the role is currently active (present and endTime not set)
             // and the player will not play it anymore, set endTime
-            if ($playsRole->isRole($roleName) and !$willPlayRole)
+            if ($playsRole->isRole($roleName) && ($playsRole->getEndTime() == null) && !$willPlayRole)
             {
                 $playsRole->setEndTime($onDateTime);
 
