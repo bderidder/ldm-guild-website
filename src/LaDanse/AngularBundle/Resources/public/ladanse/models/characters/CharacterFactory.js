@@ -19,10 +19,10 @@ Models.Characters.CharacterFactory = function()
 
         // setup guild if it exists
 
-        var guildId = jsonCharacter.guildReference.id;
-
-        if (guildId != undefined)
+        if ('guildReference' in jsonCharacter)
         {
+            var guildId = jsonCharacter.guildReference.id;
+
             var guildDataModel = gameDataModel.getGuild(guildId);
             var guild = new Models.Characters.Guild();
 
