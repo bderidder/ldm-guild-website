@@ -236,41 +236,40 @@ class CharacterHydrator
         if (count($claimIds) == 0)
         {
             $this->playsRoles = [];
-            $this->initialized = true;
-
-            return;
         }
+        else
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $qb */
+            $qb = $em->createQueryBuilder();
 
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->createQueryBuilder();
-
-        $qb->select('playsRole', 'claim')
-            ->from(Entity\PlaysRole::class, 'playsRole')
-            ->join('playsRole.claim', 'claim')
-            ->add('where',
-                $qb->expr()->andX(
-                    $qb->expr()->in(
-                        'claim.id',
-                        $claimIds
-                    ),
-                    $qb->expr()->orX(
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('playsRole.fromTime', '?1'),
-                            $qb->expr()->gt('playsRole.endTime', '?1')
+            $qb->select('playsRole', 'claim')
+                ->from(Entity\PlaysRole::class, 'playsRole')
+                ->join('playsRole.claim', 'claim')
+                ->add('where',
+                    $qb->expr()->andX(
+                        $qb->expr()->in(
+                            'claim.id',
+                            $claimIds
                         ),
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('playsRole.fromTime', '?1'),
-                            $qb->expr()->isNull('playsRole.endTime')
+                        $qb->expr()->orX(
+                            $qb->expr()->andX(
+                                $qb->expr()->lte('playsRole.fromTime', '?1'),
+                                $qb->expr()->gt('playsRole.endTime', '?1')
+                            ),
+                            $qb->expr()->andX(
+                                $qb->expr()->lte('playsRole.fromTime', '?1'),
+                                $qb->expr()->isNull('playsRole.endTime')
+                            )
                         )
                     )
                 )
-            )
-            ->setParameter(1, $this->getOnDateTime());
+                ->setParameter(1, $this->getOnDateTime());
 
-        /* @var $query \Doctrine\ORM\Query */
-        $query = $qb->getQuery();
+            /* @var $query \Doctrine\ORM\Query */
+            $query = $qb->getQuery();
 
-        $this->playsRoles = $query->getResult();
+            $this->playsRoles = $query->getResult();
+        }
 
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
