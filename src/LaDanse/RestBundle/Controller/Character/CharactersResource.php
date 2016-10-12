@@ -34,7 +34,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}", name="getCharacter")
+     * @Route("/{characterId}", name="getCharacter", options = { "expose" = true })
      * @Method({"GET"})
      */
     public function getCharacter(Request $request, $characterId)
@@ -64,7 +64,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="postClaim")
+     * @Route("/{characterId}/claim", name="postClaim", options = { "expose" = true })
      * @Method({"POST"})
      */
     public function postClaimAction(Request $request, $characterId)
@@ -98,7 +98,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="putClaimAction")
+     * @Route("/{characterId}/claim", name="putClaim", options = { "expose" = true })
      * @Method({"PUT"})
      */
     public function putClaimAction(Request $request, $characterId)
@@ -130,7 +130,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="deleteClaimAction")
+     * @Route("/{characterId}/claim", name="deleteClaim", options = { "expose" = true })
      * @Method({"DELETE"})
      */
     public function deleteClaimAction(Request $request, $characterId)
