@@ -9,10 +9,12 @@ function SearchCriteria()
     this.minLevel = 1;
     this.maxLevel = 110;
     this.raider = 1;
+    this.claimed = 1;
     this.guild = null;
     this.gameRace = null;
     this.gameClass = null;
     this.gameFaction = null;
+    this.roles = null;
 
     this.setName = function(name)
     {
@@ -54,6 +56,16 @@ function SearchCriteria()
         return this.raider;
     }
 
+    this.setClaimed= function(claimed)
+    {
+        this.claimed = claimed;
+    }
+
+    this.getClaimed = function()
+    {
+        return this.claimed;
+    }
+
     this.setGuild = function(guild)
     {
         this.guild = guild;
@@ -92,5 +104,15 @@ function SearchCriteria()
     this.getGameFaction = function()
     {
         return this.gameFaction;
+    }
+
+    this.setRoles = function(roles)
+    {
+        this.roles = roles;
+    }
+
+    this.getRoles = function()
+    {
+        return this.roles;
     }
 }
