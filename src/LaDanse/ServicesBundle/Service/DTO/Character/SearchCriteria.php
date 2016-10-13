@@ -44,6 +44,13 @@ class SearchCriteria
     protected $raider = 0;
 
     /**
+     * @var integer
+     * @Type("integer")
+     * @SerializedName("claimed")
+     */
+    protected $claimed = 0;
+
+    /**
      * @var string
      * @Type("string")
      * @SerializedName("guild")
@@ -122,6 +129,24 @@ class SearchCriteria
     public function setMaxLevel(int $maxLevel): SearchCriteria
     {
         $this->maxLevel = $maxLevel;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getClaimed(): int
+    {
+        return $this->claimed;
+    }
+
+    /**
+     * @param int $claimed
+     * @return SearchCriteria
+     */
+    public function setClaimed(int $claimed): SearchCriteria
+    {
+        $this->claimed = $claimed;
         return $this;
     }
 
