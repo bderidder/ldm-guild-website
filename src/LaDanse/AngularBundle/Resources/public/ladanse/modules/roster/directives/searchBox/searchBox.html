@@ -4,132 +4,154 @@
 
         <div style="position: relative;">
 
-        <div class="container-fluid" ng-show="!ctrl.advancedSearch" ng-cloak>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" id="" ng-model="ctrl.name" placeholder="Name">
-                        <span class="help-block">Type a name, or a part, of a character</span>
+            <div class="container-fluid" ng-cloak>
+                <div class="row">
+                    <div ng-class="{'col-md-12': !ctrl.advancedSearch, 'col-md-6': ctrl.advancedSearch}">
+                        <div class="form-group">
+                            <label for="">Name</label>
+                            <input type="text" class="form-control" id="" ng-model="ctrl.name" placeholder="Name">
+                            <span class="help-block">Type a name, or a part, of a character</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="">Raider</label>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios1" ng-model="ctrl.raider" value="1">
-                                Show both raiders and non-raiders
-                            </label>
+                    <div class="col-md-3" ng-show="ctrl.advancedSearch">
+                        <div class="form-group">
+                            <label for="">Minimum Level</label>
+                            <div>
+                                <input type="text" class="form-control" id="" ng-model="ctrl.minLevel" maxlength="3" placeholder="1">
+                            </div>
                         </div>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios1" ng-model="ctrl.raider" value="2">
-                                Show only raiders
-                            </label>
-                        </div>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios1" ng-model="ctrl.raider" value="3">
-                                Show only non-raiders
-                            </label>
+                    </div>
+                    <div class="col-md-3" ng-show="ctrl.advancedSearch">
+                        <div class="form-group">
+                            <label for="">Maximum Level</label>
+                            <div>
+                                <input type="text" class="form-control" id="" ng-model="ctrl.maxLevel" maxlength="3" placeholder="110">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-success" ng-click="ctrl.searchButtonClicked()">Search</button>
+                <div class="row" ng-show="ctrl.advancedSearch">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Claimed</label>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleClaimRadios" ng-model="ctrl.claimed" value="1" ng-disabled="ctrl.claimedDisabled">
+                                    Show all
+                                </label>
+                            </div>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleClaimRadios" ng-model="ctrl.claimed" value="2" ng-disabled="ctrl.claimedDisabled">
+                                    Only claimed
+                                </label>
+                            </div>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleClaimRadios" ng-model="ctrl.claimed" value="3" ng-disabled="ctrl.claimedDisabled">
+                                    Only unclaimed
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="">Raider</label>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleRaiderRadios" ng-model="ctrl.raider" value="1">
+                                    Show all
+                                </label>
+                            </div>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleRaiderRadios" ng-model="ctrl.raider" value="2">
+                                    Only raiders
+                                </label>
+                            </div>
+                            <div class="radio" style="width: 100%">
+                                <label>
+                                    <input type="radio" name="simpleRaiderRadios" ng-model="ctrl.raider" value="3">
+                                    Only non-raiders
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Roles</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.playsTank"> Tank
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.playsHealer"> Healer
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" ng-model="ctrl.playsDPS"> DPS
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="ctrl.advancedSearch">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Guild</label>
+                            <select class="form-control" ng-model="ctrl.guild">
+                                <option value="AnyGuild">Any or no guild</option>
+                                <option ng-repeat="guildEntry in ctrl.guildEntries"
+                                        ng-value="guildEntry.value">{{ guildEntry.label }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Race</label>
+                            <select class="form-control" ng-model="ctrl.race">
+                                <option value="AnyRace">Any race</option>
+                                <option ng-repeat="gameRaceEntry in ctrl.gameRaceEntries"
+                                        ng-value="gameRaceEntry.value">{{ gameRaceEntry.label }}</option>
+                            </select>
+                            <span class="help-block">Note: choosing a race will disable the Faction choice below</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="ctrl.advancedSearch">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Class</label>
+                            <select class="form-control" ng-model="ctrl.class">
+                                <option value="AnyClass">Any class</option>
+                                <option ng-repeat="gameClassEntry in ctrl.gameClassEntries"
+                                        ng-value="gameClassEntry.value">{{ gameClassEntry.label }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Faction</label>
+                            <select class="form-control" ng-model="ctrl.faction" ng-disabled="ctrl.factionDisabled">
+                                <option value="AnyFaction">Any faction</option>
+                                <option ng-repeat="gameFactionEntry in ctrl.gameFactionEntries"
+                                        ng-value="gameFactionEntry.value">{{ gameFactionEntry.label }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success" ng-click="ctrl.searchButtonClicked()">Search</button>
+                        <button class="btn btn-info" ng-click="ctrl.resetForm()">Reset</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="container-fluid" ng-show="ctrl.advancedSearch" ng-cloak>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" id="" ng-model="ctrl.name" placeholder="Name">
-                        <span class="help-block">Type a name, or a part, of a character</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Minimum Level</label>
-                        <div>
-                            <input type="text" class="form-control" id="" ng-model="ctrl.minLevel" maxlength="3" placeholder="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Maximum Level</label>
-                        <div>
-                            <input type="text" class="form-control" id="" ng-model="ctrl.maxLevel" maxlength="3" placeholder="110">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Raider</label>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios" ng-model="ctrl.raider" value="1">
-                                Show both raiders and non-raiders
-                            </label>
-                        </div>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios" ng-model="ctrl.raider" value="2">
-                                Show only raiders
-                            </label>
-                        </div>
-                        <div class="radio" style="width: 100%">
-                            <label>
-                                <input type="radio" name="optionsRadios" ng-model="ctrl.raider" value="3">
-                                Show only non-raiders
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="">Guild</label>
-                        <select class="form-control" ng-model="ctrl.guild">
-                            <option value="AnyGuild">Any or no guild</option>
-                            <option ng-repeat="guildEntry in ctrl.guildEntries"
-                                    ng-value="guildEntry.value">{{ guildEntry.label }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Race</label>
-                        <select class="form-control" ng-model="ctrl.race">
-                            <option value="AnyRace">Any race</option>
-                            <option ng-repeat="gameRaceEntry in ctrl.gameRaceEntries"
-                                    ng-value="gameRaceEntry.value">{{ gameRaceEntry.label }}</option>
-                        </select>
-                        <span class="help-block">Note: choosing a race will disable the Faction choice below</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Class</label>
-                        <select class="form-control" ng-model="ctrl.class">
-                            <option value="AnyClass">Any class</option>
-                            <option ng-repeat="gameClassEntry in ctrl.gameClassEntries"
-                                    ng-value="gameClassEntry.value">{{ gameClassEntry.label }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Faction</label>
-                        <select class="form-control" ng-model="ctrl.faction" ng-disabled="ctrl.factionDisabled">
-                            <option value="AnyFaction">Any faction</option>
-                            <option ng-repeat="gameFactionEntry in ctrl.gameFactionEntries"
-                                    ng-value="gameFactionEntry.value">{{ gameFactionEntry.label }}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-success" ng-click="ctrl.searchButtonClicked()">Search</button>
-                </div>
-            </div>
         </div>
-
-            </div>
 
         <div class="toggleContainer" ng-show="!ctrl.advancedSearch">
             <div ng-click="ctrl.toggleSearchScope()" class="searchToggle">
@@ -142,6 +164,7 @@
                 <i class="fa fa-caret-up" aria-hidden="true"></i> simplify search <i class="fa fa-caret-up" aria-hidden="true"></i>
             </div>
         </div>
+
 
     </form>
 

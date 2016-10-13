@@ -24,16 +24,24 @@ rosterModule.directive('characterSearchBox', function()
 
         ctrl.advancedSearch = false;
 
-        ctrl.name = "";
-        ctrl.raider = 1;
-        ctrl.minLevel = 1;
-        ctrl.maxLevel = 110;
-        ctrl.guild = "AnyGuild";
-        ctrl.race = "AnyRace";
-        ctrl.class = "AnyClass";
-        ctrl.faction = "AnyFaction";
+        ctrl.resetForm = function()
+        {
+            ctrl.name = "";
+            ctrl.raider = 1;
+            ctrl.claimed = 1;
+            ctrl.minLevel = 1;
+            ctrl.maxLevel = 110;
+            ctrl.guild = "AnyGuild";
+            ctrl.race = "AnyRace";
+            ctrl.class = "AnyClass";
+            ctrl.faction = "AnyFaction";
+            ctrl.playsTank = false;
+            ctrl.playsHealer = false;
+            ctrl.playsDPS = false;
 
-        ctrl.factionDisabled = false;
+            ctrl.factionDisabled = false;
+            ctrl.claimedDisabled = false;
+        };
 
         this.raceUpdated = function()
         {
@@ -46,10 +54,48 @@ rosterModule.directive('characterSearchBox', function()
             {
                 ctrl.factionDisabled = false;
             }
-        }
+        };
         $scope.$watch(function () {
             return ctrl.race;
         },ctrl.raceUpdated);
+
+        this.raiderUpdated = function()
+        {
+            if (ctrl.raider != 1)
+            {
+                ctrl.claimedDisabled = true;
+                ctrl.claimed = 2;
+            }
+            else
+            {
+                ctrl.claimedDisabled = false;
+            }
+        };
+        $scope.$watch(function () {
+            return ctrl.raider;
+        },ctrl.raiderUpdated);
+
+        this.roleUpdated = function()
+        {
+            if (ctrl.playsTank || ctrl.playsHealer || ctrl.playsDPS)
+            {
+                ctrl.claimedDisabled = true;
+                ctrl.claimed = 2;
+            }
+            else
+            {
+                ctrl.claimedDisabled = false;
+            }
+        };
+        $scope.$watch(function () {
+            return ctrl.playsTank;
+        },ctrl.roleUpdated);
+        $scope.$watch(function () {
+            return ctrl.playsHealer;
+        },ctrl.roleUpdated);
+        $scope.$watch(function () {
+            return ctrl.playsDPS;
+        },ctrl.roleUpdated);
 
         ctrl.toggleSearchScope = function()
         {
@@ -63,7 +109,6 @@ rosterModule.directive('characterSearchBox', function()
             var searchCriteria = new SearchCriteria();
 
             searchCriteria.setName(ctrl.name);
-            searchCriteria.setRaider(ctrl.raider);
 
             if (ctrl.advancedSearch)
             {
@@ -73,6 +118,23 @@ rosterModule.directive('characterSearchBox', function()
                 searchCriteria.setGameClass(ctrl.class !== "AnyClass" ? ctrl.class : null);
                 searchCriteria.setGameRace(ctrl.race !== "AnyRace" ? ctrl.race : null);
                 searchCriteria.setGameFaction(ctrl.faction !== "AnyFaction" ? ctrl.faction : null);
+                searchCriteria.setRaider(ctrl.raider);
+                searchCriteria.setClaimed(ctrl.claimed);
+
+                if (ctrl.playsTank || ctrl.playsHealer || ctrl.playsDPS)
+                {
+                    var roles = [];
+
+                    ctrl.playsTank ? roles.push("Tank") : null;
+                    ctrl.playsHealer ? roles.push("Healer") : null;
+                    ctrl.playsDPS ? roles.push("DPS") : null;
+
+                    searchCriteria.setRoles(roles);
+                }
+                else
+                {
+                    searchCriteria.setRoles(null);
+                }
             }
             else
             {
@@ -82,6 +144,9 @@ rosterModule.directive('characterSearchBox', function()
                 searchCriteria.setGameClass(null);
                 searchCriteria.setGameRace(null);
                 searchCriteria.setGameFaction(null);
+                searchCriteria.setRaider(1);
+                searchCriteria.setClaimed(1);
+                searchCriteria.setRoles(null);
             }
 
             $scope.callback(searchCriteria);
@@ -152,4 +217,6 @@ rosterModule.directive('characterSearchBox', function()
                 }
                 ctrl.gameFactionEntries = gameFactionEntries;
             });
+
+        ctrl.resetForm();
     });
