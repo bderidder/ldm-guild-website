@@ -105,30 +105,213 @@ class CharactersByCriteriaQuery extends AbstractQuery
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('characterVersion', 'character', 'realm', 'gameClass', 'gameRace')
-            ->from(Entity\CharacterVersion::class, 'characterVersion')
-            ->join('characterVersion.character', 'character')
-            ->join('characterVersion.gameClass', 'gameClass')
-            ->join('characterVersion.gameRace', 'gameRace')
-            ->join('character.realm', 'realm')
-            ->add('where',
-                $qb->expr()->andX(
-                    $qb->expr()->like('character.name', ':keywords'),
-                    $qb->expr()->orX(
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('characterVersion.fromTime', ':onDateTime'),
-                            $qb->expr()->gt('characterVersion.endTime', ':onDateTime')
-                        ),
-                        $qb->expr()->andX(
-                            $qb->expr()->lte('characterVersion.fromTime', ':onDateTime'),
-                            $qb->expr()->isNull('characterVersion.endTime')
-                        )
+        $whereClause = $qb->expr()->andX(
+            $qb->expr()->andX(
+                $qb->expr()->gte('characterVersion.level', ':minLevel'),
+                $qb->expr()->lte('characterVersion.level', ':maxLevel')
+            ),
+            $qb->expr()->andX(
+                $qb->expr()->like('character.name', ':name'),
+                $qb->expr()->orX(
+                    $qb->expr()->andX(
+                        $qb->expr()->lte('characterVersion.fromTime', ':onDateTime'),
+                        $qb->expr()->gt('characterVersion.endTime', ':onDateTime')
+                    ),
+                    $qb->expr()->andX(
+                        $qb->expr()->lte('characterVersion.fromTime', ':onDateTime'),
+                        $qb->expr()->isNull('characterVersion.endTime')
                     )
                 )
             )
-            ->setMaxResults(50)
-            ->setParameter('onDateTime', $this->getOnDateTime())
-            ->setParameter('keywords', '%' . $this->getSearchCriteria()->getName() . '%');
+        );
+
+        $guildParamRequired = false;
+        $raceParamRequired = false;
+        $classParamRequired = false;
+        $factionParamRequired = false;
+
+        // if Race is selected, add clause
+        if ($this->getSearchCriteria()->getGameRace() !== null)
+        {
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->eq('gameRace.id', ':gameRaceId')
+            );
+            $raceParamRequired = true;
+        }
+
+        // if Class is selected, add clause
+        if ($this->getSearchCriteria()->getGameClass() !== null)
+        {
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->eq('gameClass.id', ':gameClassId')
+            );
+            $classParamRequired = true;
+        }
+
+        // if Faction is selected, add clause
+        if ($this->getSearchCriteria()->getGameFaction() !== null)
+        {
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->eq('gameFaction.id', ':gameFactionId')
+            );
+            $factionParamRequired = true;
+        }
+
+        // if Guild is selected, add clause (this is a sub-query)
+        if ($this->getSearchCriteria()->getGuild() != null)
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $innerGuildQb */
+            $innerGuildQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->in(
+                    'characterVersion.character',
+                    $innerGuildQb->select('innerCharacter.id')
+                        ->from(Entity\InGuild::class, 'inGuild')
+                        ->join('inGuild.character', 'innerCharacter')
+                        ->join('inGuild.guild', 'innerGuild')
+                        ->add('where',
+                            $qb->expr()->andX(
+                                $qb->expr()->eq('innerGuild.id', ':guildId'),
+                                $qb->expr()->orX(
+                                    $qb->expr()->andX(
+                                        $qb->expr()->lte('inGuild.fromTime', ':onDateTime'),
+                                        $qb->expr()->gt('inGuild.endTime', ':onDateTime')
+                                    ),
+                                    $qb->expr()->andX(
+                                        $qb->expr()->lte('inGuild.fromTime', ':onDateTime'),
+                                        $qb->expr()->isNull('inGuild.endTime')
+                                    )
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+            $guildParamRequired = true;
+        }
+
+        // if any of "only raider" or "only non-raider" is selected, add clause (this is a sub-query)
+        if (($this->getSearchCriteria()->getRaider() == 2) || ($this->getSearchCriteria()->getRaider() == 3))
+        {
+            $raiderValue = $this->getSearchCriteria()->getRaider() == 2 ? 1 : 0;
+
+            /** @var \Doctrine\ORM\QueryBuilder $innerRaiderdQb */
+            $innerRaiderdQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->in(
+                    'characterVersion.character',
+                    $innerRaiderdQb->select('innerRaiderCharacter.id')
+                        ->from(Entity\Claim::class, 'raiderClaim')
+                        ->join('raiderClaim.character', 'innerRaiderCharacter')
+                        ->add('where',
+                            $qb->expr()->andX(
+                                $qb->expr()->eq('raiderClaim.raider', $raiderValue),
+                                $qb->expr()->orX(
+                                    $qb->expr()->andX(
+                                        $qb->expr()->lte('raiderClaim.fromTime', ':onDateTime'),
+                                        $qb->expr()->gt('raiderClaim.endTime', ':onDateTime')
+                                    ),
+                                    $qb->expr()->andX(
+                                        $qb->expr()->lte('raiderClaim.fromTime', ':onDateTime'),
+                                        $qb->expr()->isNull('raiderClaim.endTime')
+                                    )
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+        }
+
+        // if "only claimed" is selected, add clause (this is a sub-query)
+        if (($this->getSearchCriteria()->getClaimed() == 2) && ($this->getSearchCriteria()->getRaider() == 1))
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $innerRaiderdQb */
+            $innerRaiderdQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->in(
+                    'characterVersion.character',
+                    $innerRaiderdQb->select('innerClaimCharacter.id')
+                        ->from(Entity\Claim::class, 'claim')
+                        ->join('claim.character', 'innerClaimCharacter')
+                        ->add('where',
+                            $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                    $qb->expr()->lte('claim.fromTime', ':onDateTime'),
+                                    $qb->expr()->gt('claim.endTime', ':onDateTime')
+                                ),
+                                $qb->expr()->andX(
+                                    $qb->expr()->lte('claim.fromTime', ':onDateTime'),
+                                    $qb->expr()->isNull('claim.endTime')
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+        }
+
+        // if "only non-claimed" is selected, add clause (this is a sub-query)
+        if (($this->getSearchCriteria()->getClaimed() == 3) && ($this->getSearchCriteria()->getRaider() == 1))
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $innerRaiderdQb */
+            $innerRaiderdQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->notIn(
+                    'characterVersion.character',
+                    $innerRaiderdQb->select('innerClaimCharacter.id')
+                        ->from(Entity\Claim::class, 'claim')
+                        ->join('claim.character', 'innerClaimCharacter')
+                        ->add('where',
+                            $qb->expr()->orX(
+                                $qb->expr()->andX(
+                                    $qb->expr()->lte('claim.fromTime', ':onDateTime'),
+                                    $qb->expr()->gt('claim.endTime', ':onDateTime')
+                                ),
+                                $qb->expr()->andX(
+                                    $qb->expr()->lte('claim.fromTime', ':onDateTime'),
+                                    $qb->expr()->isNull('claim.endTime')
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+        }
+
+        $qb->select('characterVersion', 'character', 'realm', 'gameClass', 'gameRace')
+           ->from(Entity\CharacterVersion::class, 'characterVersion')
+           ->join('characterVersion.character', 'character')
+           ->join('characterVersion.gameClass', 'gameClass')
+           ->join('characterVersion.gameRace', 'gameRace')
+           ->join('gameRace.faction', 'gameFaction')
+           ->join('character.realm', 'realm')
+           ->add('where', $whereClause)
+           ->setMaxResults(50);
+
+        $qb->setParameter('minLevel', $this->getSearchCriteria()->getMinLevel())
+           ->setParameter('maxLevel', $this->getSearchCriteria()->getMaxLevel())
+           ->setParameter('onDateTime', $this->getOnDateTime())
+           ->setParameter('name', '%' . $this->getSearchCriteria()->getName() . '%');
+
+        if ($guildParamRequired)
+            $qb->setParameter('guildId', $this->getSearchCriteria()->getGuild());
+
+        if ($raceParamRequired)
+            $qb->setParameter('gameRaceId', $this->getSearchCriteria()->getGameRace());
+
+        if ($classParamRequired)
+            $qb->setParameter('gameClassId', $this->getSearchCriteria()->getGameClass());
+
+        if ($factionParamRequired)
+            $qb->setParameter('gameFactionId', $this->getSearchCriteria()->getGameFaction());
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
