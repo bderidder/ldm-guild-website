@@ -79,6 +79,13 @@ class SearchCriteria
     protected $gameFaction = null;
 
     /**
+     * @var array
+     * @Type("array<string>")
+     * @SerializedName("roles")
+     */
+    protected $roles = null;
+
+    /**
      * @return string
      */
     public function getName()
@@ -237,6 +244,24 @@ class SearchCriteria
     public function setGameFaction(string $gameFaction): SearchCriteria
     {
         $this->gameFaction = $gameFaction;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     * @return SearchCriteria
+     */
+    public function setRoles(array $roles): SearchCriteria
+    {
+        $this->roles = $roles;
         return $this;
     }
 }

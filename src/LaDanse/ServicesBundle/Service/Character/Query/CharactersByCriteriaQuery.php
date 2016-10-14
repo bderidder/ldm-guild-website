@@ -129,6 +129,7 @@ class CharactersByCriteriaQuery extends AbstractQuery
         $raceParamRequired = false;
         $classParamRequired = false;
         $factionParamRequired = false;
+        $rolesParamRequired = false;
 
         // if Race is selected, add clause
         if ($this->getSearchCriteria()->getGameRace() !== null)
@@ -286,6 +287,41 @@ class CharactersByCriteriaQuery extends AbstractQuery
             );
         }
 
+        // if "only non-claimed" is selected, add clause (this is a sub-query)
+        if (($this->getSearchCriteria()->getRoles() != null) && (count($this->getSearchCriteria()->getRoles()) > 0))
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $innerRolesQb */
+            $innerRolesQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->in(
+                    'characterVersion.character',
+                    $innerRolesQb->select('innerRolesCharacter.id')
+                        ->from(Entity\PlaysRole::class, 'playsRole')
+                        ->join('playsRole.claim', 'innerRolesClaim')
+                        ->join('innerRolesClaim.character', 'innerRolesCharacter')
+                        ->add('where',
+                            $innerRolesQb->expr()->andX(
+                                $innerRolesQb->expr()->in('playsRole.role', ':roles'),
+                                $innerRolesQb->expr()->orX(
+                                    $innerRolesQb->expr()->andX(
+                                        $innerRolesQb->expr()->lte('playsRole.fromTime', ':onDateTime'),
+                                        $innerRolesQb->expr()->gt('playsRole.endTime', ':onDateTime')
+                                    ),
+                                    $innerRolesQb->expr()->andX(
+                                        $innerRolesQb->expr()->lte('playsRole.fromTime', ':onDateTime'),
+                                        $innerRolesQb->expr()->isNull('playsRole.endTime')
+                                    )
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+
+            $rolesParamRequired = true;
+        }
+
         $qb->select('characterVersion', 'character', 'realm', 'gameClass', 'gameRace')
            ->from(Entity\CharacterVersion::class, 'characterVersion')
            ->join('characterVersion.character', 'character')
@@ -312,6 +348,9 @@ class CharactersByCriteriaQuery extends AbstractQuery
 
         if ($factionParamRequired)
             $qb->setParameter('gameFactionId', $this->getSearchCriteria()->getGameFaction());
+
+        if ($rolesParamRequired)
+            $qb->setParameter('roles', $this->getSearchCriteria()->getRoles());
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
