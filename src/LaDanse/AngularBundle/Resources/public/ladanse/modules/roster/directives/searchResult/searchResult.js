@@ -19,7 +19,7 @@ rosterModule.directive('searchResult', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/searchResult/searchResult.html')
     };
 })
-.controller('SearchResultCtrl', function($scope, $rootScope, $stateParams, $state, gameDataService, $http)
+.controller('SearchResultCtrl', function($scope, $rootScope, $stateParams, $state, gameDataService, $http, Notification)
 {
     var ctrl = this;
 
@@ -72,12 +72,12 @@ rosterModule.directive('searchResult', function()
         $http.post(restUrl, newClaim)
             .success(function()
             {
-                console.log("Claiming succeeded");
+                Notification.success("Character successfully claimed");
                 $state.go('characters.home', $stateParams);
             })
             .error(function()
             {
-                console.log("Claiming failed");
+                Notification.error("Failed to claim this character");
             });
     }
 

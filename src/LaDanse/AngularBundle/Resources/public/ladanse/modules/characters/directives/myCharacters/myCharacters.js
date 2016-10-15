@@ -17,7 +17,7 @@ charactersModule.directive('myCharacters', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/characters/directives/myCharacters/myCharacters.html')
     };
 })
-.controller('MyCharactersCtrl', function($scope, $rootScope, gameDataService, $http)
+.controller('MyCharactersCtrl', function($scope, $rootScope, gameDataService, $http, Notification)
 {
     var ctrl = this;
 
@@ -100,11 +100,13 @@ charactersModule.directive('myCharacters', function()
         $http.put(restUrl, jsonData)
             .success(function()
             {
+                Notification.success("Claim updated");
                 ctrl.fetchData();
                 ctrl.cancelEditMode();
             })
             .error(function()
             {
+                Notification.success("Could not update claim");
                 ctrl.cancelEditMode();
             });
     };
@@ -116,11 +118,13 @@ charactersModule.directive('myCharacters', function()
         $http.delete(restUrl)
             .success(function()
             {
+                Notification.success("Claim removed");
                 ctrl.fetchData();
                 ctrl.cancelEditMode();
             })
             .error(function()
             {
+                Notification.error("Could not remove claim");
                 ctrl.cancelEditMode();
             });
     };

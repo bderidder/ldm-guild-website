@@ -22,7 +22,8 @@ var ladanseApp = angular.module(LADANSE_APP_NAME,
         'angularMoment',
         'angular-inview',
         'monospaced.elastic',
-        'ngDialog'
+        'ngDialog',
+        'ui-notification'
     ]
 );
 

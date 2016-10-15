@@ -15,7 +15,7 @@ rosterModule.directive('rosterView', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/rosterView/rosterView.html')
     };
 })
-.controller('RosterViewCtrl', function($scope, $rootScope, $http)
+.controller('RosterViewCtrl', function($scope, $rootScope, $http, Notification)
 {
     var ctrl = this;
 
@@ -32,6 +32,15 @@ rosterModule.directive('rosterView', function()
             .success(function(searchResult)
             {
                 ctrl.searchResult = searchResult;
+
+                if (ctrl.searchResult.length == 0)
+                {
+                    Notification.warning('Your search did not return a result');
+                }
+            })
+            .error(function()
+            {
+                Notification.error('Search failed');
             });
     }
 });
