@@ -31,6 +31,11 @@ rosterModule.directive('rosterView', function()
         $http.post(restUrl, searchCriteria)
             .success(function(searchResult)
             {
+                searchResult.sort(function(a, b)
+                {
+                    return a.name.localeCompare(b.name);
+                });
+
                 ctrl.searchResult = searchResult;
 
                 if (ctrl.searchResult.length == 0)
