@@ -5,10 +5,14 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
+use LaDanse\ServicesBundle\Service\DTO\Character\Character;
+use LaDanse\ServicesBundle\Service\DTO\GameData\GameClass;
+use LaDanse\ServicesBundle\Service\DTO\GameData\GameRace;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 
+use LaDanse\ServicesBundle\Service\GameData\GameDataService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -55,12 +59,12 @@ class ListClaimsPartialController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in listAction',
-                array("event" => $eventId)
+                ["event" => $eventId]
             );
 
             return $this->render(
                 'LaDanseSiteBundle:events:listClaims.html.twig',
-                array('error' => 'Event does not exist')
+                ['error' => 'Event does not exist']
             );
         }
 
@@ -85,58 +89,67 @@ class ListClaimsPartialController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:events:listClaims.html.twig',
-            array('claims' => $this->getClaims($accountId, $role, $onDate))
+            ['claims' => $this->getClaims($accountId, $role, $onDate)]
         );
     }
 
     private function getClaims($accountId, $role, $onDateTime)
     {
+        /** @var GameDataService $gameDataService */
+        $gameDataService = $this->get(GameDataService::SERVICE_NAME);
+
+        $gameRaces = $gameDataService->getAllGameRaces();
+        $gameClasses = $gameDataService->getAllGameClasses();
+
         /** @var CharacterService $guildCharacterService */
         $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
 
-        $claims = $guildCharacterService->getClaimsForAccount($accountId, $onDateTime);
+        $characters = $guildCharacterService->getCharactersClaimedByAccount($accountId, $onDateTime);
 
-        $claimsDto = array();
+        $resultCharacters = [];
 
-        foreach($claims as $claim)
+        /** @var Character $character */
+        foreach($characters as $character)
         {
-            $includeClaim = false;
-
-            switch ($role)
+            if ($character->getClaim()->playsRole($role) && $character->getLevel() == 110)
             {
-                case "Tank":
-                    if ($claim->playsTank)
-                    {
-                        $includeClaim = true;
-                    };
-                    break;
-                case "Healer":
-                    if ($claim->playsHealer)
-                    {
-                        $includeClaim = true;
-                    };
-                    break;
-                case "DPS":
-                    if ($claim->playsDPS)
-                    {
-                        $includeClaim = true;
-                    };
-                    break;
-            }
-
-            if ($includeClaim)
-            {
-                $character = $guildCharacterService->getGuildCharacter($claim->character->id, $onDateTime);
-
-                $claimsDto[] = (object)array(
-                    "name"  => $character->name,
-                    "level" => $character->level,
-                    "race"  => $character->race->name,
-                    "class" => $character->class->name
-                );
+                $resultCharacters[] = (object)[
+                    "name"  => $character->getName(),
+                    "level" => $character->getLevel(),
+                    "race"  => $this->resolveGameRaceName($gameRaces, $character->getGameRaceReference()),
+                    "class" => $this->resolveGameClassName($gameClasses, $character->getGameClassReference())
+                ];
             }
         }
 
-        return $claimsDto;
+        return $resultCharacters;
+    }
+
+    private function resolveGameRaceName($gameRaces, $gameRaceReference)
+    {
+        /** @var GameRace $gameRace */
+        foreach($gameRaces as $gameRace)
+        {
+            if ($gameRace->getId() == $gameRaceReference)
+            {
+                return $gameRace->getName();
+            }
+        }
+
+        return "";
+    }
+
+    private function resolveGameClassName($gameClasses, $gameClassReference)
+    {
+        /** @var GameClass $gameClass */
+        foreach($gameClasses as $gameClass)
+        {
+            if ($gameClass->getId() == $gameClassReference)
+            {
+                return $gameClass->getName();
+            }
+        }
+
+        return "";
     }
 }

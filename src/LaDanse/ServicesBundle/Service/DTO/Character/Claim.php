@@ -72,6 +72,23 @@ class Claim
     }
 
     /**
+     * @param string $playsRole
+     * @return bool
+     */
+    public function playsRole($playsRole) : bool
+    {
+        foreach($this->roles as $role)
+        {
+            if ($role == $playsRole)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function getComment()
