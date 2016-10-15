@@ -3,7 +3,7 @@
   ~ @link     https://github.com/bderidder/ldm-guild-website
   -->
 
-<div class="EditorContainer">
+<div class="CharacterDetailContainer">
     <div class="fluid-container">
         <div class="row">
             <div class="col-md-12">
@@ -25,21 +25,43 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" ng-if="ctrl.character.claim">
-                <div style="padding: 20px 0 20px 0;">
+        <div class="row" ng-if="ctrl.character.claim">
+            <div class="col-md-4">
+                <div class="ClaimDetail">
                     <p>This character is claimed by {{ ctrl.character.claim.account.displayName }}.</p>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="ClaimDetail">
+                    <b>Roles</b><br/>
+                    <span ng-repeat="role in ctrl.character.claim.roles">{{ role }}<br/></span>
+                    <span ng-if="!ctrl.character.claim.roles || ctrl.character.claim.roles.length == 0">-</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ClaimDetail">
+                    <b>Comment</b><br/>
+                    <i>{{ ctrl.character.claim.comment }}</i>
+                    <span ng-if="!ctrl.character.claim.comment">-</span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="ClaimDetail">
+                    <b>Raider</b><br/>
+                    <i class="fa fa-check" aria-hidden="true" ng-if="ctrl.character.claim.raider"></i>
+                    <span ng-if="!ctrl.character.claim.raider">-</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="!ctrl.character.claim">
             <div class="col-md-12" ng-if="!ctrl.character.claim">
-                <div style="padding: 20px 0 20px 0;">
+                <div class="ClaimDetail">
                     <p>This character has not been claimed yet. If this is your character, <a href="" ng-click="ctrl.claimClicked()">why not claim it</a>?</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-
                 <button type="button" class="btn btn-success" ng-click="ctrl.closeClicked()">Close</button>
             </div>
         </div>
