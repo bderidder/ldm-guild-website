@@ -80,6 +80,13 @@ Models.Characters.CharacterFactory = function()
             claim.setRaider(jsonCharacter.claim.raider);
             claim.setRoles(jsonCharacter.claim.roles);
 
+            var account = new Models.Characters.Account();
+
+            account.setId(jsonCharacter.claim.accountReference.id);
+            account.setDisplayName(jsonCharacter.claim.accountReference.name);
+
+            claim.setAccount(account);
+
             character.setClaim(claim);
         }
 
