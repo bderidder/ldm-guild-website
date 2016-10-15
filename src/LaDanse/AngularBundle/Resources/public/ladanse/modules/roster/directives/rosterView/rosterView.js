@@ -26,15 +26,11 @@ rosterModule.directive('rosterView', function()
     {
         ctrl.searchCriteria = searchCriteria;
 
-        console.log("New search with criteria - " + searchCriteria);
-
         var restUrl = Routing.generate('getCharactersByCriteria');
 
         $http.post(restUrl, searchCriteria)
             .success(function(searchResult)
             {
-                console.log("Received search results");
-
                 ctrl.searchResult = searchResult;
             });
     }

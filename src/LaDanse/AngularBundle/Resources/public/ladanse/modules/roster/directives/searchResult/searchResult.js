@@ -19,12 +19,13 @@ rosterModule.directive('searchResult', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/searchResult/searchResult.html')
     };
 })
-.controller('SearchResultCtrl', function($scope, $rootScope, gameDataService)
+.controller('SearchResultCtrl', function($scope, $rootScope, $stateParams, $state, gameDataService, $http)
 {
     var ctrl = this;
 
     ctrl.searchResult = $scope.searchResult;
     ctrl.characters = null;
+    ctrl.detailCharacter = null;
 
     $scope.$watch('searchResult', function()
     {
@@ -32,10 +33,20 @@ rosterModule.directive('searchResult', function()
         ctrl.fetchData();
     });
 
+    ctrl.rowClicked = function(characterId)
+    {
+        if (ctrl.detailCharacter === null)
+        {
+            ctrl.detailCharacter = characterId;
+        }
+        else
+        {
+            ctrl.detailCharacter = null;
+        }
+    };
+
     ctrl.fetchData = function()
     {
-        console.log("fetchData");
-
         gameDataService.getGameData()
             .then(function(gameDataModel)
             {
@@ -47,5 +58,36 @@ rosterModule.directive('searchResult', function()
             });
     };
 
-    //ctrl.fetchData();
+    ctrl.claimCharacter = function(characterId)
+    {
+        var restUrl = Routing.generate('postClaim', {'characterId': characterId});
+
+        var newClaim =
+        {
+            "roles": [],
+            "raider": false,
+            "comment": null
+        };
+
+        $http.post(restUrl, newClaim)
+            .success(function()
+            {
+                console.log("Claiming succeeded");
+                $state.go('characters.home', $stateParams);
+            })
+            .error(function()
+            {
+                console.log("Claiming failed");
+            });
+    }
+
+    ctrl.detailCallback = {};
+    ctrl.detailCallback.claim = function(characterId)
+    {
+        ctrl.claimCharacter(characterId);
+    };
+    ctrl.detailCallback.close = function()
+    {
+        ctrl.detailCharacter = null;
+    };
 });

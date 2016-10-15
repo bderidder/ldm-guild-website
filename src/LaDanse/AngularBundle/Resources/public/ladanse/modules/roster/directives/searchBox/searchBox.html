@@ -9,11 +9,11 @@
                     <div ng-class="{'col-md-12': !ctrl.advancedSearch, 'col-md-6': ctrl.advancedSearch}">
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" id="" ng-model="ctrl.name" placeholder="Name">
+                            <input type="text" class="form-control" ng-model="ctrl.name" placeholder="Name" enter-key="ctrl.enterPressed()">
                             <span class="help-block">Type a name, or a part, of a character</span>
                         </div>
                     </div>
-                    <div class="col-md-3" ng-show="ctrl.advancedSearch">
+                    <div class="col-md-2" ng-show="ctrl.advancedSearch">
                         <div class="form-group">
                             <label for="">Minimum Level</label>
                             <div>
@@ -21,11 +21,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3" ng-show="ctrl.advancedSearch">
+                    <div class="col-md-2" ng-show="ctrl.advancedSearch">
                         <div class="form-group">
                             <label for="">Maximum Level</label>
                             <div>
                                 <input type="text" class="form-control" id="" ng-model="ctrl.maxLevel" maxlength="3" placeholder="110">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" ng-show="ctrl.advancedSearch">
+                        <div class="form-group">
+                            <label for="">&nbsp;</label>
+                            <div>
+                                <button class="btn btn-info form-control" ng-click="ctrl.levelCap()"
+                                ng-class="{ 'disabled': ctrl.minLevel == 110 && ctrl.maxLevel == 110}">only level 110</button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +88,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label>Roles</label>
+                            <label>Roles (any)</label>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" ng-model="ctrl.playsTank"> Tank

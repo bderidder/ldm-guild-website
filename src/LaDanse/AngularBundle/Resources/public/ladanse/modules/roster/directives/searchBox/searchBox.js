@@ -43,6 +43,11 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.claimedDisabled = false;
         };
 
+        ctrl.enterPressed = function()
+        {
+            ctrl.searchButtonClicked();
+        }
+
         this.raceUpdated = function()
         {
             if (ctrl.race != "AnyRace")
@@ -96,6 +101,12 @@ rosterModule.directive('characterSearchBox', function()
         $scope.$watch(function () {
             return ctrl.playsDPS;
         },ctrl.roleUpdated);
+
+        ctrl.levelCap = function()
+        {
+            ctrl.minLevel = 110;
+            ctrl.maxLevel = 110;
+        };
 
         ctrl.toggleSearchScope = function()
         {

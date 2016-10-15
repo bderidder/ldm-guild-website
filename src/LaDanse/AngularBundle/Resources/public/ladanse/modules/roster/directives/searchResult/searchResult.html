@@ -4,14 +4,14 @@
   -->
 
 <div class="MyCharactersContainer">
-    
+
     <p ng-if="ctrl.characters.length == 1">Only {{ ctrl.characters.length }} character in search result.</p>
     <p ng-if="ctrl.characters.length > 1 && ctrl.characters.length < 50">{{ ctrl.characters.length }} characters in search result.</p>
     <p ng-if="ctrl.characters.length >= 50">Search result is limited to {{ ctrl.characters.length }} characters.</p>
 
     <table class="table"
            style="width: 100%;"
-           ng-class="{'table-hover': !ctrl.editedCharacter}">
+           ng-class="{'table-hover': !ctrl.detailCharacter}">
         <thead>
             <tr>
                 <th class="center-th"></th> <!-- claimed -->
@@ -31,7 +31,9 @@
         </tr>
         </tbody>
         <tbody ng-repeat="character in ctrl.characters track by $index">
-            <tr class="claimRow">
+            <tr class="claimRow"
+                ng-if="ctrl.detailCharacter != character.id"
+                ng-click="ctrl.rowClicked(character.id)">
                 <td>
                     <i class="fa fa-link"
                        aria-hidden="true"
@@ -47,6 +49,12 @@
                 <td>{{ character.gameRace.name }}</td>
                 <td>{{ character.realm.name }}</td>
                 <td><span ng-if="character.guild">{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></span></td>
+            </tr>
+            <tr class="claimRow"
+                ng-if="ctrl.detailCharacter == character.id">
+                <td colspan="7">
+                    <character-detail character="character" callback="ctrl.detailCallback"></character-detail>
+                </td>
             </tr>
         </tbody>
     </table>
