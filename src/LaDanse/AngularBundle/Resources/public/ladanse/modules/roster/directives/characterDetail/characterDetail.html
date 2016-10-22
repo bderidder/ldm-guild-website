@@ -4,6 +4,7 @@
   -->
 
 <div class="CharacterDetailContainer">
+
     <div class="fluid-container">
         <div class="row">
             <div class="col-md-12">
@@ -26,9 +27,14 @@
             </div>
         </div>
         <div class="row" ng-if="ctrl.character.claim">
-            <div class="col-md-4">
+            <div class="col-md-4" ng-if="ctrl.character.claim.account.id != ctrl.currentAccount.id">
                 <div class="ClaimDetail">
                     <p>This character is claimed by <a href="#/roster/{{ ctrl.character.claim.account.id }}">{{ ctrl.character.claim.account.displayName }}</a>.</p>
+                </div>
+            </div>
+            <div class="col-md-4" ng-if="ctrl.character.claim.account.id == ctrl.currentAccount.id">
+                <div class="ClaimDetail">
+                    <p>You claimed this character. <br/>Go to <a href="#/characters">My Characters</a> to edit your claims.</p>
                 </div>
             </div>
             <div class="col-md-2">

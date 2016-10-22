@@ -20,9 +20,11 @@ rosterModule.directive('characterDetail', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/characterDetail/characterDetail.html')
     };
 })
-.controller('CharacterDetailCtrl', function($scope, $rootScope)
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $window)
 {
     var ctrl = this;
+
+    ctrl.currentAccount = $window.currentAccount;
 
     ctrl.character = $scope.character;
     ctrl.callback = $scope.callback;

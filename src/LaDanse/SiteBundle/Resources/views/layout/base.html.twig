@@ -83,6 +83,8 @@
 
     {% if auth.currentContext.authenticated %}
         <script type="text/javascript">
+            "use strict";
+
             var currentAccount = {
                 id: {{ auth.currentContext.account.id }},
                 username: '{{ auth.currentContext.account.username }}',
