@@ -366,7 +366,7 @@ class CharactersByCriteriaQuery extends AbstractQuery
            ->join('gameRace.faction', 'gameFaction')
            ->join('character.realm', 'realm')
            ->add('where', $whereClause)
-           ->setMaxResults(50);
+           ->setMaxResults(100);
 
         $qb->setParameter('minLevel', $this->getSearchCriteria()->getMinLevel())
            ->setParameter('maxLevel', $this->getSearchCriteria()->getMaxLevel())
