@@ -130,6 +130,7 @@ class CharactersByCriteriaQuery extends AbstractQuery
         $classParamRequired = false;
         $factionParamRequired = false;
         $rolesParamRequired = false;
+        $claimingMemberParamRequired = false;
 
         // if Race is selected, add clause
         if ($this->getSearchCriteria()->getGameRace() !== null)
@@ -288,6 +289,41 @@ class CharactersByCriteriaQuery extends AbstractQuery
         }
 
         // if "only non-claimed" is selected, add clause (this is a sub-query)
+        if ($this->getSearchCriteria()->getClaimingMember() != null)
+        {
+            /** @var \Doctrine\ORM\QueryBuilder $innerClaimingMemberQb */
+            $innerClaimingMemberQb = $em->createQueryBuilder();
+
+            $whereClause = $qb->expr()->andX(
+                $whereClause,
+                $qb->expr()->in(
+                    'characterVersion.character',
+                    $innerClaimingMemberQb->select('innerClaimingMemberCharacter.id')
+                        ->from(Entity\Claim::class, 'claimingMemberClaim')
+                        ->join('claimingMemberClaim.character', 'innerClaimingMemberCharacter')
+                        ->join('claimingMemberClaim.account', 'innerClaimingMemberAccount')
+                        ->add('where',
+                            $innerClaimingMemberQb->expr()->andX(
+                                $innerClaimingMemberQb->expr()->like('innerClaimingMemberAccount.displayName', ':claimingMember'),
+                                $innerClaimingMemberQb->expr()->orX(
+                                    $innerClaimingMemberQb->expr()->andX(
+                                        $innerClaimingMemberQb->expr()->lte('claimingMemberClaim.fromTime', ':onDateTime'),
+                                        $innerClaimingMemberQb->expr()->gt('claimingMemberClaim.endTime', ':onDateTime')
+                                    ),
+                                    $innerClaimingMemberQb->expr()->andX(
+                                        $innerClaimingMemberQb->expr()->lte('claimingMemberClaim.fromTime', ':onDateTime'),
+                                        $innerClaimingMemberQb->expr()->isNull('claimingMemberClaim.endTime')
+                                    )
+                                )
+                            )
+                        )->getDQL()
+                )
+            );
+
+            $claimingMemberParamRequired = true;
+        }
+
+        // if "only non-claimed" is selected, add clause (this is a sub-query)
         if (($this->getSearchCriteria()->getRoles() != null) && (count($this->getSearchCriteria()->getRoles()) > 0))
         {
             /** @var \Doctrine\ORM\QueryBuilder $innerRolesQb */
@@ -351,6 +387,9 @@ class CharactersByCriteriaQuery extends AbstractQuery
 
         if ($rolesParamRequired)
             $qb->setParameter('roles', $this->getSearchCriteria()->getRoles());
+
+        if ($claimingMemberParamRequired)
+            $qb->setParameter('claimingMember', '%' . $this->getSearchCriteria()->getClaimingMember() . '%');
 
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();

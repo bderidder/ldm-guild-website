@@ -53,6 +53,13 @@ class SearchCriteria
     /**
      * @var string
      * @Type("string")
+     * @SerializedName("claimingMember")
+     */
+    protected $claimingMember = null;
+
+    /**
+     * @var string
+     * @Type("string")
      * @SerializedName("guild")
      */
     protected $guild = null;
@@ -172,6 +179,24 @@ class SearchCriteria
     public function setRaider(int $raider): SearchCriteria
     {
         $this->raider = $raider;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClaimingMember()
+    {
+        return $this->claimingMember;
+    }
+
+    /**
+     * @param string $claimingMember
+     * @return SearchCriteria
+     */
+    public function setClaimingMember(string $claimingMember): SearchCriteria
+    {
+        $this->claimingMember = $claimingMember;
         return $this;
     }
 

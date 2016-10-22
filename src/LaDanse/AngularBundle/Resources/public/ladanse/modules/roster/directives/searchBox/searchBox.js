@@ -29,6 +29,7 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.name = "";
             ctrl.raider = 1;
             ctrl.claimed = 1;
+            ctrl.claimingMember = "";
             ctrl.minLevel = 1;
             ctrl.maxLevel = 110;
             ctrl.guild = "AnyGuild";
@@ -64,9 +65,15 @@ rosterModule.directive('characterSearchBox', function()
             return ctrl.race;
         },ctrl.raceUpdated);
 
-        this.raiderUpdated = function()
+        this.verifyClaimEnabled = function()
         {
-            if (ctrl.raider != 1)
+            if (
+                (ctrl.raider != 1)
+                ||
+                (ctrl.playsTank || ctrl.playsHealer || ctrl.playsDPS)
+                ||
+                (ctrl.claimingMember != null && ctrl.claimingMember.length > 0)
+            )
             {
                 ctrl.claimedDisabled = true;
                 ctrl.claimed = 2;
@@ -76,31 +83,24 @@ rosterModule.directive('characterSearchBox', function()
                 ctrl.claimedDisabled = false;
             }
         };
+
         $scope.$watch(function () {
             return ctrl.raider;
-        },ctrl.raiderUpdated);
+        },ctrl.verifyClaimEnabled);
 
-        this.roleUpdated = function()
-        {
-            if (ctrl.playsTank || ctrl.playsHealer || ctrl.playsDPS)
-            {
-                ctrl.claimedDisabled = true;
-                ctrl.claimed = 2;
-            }
-            else
-            {
-                ctrl.claimedDisabled = false;
-            }
-        };
         $scope.$watch(function () {
             return ctrl.playsTank;
-        },ctrl.roleUpdated);
+        },ctrl.verifyClaimEnabled);
         $scope.$watch(function () {
             return ctrl.playsHealer;
-        },ctrl.roleUpdated);
+        },ctrl.verifyClaimEnabled);
         $scope.$watch(function () {
             return ctrl.playsDPS;
-        },ctrl.roleUpdated);
+        },ctrl.verifyClaimEnabled);
+
+        $scope.$watch(function () {
+            return ctrl.claimingMember;
+        },ctrl.verifyClaimEnabled);
 
         ctrl.levelCap = function()
         {
@@ -146,6 +146,15 @@ rosterModule.directive('characterSearchBox', function()
                 {
                     searchCriteria.setRoles(null);
                 }
+
+                if (ctrl.claimingMember != null && ctrl.claimingMember.length > 0)
+                {
+                    searchCriteria.setClaimingMember(ctrl.claimingMember);
+                }
+                else
+                {
+                    searchCriteria.setClaimingMember(null);
+                }
             }
             else
             {
@@ -158,6 +167,7 @@ rosterModule.directive('characterSearchBox', function()
                 searchCriteria.setRaider(1);
                 searchCriteria.setClaimed(1);
                 searchCriteria.setRoles(null);
+                searchCriteria.setClaimingMember(null);
             }
 
             $scope.callback(searchCriteria);

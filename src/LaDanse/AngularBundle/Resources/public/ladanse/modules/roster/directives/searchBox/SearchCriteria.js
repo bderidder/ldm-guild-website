@@ -10,6 +10,7 @@ function SearchCriteria()
     this.maxLevel = 110;
     this.raider = 1;
     this.claimed = 1;
+    this.claimingMember = "";
     this.guild = null;
     this.gameRace = null;
     this.gameClass = null;
@@ -54,6 +55,16 @@ function SearchCriteria()
     this.getRaider = function()
     {
         return this.raider;
+    }
+
+    this.setClaimingMember = function(claimingMember)
+    {
+        this.claimingMember = claimingMember;
+    }
+
+    this.getClaimingMember = function()
+    {
+        return this.claimingMember;
     }
 
     this.setClaimed= function(claimed)
