@@ -54,3 +54,7 @@ parameters:
 
         # boolean flag stating if cookies can only be send over HTTPS (when true) or also over HTTP (when false)
         secure_cookies: false
+
+        # describe the type of deployment
+        deployment_name: 'Sunstrider Isle Test Deployment'
+        deployment_type: 'dev'

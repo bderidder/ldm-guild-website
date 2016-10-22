@@ -57,6 +57,10 @@
 
 <body class="">
 
+    <div id="DeploymentTypeContainer">
+        <span class="inner-text" id="DeploymentDescrption">Placeholder for deployment description</span>
+    </div>
+
     <div id="body-wrapper">
 
         <div id="content-wrapper">
@@ -154,6 +158,20 @@
                     'container':'body'
                 }
         );
+    });
+</script>
+
+<script type="text/javascript">
+    $( document ).ready(function()
+    {
+        var deploymentType = "{{ deployment_type }}";
+        var deploymentName = "{{ deployment_name }}";
+
+        if (deploymentType != "prod")
+        {
+            $("#DeploymentDescrption").text(deploymentName);
+            $("#DeploymentTypeContainer").show();
+        }
     });
 </script>
 

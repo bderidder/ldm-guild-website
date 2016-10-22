@@ -32,6 +32,8 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         auth: "@LaDanse.AuthenticationService"
+        deployment_name: "%deployment_name%"
+        deployment_type: "%deployment_type%"
 
 jms_di_extra:
     locations:
