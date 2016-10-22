@@ -110,8 +110,6 @@ rosterModule.directive('characterSearchBox', function()
 
         ctrl.toggleSearchScope = function()
         {
-            console.log("Class - " + ctrl.class);
-
             ctrl.advancedSearch = !ctrl.advancedSearch;
         }
 
