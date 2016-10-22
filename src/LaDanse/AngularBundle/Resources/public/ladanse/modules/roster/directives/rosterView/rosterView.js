@@ -28,11 +28,18 @@ rosterModule.directive('rosterView', function()
 
         if (criteriaQuery != undefined)
         {
-            var jsonCriteria = atob(criteriaQuery);
+            try
+            {
+                var jsonCriteria = atob(criteriaQuery);
 
-            ctrl.searchCriteria = new SearchCriteria(JSON.parse(jsonCriteria));
+                ctrl.searchCriteria = new SearchCriteria(JSON.parse(jsonCriteria));
 
-            ctrl.searchCallback(ctrl.searchCriteria);
+                ctrl.searchCallback(ctrl.searchCriteria);
+            }
+            catch(e)
+            {
+                ctrl.searchCriteria = new SearchCriteria();
+            }
         }
         else
         {
