@@ -3,19 +3,36 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-function SearchCriteria()
+function SearchCriteria(criteriaValues)
 {
-    this.name = "";
-    this.minLevel = 1;
-    this.maxLevel = 110;
-    this.raider = 1;
-    this.claimed = 1;
-    this.claimingMember = "";
-    this.guild = null;
-    this.gameRace = null;
-    this.gameClass = null;
-    this.gameFaction = null;
-    this.roles = null;
+    if (criteriaValues != undefined)
+    {
+        this.name = criteriaValues.name;
+        this.minLevel = criteriaValues.minLevel;
+        this.maxLevel = criteriaValues.maxLevel;
+        this.raider = criteriaValues.raider;
+        this.claimed = criteriaValues.claimed;
+        this.claimingMember = criteriaValues.claimingMember;
+        this.guild = criteriaValues.guild;
+        this.gameRace = criteriaValues.gameRace;
+        this.gameClass = criteriaValues.gameClass;
+        this.gameFaction = criteriaValues.gameFaction;
+        this.roles = criteriaValues.roles;
+    }
+    else
+    {
+        this.name = "";
+        this.minLevel = 1;
+        this.maxLevel = 110;
+        this.raider = 1;
+        this.claimed = 1;
+        this.claimingMember = "";
+        this.guild = null;
+        this.gameRace = null;
+        this.gameClass = null;
+        this.gameFaction = null;
+        this.roles = null;
+    }
 
     this.setName = function(name)
     {
@@ -126,4 +143,6 @@ function SearchCriteria()
     {
         return this.roles;
     }
+
+    return this;
 }

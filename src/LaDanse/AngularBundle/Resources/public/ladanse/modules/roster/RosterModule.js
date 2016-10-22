@@ -20,7 +20,7 @@ rosterModule.config(
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/Roster.html')
                 })
                 .state('roster.home', {
-                    url: '',
+                    url: '?criteria',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/partials/RosterView.html')
                 })
                 .state('roster.member', {

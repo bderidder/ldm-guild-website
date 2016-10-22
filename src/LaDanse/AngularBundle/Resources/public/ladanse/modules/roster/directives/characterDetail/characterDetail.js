@@ -20,7 +20,7 @@ rosterModule.directive('characterDetail', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/characterDetail/characterDetail.html')
     };
 })
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $window)
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $window, Notification)
 {
     var ctrl = this;
 
@@ -64,6 +64,22 @@ rosterModule.directive('characterDetail', function()
     ctrl.claimClicked = function()
     {
         ctrl.callback.claim(ctrl.character.id);
+    };
+
+    ctrl.accountClicked = function()
+    {
+        var displayName = ctrl.character.claim.account.displayName;
+
+        var searchCriteria = new SearchCriteria();
+        searchCriteria.setClaimingMember(displayName);
+
+        var jsonAsString = JSON.stringify(searchCriteria);
+
+        var base64Json = btoa(jsonAsString);
+
+        Notification.primary("Searching for all characters claimed by " + displayName);
+
+        $state.go('roster.home', { 'criteria': base64Json });
     };
 
     ctrl.initForm();

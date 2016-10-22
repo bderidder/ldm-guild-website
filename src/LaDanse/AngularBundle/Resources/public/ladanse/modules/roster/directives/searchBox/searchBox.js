@@ -13,7 +13,8 @@ rosterModule.directive('characterSearchBox', function()
         controllerAs: 'ctrl',
         scope: {
             visible: '=',
-            callback: '='
+            callback: '=',
+            searchCriteria: '='
         },
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/searchBox/searchBox.html')
     };
@@ -23,6 +24,23 @@ rosterModule.directive('characterSearchBox', function()
         var ctrl = this;
 
         ctrl.advancedSearch = false;
+
+        ctrl.initForm = function(searchCriteria)
+        {
+            ctrl.name = searchCriteria.getName() == null ? "" : searchCriteria.getName();
+            ctrl.raider = searchCriteria.getRaider();
+            ctrl.claimed = searchCriteria.getClaimed();
+            ctrl.claimingMember = searchCriteria.getClaimingMember() == null ? "" : searchCriteria.getClaimingMember();
+            ctrl.minLevel = searchCriteria.getMinLevel();
+            ctrl.maxLevel = searchCriteria.getMaxLevel();
+            ctrl.guild = searchCriteria.getGuild() == null ? "AnyGuild" : searchCriteria.getGuild();
+            ctrl.race = "AnyRace";
+            ctrl.class = "AnyClass";
+            ctrl.faction = "AnyFaction";
+            ctrl.playsTank = false;
+            ctrl.playsHealer = false;
+            ctrl.playsDPS = false;
+        }
 
         ctrl.resetForm = function()
         {
@@ -237,5 +255,5 @@ rosterModule.directive('characterSearchBox', function()
                 ctrl.gameFactionEntries = gameFactionEntries;
             });
 
-        ctrl.resetForm();
+        ctrl.initForm($scope.searchCriteria);
     });
