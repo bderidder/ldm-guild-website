@@ -6,6 +6,8 @@
 
     {{ renderHeader(event.name, path('calendarIndex', {'showDate': event.startTime|date("Ymd") })) }}
 
+    {% set isCancelled = (event.state == 'Cancelled') %}
+
     {# EVENT PASSED #}
 	{% if (not isFuture) and event.state != 'Cancelled' %}
 		<div class="alert alert-warning">
@@ -80,8 +82,6 @@
         <div class="row">
             <div class="col-md-7">
 
-                {% if (event.state == 'Pending' or event.state == 'Confirmed') %}
-
 			    <h4>Sign Ups</h4>
 
 			    {# render all sign ups if at least one exists #}
@@ -144,18 +144,22 @@
 			                        {% endif %}
 			                    </td>
 			                    <td>
-			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
-											<i class="fa fa-trash-o fa-1x"></i>
-										</a>
-			                        {% endif %}
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                                <i class="fa fa-trash-o fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
 			                    </td>
 								<td>
-									{% if signUp.currentUser and isFuture %}
-										<a href="{{ path('editSignUp', {'id': event.id}) }}">
-											<i class="fa fa-pencil fa-1x"></i>
-										</a>
-									{% endif %}
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a href="{{ path('editSignUp', {'id': event.id}) }}">
+                                                <i class="fa fa-pencil fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
 								</td>
 			                </tr>
 			            {% endfor %}
@@ -189,20 +193,24 @@
 			                                     'accountId': signUp.account.id,
 			                                     'role': 'DPS'}) }}"></i>{% endif %}
 			                    </td>
-			                    <td>
-			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
-											<i class="fa fa-trash-o fa-1x"></i>
-										</a>
-			                        {% endif %}
-			                    </td>
-								<td>
-									{% if signUp.currentUser and isFuture %}
-										<a href="{{ path('editSignUp', {'id': event.id}) }}">
-											<i class="fa fa-pencil fa-1x"></i>
-										</a>
-									{% endif %}
-								</td>
+                                <td>
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                                <i class="fa fa-trash-o fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a href="{{ path('editSignUp', {'id': event.id}) }}">
+                                                <i class="fa fa-pencil fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
 			                </tr>
 			            {% endfor %}
 
@@ -217,27 +225,31 @@
 			                    <td class="center-td" colspan="3">
 			                        <i class="text-danger">can't come</i>
 			                    </td>
-			                    <td>
-			                        {% if signUp.currentUser and isFuture %}
-			                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
-											<i class="fa fa-trash-o fa-1x"></i>
-										</a>
-			                        {% endif %}
-			                    </td>
-								<td>
-									{% if signUp.currentUser and isFuture %}
-										<a href="{{ path('editSignUp', {'id': event.id}) }}">
-											<i class="fa fa-pencil fa-1x"></i>
-										</a>
-									{% endif %}
-								</td>
+                                <td>
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                                <i class="fa fa-trash-o fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not isCancelled %}
+                                        {% if signUp.currentUser and isFuture %}
+                                            <a href="{{ path('editSignUp', {'id': event.id}) }}">
+                                                <i class="fa fa-pencil fa-1x"></i>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
 			                </tr>
 			            {% endfor %}
 
 			        </table>
 
 			        {# if the currently logged in user is not signed up yet, invite to do so #}
-			        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated and isFuture %}
+			        {% if (not event.signUps.currentUserSignedUp) and auth.currentContext.authenticated and isFuture and not isCancelled %}
 			            <p>You seemed to have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
 			            <p>
@@ -247,7 +259,7 @@
 			        {% endif %}
 			    
 			    {# no sign ups, invite the user to make one or inform about absence #}
-			    {% elseif isFuture %}
+			    {% elseif isFuture and not isCancelled %}
 			        <p>There are no sign ups yet. Be the first to sign up or inform us of your absence.</p>
 
 			        <p>
@@ -255,10 +267,10 @@
 			            <a class="btn btn-warning" href="{{ path('createAbsence', {'eventId': event.id}) }}">can't come</a>
 			        </p>
 				{% else %}
-					<p>There were no sign ups.</p>
+                    {% if not isCancelled %}
+					    <p>There were no sign ups.</p>
+                    {% endif %}
 			    {% endif %}
-
-                {% endif %}
 
 			    {# if the currently logged in user is the organiser, edit and delete options are shown #}
 			    {% if event.isOrganiser and auth.currentContext.authenticated and isFuture and (event.state == 'Pending' or event.state == 'Confirmed') %}
