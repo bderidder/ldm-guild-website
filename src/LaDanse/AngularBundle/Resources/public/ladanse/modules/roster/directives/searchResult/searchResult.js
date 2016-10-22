@@ -30,6 +30,7 @@ rosterModule.directive('searchResult', function()
     $scope.$watch('searchResult', function()
     {
         ctrl.searchResult = $scope.searchResult;
+        ctrl.detailCharacter = null;
         ctrl.fetchData();
     });
 
