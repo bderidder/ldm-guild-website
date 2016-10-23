@@ -423,9 +423,9 @@ class CharactersByCriteriaQuery extends AbstractQuery
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::QUERY_CHARACTERS_BY_CRITERIA,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'      => $this->getAccount()->getId(),
+                    'accountId'      => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'searchCriteria' => ActivityEvent::annotatedToSimpleObject($this->getSearchCriteria()),
                     'onDateTime'     => $this->getOnDateTime()
                 ]

@@ -222,9 +222,9 @@ class GetAllCharactersInGuildQuery extends AbstractQuery
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::QUERY_GET_ALL_CHARACTERS_IN_GUILD,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'      => $this->getAccount()->getId(),
+                    'accountId'      => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'guildReference' => $this->getGuildReference(),
                     'onDateTime'     => $this->getOnDateTime()
                 ]

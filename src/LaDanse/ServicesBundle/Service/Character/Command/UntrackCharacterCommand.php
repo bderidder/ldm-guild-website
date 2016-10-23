@@ -266,9 +266,9 @@ class UntrackCharacterCommand extends AbstractCommand
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::CHARACTER_UNTRACK,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'      => $this->getAccount()->getId(),
+                    'accountId'      => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'characterId'    => $this->getCharacterId()
                 ]
             )

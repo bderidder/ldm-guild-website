@@ -162,9 +162,9 @@ class CharactersByKeywordsQuery extends AbstractQuery
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::QUERY_CHARACTERS_BY_KEYWORDS,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'  => $this->getAccount()->getId(),
+                    'accountId'  => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'keywords'   => $this->getKeywords(),
                     'onDateTime' => $this->getOnDateTime()
                 ]

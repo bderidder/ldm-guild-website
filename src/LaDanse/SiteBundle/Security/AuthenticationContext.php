@@ -34,7 +34,14 @@ class AuthenticationContext extends LaDanseService
      */
     public function isAuthenticated()
     {
-        return (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
+        try
+        {
+            return (true === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
+        }
+        catch(\Exception $exception)
+        {
+            return false;
+        }
     }
 
     /**

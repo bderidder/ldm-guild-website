@@ -207,9 +207,9 @@ class PutClaimCommand extends AbstractCommand
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::CLAIM_EDIT,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'   => $this->getAccount()->getId(),
+                    'accountId'   => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'characterId' => $this->getCharacterId(),
                     'patchClaim'  => ActivityEvent::annotatedToSimpleObject($this->getPatchClaim())
                 ]

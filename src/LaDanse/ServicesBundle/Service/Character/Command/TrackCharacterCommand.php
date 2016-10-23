@@ -217,9 +217,9 @@ class TrackCharacterCommand extends AbstractCommand
                     ActivityEvent::EVENT_NAME,
                     new ActivityEvent(
                         ActivityType::CHARACTER_CREATE,
-                        $this->getAccount(),
+                        $this->isAuthenticated() ? $this->getAccount() : null,
                         [
-                            'accountId'      => $this->getAccount()->getId(),
+                            'accountId'      => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                             'patchCharacter' => ActivityEvent::annotatedToSimpleObject($this->getPatchCharacter())
                         ]
                     )
@@ -292,9 +292,9 @@ class TrackCharacterCommand extends AbstractCommand
                 ActivityEvent::EVENT_NAME,
                 new ActivityEvent(
                     ActivityType::CHARACTER_TRACK,
-                    $this->getAccount(),
+                    $this->isAuthenticated() ? $this->getAccount() : null,
                     [
-                        'accountId'      => $this->getAccount()->getId(),
+                        'accountId'      => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                         'characterId'    => $character->getId(),
                         'patchCharacter' => ActivityEvent::annotatedToSimpleObject($this->getPatchCharacter())
                     ]

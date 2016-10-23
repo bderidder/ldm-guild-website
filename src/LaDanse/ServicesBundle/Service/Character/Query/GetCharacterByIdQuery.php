@@ -159,9 +159,9 @@ class GetCharacterByIdQuery extends AbstractQuery
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::QUERY_GET_CHARACTER_BY_ID,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'   => $this->getAccount()->getId(),
+                    'accountId'   => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'characterId' => $this->getCharacterId(),
                     'onDateTime'  => $this->getOnDateTime()
                 ]

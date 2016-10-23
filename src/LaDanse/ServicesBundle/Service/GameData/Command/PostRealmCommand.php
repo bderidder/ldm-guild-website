@@ -155,9 +155,9 @@ class PostRealmCommand extends AbstractCommand
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::REALM_CREATE,
-                $this->getAccount(),
+                $this->isAuthenticated() ? $this->getAccount() : null,
                 [
-                    'accountId'  => $this->getAccount()->getId(),
+                    'accountId'  => $this->isAuthenticated() ? $this->getAccount()->getId() : null,
                     'patchRealm' => ActivityEvent::annotatedToSimpleObject($this->getPatchRealm())
                 ]
             )
