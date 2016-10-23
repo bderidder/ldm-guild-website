@@ -30,7 +30,15 @@ class ActivityEventFilter
             ActivityType::FORUM_TOPIC_REMOVE,
             ActivityType::FORUM_TOPIC_UPDATE,
             ActivityType::FORUM_POST_CREATE,
-            ActivityType::FORUM_POST_UPDATE
+            ActivityType::FORUM_POST_UPDATE,
+            ActivityType::SETTINGS_PROFILE_UPDATE,
+            ActivityType::SETTINGS_PASSWORD_UPDATE,
+            ActivityType::SETTINGS_CALEXPORT_UPDATE,
+            ActivityType::SETTINGS_CALEXPORT_RESET,
+            ActivityType::SETTINGS_NOTIF_UPDATE,
+            ActivityType::BATTLENET_OAUTH_VERIFY,
+            ActivityType::BATTLENET_OAUTH_DISCONNECT,
+            ActivityType::REDIRECT
         );
     }
 
