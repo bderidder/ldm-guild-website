@@ -32,3 +32,8 @@ QueriesRestRouting:
     resource: "@LaDanseRestBundle/Controller/Queries"
     type:     annotation
     prefix:   /api/queries
+
+CallbackRouting:
+    resource: "@LaDanseRestBundle/Controller/Callback"
+    type:     annotation
+    prefix:   /api/callback
