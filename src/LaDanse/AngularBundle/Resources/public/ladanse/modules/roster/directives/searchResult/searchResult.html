@@ -3,7 +3,7 @@
   ~ @link     https://github.com/bderidder/ldm-guild-website
   -->
 
-<div class="MyCharactersContainer">
+<div class="SearchResultsTableContainer">
 
     <p ng-if="ctrl.characters.length == 1">Only {{ ctrl.characters.length }} character in search result.</p>
     <p ng-if="ctrl.characters.length > 1 && ctrl.characters.length < 100">{{ ctrl.characters.length }} characters in search result.</p>
@@ -25,30 +25,29 @@
         </thead>
         <tbody>
             <tr ng-if="ctrl.characters.length == 0">
-            <td colspan="11">
-                <i>There are no characters in the search result.</i>
-            </td>
-        </tr>
+                <td colspan="11">
+                    <i>There are no characters in the search result.</i>
+                </td>
+            </tr>
         </tbody>
         <tbody ng-repeat="character in ctrl.characters track by $index">
             <tr class="claimRow"
                 ng-if="ctrl.detailCharacter != character.id"
                 ng-click="ctrl.rowClicked(character.id)">
                 <td>
-                    <i class="fa fa-link"
+                    <i class="fa fa-link claimedIcon"
                        aria-hidden="true"
-                       style="color: darkolivegreen;"
                        ng-if="character.claim"></i>
                 </td>
                 <td>
-                    <span style="font-weight: bold;">{{ character.name }}</span>
+                    <span class="characterName">{{ character.name }}</span>
                 </td>
                 <td class="center-td">{{ character.level }}</td>
 
                 <td>{{ character.gameClass.name }}</td>
                 <td>{{ character.gameRace.name }}</td>
                 <td>{{ character.realm.name }}</td>
-                <td><span ng-if="character.guild">{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></span></td>
+                <td><span ng-if="character.guild">{{ character.guild.name }} <br/><span class="characterRealm">(on {{ character.guild.realm.name }})</span></span></td>
             </tr>
             <tr class="claimRow"
                 ng-if="ctrl.detailCharacter == character.id">

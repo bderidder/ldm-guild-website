@@ -17,9 +17,9 @@
                 <th class="center-th"></th> <!-- raider -->
                 <th></th> <!-- name -->
                 <th></th> <!-- level -->
-                <th class="center-th" style="width: 75px">Tank</th>
-                <th class="center-th" style="width: 75px">Healer</th>
-                <th class="center-th" style="width: 75px">Damage</th>
+                <th class="center-th roleColumn">Tank</th>
+                <th class="center-th roleColumn">Healer</th>
+                <th class="center-th roleColumn">Damage</th>
                 <th></th> <!-- class -->
                 <th></th> <!-- race -->
                 <th>Realm</th>
@@ -40,13 +40,12 @@
                 ng-if="ctrl.editedCharacter != character.id"
                 ng-click="ctrl.editCharacter(character.id)">
                 <td>
-                    <i class="fa fa-star"
+                    <i class="fa fa-star raiderIcon"
                        aria-hidden="true"
-                       style="color: red;"
                        ng-if="character.claim && character.claim.raider"></i>
                 </td>
                 <td>
-                    <span style="font-weight: bold;">{{ character.name }}</span>
+                    <span><b>{{ character.name }}</b></span>
                 </td>
                 <td class="center-td">{{ character.level }}</td>
                 <td class="center-td">
@@ -67,7 +66,7 @@
                 <td>{{ character.gameClass.name }}</td>
                 <td>{{ character.gameRace.name }}</td>
                 <td>{{ character.realm.name }}</td>
-                <td>{{ character.guild.name }} <br/><span style="font-size: 0.85em;">(on {{ character.guild.realm.name }})</span></td>
+                <td>{{ character.guild.name }} <br/><span class="characterRealmSmall">(on {{ character.guild.realm.name }})</span></td>
                 <td><i class="fa fa-comment-o"
                        aria-hidden="true"
                        ng-if="character.claim && character.claim.comment && character.claim.comment.length > 0"></i></td>

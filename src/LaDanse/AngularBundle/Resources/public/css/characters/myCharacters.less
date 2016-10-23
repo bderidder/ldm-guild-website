@@ -3,15 +3,25 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
+@roleColumnWidth: 75px;
+
 div.MyCharactersContainer
 {
   cursor: default;
 
-  div.EditorContainer
+  th.roleColumn
   {
-    background-color: rgb(245, 245, 245);
-    border-radius: 5px;
-    padding: 10px;
+    width: @roleColumnWidth;
+  }
+
+  i.raiderIcon
+  {
+    color: red;
+  }
+
+  span.characterRealmSmall
+  {
+    font-size: 0.85em;
   }
 }
 

@@ -9,16 +9,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div style="float: left;">
-                    <span style="font-size: 2em; font-weight: bold;">{{ ctrl.character.name }}</span>
-                    <span style="font-size: 1.1em; font-weight: bold;">on {{ ctrl.character.realm.name }}</span>
+                    <span class="characterName">{{ ctrl.character.name }}</span>
+                    <span class="characterRealm">on {{ ctrl.character.realm.name }}</span>
                     <br/>
-                    <span style="font-size: 0.9em;">
+                    <span class="characterRaceClass">
                         {{ ctrl.character.level }} {{ ctrl.character.gameRace.name }} {{ ctrl.character.gameClass.name }}
                     </span>
                     <span ng-if="ctrl.character.guild"
-                          style="font-size: 0.9em;">(member of guild {{ ctrl.character.guild.name }} on {{ ctrl.character.guild.realm.name }})</span>
+                          class="characterGuild">(member of guild {{ ctrl.character.guild.name }} on {{ ctrl.character.guild.realm.name }})</span>
                 </div>
-                <div style="float: right; font-size: 0.8em;" ng-if="ctrl.character.level >= 10">
+                <div class="characterlevel" ng-if="ctrl.character.level >= 10">
                     <a target="_blank"
                        href="http://eu.battle.net/wow/en/character/{{ ctrl.character.realm.getNormalizedName() }}/{{ ctrl.character.name }}/simple">see character on Battle.net
                         <img width="25" src="/bundles/ladansesite/images/BattleNet.png" />
