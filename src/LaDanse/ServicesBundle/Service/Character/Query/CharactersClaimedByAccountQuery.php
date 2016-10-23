@@ -8,11 +8,14 @@ namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(CharactersClaimedByAccountQuery::SERVICE_NAME, public=true, shared=false)
@@ -26,6 +29,12 @@ class CharactersClaimedByAccountQuery extends AbstractQuery
      * @DI\Inject("monolog.logger.ladanse")
      */
     public $logger;
+
+    /**
+     * @var EventDispatcherInterface $eventDispatcher
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
 
     /**
      * @var $logger \Doctrine\Bundle\DoctrineBundle\Registry
@@ -171,6 +180,17 @@ class CharactersClaimedByAccountQuery extends AbstractQuery
         $characterHydrator = $this->container->get(CharacterHydrator::SERVICE_NAME);
         $characterHydrator->setCharacterIds($characterIds);
         $characterHydrator->setOnDateTime($this->getOnDateTime());
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::QUERY_CHARACTERS_CLAIMED_BY_ACCOUNT,
+                $this->getAccount(),
+                [
+                    'accountId'      => $this->getAccount()->getId()
+                ]
+            )
+        );
 
         return DTO\Character\CharacterMapper::mapArray($characterVersions, $characterHydrator);
     }

@@ -4,6 +4,8 @@ namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Common\ServiceException;
@@ -259,5 +261,17 @@ class UntrackCharacterCommand extends AbstractCommand
                 ->setParameter(2, $em->getReference(Entity\Character::class, $this->getCharacterId()))
                 ->getQuery()->execute();
         }
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHARACTER_UNTRACK,
+                $this->getAccount(),
+                [
+                    'accountId'      => $this->getAccount()->getId(),
+                    'characterId'    => $this->getCharacterId()
+                ]
+            )
+        );
     }
 }

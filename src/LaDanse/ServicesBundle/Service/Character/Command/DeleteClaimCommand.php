@@ -13,6 +13,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
@@ -179,6 +180,18 @@ class DeleteClaimCommand extends AbstractCommand
             ->getQuery()->execute();
 
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_REMOVE,
+                $this->getAccount(),
+                [
+                    'accountId'   => $this->getAccount()->getId(),
+                    'characterId' => $this->getCharacterId()
+                ]
+            )
+        );
 
         /** @var CharacterService $characterService */
         $characterService = $this->container->get(CharacterService::SERVICE_NAME);

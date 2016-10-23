@@ -13,6 +13,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
@@ -119,6 +120,10 @@ class PutClaimCommand extends AbstractCommand
         }
     }
 
+    /**
+     * @return DTO\Character\Character|null
+     * @throws ServiceException
+     */
     protected function runCommand()
     {
         // create a shared $fromTime since we will need it often below
@@ -197,6 +202,19 @@ class PutClaimCommand extends AbstractCommand
         $this->updatePlaysRoles($em, $claim, $fromTime);
 
         $em->flush();
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CLAIM_EDIT,
+                $this->getAccount(),
+                [
+                    'accountId'   => $this->getAccount()->getId(),
+                    'characterId' => $this->getCharacterId(),
+                    'patchClaim'  => ActivityEvent::annotatedToSimpleObject($this->getPatchClaim())
+                ]
+            )
+        );
 
         /** @var CharacterService $characterService */
         $characterService = $this->container->get(CharacterService::SERVICE_NAME);

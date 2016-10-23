@@ -8,11 +8,14 @@ namespace LaDanse\ServicesBundle\Service\Character\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @DI\Service(GetCharacterByIdQuery::SERVICE_NAME, public=true, shared=false)
@@ -26,6 +29,12 @@ class GetCharacterByIdQuery extends AbstractQuery
      * @DI\Inject("monolog.logger.ladanse")
      */
     public $logger;
+
+    /**
+     * @var EventDispatcherInterface $eventDispatcher
+     * @DI\Inject("event_dispatcher")
+     */
+    public $eventDispatcher;
 
     /**
      * @var $logger \Doctrine\Bundle\DoctrineBundle\Registry
@@ -146,6 +155,18 @@ class GetCharacterByIdQuery extends AbstractQuery
         $characterHydrator->setCharacterIds([$this->getCharacterId()]);
         $characterHydrator->setOnDateTime($this->getOnDateTime());
 
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::QUERY_GET_CHARACTER_BY_ID,
+                $this->getAccount(),
+                [
+                    'accountId'   => $this->getAccount()->getId(),
+                    'characterId' => $this->getCharacterId(),
+                    'onDateTime'  => $this->getOnDateTime()
+                ]
+            )
+        );
 
         return DTO\Character\CharacterMapper::mapSingle($characterVersion, $characterHydrator);
     }

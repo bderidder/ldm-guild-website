@@ -36,9 +36,11 @@ class ActivityType
 
     const GALLERY_VIEW  = 'Gallery.View';  // Read Only
 
-    const CHARACTER_CREATE = "Character.Create"; // State Change
-    const CHARACTER_UPDATE = "Character.Update"; // State Change
-    const CHARACTER_REMOVE = "Character.Remove"; // State Change
+    const CHARACTER_CREATE  = "Character.Create"; // State Change
+    const CHARACTER_UPDATE  = "Character.Update"; // State Change
+    const CHARACTER_REMOVE  = "Character.Remove"; // State Change
+    const CHARACTER_TRACK   = "Character.Track"; // State Change
+    const CHARACTER_UNTRACK = "Character.Untrack"; // State Change
 
     const CLAIM_VIEW    = 'Claim.View';   // Read Only
     const CLAIM_CREATE  = 'Claim.Create'; // State Change
@@ -84,6 +86,11 @@ class ActivityType
     const REDIRECT = "Redirect"; // Read Only
 
     const REALM_CREATE = "Realm.Create"; // State Change
-
     const GUILD_CREATE = "Guild.Create"; // State Change
+
+    const QUERY_CHARACTERS_BY_CRITERIA        = "Query.CharactersByCriteriaQuery"; // Read Only
+    const QUERY_GET_CHARACTER_BY_ID           = "Query.GetCharacterByIdQuery"; // Read Only
+    const QUERY_CHARACTERS_CLAIMED_BY_ACCOUNT = "Query.CharactersClaimedByAccountQuery"; // Read Only
+    const QUERY_GET_ALL_CHARACTERS_IN_GUILD   = "Query.GetAllCharactersInGuildQuery"; // Read Only
+    const QUERY_CHARACTERS_BY_KEYWORDS        = "Query.CharactersByKeywordsQuery"; // Read Only
 }

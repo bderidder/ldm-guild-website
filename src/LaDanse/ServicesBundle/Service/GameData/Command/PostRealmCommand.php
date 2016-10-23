@@ -8,6 +8,8 @@ namespace LaDanse\ServicesBundle\Service\GameData\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
@@ -149,20 +151,17 @@ class PostRealmCommand extends AbstractCommand
 
         $dtoRealm = RealmMapper::mapSingle($newRealm);
 
-        /*
-         * Disable until we have proper support for Commands.
-         *
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::REALM_CREATE,
                 $this->getAccount(),
                 [
-                    'realm' => $this->serializeToJson($dtoRealm)
+                    'accountId'  => $this->getAccount()->getId(),
+                    'patchRealm' => ActivityEvent::annotatedToSimpleObject($this->getPatchRealm())
                 ]
             )
         );
-        */
 
         return $dtoRealm;
     }

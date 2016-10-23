@@ -26,6 +26,7 @@ class ActivityEventFilter
             ActivityType::CHARACTER_REMOVE,
             ActivityType::CLAIM_CREATE,
             ActivityType::CLAIM_EDIT,
+            ActivityType::CLAIM_REMOVE,
             ActivityType::FORUM_TOPIC_CREATE,
             ActivityType::FORUM_TOPIC_REMOVE,
             ActivityType::FORUM_TOPIC_UPDATE,

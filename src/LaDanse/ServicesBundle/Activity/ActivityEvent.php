@@ -2,6 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Activity;
 
+use JMS\Serializer\SerializerBuilder;
 use LaDanse\DomainBundle\Entity\Account;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -99,5 +100,23 @@ class ActivityEvent extends Event
     public function setObject($object)
     {
         $this->object = $object;
+    }
+
+    /**
+     * @param object $annotatedObject
+     * @return object mixed
+     */
+    static public function annotatedToSimpleObject($annotatedObject)
+    {
+        if ($annotatedObject == NULL)
+        {
+            return NULL;
+        }
+        $serializer = SerializerBuilder::create()->build();
+        $jsonContent = $serializer->serialize($annotatedObject, 'json');
+
+        $simpleObject = json_decode($jsonContent);
+
+        return $simpleObject;
     }
 }

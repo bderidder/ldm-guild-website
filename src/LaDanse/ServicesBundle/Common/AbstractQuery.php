@@ -2,6 +2,9 @@
 
 namespace LaDanse\ServicesBundle\Common;
 
+use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\SiteBundle\Security\AuthenticationContext;
+use LaDanse\SiteBundle\Security\AuthenticationService;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -20,6 +23,34 @@ abstract class AbstractQuery
     public function __construct(ContainerInterface $container)
     {
         $this->setContainer($container);
+    }
+
+    /**
+     * Returns true if the current request is authenticated, false otherwise
+     *
+     * @return bool
+     */
+    protected function isAuthenticated()
+    {
+        /** @var $authContext AuthenticationContext */
+        $authContext = $this->container->get(AuthenticationService::SERVICE_NAME)->getCurrentContext();
+
+        return $authContext->isAuthenticated();
+    }
+
+    /**
+     * Returns the account that is currently logged in. When not authenticated, returns null.
+     *
+     * @return Account
+     */
+    protected function getAccount()
+    {
+        if ($this->isAuthenticated())
+        {
+            return $this->container->get(AuthenticationService::SERVICE_NAME)->getCurrentContext()->getAccount();
+        }
+
+        return null;
     }
 
     /**

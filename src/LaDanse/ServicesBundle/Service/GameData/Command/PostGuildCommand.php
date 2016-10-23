@@ -8,6 +8,8 @@ namespace LaDanse\ServicesBundle\Service\GameData\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
@@ -172,19 +174,17 @@ class PostGuildCommand extends AbstractCommand
 
         $dtoGuild = GuildMapper::mapSingle($newGuild);
 
-        /*
-         * Disable until we have proper support for Commands.
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
                 ActivityType::GUILD_CREATE,
                 $this->getAccount(),
                 [
-                    'guild' => $this->serializeToJson($dtoGuild)
+                    'accountId'  => $this->getAccount()->getId(),
+                    'patchGuild' => ActivityEvent::annotatedToSimpleObject($this->getPatchGuild())
                 ]
             )
         );
-        */
 
         return $dtoGuild;
     }

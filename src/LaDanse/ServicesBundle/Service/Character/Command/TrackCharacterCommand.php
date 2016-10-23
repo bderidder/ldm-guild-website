@@ -8,6 +8,8 @@ namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Common\ServiceException;
@@ -211,6 +213,18 @@ class TrackCharacterCommand extends AbstractCommand
 
                 $em->flush();
 
+                $this->eventDispatcher->dispatch(
+                    ActivityEvent::EVENT_NAME,
+                    new ActivityEvent(
+                        ActivityType::CHARACTER_CREATE,
+                        $this->getAccount(),
+                        [
+                            'accountId'      => $this->getAccount()->getId(),
+                            'patchCharacter' => ActivityEvent::annotatedToSimpleObject($this->getPatchCharacter())
+                        ]
+                    )
+                );
+
                 /** @var CharacterService $characterService */
                 $characterService = $this->container->get(CharacterService::SERVICE_NAME);
 
@@ -273,6 +287,19 @@ class TrackCharacterCommand extends AbstractCommand
             $trackedBy->setCharacterSource($characterSessionImpl->getCharacterSource());
 
             $em->persist($trackedBy);
+
+            $this->eventDispatcher->dispatch(
+                ActivityEvent::EVENT_NAME,
+                new ActivityEvent(
+                    ActivityType::CHARACTER_TRACK,
+                    $this->getAccount(),
+                    [
+                        'accountId'      => $this->getAccount()->getId(),
+                        'characterId'    => $character->getId(),
+                        'patchCharacter' => ActivityEvent::annotatedToSimpleObject($this->getPatchCharacter())
+                    ]
+                )
+            );
 
             /** @var CharacterService $characterService */
             $characterService = $this->container->get(CharacterService::SERVICE_NAME);

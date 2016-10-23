@@ -8,6 +8,8 @@ namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\InGuild;
+use LaDanse\ServicesBundle\Activity\ActivityEvent;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Common\ServiceException;
@@ -376,6 +378,19 @@ class PatchCharacterCommand extends AbstractCommand
                 500
             );
         }
+
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHARACTER_UPDATE,
+                $this->getAccount(),
+                [
+                    'accountId'      => $this->getAccount()->getId(),
+                    'characterId'    => $this->getCharacterId(),
+                    'patchCharacter' => ActivityEvent::annotatedToSimpleObject($this->getPatchCharacter())
+                ]
+            )
+        );
 
         /** @var CharacterService $characterService */
         $characterService = $this->container->get(CharacterService::SERVICE_NAME);
