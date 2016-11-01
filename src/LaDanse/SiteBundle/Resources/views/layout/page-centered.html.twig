@@ -2,6 +2,8 @@
 
 {% block memberPageBody %}
 
+    {{ include('LaDanseSiteBundle:layout:left-menu.html.twig') }}
+
     <div id="second-top-bar"></div>
 
     <div id="content-container" class="clearfix" style="width: 100%; max-width: 980px; margin: auto; position: relative;">
@@ -9,5 +11,53 @@
         {% block memberPageCenteredBody %}{% endblock %}
 
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        'use strict';
+
+        $(document).ready(function()
+        {
+            $(window).resize(function()
+            {
+                setLeftMenuDimensions();
+            });
+
+            $(window).scroll(function()
+            {
+                setLeftMenuDimensions();
+            });
+
+            setLeftMenuDimensions();
+            $('#left-menu-container').fadeIn(400);
+        });
+
+        function setLeftMenuDimensions()
+        {
+            var viewportHeight = $(window).height();
+            var scrollTop = $(window).scrollTop();
+
+            var leftMenu = $('#left-menu-container');
+
+            var leftMenuHeight = viewportHeight;
+            var leftMenuTop = 0;
+
+            if (scrollTop < 68)
+            {
+                leftMenuHeight = viewportHeight - (68 - scrollTop);
+                leftMenuTop = 68 - scrollTop;
+            }
+
+            leftMenu.css({ top: leftMenuTop, height: leftMenuHeight });
+        }
+
+    </script>
 
 {% endblock %}

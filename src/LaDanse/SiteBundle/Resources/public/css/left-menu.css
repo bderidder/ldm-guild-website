@@ -1,0 +1,49 @@
+div.left-menu
+{
+    position: fixed;
+    left: 0;
+    top: 68px;
+    width: 150px;
+    width: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: none;
+    text-align: center;
+    overflow-x: hidden;
+    color: gray;
+}
+
+div.left-menu a
+{
+    color: inherit;
+}
+
+div.left-menu:hover
+{
+    background-color: rgba(220, 255, 220, 0.6);
+    color: darkgreen;
+}
+
+div.left-menu div.menu-item-container
+{
+    padding: 15px 8px 0 0;
+    position: relative;
+    clear: both;
+}
+
+div.left-menu div.menu-item-container div.menu-item-icon
+{
+    float: left;
+    width: 40px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+div.left-menu div.menu-item-container div.menu-item-label
+{
+    float: left;
+    width: 100px;
+    line-height: 30px;
+    text-align: left;
+    display: none;
+}
