@@ -46,7 +46,7 @@ forumsModule.animation('.slide-animation', function()
         {
             if (className == 'ng-hide')
             {
-                TweenMax.to(element, 0.5, {left: -element.parent().width(), onComplete: done});
+                TweenMax.to(element, 0.5, {left: -1 * $(element.parent()).width(), onComplete: done});
             }
             else
             {
@@ -57,7 +57,7 @@ forumsModule.animation('.slide-animation', function()
         {
             if (className == 'ng-hide')
             {
-                TweenMax.set(element, {left: element.parent().width()});
+                TweenMax.set(element, {left: $(element.parent()).width()});
                 TweenMax.to(element, 0.5, {left: 0, onComplete: done});
             }
             else
