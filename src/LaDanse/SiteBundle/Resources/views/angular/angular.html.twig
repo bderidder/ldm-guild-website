@@ -26,6 +26,9 @@
 
 {% block javascript %}
 
+    {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
+    {{ parent() }}
+
     {{ include('LaDanseAngularBundle::javascript.html.twig') }}
 
 {% endblock %}
