@@ -144,15 +144,15 @@ class NotificationService
             );
 
             $this->mailService->sendMail(
-                array('noreply@ladanse.org' => $fromName),
+                ['noreply@ladanse.org' => $fromName],
                 $mail->email,
                 $mail->subject,
                 $this->renderView(
                     NotificationTemplates::getHtmlTemplate($mail->templatePrefix),
-                    array(
+                    [
                         'notificationItem' => $notificationQueueItem,
                         'data'             => $mail->data
-                    ))
+                    ])
             );
         }
     }

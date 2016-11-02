@@ -40,7 +40,7 @@ abstract class AbstractNotificator
     {
         $settings = $this->settingsService->getSettingsForAllAccounts($settingName);
 
-        $emails = array();
+        $emails = [];
 
         /** @var mixed $setting */
         foreach($settings as $setting)

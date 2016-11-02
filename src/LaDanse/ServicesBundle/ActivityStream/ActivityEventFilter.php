@@ -13,8 +13,7 @@ class ActivityEventFilter
      */
     public function __construct()
     {
-        $this->interestedActivities = array
-        (
+        $this->interestedActivities = [
             ActivityType::EVENT_EDIT,
             ActivityType::EVENT_DELETE,
             ActivityType::EVENT_CREATE,
@@ -40,7 +39,7 @@ class ActivityEventFilter
             ActivityType::BATTLENET_OAUTH_VERIFY,
             ActivityType::BATTLENET_OAUTH_DISCONNECT,
             ActivityType::REDIRECT
-        );
+        ];
     }
 
     public function isInterestingActivity($activityType)

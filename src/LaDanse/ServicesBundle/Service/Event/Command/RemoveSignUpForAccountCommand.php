@@ -148,10 +148,10 @@ class RemoveSignUpForAccountCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::SIGNUP_DELETE,
                 $this->getAccount(),
-                array(
+                [
                     'event'  => $signUpToRemove->getEvent()->toJson(),
                     'signUp' => $signUpToRemove->toJson()
-                ))
+                ])
         );
 
         $em->flush();

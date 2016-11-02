@@ -18,7 +18,7 @@ class NotificationContext
     public $logger;
 
     /** @var array $mails  */
-    private $mails = array();
+    private $mails = [];
 
     public function addMail($email, $subject, $data, $templatePrefix)
     {
@@ -57,11 +57,11 @@ class NotificationContext
             )
         );
 
-        $this->mails[$email] = (object) array(
+        $this->mails[$email] = (object) [
             'email'          => $email,
             'subject'        => $subject,
             'data'           => $data,
             'templatePrefix' => $templatePrefix
-        );
+        ];
     }
 }

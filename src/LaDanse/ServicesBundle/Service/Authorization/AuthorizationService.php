@@ -78,7 +78,7 @@ class AuthorizationService extends LaDanseService
         {
             $this->logger->error(
                 'Could not properly find a matching policy',
-                array('exception' => $e)
+                ['exception' => $e]
             );
 
             throw new CannotEvaluateException('Cannot evaluate', 0, $e);
@@ -92,7 +92,7 @@ class AuthorizationService extends LaDanseService
         {
             $this->logger->error(
                 'Could not properly evaluate matching policy',
-                array('exception' => $e)
+                ['exception' => $e]
             );
 
             throw new CannotEvaluateException('Cannot evaluate', 0, $e);

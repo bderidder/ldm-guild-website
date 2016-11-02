@@ -214,10 +214,10 @@ class CreateSignUpCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::SIGNUP_CREATE,
                 $this->getAccount(),
-                array(
+                [
                     'event'  => $this->getCachedEvent()->toJson(),
                     'signUp' => $signUp->toJson()
-                )
+                ]
             )
         );
     }

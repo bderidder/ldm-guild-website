@@ -105,10 +105,10 @@ class ConfirmEventCommand extends AbstractCommand
             new ResourceByValue(Event::class, $event->getId(), $event)))
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to confirm event',
-                array(
+                [
                     "account" => $this->getAccount()->getId(),
                     "event" => $this->getEventId()
-                )
+                ]
             );
 
             throw new NotAuthorizedException("Current user is not allowed to confirm event");
@@ -134,9 +134,9 @@ class ConfirmEventCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::EVENT_CONFIRM,
                 $this->getAccount(),
-                array(
+                [
                     'event' => $eventJson
-                )
+                ]
             )
         );
     }

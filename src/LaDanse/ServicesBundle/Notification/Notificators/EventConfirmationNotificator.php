@@ -68,10 +68,10 @@ class EventConfirmationNotificator extends AbstractNotificator
             $context->addMail(
                 $mail,
                 "Event Confirmed - " . $data->event->name,
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
-                ),
+                ],
                 NotificationTemplates::EVENT_CONFIRMED
             );
         }
@@ -85,7 +85,7 @@ class EventConfirmationNotificator extends AbstractNotificator
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($eventId);
 
-        $mails = array();
+        $mails = [];
 
         /** @var SignUp $signUp */
         foreach($event->getSignUps() as $signUp)

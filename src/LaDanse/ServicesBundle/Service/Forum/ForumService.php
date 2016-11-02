@@ -174,7 +174,7 @@ class ForumService extends LaDanseService
         }
         else
         {
-            $result = array();
+            $result = [];
 
             $posts = $topic->getPosts();
 
@@ -288,17 +288,18 @@ class ForumService extends LaDanseService
             new ActivityEvent(
                 ActivityType::FORUM_TOPIC_CREATE,
                 $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
-                    'postedBy' => array(
+                [
+                    'postedBy' =>
+                    [
                         'id'   => $account->getId(),
                         'name' => $account->getDisplayName()
-                    ),
+                    ],
                     'topicId'      => $topicId,
                     'topicSubject' => $subject,
                     'message'      => $text,
                     'forumId'      => $forum->getId(),
                     'forumName'    => $forum->getName()
-                )
+                ]
             )
         );
 
@@ -334,16 +335,17 @@ class ForumService extends LaDanseService
                 new ActivityEvent(
                     ActivityType::FORUM_TOPIC_REMOVE,
                     $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    array(
-                        'removedBy' => array(
+                    [
+                        'removedBy' =>
+                        [
                             'id'   => $account->getId(),
                             'name' => $account->getDisplayName()
-                        ),
+                        ],
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
                         'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName()
-                    )
+                    ]
                 )
             );
         }
@@ -399,17 +401,18 @@ class ForumService extends LaDanseService
                 new ActivityEvent(
                     ActivityType::FORUM_POST_CREATE,
                     $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    array(
-                        'postedBy' => array(
+                    [
+                        'postedBy' =>
+                        [
                             'id'   => $account->getId(),
                             'name' => $account->getDisplayName()
-                        ),
+                        ],
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
                         'message'      => $message,
                         'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName()
-                    )
+                    ]
                 )
             );
         }
@@ -448,11 +451,12 @@ class ForumService extends LaDanseService
                 new ActivityEvent(
                     ActivityType::FORUM_POST_UPDATE,
                     $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    array(
-                        'updatedBy' => array(
+                    [
+                        'updatedBy' =>
+                        [
                             'id'   => $account->getId(),
                             'name' => $account->getDisplayName()
-                        ),
+                        ],
                         'postId'       => $postId,
                         'topicId'      => $post->getTopic()->getId(),
                         'topicSubject' => $post->getTopic()->getSubject(),
@@ -460,7 +464,7 @@ class ForumService extends LaDanseService
                         'forumName'    => $post->getTopic()->getForum()->getName(),
                         'oldMessage'   => $oldMessage,
                         'newMessage'   => $message
-                    )
+                    ]
                 )
             );
         }
@@ -499,18 +503,19 @@ class ForumService extends LaDanseService
                 new ActivityEvent(
                     ActivityType::FORUM_TOPIC_UPDATE,
                     $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                    array(
-                        'updatedBy' => array(
+                    [
+                        'updatedBy' =>
+                        [
                             'id'   => $account->getId(),
                             'name' => $account->getDisplayName()
-                        ),
+                        ],
                         'topicId'      => $topicId,
                         'topicSubject' => $topic->getSubject(),
                         'forumId'      => $topic->getForum()->getId(),
                         'forumName'    => $topic->getForum()->getName(),
                         'oldMessage'   => $oldSubject,
                         'newMessage'   => $subject
-                    )
+                    ]
                 )
             );
         }

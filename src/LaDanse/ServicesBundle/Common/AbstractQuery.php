@@ -59,7 +59,7 @@ abstract class AbstractQuery
      *
      * @return string
      */
-    public function renderTemplate($templateName, $data = array())
+    public function renderTemplate($templateName, $data = [])
     {
         $twigEnvironment = $this->container->get('twig');
 
@@ -72,7 +72,7 @@ abstract class AbstractQuery
      *
      * @return string
      */
-    public function createSQLFromTemplate($templateName, $data = array())
+    public function createSQLFromTemplate($templateName, $data = [])
     {
         return $this->renderTemplate($templateName, $data);
     }

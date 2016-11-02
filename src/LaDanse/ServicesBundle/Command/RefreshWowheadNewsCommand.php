@@ -64,7 +64,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
         $itemXMLList = $xml->channel->item;
 
-        $items = array();
+        $items = [];
 
         $count = 0;
 
@@ -72,11 +72,11 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
         {
             $pubTime = strtotime((string)$itemXML->pubDate);
 
-            $item = (object) array(
+            $item = (object) [
                 'title'   => (string) $itemXML->title,
                 'link'    => (string) $itemXML->link,
                 'pubDate' => date('D, d M, H:i', $pubTime)
-            );
+            ];
 
             $count++;
 

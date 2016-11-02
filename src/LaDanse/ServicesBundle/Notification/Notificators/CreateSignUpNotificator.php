@@ -50,10 +50,10 @@ class CreateSignUpNotificator extends AbstractNotificator
         $context->addMail(
             $setting->account->getEmail(),
             "New Sign Up - " . $data->event->name,
-            array(
+            [
                 'account'      => $queueItem->getActivityBy(),
                 'activityData' => $data
-            ),
+            ],
             NotificationTemplates::SIGNUP_CREATE
         );
     }

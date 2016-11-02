@@ -87,9 +87,9 @@ class GetAllEventsSinceQuery extends AbstractQuery
 
         $this->logger->debug(
             __CLASS__ . " created DQL for retrieving Events ",
-            array(
+            [
                 "query" => $qb->getDQL()
-            )
+            ]
         );
 
         /* @var $query \Doctrine\ORM\Query */

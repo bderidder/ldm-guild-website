@@ -31,10 +31,10 @@ class TestNotificator extends AbstractNotificator
         $context->addMail(
             $toEmail,
             "Test Notification - " . $queueItem->getActivityType(),
-            array(
+            [
               'account'      => $queueItem->getActivityBy(),
               'activityData' => $queueItem->getData()
-            ),
+            ],
             NotificationTemplates::TEST
         );
     }

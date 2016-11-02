@@ -223,10 +223,10 @@ class UpdateEventCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::EVENT_EDIT,
                 $this->getAccount(),
-                array(
+                [
                     'oldEvent' => $oldJson,
                     'newEvent' => $event->toJson()
-                )
+                ]
             )
         );
     }

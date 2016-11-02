@@ -50,10 +50,10 @@ class DeleteSignUpNotificator extends AbstractNotificator
         $context->addMail(
             $setting->account->getEmail(),
             "Sign Up Removed - " . $data->event->name,
-            array(
+            [
                 'account'      => $queueItem->getActivityBy(),
                 'activityData' => $data
-            ),
+            ],
             NotificationTemplates::SIGNUP_DELETE
         );
     }

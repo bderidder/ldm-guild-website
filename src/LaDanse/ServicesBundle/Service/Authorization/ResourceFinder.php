@@ -60,7 +60,7 @@ class ResourceFinder
 
     private function initResourceModules()
     {
-        $this->resourceModules = array();
+        $this->resourceModules = [];
 
         $this->resourceModules[Event::class] = EventFinderModule::SERVICE_NAME;
     }

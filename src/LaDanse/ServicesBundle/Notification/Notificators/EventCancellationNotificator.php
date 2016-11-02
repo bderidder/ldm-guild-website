@@ -68,10 +68,10 @@ class EventCancellationNotificator extends AbstractNotificator
             $context->addMail(
                 $mail,
                 "Event Cancelled - " . $data->event->name,
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
-                ),
+                ],
                 NotificationTemplates::EVENT_CANCELLED
             );
         }
@@ -85,7 +85,7 @@ class EventCancellationNotificator extends AbstractNotificator
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($eventId);
 
-        $mails = array();
+        $mails = [];
 
         /** @var SignUp $signUp */
         foreach($event->getSignUps() as $signUp)

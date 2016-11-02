@@ -22,7 +22,7 @@ class EventFactory
 
     private function createEvent(Entity\Event $event)
     {
-        $signUpDtos = array();
+        $signUpDtos = [];
 
         /** @var Entity\SignUp $signUp */
         foreach($event->getSignUps() as $signUp)
@@ -52,7 +52,7 @@ class EventFactory
 
         if ($signUp->getType() != Entity\SignUpType::ABSENCE)
         {
-            $roles = array();
+            $roles = [];
 
             /** @var Entity\ForRole $role */
             foreach($signUp->getRoles() as $role)

@@ -51,9 +51,9 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
     /**
      * @var array
      */
-    protected $properties = array(
+    protected $properties = [
         'identifier' => 'id',
-    );
+    ];
 
     /**
      * @var PropertyAccessor

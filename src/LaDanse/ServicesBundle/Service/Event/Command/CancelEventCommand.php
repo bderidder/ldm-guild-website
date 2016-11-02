@@ -104,11 +104,12 @@ class CancelEventCommand extends AbstractCommand
             ActivityType::EVENT_CONFIRM,
             new ResourceByValue(Event::class, $event->getId(), $event)))
         {
-            $this->logger->warning(__CLASS__ . ' the user is not authorized to cancel event',
-                array(
+            $this->logger->warning(
+                __CLASS__ . ' the user is not authorized to cancel event',
+                [
                     "account" => $this->getAccount()->getId(),
                     "event" => $this->getEventId()
-                )
+                ]
             );
 
             throw new NotAuthorizedException("Current user is not allowed to cancel event");
@@ -134,9 +135,9 @@ class CancelEventCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::EVENT_CANCEL,
                 $this->getAccount(),
-                array(
+                [
                     'event' => $eventJson
-                )
+                ]
             )
         );
 

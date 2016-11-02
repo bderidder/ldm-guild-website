@@ -54,10 +54,10 @@ class ReplyForumPostNotificator extends AbstractNotificator
                 sprintf("Forums - reply in '%s'",
                     $data->topicSubject
                 ),
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $queueItem->getData()
-                ),
+                ],
                 NotificationTemplates::TOPIC_REPLY
             );
         }
@@ -67,7 +67,7 @@ class ReplyForumPostNotificator extends AbstractNotificator
     {
         $topicPosts = $this->forumService->getAllPosts($topicId);
 
-        $mails = array();
+        $mails = [];
 
         /** @var Post $topicPost */
         foreach($topicPosts as $topicPost)

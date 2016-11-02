@@ -42,10 +42,10 @@ class NotificationQueue
     {
         $this->logger->debug(
             __CLASS__ . ' received ActivityEvent',
-            array(
+            [
                 'activity' => $activity->getType(),
                 'data' => $activity->getObject()
-            )
+            ]
         );
 
         if ($this->notificationService->hasNotificationsFor($activity->getType()))
@@ -119,10 +119,10 @@ class NotificationQueue
                         __CLASS__,
                         $e->getMessage()
                     ),
-                    array(
+                    [
                         'notificationItem' => $item,
                         'exception' => $e
-                    )
+                    ]
                 );
             }
         }

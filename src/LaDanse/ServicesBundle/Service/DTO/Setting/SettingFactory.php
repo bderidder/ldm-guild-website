@@ -20,7 +20,7 @@ class SettingFactory
 
     protected function createSettings($settings)
     {
-        $aggregate = array();
+        $aggregate = [];
 
         /** @var Entity\Setting $setting */
         foreach($settings as $setting)

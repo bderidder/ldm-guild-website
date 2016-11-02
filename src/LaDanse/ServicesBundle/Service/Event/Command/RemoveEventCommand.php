@@ -109,9 +109,9 @@ class RemoveEventCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::EVENT_DELETE,
                 $this->getAccount(),
-                array(
+                [
                     'event' => $event->toJson()
-                )
+                ]
             )
         );
     }

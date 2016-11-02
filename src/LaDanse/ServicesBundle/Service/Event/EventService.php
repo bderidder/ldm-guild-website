@@ -236,7 +236,7 @@ class EventService extends LaDanseService
      * @throws UserAlreadySignedException if the user is already signed
      * @throws EventInThePastException if the event is in the past
      */
-    public function createSignUp($eventId, Account $account, $signUpType, $roles = array())
+    public function createSignUp($eventId, Account $account, $signUpType, $roles = [])
     {
         /** @var CreateSignUpCommand $createSignUpCommand */
         $createSignUpCommand = $this->container->get(CreateSignUpCommand::SERVICE_NAME);

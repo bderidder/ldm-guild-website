@@ -34,10 +34,10 @@ class FeatureUseListener
     {
         $this->logger->debug(
             __CLASS__ . ' received ActivityEvent',
-            array(
+            [
                 'activity' => $activity->getType(),
                 'data' => $activity->getObject()
-            )
+            ]
         );
 
         $em = $this->doctrine->getManager();

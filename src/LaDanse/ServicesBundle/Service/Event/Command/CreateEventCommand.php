@@ -190,9 +190,9 @@ class CreateEventCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::EVENT_CREATE,
                 $this->getAccount(),
-                array(
+                [
                     'event' => $event->toJson()
-                )
+                ]
             )
         );
     }

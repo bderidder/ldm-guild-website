@@ -32,7 +32,7 @@ class ListFunctions
      */
     static public function removeDuplicates(array $list)
     {
-        $deduplicated = array();
+        $deduplicated = [];
 
         if (count($list) == 0)
         {
@@ -64,7 +64,7 @@ class ListFunctions
      */
     static public function getIntersection(array $listOne, array $listTwo)
     {
-        $intersection = array();
+        $intersection = [];
 
         $oneCount = 0;
         $twoCount = 0;

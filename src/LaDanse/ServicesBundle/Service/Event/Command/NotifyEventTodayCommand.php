@@ -74,9 +74,9 @@ class NotifyEventTodayCommand extends AbstractCommand
 
         $this->logger->debug(
             __CLASS__ . " created DQL for retrieving Events ",
-            array(
+            [
                 "query" => $qb->getDQL()
-            )
+            ]
         );
 
         /* @var $query \Doctrine\ORM\Query */
@@ -92,9 +92,9 @@ class NotifyEventTodayCommand extends AbstractCommand
                 new ActivityEvent(
                     ActivityType::EVENT_TODAY,
                     null,
-                    array(
+                    [
                         'event' => $event->toJson()
-                    )
+                    ]
                 )
             );
         }

@@ -26,7 +26,7 @@ class FeatureToggleService extends LaDanseService
     public $logger;
 
     /** @var array $cachedToggles */
-    private $cachedToggles = array();
+    private $cachedToggles = [];
 
     /**
      * @param ContainerInterface $container

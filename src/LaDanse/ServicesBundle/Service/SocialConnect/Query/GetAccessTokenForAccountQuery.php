@@ -59,7 +59,7 @@ class GetAccessTokenForAccountQuery extends AbstractQuery
     {
         $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
 
-        $socialConnects = $repo->findBy(array('account' => $this->account));
+        $socialConnects = $repo->findBy(['account' => $this->account]);
 
         if (count($socialConnects) == 1)
         {

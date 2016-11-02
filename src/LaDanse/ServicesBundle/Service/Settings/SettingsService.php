@@ -66,7 +66,7 @@ class SettingsService extends LaDanseService
         
         $settings = $query->getResult();
 
-        $settingModels = array();
+        $settingModels = [];
 
         /** @var Setting $setting */
         foreach($settings as $setting)
@@ -95,7 +95,7 @@ class SettingsService extends LaDanseService
         
         $settings = $query->getResult();
 
-        $settingModels = array();
+        $settingModels = [];
 
         foreach($settings as $setting)
         {
@@ -184,9 +184,9 @@ class SettingsService extends LaDanseService
 
         $this->logger->debug(
             __CLASS__ . " created DQL for retrieving CalendarExport ",
-            array(
+            [
                 "query" => $qb->getDQL()
-            )
+            ]
         );
 
         /* @var $query \Doctrine\ORM\Query */
@@ -234,9 +234,9 @@ class SettingsService extends LaDanseService
 
         $this->logger->debug(
             __CLASS__ . " created DQL for retrieving CalendarExport ",
-            array(
+            [
                 "query" => $qb->getDQL()
-            )
+            ]
         );
 
         /* @var $query \Doctrine\ORM\Query */
@@ -327,11 +327,11 @@ class SettingsService extends LaDanseService
      */
     protected function settingToDto($setting)
     {
-        return (object) array(
+        return (object) [
             'name'      => $setting->getName(),
             'value'     => $setting->getValue(),
             'account'   => $setting->getAccount()
-        );
+        ];
     }
 
     protected function generateRandomString($length = 10)

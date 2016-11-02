@@ -31,10 +31,10 @@ class FeedbackNotificator extends AbstractNotificator
         $context->addMail(
             $toEmail,
             "Feedback Notification",
-            array(
+            [
               'account'      => $queueItem->getActivityBy(),
               'activityData' => $queueItem->getData()
-            ),
+            ],
             NotificationTemplates::FEEDBACK
         );
     }

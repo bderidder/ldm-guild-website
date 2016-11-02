@@ -63,10 +63,10 @@ class EventTodayNotificator extends AbstractNotificator
             $context->addMail(
                 $mail,
                 "Reminder ... '" . $data->event->name . "' is today!",
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
-                ),
+                ],
                 NotificationTemplates::EVENT_TODAY
             );
         }
@@ -80,7 +80,7 @@ class EventTodayNotificator extends AbstractNotificator
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($eventId);
 
-        $mails = array();
+        $mails = [];
 
         /** @var SignUp $signUp */
         foreach($event->getSignUps() as $signUp)

@@ -98,7 +98,7 @@ class ForumStatsService extends LaDanseService
 
         $queryResult = $query->getResult();
 
-        $unreadPosts = array();
+        $unreadPosts = [];
 
         /** @var UnreadPost $unreadPost */
         foreach($queryResult as $unreadPost)

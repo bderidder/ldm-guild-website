@@ -20,7 +20,7 @@ class FeatureToggleFactory
 
     protected function createFeatureToggles($featureToggles)
     {
-        $aggregate = array();
+        $aggregate = [];
 
         /** @var Entity\FeatureToggle $featureToggle */
         foreach($featureToggles as $featureToggle)

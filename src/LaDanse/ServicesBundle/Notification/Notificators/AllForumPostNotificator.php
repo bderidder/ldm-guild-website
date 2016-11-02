@@ -38,13 +38,14 @@ class AllForumPostNotificator extends AbstractNotificator
 
             $context->addMail(
                 $mail,
-                sprintf("Forums - post in '%s'",
+                sprintf(
+                    "Forums - post in '%s'",
                     $data->topicSubject
                 ),
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $queueItem->getData()
-                ),
+                ],
                 NotificationTemplates::TOPIC_REPLY
             );
         }

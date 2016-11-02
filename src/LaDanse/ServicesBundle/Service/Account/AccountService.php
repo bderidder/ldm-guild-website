@@ -223,7 +223,7 @@ class AccountService extends LaDanseService
 
         $traversable = $userManager->findUsers();
 
-        $result = array();
+        $result = [];
 
         /** @var Account $user */
         foreach($traversable as $user)

@@ -68,10 +68,10 @@ class UpdateEventNotificator extends AbstractNotificator
             $context->addMail(
                 $mail,
                 "Event Updated - " . $data->oldEvent->name,
-                array(
+                [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
-                ),
+                ],
                 NotificationTemplates::EVENT_UPDATE
             );
         }
@@ -85,7 +85,7 @@ class UpdateEventNotificator extends AbstractNotificator
         /* @var $event \LaDanse\DomainBundle\Entity\Event */
         $event = $repository->find($eventId);
 
-        $mails = array();
+        $mails = [];
 
         /** @var SignUp $signUp */
         foreach($event->getSignUps() as $signUp)

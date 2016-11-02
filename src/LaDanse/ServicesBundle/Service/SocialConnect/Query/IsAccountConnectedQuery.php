@@ -59,7 +59,7 @@ class IsAccountConnectedQuery extends AbstractQuery
     {
         $repo = $this->doctrine->getRepository(SocialConnect::REPOSITORY);
 
-        $socialConnects = $repo->findBy(array('account' => $this->account));
+        $socialConnects = $repo->findBy(['account' => $this->account]);
 
         return count($socialConnects) == 1;
     }

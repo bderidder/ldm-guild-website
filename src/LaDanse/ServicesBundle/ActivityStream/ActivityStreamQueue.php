@@ -36,10 +36,10 @@ class ActivityStreamQueue
     {
         $this->logger->debug(
             __CLASS__ . ' received ActivityEvent',
-            array(
+            [
                 'activity' => $activity->getType(),
                 'data' => $activity->getObject()
-            )
+            ]
         );
 
         $activityEventFilter = new ActivityEventFilter();
@@ -113,10 +113,10 @@ class ActivityStreamQueue
             {
                 $this->logger->error(
                     __CLASS__ .  ' caught exception: ' . $e->getMessage(),
-                    array(
+                    [
                         'activityQueueItem' => $item,
                         'exception' => $e
-                    )
+                    ]
                 );
             }
         }

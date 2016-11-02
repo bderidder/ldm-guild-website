@@ -155,11 +155,11 @@ class UpdateSignUpCommand extends AbstractCommand
             new ActivityEvent(
                 ActivityType::SIGNUP_EDIT,
                 $this->getAccount(),
-                array(
+                [
                     'event'     => $signUp->getEvent()->toJson(),
                     'oldSignUp' => $oldSignUpJson,
                     'newSignUp' => $signUp->toJson()
-                ))
+                ])
         );
     }
 }

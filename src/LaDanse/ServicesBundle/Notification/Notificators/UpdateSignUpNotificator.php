@@ -50,10 +50,10 @@ class UpdateSignUpNotificator extends AbstractNotificator
         $context->addMail(
             $setting->account->getEmail(),
             "Sign Up Changed - " . $data->event->name,
-            array(
+            [
                 'account'      => $queueItem->getActivityBy(),
                 'activityData' => $data
-            ),
+            ],
             NotificationTemplates::SIGNUP_UPDATE
         );
     }

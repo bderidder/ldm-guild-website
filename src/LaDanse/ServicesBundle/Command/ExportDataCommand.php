@@ -65,7 +65,7 @@ class ExportDataCommand extends ContainerAwareCommand
 
         $events = $repository->findAll();
 
-        $jsonEvents = array();
+        $jsonEvents = [];
 
         /** @var Entity\Event $event */
         foreach($events as $event)

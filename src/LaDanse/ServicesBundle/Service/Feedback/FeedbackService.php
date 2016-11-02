@@ -73,9 +73,9 @@ class FeedbackService extends LaDanseService
             new ActivityEvent(
                 ActivityType::FEEDBACK_POST,
                 $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                array(
+                [
                     'feedback' => $description
-                ))
+                ])
         );
     }
 }

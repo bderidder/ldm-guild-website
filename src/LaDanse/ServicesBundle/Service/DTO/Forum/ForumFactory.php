@@ -25,7 +25,7 @@ class ForumFactory
 
     private Function createTopicEntries(DomainEntity\Forum\Forum $forum)
     {
-        $topicEntries = array();
+        $topicEntries = [];
 
         /** @var \LaDanse\DomainBundle\Entity\Forum\Topic $topic */
         foreach($forum->getTopics() as $topic)
