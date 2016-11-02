@@ -3,11 +3,15 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\ForRole;
+use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\GameData\GameClass;
 use LaDanse\ServicesBundle\Service\DTO\GameData\GameRace;
+use LaDanse\ServicesBundle\Service\DTO\GameData\Realm;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
@@ -89,17 +93,42 @@ class ListClaimsPartialController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:events:listClaims.html.twig',
-            ['claims' => $this->getClaims($accountId, $role, $onDate)]
+            ['claims' => $this->getClaims($accountId, $this->getRolesForSignUp($event, $accountId), $onDate)]
         );
     }
 
-    private function getClaims($accountId, $role, $onDateTime)
+    private function getRolesForSignUp(Event $event, $accountId)
+    {
+        foreach($event->getSignUps() as $signUp)
+        {
+            /** @var SignUp $signUp */
+
+            if ($signUp->getAccount()->getId() == $accountId)
+            {
+                $roles = [];
+
+                foreach($signUp->getRoles() as $forRole)
+                {
+                    /** @var ForRole $forRole */
+
+                    $roles[] = $forRole->getRole();
+                }
+
+                return $roles;
+            }
+        }
+
+        return [];
+    }
+
+    private function getClaims($accountId, $roles, $onDateTime)
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
 
         $gameRaces = $gameDataService->getAllGameRaces();
         $gameClasses = $gameDataService->getAllGameClasses();
+        $realms = $gameDataService->getAllRealms();
 
         /** @var CharacterService $guildCharacterService */
         $guildCharacterService = $this->get(CharacterService::SERVICE_NAME);
@@ -111,11 +140,12 @@ class ListClaimsPartialController extends LaDanseController
         /** @var Character $character */
         foreach($characters as $character)
         {
-            if ($character->getClaim()->playsRole($role) && $character->getLevel() == 110)
+            if ($this->characterPlaysAnyRole($character, $roles) && $character->getLevel() == 110)
             {
                 $resultCharacters[] = (object)[
                     "name"  => $character->getName(),
                     "level" => $character->getLevel(),
+                    "realm" => $this->transformRealmNameForUrl($this->resolveRealmName($realms, $character->getRealmReference())),
                     "race"  => $this->resolveGameRaceName($gameRaces, $character->getGameRaceReference()),
                     "class" => $this->resolveGameClassName($gameClasses, $character->getGameClassReference())
                 ];
@@ -151,5 +181,37 @@ class ListClaimsPartialController extends LaDanseController
         }
 
         return "";
+    }
+
+    private function resolveRealmName($realms, $realmReference)
+    {
+        /** @var Realm $realm */
+        foreach($realms as $realm)
+        {
+            if ($realm->getId() == $realmReference)
+            {
+                return $realm->getName();
+            }
+        }
+
+        return null;
+    }
+
+    private function transformRealmNameForUrl($realmName)
+    {
+        return str_replace(" ", "-", strtolower($realmName));
+    }
+
+    private function characterPlaysAnyRole(Character $character, $roles)
+    {
+        foreach($roles as $role)
+        {
+            if ($character->getClaim()->playsRole($role))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
