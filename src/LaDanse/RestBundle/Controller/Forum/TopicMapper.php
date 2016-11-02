@@ -24,20 +24,20 @@ class TopicMapper
      */
     public function mapTopic(UrlGeneratorInterface $generator, Topic $topic)
     {
-        return (object)array(
+        return (object)[
             "topicId"    => $topic->getId(),
             "creatorId"  => $topic->getCreator()->getId(),
             "creator"    => $topic->getCreator()->getDisplayName(),
             "subject"    => $topic->getSubject(),
             "createDate" => $topic->getCreateDate()->format(\DateTime::ISO8601),
             "lastPost"   => $this->createLastPost($topic),
-            "links"      => (object)array(
+            "links"      => (object)[
                 "self"
-                    => $generator->generate('getPostsInTopic', array('topicId' => $topic->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
+                    => $generator->generate('getPostsInTopic', ['topicId' => $topic->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
                 "createPostInTopic"
-                    => $generator->generate('createPostInTopic', array('topicId' => $topic->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+                    => $generator->generate('createPostInTopic', ['topicId' => $topic->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
     }
 
     /**
@@ -66,7 +66,7 @@ class TopicMapper
      */
     public function mapTopicsAndForum(UrlGeneratorInterface $generator, $topics)
     {
-        $jsonTopics = array();
+        $jsonTopics = [];
 
         /** @var Topic $topic */
         foreach($topics as $topic)
@@ -101,7 +101,7 @@ class TopicMapper
 
         $postMapper = new PostMapper();
 
-        $jsonArray = array();
+        $jsonArray = [];
 
         foreach ($posts as $post)
         {
@@ -117,13 +117,13 @@ class TopicMapper
     {
         if ($topic->getLastPostPoster() != null)
         {
-            return (object)array(
+            return (object)[
                 "date" => $topic->getLastPostDate()->format(\DateTime::ISO8601),
-                "poster" => (object)array(
+                "poster" => (object)[
                     "id" => $topic->getLastPostPoster()->getId(),
                     "displayName" => $topic->getLastPostPoster()->getDisplayName()
-                )
-            );
+                ]
+            ];
         }
         else
         {

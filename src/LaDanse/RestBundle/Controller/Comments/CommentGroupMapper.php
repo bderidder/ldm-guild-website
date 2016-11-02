@@ -24,13 +24,13 @@ class CommentGroupMapper
      */
     public function mapGroup(UrlGeneratorInterface $generator, CommentGroup $group)
     {
-        return (object)array(
-            "groupId"   => $group->getId(),
+        return (object)[
+            "groupId"    => $group->getId(),
             "createDate" => $group->getCreateDate()->format(\DateTime::ISO8601),
-            "links"    => (object)array(
-                "self"   => $generator->generate('getCommentsInGroup', array('groupId' => $group->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+            "links"      => (object)[
+                "self" => $generator->generate('getCommentsInGroup', ['groupId' => $group->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
     }
 
     /**
@@ -57,7 +57,7 @@ class CommentGroupMapper
 
         $commentMapper = new CommentMapper();
 
-        $jsonArray = array();
+        $jsonArray = [];
 
         foreach ($comments as $comment)
         {

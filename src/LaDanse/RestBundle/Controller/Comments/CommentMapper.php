@@ -24,15 +24,15 @@ class CommentMapper
      */
     public function mapComment(UrlGeneratorInterface $generator, Comment $comment)
     {
-        return (object)array(
+        return (object)[
             "postId"   => $comment->getId(),
             "posterId" => $comment->getPoster()->getId(),
             "poster"   => $comment->getPoster()->getDisplayName(),
             "message"  => $comment->getMessage(),
             "postDate" => $comment->getPostDate()->format(\DateTime::ISO8601),
-            "links"    => (object)array(
-                "update" => $generator->generate('updateComment', array('commentId' => $comment->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+            "links"    => (object)[
+                "update" => $generator->generate('updateComment', ['commentId' => $comment->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
     }
 } 

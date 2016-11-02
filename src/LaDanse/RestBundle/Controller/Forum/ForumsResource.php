@@ -207,9 +207,9 @@ class ForumsResource extends AbstractRestController
             );
         }
 
-        $jsonObject = (object)array(
+        $jsonObject = (object)[
             "status" => "topic created in forum"
-        );
+        ];
 
         return new JsonResponse($jsonObject);
     }

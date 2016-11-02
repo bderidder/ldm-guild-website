@@ -19,7 +19,7 @@ class ResourceHelper
      * @param array $headers
      * @return JsonResponse
      */
-    public static function createErrorResponse($request, $httpStatusCode, $errorMessage, $headers = array())
+    public static function createErrorResponse($request, $httpStatusCode, $errorMessage, $headers = [])
     {
         $errorResponse = new ErrorResponse();
         $errorResponse
@@ -60,10 +60,10 @@ class ResourceHelper
      */
     static public function isOriginAllowed($origin)
     {
-        $allowedOrigins = array(
+        $allowedOrigins = [
             'http://localhost:8080/',
             'http://localhost:8000/'
-        );
+        ];
 
         foreach($allowedOrigins as $allowedOrigin)
         {

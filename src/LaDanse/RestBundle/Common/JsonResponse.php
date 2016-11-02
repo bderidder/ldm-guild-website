@@ -22,7 +22,7 @@ class JsonResponse extends Response
      * @param int   $status  The response status code
      * @param array $headers An array of response headers
      */
-    public function __construct($object = null, $status = 200, $headers = array())
+    public function __construct($object = null, $status = 200, $headers = [])
     {
         parent::__construct('', $status, $headers);
 
@@ -37,7 +37,7 @@ class JsonResponse extends Response
     /**
      * {@inheritdoc}
      */
-    public static function create($object = null, $status = 200, $headers = array())
+    public static function create($object = null, $status = 200, $headers = [])
     {
         return new static($object, $status, $headers);
     }

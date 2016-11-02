@@ -24,17 +24,17 @@ class PostMapper
      */
     public function mapPost(UrlGeneratorInterface $generator, Post $post)
     {
-        return (object)array(
+        return (object)[
             "postId"   => $post->getId(),
             "posterId" => $post->getPoster()->getId(),
             "poster"   => $post->getPoster()->getDisplayName(),
             "message"  => $post->getMessage(),
             "postDate" => $post->getPostDate()->format(\DateTime::ISO8601),
-            "links"    => (object)array(
-                "self"   => $generator->generate('getPost', array('postId' => $post->getId()), UrlGeneratorInterface::ABSOLUTE_URL),
-                "update" => $generator->generate('updatePost', array('postId' => $post->getId()), UrlGeneratorInterface::ABSOLUTE_URL)
-            )
-        );
+            "links"    => (object)[
+                "self"   => $generator->generate('getPost', ['postId' => $post->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+                "update" => $generator->generate('updatePost', ['postId' => $post->getId()], UrlGeneratorInterface::ABSOLUTE_URL)
+            ]
+        ];
     }
 
     /**
@@ -63,7 +63,7 @@ class PostMapper
      */
     public function mapPostsAndTopic(UrlGeneratorInterface $generator, $posts)
     {
-        $jsonPosts = array();
+        $jsonPosts = [];
 
         /** @var Post $post */
         foreach($posts as $post)
