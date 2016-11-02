@@ -115,7 +115,7 @@
 			                {% else %} 
 			                <tr>   
 			                {% endif %}
-			                    <td><a href="{{ path('viewRoster')}}#/roster/{{ signUp.account.id }}">{{ signUp.account.displayName }}</a></td>
+			                    <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.account.displayName }}</a></td>
 			                    <td class="center-td">
 			                        {% if signUp.signedAsTank %}
 			                            <i class="signUp fa fa-times fa-1x text-success" 
@@ -171,7 +171,7 @@
 			                {% else %} 
 			                <tr>   
 			                {% endif %}
-			                    <td><a href="{{ path('viewRoster')}}#/roster/{{ signUp.account.id }}">{{ signUp.account.displayName }}</a></td>
+                                <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.account.displayName }}</a></td>
 			                    <td class="center-td">
 			                        {% if signUp.signedAsTank %}<i class="signUp fa fa-question fa-1x text-warning" 
 			                                data-url="{{ path('listClaims', 
@@ -221,7 +221,7 @@
 			                {% else %} 
 			                <tr>   
 			                {% endif %}
-			                    <td><a href="{{ path('viewRoster')}}#/roster/{{ signUp.account.id }}">{{ signUp.account.displayName }}</a></td>
+                                <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.account.displayName }}</a></td>
 			                    <td class="center-td" colspan="3">
 			                        <i class="text-danger">can't come</i>
 			                    </td>
@@ -365,6 +365,24 @@
 
             $("#relativeStartTime").text(relativeStart);
         });
+    </script>
+
+    <script type="application/javascript">
+
+        'use strict';
+
+        function accountLinkClicked(displayName)
+        {
+            var searchCriteria = new SearchCriteria();
+            searchCriteria.setClaimingMember(displayName);
+
+            var jsonAsString = JSON.stringify(searchCriteria);
+
+            var base64Json = btoa(jsonAsString);
+
+            document.location.href = '/app/roster#/roster?criteria=' + base64Json;
+        }
+
     </script>
 
     <script type="application/javascript">
