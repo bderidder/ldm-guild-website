@@ -2,19 +2,50 @@
 
     <p>{{ error }}</p>
 
-{% else %} 
+{% else %}
+
+    <style>
+        div.claimsContainer
+        {
+            width: 100%;
+        }
+    </style>
 
     {% if (claims|length != 0) %} 
 
-        <table style="background-color: white;" cellpadding="5">
+
+
+        <table style="background-color: white;">
+
+            <tr>
+                <td style="padding: 0 8px 0 8px;"></td>
+                <td style="padding: 0 8px 0 8px;">Tank</td>
+                <td style="padding: 0 8px 0 8px;">Healer</td>
+                <td style="padding: 0 8px 0 8px;">DPS</td>
+            </tr>
 
             {% for claim in claims %}
 
                 <tr>
                     <td><a target="_blank" href="http://eu.battle.net/wow/en/character/{{ claim.realm }}/{{ claim.name }}/simple">{{ claim.name }}</a></td>
-                    <td>{{ claim.level }}</td>
-                    <td>{{ claim.class }}</td>
-                    <td>{{ claim.race }}</td>
+                    <td class="center-td">
+                        {% if 'Tank' in claim.roles %}
+                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                        {% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if 'Healer' in claim.roles %}
+                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                        {% endif %}
+                    </td>
+                    <td class="center-td">
+                        {% if 'DPS' in claim.roles %}
+                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"><i style="padding-left: 8px;">{{ claim.level }} {{ claim.class }} ({{ claim.race }})</i></td>
                 </tr>
             
             {% endfor %}

@@ -147,7 +147,8 @@ class ListClaimsPartialController extends LaDanseController
                     "level" => $character->getLevel(),
                     "realm" => $this->transformRealmNameForUrl($this->resolveRealmName($realms, $character->getRealmReference())),
                     "race"  => $this->resolveGameRaceName($gameRaces, $character->getGameRaceReference()),
-                    "class" => $this->resolveGameClassName($gameClasses, $character->getGameClassReference())
+                    "class" => $this->resolveGameClassName($gameClasses, $character->getGameClassReference()),
+                    "roles" => $character->getClaim()->getRoles()
                 ];
             }
         }
