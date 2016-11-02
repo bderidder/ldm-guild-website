@@ -169,17 +169,17 @@ class SignUp
 
     public function toJson()
     {
-        $simpleRoles = array();
+        $simpleRoles = [];
 
         for($i = 0; $i < $this->roles->count(); $i++)
         {
             $simpleRoles[] = $this->roles->get($i)->getRole();
         }
 
-        return (object) array(
+        return (object) [
             'signUpId' => $this->id,
             'type'     => $this->type,
             'roles'    => $simpleRoles
-        );
+        ];
     }
 }

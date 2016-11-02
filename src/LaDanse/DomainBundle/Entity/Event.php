@@ -381,7 +381,7 @@ class Event implements StatefulInterface
 
     public function toJson()
     {
-        return (object) array(
+        return (object) [
             'eventId'     => $this->id,
             'name'        => $this->name,
             'description' => $this->description,
@@ -390,6 +390,6 @@ class Event implements StatefulInterface
             'endTime'     => $this->endTime->format(\DateTime::ISO8601),
             'organiserId' => $this->organiser->getId(),
             'state'       => $this->state
-        );
+        ];
     }
 }
