@@ -12,25 +12,38 @@ class ProfileFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'login', TextType::class,
-            array(
-                'label' => "Login",
-                'attr' =>  array(
-                    'readonly'   => true))
+        $builder
+            ->add(
+                'login',
+                TextType::class,
+                [
+                    'label' => "Login",
+                    'attr'  =>  ['readonly' => true]
+                ]
             )
-                ->add('displayName', TextType::class, array('label' => "Display Name"))
-                ->add('email', TextType::class, array('label' => "Email"))
-                ->add('save', SubmitType::class, array(
-                    'label'  => 'save',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+            ->add(
+                'displayName',
+                TextType::class,
+                ['label' => "Display Name"]
+            )
+            ->add(
+                'email',
+                TextType::class,
+                ['label' => "Email"]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'save',
+                    'attr' =>  ['class' => 'btn-primary']
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

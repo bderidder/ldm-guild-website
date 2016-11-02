@@ -12,18 +12,30 @@ class PasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('passwordOne', PasswordType::class, array('label' => "New Password"))
-                ->add('passwordTwo', PasswordType::class, array('label' => "Repeat Password"))
-                ->add('save', SubmitType::class, array(
-                    'label'  => 'change',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-            ));
+        $builder
+            ->add(
+                'passwordOne',
+                PasswordType::class,
+                ['label' => "New Password"]
+            )
+            ->add(
+                'passwordTwo',
+                PasswordType::class,
+                ['label' => "Repeat Password"]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
+                    'label' => 'change',
+                    'attr'  =>  ['class' => 'btn-primary']
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

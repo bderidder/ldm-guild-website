@@ -16,9 +16,9 @@ class EventSignUpsModel
     protected $signUps;
     protected $organiser;
     protected $currentUserSigned;
-    protected $mightComeSignUps = array();
-    protected $willComeSignUps = array();
-    protected $absentSignUps = array();
+    protected $mightComeSignUps = [];
+    protected $willComeSignUps = [];
+    protected $absentSignUps = [];
 
     protected $totalWillCome = 0;
     protected $totalMightCome = 0;

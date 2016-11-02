@@ -55,7 +55,7 @@ class EditEventController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in indexAction',
-                array("event" => $id)
+                ["event" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -64,21 +64,21 @@ class EditEventController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $e,
                     "event"     => $id,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
 
         /* verify that the event is not in the past */
         $currentDateTime = new \DateTime();
         if ($event->getInviteTime() <= $currentDateTime)
         {
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
 
         /* verify that the user can edit this particular event */
@@ -95,7 +95,7 @@ class EditEventController extends LaDanseController
         $formModel = $this->entityToModel($event);
 
         $form = $this->createForm(EventFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -111,24 +111,28 @@ class EditEventController extends LaDanseController
 
                 $this->addToast('Event updated');
 
-        		return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+        		return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         	}
             else
             {
-                return $this->render('LaDanseSiteBundle:events:editEvent.html.twig',
-                        array('event' => new EventModel($event, $this->getAccount()),
-                              'form' => $form->createView(),
-                              'errors' => $errors));    
+                return $this->render(
+                    'LaDanseSiteBundle:events:editEvent.html.twig',
+                    [
+                        'event' => new EventModel($event, $this->getAccount()),
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
     	}
     	else
     	{
         	return $this->render(
                 'LaDanseSiteBundle:events:editEvent.html.twig',
-                array(
+                [
                     'event' => new EventModel($event, $this->getAccount()),
                     'form' => $form->createView()
-                )
+                ]
             );
     	}
     }

@@ -55,7 +55,7 @@ class EditSignUpController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in indexAction',
-                array("event" => $id)
+                ["event" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -65,7 +65,7 @@ class EditSignUpController extends LaDanseController
         $currentDateTime = new \DateTime();
         if ($event->getInviteTime() <= $currentDateTime)
         {
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
 
         /** @var SignUp $currentSignUp */
@@ -84,26 +84,26 @@ class EditSignUpController extends LaDanseController
         }
         catch(EventInThePastException $e)
         {
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(\Exception $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $e,
                     "event"     => $id,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
 
         if ($currentSignUp == null)
         {
             $this->logger->warning(__CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
-                array('event' => $id, 'user' => $this->getAccount()->getId()));
+                ['event' => $id, 'user' => $this->getAccount()->getId()]);
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }       
@@ -111,7 +111,7 @@ class EditSignUpController extends LaDanseController
         $formModel = new SignUpFormModel($currentSignUp);
 
         $form = $this->createForm(SignUpFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         $form->handleRequest($request);
 
@@ -123,42 +123,42 @@ class EditSignUpController extends LaDanseController
 
                 $this->addToast('Signup updated');
 
-                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
             }
             catch(EventInThePastException $e)
             {
-                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
             }
             catch(NotAuthorizedException $e)
             {
                 $this->logger->warning(
                     __CLASS__ . ' currently logged in user is not allowed to remove this event',
-                    array(
+                    [
                         "event"   => $id,
                         "account" => $account->getId()
-                    )
+                    ]
                 );
 
-                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
             }
             catch(\Exception $e)
             {
                 $this->logger->warning(
                     __CLASS__ . ' unexpected error',
-                    array(
+                    [
                         "throwable" => $e,
                         "event"     => $id,
                         "account"   => $account->getId()
-                    )
+                    ]
                 );
 
-                return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+                return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
             }
         }
         else
         {
             return $this->render("LaDanseSiteBundle:events:editSignUp.html.twig",
-                array('event' => $event, 'form' => $form->createView()));
+                ['event' => $event, 'form' => $form->createView()]);
         }
     }
 }

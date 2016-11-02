@@ -51,7 +51,7 @@ class CreateSignUpController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in createAction',
-                array("event id" => $eventId)
+                ["event id" => $eventId]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -60,14 +60,14 @@ class CreateSignUpController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $t,
                     "event"     => $eventId,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
 
         $formModel = new SignUpFormModel();
@@ -75,7 +75,7 @@ class CreateSignUpController extends LaDanseController
         $form = $this->createForm(
             SignUpFormType::class,
             $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => ''))
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]
         );
 
         $form->handleRequest($request);
@@ -97,19 +97,19 @@ class CreateSignUpController extends LaDanseController
             {
                 $this->logger->error(
                     __CLASS__ . ' could not create sign up',
-                    array("exception" => $e)
+                    ["exception" => $e]
                 );
 
                 $this->addToast('Error saving sign up');
             }
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
         else
         {
             return $this->render(
                 "LaDanseSiteBundle:events:createSignUp.html.twig",
-                array('event' => $event, 'form' => $form->createView())
+                ['event' => $event, 'form' => $form->createView()]
             );
         }
     }
@@ -140,12 +140,12 @@ class CreateSignUpController extends LaDanseController
         {
             $this->logger->error(
                 __CLASS__ . ' could not create sign up',
-                array("exception" => $e)
+                ["exception" => $e]
             );
 
             $this->addToast('Error saving absence');
         }
 
-        return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+        return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
     }
 }

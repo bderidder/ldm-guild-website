@@ -40,7 +40,7 @@ class FeedbackController extends LaDanseController
         $formModel->setDescription('');
 
         $form = $this->createForm(FeedbackFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -59,8 +59,13 @@ class FeedbackController extends LaDanseController
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:feedback:feedbackForm.html.twig',
-                        array('form' => $form->createView(), 'errors' => $errors));
+                return $this->render(
+                    'LaDanseSiteBundle:feedback:feedbackForm.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
         }
         else
@@ -72,8 +77,10 @@ class FeedbackController extends LaDanseController
                     $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
-            return $this->render('LaDanseSiteBundle:feedback:feedbackForm.html.twig',
-                        array('form' => $form->createView()));
+            return $this->render(
+                'LaDanseSiteBundle:feedback:feedbackForm.html.twig',
+                ['form' => $form->createView()]
+            );
         }
     }
 }

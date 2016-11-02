@@ -40,13 +40,13 @@ class EditStateEventController extends LaDanseController
         {
             $eventService->confirmEvent($id);
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in confirmEvent',
-                array("event" => $id)
+                ["event" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -55,26 +55,26 @@ class EditStateEventController extends LaDanseController
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to confirm event');
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(EventInvalidStateChangeException $e)
         {
             $this->logger->warning(__CLASS__ . ' the event is in a state that does not allow confirmation');
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(\Throwable $t)
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $t,
                     "event"     => $id,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
     }
 
@@ -98,13 +98,13 @@ class EditStateEventController extends LaDanseController
         {
             $eventService->cancelEvent($id);
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in cancelEvent',
-                array("event" => $id)
+                ["event" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -113,26 +113,26 @@ class EditStateEventController extends LaDanseController
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to cancel event');
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(EventInvalidStateChangeException $e)
         {
             $this->logger->warning(__CLASS__ . ' the event is in a state that does not allow cancellation');
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(\Exception $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $e,
                     "event"     => $id,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
     }
 }

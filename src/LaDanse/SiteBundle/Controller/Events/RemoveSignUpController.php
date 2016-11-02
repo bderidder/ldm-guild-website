@@ -43,16 +43,16 @@ class RemoveSignUpController extends LaDanseController
         {
             $eventService->removeSignUpForAccount($eventId, $account->getId());
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
         catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist',
-                array(
+                [
                     "event"   => $eventId,
                     "account" => $account->getId()
-                )
+                ]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -61,50 +61,50 @@ class RemoveSignUpController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' no sign up for this account on given event',
-                array(
+                [
                     "event"   => $eventId,
                     "account" => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
         catch(EventInThePastException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' given event is in the past',
-                array(
+                [
                     "event"   => $eventId,
                     "account" => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
         catch(NotAuthorizedException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' currently logged in user is not allowed to remove this sign up',
-                array(
+                [
                     "event"   => $eventId,
                     "account" => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
         catch(\Exception $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $e,
                     "event"     => $eventId,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $eventId)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
     }
 }

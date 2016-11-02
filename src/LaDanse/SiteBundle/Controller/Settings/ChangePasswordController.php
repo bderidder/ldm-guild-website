@@ -52,7 +52,7 @@ class ChangePasswordController extends LaDanseController
         $formModel = new PasswordFormModel();
 
         $form = $this->createForm(PasswordFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -73,9 +73,13 @@ class ChangePasswordController extends LaDanseController
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
-                    array('form' => $form->createView(),
-                        'errors' => $errors));
+                return $this->render(
+                    'LaDanseSiteBundle:settings:changePassword.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
         }
         else
@@ -87,8 +91,10 @@ class ChangePasswordController extends LaDanseController
                     $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
-            return $this->render('LaDanseSiteBundle:settings:changePassword.html.twig',
-                array('form' => $form->createView()));
+            return $this->render(
+                'LaDanseSiteBundle:settings:changePassword.html.twig',
+                ['form' => $form->createView()]
+            );
         }
     }
 }

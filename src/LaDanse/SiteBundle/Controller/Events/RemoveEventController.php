@@ -52,7 +52,7 @@ class RemoveEventController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in removeAction',
-                array("event id" => $id)
+                ["event id" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -61,35 +61,35 @@ class RemoveEventController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event is in the past in removeAction',
-                array("event id" => $id)
+                ["event id" => $id]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(NotAuthorizedException $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' currently logged in user is not allowed to remove this event',
-                array(
+                [
                     "event"   => $id,
                     "account" => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
         catch(\Exception $e)
         {
             $this->logger->warning(
                 __CLASS__ . ' unexpected error',
-                array(
+                [
                     "throwable" => $e,
                     "event"     => $id,
                     "account"   => $account->getId()
-                )
+                ]
             );
 
-            return $this->redirect($this->generateUrl('viewEvent', array('id' => $id)));
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
     }
 }

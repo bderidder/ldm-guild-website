@@ -52,16 +52,16 @@ class ICalController extends LaDanseController
 
         if ($exportSettings === null)
         {
-            $this->logger->info(__CLASS__ . " Supplied secret is not known", array("secret" => $secret));
+            $this->logger->info(__CLASS__ . " Supplied secret is not known", ["secret" => $secret]);
 
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         $this->logger->info(
             __CLASS__ . " found account for secret ",
-            array(
+            [
                 "account" => $exportSettings->getAccount()->getUsername()
-            )
+            ]
         );
 
         $account = $exportSettings->getAccount();
@@ -113,13 +113,13 @@ class ICalController extends LaDanseController
         return new Response(
             $vCalendar->render(),
             Response::HTTP_OK,
-            array(
+            [
                 'Cache-Control' => 'no-cache, no-store, must-revalidate',
                 'Pragma' => 'no-cache',
                 'Expires' => '0',
                 'Content-Type' => 'text/calendar; charset=utf-8',
                 'Content-Disposition' => 'attachment; filename="cal.ics"'
-                )
+            ]
         );
     }
 
@@ -130,7 +130,7 @@ class ICalController extends LaDanseController
 
         $events = $eventService->getAllEvents();
 
-        $eventModels = array();
+        $eventModels = [];
 
         foreach($events as $event)
         {
@@ -169,7 +169,7 @@ class ICalController extends LaDanseController
         $vEvent->setSummary($description);
         $vEvent->setDescription($this->createDescription($event));
 
-        $vEvent->setUrl($this->generateUrl('viewEvent', array('id' => $event->getId()), true));
+        $vEvent->setUrl($this->generateUrl('viewEvent', ['id' => $event->getId()], true));
 
         $vEvent->setUseTimezone(true);
 
@@ -235,7 +235,7 @@ class ICalController extends LaDanseController
             ($commentGroup->getComments()->count() > 0))
         {
             $description = $description . "\n\n";
-            $description = $description . $this->generateUrl('viewEvent', array('id' => $event->getId()), true);
+            $description = $description . $this->generateUrl('viewEvent', ['id' => $event->getId()], true);
         }
 
         return $description;

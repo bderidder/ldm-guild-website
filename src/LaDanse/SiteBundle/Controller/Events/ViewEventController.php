@@ -51,7 +51,7 @@ class ViewEventController extends LaDanseController
         {
             $this->logger->warning(
                 __CLASS__ . ' the event does not exist in indexAction',
-                array("event" => $id)
+                ["event" => $id]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
@@ -68,9 +68,10 @@ class ViewEventController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:events:viewEvent.html.twig',
-            array(
+            [
                 'isFuture' => ($event->getInviteTime() > $currentDateTime),
-                'event' => new EventModel($event, $this->getAccount()))
+                'event'    => new EventModel($event, $this->getAccount())
+            ]
         );
     }
 }

@@ -63,7 +63,7 @@ class EditCalExportController extends LaDanseController
         $formModel->setExportAbsence($calExport->getExportAbsence());
 
         $form = $this->createForm(CalExportFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -82,10 +82,10 @@ class EditCalExportController extends LaDanseController
             else
             {
                 return $this->render('LaDanseSiteBundle:settings:editCalExport.html.twig',
-                    array(
+                    [
                         'form' => $form->createView(),
-                        'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), UrlGeneratorInterface::ABSOLUTE_URL)
-                    )
+                        'personalUrl' => $this->generateUrl('icalIndex', ['secret' => $calExport->getSecret()], UrlGeneratorInterface::ABSOLUTE_URL)
+                    ]
                 );
             }
         }
@@ -99,10 +99,10 @@ class EditCalExportController extends LaDanseController
             );
 
             return $this->render('LaDanseSiteBundle:settings:editCalExport.html.twig',
-                array(
+                [
                     'form' => $form->createView(),
-                    'personalUrl' => $this->generateUrl('icalIndex', array('secret' => $calExport->getSecret()), UrlGeneratorInterface::ABSOLUTE_URL)
-                )
+                    'personalUrl' => $this->generateUrl('icalIndex', ['secret' => $calExport->getSecret()], UrlGeneratorInterface::ABSOLUTE_URL)
+                ]
             );
         }
     }

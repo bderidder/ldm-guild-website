@@ -12,23 +12,55 @@ class NotificationsFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('newEvents', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('changeSignedEvent', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('eventToday', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('signUpChange', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('topicCreated', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('replyToTopic', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('allForumPosts', CheckboxType::class, array('label' => "Change this in template"))
-                ->add('change', SubmitType::class, array(
-                    'label'  => 'save',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+        $builder
+            ->add(
+                'newEvents',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'changeSignedEvent',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'eventToday',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'signUpChange',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'topicCreated',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'replyToTopic',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'allForumPosts',
+                CheckboxType::class,
+                ['label' => "Change this in template"]
+            )
+            ->add(
+                'change',
+                SubmitType::class,
+                [
+                    'label' => 'save',
+                    'attr'  =>  ['class'=> 'btn-primary']
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

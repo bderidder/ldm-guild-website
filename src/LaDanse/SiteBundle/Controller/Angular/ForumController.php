@@ -70,9 +70,9 @@ class ForumController extends LaDanseController
 
         return $this->render(
             "LaDanseSiteBundle:forum:menuPartial.html.twig",
-            array(
+            [
                 'unreadPosts' => $unreadPosts
-            )
+            ]
         );
     }
 }

@@ -15,9 +15,16 @@ class TwigHeaderAndBackExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('renderHeader', array($this, 'renderFunction'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction(
+                'renderHeader',
+                [
+                    $this,
+                    'renderFunction'
+                ],
+                ['is_safe' => ['html']]
+            ),
+        ];
     }
 
     public function renderFunction($headerTitle, $backPath = null)
@@ -34,8 +41,12 @@ class TwigHeaderAndBackExtension extends \Twig_Extension
     {
         $templating = $this->container->get('templating');
 
-        return $templating->render('LaDanseSiteBundle:twig:PageHeader.html.twig',
-            array('headerTitle' => $headerTitle,
-                  'backPath' => $backPath));
+        return $templating->render(
+            'LaDanseSiteBundle:twig:PageHeader.html.twig',
+            [
+                'headerTitle' => $headerTitle,
+                'backPath' => $backPath
+            ]
+        );
     }
 }

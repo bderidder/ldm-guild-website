@@ -23,7 +23,7 @@ class SignUpFormModel
 
         $this->type = $signUp->getType();
 
-        $this->roles = array();
+        $this->roles = [];
         foreach($signUp->getRoles() as $signedRole)
         {
             $this->roles[] = $signedRole->getRole();

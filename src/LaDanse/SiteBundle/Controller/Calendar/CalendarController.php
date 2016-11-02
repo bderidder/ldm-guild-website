@@ -79,7 +79,7 @@ class CalendarController extends LaDanseController
         }
 
         return $this->render('LaDanseSiteBundle:calendar:calendar.html.twig',
-            array('showDate' => $showDate)
+            ['showDate' => $showDate]
         );
     }
 
@@ -105,7 +105,7 @@ class CalendarController extends LaDanseController
         // the algoritm below needs to start on the day before, so we substract a day
         $startDate = $startDate->modify('-1days');
 
-        $calendarDates = array();
+        $calendarDates = [];
 
         $events = $this->getEvents($startDate, $this->getAuthenticationService()->getCurrentContext()->getAccount());
 
@@ -168,11 +168,12 @@ class CalendarController extends LaDanseController
         $todayDate = new \DateTime('today');
 
         return $this->render('LaDanseSiteBundle:calendar:calendarPartial.html.twig',
-                array(
+                [
                     'calendarDays'     => $calendarDates,
                     'previousPageDate' => $previousPageDate->format(CalendarController::QUERY_DATE_FORMAT),
                     'todayPageDate'    => $todayDate->format(CalendarController::QUERY_DATE_FORMAT),
-                    'nextPageDate'     => $nextPageDate->format(CalendarController::QUERY_DATE_FORMAT))
+                    'nextPageDate'     => $nextPageDate->format(CalendarController::QUERY_DATE_FORMAT)
+                ]
         );
     }
 
@@ -182,7 +183,7 @@ class CalendarController extends LaDanseController
         $events = $this->getEvents($startDate, $this->getAuthenticationService()->getCurrentContext()->getAccount());
 
         return $this->render('LaDanseSiteBundle:calendar:calendarTilePartial.html.twig',
-                    array('events' => $events)
+                    ['events' => $events]
                 );
     }
 
@@ -193,7 +194,7 @@ class CalendarController extends LaDanseController
 
         $events = $eventService->getAllEventsSince($startDate);
 
-        $eventModels = array();
+        $eventModels = [];
 
         foreach($events as $event)
         {

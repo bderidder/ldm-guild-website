@@ -56,7 +56,7 @@ class EditNotificationsController extends LaDanseController
         $this->loadSettings($formModel, $authContext->getAccount());
 
         $form = $this->createForm(NotificationsFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -81,15 +81,21 @@ class EditNotificationsController extends LaDanseController
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:settings:editNotifications.html.twig',
-                    array('form' => $form->createView(),
-                        'errors' => $errors));
+                return $this->render(
+                    'LaDanseSiteBundle:settings:editNotifications.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:settings:editNotifications.html.twig',
-                array('form' => $form->createView()));
+            return $this->render(
+                'LaDanseSiteBundle:settings:editNotifications.html.twig',
+                ['form' => $form->createView()]
+            );
         }
     }
 
@@ -138,36 +144,36 @@ class EditNotificationsController extends LaDanseController
 
         $settingsService->updateSettingsForAccount(
             $account,
-            array (
-                (object) array(
+            [
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_EVENT_CREATED,
                     'value' => $settingsFormModel->getNewEvents() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_EVENT_UPDATED,
                     'value' => $settingsFormModel->getChangeSignedEvent() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_EVENT_TODAY,
                     'value' => $settingsFormModel->getEventToday() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED,
                     'value' => $settingsFormModel->getSignUpChange() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_FORUMS_TOPIC_CREATED,
                     'value' => $settingsFormModel->getTopicCreated() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_FORUMS_POST_REPLY,
                     'value' => $settingsFormModel->getReplyToTopic() ? '1' : '0'
-                ),
-                (object) array(
+                ],
+                (object) [
                     'name' => SettingNames::NOTIFICATIONS_FORUMS_ALL_POSTS,
                     'value' => $settingsFormModel->getAllForumPosts() ? '1' : '0'
-                )
-            )
+                ]
+            ]
         );
     }
 }

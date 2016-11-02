@@ -57,7 +57,7 @@ class EditProfileController extends LaDanseController
         $formModel->setEmail($account->getEmail());
 
         $form = $this->createForm(ProfileFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
 
         if ($request->getMethod() == 'POST')
         {
@@ -78,9 +78,13 @@ class EditProfileController extends LaDanseController
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',
-                    array('form' => $form->createView(),
-                        'errors' => $errors));
+                return $this->render(
+                    'LaDanseSiteBundle:settings:editProfile.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
         }
         else
@@ -92,8 +96,10 @@ class EditProfileController extends LaDanseController
                     $this->getAuthenticationService()->getCurrentContext()->getAccount())
             );
 
-            return $this->render('LaDanseSiteBundle:settings:editProfile.html.twig',
-                array('form' => $form->createView()));
+            return $this->render(
+                'LaDanseSiteBundle:settings:editProfile.html.twig',
+                ['form' => $form->createView()]
+            );
         }
     }
 

@@ -26,8 +26,16 @@ class RegistrationController extends LaDanseController
     {
         $formModel = new RegistrationFormModel();
 
-        $form = $this->createForm(RegistrationFormType::class, $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => '')));
+        $form = $this->createForm(
+            RegistrationFormType::class,
+            $formModel,
+            [
+                'attr' => [
+                    'class' => 'form-horizontal',
+                    'novalidate' => ''
+                ]
+            ]
+        );
 
         if ($request->getMethod() == 'POST')
         {
@@ -45,15 +53,23 @@ class RegistrationController extends LaDanseController
             }
             else
             {
-                return $this->render('LaDanseSiteBundle:registration:registerProfile.html.twig',
-                    array('form' => $form->createView(),
-                        'errors' => $errors));
+                return $this->render(
+                    'LaDanseSiteBundle:registration:registerProfile.html.twig',
+                    [
+                        'form' => $form->createView(),
+                        'errors' => $errors
+                    ]
+                );
             }
         }
         else
         {
-            return $this->render('LaDanseSiteBundle:registration:registerProfile.html.twig',
-                array('form' => $form->createView()));
+            return $this->render(
+                'LaDanseSiteBundle:registration:registerProfile.html.twig',
+                [
+                    'form' => $form->createView()
+                ]
+            );
         }
     }
 

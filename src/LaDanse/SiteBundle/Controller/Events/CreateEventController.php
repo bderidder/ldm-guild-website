@@ -63,7 +63,7 @@ class CreateEventController extends LaDanseController
         $form = $this->createForm(
             EventFormType::class,
             $formModel,
-            array('attr' => array('class' => 'form-horizontal', 'novalidate' => ''))
+            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]
         );
 
         if ($request->getMethod() == 'POST')
@@ -78,13 +78,13 @@ class CreateEventController extends LaDanseController
 
                 $this->addToast('New event created');
 
-                return $this->redirect($this->generateUrl('calendarIndex', array('showDate' => $eventDate->format('Ymd'))));
+                return $this->redirect($this->generateUrl('calendarIndex', ['showDate' => $eventDate->format('Ymd')]));
             }
             else
             {
                 return $this->render(
                     'LaDanseSiteBundle:events:createEvent.html.twig',
-                    array('form' => $form->createView(), 'errors' => $errors)
+                    ['form' => $form->createView(), 'errors' => $errors]
                 );
             }
         }
@@ -92,7 +92,7 @@ class CreateEventController extends LaDanseController
         {
             return $this->render(
                 'LaDanseSiteBundle:events:createEvent.html.twig',
-                array('form' => $form->createView())
+                ['form' => $form->createView()]
             );
         }
     }

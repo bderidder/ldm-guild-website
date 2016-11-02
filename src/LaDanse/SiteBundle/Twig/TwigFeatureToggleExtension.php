@@ -17,9 +17,16 @@ class TwigFeatureToggleExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('hasFeatureToggle', array($this, 'hasFeatureToggle'), array('is_safe' => array('html'))),
-        );
+        return [
+            new \Twig_SimpleFunction(
+                'hasFeatureToggle',
+                [
+                    $this,
+                    'hasFeatureToggle']
+                ,
+                ['is_safe' => ['html']]
+            ),
+        ];
     }
 
     public function hasFeatureToggle($featureToggle)

@@ -13,21 +13,44 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', TextType::class, array('label' => "Username"))
-                ->add('displayName', TextType::class, array('label' => "Display Name"))
-                ->add('email', TextType::class, array('label' => "Email"))
-                ->add('passwordOne', PasswordType::class, array('label' => "Password"))
-                ->add('passwordTwo', PasswordType::class, array('label' => "Repeat Password"))
-                ->add('save', SubmitType::class, array(
-                    'label'  => 'register',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+        $builder
+            ->add(
+                'username',
+                TextType::class,
+                ['label' => "Username"]
+            )
+            ->add(
+                'displayName',
+                TextType::class,
+                ['label' => "Display Name"]
+            )
+            ->add(
+                'email',
+                TextType::class,
+                ['label' => "Email"]
+            )
+            ->add(
+                'passwordOne',
+                PasswordType::class,
+                ['label' => "Password"]
+            )
+            ->add(
+                'passwordTwo',
+                PasswordType::class,
+                ['label' => "Repeat Password"]
+            )
+            ->add(
+                'save', SubmitType::class,
+                [
+                    'label' => 'register',
+                    'attr'  =>  ['class' => 'btn-primary']
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

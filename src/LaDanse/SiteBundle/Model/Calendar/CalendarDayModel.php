@@ -20,7 +20,7 @@ class CalendarDayModel
         $this->setContainer($container);
 
         $this->date = $date;
-        $this->events = array();
+        $this->events = [];
         $this->showMonth = false;
         $this->inCurrentRaidWeek = false;
     }

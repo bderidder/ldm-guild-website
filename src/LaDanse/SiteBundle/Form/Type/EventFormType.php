@@ -15,30 +15,58 @@ class EventFormType extends AbstractType
 {
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('name', TextType::class, array(
-                	'label' => "Name"
-                	))
-		        ->add('description', TextareaType::class)
-		        ->add('date', DateType::class, array(
+		$builder
+            ->add(
+                'name',
+                TextType::class,
+                [
+                    'label' => "Name"
+                ]
+            )
+            ->add('description', TextareaType::class)
+            ->add(
+                'date',
+                DateType::class,
+                [
 		        	'widget' => 'single_text',
 		        	'format' => 'EEE dd-MM-yyyy',
-					'attr' => array('class' => 'date')))
-		        ->add('inviteTime', TimeType::class, array(
-		        	'widget' => 'single_text'))
-		        ->add('startTime', TimeType::class, array(
-		        	'widget' => 'single_text'))
-		        ->add('endTime', TimeType::class, array(
-		        	'widget' => 'single_text'))
-                ->add('save', SubmitType::class, array(
+					'attr' => ['class' => 'date']
+                ]
+            )
+            ->add(
+                'inviteTime',
+                TimeType::class,
+                [
+		        	'widget' => 'single_text'
+                ]
+            )
+            ->add(
+                'startTime',
+                TimeType::class,
+                [
+		        	'widget' => 'single_text'
+                ]
+            )
+            ->add(
+                'endTime',
+                TimeType::class,
+                [
+		        	'widget' => 'single_text'
+                ]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                [
                     'label'  => 'save',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+                    'attr'   =>  ['class' => 'btn-primary']
+                ]
+            );
 	}
 
 	public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

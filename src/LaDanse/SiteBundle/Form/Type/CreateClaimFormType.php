@@ -13,23 +13,20 @@ class CreateClaimFormType extends AbstractType
 {
    public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder->add('roles', ChoiceType::class, array(
-    				'choices'   => array(
+		$builder->add('roles', ChoiceType::class, [
+    				'choices'   => [
                         'Tank'   => Role::TANK,
                         'Healer' => Role::HEALER,
-                        'Damage' => Role::DPS),
+                        'Damage' => Role::DPS],
                     'expanded'	=> true,
-    				'multiple'	=> true
-				))
-		        ->add('character', ChoiceType::class, array(
+    				'multiple'	=> true])
+		        ->add('character', ChoiceType::class, [
                     'choices' => $options['unclaimedChars'],
                     'expanded'  => false,
-                    'multiple'  => false))
-                ->add('save', SubmitType::class, array(
+                    'multiple'  => false])
+                ->add('save', SubmitType::class, [
                     'label'  => 'save',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+                    'attr'   =>  ['class' => 'btn-primary']]);
 	}
 
     /**
@@ -46,9 +43,9 @@ class CreateClaimFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'unclaimedChars' => null,
-            )
+            ]
         );
     }
 }

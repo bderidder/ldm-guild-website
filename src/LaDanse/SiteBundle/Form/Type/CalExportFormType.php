@@ -12,19 +12,20 @@ class CalExportFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('exportSignUp', CheckboxType::class, array('label' => "dummy label", 'disabled' => true))
-                ->add('exportAbsence', CheckboxType::class, array('label' => "dummy label"))
-                ->add('exportNew', CheckboxType::class, array('label' => "dummy label"))
-                ->add('change', SubmitType::class, array(
+        $builder->add('exportSignUp', CheckboxType::class, ['label' => "dummy label", 'disabled' => true])
+                ->add('exportAbsence', CheckboxType::class, ['label' => "dummy label"])
+                ->add('exportNew', CheckboxType::class, ['label' => "dummy label"])
+                ->add('change', SubmitType::class, [
                     'label'  => 'save',
-                    'attr'   =>  array(
-                        'class'   => 'btn-primary')
-                ));
+                    'attr'   =>  [
+                        'class'   => 'btn-primary']
+                    ]
+                );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array('show_legend' => false));
+        $resolver->setDefaults(['show_legend' => false]);
     }
 
     /**

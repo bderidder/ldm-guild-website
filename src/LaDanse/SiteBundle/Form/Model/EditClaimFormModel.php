@@ -12,7 +12,7 @@ class EditClaimFormModel
 
     public function __construct($claimModel)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         if ($claimModel->playsTank)
         {

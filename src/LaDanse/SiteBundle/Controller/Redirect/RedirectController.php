@@ -43,9 +43,9 @@ class RedirectController extends LaDanseController
             new ActivityEvent(
                 ActivityType::REDIRECT,
                 $account,
-                array(
+                [
                     'url' => $url
-                )
+                ]
             )
         );
 

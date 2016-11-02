@@ -8,7 +8,7 @@ class ErrorModel
 
     public function __construct()
     {
-        $this->errors = array();
+        $this->errors = [];
     }
 
     public function getHasErrors()

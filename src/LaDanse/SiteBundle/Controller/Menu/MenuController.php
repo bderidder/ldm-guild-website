@@ -57,9 +57,9 @@ class MenuController extends LaDanseController
 
         return $this->render(
             'LaDanseSiteBundle:menu:menu.html.twig',
-            array(
+            [
                 "wowheadNews" => $items
-            )
+            ]
         );
     }
 }
