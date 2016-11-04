@@ -13,12 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class CharactersController extends LaDanseController
 {
     /**
-     * @var $logger \Monolog\Logger
-     * @DI\Inject("monolog.logger.ladanse")
-     */
-    private $logger;
-
-    /**
      * @Route("/characters", name="charactersIndex")
      *
      * @return \Symfony\Component\HttpFoundation\Response
