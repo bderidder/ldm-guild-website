@@ -4,15 +4,11 @@
   "type": "project",
   "description": "The \"Symfony Standard Edition\" distribution",
   "autoload": {
-    "psr-0": {
-      "": "src/"
-    },
-    "autoload-dev": {
-      "psr-4": { "Tests\\": "tests/" }
-    },
-    "files": [
-      "app/AppKernel.php"
-    ]
+    "psr-4": { "": "src/" },
+    "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+  },
+  "autoload-dev": {
+    "psr-4": { "Tests\\": "tests/" }
   },
   "require": {
     "php": ">=5.3.9",
@@ -58,14 +54,16 @@
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
     ],
     "post-update-cmd": [
       "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sp\\BowerBundle\\Composer\\ScriptHandler::bowerInstall"
     ]
   },
   "extra": {
