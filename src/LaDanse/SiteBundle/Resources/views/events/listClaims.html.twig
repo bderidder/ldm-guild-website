@@ -32,7 +32,7 @@
                         {% endif %}
                     </td>
                     <td class="center-td">
-                        {% if 'Healer' in claim.roles and claim.raider %}
+                        {% if 'Healer' in claim.roles %}
                             <i class="signUp fa fa-times fa-1x {{ claim.raider ? 'text-success' : 'text-muted' }}"></i>
                         {% endif %}
                     </td>
