@@ -11,8 +11,6 @@ use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
-use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
-use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

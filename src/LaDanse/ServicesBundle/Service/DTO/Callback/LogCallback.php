@@ -9,7 +9,6 @@ namespace LaDanse\ServicesBundle\Service\DTO\Callback;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
-use LaDanse\ServicesBundle\Service\DTO\Reference\StringReference;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**

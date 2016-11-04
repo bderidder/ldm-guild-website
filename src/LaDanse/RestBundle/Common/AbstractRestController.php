@@ -9,7 +9,6 @@ namespace LaDanse\RestBundle\Common;
 use JMS\Serializer\SerializerBuilder;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Common\ServiceException;
-use LaDanse\ServicesBundle\Service\Account\AccountService;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceReference;

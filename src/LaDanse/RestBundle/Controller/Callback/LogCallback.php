@@ -8,7 +8,6 @@ namespace LaDanse\RestBundle\Controller\Callback;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\RestBundle\Common\AbstractRestController;
-use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\ServiceException;
