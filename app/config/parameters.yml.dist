@@ -58,3 +58,4 @@ parameters:
         # describe the type of deployment
         deployment_name: 'Sunstrider Isle Test Deployment'
         deployment_type: 'dev'
+        deployment_version: 'v1'

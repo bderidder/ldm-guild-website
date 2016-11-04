@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: version.yml }
     - { resource: security.yml }
     - { resource: hwi_oauth.yml }
 
@@ -24,7 +25,8 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
-    assets: ~
+    assets:
+        version: "%deployment_version%"
 
 # Twig Configuration
 twig:

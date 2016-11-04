@@ -55,3 +55,4 @@ app/Resources/mopa_remote_update.sqlite
 /src/LaDanse/AngularBundle/Resources/public/components/
 /src/LaDanse/AngularBundle/Resources/config/bower/.bowerrc
 /src/LaDanse/SiteBundle/Resources/config/bower/.bowerrc
+/app/config/version.yml
