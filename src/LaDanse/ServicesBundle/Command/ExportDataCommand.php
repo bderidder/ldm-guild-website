@@ -81,7 +81,14 @@ class ExportDataCommand extends ContainerAwareCommand
 
             $exportFilename = $destination . "/event_" . $jsonEvent->getId() . ".json";
 
-            $exportFile = fopen($exportFilename, "w") or die("Unable to open file!");
+            $exportFile = fopen($exportFilename, "w");
+
+            if ($exportFile == null)
+            {
+                $output->writeln('ERROR - Could not open file for export');
+
+                return;
+            }
 
             fwrite($exportFile, $jsonContent);
 
