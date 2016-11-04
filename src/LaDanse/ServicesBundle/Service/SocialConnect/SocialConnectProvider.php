@@ -140,7 +140,7 @@ class SocialConnectProvider implements AccountConnectorInterface, OAuthAwareUser
 
         foreach($response->getResponse() as $path)
         {
-            $this->logger->info('path element > ' . var_export($path));
+            $this->logger->info('path element > ' . json_encode($path));
         }
 
         throw new AccountNotLinkedException(sprintf("Resource '%s' not found and no user currently authenticated", $response->getResourceOwner()->getName()));
