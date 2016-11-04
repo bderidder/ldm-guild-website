@@ -143,12 +143,13 @@ class ListClaimsPartialController extends LaDanseController
             if ($this->characterPlaysAnyRole($character, $roles) && $character->getLevel() == 110)
             {
                 $resultCharacters[] = (object)[
-                    "name"  => $character->getName(),
-                    "level" => $character->getLevel(),
-                    "realm" => $this->transformRealmNameForUrl($this->resolveRealmName($realms, $character->getRealmReference())),
-                    "race"  => $this->resolveGameRaceName($gameRaces, $character->getGameRaceReference()),
-                    "class" => $this->resolveGameClassName($gameClasses, $character->getGameClassReference()),
-                    "roles" => $character->getClaim()->getRoles()
+                    "name"   => $character->getName(),
+                    "level"  => $character->getLevel(),
+                    "realm"  => $this->transformRealmNameForUrl($this->resolveRealmName($realms, $character->getRealmReference())),
+                    "race"   => $this->resolveGameRaceName($gameRaces, $character->getGameRaceReference()),
+                    "class"  => $this->resolveGameClassName($gameClasses, $character->getGameClassReference()),
+                    "roles"  => $character->getClaim()->getRoles(),
+                    "raider" => $character->getClaim()->isRaider()
                 ];
             }
         }

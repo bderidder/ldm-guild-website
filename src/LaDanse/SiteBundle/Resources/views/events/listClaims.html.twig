@@ -13,8 +13,6 @@
 
     {% if (claims|length != 0) %} 
 
-
-
         <table style="background-color: white;">
 
             <tr>
@@ -30,17 +28,17 @@
                     <td><a target="_blank" href="http://eu.battle.net/wow/en/character/{{ claim.realm }}/{{ claim.name }}/simple">{{ claim.name }}</a></td>
                     <td class="center-td">
                         {% if 'Tank' in claim.roles %}
-                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                            <i class="signUp fa fa-times fa-1x {{ claim.raider ? 'text-success' : 'text-muted' }}"></i>
                         {% endif %}
                     </td>
                     <td class="center-td">
-                        {% if 'Healer' in claim.roles %}
-                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                        {% if 'Healer' in claim.roles and claim.raider %}
+                            <i class="signUp fa fa-times fa-1x {{ claim.raider ? 'text-success' : 'text-muted' }}"></i>
                         {% endif %}
                     </td>
                     <td class="center-td">
                         {% if 'DPS' in claim.roles %}
-                            <i class="signUp fa fa-times fa-1x text-success"></i>
+                            <i class="signUp fa fa-times fa-1x {{ claim.raider ? 'text-success' : 'text-muted' }}"></i>
                         {% endif %}
                     </td>
                 </tr>
@@ -49,6 +47,13 @@
                 </tr>
             
             {% endfor %}
+
+            <tr>
+                <td colspan="4" style="font-size: 0.85em;">
+                    <i class="signUp fa fa-times fa-1x text-success"></i> = role as raider<br/>
+                    <i class="signUp fa fa-times fa-1x text-muted"></i> = role as non-raider
+                </td>
+            </tr>
 
         </table>
 
