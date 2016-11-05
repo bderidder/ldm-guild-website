@@ -24,7 +24,7 @@
         {% if verification.connected %}
 
             {% if verification.tokenValid %}
-                <p><i class="fa fa-check" style="color: green"></i> The access token is still valid, it will expire on {{ verification.expirationDate|date("d/m/Y h:i") }}</p>
+                <p><i class="fa fa-check" style="color: green"></i> The access token is still valid, it will expire on {{ verification.expirationDate|date("d/m/Y H:i") }}</p>
 
                 {% if verification.charactersLoaded %}
                     <p><i class="fa fa-check" style="color: green"></i> The site could request a list of your characters</p>

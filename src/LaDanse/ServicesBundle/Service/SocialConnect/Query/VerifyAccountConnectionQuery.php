@@ -107,6 +107,10 @@ class VerifyAccountConnectionQuery extends AbstractQuery
 
                 if ($response->getStatusCode() != 200)
                 {
+                    $verificationReport->setTokenValid(false);
+                }
+                else
+                {
                     $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
 
                     $jsonBody = $response->getBody();
@@ -126,10 +130,6 @@ class VerifyAccountConnectionQuery extends AbstractQuery
 
                         $verificationReport->setExpirationDate($expirationDate);
                     }
-                }
-                else
-                {
-                    $verificationReport->setTokenValid(false);
                 }
             }
             catch(ClientException $e)
