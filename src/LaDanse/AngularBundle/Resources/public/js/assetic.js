@@ -9,7 +9,7 @@ var Assetic = (function ()
 
     my.generate = function (assetBundlePath)
     {
-        return BUNDLE_BASEPATH + assetBundlePath;
+        return BUNDLE_BASEPATH + assetBundlePath + "?" + deploymentVersion;
     };
 
     return my;
