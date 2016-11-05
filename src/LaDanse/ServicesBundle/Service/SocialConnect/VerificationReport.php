@@ -8,10 +8,7 @@ class VerificationReport
     private $connected;
 
     /** @var bool */
-    private $checkAccessToken;
-
-    /** @var bool */
-    private $accessTokenExpired;
+    private $tokenValid;
 
     /** @var \DateTime */
     private $expirationDate;
@@ -40,36 +37,18 @@ class VerificationReport
     /**
      * @return boolean
      */
-    public function isCheckAccessToken()
+    public function isTokenValid()
     {
-        return $this->checkAccessToken;
+        return $this->tokenValid;
     }
 
     /**
-     * @param boolean $checkAccessToken
+     * @param boolean $tokenValid
      * @return VerificationReport
      */
-    public function setCheckAccessToken($checkAccessToken)
+    public function setTokenValid($tokenValid)
     {
-        $this->checkAccessToken = $checkAccessToken;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isAccessTokenExpired()
-    {
-        return $this->accessTokenExpired;
-    }
-
-    /**
-     * @param boolean $accessTokenExpired
-     * @return VerificationReport
-     */
-    public function setAccessTokenExpired($accessTokenExpired)
-    {
-        $this->accessTokenExpired = $accessTokenExpired;
+        $this->tokenValid = $tokenValid;
         return $this;
     }
 

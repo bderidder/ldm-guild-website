@@ -89,6 +89,8 @@ class VerifyAccountConnectionQuery extends AbstractQuery
             {
                 $client = new Client();
 
+                $this->logger->debug(__CLASS__ . " verifying token ('check_token').");
+
                 $response = $client->get(
                     $checkTokenUrl,
                     [
@@ -101,69 +103,83 @@ class VerifyAccountConnectionQuery extends AbstractQuery
                     ]
                 );
 
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
+                $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token status code " . $response->getStatusCode());
 
-                $jsonBody = $response->getBody();
-
-                $checkAccessToken = json_decode($jsonBody);
-
-                if (!property_exists($checkAccessToken, 'exp'))
+                if ($response->getStatusCode() != 200)
                 {
-                    $verificationReport->setCheckAccessToken(false);
+                    $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token success " . $response->getBody());
+
+                    $jsonBody = $response->getBody();
+
+                    $checkAccessToken = json_decode($jsonBody);
+
+                    if (!property_exists($checkAccessToken, 'exp'))
+                    {
+                        $verificationReport->setTokenValid(false);
+                    }
+                    else
+                    {
+                        $verificationReport->setTokenValid(true);
+
+                        $expirationDate = new \DateTime();
+                        $expirationDate->setTimestamp($checkAccessToken->exp);
+
+                        $verificationReport->setExpirationDate($expirationDate);
+                    }
                 }
                 else
                 {
-                    $verificationReport->setCheckAccessToken(true);
-
-                    $expirationDate = new \DateTime();
-                    $expirationDate->setTimestamp($checkAccessToken->exp);
-
-                    $verificationReport->setExpirationDate($expirationDate);
+                    $verificationReport->setTokenValid(false);
                 }
             }
             catch(ClientException $e)
             {
-                $verificationReport->setCheckAccessToken(false);
+                $verificationReport->setTokenValid(false);
 
                 $this->logger->debug(__CLASS__ . " verifyBattlenetAction check_token failure " . $e->getMessage());
             }
 
-            try
+            if ($verificationReport->isTokenValid())
             {
-                $client = new Client();
+                try
+                {
+                    $client = new Client();
 
-                $response = $client->get(
-                    $charactersUrl,
-                    [
-                        'query' => ['access_token' => $accessToken],
-                        'debug' => false,
-                        'connect_timeout' => 10,
-                        'curl' => [
-                            CURLOPT_SSLVERSION => 6
+                    $this->logger->debug(__CLASS__ . " trying to retrieve characters.");
+
+                    $response = $client->get(
+                        $charactersUrl,
+                        [
+                            'query' => ['access_token' => $accessToken],
+                            'debug' => false,
+                            'connect_timeout' => 10,
+                            'curl' => [
+                                CURLOPT_SSLVERSION => 6
+                            ]
                         ]
-                    ]
-                );
+                    );
 
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters success " . $response->getBody());
+                    $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters success " . $response->getBody());
 
-                $jsonBody = $response->getBody();
+                    $jsonBody = $response->getBody();
 
-                $checkAccessToken = json_decode($jsonBody);
+                    $checkAccessToken = json_decode($jsonBody);
 
-                if (!property_exists($checkAccessToken, 'characters'))
+                    if (!property_exists($checkAccessToken, 'characters'))
+                    {
+                        $verificationReport->setCharactersLoaded(false);
+                    }
+                    else
+                    {
+                        $verificationReport->setCharactersLoaded(true);
+                    }
+                }
+                catch(ClientException $e)
                 {
                     $verificationReport->setCharactersLoaded(false);
-                }
-                else
-                {
-                    $verificationReport->setCharactersLoaded(true);
-                }
-            }
-            catch(ClientException $e)
-            {
-                $verificationReport->setCharactersLoaded(false);
 
-                $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters failure " . $e->getMessage());
+                    $this->logger->debug(__CLASS__ . " verifyBattlenetAction characters failure " . $e->getMessage());
+                }
             }
         }
 

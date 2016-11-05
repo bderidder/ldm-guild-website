@@ -23,15 +23,8 @@
 
         {% if verification.connected %}
 
-            {% if verification.accessTokenExpired %}
-                <p><i class="fa fa-times" style="color: red"></i> The access token has expired, you will have to
-                    <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">refresh this token</a>
-                </p>
-            {% else %}
+            {% if verification.tokenValid %}
                 <p><i class="fa fa-check" style="color: green"></i> The access token is still valid, it will expire on {{ verification.expirationDate|date("d/m/Y h:i") }}</p>
-            {% endif %}
-
-            {% if not verification.accessTokenExpired %}
 
                 {% if verification.charactersLoaded %}
                     <p><i class="fa fa-check" style="color: green"></i> The site could request a list of your characters</p>
@@ -40,7 +33,10 @@
                         You can try to <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">refresh the access token</a>.
                     </p>
                 {% endif %}
-
+            {% else %}
+                <p><i class="fa fa-times" style="color: red"></i> The access token we have, is not valid anymore, you will have to
+                    <a href="{{ path('hwi_oauth_service_redirect', { 'service': 'battlenet', '_destination' : app.request.requestUri }) }}">refresh this token</a>
+                </p>
             {% endif %}
 
         {% endif %}
