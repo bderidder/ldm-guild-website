@@ -1,6 +1,6 @@
 a div.tile:hover
 {
-    background-color: rgba(75, 75, 75, .95);
+    background-color: rgba(75, 75, 75, .85);
     disabled-outline: #999999 solid 2px;
 }
 
