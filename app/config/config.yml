@@ -36,6 +36,7 @@ twig:
         auth: "@LaDanse.AuthenticationService"
         deployment_name: "%deployment_name%"
         deployment_type: "%deployment_type%"
+        deployment_version: "%deployment_version%"
 
 jms_di_extra:
     locations:

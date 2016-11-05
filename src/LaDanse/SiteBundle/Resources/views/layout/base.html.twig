@@ -57,6 +57,14 @@
 
 <body class="">
 
+    <div id="NewVersionReminderContainer">
+        <span>there is a new version of the site</span>
+        <br/>
+        <div class="button"><button id="NewVersionReloadButton"
+                                    type="button"
+                                    class="btn btn-success">RELOAD</button></div>
+    </div>
+
     <div id="DeploymentTypeContainer">
         <span class="inner-text" id="DeploymentDescrption">Placeholder for deployment description</span>
     </div>
@@ -140,6 +148,22 @@
     <!--CDN link for the latest TweenMax-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
 
+    <script type="text/javascript">
+
+        var deploymentType = "{{ deployment_type }}";
+        var deploymentName = "{{ deployment_name }}";
+        var deploymentVersion = "{{ deployment_version }}";
+
+        $( document ).ready(function()
+        {
+            if (deploymentType != "prod")
+            {
+                $("#DeploymentDescrption").text(deploymentName);
+                $("#DeploymentTypeContainer").show();
+            }
+        });
+    </script>
+
 {% javascripts
     '@CoderSpottingToastMessageBundle/Resources/public/js/*'
     '@LaDanseBootstrapBundle/Resources/public/js/*'
@@ -158,20 +182,6 @@
                     'container':'body'
                 }
         );
-    });
-</script>
-
-<script type="text/javascript">
-    $( document ).ready(function()
-    {
-        var deploymentType = "{{ deployment_type }}";
-        var deploymentName = "{{ deployment_name }}";
-
-        if (deploymentType != "prod")
-        {
-            $("#DeploymentDescrption").text(deploymentName);
-            $("#DeploymentTypeContainer").show();
-        }
     });
 </script>
 
