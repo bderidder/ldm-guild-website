@@ -33,10 +33,10 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.claimingMember = searchCriteria.getClaimingMember() == null ? "" : searchCriteria.getClaimingMember();
             ctrl.minLevel = searchCriteria.getMinLevel();
             ctrl.maxLevel = searchCriteria.getMaxLevel();
-            ctrl.guild = searchCriteria.getGuild() == null ? "AnyGuild" : searchCriteria.getGuild();
-            ctrl.race = "AnyRace";
-            ctrl.class = "AnyClass";
-            ctrl.faction = "AnyFaction";
+            ctrl.guild = searchCriteria.getGuild() == null ? null : searchCriteria.getGuild();
+            ctrl.race = null;
+            ctrl.class = null;
+            ctrl.faction = null;
             ctrl.playsTank = false;
             ctrl.playsHealer = false;
             ctrl.playsDPS = false;
@@ -50,10 +50,10 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.claimingMember = "";
             ctrl.minLevel = 1;
             ctrl.maxLevel = 110;
-            ctrl.guild = "AnyGuild";
-            ctrl.race = "AnyRace";
-            ctrl.class = "AnyClass";
-            ctrl.faction = "AnyFaction";
+            ctrl.guild = null;
+            ctrl.race = null;
+            ctrl.class = null;
+            ctrl.faction = null;
             ctrl.playsTank = false;
             ctrl.playsHealer = false;
             ctrl.playsDPS = false;
@@ -69,10 +69,10 @@ rosterModule.directive('characterSearchBox', function()
 
         this.raceUpdated = function()
         {
-            if (ctrl.race != "AnyRace")
+            if (ctrl.race != null)
             {
                 ctrl.factionDisabled = true;
-                ctrl.faction = "AnyFaction";
+                ctrl.faction = null;
             }
             else
             {
@@ -141,10 +141,10 @@ rosterModule.directive('characterSearchBox', function()
             {
                 searchCriteria.setMinLevel(ctrl.minLevel);
                 searchCriteria.setMaxLevel(ctrl.maxLevel);
-                searchCriteria.setGuild(ctrl.guild !== "AnyGuild" ? ctrl.guild : null);
-                searchCriteria.setGameClass(ctrl.class !== "AnyClass" ? ctrl.class : null);
-                searchCriteria.setGameRace(ctrl.race !== "AnyRace" ? ctrl.race : null);
-                searchCriteria.setGameFaction(ctrl.faction !== "AnyFaction" ? ctrl.faction : null);
+                searchCriteria.setGuild(ctrl.guild);
+                searchCriteria.setGameClass(ctrl.class);
+                searchCriteria.setGameRace(ctrl.race);
+                searchCriteria.setGameFaction(ctrl.faction);
                 searchCriteria.setRaider(ctrl.raider);
                 searchCriteria.setClaimed(ctrl.claimed);
 
@@ -202,7 +202,8 @@ rosterModule.directive('characterSearchBox', function()
 
                     var selectEntry = new SelectEntry(
                         guild.id,
-                        guild.name + " (" + ctrl.gameDataModel.getRealm(guild.realmReference.id).name + ")"
+                        guild.name,
+                        ctrl.gameDataModel.getRealm(guild.realmReference.id).name
                     );
 
                     guildEntries.push(selectEntry);
@@ -217,7 +218,8 @@ rosterModule.directive('characterSearchBox', function()
 
                     var selectEntry = new SelectEntry(
                         gameRace.id,
-                        gameRace.name
+                        gameRace.name,
+                        ctrl.gameDataModel.getGameFaction(gameRace.gameFactionReference.id).name
                     );
 
                     gameRaceEntries.push(selectEntry);

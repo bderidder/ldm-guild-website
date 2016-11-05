@@ -118,21 +118,39 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Guild</label>
-                            <select class="form-control" ng-model="ctrl.guild">
-                                <option value="AnyGuild">Any or no guild</option>
-                                <option ng-repeat="guildEntry in ctrl.guildEntries"
-                                        ng-value="guildEntry.value">{{ guildEntry.label }}</option>
-                            </select>
+                            <div class="input-group">
+                                <ui-select ng-model="ctrl.guild" theme="bootstrap" title="Choose a guild">
+                                    <ui-select-match placeholder="Any or no guild">{{ $select.selected.label }} (on {{ $select.selected.sublabel }})</ui-select-match>
+                                    <ui-select-choices repeat="guildEntry.value as guildEntry in ctrl.guildEntries | filter: $select.search">
+                                        <div ng-bind-html="guildEntry.label | highlight: $select.search"></div>
+                                        <small ng-if="guildEntry.sublabel">{{ guildEntry.sublabel }}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="ctrl.guild = undefined" class="btn btn-default">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Race</label>
-                            <select class="form-control" ng-model="ctrl.race">
-                                <option value="AnyRace">Any race</option>
-                                <option ng-repeat="gameRaceEntry in ctrl.gameRaceEntries"
-                                        ng-value="gameRaceEntry.value">{{ gameRaceEntry.label }}</option>
-                            </select>
+                            <div class="input-group">
+                                <ui-select ng-model="ctrl.race" theme="bootstrap" title="Choose a game race">
+                                    <ui-select-match placeholder="Any race">{{ $select.selected.label }}</ui-select-match>
+                                    <ui-select-choices repeat="gameRaceEntry.value as gameRaceEntry in ctrl.gameRaceEntries | filter: $select.search">
+                                        <div ng-bind-html="gameRaceEntry.label | highlight: $select.search"></div>
+                                        <small ng-if="gameRaceEntry.sublabel">{{ gameRaceEntry.sublabel }}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="ctrl.race = undefined" class="btn btn-default">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
                             <span class="help-block">Note: choosing a race will disable the Faction choice below</span>
                         </div>
                     </div>
@@ -141,21 +159,39 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Class</label>
-                            <select class="form-control" ng-model="ctrl.class">
-                                <option value="AnyClass">Any class</option>
-                                <option ng-repeat="gameClassEntry in ctrl.gameClassEntries"
-                                        ng-value="gameClassEntry.value">{{ gameClassEntry.label }}</option>
-                            </select>
+                            <div class="input-group">
+                                <ui-select ng-model="ctrl.class" theme="bootstrap" title="Choose a game class">
+                                    <ui-select-match placeholder="Any class">{{ $select.selected.label }}</ui-select-match>
+                                    <ui-select-choices repeat="gameClassEntry.value as gameClassEntry in ctrl.gameClassEntries | filter: $select.search">
+                                        <div ng-bind-html="gameClassEntry.label | highlight: $select.search"></div>
+                                        <small ng-if="gameClassEntry.sublabel">{{ gameClassEntry.sublabel }}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="ctrl.class = undefined" class="btn btn-default">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Faction</label>
-                            <select class="form-control" ng-model="ctrl.faction" ng-disabled="ctrl.factionDisabled">
-                                <option value="AnyFaction">Any faction</option>
-                                <option ng-repeat="gameFactionEntry in ctrl.gameFactionEntries"
-                                        ng-value="gameFactionEntry.value">{{ gameFactionEntry.label }}</option>
-                            </select>
+                            <div class="input-group">
+                                <ui-select ng-model="ctrl.faction" theme="bootstrap" ng-disabled="ctrl.factionDisabled" title="Choose a game faction">
+                                    <ui-select-match placeholder="Any faction">{{ $select.selected.label }}</ui-select-match>
+                                    <ui-select-choices repeat="gameFactionEntry.value as gameFactionEntry in ctrl.gameFactionEntries | filter: $select.search">
+                                        <div ng-bind-html="gameFactionEntry.label | highlight: $select.search"></div>
+                                        <small ng-if="gameFactionEntry.sublabel">{{ gameFactionEntry.sublabel }}</small>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="ctrl.faction = undefined" class="btn btn-default" ng-disabled="ctrl.factionDisabled">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
