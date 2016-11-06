@@ -54,6 +54,7 @@ security:
         - { path: ^/calendar/ical,  role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$,              role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/angular,        role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/callback/version, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,            role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/profile,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/guildmeet,      role: IS_AUTHENTICATED_REMEMBERED }
