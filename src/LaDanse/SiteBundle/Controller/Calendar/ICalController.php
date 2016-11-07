@@ -207,7 +207,7 @@ class ICalController extends LaDanseController
         $description = $description . $event->getDescription();
 
         if (($event->getDescription() !== null || strlen($event->getDescription()) > 0)
-            and
+            &&
             ($commentGroup->getComments()->count() > 0))
         {
             $description = $description . "\n\n";
@@ -231,7 +231,7 @@ class ICalController extends LaDanseController
         }
 
         if (($event->getDescription() !== null || strlen($event->getDescription()) > 0)
-            or
+            ||
             ($commentGroup->getComments()->count() > 0))
         {
             $description = $description . "\n\n";

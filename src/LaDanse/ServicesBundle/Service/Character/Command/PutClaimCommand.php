@@ -310,7 +310,7 @@ class PutClaimCommand extends AbstractCommand
             }
         }
 
-        if (!$alreadyPlaysRole and $willPlayRole)
+        if (!$alreadyPlaysRole && $willPlayRole)
         {
             $em->persist($this->createPlaysRole($onDateTime, $claim, $roleName));
 

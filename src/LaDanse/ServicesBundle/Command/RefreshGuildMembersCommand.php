@@ -447,7 +447,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
                 return null;
             }
-            elseif (!property_exists($armoryGuild, "battlegroup") or !property_exists($armoryGuild, "realm"))
+            elseif (!property_exists($armoryGuild, "battlegroup") || !property_exists($armoryGuild, "realm"))
             {
                 $context->error("Armory did not return list of members");
                 $context->error($json);

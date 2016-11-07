@@ -212,8 +212,8 @@ class CharacterVersion
     public function isVersionActiveOn(\DateTime $onDateTime)
     {
         if (($this->getFromTime() <= $onDateTime)
-            and
-            (($this->getEndTime() > $onDateTime) or is_null($this->getEndTime())))
+            &&
+            (($this->getEndTime() > $onDateTime) || is_null($this->getEndTime())))
         {
             return true;
         }

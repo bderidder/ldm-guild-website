@@ -145,9 +145,9 @@ class Claim extends VersionedEntity
         foreach($this->getRoles() as $playsRole)
         {
             if (($playsRole->isRole($roleName))
-                and
+                &&
                 (($playsRole->getFromTime()->getTimestamp() <= $onDateTime->getTimestamp())
-                    and (is_null($playsRole->getEndTime()) or
+                    && (is_null($playsRole->getEndTime()) ||
                         ($playsRole->getEndTime()->getTimestamp() > $onDateTime->getTimestamp())))
             )
             {
