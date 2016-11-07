@@ -218,19 +218,20 @@ class CharactersByCriteriaQuery extends AbstractQuery
                 $qb->expr()->in(
                     'characterVersion.character',
                     $innerRaiderdQb->select('innerRaiderCharacter.id')
-                        ->from(Entity\Claim::class, 'raiderClaim')
+                        ->from(Entity\ClaimVersion::class, 'raiderClaimVersion')
+                        ->join('raiderClaimVersion.claim', 'raiderClaim')
                         ->join('raiderClaim.character', 'innerRaiderCharacter')
                         ->add('where',
                             $qb->expr()->andX(
-                                $qb->expr()->eq('raiderClaim.raider', $raiderValue),
+                                $qb->expr()->eq('raiderClaimVersion.raider', $raiderValue),
                                 $qb->expr()->orX(
                                     $qb->expr()->andX(
-                                        $qb->expr()->lte('raiderClaim.fromTime', ':onDateTime'),
-                                        $qb->expr()->gt('raiderClaim.endTime', ':onDateTime')
+                                        $qb->expr()->lte('raiderClaimVersion.fromTime', ':onDateTime'),
+                                        $qb->expr()->gt('raiderClaimVersion.endTime', ':onDateTime')
                                     ),
                                     $qb->expr()->andX(
-                                        $qb->expr()->lte('raiderClaim.fromTime', ':onDateTime'),
-                                        $qb->expr()->isNull('raiderClaim.endTime')
+                                        $qb->expr()->lte('raiderClaimVersion.fromTime', ':onDateTime'),
+                                        $qb->expr()->isNull('raiderClaimVersion.endTime')
                                     )
                                 )
                             )

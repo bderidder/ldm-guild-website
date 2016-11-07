@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="PlaysRole")
  */
-class PlaysRole
+class PlaysRole extends VersionedEntity
 {
     const REPOSITORY = 'LaDanseDomainBundle:PlaysRole';
 
@@ -22,16 +22,6 @@ class PlaysRole
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="datetime", length=255, nullable=false)
-     */
-    protected $fromTime;
-
-    /**
-     * @ORM\Column(type="datetime", length=255, nullable=true)
-     */
-    protected $endTime;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
@@ -98,52 +88,6 @@ class PlaysRole
     public function getClaim()
     {
         return $this->claim;
-    }
-
-    /**
-     * Set fromTime
-     *
-     * @param \DateTime $fromTime
-     * @return PlaysRole
-     */
-    public function setFromTime($fromTime)
-    {
-        $this->fromTime = $fromTime;
-
-        return $this;
-    }
-
-    /**
-     * Get fromTime
-     *
-     * @return \DateTime 
-     */
-    public function getFromTime()
-    {
-        return $this->fromTime;
-    }
-
-    /**
-     * Set endTime
-     *
-     * @param \DateTime $endTime
-     * @return PlaysRole
-     */
-    public function setEndTime($endTime)
-    {
-        $this->endTime = $endTime;
-
-        return $this;
-    }
-
-    /**
-     * Get endTime
-     *
-     * @return \DateTime 
-     */
-    public function getEndTime()
-    {
-        return $this->endTime;
     }
 
     /**

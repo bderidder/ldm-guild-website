@@ -105,7 +105,7 @@ class DeleteClaimCommand extends AbstractCommand
          * If found
          *      Verify if the current account is authorized to delete it
          *      If yes
-         *          set the endTime on the claim and any playsRole
+         *          set the endTime on the claim, claimVersion and any playsRole
          *      If no
          *          throw UnauthorizedException
          * Not found
@@ -164,6 +164,17 @@ class DeleteClaimCommand extends AbstractCommand
         }
 
         $claim->setEndTime($onDateTime);
+
+        /** @var QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->update(Entity\ClaimVersion::class, 'claimVersion')
+            ->set('claimVersion.endTime', '?1')
+            ->where($qb->expr()->eq('claimVersion.claim', '?2'))
+            ->andWhere('claimVersion.endTime IS NULL')
+            ->setParameter(1, $onDateTime)
+            ->setParameter(2, $claim)
+            ->getQuery()->execute();
 
         /** @var QueryBuilder $qb */
         $qb = $em->createQueryBuilder();

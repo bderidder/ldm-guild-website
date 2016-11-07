@@ -11,6 +11,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Claim;
+use LaDanse\DomainBundle\Entity\ClaimVersion;
 use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\DomainBundle\Entity\Role;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
@@ -126,8 +127,8 @@ class PutClaimCommand extends AbstractCommand
      */
     protected function runCommand()
     {
-        // create a shared $fromTime since we will need it often below
-        $fromTime = new \DateTime();
+        // create a shared $onDateTime since we will need it often below
+        $onDateTime = new \DateTime();
 
         /** @var EntityManager $em */
         $em = $this->doctrine->getManager();
@@ -147,28 +148,29 @@ class PutClaimCommand extends AbstractCommand
         /** @var QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('claim', 'character', 'account')
-            ->from(Entity\Claim::class, 'claim')
+        $qb->select('claimVersion', 'claim', 'character', 'account')
+            ->from(Entity\ClaimVersion::class, 'claimVersion')
+            ->join('claimVersion.claim', 'claim')
             ->join('claim.character', 'character')
             ->join('claim.account', 'account')
             ->where('character.id = ?1')
-            ->andWhere('claim.fromTime IS NOT NULL')
-            ->andWhere('claim.endTime IS NULL')
+            ->andWhere('claimVersion.fromTime IS NOT NULL')
+            ->andWhere('claimVersion.endTime IS NULL')
             ->setParameter(1, $this->getCharacterId());
 
         /* @var Query $query */
         $query = $qb->getQuery();
 
-        $claims = $query->getResult();
+        $claimVersions = $query->getResult();
 
-        if (count($claims) == 0)
+        if (count($claimVersions) == 0)
         {
             throw new ServiceException(
                 sprintf('Could not find an active claim for character %s', $this->getCharacterId()),
                 404
             );
         }
-        else if (count($claims) > 1)
+        else if (count($claimVersions) > 1)
         {
             throw new ServiceException(
                 sprintf('There are too many claims for character %s', $this->getCharacterId()),
@@ -176,16 +178,14 @@ class PutClaimCommand extends AbstractCommand
             );
         }
 
-        // count($claims) == 1, we can update a new Claim
-
-        /** @var Claim $claim */
-        $claim = $claims[0];
+        /** @var ClaimVersion $claimVersion */
+        $claimVersion = $claimVersions[0];
 
         /* verify that the user can edit this particular event */
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::CLAIM_EDIT,
-            new ResourceByValue(Claim::class, $claim->getId(), $claim)))
+            new ResourceByValue(Claim::class, $claimVersion->getClaim()->getId(), $claimVersion->getClaim())))
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
 
@@ -195,11 +195,19 @@ class PutClaimCommand extends AbstractCommand
             );
         }
 
-        $claim
+        $claimVersion->setEndTime($onDateTime);
+
+        $newClaimVersion = new Entity\ClaimVersion();
+        $newClaimVersion
+            ->setClaim($claimVersion->getClaim())
+            ->setFromTime($onDateTime)
+            ->setEndTime(null)
             ->setRaider($this->getPatchClaim()->isRaider())
             ->setComment($this->getPatchClaim()->getComment());
 
-        $this->updatePlaysRoles($em, $claim, $fromTime);
+        $em->persist($newClaimVersion);
+
+        $this->updatePlaysRoles($em, $claimVersion->getClaim(), $onDateTime);
 
         $em->flush();
 

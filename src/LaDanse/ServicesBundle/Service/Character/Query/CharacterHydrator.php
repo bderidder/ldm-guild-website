@@ -37,8 +37,8 @@ class CharacterHydrator
     /** @var bool $initialized */
     private $initialized = false;
 
-    /** @var array $claims */
-    private $claims;
+    /** @var array $claimVersions */
+    private $claimVersions;
 
     /** @var array $playsRoles */
     private $playsRoles;
@@ -86,15 +86,15 @@ class CharacterHydrator
     {
         $this->init();
 
-        if ($this->claims == null)
+        if ($this->claimVersions == null)
         {
             return false;
         }
 
-        foreach($this->claims as $claim)
+        foreach($this->claimVersions as $claimVersion)
         {
-            /** @var Entity\Claim $claim */
-            if ($claim->getCharacter()->getId() == $characterId)
+            /** @var Entity\ClaimVersion $claimVersion */
+            if ($claimVersion->getClaim()->getCharacter()->getId() == $characterId)
             {
                 return true;
             }
@@ -106,23 +106,23 @@ class CharacterHydrator
     /**
      * @param int $characterId
      *
-     * @return Entity\Claim
+     * @return Entity\ClaimVersion
      */
-    public function getClaim(int $characterId)
+    public function getClaimVersion(int $characterId)
     {
         $this->init();
 
-        if ($this->claims == null)
+        if ($this->claimVersions == null)
         {
             return null;
         }
 
-        foreach($this->claims as $claim)
+        foreach($this->claimVersions as $claimVersion)
         {
-            /** @var Entity\Claim $claim */
-            if ($claim->getCharacter()->getId() == $characterId)
+            /** @var Entity\ClaimVersion $claimVersion */
+            if ($claimVersion->getClaim()->getCharacter()->getId() == $characterId)
             {
-                return $claim;
+                return $claimVersion;
             }
         }
 
@@ -182,7 +182,7 @@ class CharacterHydrator
 
         if ($this->getCharacterIds() == null || count($this->getCharacterIds()) == 0)
         {
-            $this->claims = [];
+            $this->claimVersions = [];
             $this->playsRoles = [];
             $this->inGuilds = [];
             $this->initialized = true;
@@ -195,8 +195,9 @@ class CharacterHydrator
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->createQueryBuilder();
 
-        $qb->select('claim', 'account', 'character')
-            ->from(Entity\Claim::class, 'claim')
+        $qb->select('claimVersion', 'claim', 'account', 'character')
+            ->from(Entity\ClaimVersion::class, 'claimVersion')
+            ->join('claimVersion.claim', 'claim')
             ->join('claim.account', 'account')
             ->join('claim.character', 'character')
             ->add('where',
@@ -207,12 +208,12 @@ class CharacterHydrator
                     ),
                     $qb->expr()->orX(
                         $qb->expr()->andX(
-                            $qb->expr()->lte('claim.fromTime', '?1'),
-                            $qb->expr()->gt('claim.endTime', '?1')
+                            $qb->expr()->lte('claimVersion.fromTime', '?1'),
+                            $qb->expr()->gt('claimVersion.endTime', '?1')
                         ),
                         $qb->expr()->andX(
-                            $qb->expr()->lte('claim.fromTime', '?1'),
-                            $qb->expr()->isNull('claim.endTime')
+                            $qb->expr()->lte('claimVersion.fromTime', '?1'),
+                            $qb->expr()->isNull('claimVersion.endTime')
                         )
                     )
                 )
@@ -222,15 +223,15 @@ class CharacterHydrator
         /* @var $query \Doctrine\ORM\Query */
         $query = $qb->getQuery();
 
-        $this->claims = $query->getResult();
+        $this->claimVersions = $query->getResult();
 
         $claimIds = [];
 
-        foreach($this->claims as $claim)
+        foreach($this->claimVersions as $claimVersion)
         {
-            /** @var Entity\Claim $claim */
+            /** @var Entity\ClaimVersion $claimVersion */
 
-            $claimIds[] = $claim->getId();
+            $claimIds[] = $claimVersion->getClaim()->getId();
         }
 
         if (count($claimIds) == 0)

@@ -119,29 +119,6 @@ class CharacterService extends LaDanseService
     }
 
     /**
-     * @param string $keywords
-     * @param \DateTime|null $onDateTime
-     *
-     * @return array
-     */
-    public function getCharactersByKeywords(string $keywords, \DateTime $onDateTime = null) : array
-    {
-        if ($onDateTime == null)
-        {
-            $onDateTime = new \DateTime();
-        }
-
-        /** @var CharactersByKeywordsQuery $query */
-        $query = $this->get(CharactersByKeywordsQuery::SERVICE_NAME);
-
-        $query
-            ->setOnDateTime($onDateTime)
-            ->setKeywords($keywords);
-
-        return $query->run();
-    }
-
-    /**
      * @param SearchCriteria $searchCriteria
      * @param \DateTime|null $onDateTime
      *

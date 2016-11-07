@@ -8,8 +8,6 @@ namespace LaDanse\ServicesBundle\Service\Character\Command;
 
 use Doctrine\ORM\EntityManager;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
@@ -180,10 +178,8 @@ class PostClaimCommand extends AbstractCommand
 
         // count($claims) == 0, we can create a new Claim
 
-        $claim = new Claim();
+        $claim = new Entity\Claim();
         $claim
-            ->setRaider($this->getPatchClaim()->isRaider())
-            ->setComment($this->getPatchClaim()->getComment())
             ->setAccount($em->getReference(Entity\Account::class, $this->getAccountId()))
             ->setCharacter($em->getReference(Entity\Character::class, $this->getCharacterId()))
             ->setFromTime($fromTime)
@@ -191,7 +187,16 @@ class PostClaimCommand extends AbstractCommand
 
         $this->persistPlaysRoles($em, $fromTime, $claim);
 
+        $claimVersion = new Entity\ClaimVersion();
+        $claimVersion
+            ->setClaim($claim)
+            ->setFromTime($fromTime)
+            ->setEndTime(null)
+            ->setRaider($this->getPatchClaim()->isRaider())
+            ->setComment($this->getPatchClaim()->getComment());
+
         $em->persist($claim);
+        $em->persist($claimVersion);
         $em->flush();
 
         $this->eventDispatcher->dispatch(
@@ -215,7 +220,7 @@ class PostClaimCommand extends AbstractCommand
 
     private function createPlaysRole($onDateTime, $claim, $role)
     {
-        $playsRole = new PlaysRole();
+        $playsRole = new Entity\PlaysRole();
         $playsRole
             ->setRole($role)
             ->setClaim($claim)
@@ -227,7 +232,7 @@ class PostClaimCommand extends AbstractCommand
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $em
      * @param \DateTime $fromTime
-     * @param Claim $claim
+     * @param Entity\Claim $claim
      *
      * @throws ServiceException
      */

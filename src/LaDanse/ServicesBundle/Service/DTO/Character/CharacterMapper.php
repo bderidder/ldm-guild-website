@@ -56,15 +56,15 @@ class CharacterMapper
 
         if ($characterHydrator->hasBeenClaimed($characterVersion->getCharacter()->getId()))
         {
-            $claim = $characterHydrator->getClaim($characterVersion->getCharacter()->getId());
+            $claim = $characterHydrator->getClaimVersion($characterVersion->getCharacter()->getId());
 
             $claimDto = new Claim();
             $claimDto
                 ->setComment($claim->getComment())
                 ->setAccountReference(
                     new AccountReference(
-                        $claim->getAccount()->getId(),
-                        $claim->getAccount()->getDisplayName()
+                        $claim->getClaim()->getAccount()->getId(),
+                        $claim->getClaim()->getAccount()->getDisplayName()
                     )
                 )
                 ->setRaider($claim->isRaider())

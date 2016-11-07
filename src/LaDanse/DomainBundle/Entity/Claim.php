@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="CharacterClaim")
  */
-class Claim
+class Claim extends VersionedEntity
 {
     const REPOSITORY = 'LaDanseDomainBundle:Claim';
 
@@ -24,16 +24,6 @@ class Claim
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="datetime", length=255, nullable=false)
-     */
-    protected $fromTime;
-
-    /**
-     * @ORM\Column(type="datetime", length=255, nullable=true)
-     */
-    protected $endTime;
 
     /**
      * @ORM\ManyToOne(targetEntity="Account")
@@ -53,18 +43,6 @@ class Claim
     protected $roles;
 
     /**
-     * @var string
-     * @ORM\Column(type="text", length=1024, nullable=true)
-     */
-    protected $comment;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $raider = false;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -80,52 +58,6 @@ class Claim
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set fromTime
-     *
-     * @param \DateTime $fromTime
-     * @return Claim
-     */
-    public function setFromTime($fromTime)
-    {
-        $this->fromTime = $fromTime;
-
-        return $this;
-    }
-
-    /**
-     * Get fromTime
-     *
-     * @return \DateTime 
-     */
-    public function getFromTime()
-    {
-        return $this->fromTime;
-    }
-
-    /**
-     * Set endTime
-     *
-     * @param \DateTime $endTime
-     * @return Claim
-     */
-    public function setEndTime($endTime)
-    {
-        $this->endTime = $endTime;
-
-        return $this;
-    }
-
-    /**
-     * Get endTime
-     *
-     * @return \DateTime 
-     */
-    public function getEndTime()
-    {
-        return $this->endTime;
     }
 
     /**
@@ -224,41 +156,5 @@ class Claim
         }
 
         return false;
-    }
-
-    /**
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @param string|null $comment
-     * @return Claim
-     */
-    public function setComment($comment): Claim
-    {
-        $this->comment = $comment;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isRaider(): bool
-    {
-        return $this->raider;
-    }
-
-    /**
-     * @param boolean $raider
-     * @return Claim
-     */
-    public function setRaider(bool $raider): Claim
-    {
-        $this->raider = $raider;
-        return $this;
     }
 }
