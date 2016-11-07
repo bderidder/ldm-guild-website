@@ -112,7 +112,7 @@ class EditCalExportController extends LaDanseController
      *
      * @Route("/resetSecret", name="resetSecret")
      */
-    public function resetSecret()
+    public function resetSecretAction()
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
