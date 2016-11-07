@@ -33,7 +33,7 @@ class AccountResource extends AbstractRestController
      * @Route("/unread", name="getUnreadForAccount")
      * @Method({"GET"})
      */
-    public function getUnreadForAccount()
+    public function getUnreadForAccountAction()
     {
         /** @var AuthenticationService $authenticationService */
         $authenticationService = $this->get(AuthenticationService::SERVICE_NAME);

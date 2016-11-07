@@ -29,7 +29,7 @@ class GameRaceResource extends AbstractRestController
      * @Route("/", name="getAllGameRaces", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getAllGameRaces()
+    public function getAllGameRacesAction()
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);

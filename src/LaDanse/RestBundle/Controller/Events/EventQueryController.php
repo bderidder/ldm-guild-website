@@ -23,7 +23,7 @@ class EventQueryController extends Controller
      * @Route("/")
      * @Method({"GET","HEAD"})
      */
-    public function queryEvents(Request $request)
+    public function queryEventsAction(Request $request)
     {
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
@@ -53,7 +53,7 @@ class EventQueryController extends Controller
      * @Route("/{eventId}")
      * @Method({"GET","HEAD"})
      */
-    public function queryEventById(Request $request, $eventId)
+    public function queryEventByIdAction(Request $request, $eventId)
     {
         /** @var NewEventService $eventService */
         $eventService = $this->get(NewEventService::SERVICE_NAME);

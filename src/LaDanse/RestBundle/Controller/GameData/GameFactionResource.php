@@ -29,7 +29,7 @@ class GameFactionResource extends AbstractRestController
      * @Route("/", name="getAllGameFactions", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getAllGameFactions()
+    public function getAllGameFactionsAction()
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);

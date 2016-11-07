@@ -34,7 +34,7 @@ class CharactersClaimedByAccountQuery extends AbstractRestController
      * @Route("/charactersClaimedByAccount", name="getCharactersClaimedByAccount", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getCharactersClaimedByAccount(Request $request)
+    public function getCharactersClaimedByAccountAction(Request $request)
     {
         $accountId = $request->query->get('accountId');
 

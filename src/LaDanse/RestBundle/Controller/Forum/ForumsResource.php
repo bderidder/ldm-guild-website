@@ -39,7 +39,7 @@ class ForumsResource extends AbstractRestController
      * @Route("/", name="getForumList")
      * @Method({"GET"})
      */
-    public function getForumList()
+    public function getForumListAction()
     {
         /** @var ForumService $forumService */
         $forumService = $this->get(ForumService::SERVICE_NAME);
@@ -59,7 +59,7 @@ class ForumsResource extends AbstractRestController
      * @Route("/activity", name="getActivityForForums")
      * @Method({"GET"})
      */
-    public function getActivityForForums()
+    public function getActivityForForumsAction()
     {
         /** @var ForumService $forumService */
         $forumService = $this->get(ForumService::SERVICE_NAME);
@@ -122,7 +122,7 @@ class ForumsResource extends AbstractRestController
      * @Route("/{forumId}/activity", name="getActivityForForum")
      * @Method({"GET"})
      */
-    public function getActivityForForum(Request $request, $forumId)
+    public function getActivityForForumAction(Request $request, $forumId)
     {
         /** @var ForumService $forumService */
         $forumService = $this->get(ForumService::SERVICE_NAME);

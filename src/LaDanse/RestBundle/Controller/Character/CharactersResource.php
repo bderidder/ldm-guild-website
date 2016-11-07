@@ -37,7 +37,7 @@ class CharactersResource extends AbstractRestController
      * @Route("/{characterId}", name="getCharacter", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getCharacter(Request $request, $characterId)
+    public function getCharacterAction(Request $request, $characterId)
     {
         /** @var CharacterService $characterService */
         $characterService = $this->get(CharacterService::SERVICE_NAME);
@@ -67,7 +67,7 @@ class CharactersResource extends AbstractRestController
      * @Route("/{characterId}/claim", name="postClaim", options = { "expose" = true })
      * @Method({"POST"})
      */
-    public function postClaimAction(Request $request, $characterId)
+    public function postClaimActionAction(Request $request, $characterId)
     {
         try
         {

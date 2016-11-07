@@ -35,7 +35,7 @@ class CharactersByCriteriaQuery extends AbstractRestController
      * @Route("/charactersByCriteria", name="getCharactersByCriteria", options = { "expose" = true })
      * @Method({"POST"})
      */
-    public function getCharactersByCriteria(Request $request)
+    public function getCharactersByCriteriaAction(Request $request)
     {
         /** @var SearchCriteria $searchCriteria */
         $searchCriteria = $this->getDtoFromContent($request, SearchCriteria::class);

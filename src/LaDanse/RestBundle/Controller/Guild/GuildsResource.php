@@ -32,7 +32,7 @@ class GuildsResource extends AbstractRestController
      * @Route("/", name="getAllGuilds", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getAllGuilds(Request $request)
+    public function getAllGuildsAction(Request $request)
     {
         /** @var GameDataService $characterService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
@@ -52,7 +52,7 @@ class GuildsResource extends AbstractRestController
      * @Route("/", name="postGuild")
      * @Method({"POST"})
      */
-    public function postGuild(Request $request)
+    public function postGuildAction(Request $request)
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);

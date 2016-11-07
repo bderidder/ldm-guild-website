@@ -33,7 +33,7 @@ class RealmResource extends AbstractRestController
      * @Route("/", name="getAllRealms", options = { "expose" = true })
      * @Method({"GET"})
      */
-    public function getAllRealms()
+    public function getAllRealmsAction()
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
@@ -53,7 +53,7 @@ class RealmResource extends AbstractRestController
      * @Route("/", name="postRealm")
      * @Method({"POST"})
      */
-    public function postRealm(Request $request)
+    public function postRealmAction(Request $request)
     {
         /** @var GameDataService $gameDataService */
         $gameDataService = $this->get(GameDataService::SERVICE_NAME);
