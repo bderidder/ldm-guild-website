@@ -93,18 +93,5 @@ class RemoveSignUpController extends LaDanseController
 
             return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
-        catch(\Exception $e)
-        {
-            $this->logger->warning(
-                __CLASS__ . ' unexpected error',
-                [
-                    "throwable" => $e,
-                    "event"     => $eventId,
-                    "account"   => $account->getId()
-                ]
-            );
-
-            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
-        }
     }
 }

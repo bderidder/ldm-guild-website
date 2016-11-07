@@ -41,14 +41,6 @@ class EditCalExportController extends LaDanseController
     public function indexAction(Request $request)
     {
     	$authContext = $this->getAuthenticationService()->getCurrentContext();
-
-    	if (!$authContext->isAuthenticated())
-    	{
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in editProfile');
-
-    		return $this->redirect($this->generateUrl('welcomeIndex'));
-    	}
-
         $account = $authContext->getAccount();
 
         /** @var SettingsService $settingsService */

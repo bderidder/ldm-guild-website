@@ -44,13 +44,6 @@ class EditNotificationsController extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in editNotifications');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         $formModel = new NotificationsFormModel();
 
         $this->loadSettings($formModel, $authContext->getAccount());

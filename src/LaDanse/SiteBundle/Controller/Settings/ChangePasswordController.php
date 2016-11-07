@@ -42,13 +42,6 @@ class ChangePasswordController extends LaDanseController
     {
         $authContext = $this->getAuthenticationService()->getCurrentContext();
 
-        if (!$authContext->isAuthenticated())
-        {
-            $this->logger->warning(__CLASS__ . ' the user was not authenticated in changePassword');
-
-            return $this->redirect($this->generateUrl('welcomeIndex'));
-        }
-
         $formModel = new PasswordFormModel();
 
         $form = $this->createForm(PasswordFormType::class, $formModel,
