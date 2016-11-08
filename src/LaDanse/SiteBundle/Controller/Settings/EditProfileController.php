@@ -64,8 +64,6 @@ class EditProfileController extends LaDanseController
 
                $this->addToast('Profile updated');
 
-
-
                return $this->redirect($this->generateUrl('editProfile'));
             }
             else
