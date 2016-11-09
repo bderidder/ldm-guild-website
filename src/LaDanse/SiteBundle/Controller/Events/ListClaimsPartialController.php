@@ -42,13 +42,12 @@ class ListClaimsPartialController extends LaDanseController
     /**
      * @param string $eventId
      * @param string $accountId
-     * @param string $role
      *
      * @return Response
      *
-     * @Route("/{eventId}/claims/{accountId}/role/{role}", name="listClaims")
+     * @Route("/{eventId}/claims/{accountId}", name="listClaims")
      */
-    public function listAction($eventId, $accountId, $role)
+    public function listAction($eventId, $accountId)
     {
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
@@ -140,7 +139,7 @@ class ListClaimsPartialController extends LaDanseController
         /** @var Character $character */
         foreach($characters as $character)
         {
-            if ($this->characterPlaysAnyRole($character, $roles) && $character->getLevel() == 110)
+            if (($roles == null || count($roles) == 0 || $this->characterPlaysAnyRole($character, $roles)) && $character->getLevel() == 110)
             {
                 $resultCharacters[] = (object)[
                     "name"   => $character->getName(),

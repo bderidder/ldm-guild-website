@@ -176,3 +176,8 @@ div.event-state-container > div.state-text
     width: 89%;
     line-height: 45px;
 }
+
+.cursor-default
+{
+    cursor: default;
+}

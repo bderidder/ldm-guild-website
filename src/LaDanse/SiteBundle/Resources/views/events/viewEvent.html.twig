@@ -121,8 +121,7 @@
 			                            <i class="signUp fa fa-times fa-1x text-success" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'Tank'}) }}"></i>
+			                                     'accountId': signUp.account.id}) }}"></i>
 			                        {% endif %}
 			                    </td>
 			                    <td class="center-td">
@@ -130,8 +129,7 @@
 			                            <i class="signUp fa fa-times fa-1x text-success" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'Healer'}) }}"></i>
+			                                     'accountId': signUp.account.id}) }}"></i>
 			                        {% endif %}
 			                    </td>
 			                    <td class="center-td">
@@ -139,8 +137,7 @@
 			                            <i class="signUp fa fa-times fa-1x text-success" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'DPS'}) }}"></i>
+			                                     'accountId': signUp.account.id}) }}"></i>
 			                        {% endif %}
 			                    </td>
 			                    <td>
@@ -176,22 +173,19 @@
 			                        {% if signUp.signedAsTank %}<i class="signUp fa fa-question fa-1x text-warning" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'Tank'}) }}"></i>{% endif %}
+			                                     'accountId': signUp.account.id}) }}"></i>{% endif %}
 			                    </td>
 			                    <td class="center-td">
 			                        {% if signUp.signedAsHealer %}<i class="signUp fa fa-question fa-1x text-warning" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'Healer'}) }}"></i>{% endif %}
+			                                     'accountId': signUp.account.id}) }}"></i>{% endif %}
 			                    </td>
 			                    <td class="center-td">
 			                        {% if signUp.signedAsDamage %}<i class="signUp fa fa-question fa-1x text-warning" 
 			                                data-url="{{ path('listClaims', 
 			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id,
-			                                     'role': 'DPS'}) }}"></i>{% endif %}
+			                                     'accountId': signUp.account.id}) }}"></i>{% endif %}
 			                    </td>
                                 <td>
                                     {% if not isCancelled %}
@@ -223,7 +217,10 @@
 			                {% endif %}
                                 <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.account.displayName }}</a></td>
 			                    <td class="center-td" colspan="3">
-			                        <i class="text-danger">can't come</i>
+			                        <i class="text-danger signUp cursor-default"
+                                       data-url="{{ path('listClaims',
+                                          {'eventId': event.id,
+                                           'accountId': signUp.account.id}) }}">can't come</i>
 			                    </td>
                                 <td>
                                     {% if not isCancelled %}
