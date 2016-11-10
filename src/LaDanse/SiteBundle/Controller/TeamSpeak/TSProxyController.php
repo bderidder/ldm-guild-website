@@ -17,7 +17,7 @@ class TSProxyController extends LaDanseController
      */
     public function clientsAction()
     {
-        return $this->getJsonFromUrl('http://ts.ladanse.org/TeamSpeak/rest/v1/clients');
+        return $this->getJsonFromUrl('https://ts.ladanse.org/TeamSpeak/rest/v1/clients');
     }
 
     /**
@@ -27,7 +27,7 @@ class TSProxyController extends LaDanseController
      */
     public function channelsAction()
     {
-        return $this->getJsonFromUrl('http://ts.ladanse.org/TeamSpeak/rest/v1/channels');
+        return $this->getJsonFromUrl('https://ts.ladanse.org/TeamSpeak/rest/v1/channels');
     }
 
     private function getJsonFromUrl($url)
