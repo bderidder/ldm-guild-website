@@ -58,11 +58,11 @@
             <div class="col-md-2">
                 <div class="ClaimDetail">
                     <b>Raider?</b><br/>
-                    <span ng-if="!ctrl.character.claim.raider">
-                        <i class="fa fa-times" aria-hidden="true" style="color: red;"></i>
+                    <span ng-if="!ctrl.character.claim.raider" style="color: red;">
+                        <i class="fa fa-times" aria-hidden="true"></i> No
                     </span>
-                    <span ng-if="ctrl.character.claim.raider">
-                        <i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
+                    <span ng-if="ctrl.character.claim.raider" style="color: green;">
+                        <i class="fa fa-check" aria-hidden="true"></i> Yes
                     </span>
                 </div>
             </div>
