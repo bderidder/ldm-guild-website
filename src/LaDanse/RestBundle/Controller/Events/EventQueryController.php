@@ -2,9 +2,7 @@
 
 namespace LaDanse\RestBundle\Controller\Events;
 
-use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\RestBundle\Common\JsonResponse;
-use LaDanse\ServicesBundle\Service\DTO\Event\EventFactory;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\NewEvent\NewEventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class EventQueryController extends Controller
 {
@@ -20,7 +19,7 @@ class EventQueryController extends Controller
      *
      * @return Response
      *
-     * @Route("/")
+     * @Route("/", name="queryEvents")
      * @Method({"GET","HEAD"})
      */
     public function queryEventsAction(Request $request)
@@ -31,17 +30,25 @@ class EventQueryController extends Controller
         /** @var \DateTime $startOnDate */
         $startOnDate = $this->getStartOnDate($request->query->get('startOn'));
 
-        $events = $eventService->getAllEvents();
+        $eventPage = $eventService->getAllEventsPaged($startOnDate);
 
-        $result = [];
+        $pagedResult = [
+            'data'   => $eventPage->getEvents(),
+            'paging' => [
+                'previous' => $this->generateUrl(
+                    'queryEvents',
+                    ['startOn' => $eventPage->getPreviousTimestamp()->format('Ymd')],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                ),
+                'next'     => $this->generateUrl(
+                    'queryEvents',
+                    ['startOn' => $eventPage->getNextTimestamp()->format('Ymd')],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                )
+            ]
+        ];
 
-        /** @var Event $event */
-        foreach($events as $event)
-        {
-            $result[] = EventFactory::create($event);
-        }
-
-        return new JsonResponse($result);
+        return new JsonResponse($pagedResult);
     }
 
     /**
@@ -50,7 +57,7 @@ class EventQueryController extends Controller
      *
      * @return Response
      *
-     * @Route("/{eventId}")
+     * @Route("/{eventId}", name="queryEventById")
      * @Method({"GET","HEAD"})
      */
     public function queryEventByIdAction(Request $request, $eventId)
@@ -70,6 +77,6 @@ class EventQueryController extends Controller
             return new \DateTime();
         }
 
-        return $pStartOnDate;
+        return \DateTime::createFromFormat('Ymd', $pStartOnDate);
     }
 }
