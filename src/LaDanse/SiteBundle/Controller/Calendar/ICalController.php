@@ -128,7 +128,7 @@ class ICalController extends LaDanseController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $events = $eventService->getAllEvents();
+        $events = $eventService->getAllEventsPaged();
 
         $eventModels = [];
 
