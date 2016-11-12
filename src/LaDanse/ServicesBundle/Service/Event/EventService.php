@@ -14,6 +14,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\ConfirmEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
@@ -105,7 +106,12 @@ class EventService extends LaDanseService
      */
     public function postEvent(DTO\Event\PostEvent $postEvent)
     {
+        /** @var PostEventCommand $command */
+        $command = $this->container->get(PostEventCommand::SERVICE_NAME);
 
+        $command->setPostEventDto($postEvent);
+
+        return $command->run();
     }
 
     /**
