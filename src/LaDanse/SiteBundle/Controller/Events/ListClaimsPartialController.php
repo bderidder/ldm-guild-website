@@ -3,9 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\ForRole;
-use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
@@ -52,6 +50,7 @@ class ListClaimsPartialController extends LaDanseController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
+        /** @var DTO\Event\Event $event */
         $event = null;
 
         try
@@ -96,11 +95,11 @@ class ListClaimsPartialController extends LaDanseController
         );
     }
 
-    private function getRolesForSignUp(Event $event, $accountId)
+    private function getRolesForSignUp(DTO\Event\Event $event, $accountId)
     {
         foreach($event->getSignUps() as $signUp)
         {
-            /** @var SignUp $signUp */
+            /** @var DTO\Event\SignUp $signUp */
 
             if ($signUp->getAccount()->getId() == $accountId)
             {
@@ -108,9 +107,9 @@ class ListClaimsPartialController extends LaDanseController
 
                 foreach($signUp->getRoles() as $forRole)
                 {
-                    /** @var ForRole $forRole */
+                    /** @var string $forRole */
 
-                    $roles[] = $forRole->getRole();
+                    $roles[] = $forRole;
                 }
 
                 return $roles;

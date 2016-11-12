@@ -3,22 +3,16 @@
 namespace LaDanse\SiteBundle\Model\Calendar;
 
 use LaDanse\SiteBundle\Model\EventModel;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CalendarDayModel
 {
-    use ContainerAwareTrait;
-
     protected $date;
     protected $events;
     protected $showMonth;
     protected $inCurrentRaidWeek;
 
-    public function __construct(ContainerInterface $container, \DateTime $date)
+    public function __construct( \DateTime $date)
     {
-        $this->setContainer($container);
-
         $this->date = $date;
         $this->events = [];
         $this->showMonth = false;

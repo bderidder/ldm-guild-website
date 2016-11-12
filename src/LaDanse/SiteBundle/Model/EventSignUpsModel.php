@@ -3,8 +3,8 @@
 namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * Class EventSignUpsModel
@@ -32,10 +32,10 @@ class EventSignUpsModel
     protected $mightComeDPSCount = 0;
 
     /**
-     * @param Event $event
+     * @param DTO\Event\Event $event
      * @param Account $currentUser
      */
-    public function __construct(Event $event, Account $currentUser)
+    public function __construct(DTO\Event\Event $event, Account $currentUser)
     {
         $this->eventId = $event->getId();
 
@@ -43,8 +43,8 @@ class EventSignUpsModel
 
         $this->currentUserSigned = false;
 
-        /* @var $signUp \LaDanse\DomainBundle\Entity\SignUp */
-        foreach($signUps as &$signUp)
+        /* @var DTO\Event\SignUp $signUp */
+        foreach($signUps as $signUp)
         {
             $signUpModel = new SignUpModel($signUp, $currentUser);
 

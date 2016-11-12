@@ -83,6 +83,18 @@ class CalendarController extends LaDanseController
         );
     }
 
+    /**
+     * @param $request Request
+     *
+     * @return Response
+     *
+     * @Route("/test", name="testCalendarAction")
+     */
+    public function testCalendarAction(Request $request)
+    {
+        return $this->indexPartialAction(\DateTime::createFromFormat("Y-m-d", "2016-10-16"));
+    }
+
     public function indexPartialAction(\DateTime $showDate)
     {
         /** @var CalendarMonthModel $calendarMonthModel */
@@ -120,7 +132,7 @@ class CalendarController extends LaDanseController
 
             $date->modify('+1days');
 
-            $calendarDateModel = new CalendarDayModel($this->container, $date);
+            $calendarDateModel = new CalendarDayModel($date);
 
             $calendarDateModel->setIsInCurrentRaidWeek($raidWeek->inRaidWeek($date));
 
@@ -192,7 +204,7 @@ class CalendarController extends LaDanseController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $events = $eventService->getAllEventsSince($startDate);
+        $events = $eventService->getAllEventsPaged($startDate)->getEvents();
 
         $eventModels = [];
 

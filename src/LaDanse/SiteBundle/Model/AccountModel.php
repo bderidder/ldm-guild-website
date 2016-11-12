@@ -2,19 +2,17 @@
 
 namespace LaDanse\SiteBundle\Model;
 
-use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 
 class AccountModel
 {
     protected $id;
-    protected $name;
     protected $displayName;
 
-    public function __construct(Account $account)
+    public function __construct(AccountReference $account)
     {
         $this->id = $account->getId();
-        $this->name = $account->getUsername();
-        $this->displayName = $account->getDisplayName();
+        $this->displayName = $account->getName();
     }
 
     /**
@@ -34,25 +32,6 @@ class AccountModel
     }
 
     /**
-     * @param string $name
-     * @return AccountModel
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-        /**
      * @param string $displayName
      * @return AccountModel
      */

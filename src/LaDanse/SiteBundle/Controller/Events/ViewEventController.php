@@ -62,7 +62,7 @@ class ViewEventController extends LaDanseController
             new ActivityEvent(
                 ActivityType::EVENT_VIEW,
                 $this->getAuthenticationService()->getCurrentContext()->getAccount(),
-                $event->toJson()
+                ActivityEvent::annotatedToSimpleObject($event)
             )
         );
 

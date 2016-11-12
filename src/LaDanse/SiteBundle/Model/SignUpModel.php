@@ -4,8 +4,8 @@ namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Role;
-use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 class SignUpModel
 {
@@ -16,7 +16,7 @@ class SignUpModel
     protected $currentUser = false;
     protected $account;
 
-    public function __construct(SignUp $signUp, Account $currentUser)
+    public function __construct(DTO\Event\SignUp $signUp, Account $currentUser)
     {
         if ($signUp->getAccount()->getId() === $currentUser->getId())
         {
@@ -29,10 +29,10 @@ class SignUpModel
 
         $forRoles = $signUp->getRoles();
 
-        /* @var $forRole \LaDanse\DomainBundle\Entity\ForRole */
+        /* @var string $forRole */
         foreach($forRoles as &$forRole)
         {
-            switch($forRole->getRole())
+            switch($forRole)
             {
                 case Role::TANK:
                     $this->signedAsTank = true;

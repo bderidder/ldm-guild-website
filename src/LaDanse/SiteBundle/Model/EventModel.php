@@ -3,7 +3,8 @@
 namespace LaDanse\SiteBundle\Model;
 
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Event;
+
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 class EventModel
 {
@@ -20,7 +21,7 @@ class EventModel
     protected $topicId;
     protected $state;
 
-    public function __construct(Event $event, Account $currentUser)
+    public function __construct(DTO\Event\Event $event, Account $currentUser)
     {
         $this->id = $event->getId();
         $this->name = $event->getName();
@@ -29,10 +30,9 @@ class EventModel
         $this->inviteTime = $event->getInviteTime();
         $this->startTime = $event->getStartTime();
         $this->endTime = $event->getEndTime();
-        $this->lastModifiedTime = $event->getLastModifiedTime();
         $this->organiser = new AccountModel($event->getOrganiser());
-        $this->topicId = $event->getTopicId();
-        $this->state = $event->getFiniteState();
+        $this->topicId = $event->getCommentGroup()->getId();
+        $this->state = $event->getState();
 
         $this->signUpsModel = new EventSignUpsModel($event, $currentUser);
 
@@ -154,10 +154,10 @@ class EventModel
     }
 
     /**
-     * @param Event $event
+     * @param DTO\Event\Event $event
      * @param Account $currentUser
      */
-    private function calculateEditable(Event $event, Account $currentUser)
+    private function calculateEditable(DTO\Event\Event $event, Account $currentUser)
     {
         $this->isOrganiser = false;
 
