@@ -9,51 +9,28 @@ use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 class SignUp
 {
     /**
-     * @SerializedName("id")
-     *
      * @var int
+     * @SerializedName("id")
      */
     protected $id;
 
     /**
-     * @SerializedName("accountRef")
-     *
      * @var AccountReference
+     * @SerializedName("accountRef")
      */
     protected $account;
 
     /**
-     * @SerializedName("type")
-     *
      * @var string
+     * @SerializedName("type")
      */
     protected $type;
 
     /**
-     * @SerializedName("roles")
-     *
      * @var array
+     * @SerializedName("roles")
      */
     protected $roles;
-
-    /**
-     * SignUp constructor.
-     *
-     * @param int $id
-     * @param AccountReference $account
-     * @param string $type
-     * @param array $roles
-     */
-    public function __construct($id,
-                                AccountReference $account,
-                                $type,
-                                array $roles = null)
-    {
-        $this->id = $id;
-        $this->account = $account;
-        $this->type = $type;
-        $this->roles = $roles;
-    }
 
     /**
      * @return int
@@ -64,11 +41,31 @@ class SignUp
     }
 
     /**
+     * @param int $id
+     * @return SignUp
+     */
+    public function setId(int $id): SignUp
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @return AccountReference
      */
-    public function getAccount()
+    public function getAccount(): AccountReference
     {
         return $this->account;
+    }
+
+    /**
+     * @param AccountReference $account
+     * @return SignUp
+     */
+    public function setAccount(AccountReference $account): SignUp
+    {
+        $this->account = $account;
+        return $this;
     }
 
     /**
@@ -80,10 +77,30 @@ class SignUp
     }
 
     /**
+     * @param string $type
+     * @return SignUp
+     */
+    public function setType($type): SignUp
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     * @return SignUp
+     */
+    public function setRoles($roles): SignUp
+    {
+        $this->roles = $roles;
+        return $this;
     }
 }

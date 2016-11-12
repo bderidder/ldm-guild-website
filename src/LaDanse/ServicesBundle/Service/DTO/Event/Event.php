@@ -2,118 +2,75 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\Event;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\SerializedName;
 use LaDanse\ServicesBundle\Service\DTO\Reference\AccountReference;
 use LaDanse\ServicesBundle\Service\DTO\Reference\CommentGroupReference;
 
+/**
+ * @ExclusionPolicy("none")
+ */
 class Event
 {
     /**
-     * @SerializedName("id")
-     *
      * @var int
+     * @SerializedName("id")
      */
     protected $id;
 
     /**
-     * @SerializedName("name")
-     *
      * @var string
+     * @SerializedName("name")
      */
     protected $name;
 
     /**
-     * @SerializedName("description")
-     *
      * @var string
+     * @SerializedName("description")
      */
     protected $description;
 
     /**
-     * @SerializedName("organiserRef")
-     *
      * @var AccountReference
+     * @SerializedName("organiserRef")
      */
     protected $organiser;
 
     /**
-     * @SerializedName("inviteTime")
-     *
      * @var \DateTime
+     * @SerializedName("inviteTime")
      */
     protected $inviteTime;
 
     /**
-     * @SerializedName("startTime")
-     *
      * @var \DateTime
+     * @SerializedName("startTime")
      */
     protected $startTime;
 
     /**
-     * @SerializedName("endTime")
-     *
      * @var \DateTime
+     * @SerializedName("endTime")
      */
     protected $endTime;
 
     /**
-     * @SerializedName("state")
-     *
      * @var string
+     * @SerializedName("state")
      */
     protected $state;
 
     /**
-     * @SerializedName("commentGroupRef")
-     *
      * @var CommentGroupReference
+     * @SerializedName("commentGroupRef")
      */
     protected $commentGroup;
 
     /**
-     * @SerializedName("signUps")
-     *
      * @var array
+     * @SerializedName("signUps")
      */
     protected $signUps;
-
-    /**
-     * Event constructor.
-     *
-     * @param int $id
-     * @param string $name
-     * @param string $description
-     * @param AccountReference $organiser
-     * @param \DateTime $inviteTime
-     * @param \DateTime $startTime
-     * @param \DateTime $endTime
-     * @param string $state
-     * @param CommentGroupReference $commentGroup
-     * @param array $signUps
-     */
-    public function __construct($id,
-                                $name,
-                                $description,
-                                AccountReference $organiser,
-                                \DateTime $inviteTime,
-                                \DateTime $startTime,
-                                \DateTime $endTime,
-                                $state,
-                                CommentGroupReference $commentGroup,
-                                array $signUps)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->organiser = $organiser;
-        $this->description = $description;
-        $this->inviteTime = $inviteTime;
-        $this->startTime = $startTime;
-        $this->endTime = $endTime;
-        $this->state = $state;
-        $this->commentGroup = $commentGroup;
-        $this->signUps = $signUps;
-    }
 
     /**
      * @return int
@@ -121,6 +78,16 @@ class Event
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return Event
+     */
+    public function setId(int $id): Event
+    {
+        $this->id = $id;
+        return $this;
     }
 
     /**
@@ -132,6 +99,16 @@ class Event
     }
 
     /**
+     * @param string $name
+     * @return Event
+     */
+    public function setName($name): Event
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getDescription()
@@ -140,11 +117,31 @@ class Event
     }
 
     /**
+     * @param string $description
+     * @return Event
+     */
+    public function setDescription($description): Event
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
      * @return AccountReference
      */
-    public function getOrganiser()
+    public function getOrganiser(): AccountReference
     {
         return $this->organiser;
+    }
+
+    /**
+     * @param AccountReference $organiser
+     * @return Event
+     */
+    public function setOrganiser(AccountReference $organiser): Event
+    {
+        $this->organiser = $organiser;
+        return $this;
     }
 
     /**
@@ -156,11 +153,31 @@ class Event
     }
 
     /**
+     * @param \DateTime $inviteTime
+     * @return Event
+     */
+    public function setInviteTime(\DateTime $inviteTime): Event
+    {
+        $this->inviteTime = $inviteTime;
+        return $this;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getStartTime()
     {
         return $this->startTime;
+    }
+
+    /**
+     * @param \DateTime $startTime
+     * @return Event
+     */
+    public function setStartTime(\DateTime $startTime): Event
+    {
+        $this->startTime = $startTime;
+        return $this;
     }
 
     /**
@@ -172,42 +189,66 @@ class Event
     }
 
     /**
+     * @param \DateTime $endTime
+     * @return Event
+     */
+    public function setEndTime(\DateTime $endTime)
+    {
+        $this->endTime = $endTime;
+        return $this;
+    }
+
+    /**
      * @return string
      */
-    public function getState(): string
+    public function getState()
     {
         return $this->state;
     }
 
     /**
      * @param string $state
+     * @return Event
      */
-    public function setState(string $state)
+    public function setState($state): Event
     {
         $this->state = $state;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSignUps()
-    {
-        return $this->signUps;
+        return $this;
     }
 
     /**
      * @return CommentGroupReference
      */
-    public function getCommentGroup()
+    public function getCommentGroup(): CommentGroupReference
     {
         return $this->commentGroup;
     }
 
     /**
      * @param CommentGroupReference $commentGroup
+     * @return Event
      */
-    public function setCommentGroup($commentGroup)
+    public function setCommentGroup($commentGroup): Event
     {
         $this->commentGroup = $commentGroup;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSignUps(): array
+    {
+        return $this->signUps;
+    }
+
+    /**
+     * @param array $signUps
+     * @return Event
+     */
+    public function setSignUps($signUps): Event
+    {
+        $this->signUps = $signUps;
+        return $this;
     }
 }
