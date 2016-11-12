@@ -5,6 +5,7 @@ namespace LaDanse\ServicesBundle\Service\Event\Query;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
+use LaDanse\ServicesBundle\Service\DTO\Event\EventMapper;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -84,6 +85,13 @@ class GetEventByIdQuery extends AbstractQuery
             throw new EventDoesNotExistException('Event does not exist');
         }
 
-        return $event;
+        /** @var EventHydrator $eventHydrator */
+        $eventHydrator = $this->container->get(EventHydrator::SERVICE_NAME);
+
+        $eventIds = [$event->getId()];
+
+        $eventHydrator->setEventIds($eventIds);
+
+        return EventMapper::mapSingle($event, $eventHydrator);
     }
 }
