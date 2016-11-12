@@ -15,6 +15,7 @@ use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
@@ -118,10 +119,17 @@ class EventService extends LaDanseService
      * Update an existing event
      *
      * @param DTO\Event\PutEvent $putEvent
+     * @param int $eventId
      */
-    public function putEvent(DTO\Event\PutEvent $putEvent)
+    public function putEvent(int $eventId, DTO\Event\PutEvent $putEvent)
     {
+        /** @var PutEventCommand $command */
+        $command = $this->container->get(PutEventCommand::SERVICE_NAME);
 
+        $command->setEventId($eventId);
+        $command->setPutEventDto($putEvent);
+
+        return $command->run();
     }
 
     /**

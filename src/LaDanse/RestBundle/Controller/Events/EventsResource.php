@@ -13,6 +13,7 @@ use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -105,6 +106,43 @@ class EventsResource extends AbstractRestController
             $postEventDto = $this->getDtoFromContent($request, PostEvent::class);
 
             $eventDto = $eventService->postEvent($postEventDto);
+
+            return new JsonResponse(ResourceHelper::object($eventDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     *
+     * @ApiDoc(
+     *  description="Update an existing event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}", name="putEvent", options = { "expose" = true })
+     * @Method({"PUT"})
+     */
+    public function putEventAction(Request $request, $eventId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        try
+        {
+            $putEventDto = $this->getDtoFromContent($request, PutEvent::class);
+
+            $eventDto = $eventService->putEvent(intval($eventId), $putEventDto);
 
             return new JsonResponse(ResourceHelper::object($eventDto));
         }
