@@ -5,10 +5,10 @@ namespace LaDanse\ServicesBundle\Service\Event;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\Command\CancelEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\ConfirmEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
@@ -19,12 +19,12 @@ use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
-use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsQuery;
-use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsSinceQuery;
+use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsPagedQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
 use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * Class EventService
@@ -61,52 +61,115 @@ class EventService extends LaDanseService
     }
 
     /**
-     * Return all events. The result is sorted by invite time (ascending).
+     * Return all events.
      *
-     * @return array
+     * The result is sorted by invite time (ascending) and limited to 28 days starting from $fromTime (included)
+     *
+     * @param \DateTime $fromTime
+     *
+     * @return DTO\Event\EventPage
      */
-    public function getAllEvents()
+    public function getAllEventsPaged(\DateTime $fromTime)
     {
-        /** @var GetAllEventsQuery $getAllEventsQuery */
-        $getAllEventsQuery = $this->get(GetAllEventsQuery::SERVICE_NAME);
+        /** @var GetAllEventsPagedQuery $query */
+        $query = $this->get(GetAllEventsPagedQuery::SERVICE_NAME);
 
-        return $getAllEventsQuery->run();
-    }
+        $query->setStartOn($fromTime);
 
-    /**
-     * Returns all events whose invite time is equal to or later than the given date
-     *
-     * @param \DateTime $sinceDate
-     *
-     * @return array
-     */
-    public function getAllEventsSince(\DateTime $sinceDate)
-    {
-        /** @var GetAllEventsSinceQuery $getAllEventsSinceQuery */
-        $getAllEventsSinceQuery = $this->get(GetAllEventsSinceQuery::SERVICE_NAME);
-
-        $getAllEventsSinceQuery->setSinceDate($sinceDate);
-
-        return $getAllEventsSinceQuery->run();
+        return $query->run();
     }
 
     /**
      * Return the event with the given id
      *
-     * @param int $id id of event to retrieve
+     * @param int $eventId id of event to retrieve
      *
      * @throws EventDoesNotExistException if the event does not exist
      *
-     * @return Event
+     * @return DTO\Event\Event
      */
-    public function getEventById($id)
+    public function getEventById($eventId)
     {
-        /** @var GetEventByIdQuery $getEventByIdQuery */
-        $getEventByIdQuery = $this->container->get(GetEventByIdQuery::SERVICE_NAME);
+        /** @var GetEventByIdQuery $query */
+        $query = $this->container->get(GetEventByIdQuery::SERVICE_NAME);
 
-        $getEventByIdQuery->setEventId($id);
+        $query->setEventId($eventId);
 
-        return $getEventByIdQuery->run();
+        return $query->run();
+    }
+
+    /**
+     * Create a new event
+     *
+     * @param DTO\Event\PostEvent $postEvent
+     */
+    public function postEvent(DTO\Event\PostEvent $postEvent)
+    {
+
+    }
+
+    /**
+     * Update an existing event
+     *
+     * @param DTO\Event\PutEvent $putEvent
+     */
+    public function putEvent(DTO\Event\PutEvent $putEvent)
+    {
+
+    }
+
+    /**
+     * Update the state of an existing event
+     *
+     * @param PutEventState $putEventState
+     */
+    public function putEventState(DTO\Event\PutEventState $putEventState)
+    {
+
+    }
+
+    /**
+     * Delete an existing event
+     *
+     * @param $eventId
+     */
+    public function deleteEvent($eventId)
+    {
+
+    }
+
+    /**
+     * Create a new sign up for an existing event
+     *
+     * @param $eventId
+     * @param DTO\Event\PostSignUp $postSignUp
+     */
+    public function postSignUp($eventId, DTO\Event\PostSignUp $postSignUp)
+    {
+
+    }
+
+    /**
+     * Update an existing sign up
+     *
+     * @param $eventId
+     * @param $signUpId
+     * @param DTO\Event\PutSignUp $putSignUp
+     */
+    public function putSignUp($eventId, $signUpId, DTO\Event\PutSignUp $putSignUp)
+    {
+
+    }
+
+    /**
+     * Remove an existing sign up
+     *
+     * @param $eventId
+     * @param $signUpId
+     */
+    public function deleteSignUp($eventId, $signUpId)
+    {
+
     }
 
     /**
