@@ -73,3 +73,9 @@ GuildMeet:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    LaDanseSiteBundle:static:guildmeet.html.twig
+
+AddOnQLTalk:
+    path: /addon/qltalk
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    LaDanseSiteBundle:static:addon.html.twig
