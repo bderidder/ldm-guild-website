@@ -193,6 +193,7 @@ class NotificationService
             DeleteEventNotificator::SERVICE_NAME
         ];
 
+        /*
         $this->notificators[ActivityType::EVENT_CONFIRM]  = [
             EventConfirmationNotificator::SERVICE_NAME
         ];
@@ -200,6 +201,7 @@ class NotificationService
         $this->notificators[ActivityType::EVENT_CANCEL]  = [
             EventCancellationNotificator::SERVICE_NAME
         ];
+        */
 
         $this->notificators[ActivityType::EVENT_TODAY]  = [
             EventTodayNotificator::SERVICE_NAME

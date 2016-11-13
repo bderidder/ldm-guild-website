@@ -35,15 +35,7 @@ class PolicyCatalog
 
         $this->topPolicies[] = new PolicySet(
             'Event State Change Policy Set',
-            ActivityType::EVENT_CONFIRM,
-            [
-                new CreatorCanChangeEventStateRule()
-            ]
-        );
-
-        $this->topPolicies[] = new PolicySet(
-            'Event State Change Policy Set',
-            ActivityType::EVENT_CANCEL,
+            ActivityType::EVENT_PUT_STATE,
             [
                 new CreatorCanChangeEventStateRule()
             ]
