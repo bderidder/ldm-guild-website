@@ -2,11 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-class NotAuthorizedException extends \Exception
+use LaDanse\ServicesBundle\Common\ServiceException;
+
+class NotAuthorizedException extends ServiceException
 {
-    public function __construct($message, $code = 0, \Exception $previous = null)
+    public function __construct($message, \Exception $previous = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, 404, $previous);
     }
 
     public function __toString()
