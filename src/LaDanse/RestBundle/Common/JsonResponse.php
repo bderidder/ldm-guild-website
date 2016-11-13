@@ -26,11 +26,6 @@ class JsonResponse extends Response
     {
         parent::__construct('', $status, $headers);
 
-        if (null === $object)
-        {
-            throw new \InvalidArgumentException("$object argument cannot be null");
-        }
-
         $this->setData($object);
     }
 
