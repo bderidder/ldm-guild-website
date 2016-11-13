@@ -1,0 +1,124 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}QLTalk - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Addon - QLTalk') }}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+
+                <p>
+                    The QLTalk ("Quartiz Leto Talk") addon has been developed to enable members of La Danse Macabre to talk
+                    to each other regardless on which character, realm or faction they are. If you are on your Alliance character
+                    and you want to talk with your fellow guildies, this is the addon you are looking for.
+                </p>
+
+                <p><b>How to use the addon?</b></p>
+
+                <p>
+                    To use the addon you can simply use the "/ql" command to send a message to your fellow guildies.
+                </p>
+
+                <p>
+                    If you type:
+                </p>
+
+                <p>
+                    <code>/ql hello everyone, how are we doing</code>
+                </p>
+
+                <p>
+                    it will send the message "hello everyone, how are we doing" to everyone in the guild.
+                </p>
+
+                <p><b>How to install the addon?</b></p>
+
+                <p>Installation instructions will come soon. Stay tuned. In the meantime you can have a look at the
+                <a href="{{ path('redirect', {'url': "https://mods.curse.com/faqs/wow-addons#manual" }) }}">manual addon installation instructions found on Curse.com</a>. The procedure is the same except you download
+                the addon from this website and not from Curse.com</p>
+
+                <div class="faq">
+
+                    <p class="header">Frequently Asked Questions</p>
+
+                    <p class="question">I send a message and not everyone received it, what went wrong?</p>
+
+                    <p class="answer">
+                        The addon can send messages along a path made up by Battle.net friend connections and guild channels. When
+                        you send a message, it will be received by anyone that can be reached through a combination of Battle.net
+                        friend connections and guild channels. Everyone on these paths, must have the addon installed as well.
+                    </p>
+                    <p class="answer">
+                        Let's assume we have Legolas, Shania and Mirgo playing the game. Legolas and Shania are Battle.net friends.
+                        Legolas is not in a guild but Shania and Mirgo are both in "Awesome Raiders" on Darkmoon Faire. All three have
+                        QLTalk installed and enabled. When Legolas sends a message using the addon, Shania and Mirgo wil receive it.
+                    </p>
+                    <p class="answer">
+                        But if Shania would not have the addon installed or enabled, neither Shania nor Mirgo will receive the message
+                        send by Legolas. Even though Mirgo has the addon installed, there is no path of Battle.net friends and guilds
+                        between Mirgo and Legolas where every intermediate player has QLTalk installed and enabled.
+                    </p>
+                    <p class="answer">
+                        So depending on who is online and what Battle.net friends they have, your message may be missed by some and you
+                        may miss some messages send by others.
+                    </p>
+                    <p class="answer">
+                        The more members of a Danse Macabre have the addon installed, the less likely it wil be you miss messages!
+                    </p>
+
+                    <p class="question">Why isn't the addon available on Curse.com?</p>
+
+                    <p class="answer">
+                        Having the addon available on Curse.com would make installing and keeping it up to date much easier. Sadly,
+                        due to the way the addon works, it is currently not a good idea to have it installed on a wide basis. In
+                        other words, we have to keep it limited to La Danse Macabre members. By making the addon available on Curse.com
+                        we can't guarantee this.
+                    </p>
+                    <p class="answer">
+                        Future versions of the addon may be released on Curse.com. So stay tuned!
+                    </p>
+
+                    <p class="question">Is the addon safe to use? Does it conform to Blizzard's EULA?</p>
+
+                    <p class="answer">
+                        As far was we know, this addon is safe to use and does not violate Blizzard's terms.
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="col-md-3" >
+                <div class="well well-lg">
+                    <p style="text-align: center;">
+                        <a href="{{ path('redirect', {'url': "https://dl.ladanse.org/addons/qltalk/qltalk-current.zip" }) }}"
+                           target="_blank">
+                            <span style="font-size: 1.4em">Download Latest</span>
+                        </a>
+                        <br/>
+                        <span>(version 0.9)</span>
+                    </p>
+                    <hr style="border-color: darkgray"/>
+                    <p>Previous versions:</p>
+                    <p>
+                        <i>no previous versions yet</i>
+                        <!--
+                        <a href="{{ path('redirect', {'url': "https://dl.ladanse.org/addons/qltalk/qltalk-0.8.zip" }) }}"
+                              target="_blank">
+                            version 0.8
+                        </a><br/>
+                        <a href="{{ path('redirect', {'url': "https://dl.ladanse.org/addons/qltalk/qltalk-0.7.zip" }) }}"
+                           target="_blank">
+                            version 0.7
+                        </a><br/>
+                        -->
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
