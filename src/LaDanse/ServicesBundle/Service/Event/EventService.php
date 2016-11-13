@@ -9,7 +9,7 @@ use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventStateCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\PostSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
@@ -152,7 +152,7 @@ class EventService extends LaDanseService
      */
     public function deleteEvent($eventId)
     {
-        /** @var DeleteEventCommand $removeEventCommand */
+        /** @var DeleteEventCommand $command */
         $command = $this->container->get(DeleteEventCommand::SERVICE_NAME);
 
         $command->setEventId($eventId);
@@ -168,7 +168,13 @@ class EventService extends LaDanseService
      */
     public function postSignUp($eventId, DTO\Event\PostSignUp $postSignUp)
     {
+        /** @var PostSignUpCommand $command */
+        $command = $this->container->get(PostSignUpCommand::SERVICE_NAME);
 
+        $command->setEventId($eventId);
+        $command->setPostSignUp($postSignUp);
+
+        return $command->run();
     }
 
     /**
@@ -208,8 +214,8 @@ class EventService extends LaDanseService
      */
     public function createSignUp($eventId, Account $account, $signUpType, $roles = [])
     {
-        /** @var CreateSignUpCommand $createSignUpCommand */
-        $createSignUpCommand = $this->container->get(CreateSignUpCommand::SERVICE_NAME);
+        /** @var PostSignUpCommand $createSignUpCommand */
+        $createSignUpCommand = $this->container->get(PostSignUpCommand::SERVICE_NAME);
 
         $createSignUpCommand->setEventId($eventId);
         $createSignUpCommand->setAccount($account);

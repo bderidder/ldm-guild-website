@@ -11,6 +11,7 @@ use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
+use LaDanse\ServicesBundle\Service\DTO\Event\PostSignUp;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -216,6 +217,43 @@ class EventsResource extends AbstractRestController
             $eventService->deleteEvent(intval($eventId));
 
             return new Response();
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     *
+     * @ApiDoc(
+     *  description="Create a new sign up for the given event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}/signUps", name="postSignUp", options = { "expose" = true })
+     * @Method({"POST"})
+     */
+    public function postSignUpAction(Request $request, $eventId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        try
+        {
+            $postSignUpDto = $this->getDtoFromContent($request, PostSignUp::class);
+
+            $eventDto = $eventService->postSignUp(intval($eventId), $postSignUpDto);
+
+            return new JsonResponse(ResourceHelper::object($eventDto));
         }
         catch(ServiceException $serviceException)
         {
