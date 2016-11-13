@@ -10,15 +10,16 @@ use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(RemoveEventCommand::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(DeleteEventCommand::SERVICE_NAME, public=true, shared=false)
  */
-class RemoveEventCommand extends AbstractCommand
+class DeleteEventCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.RemoveEventCommand';
+    const SERVICE_NAME = 'LaDanse.DeleteEventCommand';
 
     /**
      * @var $logger \Monolog\Logger
@@ -75,6 +76,9 @@ class RemoveEventCommand extends AbstractCommand
 
     protected function runCommand()
     {
+        /** @var EventService $eventService */
+        $eventService = $this->container->get(EventService::SERVICE_NAME);
+
         /** @var $commentService CommentService */
         $commentService = $this->container->get(CommentService::SERVICE_NAME);
 
@@ -83,6 +87,8 @@ class RemoveEventCommand extends AbstractCommand
 
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $this->doctrine->getRepository(Event::REPOSITORY);
+
+        $eventDto = $eventService->getEventById($this->getEventId());
 
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $event = $repository->find($this->getEventId());
@@ -110,7 +116,7 @@ class RemoveEventCommand extends AbstractCommand
                 ActivityType::EVENT_DELETE,
                 $this->getAccount(),
                 [
-                    'event' => $event->toJson()
+                    'event' => ActivityEvent::annotatedToSimpleObject($eventDto)
                 ]
             )
         );

@@ -7,14 +7,13 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
-use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventStateCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\DeleteEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
@@ -153,7 +152,12 @@ class EventService extends LaDanseService
      */
     public function deleteEvent($eventId)
     {
+        /** @var DeleteEventCommand $removeEventCommand */
+        $command = $this->container->get(DeleteEventCommand::SERVICE_NAME);
 
+        $command->setEventId($eventId);
+
+        $command->run();
     }
 
     /**
@@ -188,21 +192,6 @@ class EventService extends LaDanseService
     public function deleteSignUp($eventId, $signUpId)
     {
 
-    }
-
-    /**
-     * Remove an event
-     *
-     * @param int $eventId
-     */
-    public function removeEvent($eventId)
-    {
-        /** @var RemoveEventCommand $removeEventCommand */
-        $removeEventCommand = $this->container->get(RemoveEventCommand::SERVICE_NAME);
-
-        $removeEventCommand->setEventId($eventId);
-
-        $removeEventCommand->run();
     }
 
     /**
