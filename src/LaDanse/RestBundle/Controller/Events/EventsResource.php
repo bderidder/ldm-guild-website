@@ -10,8 +10,6 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
-use LaDanse\ServicesBundle\Service\Character\CharacterService;
-use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
@@ -183,6 +181,41 @@ class EventsResource extends AbstractRestController
             $eventDto = $eventService->putEventState(intval($eventId), $putEventStateDto);
 
             return new JsonResponse(ResourceHelper::object($eventDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     *
+     * @ApiDoc(
+     *  description="Delete an event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}", name="deleteEvent", options = { "expose" = true })
+     * @Method({"DELETE"})
+     */
+    public function deleteEventAction(Request $request, $eventId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        try
+        {
+            $eventService->deleteEvent(intval($eventId));
+
+            return new Response();
         }
         catch(ServiceException $serviceException)
         {
