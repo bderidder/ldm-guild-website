@@ -14,6 +14,7 @@ use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -143,6 +144,43 @@ class EventsResource extends AbstractRestController
             $putEventDto = $this->getDtoFromContent($request, PutEvent::class);
 
             $eventDto = $eventService->putEvent(intval($eventId), $putEventDto);
+
+            return new JsonResponse(ResourceHelper::object($eventDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     *
+     * @ApiDoc(
+     *  description="Change the state of an event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}/state", name="putEventState", options = { "expose" = true })
+     * @Method({"PUT"})
+     */
+    public function putEventStateAction(Request $request, $eventId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        try
+        {
+            $putEventStateDto = $this->getDtoFromContent($request, PutEventState::class);
+
+            $eventDto = $eventService->putEventState(intval($eventId), $putEventStateDto);
 
             return new JsonResponse(ResourceHelper::object($eventDto));
         }

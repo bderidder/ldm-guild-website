@@ -9,9 +9,7 @@ use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
-use LaDanse\ServicesBundle\Service\Event\Command\CancelEventCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\ConfirmEventCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\CreateEventCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\PutEventStateCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\CreateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
@@ -19,7 +17,6 @@ use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\UpdateEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsPagedQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
@@ -118,8 +115,8 @@ class EventService extends LaDanseService
     /**
      * Update an existing event
      *
-     * @param DTO\Event\PutEvent $putEvent
      * @param int $eventId
+     * @param DTO\Event\PutEvent $putEvent
      */
     public function putEvent(int $eventId, DTO\Event\PutEvent $putEvent)
     {
@@ -135,11 +132,18 @@ class EventService extends LaDanseService
     /**
      * Update the state of an existing event
      *
+     * @param int $eventId
      * @param PutEventState $putEventState
      */
-    public function putEventState(DTO\Event\PutEventState $putEventState)
+    public function putEventState($eventId, DTO\Event\PutEventState $putEventState)
     {
+        /** @var PutEventStateCommand $command */
+        $command = $this->container->get(PutEventStateCommand::SERVICE_NAME);
 
+        $command->setEventId($eventId);
+        $command->setPutEventState($putEventState);
+
+        return $command->run();
     }
 
     /**
@@ -184,106 +188,6 @@ class EventService extends LaDanseService
     public function deleteSignUp($eventId, $signUpId)
     {
 
-    }
-
-    /**
-     * Create a new event with the given values
-     *
-     * @param Account $organiser
-     * @param string $name
-     * @param string $description
-     * @param \DateTime $inviteTime
-     * @param \DateTime $startTime
-     * @param \DateTime $endTIme
-     */
-    public function createEvent(
-        Account $organiser,
-        $name,
-        $description,
-        \DateTime $inviteTime,
-        \DateTime $startTime,
-        \DateTime $endTIme)
-    {
-        /** @var CreateEventCommand $createEventCommand */
-        $createEventCommand = $this->container->get(CreateEventCommand::SERVICE_NAME);
-
-        $createEventCommand->setOrganiser($organiser);
-        $createEventCommand->setName($name);
-        $createEventCommand->setDescription($description);
-        $createEventCommand->setInviteTime($inviteTime);
-        $createEventCommand->setStartTime($startTime);
-        $createEventCommand->setEndTime($endTIme);
-
-        $createEventCommand->run();
-    }
-
-    /**
-     * Update an existing event with the new values
-     *
-     * @param int $eventId
-     * @param string $name
-     * @param string $description
-     * @param \DateTime $inviteTime
-     * @param \DateTime $startTime
-     * @param \DateTime $endTIme
-     */
-    public function updateEvent(
-        $eventId,
-        $name,
-        $description,
-        \DateTime $inviteTime,
-        \DateTime $startTime,
-        \DateTime $endTIme)
-    {
-        /** @var UpdateEventCommand $updateEventCommand */
-        $updateEventCommand = $this->container->get(UpdateEventCommand::SERVICE_NAME);
-
-        $updateEventCommand->setEventId($eventId);
-        $updateEventCommand->setName($name);
-        $updateEventCommand->setDescription($description);
-        $updateEventCommand->setInviteTime($inviteTime);
-        $updateEventCommand->setStartTime($startTime);
-        $updateEventCommand->setEndTime($endTIme);
-
-        $updateEventCommand->run();
-    }
-
-    /**
-     * Confirm an event that is in Pending state
-     *
-     * @param int $eventId
-     *
-     * @throws NotAuthorizedException when the currently logged in user is not allowed this action
-     * @throws EventInvalidStateChangeException the event does not allow this state change right now
-     * @throws EventDoesNotExistException $eventId does not point to an existing event
-     */
-    public function confirmEvent($eventId)
-    {
-        /** @var ConfirmEventCommand $confirmEventCommand */
-        $confirmEventCommand = $this->container->get(ConfirmEventCommand::SERVICE_NAME);
-
-        $confirmEventCommand->setEventId($eventId);
-
-        $confirmEventCommand->run();
-    }
-
-    /**
-     * Cancel an event that is in Pending state
-     *
-     * @param int $eventId
-     *
-     * @throws NotAuthorizedException when the currently logged in user is not allowed this action
-     * @throws EventInvalidStateChangeException the event does not allow this state change right now
-     * @throws EventDoesNotExistException $eventId does not point to an existing event
-     */
-    public function cancelEvent($eventId)
-    {
-        /** @var CancelEventCommand $cancelEventCommand */
-        $cancelEventCommand = $this->container->get(CancelEventCommand::SERVICE_NAME);
-
-        $cancelEventCommand->setEventId($eventId);
-
-        $cancelEventCommand->run();
     }
 
     /**

@@ -102,7 +102,7 @@ class PostEventCommand extends AbstractCommand
         $event->setTopicId($commentGroupId);
 
         $this->logger->info(__CLASS__ . ' persisting event');
-        
+
         $em->persist($event);
         $em->flush();
 
