@@ -77,11 +77,11 @@ class AuthorizationService extends LaDanseService
         catch(AuthorizationException $e)
         {
             $this->logger->error(
-                'Could not properly find a matching policy',
+                'Could not find single matching policy for this evaluation request',
                 ['exception' => $e]
             );
 
-            throw new CannotEvaluateException('Cannot evaluate', 0, $e);
+            throw new CannotEvaluateException('Cannot evaluate because no single policy matched', 0, $e);
         }
 
         try

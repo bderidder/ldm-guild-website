@@ -3,8 +3,8 @@
 namespace LaDanse\SiteBundle\Form\Model;
 
 use LaDanse\DomainBundle\Entity\Role;
-use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\DTO\Event\SignUp;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,11 +23,7 @@ class SignUpFormModel
 
         $this->type = $signUp->getType();
 
-        $this->roles = [];
-        foreach($signUp->getRoles() as $signedRole)
-        {
-            $this->roles[] = $signedRole->getRole();
-        }
+        $this->roles = $signUp->getRoles();
     }
 
 	/**
@@ -52,8 +48,8 @@ class SignUpFormModel
      */
     public function getRoles()
     {
-        // we add this dummy statement to trigger a proper use import of the type
-        Role::DPS;
+        // Dummy statement to trigger the proper import and avoid the import being removed
+        Role::TANK;
 
         return $this->roles;
     }

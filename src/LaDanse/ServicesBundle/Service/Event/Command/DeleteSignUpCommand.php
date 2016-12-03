@@ -9,16 +9,17 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
+use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @DI\Service(RemoveSignUpCommand::SERVICE_NAME, public=true, shared=false)
+ * @DI\Service(DeleteSignUpCommand::SERVICE_NAME, public=true, shared=false)
  */
-class RemoveSignUpCommand extends AbstractCommand
+class DeleteSignUpCommand extends AbstractCommand
 {
-    const SERVICE_NAME = 'LaDanse.RemoveSignUpCommand';
+    const SERVICE_NAME = 'LaDanse.DeleteSignUpCommand';
 
     /**
      * @var $logger \Monolog\Logger
@@ -38,6 +39,15 @@ class RemoveSignUpCommand extends AbstractCommand
      */
     public $doctrine;
 
+    /**
+     * @var EventService $eventService
+     * @DI\Inject(EventService::SERVICE_NAME)
+     */
+    public $eventService;
+
+    /** @var int $eventId */
+    private $eventId;
+
     /** @var int $signUpId */
     private $signUpId;
 
@@ -51,6 +61,24 @@ class RemoveSignUpCommand extends AbstractCommand
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * @param mixed $eventId
+     * @return DeleteSignUpCommand
+     */
+    public function setEventId($eventId)
+    {
+        $this->eventId = $eventId;
+        return $this;
     }
 
     /**
@@ -95,11 +123,9 @@ class RemoveSignUpCommand extends AbstractCommand
             throw new EventInThePastException("Event belonging to sign up is in the past and cannot be changed");
         }
 
-        $event = $signUp->getEvent();
+        $oldEventDto = $this->eventService->getEventById($this->getEventId());
 
-        $fsm = $event->getStateMachine();
-
-        if (!($fsm->getCurrentState() == 'Pending' || $fsm->getCurrentState() == 'Confirmed'))
+        if (!($oldEventDto->getState() == 'Pending' || $oldEventDto->getState() == 'Confirmed'))
         {
             throw new EventInvalidStateChangeException(
                 'The event is not in Pending or Confirmed state, sign-up removals are not allowed'
@@ -107,6 +133,9 @@ class RemoveSignUpCommand extends AbstractCommand
         }
 
         $em->remove($signUp);
+        $em->flush();
+
+        $newEventDto = $this->eventService->getEventById($this->getEventId());
 
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
@@ -114,11 +143,10 @@ class RemoveSignUpCommand extends AbstractCommand
                 ActivityType::SIGNUP_DELETE,
                 $this->getAccount(),
                 [
-                    'event'  => $signUp->getEvent()->toJson(),
-                    'signUp' => $signUp->toJson()
-                ])
+                    'oldEvent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
+                    'newEvent' => ActivityEvent::annotatedToSimpleObject($newEventDto)
+                ]
+            )
         );
-
-        $em->flush();
     }
 }

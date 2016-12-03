@@ -14,7 +14,8 @@ use LaDanse\ServicesBundle\Service\Event\Command\NotifyEventTodayCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PostEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\DeleteEventCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\PutSignUpCommand;
+use LaDanse\ServicesBundle\Service\Event\Command\DeleteSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsPagedQuery;
@@ -186,7 +187,14 @@ class EventService extends LaDanseService
      */
     public function putSignUp($eventId, $signUpId, DTO\Event\PutSignUp $putSignUp)
     {
+        /** @var PutSignUpCommand $command */
+        $command = $this->container->get(PutSignUpCommand::SERVICE_NAME);
 
+        $command->setEventId($eventId);
+        $command->setSignUpId($signUpId);
+        $command->setPutSignUp($putSignUp);
+
+        return $command->run();
     }
 
     /**
@@ -197,100 +205,13 @@ class EventService extends LaDanseService
      */
     public function deleteSignUp($eventId, $signUpId)
     {
+        /** @var DeleteSignUpCommand $command */
+        $command = $this->container->get(DeleteSignUpCommand::SERVICE_NAME);
 
-    }
+        $command->setEventId($eventId);
+        $command->setSignUpId($signUpId);
 
-    /**
-     * Create a new signup with the given values
-     *
-     * @param int $eventId
-     * @param Account $account
-     * @param string $signUpType
-     * @param array $roles
-     *
-     * @throws EventDoesNotExistException if the event does not exist
-     * @throws UserAlreadySignedException if the user is already signed
-     * @throws EventInThePastException if the event is in the past
-     */
-    public function createSignUp($eventId, Account $account, $signUpType, $roles = [])
-    {
-        /** @var PostSignUpCommand $createSignUpCommand */
-        $createSignUpCommand = $this->container->get(PostSignUpCommand::SERVICE_NAME);
-
-        $createSignUpCommand->setEventId($eventId);
-        $createSignUpCommand->setAccount($account);
-        $createSignUpCommand->setSignUpType($signUpType);
-        $createSignUpCommand->setRoles($roles);
-
-        $createSignUpCommand->run();
-    }
-
-    /**
-     * Update an existing sign up with the supplied new information
-     *
-     * @param int $signUpId
-     * @param SignUpFormModel $formModel
-     */
-    public function updateSignUp($signUpId, SignUpFormModel $formModel)
-    {
-        /** @var UpdateSignUpCommand $updateSignUpCommand */
-        $updateSignUpCommand = $this->container->get(UpdateSignUpCommand::SERVICE_NAME);
-
-        $updateSignUpCommand->setSignUpId($signUpId);
-        $updateSignUpCommand->setFormModel($formModel);
-
-        $updateSignUpCommand->run();
-    }
-
-    /**
-     * Remove a sign up
-     *
-     * @param int $signUpId
-     */
-    public function removeSignUp($signUpId)
-    {
-        /** @var RemoveSignUpCommand $removeSignUpCommand */
-        $removeSignUpCommand = $this->container->get(RemoveSignUpCommand::SERVICE_NAME);
-
-        $removeSignUpCommand->setSignUpId($signUpId);
-
-        $removeSignUpCommand->run();
-    }
-
-    /**
-     * Remove the sign up the given account has on the given event
-     *
-     * @param $eventId
-     * @param $accountId
-     */
-    public function removeSignUpForAccount($eventId, $accountId)
-    {
-        /** @var RemoveSignUpForAccountCommand $removeSignUpForAccountCommand */
-        $removeSignUpForAccountCommand = $this->container->get(RemoveSignUpForAccountCommand::SERVICE_NAME);
-
-        $removeSignUpForAccountCommand->setEventId($eventId);
-        $removeSignUpForAccountCommand->setAccountId($accountId);
-
-        $removeSignUpForAccountCommand->run();
-    }
-
-    /**
-     * If it exists, return the sign up the given user has for the given event
-     *
-     * @param $eventId
-     * @param $accountId
-     *
-     * @return SignUp
-     */
-    public function getSignUpForUser($eventId, $accountId)
-    {
-        /** @var UserSignUpQuery $userSignUpQuery */
-        $userSignUpQuery = $this->container->get(UserSignUpQuery::SERVICE_NAME);
-
-        $userSignUpQuery->setEventId($eventId);
-        $userSignUpQuery->setAccountId($accountId);
-
-        return $userSignUpQuery->run();
+        return $command->run();
     }
 
     /**

@@ -4,6 +4,8 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\SignUpType;
+use LaDanse\ServicesBundle\Service\DTO\Event\PostSignUp;
+use LaDanse\ServicesBundle\Service\DTO\Reference\IntegerReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Common\LaDanseController;
@@ -84,12 +86,16 @@ class CreateSignUpController extends LaDanseController
         {
             try
             {
-                $eventService->createSignUp(
-                    $eventId,
-                    $this->getAccount(),
-                    $formModel->getType(),
-                    $formModel->getRoles()
-                );
+                $postSignUp = new PostSignUp();
+
+                $postSignUp
+                    ->setSignUpType($formModel->getType())
+                    ->setRoles($formModel->getRoles())
+                    ->setAccountReference(
+                        new IntegerReference($this->getAccount()->getId())
+                    );
+
+                $eventService->postSignUp($eventId, $postSignUp);
 
                 $this->addToast('Signed up');
             }

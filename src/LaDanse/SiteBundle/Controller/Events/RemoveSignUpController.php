@@ -4,6 +4,8 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
+use LaDanse\ServicesBundle\Service\DTO\Event\Event;
+use LaDanse\ServicesBundle\Service\DTO\Event\SignUp;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -39,45 +41,53 @@ class RemoveSignUpController extends LaDanseController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
+        /** @var Event $event */
+        $event = null;
+
         try
         {
-            $eventService->removeSignUpForAccount($eventId, $account->getId());
-
-            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
+            $event = $eventService->getEventById($eventId);
         }
         catch(EventDoesNotExistException $e)
         {
             $this->logger->warning(
-                __CLASS__ . ' the event does not exist',
+                __CLASS__ . ' the event does not exist in indexAction',
                 [
-                    "event"   => $eventId,
-                    "account" => $account->getId()
+                    "event" => $eventId
                 ]
             );
 
             return $this->redirect($this->generateUrl('calendarIndex'));
         }
-        catch(SignUpDoesNotExistException $e)
+
+        /** @var SignUp $currentSignUp */
+        $currentSignUp = null;
+
+        /** @var SignUp $signUp */
+        foreach($event->getSignUps() as $signUp)
+        {
+            if ($signUp->getAccount()->getId() == $account->getId())
+            {
+                $currentSignUp = $signUp;
+            }
+        }
+
+        if (is_null($currentSignUp))
         {
             $this->logger->warning(
-                __CLASS__ . ' no sign up for this account on given event',
+                __CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
                 [
-                    "event"   => $eventId,
-                    "account" => $account->getId()
+                    'event' => $eventId,
+                    'user' => $this->getAccount()->getId()
                 ]
             );
 
             return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
-        catch(EventInThePastException $e)
+
+        try
         {
-            $this->logger->warning(
-                __CLASS__ . ' given event is in the past',
-                [
-                    "event"   => $eventId,
-                    "account" => $account->getId()
-                ]
-            );
+            $eventService->deleteSignUp($eventId, $currentSignUp->getId());
 
             return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
         }
@@ -92,6 +102,31 @@ class RemoveSignUpController extends LaDanseController
             );
 
             return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
+        }
+        catch(EventInThePastException $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' event is in the past, cannot remove sign-up',
+                [
+                    "event"     => $eventId,
+                    "account"   => $account->getId()
+                ]
+            );
+
+            return $this->redirect($this->generateUrl('viewEvent', ['id' => $eventId]));
+        }
+        catch(\Exception $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' unknown error occured while attempting to delete sign-up',
+                [
+                    "exception" => $e->getMessage(),
+                    "event"     => $eventId,
+                    "account"   => $account->getId()
+                ]
+            );
+
+            return $this->redirect($this->generateUrl('calendarIndex'));
         }
     }
 }

@@ -3,9 +3,11 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
+use LaDanse\ServicesBundle\Service\DTO\Event\Event;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutSignUp;
+use LaDanse\ServicesBundle\Service\DTO\Event\SignUp;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -71,47 +73,36 @@ class EditSignUpController extends LaDanseController
         /** @var SignUp $currentSignUp */
         $currentSignUp = null;
 
-        try
+        /** @var SignUp $signUp */
+        foreach($event->getSignUps() as $signUp)
         {
-            $currentSignUp = $eventService->getSignUpForUser(
-                $event->getId(),
-                $account->getId()
-            );
+            if ($signUp->getAccount()->getId() == $account->getId())
+            {
+                $currentSignUp = $signUp;
+            }
         }
-        catch(EventDoesNotExistException $e)
-        {
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        }
-        catch(EventInThePastException $e)
-        {
-            return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
-        }
-        catch(\Exception $e)
+
+        if (is_null($currentSignUp))
         {
             $this->logger->warning(
-                __CLASS__ . ' unexpected error',
+                __CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
                 [
-                    "throwable" => $e,
-                    "event"     => $id,
-                    "account"   => $account->getId()
+                    'event' => $id,
+                    'user' => $this->getAccount()->getId()
                 ]
             );
 
             return $this->redirect($this->generateUrl('viewEvent', ['id' => $id]));
         }
 
-        if ($currentSignUp == null)
-        {
-            $this->logger->warning(__CLASS__ . ' the user is not yet subscribed to this event in editSignUp',
-                ['event' => $id, 'user' => $this->getAccount()->getId()]);
-
-            return $this->redirect($this->generateUrl('calendarIndex'));
-        }       
-
         $formModel = new SignUpFormModel($currentSignUp);
 
-        $form = $this->createForm(SignUpFormType::class, $formModel,
-            ['attr' => ['class' => 'form-horizontal', 'novalidate' => '']]);
+        $form = $this->createForm(
+            SignUpFormType::class, $formModel,
+            [
+                'attr' => ['class' => 'form-horizontal', 'novalidate' => '']
+            ]
+        );
 
         $form->handleRequest($request);
 
@@ -119,7 +110,16 @@ class EditSignUpController extends LaDanseController
         {
             try
             {
-                $eventService->updateSignUp($currentSignUp->getId(), $formModel);
+                $putSignUp = new PutSignUp();
+
+                $putSignUp->setSignUpType($formModel->getType());
+
+                if ($formModel->getType() != SignUpType::ABSENCE)
+                {
+                    $putSignUp->setRoles($formModel->getRoles());
+                }
+
+                $eventService->putSignUp($id, $currentSignUp->getId(), $putSignUp);
 
                 $this->addToast('Signup updated');
 
@@ -132,7 +132,7 @@ class EditSignUpController extends LaDanseController
             catch(NotAuthorizedException $e)
             {
                 $this->logger->warning(
-                    __CLASS__ . ' currently logged in user is not allowed to remove this event',
+                    __CLASS__ . ' currently logged in user is not allowed to edit his/her sign-up',
                     [
                         "event"   => $id,
                         "account" => $account->getId()
@@ -157,8 +157,13 @@ class EditSignUpController extends LaDanseController
         }
         else
         {
-            return $this->render("LaDanseSiteBundle:events:editSignUp.html.twig",
-                ['event' => $event, 'form' => $form->createView()]);
+            return $this->render(
+                "LaDanseSiteBundle:events:editSignUp.html.twig",
+                [
+                    'event' => $event,
+                    'form' => $form->createView()
+                ]
+            );
         }
     }
 }
