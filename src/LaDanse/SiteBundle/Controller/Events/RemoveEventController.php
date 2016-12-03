@@ -42,11 +42,22 @@ class RemoveEventController extends LaDanseController
 
         try
         {
-            $eventService->removeEvent($id);
+            $event = $eventService->getEventById($id);
+
+            $startTime = $event->getStartTime();
+
+            $eventService->deleteEvent($id);
 
             $this->addToast('Event removed');
 
-            return $this->redirect($this->generateUrl('menuIndex'));
+            $calendarDate = $startTime->format("Ymd");
+
+            return $this->redirect($this->generateUrl(
+                'calendarIndex',
+                [
+                    'showDate' => $calendarDate
+                ]
+            ));
         }
         catch (EventDoesNotExistException $e)
         {

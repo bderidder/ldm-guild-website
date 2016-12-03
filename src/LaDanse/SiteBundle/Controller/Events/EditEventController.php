@@ -4,10 +4,13 @@ namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
+use LaDanse\ServicesBundle\Service\DTO\Event\Event;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
+use LaDanse\ServicesBundle\Service\DTO\Reference\IntegerReference;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Common\LaDanseController;
@@ -107,7 +110,7 @@ class EditEventController extends LaDanseController
         	{
                 $this->logger->info(__CLASS__ . ' persisting changes to event indexAction');
 
-        		$this->updateEvent($formModel, $id);
+        		$this->updateEvent($account, $formModel, $id);
 
                 $this->addToast('Event updated');
 
@@ -150,21 +153,24 @@ class EditEventController extends LaDanseController
     	return $formModel;
     }
 
-    private function updateEvent(EventFormModel $formModel, $eventId)
+    private function updateEvent(Account $account, EventFormModel $formModel, $eventId)
     {
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $eventService->updateEvent(
-            $eventId,
-            $formModel->getName(),
-            $formModel->getDescription(),
-            $this->createDateTime($formModel->getDate(), $formModel->getInviteTime()),
-            $this->createDateTime($formModel->getDate(), $formModel->getStartTime()),
-            $this->createDateTime($formModel->getDate(), $formModel->getEndTime())
-        );
+        $putEvent = new PutEvent();
 
-        $this->logger->info(__CLASS__ . ' persisting event');
+        $putEvent
+            ->setName($formModel->getName())
+            ->setDescription($formModel->getDescription())
+            ->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()))
+            ->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()))
+            ->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()))
+            ->setOrganiserReference(
+                new IntegerReference($account->getId())
+            );
+
+        $eventService->putEvent($eventId, $putEvent);
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)

@@ -5,6 +5,9 @@ namespace LaDanse\SiteBundle\Controller\Events;
 use DateTime;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
+use LaDanse\ServicesBundle\Service\DTO\Reference\IntegerReference;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\EventFormModel;
@@ -102,16 +105,19 @@ class CreateEventController extends LaDanseController
         /** @var $eventService EventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $eventService->createEvent(
-            $account,
-            $formModel->getName(),
-            $formModel->getDescription(),
-            $this->createDateTime($formModel->getDate(), $formModel->getInviteTime()),
-            $this->createDateTime($formModel->getDate(), $formModel->getStartTime()),
-            $this->createDateTime($formModel->getDate(), $formModel->getEndTime())
-        );
+        $putEvent = new PostEvent();
 
-        $this->logger->info(__CLASS__ . ' persisting event');
+        $putEvent
+            ->setName($formModel->getName())
+            ->setDescription($formModel->getDescription())
+            ->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()))
+            ->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()))
+            ->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()))
+            ->setOrganiserReference(
+                new IntegerReference($account->getId())
+            );
+
+        $eventService->postEvent($putEvent);
     }
 
     private function createDateTime(DateTime $datePart, DateTime $timePart)
