@@ -11,8 +11,7 @@ class CreatorCanChangeEventStateRule extends Rule
 {
     public function match(EvaluationCtx $evaluationCt)
     {
-        return $evaluationCt->getAction() == ActivityType::EVENT_CONFIRM
-            || $evaluationCt->getAction() == ActivityType::EVENT_CANCEL;
+        return $evaluationCt->getAction() == ActivityType::EVENT_PUT_STATE;
     }
 
     public function evaluate(EvaluationCtx $evaluationCtx)

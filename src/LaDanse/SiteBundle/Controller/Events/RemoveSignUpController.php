@@ -9,7 +9,6 @@ use LaDanse\ServicesBundle\Service\DTO\Event\SignUp;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 

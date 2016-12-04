@@ -8,7 +8,6 @@ use LaDanse\ServicesBundle\Service\Character\Command\DeleteClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersByCriteriaQuery;
-use LaDanse\ServicesBundle\Service\Character\Query\CharactersByKeywordsQuery;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersClaimedByAccountQuery;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;

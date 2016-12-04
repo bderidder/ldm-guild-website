@@ -2,7 +2,6 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization\Policies;
 
-use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\EvaluationCtx;

@@ -15,18 +15,15 @@ use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
-use LaDanse\ServicesBundle\Service\DTO\Event\PostSignUp;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutSignUp;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
-use LaDanse\ServicesBundle\Service\Event\UserAlreadySignedException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use LaDanse\DomainBundle\Entity as Entity;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(PutSignUpCommand::SERVICE_NAME, public=true, shared=false)
@@ -257,19 +254,5 @@ class PutSignUpCommand extends AbstractCommand
         );
 
         return $newEventDto;
-    }
-
-    private function isUserSigned(DTO\Event\Event $eventDto, DTO\Reference\IntegerReference $accountReference)
-    {
-        foreach($eventDto->getSignUps() as $signUp)
-        {
-            /** @var DTO\Event\SignUp $signUp */
-            if ($signUp->getAccount()->getId() == $accountReference->getId())
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

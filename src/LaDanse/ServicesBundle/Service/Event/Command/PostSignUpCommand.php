@@ -56,9 +56,6 @@ class PostSignUpCommand extends AbstractCommand
     /** @var PostSignUp */
     private $postSignUp;
 
-    /** @var DTO\Event\Event $cachedEventDto */
-    private $cachedEventDto;
-
     /**
      * @param ContainerInterface $container
      *

@@ -4,8 +4,6 @@ namespace LaDanse\ServicesBundle\Service\Event;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Account;
-use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Common\LaDanseService;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\Command\PutEventStateCommand;
@@ -16,12 +14,8 @@ use LaDanse\ServicesBundle\Service\Event\Command\PutEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\DeleteEventCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\PutSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Command\DeleteSignUpCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\RemoveSignUpForAccountCommand;
-use LaDanse\ServicesBundle\Service\Event\Command\UpdateSignUpCommand;
 use LaDanse\ServicesBundle\Service\Event\Query\GetAllEventsPagedQuery;
 use LaDanse\ServicesBundle\Service\Event\Query\GetEventByIdQuery;
-use LaDanse\ServicesBundle\Service\Event\Query\UserSignUpQuery;
-use LaDanse\SiteBundle\Form\Model\SignUpFormModel;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 

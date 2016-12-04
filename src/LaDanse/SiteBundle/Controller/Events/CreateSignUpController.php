@@ -134,11 +134,16 @@ class CreateSignUpController extends LaDanseController
 
         try
         {
-            $eventService->createSignUp(
-                $eventId,
-                $this->getAccount(),
-                SignUpType::ABSENCE
-            );
+            $postSignUp = new PostSignUp();
+
+            $postSignUp
+                ->setSignUpType(SignUpType::ABSENCE)
+                ->setRoles(null)
+                ->setAccountReference(
+                    new IntegerReference($this->getAccount()->getId())
+                );
+
+            $eventService->postSignUp($eventId, $postSignUp);
 
             $this->addToast('Absence saved');
         }
