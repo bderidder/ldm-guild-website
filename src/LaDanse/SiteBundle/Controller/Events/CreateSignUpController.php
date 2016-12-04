@@ -138,7 +138,7 @@ class CreateSignUpController extends LaDanseController
 
             $postSignUp
                 ->setSignUpType(SignUpType::ABSENCE)
-                ->setRoles(null)
+                ->setRoles([])
                 ->setAccountReference(
                     new IntegerReference($this->getAccount()->getId())
                 );

@@ -44,7 +44,7 @@ class PutSignUp
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
