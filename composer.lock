@@ -1225,12 +1225,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "3c89d4f01ec2852ad7e3d6ac02031fe32f70a536"
+                "reference": "507ae09e95788d23e8cdbd1b3c23b5c46dc8b5a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/3c89d4f01ec2852ad7e3d6ac02031fe32f70a536",
-                "reference": "3c89d4f01ec2852ad7e3d6ac02031fe32f70a536",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/507ae09e95788d23e8cdbd1b3c23b5c46dc8b5a1",
+                "reference": "507ae09e95788d23e8cdbd1b3c23b5c46dc8b5a1",
                 "shasum": ""
             },
             "require": {
@@ -1239,6 +1239,7 @@
                 "symfony/form": "^2.7 || ^3.0",
                 "symfony/framework-bundle": "^2.7 || ^3.0",
                 "symfony/security-bundle": "^2.7 || ^3.0",
+                "symfony/templating": "^2.7 || ^3.0",
                 "symfony/twig-bundle": "^2.7 || ^3.0"
             },
             "conflict": {
@@ -1291,7 +1292,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-11-30 17:06:29"
+            "time": "2016-12-02 11:20:52"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1470,12 +1471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hwi/HWIOAuthBundle.git",
-                "reference": "a588551d9f0975229ba7a43c4ce7c08fa84a5e3c"
+                "reference": "1972b57e7bf2bdac7c5aa44c63d4b1dd569da755"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/a588551d9f0975229ba7a43c4ce7c08fa84a5e3c",
-                "reference": "a588551d9f0975229ba7a43c4ce7c08fa84a5e3c",
+                "url": "https://api.github.com/repos/hwi/HWIOAuthBundle/zipball/1972b57e7bf2bdac7c5aa44c63d4b1dd569da755",
+                "reference": "1972b57e7bf2bdac7c5aa44c63d4b1dd569da755",
                 "shasum": ""
             },
             "require": {
@@ -1611,7 +1612,7 @@
                 "yandex",
                 "youtube"
             ],
-            "time": "2016-11-30 11:36:02"
+            "time": "2016-12-02 11:45:20"
         },
         {
             "name": "incenteev/composer-parameter-handler",
