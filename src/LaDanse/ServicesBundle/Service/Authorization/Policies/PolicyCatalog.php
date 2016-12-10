@@ -67,6 +67,22 @@ class PolicyCatalog
         );
 
         $this->topPolicies[] = new PolicySet(
+            'Event - List',
+            ActivityType::EVENT_LIST,
+            [
+                new AllowAllRule()
+            ]
+        );
+
+        $this->topPolicies[] = new PolicySet(
+            'Event - View Single',
+            ActivityType::EVENT_VIEW,
+            [
+                new AllowAllRule()
+            ]
+        );
+
+        $this->topPolicies[] = new PolicySet(
             'Character Set - Claim',
             ActivityType::CLAIM_EDIT,
             [
