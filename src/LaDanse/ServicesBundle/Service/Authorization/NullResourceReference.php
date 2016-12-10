@@ -11,11 +11,11 @@ class NullResourceReference extends ResourceReference
 
     public function getResourceType()
     {
-        throw new UnresolvableResourceException('NullResourceReference, cannot resolve to resource');
+        return "NullResourceReference";
     }
 
     public function getResourceId()
     {
-        throw new UnresolvableResourceException('NullResourceReference, cannot resolve to resource');
+        return "NullResourceReference";
     }
 }
