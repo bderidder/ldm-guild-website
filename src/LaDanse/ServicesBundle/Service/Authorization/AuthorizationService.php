@@ -57,6 +57,47 @@ class AuthorizationService extends LaDanseService
      *
      * @return bool
      *
+     * @throws NotAuthorizedException
+     */
+    public function allowOrThrow(SubjectReference $subject, $action, ResourceReference $resource)
+    {
+        try
+        {
+            if (!$this->evaluate($subject, $action, $resource))
+            {
+                $this->logger->warning(
+                    __CLASS__ . ' the subject is not authorized to perform this action on this resource',
+                    $this->createAuthZRequestRepresentation($subject, $action, $resource)
+                );
+
+                throw new NotAuthorizedException("The subject is not authorized to perform this action on this resource");
+            }
+
+            return true;
+        }
+        catch(\Exception $e)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' could not evaluate authorization request',
+                [
+                    "exception" => $e->getMessage(),
+                    "request"   => $this->createAuthZRequestRepresentation($subject, $action, $resource)
+                ]
+            );
+
+            throw new NotAuthorizedException("Could not evaluate authorization request", $e);
+        }
+    }
+
+    /**
+     * Verify if $subject is authorized to perform $action on $resource
+     *
+     * @param SubjectReference $subject
+     * @param string $action
+     * @param ResourceReference $resource
+     *
+     * @return bool
+     *
      * @throws CannotEvaluateException
      */
     public function evaluate(SubjectReference $subject, $action, ResourceReference $resource)
@@ -125,5 +166,21 @@ class AuthorizationService extends LaDanseService
         }
 
         return $matchedPolicy;
+    }
+
+    private function createAuthZRequestRepresentation(SubjectReference $subject, $action, ResourceReference $resource)
+    {
+        return [
+            "subject" => [
+                "id"   => $subject->getAccount()->getId(),
+                "name" => $subject->getAccount()->getDisplayName(),
+            ],
+            "action" => $action,
+            "resource" => [
+                "type"      => $resource->getResourceType(),
+                "id"        => $resource->getResourceId(),
+                "reference" => get_class($resource)
+            ]
+        ];
     }
 }
