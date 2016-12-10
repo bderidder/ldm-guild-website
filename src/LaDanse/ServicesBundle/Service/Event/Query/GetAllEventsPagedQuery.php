@@ -5,9 +5,13 @@ namespace LaDanse\ServicesBundle\Service\Event\Query;
 use DateInterval;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\NullResourceReference;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\DTO\Event\EventMapper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -36,6 +40,12 @@ class GetAllEventsPagedQuery extends AbstractQuery
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var \DateTime
@@ -82,6 +92,12 @@ class GetAllEventsPagedQuery extends AbstractQuery
 
     protected function runQuery()
     {
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_LIST,
+            new NullResourceReference()
+        );
+
         $this->startOn->setTime(0, 0, 0);
 
         $beforeDate = clone $this->getStartOn();

@@ -4,12 +4,14 @@ namespace LaDanse\ServicesBundle\Service\Event\Query;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractQuery;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\DTO\Event\EventMapper;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -36,6 +38,12 @@ class GetEventByIdQuery extends AbstractQuery
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /** @var int $eventId */
     private $eventId;
@@ -84,6 +92,12 @@ class GetEventByIdQuery extends AbstractQuery
         {
             throw new EventDoesNotExistException('Event does not exist');
         }
+
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_VIEW,
+            new ResourceByValue(Event::class, $this->getEventId(), $event)
+        );
 
         /** @var EventHydrator $eventHydrator */
         $eventHydrator = $this->container->get(EventHydrator::SERVICE_NAME);
