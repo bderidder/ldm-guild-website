@@ -3,16 +3,19 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\DomainBundle\Entity as Entity;
-use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(PostEventCommand::SERVICE_NAME, public=true, shared=false)
@@ -38,6 +41,12 @@ class PostEventCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var DTO\Event\PostEvent
@@ -80,6 +89,12 @@ class PostEventCommand extends AbstractCommand
 
     protected function runCommand()
     {
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_CREATE,
+            new ResourceByValue(DTO\Event\PostEvent::class, null, $this->getPostEventDto())
+        );
+
         $em = $this->doctrine->getManager();
 
         /** @var $commentService CommentService */

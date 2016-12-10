@@ -25,6 +25,14 @@ class PolicyCatalog
         $this->topPolicies = [];
 
         $this->topPolicies[] = new PolicySet(
+            'Create Event Policy Set',
+            ActivityType::EVENT_CREATE,
+            [
+                new AllowAllRule()
+            ]
+        );
+
+        $this->topPolicies[] = new PolicySet(
             'Edit Event Policy Set',
             ActivityType::EVENT_EDIT,
             [
