@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\DomainBundle\Entity\Claim;
 use LaDanse\DomainBundle\Entity\ClaimVersion;
 use LaDanse\DomainBundle\Entity\PlaysRole;
@@ -26,7 +27,6 @@ use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\DomainBundle\Entity as Entity;
 
 /**
  * @DI\Service(PutClaimCommand::SERVICE_NAME, public=true, shared=false)
@@ -185,7 +185,7 @@ class PutClaimCommand extends AbstractCommand
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::CLAIM_EDIT,
-            new ResourceByValue(Claim::class, $claimVersion->getClaim()->getId(), $claimVersion->getClaim())))
+            new ResourceByValue(Claim::class, $claimVersion->getClaim())))
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
 

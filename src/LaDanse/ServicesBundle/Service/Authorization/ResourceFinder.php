@@ -33,10 +33,19 @@ class ResourceFinder
         }
         else if (get_class($resourceReference) == ResourceById::class)
         {
-            /** @var ResourceFinderModule $resourceModule */
-            $resourceModule = $this->findResourceModule($resourceReference->getResourceType());
+            /** @var ResourceById $resourceById */
+            $resourceById = $resourceReference;
 
-            return $resourceModule->findResourceById($resourceReference->getResourceId());
+            /** @var ResourceFinderModule $resourceModule */
+            $resourceModule = $this->findResourceModule($resourceById->getResourceType());
+
+            return $resourceModule->findResourceById($resourceById->getResourceId());
+        }
+        else if (get_class($resourceReference) == NullResourceReference::class)
+        {
+            throw new UnresolvableResourceException(
+                'This method should never be called on a NullResourceReference'
+            );
         }
         else
         {
@@ -52,7 +61,7 @@ class ResourceFinder
 
         if ($resourceModule == null)
         {
-            throw new UnresolvableResourceException('Could not find module for ' . $resourceType);
+            throw new UnresolvableResourceException('Could not find resource module for ' . $resourceType);
         }
 
         return $this->container->get($resourceModule);

@@ -178,7 +178,6 @@ class AuthorizationService extends LaDanseService
             "action" => $action,
             "resource" => [
                 "type"      => $resource->getResourceType(),
-                "id"        => $resource->getResourceId(),
                 "reference" => get_class($resource)
             ]
         ];

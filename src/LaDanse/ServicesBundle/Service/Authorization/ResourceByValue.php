@@ -2,13 +2,13 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization;
 
-class ResourceByValue extends ResourceById
+class ResourceByValue extends ResourceReference
 {
     private $resourceValue;
 
-    public function __construct($resourceType, $resourceId, $resourceValue)
+    public function __construct($resourceType, $resourceValue)
     {
-        parent::__construct($resourceType, $resourceId);
+        parent::__construct($resourceType);
 
         $this->resourceValue = $resourceValue;
     }

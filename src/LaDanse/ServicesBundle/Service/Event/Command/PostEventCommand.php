@@ -92,7 +92,7 @@ class PostEventCommand extends AbstractCommand
         $this->authzService->allowOrThrow(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_CREATE,
-            new ResourceByValue(DTO\Event\PostEvent::class, null, $this->getPostEventDto())
+            new ResourceByValue(DTO\Event\PostEvent::class, $this->getPostEventDto())
         );
 
         $em = $this->doctrine->getManager();

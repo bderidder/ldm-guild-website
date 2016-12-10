@@ -51,11 +51,6 @@ class EvaluationCtx
         return $this->resource->getResourceType();
     }
 
-    public function getResourceId()
-    {
-        return $this->resource->getResourceId();
-    }
-
     public function getResourceValue()
     {
         try

@@ -10,8 +10,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\DomainBundle\Entity\Claim;
-use LaDanse\DomainBundle\Entity\PlaysRole;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
@@ -22,7 +22,6 @@ use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\DomainBundle\Entity as Entity;
 
 /**
  * @DI\Service(DeleteClaimCommand::SERVICE_NAME, public=true, shared=false)
@@ -153,7 +152,7 @@ class DeleteClaimCommand extends AbstractCommand
         if (!$this->authzService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::CLAIM_REMOVE,
-            new ResourceByValue(Claim::class, $claim->getId(), $claim)))
+            new ResourceByValue(Claim::class, $claim)))
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
 

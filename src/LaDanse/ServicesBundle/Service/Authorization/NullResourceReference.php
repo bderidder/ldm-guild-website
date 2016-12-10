@@ -6,7 +6,7 @@ class NullResourceReference extends ResourceReference
 {
     public function __construct()
     {
-        parent::__construct('');
+        parent::__construct('NullResourceReference');
     }
 
     public function getResourceType()

@@ -3,6 +3,7 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
+use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\DomainBundle\Entity\SignUpType;
@@ -23,7 +24,6 @@ use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use LaDanse\DomainBundle\Entity as Entity;
 
 /**
  * @DI\Service(PutSignUpCommand::SERVICE_NAME, public=true, shared=false)
@@ -203,7 +203,7 @@ class PutSignUpCommand extends AbstractCommand
         if (!$authService->evaluate(
             new SubjectReference($this->getAccount()),
             ActivityType::SIGNUP_EDIT,
-            new ResourceByValue(SignUp::class, $this->getSignUpId(), $signUp)))
+            new ResourceByValue(SignUp::class, $signUp)))
         {
             $this->logger->error(__CLASS__ . ' not authorized to edit sign-up');
 

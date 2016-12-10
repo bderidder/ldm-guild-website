@@ -96,7 +96,7 @@ class GetEventByIdQuery extends AbstractQuery
         $this->authzService->allowOrThrow(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_VIEW,
-            new ResourceByValue(Event::class, $this->getEventId(), $event)
+            new ResourceByValue(Event::class, $event)
         );
 
         /** @var EventHydrator $eventHydrator */

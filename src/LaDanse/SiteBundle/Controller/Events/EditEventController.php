@@ -18,9 +18,7 @@ use LaDanse\SiteBundle\Form\Model\EventFormModel;
 use LaDanse\SiteBundle\Form\Type\EventFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
 use LaDanse\SiteBundle\Model\EventModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class EditEventController extends LaDanseController
@@ -88,7 +86,7 @@ class EditEventController extends LaDanseController
         if (!$this->isAuthorized(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_EDIT,
-            new ResourceByValue(Event::class, $event->getId(), $event)))
+            new ResourceByValue(Event::class, $event)))
         {
             $this->logger->warning(__CLASS__ . ' the user is not authorized to edit event in indexAction');
 

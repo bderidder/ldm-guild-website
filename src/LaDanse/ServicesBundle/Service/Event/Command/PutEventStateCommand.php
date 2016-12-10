@@ -127,7 +127,7 @@ class PutEventStateCommand extends AbstractCommand
         $this->authzService->allowOrThrow(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_PUT_STATE,
-            new ResourceByValue(Event::class, $event->getId(), $event)
+            new ResourceByValue(Event::class, $event)
         );
 
         $desiredStateTransition = $this->getStateTransition($event->getStateMachine(), $this->getPutEventState()->getState());

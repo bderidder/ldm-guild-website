@@ -19,6 +19,4 @@ abstract class ResourceReference
     {
         return $this->resourceType;
     }
-
-    abstract public function getResourceId();
 }
