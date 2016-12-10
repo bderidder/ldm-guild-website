@@ -10,7 +10,6 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
-use LaDanse\ServicesBundle\Service\Authorization\NotAuthorizedException;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
@@ -125,22 +124,11 @@ class PutEventStateCommand extends AbstractCommand
             throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
         }
 
-        /* verify that the user can edit this particular event */
-        if (!$this->authzService->evaluate(
+        $this->authzService->allowOrThrow(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_PUT_STATE,
-            new ResourceByValue(Event::class, $event->getId(), $event)))
-        {
-            $this->logger->warning(
-                __CLASS__ . ' the user is not authorized to change the state of this event',
-                [
-                    "account" => $this->getAccount()->getId(),
-                    "event" => $this->getEventId()
-                ]
-            );
-
-            throw new NotAuthorizedException("Current user is not allowed to change the state of this event");
-        }
+            new ResourceByValue(Event::class, $event->getId(), $event)
+        );
 
         $desiredStateTransition = $this->getStateTransition($event->getStateMachine(), $this->getPutEventState()->getState());
 
