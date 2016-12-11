@@ -52,6 +52,14 @@ class PolicyCatalog
 
         $this->topPolicies[] = new PolicySet(
             'Edit Sign-Up Policy Set',
+            ActivityType::SIGNUP_CREATE,
+            [
+                new AllowAllRule()
+            ]
+        );
+
+        $this->topPolicies[] = new PolicySet(
+            'Edit Sign-Up Policy Set',
             ActivityType::SIGNUP_EDIT,
             [
                 new CreatorCanEditSignUpRule(),

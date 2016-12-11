@@ -8,6 +8,9 @@ use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Common\InvalidInputException;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostSignUp;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
@@ -43,6 +46,12 @@ class PostSignUpCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var EventService $eventService
@@ -143,6 +152,12 @@ class PostSignUpCommand extends AbstractCommand
         }
 
         $oldEventDto = $this->eventService->getEventById($this->getEventId());
+
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::SIGNUP_CREATE,
+            new ResourceByValue(DTO\Event\Event::class, $oldEventDto)
+        );
 
         $fsm = $event->getStateMachine();
 
