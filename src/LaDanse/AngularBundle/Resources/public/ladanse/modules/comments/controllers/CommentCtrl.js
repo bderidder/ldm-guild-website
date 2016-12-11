@@ -24,19 +24,19 @@ commentsModule.controller('CommentCtrl', function ($scope, $rootScope, $http) {
         $scope.currentEdited.controller = $scope;
 
         $rootScope.$broadcast('CommentsApp.EditComment.Started', $scope.comment.postId);
-    }
+    };
 
     $scope.isEditable = function()
     {
         return $scope.comment.posterId == currentAccount.id;
-    }
+    };
 
     $scope.stopEditing = function()
     {
         $scope.editing = false;
 
         $rootScope.$broadcast('CommentsApp.EditComment.Stopped', $scope.comment.postId);
-    }
+    };
 
     $scope.cancelCommentEditor = function()
     {
@@ -44,27 +44,30 @@ commentsModule.controller('CommentCtrl', function ($scope, $rootScope, $http) {
         $scope.currentEdited.controller = null;
 
         $rootScope.$broadcast('CommentsApp.EditComment.Cancelled', $scope.comment.postId);
-    }
+    };
 
     $scope.saveCommentEditor = function(newValue)
     {
         $scope.editing = false;
         $scope.currentEdited.controller = null;
 
-        $http.post('/services/comment/comments/' + $scope.comment.postId,
+        $http.post(
+            '/services/comment/comments/' + $scope.comment.postId,
             {
                 message: newValue.trim()
-            }).
-            success(function(data, status, headers, config)
-            {
-                $rootScope.$broadcast('CommentsApp.EditComment.Succeeded', $scope.comment.postId);
-                $scope.comment.message = newValue;
-                $scope.editedValue = "";
-            }).
-            error(function(data, status, headers, config)
-            {
-                $rootScope.$broadcast('CommentsApp.EditComment.Failed', $scope.comment.postId);
-            });
+            })
+            .then(
+                function()
+                {
+                    $rootScope.$broadcast('CommentsApp.EditComment.Succeeded', $scope.comment.postId);
+                    $scope.comment.message = newValue;
+                    $scope.editedValue = "";
+                },
+                    function()
+                {
+                    $rootScope.$broadcast('CommentsApp.EditComment.Failed', $scope.comment.postId);
+                }
+            );
     }
 
 });

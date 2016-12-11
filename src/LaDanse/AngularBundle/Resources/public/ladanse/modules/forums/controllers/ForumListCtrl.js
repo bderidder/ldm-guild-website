@@ -36,10 +36,14 @@ app.controller('ForumListCtrl',
 
         $scope.refreshTopics = function()
         {
-            $http.get('/services/forum/forums').success(function(data) {
-                $scope.forums = data.forums;
-                $scope.isForumLoaded = true;
-            });
+            $http.get('/services/forum/forums')
+                .then(
+                    function(httpRestResponse)
+                    {
+                        $scope.forums = httpRestResponse.data.forums;
+                        $scope.isForumLoaded = true;
+                    }
+                );
         }
     }
 );

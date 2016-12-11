@@ -15,7 +15,7 @@ rosterModule.directive('rosterView', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/rosterView/rosterView.html')
     };
 })
-.controller('RosterViewCtrl', function($scope, $rootScope, $stateParams, $http, Notification, logCallbackService)
+.controller('RosterViewCtrl', function($scope, $rootScope, $stateParams, $http, logCallbackService)
 {
     var ctrl = this;
 
@@ -53,28 +53,34 @@ rosterModule.directive('rosterView', function()
 
         var restUrl = Routing.generate('getCharactersByCriteria');
 
+        console.log("Starting search on server");
+
         $http.post(restUrl, searchCriteria)
-            .success(function(searchResult)
-            {
-                searchResult.sort(function(a, b)
+            .then(
+                function(httpRestResponse)
                 {
-                    return a.name.localeCompare(b.name);
-                });
+                    var charactersFound = httpRestResponse.data;
 
-                ctrl.searchResult = searchResult;
+                    charactersFound.sort(function(a, b)
+                    {
+                        return a.name.localeCompare(b.name);
+                    });
 
-                if (ctrl.searchResult.length == 0)
+                    ctrl.searchResult = charactersFound;
+
+                    if (ctrl.searchResult.length == 0)
+                    {
+                        alertify.error('Your search did not return a result');
+                    }
+                },
+                function()
                 {
-                    Notification.warning('Your search did not return a result');
+                    logCallbackService.log('RosterViewCtrl', 'Could not execute search request');
+
+                    alertify.error('Search failed');
                 }
-            })
-            .error(function()
-            {
-                logCallbackService.log('RosterViewCtrl', 'Could not execute search request');
-
-                Notification.error('Search failed');
-            });
-    }
+            );
+    };
 
     ctrl.init();
 });

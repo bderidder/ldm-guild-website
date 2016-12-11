@@ -17,18 +17,18 @@ commentsModule.controller('CommentEditorCtrl', function ($scope, $rootScope, $ht
     $scope.isTooMuchText = function()
     {
         return $scope.message.length > $scope.maxLength;
-    }
+    };
 
     $scope.updateCharacterUsage = function()
     {
         $scope.characterUsage = $scope.message.length + "/" + $scope.maxLength;
-    }
+    };
 
     $scope.escapePressed = function()
     {
         $scope.message = "";
         $scope.cancelCallback();
-    }
+    };
 
     $scope.enterPressed = function()
     {

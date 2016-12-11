@@ -86,16 +86,21 @@ app.controller('TopicPageCtrl',
 
         $scope.refreshPosts = function()
         {
-            $http.get('/services/forum/topics/' + $scope.topicId).success(function(data) {
-                $scope.topicId = data.topicId;
-                $scope.createorId = data.creatorId;
-                $scope.creator = data.creator;
-                $scope.subject = data.subject;
-                $scope.createDate = data.createDate;
-                $scope.posts = data.posts;
-                $scope.isTopicLoaded = true;
-            });
-        }
+            $http.get('/services/forum/topics/' + $scope.topicId)
+                .then(
+                    function(httpRestResponse)
+                    {
+                        var topic = httpRestResponse.data;
 
+                        $scope.topicId = topic.topicId;
+                        $scope.createorId = topic.creatorId;
+                        $scope.creator = topic.creator;
+                        $scope.subject = topic.subject;
+                        $scope.createDate = topic.createDate;
+                        $scope.posts = topic.posts;
+                        $scope.isTopicLoaded = true;
+                    }
+             );
+        };
     }
 );

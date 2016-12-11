@@ -23,7 +23,7 @@ app.service(
             else
             {
                 deferred.resolve(forumServiceInstance.activityModel);
-            };
+            }
 
             return deferred.promise;
         };
@@ -31,19 +31,20 @@ app.service(
         forumServiceInstance.fetchActivityData = function()
         {
             $http.get('/services/forum/forums/activity')
-                .success(function(data)
-                {
-                    forumServiceInstance.activityModel = new ActivityModel(data.posts);
-
-                    for (i = 0; i < forumServiceInstance.activityPromises.length; i++)
+                .then(
+                    function(httpRestResponse)
                     {
-                        forumServiceInstance.activityPromises[i].resolve(forumServiceInstance.activityModel);
-                    }
+                        forumServiceInstance.activityModel = new ActivityModel(httpRestResponse.data.posts);
 
-                    forumServiceInstance.activityPromises = []
-                })
-            ;
-        }
+                        for (var i = 0; i < forumServiceInstance.activityPromises.length; i++)
+                        {
+                            forumServiceInstance.activityPromises[i].resolve(forumServiceInstance.activityModel);
+                        }
+
+                        forumServiceInstance.activityPromises = []
+                    }
+                );
+        };
 
         forumServiceInstance.getChangesForUser = function()
         {
@@ -56,7 +57,7 @@ app.service(
             else
             {
                 deferred.resolve(forumServiceInstance.changesForUserModel);
-            };
+            }
 
             return deferred.promise;
         };
@@ -64,26 +65,27 @@ app.service(
         forumServiceInstance.fetchChangesForUser = function()
         {
             $http.get('/services/forum/account/unread')
-                .success(function(data)
-                {
-                    forumServiceInstance.changesForUserModel = new LastChangesModel(data.unreadPosts);
-
-                    for (i = 0; i < forumServiceInstance.changesForUserPromises.length; i++)
+                .then(
+                    function(httpRestResponse)
                     {
-                        forumServiceInstance.changesForUserPromises[i].resolve(forumServiceInstance.changesForUserModel);
-                    }
+                        forumServiceInstance.changesForUserModel = new LastChangesModel(httpRestResponse.data.unreadPosts);
 
-                    forumServiceInstance.changesForUserPromises = []
-                })
-            ;
-        }
+                        for (var i = 0; i < forumServiceInstance.changesForUserPromises.length; i++)
+                        {
+                            forumServiceInstance.changesForUserPromises[i].resolve(forumServiceInstance.changesForUserModel);
+                        }
+
+                        forumServiceInstance.changesForUserPromises = []
+                    }
+                );
+        };
 
         forumServiceInstance.markPostAsRead = function(postId)
         {
             forumServiceInstance.changesForUserModel.markPostAsRead(postId);
 
             $http.get('/services/forum/posts/' + postId + '/markRead');
-        }
+        };
 
         forumServiceInstance.markTopicAsRead = function(topicId)
         {
@@ -101,7 +103,7 @@ app.service(
                     i++;
                 }
             }
-        }
+        };
 
         forumServiceInstance.fetchActivityData();
         forumServiceInstance.fetchChangesForUser();

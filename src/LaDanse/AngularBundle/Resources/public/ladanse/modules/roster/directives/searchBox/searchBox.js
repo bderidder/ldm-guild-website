@@ -65,7 +65,7 @@ rosterModule.directive('characterSearchBox', function()
         ctrl.enterPressed = function()
         {
             ctrl.searchButtonClicked();
-        }
+        };
 
         this.raceUpdated = function()
         {
@@ -129,7 +129,7 @@ rosterModule.directive('characterSearchBox', function()
         ctrl.toggleSearchScope = function()
         {
             ctrl.advancedSearch = !ctrl.advancedSearch;
-        }
+        };
 
         ctrl.searchButtonClicked = function()
         {
@@ -187,75 +187,82 @@ rosterModule.directive('characterSearchBox', function()
             }
 
             $scope.callback(searchCriteria);
-        }
+        };
 
         gameDataService.getGameData()
-            .then(function(gameDataModel)
-            {
-                ctrl.gameDataModel = gameDataModel;
-
-                var guilds = ctrl.gameDataModel.getGuilds();
-                var guildEntries = [];
-                for (var i = 0; i < guilds.length; i++)
+            .then(
+                function(gameDataModel)
                 {
-                    var guild = guilds[i];
+                    console.log("searchBox - got game data");
 
-                    var selectEntry = new SelectEntry(
-                        guild.id,
-                        guild.name,
-                        ctrl.gameDataModel.getRealm(guild.realmReference.id).name
-                    );
+                    ctrl.gameDataModel = gameDataModel;
 
-                    guildEntries.push(selectEntry);
+                    var i;
+                    var selectEntry = null;
+
+                    var guilds = ctrl.gameDataModel.getGuilds();
+                    var guildEntries = [];
+                    for (i = 0; i < guilds.length; i++)
+                    {
+                        var guild = guilds[i];
+
+                        selectEntry = new SelectEntry(
+                            guild.id,
+                            guild.name,
+                            ctrl.gameDataModel.getRealm(guild.realmReference.id).name
+                        );
+
+                        guildEntries.push(selectEntry);
+                    }
+                    ctrl.guildEntries = guildEntries;
+
+                    var gameRaces = ctrl.gameDataModel.getGameRaces();
+                    var gameRaceEntries = [];
+                    for (i = 0; i < gameRaces.length; i++)
+                    {
+                        var gameRace = gameRaces[i];
+
+                        selectEntry = new SelectEntry(
+                            gameRace.id,
+                            gameRace.name,
+                            ctrl.gameDataModel.getGameFaction(gameRace.gameFactionReference.id).name
+                        );
+
+                        gameRaceEntries.push(selectEntry);
+                    }
+                    ctrl.gameRaceEntries = gameRaceEntries;
+
+                    var gameClasses = ctrl.gameDataModel.getGameClasses();
+                    var gameClassEntries = [];
+                    for (i = 0; i < gameClasses.length; i++)
+                    {
+                        var gameClass = gameClasses[i];
+
+                        selectEntry = new SelectEntry(
+                            gameClass.id,
+                            gameClass.name
+                        );
+
+                        gameClassEntries.push(selectEntry);
+                    }
+                    ctrl.gameClassEntries = gameClassEntries;
+
+                    var gameFactions = ctrl.gameDataModel.getGameFactions();
+                    var gameFactionEntries = [];
+                    for (i = 0; i < gameFactions.length; i++)
+                    {
+                        var gameFaction = gameFactions[i];
+
+                        selectEntry = new SelectEntry(
+                            gameFaction.id,
+                            gameFaction.name
+                        );
+
+                        gameFactionEntries.push(selectEntry);
+                    }
+                    ctrl.gameFactionEntries = gameFactionEntries;
                 }
-                ctrl.guildEntries = guildEntries;
-
-                var gameRaces = ctrl.gameDataModel.getGameRaces();
-                var gameRaceEntries = [];
-                for (var i = 0; i < gameRaces.length; i++)
-                {
-                    var gameRace = gameRaces[i];
-
-                    var selectEntry = new SelectEntry(
-                        gameRace.id,
-                        gameRace.name,
-                        ctrl.gameDataModel.getGameFaction(gameRace.gameFactionReference.id).name
-                    );
-
-                    gameRaceEntries.push(selectEntry);
-                }
-                ctrl.gameRaceEntries = gameRaceEntries;
-
-                var gameClasses = ctrl.gameDataModel.getGameClasses();
-                var gameClassEntries = [];
-                for (var i = 0; i < gameClasses.length; i++)
-                {
-                    var gameClass = gameClasses[i];
-
-                    var selectEntry = new SelectEntry(
-                        gameClass.id,
-                        gameClass.name
-                    );
-
-                    gameClassEntries.push(selectEntry);
-                }
-                ctrl.gameClassEntries = gameClassEntries;
-
-                var gameFactions = ctrl.gameDataModel.getGameFactions();
-                var gameFactionEntries = [];
-                for (var i = 0; i < gameFactions.length; i++)
-                {
-                    var gameFaction = gameFactions[i];
-
-                    var selectEntry = new SelectEntry(
-                        gameFaction.id,
-                        gameFaction.name
-                    );
-
-                    gameFactionEntries.push(selectEntry);
-                }
-                ctrl.gameFactionEntries = gameFactionEntries;
-            });
+            );
 
         ctrl.initForm($scope.searchCriteria);
     });

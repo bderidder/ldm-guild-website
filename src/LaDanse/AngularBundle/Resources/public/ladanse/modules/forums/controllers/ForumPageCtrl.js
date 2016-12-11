@@ -22,11 +22,15 @@ app.controller('ForumPageCtrl',
 
         $scope.refreshTopics = function()
         {
-            $http.get('/services/forum/forums/' + $scope.forumId).success(function(data) {
-                $scope.name = data.name;
-                $scope.topics = data.topics;
-                $scope.isForumLoaded = true;
-            });
+            $http.get('/services/forum/forums/' + $scope.forumId)
+                .then(
+                    function(httpRestResponse)
+                    {
+                        $scope.name = httpRestResponse.data.name;
+                        $scope.topics = httpRestResponse.data.topics;
+                        $scope.isForumLoaded = true;
+                    }
+                );
         }
     }
 );

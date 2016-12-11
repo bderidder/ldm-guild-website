@@ -20,11 +20,11 @@ app.service(
                     'message': message
                 })
                 .then(
-                    function successCallback(response)
+                    function()
                     {
                         // nothing to do if there was success
                     },
-                    function errorCallback(response)
+                    function()
                     {
                         console.log("Failed to log - " + source + " (accountId " + $window.currentAccount.id + ") - " + message);
                     }

@@ -20,7 +20,7 @@ rosterModule.directive('characterDetail', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/roster/directives/characterDetail/characterDetail.html')
     };
 })
-.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $window, Notification)
+.controller('CharacterDetailCtrl', function($scope, $rootScope, $state, $window)
 {
     var ctrl = this;
 
@@ -77,7 +77,7 @@ rosterModule.directive('characterDetail', function()
 
         var base64Json = btoa(jsonAsString);
 
-        Notification.primary("Searching for all characters claimed by " + displayName);
+        alertify.success("Searching for all characters claimed by " + displayName);
 
         $state.go('roster.home', { 'criteria': base64Json });
     };

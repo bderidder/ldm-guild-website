@@ -31,18 +31,21 @@ app.controller('AddPostCtrl', function ($scope, $rootScope, $http) {
 
     $scope.savePostEditor = function(postValue)
     {
-        $http.post('/services/forum/topics/' + $scope.topicId + "/posts",
+        $http.post(
+            '/services/forum/topics/' + $scope.topicId + "/posts",
             {
                 message: postValue
-            }).
-            success(function(data, status, headers, config)
-            {
-                $scope.hideAndReset();
-                $scope.refreshPosts();
-            }).
-            error(function(data, status, headers, config)
-            {
-                // posting failed
-            });
+            })
+            .then(
+                function()
+                {
+                    $scope.hideAndReset();
+                    $scope.refreshPosts();
+                },
+                function()
+                {
+                    // posting failed
+                }
+            );
     }
 });

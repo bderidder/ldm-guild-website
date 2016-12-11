@@ -32,7 +32,7 @@ app.service(
             else
             {
                 deferred.resolve(serviceInstance.gameData);
-            };
+            }
 
             return deferred.promise;
         };
@@ -40,43 +40,45 @@ app.service(
         serviceInstance.fetchGameData = function()
         {
             $http.get(Routing.generate('getAllGuilds'))
-                .success(function(data)
+                .then(function(httpRestResponse)
                 {
-                    serviceInstance.guilds = data;
+                    serviceInstance.guilds = httpRestResponse.data;
 
                     serviceInstance.verifyPromises();
                 });
 
             $http.get(Routing.generate('getAllRealms'))
-                .success(function(data)
+                .then(function(httpRestResponse)
                 {
-                    serviceInstance.realms = data;
+                    serviceInstance.realms = httpRestResponse.data;
 
                     serviceInstance.verifyPromises();
                 });
 
             $http.get(Routing.generate('getAllGameClasses'))
-                .success(function(data)
+                .then(function(httpRestResponse)
                 {
-                    serviceInstance.gameClasses = data;
+                    serviceInstance.gameClasses = httpRestResponse.data;
 
                     serviceInstance.verifyPromises();
                 });
+
             $http.get(Routing.generate('getAllGameRaces'))
-                .success(function(data)
+                .then(function(httpRestResponse)
                 {
-                    serviceInstance.gameRaces = data;
+                    serviceInstance.gameRaces = httpRestResponse.data;
 
                     serviceInstance.verifyPromises();
                 });
+
             $http.get(Routing.generate('getAllGameFactions'))
-                .success(function(data)
+                .then(function(httpRestResponse)
                 {
-                    serviceInstance.gameFactions = data;
+                    serviceInstance.gameFactions = httpRestResponse.data;
 
                     serviceInstance.verifyPromises();
                 });
-        }
+        };
 
         serviceInstance.verifyPromises = function()
         {
@@ -90,14 +92,14 @@ app.service(
                     serviceInstance.gameFactions
                 );
 
-                for (i = 0; i < serviceInstance.gameDataPromises.length; i++)
+                for (var i = 0; i < serviceInstance.gameDataPromises.length; i++)
                 {
                     serviceInstance.gameDataPromises[i].resolve(serviceInstance.gameData);
                 }
 
                 serviceInstance.gameDataPromises = []
             }
-        }
+        };
 
         serviceInstance.isAllGameDataLoaded = function()
         {
@@ -108,7 +110,7 @@ app.service(
                 || serviceInstance.gameClasses === null
                 || serviceInstance.gameFactions === null
             );
-        }
+        };
 
         serviceInstance.fetchGameData();
 

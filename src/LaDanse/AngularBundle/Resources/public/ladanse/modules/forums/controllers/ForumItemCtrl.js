@@ -26,18 +26,24 @@ app.controller('ForumItemCtrl',
 
         $scope.refreshActivity = function()
         {
-            $http.get('/services/forum/forums/' + $scope.forumId + "/activity").success(function(data) {
-                $scope.recentPosts = data.posts;
-            });
-        }
+            $http.get('/services/forum/forums/' + $scope.forumId + "/activity")
+                .then(
+                    function(httpRestResponse)
+                    {
+                        $scope.recentPosts = httpRestResponse.data.posts;
+                    }
+                );
+        };
 
         $scope.initRecentActivity = function()
         {
             forumService.getChangesForUser()
-                .then(function(lastChangesModel)
-                {
-                    $scope.isRecentlyUpdated = lastChangesModel.hasForumChanged($scope.forumId);
-                });
+                .then(
+                    function(lastChangesModel)
+                    {
+                        $scope.isRecentlyUpdated = lastChangesModel.hasForumChanged($scope.forumId);
+                    }
+                );
         }
     }
 );

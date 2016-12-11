@@ -89,19 +89,18 @@ app.controller('PostCtrl',
         {
             $scope.post.message = postValue;
 
-            $http.post('/services/forum/posts/' + $scope.post.postId,
+            $http.post(
+                '/services/forum/posts/' + $scope.post.postId,
                 {
                     message: postValue
-                }).
-                success(function(data, status, headers, config)
-                {
-                    $scope.isEditing = false;
-                    $scope.refreshPosts();
-                }).
-                error(function(data, status, headers, config)
-                {
-                    // posting failed
-                });
+                })
+                .then(
+                    function()
+                    {
+                        $scope.isEditing = false;
+                        $scope.refreshPosts();
+                    }
+                );
         }
     }
 );

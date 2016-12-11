@@ -23,7 +23,6 @@ var ladanseApp = angular.module(LADANSE_APP_NAME,
         'angular-inview',
         'monospaced.elastic',
         'ngDialog',
-        'ui-notification',
         'ui.select'
     ]
 );

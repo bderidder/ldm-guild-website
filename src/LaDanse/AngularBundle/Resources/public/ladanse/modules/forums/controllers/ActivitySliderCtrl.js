@@ -26,7 +26,7 @@ app.controller('ActivitySliderCtrl',
         $scope.isCurrentSlideIndex = function(index)
         {
             return $scope.counter.value == index;
-        }
+        };
 
         $scope.startSlider = function()
         {
@@ -37,7 +37,7 @@ app.controller('ActivitySliderCtrl',
             {
                 $scope.advanceValue();
             }, 4500);
-        }
+        };
 
         $scope.advanceValue = function()
         {
@@ -55,17 +55,19 @@ app.controller('ActivitySliderCtrl',
                     $scope.advanceValue();
                 }, 4500);
             }
-        }
+        };
 
         $scope.fetchData = function(dataUrl)
         {
             forumService.getLastActivity()
-                .then(function(activityModel)
-                {
-                    $scope.itemCount = activityModel.getPostCount();
-                    $scope.posts = activityModel.getPosts();
-                    $scope.startSlider();
-                });
+                .then(
+                    function(activityModel)
+                    {
+                        $scope.itemCount = activityModel.getPostCount();
+                        $scope.posts = activityModel.getPosts();
+                        $scope.startSlider();
+                    }
+                );
         }
     }
 );

@@ -41,20 +41,23 @@ commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http)
 
     $scope.saveCommentEditor = function(newValue)
     {
-        $http.post('../services/comment/groups/' + $scope.groupId + "/comments",
+        $http.post(
+            '../services/comment/groups/' + $scope.groupId + "/comments",
             {
                 message: newValue.trim()
-            }).
-            success(function(data, status, headers, config)
-            {
-                $rootScope.$broadcast('CommentsApp.AddComment.Succeeded');
-                $scope.message = "";
-                $scope.refreshPosts();
-            }).
-            error(function(data, status, headers, config)
-            {
-                $rootScope.$broadcast('CommentsApp.AddComment.Failed');
-            });
+            })
+            .then(
+                function()
+                {
+                    $rootScope.$broadcast('CommentsApp.AddComment.Succeeded');
+                    $scope.message = "";
+                    $scope.refreshPosts();
+                },
+                function()
+                {
+                    $rootScope.$broadcast('CommentsApp.AddComment.Failed');
+                }
+            );
     }
 
 });

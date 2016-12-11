@@ -17,7 +17,7 @@ charactersModule.directive('myCharacters', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/characters/directives/myCharacters/myCharacters.html')
     };
 })
-.controller('MyCharactersCtrl', function($scope, $rootScope, gameDataService, $http, Notification)
+.controller('MyCharactersCtrl', function($scope, $rootScope, gameDataService, $http)
 {
     var ctrl = this;
 
@@ -39,19 +39,19 @@ charactersModule.directive('myCharacters', function()
         {
             ctrl.cancelEditMode();
         }
-    }
+    };
 
     ctrl.cancelEditMode = function()
     {
         ctrl.editedCharacter = null;
-    }
+    };
 
     ctrl.initData = function()
     {
         var characterFactory = new Models.Characters.CharacterFactory();
 
         ctrl.claimedCharacters = characterFactory.createCharacterArray(ctrl.gameDataModel, ctrl.claimedCharactersData);
-    }
+    };
 
     ctrl.verifyData = function()
     {
@@ -61,25 +61,29 @@ charactersModule.directive('myCharacters', function()
 
             ctrl.initialized = true;
         }
-    }
+    };
 
     ctrl.fetchData = function()
     {
         var restUrl = Routing.generate('getCharactersClaimedByAccount', {'accountId': currentAccount.id});
 
         gameDataService.getGameData()
-            .then(function(gameDataModel)
-            {
-                ctrl.gameDataModel = gameDataModel;
-                ctrl.verifyData();
-            });
+            .then(
+                function(gameDataModel)
+                {
+                    ctrl.gameDataModel = gameDataModel;
+                    ctrl.verifyData();
+                }
+            );
 
         $http.get(restUrl)
-            .success(function(claimedCharacters)
-            {
-                ctrl.claimedCharactersData = claimedCharacters;
-                ctrl.verifyData();
-            });
+            .then(
+                function(httpRestResponse)
+                {
+                    ctrl.claimedCharactersData = httpRestResponse.data;
+                    ctrl.verifyData();
+                }
+            );
     };
 
     ctrl.updateClaim = function(updateModel)
@@ -98,17 +102,19 @@ charactersModule.directive('myCharacters', function()
         var restUrl = Routing.generate('putClaim', {'characterId': ctrl.editedCharacter});
 
         $http.put(restUrl, jsonData)
-            .success(function()
-            {
-                Notification.success("Claim updated");
-                ctrl.fetchData();
-                ctrl.cancelEditMode();
-            })
-            .error(function()
-            {
-                Notification.success("Could not update claim");
-                ctrl.cancelEditMode();
-            });
+            .then(
+                function()
+                {
+                    alertify.success('Claim updated');
+                    ctrl.fetchData();
+                    ctrl.cancelEditMode();
+                },
+                function()
+                {
+                    alertify.error("Could not update claim");
+                    ctrl.cancelEditMode();
+                }
+            );
     };
 
     ctrl.removeClaim = function()
@@ -116,17 +122,19 @@ charactersModule.directive('myCharacters', function()
         var restUrl = Routing.generate('deleteClaim', {'characterId': ctrl.editedCharacter});
 
         $http.delete(restUrl)
-            .success(function()
-            {
-                Notification.success("Claim removed");
-                ctrl.fetchData();
-                ctrl.cancelEditMode();
-            })
-            .error(function()
-            {
-                Notification.error("Could not remove claim");
-                ctrl.cancelEditMode();
-            });
+            .then(
+                function()
+                {
+                    alertify.success("Claim removed");
+                    ctrl.fetchData();
+                    ctrl.cancelEditMode();
+                },
+                function()
+                {
+                    alertify.error("Could not remove claim");
+                    ctrl.cancelEditMode();
+                }
+            );
     };
 
     ctrl.editCallback = {};

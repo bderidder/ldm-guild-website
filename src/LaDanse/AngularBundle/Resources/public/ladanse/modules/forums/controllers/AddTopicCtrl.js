@@ -49,20 +49,20 @@ app.controller('AddTopicCtrl', function ($scope, $rootScope, $http) {
             return;
         }
 
-        $http.post('/services/forum/forums/' + $scope.forumId + "/topics",
+        $http.post(
+            '/services/forum/forums/' + $scope.forumId + "/topics",
             {
                 subject: subjectValue.trim(),
                 text: textValue.trim()
-            }).
-            success(function(data, status, headers, config)
-            {
-                $scope.newSubject.value = "";
-                $scope.newText.value = "";
-                $scope.hideAndReset();
-                $scope.refreshTopics();
-            }).
-            error(function(data, status, headers, config)
-            {
-            });
+            })
+            .then(
+                function()
+                {
+                    $scope.newSubject.value = "";
+                    $scope.newText.value = "";
+                    $scope.hideAndReset();
+                    $scope.refreshTopics();
+                }
+            );
     }
 });

@@ -16,11 +16,15 @@
         "bundles/ladansesite/components/qtip2/jquery.qtip.min.css"
         "bundles/ladanseangular/components/ng-dialog/css/ngDialog.min.css"
         "bundles/ladanseangular/components/ng-dialog/css/ngDialog-theme-default.css"
-        "bundles/ladanseangular/components/angular-ui-notification/dist/angular-ui-notification.min.css"
         "bundles/ladanseangular/components/angular-ui-select/dist/select.min.css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
 
     {% stylesheets filter='cssrewrite'
         'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
@@ -140,11 +144,13 @@
         "bundles/ladansesite/components/angular-ui-router/release/angular-ui-router.js"
         "bundles/ladansesite/components/angular-elastic/elastic.js"
         "bundles/ladanseangular/components/ng-dialog/js/ngDialog.min.js"
-        "bundles/ladanseangular/components/angular-ui-notification/dist/angular-ui-notification.min.js"
         "bundles/ladanseangular/components/angular-ui-select/dist/select.min.js"
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 

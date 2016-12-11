@@ -14,10 +14,14 @@ commentsModule.controller('CommentGroupCtrl', function ($scope, $rootScope, $htt
 
     $scope.refreshPosts = function()
     {
-        $http.get('/services/comment/groups/' + $scope.groupId).success(function(data) {
-            $scope.comments = data.comments;
-        });
-    }
+        $http.get('/services/comment/groups/' + $scope.groupId)
+            .then(
+                function(httpRestResponse)
+                {
+                    $scope.comments = httpRestResponse.data.comments;
+                }
+            );
+    };
 
     $scope.currentEdited = {};
     $scope.currentEdited.controller = null
