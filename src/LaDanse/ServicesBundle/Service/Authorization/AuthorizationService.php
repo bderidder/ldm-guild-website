@@ -61,19 +61,11 @@ class AuthorizationService extends LaDanseService
      */
     public function allowOrThrow(SubjectReference $subject, $action, ResourceReference $resource)
     {
+        $evalutionResult = false;
+
         try
         {
-            if (!$this->evaluate($subject, $action, $resource))
-            {
-                $this->logger->warning(
-                    __CLASS__ . ' the subject is not authorized to perform this action on this resource',
-                    $this->createAuthZRequestRepresentation($subject, $action, $resource)
-                );
-
-                throw new NotAuthorizedException("The subject is not authorized to perform this action on this resource");
-            }
-
-            return true;
+            $evalutionResult = $this->evaluate($subject, $action, $resource);
         }
         catch(\Exception $e)
         {
@@ -87,6 +79,25 @@ class AuthorizationService extends LaDanseService
 
             throw new NotAuthorizedException("Could not evaluate authorization request", $e);
         }
+
+        if (!$evalutionResult)
+        {
+            $this->logger->warning(
+                __CLASS__ . ' the subject is not authorized to perform this action on this resource',
+                $this->createAuthZRequestRepresentation($subject, $action, $resource)
+            );
+
+            throw new NotAuthorizedException("The subject is not authorized to perform this action on this resource");
+        }
+
+        $this->logger->debug(
+            __CLASS__ . ' allowing authorization request',
+            [
+                "request"   => $this->createAuthZRequestRepresentation($subject, $action, $resource)
+            ]
+        );
+
+        return true;
     }
 
     /**

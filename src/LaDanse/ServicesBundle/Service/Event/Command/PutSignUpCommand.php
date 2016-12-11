@@ -24,6 +24,7 @@ use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(PutSignUpCommand::SERVICE_NAME, public=true, shared=false)
@@ -49,6 +50,12 @@ class PutSignUpCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var EventService $eventService
@@ -180,6 +187,15 @@ class PutSignUpCommand extends AbstractCommand
 
         $oldEventDto = $this->eventService->getEventById($this->getEventId());
 
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::SIGNUP_EDIT,
+            new ResourceByValue(
+                DTO\Event\SignUp::class,
+                $oldEventDto->getSignUpForId($this->getSignUpId())
+            )
+        );
+
         $fsm = $event->getStateMachine();
 
         if (!(strcmp($fsm->getCurrentState()->getName(), EventStateMachine::PENDING) == 0
@@ -195,19 +211,6 @@ class PutSignUpCommand extends AbstractCommand
         if ($event->getInviteTime() <= $currentDateTime)
         {
             throw new EventInThePastException('Event is in the past, updating sign-up is not allowed anymore');
-        }
-
-        /** @var AuthorizationService $authService */
-        $authService = $this->container->get(AuthorizationService::SERVICE_NAME);
-
-        if (!$authService->evaluate(
-            new SubjectReference($this->getAccount()),
-            ActivityType::SIGNUP_EDIT,
-            new ResourceByValue(SignUp::class, $signUp)))
-        {
-            $this->logger->error(__CLASS__ . ' not authorized to edit sign-up');
-
-            throw new NotAuthorizedException("Not authorized to update this sign-up");
         }
 
         $signUp->setType($this->getPutSignUp()->getSignUpType());

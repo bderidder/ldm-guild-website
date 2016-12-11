@@ -234,6 +234,34 @@ class Event
         return $this;
     }
 
+    public function getSignUpForId($signUpId)
+    {
+        foreach($this->signUps as $signUp)
+        {
+            /** @var SignUp $signUp */
+            if ($signUp->getId() == $signUpId)
+                return $signUp;
+
+            return null;
+        }
+
+        return null;
+    }
+
+    public function getSignUpForAccountId($accountId)
+    {
+        foreach($this->signUps as $signUp)
+        {
+            /** @var SignUp $signUp */
+            if ($signUp->getAccount()->getId() == $accountId)
+                return $signUp;
+
+            return null;
+        }
+
+        return null;
+    }
+
     /**
      * @return array
      */
