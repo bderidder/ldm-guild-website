@@ -11,7 +11,9 @@ class CreatorCanEditEventRule extends Rule
 {
     public function match(EvaluationCtx $evaluationCt)
     {
-        return $evaluationCt->getAction() == ActivityType::EVENT_EDIT;
+        return $evaluationCt->getAction() == ActivityType::EVENT_EDIT
+            ||
+            $evaluationCt->getAction() == ActivityType::EVENT_DELETE;
     }
 
     public function evaluate(EvaluationCtx $evaluationCtx)

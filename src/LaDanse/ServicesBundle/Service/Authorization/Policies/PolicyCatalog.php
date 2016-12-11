@@ -42,6 +42,15 @@ class PolicyCatalog
         );
 
         $this->topPolicies[] = new PolicySet(
+            'Edit Event Policy Set',
+            ActivityType::EVENT_DELETE,
+            [
+                new CreatorCanEditEventRule(),
+                new OfficerCanEditEventRule()
+            ]
+        );
+
+        $this->topPolicies[] = new PolicySet(
             'Edit Sign-Up Policy Set',
             ActivityType::SIGNUP_EDIT,
             [

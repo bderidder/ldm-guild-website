@@ -7,12 +7,16 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(DeleteEventCommand::SERVICE_NAME, public=true, shared=false)
@@ -38,6 +42,12 @@ class DeleteEventCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /** @var int $eventId */
     private $eventId;
@@ -82,21 +92,27 @@ class DeleteEventCommand extends AbstractCommand
         /** @var $commentService CommentService */
         $commentService = $this->container->get(CommentService::SERVICE_NAME);
 
+        $eventDto = $eventService->getEventById($this->getEventId());
+
+        if ($eventDto == null)
+        {
+            throw new EventDoesNotExistException("Event does not exist, id = " . $this->getEventId());
+        }
+
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_DELETE,
+            new ResourceByValue(DTO\Event\Event::class, $eventDto)
+        );
+
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->doctrine->getManager();
 
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $repository = $this->doctrine->getRepository(Event::REPOSITORY);
 
-        $eventDto = $eventService->getEventById($this->getEventId());
-
         /* @var $repository \Doctrine\ORM\EntityRepository */
         $event = $repository->find($this->getEventId());
-
-        if ($event == null)
-        {
-            throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
-        }
 
         $currentDateTime = new \DateTime();
         if ($event->getInviteTime() <= $currentDateTime)
