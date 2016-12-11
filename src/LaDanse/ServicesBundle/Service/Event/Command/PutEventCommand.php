@@ -7,6 +7,9 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,6 +40,12 @@ class PutEventCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var int
@@ -111,6 +120,12 @@ class PutEventCommand extends AbstractCommand
         $event = $em->getRepository(Event::REPOSITORY)->find($this->getEventId());
 
         $oldEventDto = $eventService->getEventById($event->getId());
+
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::EVENT_EDIT,
+            new ResourceByValue(DTO\Event\Event::class, $oldEventDto)
+        );
 
         $event->setOrganiser(
             $em->getReference(

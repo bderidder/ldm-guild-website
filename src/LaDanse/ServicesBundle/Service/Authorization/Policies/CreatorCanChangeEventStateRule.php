@@ -2,10 +2,10 @@
 
 namespace LaDanse\ServicesBundle\Service\Authorization\Policies;
 
-use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Authorization\EvaluationCtx;
 use LaDanse\ServicesBundle\Service\Authorization\Rule;
+use LaDanse\ServicesBundle\Service\DTO\Event\Event;
 
 class CreatorCanChangeEventStateRule extends Rule
 {

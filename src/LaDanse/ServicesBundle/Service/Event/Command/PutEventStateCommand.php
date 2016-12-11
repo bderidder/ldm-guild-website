@@ -4,7 +4,8 @@ namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use Finite\StateMachine\StateMachineInterface;
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -12,7 +13,6 @@ use LaDanse\ServicesBundle\Common\AbstractCommand;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
-use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\Event\EventDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
@@ -53,7 +53,7 @@ class PutEventStateCommand extends AbstractCommand
     /** @var int $eventId */
     private $eventId;
 
-    /** @var PutEventState */
+    /** @var DTO\Event\PutEventState */
     private $putEventState;
 
     /**
@@ -85,18 +85,18 @@ class PutEventStateCommand extends AbstractCommand
     }
 
     /**
-     * @return PutEventState
+     * @return DTO\Event\PutEventState
      */
-    public function getPutEventState(): PutEventState
+    public function getPutEventState(): DTO\Event\PutEventState
     {
         return $this->putEventState;
     }
 
     /**
-     * @param PutEventState $putEventState
+     * @param DTO\Event\PutEventState $putEventState
      * @return PutEventStateCommand
      */
-    public function setPutEventState(PutEventState $putEventState): PutEventStateCommand
+    public function setPutEventState(DTO\Event\PutEventState $putEventState): PutEventStateCommand
     {
         $this->putEventState = $putEventState;
         return $this;
@@ -113,13 +113,9 @@ class PutEventStateCommand extends AbstractCommand
         /** @var EventService $eventService */
         $eventService = $this->container->get(EventService::SERVICE_NAME);
 
-        /* @var $repository \Doctrine\ORM\EntityRepository */
-        $repository = $this->doctrine->getRepository(Event::REPOSITORY);
+        $oldEventDto = $eventService->getEventById($this->getEventId());
 
-        /* @var $event \LaDanse\DomainBundle\Entity\Event */
-        $event = $repository->find($this->getEventId());
-
-        if ($event == null)
+        if ($oldEventDto == null)
         {
             throw new EventDoesNotExistException("Event does not exist " . $this->getEventId());
         }
@@ -127,8 +123,14 @@ class PutEventStateCommand extends AbstractCommand
         $this->authzService->allowOrThrow(
             new SubjectReference($this->getAccount()),
             ActivityType::EVENT_PUT_STATE,
-            new ResourceByValue(Event::class, $event)
+            new ResourceByValue(DTO\Event\Event::class, $oldEventDto)
         );
+
+        /* @var $repository \Doctrine\ORM\EntityRepository */
+        $repository = $this->doctrine->getRepository(Entity\Event::REPOSITORY);
+
+        /* @var $event \LaDanse\DomainBundle\Entity\Event */
+        $event = $repository->find($this->getEventId());
 
         $desiredStateTransition = $this->getStateTransition($event->getStateMachine(), $this->getPutEventState()->getState());
 
@@ -153,7 +155,8 @@ class PutEventStateCommand extends AbstractCommand
                 ActivityType::EVENT_PUT_STATE,
                 $this->getAccount(),
                 [
-                    'event' => ActivityEvent::annotatedToSimpleObject($eventDto)
+                    'oldEevent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
+                    'newEvent'  => ActivityEvent::annotatedToSimpleObject($eventDto)
                 ]
             )
         );
