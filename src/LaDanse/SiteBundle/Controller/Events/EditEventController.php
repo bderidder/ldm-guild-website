@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Events;
 
 use DateTime;
+use FOS\RestBundle\Controller\Annotations\Route;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\ServicesBundle\Activity\ActivityType;
