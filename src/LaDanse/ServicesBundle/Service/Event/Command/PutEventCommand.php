@@ -7,6 +7,7 @@ use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Common\InvalidInputException;
 use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
 use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
 use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
@@ -107,6 +108,14 @@ class PutEventCommand extends AbstractCommand
 
     protected function validateInput()
     {
+        $inviteTime = $this->getPutEventDto()->getInviteTime();
+        $startTime = $this->getPutEventDto()->getStartTime();
+        $endTime = $this->getPutEventDto()->getEndTime();
+
+        if (!(($inviteTime <= $startTime) && ($startTime <= $endTime)))
+        {
+            throw new InvalidInputException("Violation of time constraints: inviteTime <= startTime <= endTime");
+        }
     }
 
     protected function runCommand()
