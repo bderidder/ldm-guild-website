@@ -3,16 +3,20 @@
 namespace LaDanse\ServicesBundle\Service\Event\Command;
 
 use JMS\DiExtraBundle\Annotation as DI;
-use LaDanse\DomainBundle\Entity\SignUp;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Common\AbstractCommand;
+use LaDanse\ServicesBundle\Service\Authorization\AuthorizationService;
+use LaDanse\ServicesBundle\Service\Authorization\ResourceByValue;
+use LaDanse\ServicesBundle\Service\Authorization\SubjectReference;
 use LaDanse\ServicesBundle\Service\Event\EventInThePastException;
 use LaDanse\ServicesBundle\Service\Event\EventInvalidStateChangeException;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use LaDanse\ServicesBundle\Service\Event\SignUpDoesNotExistException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use LaDanse\DomainBundle\Entity as Entity;
+use LaDanse\ServicesBundle\Service\DTO as DTO;
 
 /**
  * @DI\Service(DeleteSignUpCommand::SERVICE_NAME, public=true, shared=false)
@@ -38,6 +42,12 @@ class DeleteSignUpCommand extends AbstractCommand
      * @DI\Inject("doctrine")
      */
     public $doctrine;
+
+    /**
+     * @var AuthorizationService $authzService
+     * @DI\Inject(AuthorizationService::SERVICE_NAME)
+     */
+    public $authzService;
 
     /**
      * @var EventService $eventService
@@ -107,9 +117,9 @@ class DeleteSignUpCommand extends AbstractCommand
         $em = $this->doctrine->getManager();
 
         /* @var \Doctrine\ORM\EntityRepository $repository */
-        $repository = $this->doctrine->getRepository(SignUp::REPOSITORY);
+        $repository = $this->doctrine->getRepository(Entity\SignUp::REPOSITORY);
 
-        /* @var SignUp $signUp */
+        /* @var Entity\SignUp $signUp */
         $signUp = $repository->find($this->getSignUpId());
 
         if ($signUp == null)
@@ -117,13 +127,22 @@ class DeleteSignUpCommand extends AbstractCommand
             throw new SignUpDoesNotExistException("Sign up with id " . $this->getSignUpId() . ' does not exist');
         }
 
+        $oldEventDto = $this->eventService->getEventById($this->getEventId());
+
+        $this->authzService->allowOrThrow(
+            new SubjectReference($this->getAccount()),
+            ActivityType::SIGNUP_DELETE,
+            new ResourceByValue(
+                DTO\Event\SignUp::class,
+                $oldEventDto->getSignUpForId($this->getSignUpId())
+            )
+        );
+
         $currentDateTime = new \DateTime();
         if ($signUp->getEvent()->getInviteTime() <= $currentDateTime)
         {
             throw new EventInThePastException("Event belonging to sign up is in the past and cannot be changed");
         }
-
-        $oldEventDto = $this->eventService->getEventById($this->getEventId());
 
         if (!($oldEventDto->getState() == 'Pending' || $oldEventDto->getState() == 'Confirmed'))
         {
