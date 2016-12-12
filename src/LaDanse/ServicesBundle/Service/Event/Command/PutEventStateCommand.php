@@ -155,7 +155,7 @@ class PutEventStateCommand extends AbstractCommand
                 ActivityType::EVENT_PUT_STATE,
                 $this->getAccount(),
                 [
-                    'oldEevent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
+                    'oldEvent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
                     'newEvent'  => ActivityEvent::annotatedToSimpleObject($eventDto)
                 ]
             )
