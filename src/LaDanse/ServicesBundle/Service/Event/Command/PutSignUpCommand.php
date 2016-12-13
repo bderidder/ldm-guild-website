@@ -247,11 +247,13 @@ class PutSignUpCommand extends AbstractCommand
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
-                ActivityType::SIGNUP_CREATE,
+                ActivityType::SIGNUP_EDIT,
                 $this->getAccount(),
                 [
-                    'oldEvent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
-                    'newEvent' => ActivityEvent::annotatedToSimpleObject($newEventDto)
+                    'oldEvent'  => ActivityEvent::annotatedToSimpleObject($oldEventDto),
+                    'newEvent'  => ActivityEvent::annotatedToSimpleObject($newEventDto),
+                    'signUpId'  => $this->getSignUpId(),
+                    'putSignUp' => ActivityEvent::annotatedToSimpleObject($this->getPutSignUp())
                 ]
             )
         );

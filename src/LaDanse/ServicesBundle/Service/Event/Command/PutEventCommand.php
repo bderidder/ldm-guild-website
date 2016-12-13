@@ -161,7 +161,8 @@ class PutEventCommand extends AbstractCommand
                 $this->getAccount(),
                 [
                     'oldEvent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
-                    'newEvent' => ActivityEvent::annotatedToSimpleObject($newEventDto)
+                    'newEvent' => ActivityEvent::annotatedToSimpleObject($newEventDto),
+                    'putEvent' => ActivityEvent::annotatedToSimpleObject($this->getPutEventDto()),
                 ]
             )
         );

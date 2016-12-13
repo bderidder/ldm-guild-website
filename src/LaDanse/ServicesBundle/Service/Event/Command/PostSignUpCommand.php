@@ -219,8 +219,9 @@ class PostSignUpCommand extends AbstractCommand
                 ActivityType::SIGNUP_CREATE,
                 $this->getAccount(),
                 [
-                    'oldEvent' => ActivityEvent::annotatedToSimpleObject($oldEventDto),
-                    'newEvent' => ActivityEvent::annotatedToSimpleObject($newEventDto)
+                    'oldEvent'   => ActivityEvent::annotatedToSimpleObject($oldEventDto),
+                    'newEvent'   => ActivityEvent::annotatedToSimpleObject($newEventDto),
+                    'postSignUp' => ActivityEvent::annotatedToSimpleObject($this->getPostSignUp())
                 ]
             )
         );
