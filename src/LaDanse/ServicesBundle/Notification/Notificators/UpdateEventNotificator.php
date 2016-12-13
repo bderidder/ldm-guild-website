@@ -48,7 +48,7 @@ class UpdateEventNotificator extends AbstractNotificator
         /** @var mixed $data */
         $data = $queueItem->getData();
 
-        $mailsSignUps = $this->getEmailsFromSignUps($data->oldEvent->eventId);
+        $mailsSignUps = $this->getEmailsFromSignUps($data->oldEvent->id);
 
         $sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
 
