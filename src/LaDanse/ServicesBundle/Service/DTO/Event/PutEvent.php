@@ -57,6 +57,11 @@ class PutEvent
      */
     private $organiserReference;
 
+    public function __construct()
+    {
+        $this->description = "";
+    }
+
     /**
      * @return string
      */

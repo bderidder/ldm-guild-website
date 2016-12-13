@@ -108,7 +108,7 @@ class CreateEventController extends LaDanseController
 
         $putEvent
             ->setName($formModel->getName())
-            ->setDescription($formModel->getDescription())
+            ->setDescription($formModel->getDescription() == null ? "" : $formModel->getDescription())
             ->setStartTime($this->createDateTime($formModel->getDate(), $formModel->getStartTime()))
             ->setInviteTime($this->createDateTime($formModel->getDate(), $formModel->getInviteTime()))
             ->setEndTime($this->createDateTime($formModel->getDate(), $formModel->getEndTime()))

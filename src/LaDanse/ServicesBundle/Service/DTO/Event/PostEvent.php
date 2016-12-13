@@ -57,6 +57,11 @@ class PostEvent
      */
     private $organiserReference;
 
+    public function __construct()
+    {
+        $this->description = "";
+    }
+
     /**
      * @return string
      */
