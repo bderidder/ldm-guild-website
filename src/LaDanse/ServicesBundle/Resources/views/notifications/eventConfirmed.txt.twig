@@ -1,19 +1,19 @@
 Confirmed!
 
-The organiser of the event '{{ data.activityData.event.name }}' you signed up for, confirmed the event!
+The organiser of the event '{{ data.activityData.newEvent.name }}' you signed up for, confirmed the event!
 
-When: {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
 
-Invite Time: {{ data.activityData.event.inviteTime|date("H:i") }}
-Start Time: {{ data.activityData.event.startTime|date("H:i") }}
+Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i") }}
+Start Time: {{ data.activityData.newEvent.startTime|date("H:i") }}
 
-End Time: {{ data.activityData.event.endTime|date("H:i") }}
+End Time: {{ data.activityData.newEvent.endTime|date("H:i") }}
 
-{{ data.activityData.event.description }}
+{{ data.activityData.newEvent.description }}
 
 Make sure to properly prepare yourself. Read up on tactics and bring flasks, pots and runes with you!
 
-{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}
+{{ url('viewEvent', {'id': data.activityData.newEvent.eventId} ) }}
 
 
 

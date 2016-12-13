@@ -7,6 +7,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\ListFunctions;
 use LaDanse\ServicesBundle\Notification\NotificationContext;
@@ -15,11 +16,11 @@ use LaDanse\ServicesBundle\Service\Settings\SettingNames;
 use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 
 /**
- * @DI\Service(EventConfirmationNotificator::SERVICE_NAME, public=true)
+ * @DI\Service(EventStateChangeNotificator::SERVICE_NAME, public=true)
  */
-class EventConfirmationNotificator extends AbstractNotificator
+class EventStateChangeNotificator extends AbstractNotificator
 {
-    const SERVICE_NAME = 'LaDanse.EventConfirmationNotificator';
+    const SERVICE_NAME = 'LaDanse.EventStateChangeNotificator';
 
     /**
      * @var $logger \Monolog\Logger
@@ -43,10 +44,28 @@ class EventConfirmationNotificator extends AbstractNotificator
         NotificationQueueItem $queueItem,
         NotificationContext $context)
     {
-        $mailsSettings = $this->getEmailsHavingSetting(SettingNames::NOTIFICATIONS_EVENT_UPDATED);
-
         /** @var mixed $data */
         $data = $queueItem->getData();
+
+        $notificationSubject = null;
+        $notificationTemplate = null;
+
+        if ($data->putEventState->state == EventStateMachine::CONFIRMED)
+        {
+            $notificationSubject = "Event Confirmed - " . $data->newEvent->name;
+            $notificationTemplate = NotificationTemplates::EVENT_CONFIRMED;
+        }
+        else if ($data->putEventState->state == EventStateMachine::CANCELLED)
+        {
+            $notificationSubject = "Event Cancelled - " . $data->newEvent->name;
+            $notificationTemplate = NotificationTemplates::EVENT_CANCELLED;
+        }
+        else
+        {
+            return;
+        }
+
+        $mailsSettings = $this->getEmailsHavingSetting(SettingNames::NOTIFICATIONS_EVENT_UPDATED);
 
         $mailsSignUps = $this->getEmailsFromSignUps($data->event->eventId);
 
@@ -67,12 +86,12 @@ class EventConfirmationNotificator extends AbstractNotificator
 
             $context->addMail(
                 $mail,
-                "Event Confirmed - " . $data->event->name,
+                $notificationSubject,
                 [
                     'account'      => $queueItem->getActivityBy(),
                     'activityData' => $data
                 ],
-                NotificationTemplates::EVENT_CONFIRMED
+                $notificationTemplate
             );
         }
     }

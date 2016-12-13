@@ -17,7 +17,7 @@
 
     <p style="font-size: 2em; font-weight: bold">Confirmed!</p>
 
-    <p>The organiser of the event '{{ data.activityData.event.name }}' you signed up for, confirmed the event!</p>
+    <p>The organiser of the event '{{ data.activityData.newEvent.name }}' you signed up for, confirmed the event!</p>
 
     <div class="PostContent">
 
@@ -25,26 +25,26 @@
             <tr>
                 <td align="center">
                     <p class="event-label">When</p>
-                    <p>{{ data.activityData.event.inviteTime|date("d/m (D)") }}</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Invite Time</p>
-                    <p>{{ data.activityData.event.inviteTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("H:i") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Start Time</p>
-                    <p>{{ data.activityData.event.startTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.startTime|date("H:i") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">End Time</p>
-                    <p>{{ data.activityData.event.endTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.endTime|date("H:i") }}</p>
                 </td>
             </tr>
         </table>
 
         <br/>
         <div>
-            {{ data.activityData.event.description }}
+            {{ data.activityData.newEvent.description }}
         </div>
 
         <br/>
@@ -58,7 +58,7 @@
 
 {% block notificationActions %}
 
-    <a href="{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}">
+    <a href="{{ url('viewEvent', {'id': data.activityData.newEvent.eventId} ) }}">
         <div class="button btn-lightGreen">
             manage my signup
         </div>
