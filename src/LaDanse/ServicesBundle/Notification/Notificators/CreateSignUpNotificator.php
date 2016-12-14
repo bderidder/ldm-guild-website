@@ -30,9 +30,9 @@ class CreateSignUpNotificator extends AbstractNotificator
         /** @var mixed $data */
         $data = $queueItem->getData();
 
-        $settings = $this->settingsService->getSettingsForAccount($data->event->organiserId);
+        $settings = $this->settingsService->getSettingsForAccount($data->newEvent->organiserRef->id);
 
-        if (!$this->mustNotifyOrganiser($data->event->organiserId))
+        if (!$this->mustNotifyOrganiser($data->newEvent->organiserRef->id))
         {
             // the organiser does not want to be notified when sign ups change
             return;
@@ -49,7 +49,7 @@ class CreateSignUpNotificator extends AbstractNotificator
 
         $context->addMail(
             $setting->account->getEmail(),
-            "New Sign Up - " . $data->event->name,
+            "New Sign Up - " . $data->newEvent->name,
             [
                 'account'      => $queueItem->getActivityBy(),
                 'activityData' => $data
