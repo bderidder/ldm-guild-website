@@ -1,4 +1,4 @@
-{ data.account.displayName }} update the sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+{ data.account.displayName }} update the sign up for '{{ data.activityData.newEvent.name }}' on {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
 {{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
 
 BEFORE
@@ -25,23 +25,23 @@ AFTER
 
 Type:
 
-{% if data.activityData.newSignUp.type == "WillCome" %}
+{% if data.activityData.putSignUp.signUpType == "WillCome" %}
     <p>Will come</p>
 {% endif %}
-{% if data.activityData.newSignUp.type == "MightCome" %}
+{% if data.activityData.putSignUp.signUpType == "MightCome" %}
     <p>Might come</p>
 {% endif %}
-{% if data.activityData.newSignUp.type == "Absence" %}
+{% if data.activityData.putSignUp.signUpType == "Absence" %}
     <p>Absence</p>
 {% endif %}
 
 Roles:
 
-{% for role in data.activityData.newSignUp.roles %}
+{% for role in data.activityData.putSignUp.roles %}
     {{ role }}
 {% endfor %}
 
-{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}
+{{ url('viewEvent', {'id': data.activityData.newEvent.id} ) }}
 
 
 
