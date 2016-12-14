@@ -67,7 +67,7 @@ class EventStateChangeNotificator extends AbstractNotificator
 
         $mailsSettings = $this->getEmailsHavingSetting(SettingNames::NOTIFICATIONS_EVENT_UPDATED);
 
-        $mailsSignUps = $this->getEmailsFromSignUps($data->event->eventId);
+        $mailsSignUps = $this->getEmailsFromSignUps($data->newEvent->id);
 
         $sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
 
