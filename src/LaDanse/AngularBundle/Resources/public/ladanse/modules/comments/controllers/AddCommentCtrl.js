@@ -25,19 +25,19 @@ commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http)
     $scope.showEditor = function()
     {
         $scope.visible = true;
-    }
+    };
 
     $scope.hideEditor = function(f)
     {
         $scope.visible = false;
-    }
+    };
 
     $scope.cancelCommentEditor = function()
     {
         $rootScope.$broadcast('CommentsApp.AddComment.Cancelled');
 
         $scope.message = "";
-    }
+    };
 
     $scope.saveCommentEditor = function(newValue)
     {
@@ -58,6 +58,6 @@ commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http)
                     $rootScope.$broadcast('CommentsApp.AddComment.Failed');
                 }
             );
-    }
+    };
 
 });
