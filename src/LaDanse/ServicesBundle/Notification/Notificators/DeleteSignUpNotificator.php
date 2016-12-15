@@ -30,9 +30,9 @@ class DeleteSignUpNotificator extends AbstractNotificator
         /** @var mixed $data */
         $data = $queueItem->getData();
 
-        $settings = $this->settingsService->getSettingsForAccount($data->event->organiserId);
+        $settings = $this->settingsService->getSettingsForAccount($data->newEvent->organiserRef->id);
 
-        if (!$this->mustNotifyOrganiser($data->event->organiserId))
+        if (!$this->mustNotifyOrganiser($data->newEvent->organiserRef->id))
         {
             // the organiser does not want to be notified when sign ups change
             return;
@@ -47,9 +47,11 @@ class DeleteSignUpNotificator extends AbstractNotificator
             )
         );
 
+        $data->deletedSignUp = $this->getRemovedSignUp($data->oldEvent, $data->signUpId);
+
         $context->addMail(
             $setting->account->getEmail(),
-            "Sign Up Removed - " . $data->event->name,
+            "Sign Up Removed - " . $data->newEvent->name,
             [
                 'account'      => $queueItem->getActivityBy(),
                 'activityData' => $data
@@ -72,5 +74,18 @@ class DeleteSignUpNotificator extends AbstractNotificator
         $setting = $settings[SettingNames::NOTIFICATIONS_SIGNUPS_CHANGED];
 
         return $setting->value;
+    }
+
+    private function getRemovedSignUp($oldEvent, $signUpId)
+    {
+        foreach($oldEvent->signUps as $signUp)
+        {
+            if ($signUp->id == $signUpId)
+            {
+                return $signUp;
+            }
+        }
+
+        return null;
     }
 }

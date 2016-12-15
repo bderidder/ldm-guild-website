@@ -15,7 +15,7 @@
 
 {% block notificationMessage %}
 
-    <b>{{ data.account.displayName }}</b> <font color="red">removed</font> sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+    <b>{{ data.account.displayName }}</b> <font color="red">removed</font> sign up for '{{ data.activityData.newEvent.name }}' on {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
     <br/>
     <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
 
@@ -25,20 +25,20 @@
             <tr>
                 <td align="center">
                     <p class="event-label">Type</p>
-                    {% if data.activityData.signUp.type == "WillCome" %}
+                    {% if data.activityData.deletedSignUp.type == "WillCome" %}
                         <p>Will come</p>
                     {% endif %}
-                    {% if data.activityData.signUp.type == "MightCome" %}
+                    {% if data.activityData.deletedSignUp.type == "MightCome" %}
                         <p>Might come</p>
                     {% endif %}
-                    {% if data.activityData.signUp.type == "Absence" %}
+                    {% if data.activityData.deletedSignUp.type == "Absence" %}
                         <p>Absence</p>
                     {% endif %}
                 </td>
                 <td align="center">
                     <p class="event-label">Tank</p>
                     <p>&nbsp;
-                    {% for role in data.activityData.signUp.roles %}
+                    {% for role in data.activityData.deletedSignUp.roles %}
                         {% if role == "Tank" %}
                             X
                         {% endif %}
@@ -48,7 +48,7 @@
                 <td align="center">
                     <p class="event-label">Healer</p>
                     <p>&nbsp;
-                    {% for role in data.activityData.signUp.roles %}
+                    {% for role in data.activityData.deletedSignUp.roles %}
                         {% if role == "Healer" %}
                             X
                         {% endif %}
@@ -58,7 +58,7 @@
                 <td align="center">
                     <p class="event-label">Damage</p>
                     <p>&nbsp;
-                    {% for role in data.activityData.signUp.roles %}
+                    {% for role in data.activityData.deletedSignUp.roles %}
                         {% if role == "DPS" %}
                             X
                         {% endif %}
@@ -74,7 +74,7 @@
 
 {% block notificationActions %}
 
-    <a href="{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}">
+    <a href="{{ url('viewEvent', {'id': data.activityData.newEvent.id} ) }}">
         <div class="button btn-lightGreen">
             view event
         </div>

@@ -1,25 +1,25 @@
-{ data.account.displayName }} removed sign up for '{{ data.activityData.event.name }}' on {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+{ data.account.displayName }} removed sign up for '{{ data.activityData.newEvent.name }}' on {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
 {{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
 
 Type:
 
-{% if data.activityData.signUp.type == "WillCome" %}
+{% if data.activityData.deletedSignUp.type == "WillCome" %}
     <p>Will come</p>
 {% endif %}
-{% if data.activityData.signUp.type == "MightCome" %}
+{% if data.activityData.deletedSignUp.type == "MightCome" %}
     <p>Might come</p>
 {% endif %}
-{% if data.activityData.signUp.type == "Absence" %}
+{% if data.activityData.deletedSignUp.type == "Absence" %}
     <p>Absence</p>
 {% endif %}
 
 Roles:
 
-{% for role in data.activityData.signUp.roles %}
+{% for role in data.activityData.deletedSignUp.roles %}
     {{ role }}
 {% endfor %}
 
-{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}
+{{ url('viewEvent', {'id': data.activityData.newEvent.id} ) }}
 
 
 
