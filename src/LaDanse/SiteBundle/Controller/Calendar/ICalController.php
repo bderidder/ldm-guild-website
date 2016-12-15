@@ -2,6 +2,7 @@
 
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
+use DateInterval;
 use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
@@ -23,7 +24,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class ICalController extends LaDanseController
 {
@@ -46,7 +50,7 @@ class ICalController extends LaDanseController
      *
      * @Route("/ical/{secret}", name="icalIndex")
      */
-    public function indexAction($secret)
+    public function indexAction(Request $request, $secret)
     {
         $exportSettings = $this->getExportSettings($secret);
 
@@ -66,6 +70,8 @@ class ICalController extends LaDanseController
 
         $account = $exportSettings->getAccount();
 
+        $this->loginAccount($request, $account);
+
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
@@ -79,7 +85,7 @@ class ICalController extends LaDanseController
         // we suggest a refresh every 30 minutes
         $vCalendar->setPublishedTTL('PT30M');
 
-        $allEvents = $this->getAllEvents($account);
+        $allEvents = $this->getEvents($account);
 
         /** @var \LaDanse\SiteBundle\Model\EventModel $event */
         foreach($allEvents as $event)
@@ -123,18 +129,29 @@ class ICalController extends LaDanseController
         );
     }
 
-    protected function getAllEvents(Account $currentUser)
+    protected function getEvents(Account $currentUser)
     {
+        $today = new \DateTime();
+
+        $pageStartDate = clone $today;
+        $pageStartDate->sub(new DateInterval('P56D'));
+        $pageStartDate->setTime(0, 0, 0);
+
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $events = $eventService->getAllEventsPaged();
-
         $eventModels = [];
 
-        foreach($events as $event)
+        for($i = 0; $i < 4; $i++)
         {
-            $eventModels[] = new EventModel($event, $currentUser);
+            $eventPage = $eventService->getAllEventsPaged($pageStartDate);
+
+            foreach($eventPage->getEvents() as $event)
+            {
+                $eventModels[] = new EventModel($event, $currentUser);
+            }
+
+            $pageStartDate = $eventPage->getNextTimestamp();
         }
 
         return $eventModels;
@@ -239,5 +256,15 @@ class ICalController extends LaDanseController
         }
 
         return $description;
+    }
+
+    private function loginAccount(Request $request, Account $account)
+    {
+        $token = new UsernamePasswordToken($account, null, "main", $account->getRoles());
+        $this->get("security.token_storage")->setToken($token); //now the user is logged in
+
+        //now dispatch the login event
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
     }
 }
