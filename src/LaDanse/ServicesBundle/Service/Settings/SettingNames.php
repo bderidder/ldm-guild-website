@@ -10,7 +10,7 @@ class SettingNames
 
     const NOTIFICATIONS_EVENT_CREATED        = "notifications.eventCreated";
     const NOTIFICATIONS_EVENT_UPDATED        = "notifications.eventUpdated";
-    const NOTIFICATIONS_EVENT_TODAY          = "otifications.eventToday";
+    const NOTIFICATIONS_EVENT_TODAY          = "notifications.eventToday";
 
     const NOTIFICATIONS_SIGNUPS_CHANGED      = "notifications.signUpsChanged";
 }
