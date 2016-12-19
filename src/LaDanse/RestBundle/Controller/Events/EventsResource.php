@@ -14,6 +14,7 @@ use LaDanse\ServicesBundle\Service\DTO\Event\PostEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PostSignUp;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
+use LaDanse\ServicesBundle\Service\DTO\Event\PutSignUp;
 use LaDanse\ServicesBundle\Service\Event\EventService;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -291,9 +292,80 @@ class EventsResource extends AbstractRestController
         }
     }
 
-    // PutSignUp
+    /**
+     *
+     * @ApiDoc(
+     *  description="Update an existing sign up for the given event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     * @param string $signUpId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}/signUps/{signUpId}", name="putSignUp", options = { "expose" = true })
+     * @Method({"PUT"})
+     */
+    public function putSignUpAction(Request $request, $eventId, $signUpId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
 
-    // DeleteSignUp
+        try
+        {
+            /** @var PutSignUp $putSignUpDto */
+            $putSignUpDto = $this->getDtoFromContent($request, PutSignUp::class);
+
+            $eventDto = $eventService->putSignUp(intval($eventId), intval($signUpId), $putSignUpDto);
+
+            return new JsonResponse(ResourceHelper::object($eventDto));
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
+
+    /**
+     *
+     * @ApiDoc(
+     *  description="Delete an event"
+     * )
+     *
+     * @param Request $request
+     * @param string $eventId
+     * @param string $signUpId
+     *
+     * @return Response
+     *
+     * @Route("/{eventId}/signUps/{signUpId}", name="deleteSignUp", options = { "expose" = true })
+     * @Method({"DELETE"})
+     */
+    public function deleteSignUpAction(Request $request, $eventId, $signUpId)
+    {
+        /** @var EventService $eventService */
+        $eventService = $this->get(EventService::SERVICE_NAME);
+
+        try
+        {
+            $eventService->deleteSignUp(intval($eventId), intval($signUpId));
+
+            return new Response();
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
+    }
 
     private function getStartOnDate($pStartOnDate)
     {
