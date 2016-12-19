@@ -40,28 +40,39 @@ class EventsResource extends AbstractRestController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        /** @var \DateTime $startOnDate */
-        $startOnDate = $this->getStartOnDate($request->query->get('startOn'));
+        try
+        {
+            /** @var \DateTime $startOnDate */
+            $startOnDate = $this->getStartOnDate($request->query->get('startOn'));
 
-        $eventPage = $eventService->getAllEventsPaged($startOnDate);
+            $eventPage = $eventService->getAllEventsPaged($startOnDate);
 
-        $pagedResult = [
-            'data'   => $eventPage->getEvents(),
-            'paging' => [
-                'previous' => $this->generateUrl(
-                    'queryEvents',
-                    ['startOn' => $eventPage->getPreviousTimestamp()->format('Ymd')],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                ),
-                'next'     => $this->generateUrl(
-                    'queryEvents',
-                    ['startOn' => $eventPage->getNextTimestamp()->format('Ymd')],
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                )
-            ]
-        ];
+            $pagedResult = [
+                'data'   => $eventPage->getEvents(),
+                'paging' => [
+                    'previous' => $this->generateUrl(
+                        'queryEvents',
+                        ['startOn' => $eventPage->getPreviousTimestamp()->format('Ymd')],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    ),
+                    'next'     => $this->generateUrl(
+                        'queryEvents',
+                        ['startOn' => $eventPage->getNextTimestamp()->format('Ymd')],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                ]
+            ];
 
-        return new JsonResponse($pagedResult);
+            return new JsonResponse($pagedResult);
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
     }
 
     /**
@@ -78,9 +89,20 @@ class EventsResource extends AbstractRestController
         /** @var EventService $eventService */
         $eventService = $this->get(EventService::SERVICE_NAME);
 
-        $event = $eventService->getEventById($eventId);
+        try
+        {
+            $event = $eventService->getEventById($eventId);
 
-        return new JsonResponse($event);
+            return new JsonResponse($event);
+        }
+        catch(ServiceException $serviceException)
+        {
+            return ResourceHelper::createErrorResponse(
+                $request,
+                $serviceException->getCode(),
+                $serviceException->getMessage()
+            );
+        }
     }
 
     /**
@@ -103,6 +125,7 @@ class EventsResource extends AbstractRestController
 
         try
         {
+            /** @var PostEvent $postEventDto */
             $postEventDto = $this->getDtoFromContent($request, PostEvent::class);
 
             $eventDto = $eventService->postEvent($postEventDto);
@@ -140,6 +163,7 @@ class EventsResource extends AbstractRestController
 
         try
         {
+            /** @var PutEvent $putEventDto */
             $putEventDto = $this->getDtoFromContent($request, PutEvent::class);
 
             $eventDto = $eventService->putEvent(intval($eventId), $putEventDto);
@@ -177,6 +201,7 @@ class EventsResource extends AbstractRestController
 
         try
         {
+            /** @var PutEventState $putEventStateDto */
             $putEventStateDto = $this->getDtoFromContent($request, PutEventState::class);
 
             $eventDto = $eventService->putEventState(intval($eventId), $putEventStateDto);
@@ -249,6 +274,7 @@ class EventsResource extends AbstractRestController
 
         try
         {
+            /** @var PostSignUp $postSignUpDto */
             $postSignUpDto = $this->getDtoFromContent($request, PostSignUp::class);
 
             $eventDto = $eventService->postSignUp(intval($eventId), $postSignUpDto);
@@ -264,6 +290,10 @@ class EventsResource extends AbstractRestController
             );
         }
     }
+
+    // PutSignUp
+
+    // DeleteSignUp
 
     private function getStartOnDate($pStartOnDate)
     {

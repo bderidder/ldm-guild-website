@@ -13,6 +13,7 @@ var ladanseApp = angular.module(LADANSE_APP_NAME,
         'LaDanseApp.Characters',
         'LaDanseApp.Comments',
         'LaDanseApp.Roster',
+        'LaDanseApp.Events',
         'ngResource',
         'ui.bootstrap',
         'ngSanitize',
@@ -76,7 +77,7 @@ ladanseApp.config(
                 {
                     return '/forums';
                 }
-                else if (fullUrl.includes('/events'))
+                else if (fullUrl.includes('/eventsDisabled'))
                 {
                     return '/comments';
                 }
@@ -87,6 +88,10 @@ ladanseApp.config(
                 else if (fullUrl.includes('/roster'))
                 {
                     return '/roster';
+                }
+                else if (fullUrl.includes('/events'))
+                {
+                    return '/events';
                 }
 
                 return "/ShouldNeverHappen";
