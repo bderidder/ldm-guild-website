@@ -241,8 +241,6 @@ class Event
             /** @var SignUp $signUp */
             if ($signUp->getId() == $signUpId)
                 return $signUp;
-
-            return null;
         }
 
         return null;
@@ -255,8 +253,6 @@ class Event
             /** @var SignUp $signUp */
             if ($signUp->getAccount()->getId() == $accountId)
                 return $signUp;
-
-            return null;
         }
 
         return null;
