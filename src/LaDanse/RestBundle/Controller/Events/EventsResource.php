@@ -33,7 +33,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="queryEvents")
+     * @Route("/", name="queryEvents", options = { "expose" = true })
      * @Method({"GET","HEAD"})
      */
     public function queryEventsAction(Request $request)
@@ -82,7 +82,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}", name="queryEventById")
+     * @Route("/{eventId}", name="queryEventById", options = { "expose" = true })
      * @Method({"GET","HEAD"})
      */
     public function queryEventByIdAction(Request $request, $eventId)
