@@ -48,6 +48,7 @@ class EventsResource extends AbstractRestController
 
             $eventPage = $eventService->getAllEventsPaged($startOnDate);
 
+            /*
             $pagedResult = [
                 'data'   => $eventPage->getEvents(),
                 'paging' => [
@@ -63,8 +64,9 @@ class EventsResource extends AbstractRestController
                     )
                 ]
             ];
+            */
 
-            return new JsonResponse($pagedResult);
+            return new JsonResponse($eventPage);
         }
         catch(ServiceException $serviceException)
         {

@@ -2,15 +2,30 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\Event;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\SerializedName;
+
+/**
+ * @ExclusionPolicy("none")
+ */
 class EventPage
 {
-    /** @var array */
+    /**
+     * @var array
+     * @SerializedName("events")
+     */
     private $events;
 
-    /** @var \DateTime */
+    /**
+     * @var \DateTime
+     * @SerializedName("previousTimestamp")
+     */
     private $previousTimestamp;
 
-    /** @var \DateTime */
+    /**
+     * @var \DateTime
+     * @SerializedName("nextTimestamp")
+     */
     private $nextTimestamp;
 
     /**
