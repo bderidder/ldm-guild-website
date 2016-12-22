@@ -3,4 +3,12 @@
   ~ @link     https://github.com/bderidder/ldm-guild-website
   -->
 
-<p>View Event</p>
+<waiting-spinner show="!ctrl.eventDto"></waiting-spinner>
+
+<div ng-if="ctrl.eventDto">
+
+    <page-header title="{{ ctrl.eventDto.name }}" url="#/calendar"></page-header>
+
+    <p>Name: {{ ctrl.eventDto.name }}</p>
+
+</div>

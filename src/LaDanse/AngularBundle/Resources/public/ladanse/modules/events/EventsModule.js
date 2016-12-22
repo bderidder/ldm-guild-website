@@ -19,8 +19,12 @@ eventsModule.config(
                     abstract: true,
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/Events.html')
                 })
-                .state('events.home', {
+                .state('events.calendar', {
                     url: '',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/Calendar.html')
+                })
+                .state('events.event', {
+                    url: '/:eventId',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/EventsView.html')
                 });
         }

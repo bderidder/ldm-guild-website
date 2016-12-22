@@ -7,32 +7,32 @@
 
 var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
 
-eventsModule.directive('viewEvent', function()
+eventsModule.directive('calendar', function()
 {
     return {
         restrict: 'E',
-        controller: 'ViewEventCtrl',
+        controller: 'CalendarCtrl',
         controllerAs: 'ctrl',
         scope: {},
-        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/viewEvent/viewEvent.html')
+        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/calendar/calendar.html')
     };
 })
-.controller('ViewEventCtrl', function($scope, $rootScope, $stateParams, eventService)
+.controller('CalendarCtrl', function($scope, $rootScope, eventService)
 {
     var ctrl = this;
 
-    ctrl.eventId = $stateParams.eventId;
+    ctrl.eventsPage = null;
 
-    ctrl.eventDto = null;
-
-    var promise = eventService.getEventById(ctrl.eventId);
+    var promise = eventService.getEventsPage();
 
     promise.then(
-        function(eventDto)
+        function(eventsPage)
         {
             try
             {
-                ctrl.eventDto = eventDto;
+                ctrl.eventsPage = eventsPage;
+
+                console.log("ctrl.eventsPage - " + ctrl.eventsPage);
             }
             catch(e)
             {
@@ -41,7 +41,7 @@ eventsModule.directive('viewEvent', function()
         },
         function(reason)
         {
-            console.log('Failed to get event - ' + reason);
+            console.log('Failed to get events - ' + reason);
         }
     );
 });

@@ -1,6 +1,7 @@
-var AccountReference = (function ()
+DTO.Shared.AccountReference = (function ()
 {
-    function AccountReference() {
+    function AccountReference()
+    {
         this._id = -1;
     }
 
@@ -18,19 +19,27 @@ var AccountReference = (function ()
         }
     );
 
-    Object.defineProperty(AccountReference.prototype, "displayName",
+    Object.defineProperty(AccountReference.prototype, "name",
         {
             get: function ()
             {
-                return this._displayName;
+                return this._name;
             },
-            set: function (displayName)
+            set: function (name)
             {
-                this._displayName = displayName;
+                this._name = name;
             },
             enumerable: true
         }
     );
+
+    AccountReference.prototype.toJSON = function()
+    {
+        return {
+            "id": this.id,
+            "name": this.name
+        }
+    };
 
     return AccountReference;
 })();

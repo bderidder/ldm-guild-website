@@ -1,13 +1,13 @@
-var SignUpDTO = (function ()
+DTO.Events.SignUp = (function ()
 {
-    function SignUpDTO() {
+    function SignUp() {
         this._id = null;
         this._accountRef = null;
         this._type = null;
         this._roles = null;
     }
 
-    Object.defineProperty(SignUpDTO.prototype, "id",
+    Object.defineProperty(SignUp.prototype, "id",
         {
             get: function ()
             {
@@ -20,7 +20,7 @@ var SignUpDTO = (function ()
         }
     );
 
-    Object.defineProperty(SignUpDTO.prototype, "accountRef",
+    Object.defineProperty(SignUp.prototype, "accountRef",
         {
             get: function ()
             {
@@ -33,7 +33,7 @@ var SignUpDTO = (function ()
         }
     );
 
-    Object.defineProperty(SignUpDTO.prototype, "type",
+    Object.defineProperty(SignUp.prototype, "type",
         {
             get: function ()
             {
@@ -46,7 +46,7 @@ var SignUpDTO = (function ()
         }
     );
 
-    Object.defineProperty(SignUpDTO.prototype, "roles",
+    Object.defineProperty(SignUp.prototype, "roles",
         {
             get: function ()
             {
@@ -59,5 +59,15 @@ var SignUpDTO = (function ()
         }
     );
 
-    return SignUpDTO;
+    SignUp.prototype.toJSON = function()
+    {
+        return {
+            "id": this.id,
+            "type": this.type,
+            "roles": this.roles,
+            "accountRef": this.accountRef
+        }
+    };
+
+    return SignUp;
 })();

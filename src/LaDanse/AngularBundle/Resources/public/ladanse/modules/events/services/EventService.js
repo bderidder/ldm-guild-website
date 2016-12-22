@@ -10,7 +10,6 @@ eventsModule.service(
 
         /*
             Get Events (paged)
-            Get Event by Id
 
             Post Event
             Put Event
@@ -22,21 +21,58 @@ eventsModule.service(
             Delete Sign Up
          */
 
+        eventServiceInstance.getEventsPage = function()
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.get(Routing.generate('queryEvents'))
+                    .then(
+                        function (httpRestResponse)
+                        {
+                            var eventsPageDto = DTO.Events.EventsPageMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventsPageDto);
+                        },
+                        function (httpRestResponse)
+                        {
+                            reject('Failed to get events');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
         eventServiceInstance.getEventById = function(eventId)
         {
             var deferred = $q.defer();
 
-            $http.get(Routing.generate('queryEventById', { eventId: eventId }))
-                .then(
-                    function(httpRestResponse)
-                    {
-                        deferred.resolve(httpRestResponse.data);
-                    },
-                    function(httpRestResponse)
-                    {
-                        reject('Failed to get events');
-                    }
-                );
+            try
+            {
+                $http.get(Routing.generate('queryEventById', { eventId: eventId }))
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            reject('Failed to get events');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
 
             return deferred.promise;
         };

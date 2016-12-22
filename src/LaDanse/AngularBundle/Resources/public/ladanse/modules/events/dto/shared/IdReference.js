@@ -1,4 +1,4 @@
-var IdReference = (function ()
+DTO.Shared.IdReference = (function ()
 {
     function IdReference() {
         this._id = -1;
@@ -16,6 +16,13 @@ var IdReference = (function ()
             }
         }
     );
+
+    IdReference.prototype.toJSON = function()
+    {
+        return {
+            "id": this.id
+        }
+    };
 
     return IdReference;
 })();

@@ -1,6 +1,6 @@
-var EventDTO = (function ()
+DTO.Events.Event = (function ()
 {
-    function EventDTO() {
+    function Event() {
         this._id = null;
         this._name = null;
         this._description = null;
@@ -13,7 +13,7 @@ var EventDTO = (function ()
         this._signUps = null;
     }
 
-    Object.defineProperty(EventDTO.prototype, "id",
+    Object.defineProperty(Event.prototype, "id",
         {
             get: function ()
             {
@@ -27,7 +27,7 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "name",
+    Object.defineProperty(Event.prototype, "name",
         {
             get: function ()
             {
@@ -41,7 +41,7 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "description",
+    Object.defineProperty(Event.prototype, "description",
         {
             get: function ()
             {
@@ -55,21 +55,21 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "organiser",
+    Object.defineProperty(Event.prototype, "organiserRef",
         {
             get: function ()
             {
-                return this._organiser;
+                return this._organiserRef;
             },
-            set: function (organiser)
+            set: function (organiserRef)
             {
-                this._organiser = organiser;
+                this._organiserRef = organiserRef;
             },
             enumerable: true
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "inviteTime",
+    Object.defineProperty(Event.prototype, "inviteTime",
         {
             get: function ()
             {
@@ -83,7 +83,7 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "startTime",
+    Object.defineProperty(Event.prototype, "startTime",
         {
             get: function ()
             {
@@ -97,7 +97,7 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "endTime",
+    Object.defineProperty(Event.prototype, "endTime",
         {
             get: function ()
             {
@@ -111,7 +111,7 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "state",
+    Object.defineProperty(Event.prototype, "state",
         {
             get: function ()
             {
@@ -125,21 +125,21 @@ var EventDTO = (function ()
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "commentGroup",
+    Object.defineProperty(Event.prototype, "commentGroupRef",
         {
             get: function ()
             {
-                return this._commentGroup;
+                return this._commentGroupRef;
             },
-            set: function (commentGroup)
+            set: function (commentGroupRef)
             {
-                this._commentGroup = commentGroup;
+                this._commentGroupRef = commentGroupRef;
             },
             enumerable: true
         }
     );
 
-    Object.defineProperty(EventDTO.prototype, "signUps",
+    Object.defineProperty(Event.prototype, "signUps",
         {
             get: function ()
             {
@@ -153,5 +153,21 @@ var EventDTO = (function ()
         }
     );
 
-    return EventDTO;
+    Event.prototype.toJSON = function()
+    {
+        return {
+            "id": this.id,
+            "name": this.name,
+            "description": this.description,
+            "inviteTime": this.inviteTime.toISOString(),
+            "startTime": this.startTime.toISOString(),
+            "endTime": this.endTime.toISOString(),
+            "state": this.state,
+            "commentGroupRef": this.commentGroupRef,
+            "organiserRef": this.organiserRef,
+            "signUps": this.signUps
+        }
+    };
+
+    return Event;
 })();

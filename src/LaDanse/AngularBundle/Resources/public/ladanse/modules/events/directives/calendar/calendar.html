@@ -1,0 +1,23 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<page-header title="Calendar" url=""></page-header>
+
+<waiting-spinner show="!ctrl.eventsPage"></waiting-spinner>
+
+<div ng-if="ctrl.eventsPage">
+
+    <ul>
+        <li>Events
+            <ul>
+                <li ng-repeat="event in ctrl.eventsPage.events">
+                    <a ui-sref="events.event({eventId: event.id})">{{ event.name }}</a></li>
+            </ul>
+        </li>
+        <li>{{ ctrl.eventsPage.previousTimestamp }}</li>
+        <li>{{ ctrl.eventsPage.nextTimestamp }}</li>
+    </ul>
+
+</div>
