@@ -21,13 +21,18 @@ eventsModule.service(
             Delete Sign Up
          */
 
-        eventServiceInstance.getEventsPage = function()
+        eventServiceInstance.getEventsPage = function(startOn)
         {
+            if (startOn == undefined || startOn == null)
+            {
+                startOn = moment().format('YYYYMMDD');
+            }
+
             var deferred = $q.defer();
 
             try
             {
-                $http.get(Routing.generate('queryEvents'))
+                $http.get(Routing.generate('queryEvents', { 'startOn': startOn}))
                     .then(
                         function (httpRestResponse)
                         {
