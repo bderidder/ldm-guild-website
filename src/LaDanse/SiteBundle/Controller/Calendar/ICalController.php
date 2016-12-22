@@ -3,6 +3,7 @@
 namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use DateInterval;
+use DateTimeZone;
 use Eluceo\iCal\Component as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
@@ -181,8 +182,8 @@ class ICalController extends LaDanseController
         $vEvent = new iCal\Event();
         $vEvent->setSequence(floor(microtime(true)));
         $vEvent->setUniqueId($event->getId());
-        $vEvent->setDtStart($event->getInviteTime());
-        $vEvent->setDtEnd($event->getEndTime());
+        $vEvent->setDtStart($this->fixTimezone($event->getInviteTime()));
+        $vEvent->setDtEnd($this->fixTimezone($event->getEndTime()));
         $vEvent->setSummary($description);
         $vEvent->setDescription($this->createDescription($event));
 
@@ -256,6 +257,15 @@ class ICalController extends LaDanseController
         }
 
         return $description;
+    }
+
+    private function fixTimezone(\DateTime $date)
+    {
+        $fixedDate = clone $date;
+
+        $fixedDate->setTimezone(new DateTimeZone('Europe/Brussels'));
+
+        return $fixedDate;
     }
 
     private function loginAccount(Request $request, Account $account)
