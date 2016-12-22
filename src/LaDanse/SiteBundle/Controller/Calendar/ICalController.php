@@ -261,11 +261,7 @@ class ICalController extends LaDanseController
 
     private function fixTimezone(\DateTime $date)
     {
-        $fixedDate = clone $date;
-
-        $fixedDate->setTimezone(new DateTimeZone('Europe/Brussels'));
-
-        return $fixedDate;
+        return new \DateTime($date->format("Y-m-d H:i"), new DateTimeZone('Europe/Brussels'));
     }
 
     private function loginAccount(Request $request, Account $account)
