@@ -17,4 +17,35 @@ forumsModule.directive('waitingSpinner', function()
 })
 .controller('WaitingSpinnerCtrl', function($scope, $rootScope)
 {
+    this.waitTimePassed = false;
+    this.showSpinner = false;
+
+    var myThis = this;
+
+    this.checkShowSpinner = function()
+    {
+        this.showSpinner = this.waitTimePassed && $scope.show;
+    }
+
+    this.showUpdated = function()
+    {
+        myThis.checkShowSpinner();
+    };
+    $scope.$watch(
+        function ()
+        {
+            return $scope.show;
+        },
+        this.showUpdated
+    );
+
+    setTimeout(
+        function ()
+        {
+            this.waitTimePassed = true;
+
+            myThis.checkShowSpinner();
+        },
+        150
+    );
 });
