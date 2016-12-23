@@ -1,0 +1,74 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<div class="CommentContainer">
+
+    <style>
+
+        textarea.tooMuchText
+        {
+            background-color: lightcoral;
+        }
+
+        p.tooMuchText
+        {
+            color: red;
+        }
+
+    </style>
+
+    <!--
+    <div class="CommentsTitle">
+        <h4>{{ comments.length }} Comments</h4>
+    </div>
+    -->
+
+    <div ng-controller="AddCommentCtrl"
+         ng-init="initAddCommentCtrl(ctrl.groupId)"
+         ng-show="visible"
+         class="AddComment">
+        <div ng-controller="CommentEditorCtrl"
+             ng-init="initCommentEditorCtrl('', saveCommentEditor, cancelCommentEditor)"
+             comment-editor-template>
+        </div>
+    </div> <!-- AddCommentCtrl -->
+
+    <div ng-repeat="comment in ctrl.comments">
+
+        <div class="post" style="clear: both;"
+             ng-controller="CommentCtrl"
+             ng-init="initCommentCtrl(comment)"
+             ng-cloak
+             ng-switch="editing">
+
+            <div class="postContainer"
+                 ng-switch-when="false">
+                <div>
+                    <span class="poster">{{ comment.poster }}</span>
+                    <span class="message">{{ comment.message }}</span>
+                </div>
+                <div>
+                    <span popover="{{ comment.postDate | date: 'EEE MMM d, y' }} at {{ comment.postDate | date: 'H:mm' }}"
+                          popover-trigger="mouseenter"
+                          popover-append-to-body="true"
+                          popover-placement="bottom"
+                          am-time-ago="comment.postDate"
+                          class="postDate"></span>
+                    <span class="postEditLink" ng-if="isEditable()"
+                          ng-click="editClicked()"><i class="fa fa-pencil fa-1x"></i></span>
+                </div>
+            </div> <!-- ng-switch="editing" - ng-switch-when="false" -->
+
+            <div ng-controller="CommentEditorCtrl"
+                 ng-init="initCommentEditorCtrl(comment.message, saveCommentEditor, cancelCommentEditor)"
+                 ng-switch-when="true"
+                 comment-editor-template>
+            </div> <!-- ng-switch="editing" - ng-switch-when="true" -->
+
+        </div> <!-- CommentCtrl -->
+
+    </div> <!-- ng-repeat="comment in comments" -->
+
+</div>

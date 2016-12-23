@@ -4,6 +4,9 @@ commentsModule.controller('CommentCtrl', function ($scope, $rootScope, $http) {
 
     $scope.editing = false;
     $scope.editedValue = "";
+    $scope.currentEdited = {
+        controller: null
+    };
 
     $scope.initCommentCtrl = function(comment)
     {

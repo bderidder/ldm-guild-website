@@ -2,6 +2,7 @@
 
 namespace LaDanse\ServicesBundle\Service\DTO\Event;
 
+use DateTimeZone;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Service\DTO\MapperException;
@@ -23,9 +24,9 @@ class EventMapper
             ->setId($event->getId())
             ->setName($event->getName())
             ->setDescription($event->getDescription())
-            ->setInviteTime($event->getInviteTime())
-            ->setStartTime($event->getStartTime())
-            ->setEndTime($event->getEndTime())
+            ->setInviteTime(EventMapper::fixTimeZone($event->getInviteTime()))
+            ->setStartTime(EventMapper::fixTimeZone($event->getStartTime()))
+            ->setEndTime(EventMapper::fixTimeZone($event->getEndTime()))
             ->setState($event->getFiniteState())
             ->setOrganiser(
                 new DTO\Reference\AccountReference(
@@ -88,5 +89,10 @@ class EventMapper
         }
 
         return $dtoArray;
+    }
+
+    private static function fixTimeZone(\DateTime $date)
+    {
+        return new \DateTime($date->format("Y-m-d H:i"), new DateTimeZone('Europe/Brussels'));
     }
 }

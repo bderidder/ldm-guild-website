@@ -3,12 +3,300 @@
   ~ @link     https://github.com/bderidder/ldm-guild-website
   -->
 
-<waiting-spinner show="!ctrl.eventDto"></waiting-spinner>
+<waiting-spinner show="!ctrl.event"></waiting-spinner>
 
-<div ng-if="ctrl.eventDto">
+<div ng-if="ctrl.event">
 
-    <page-header title="{{ ctrl.eventDto.name }}" url="#/calendar"></page-header>
+    <page-header title="{{ ctrl.event.name }}" url="#/calendar"></page-header>
 
-    <p>Name: {{ ctrl.eventDto.name }}</p>
+    <!-- EVENT IN THE PAST -->
+    <div ng-if="!ctrl.event.isFuture && !ctrl.event.isCancelled"
+         class="alert alert-warning">
+        <div style="text-align: center; font-size: 150%">
+            This event is in the past! You can only comment.
+        </div>
+    </div>
+
+    <!-- EVENT PENDING -->
+    <div ng-if="ctrl.event.isPending && ctrl.event.isFuture"
+            class="alert alert-info event-state-container">
+        <div class="state-icon"><i class="fa fa-question fa-2x" aria-hidden="true"></i></div>
+        <div class="state-text">This event is still pending ...</div>
+    </div>
+
+    <!-- EVENT CONFIRMED -->
+    <div ng-if="ctrl.event.isConfirmed && ctrl.event.isFuture"
+         class="alert alert-success event-state-container">
+        <div class="state-icon"><i class="fa fa-check fa-2x" aria-hidden="true"></i></div>
+        <div class="state-text">This event has been confirmed!</div>
+    </div>
+
+    <!-- EVENT CANCELLED -->
+    <div ng-if="ctrl.event.isCancelled && ctrl.event.isFuture"
+         class="alert alert-danger event-state-container">
+        <div class="state-icon"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div>
+        <div class="state-text">This event has been cancelled. You can only comment.</div>
+    </div>
+
+    <!-- Render description, invite time ... in a horizontal table -->
+    <div class="container-fluid" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="event-label">Organised by {{ ctrl.event.organiser.displayName }}</p>
+                <p>{{ ctrl.event.description }}</p>
+            </div>
+
+            <div class="col-md-3">
+                <div class="event-label-container">
+                    <p class="event-label">When</p>
+                    <p>{{ ctrl.event.inviteTime | amDateFormat:'dddd D/M' }}, <span am-time-ago="ctrl.event.inviteTime"></span></p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">Invite Time</p>
+                    <p>{{ ctrl.event.inviteTime | amDateFormat:'HH:mm' }}</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">Start Time</p>
+                    <p>{{ ctrl.event.startTime | amDateFormat:'HH:mm' }}</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="event-label-container">
+                    <p class="event-label">End Time</p>
+                    <p>{{ ctrl.event.endTime | amDateFormat:'HH:mm' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="padding-top: 15px;">
+        <div class="row">
+            <div class="col-md-7">
+
+                <h4>Sign Ups</h4>
+
+                <div ng-if="ctrl.event.signUpCount > 0">
+
+                    <table class="table table-condensed" style="width: auto;">
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th class="center-td">Tank</th>
+                            <th class="center-td">Healer</th>
+                            <th class="center-td">Damage</th>
+                            <th><!-- placeholder for remove signup action --></th>
+                            <th><!-- placeholder for edit signup action --></th>
+                        </tr>
+
+                        <tr>
+                            <td class="center-td">({{ ctrl.event.willComeCount }}/{{ ctrl.event.mightComeCount }})</td>
+                            <td class="center-td">({{ ctrl.event.willComeTankCount }}/{{ ctrl.event.mightComeTankCount }})</td>
+                            <td class="center-td">({{ ctrl.event.willComeHealerCount }}/{{ ctrl.event.mightComeHealerCount }})</td>
+                            <td class="center-td">({{ ctrl.event.willComeDPSCount }}/{{ ctrl.event.mightComeDPSCount }})</td>
+                            <td><!-- remove --></td>
+                            <td><!-- edit --></td>
+                        </tr>
+
+                        <!-- render 'will come' sign ups, if any -->
+                        <tr ng-repeat="signUp in ctrl.event.willComeSignUps"
+                            ng-class="{'active': ctrl.event.currentUserSignedUp}">
+                            <td>{{ signUp.accountRef.name }}</td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForTank"
+                                   class="signUp fa fa-times fa-1x text-success"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForHealer"
+                                   class="signUp fa fa-times fa-1x text-success"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForDPS"
+                                   class="signUp fa fa-times fa-1x text-success"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                        id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                    <i class="fa fa-trash-o fa-1x"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
+                                        href="{{ path('editSignUp', {'id': event.id}) }}">
+                                    <i class="fa fa-pencil fa-1x"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- render 'might come' sign ups, if any -->
+                        <tr ng-repeat="signUp in ctrl.event.mightComeSignUps"
+                            ng-class="{'active': ctrl.event.currentUserSignedUp}">
+                            <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForTank"
+                                   class="signUp fa fa-question fa-1x text-warning"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForHealer"
+                                   class="signUp fa fa-question fa-1x text-warning"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td class="center-td">
+                                <i ng-if="signUp.isForDPS"
+                                   class="signUp fa fa-question fa-1x text-warning"
+                                   data-url="{{ path('listClaims',
+			                                    {'eventId': event.id,
+			                                     'accountId': signUp.account.id}) }}"></i>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                   id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                    <i class="fa fa-trash-o fa-1x"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
+                                   href="{{ path('editSignUp', {'id': event.id}) }}">
+                                    <i class="fa fa-pencil fa-1x"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- render 'absence' sign ups, if any -->
+                        <tr ng-repeat="signUp in ctrl.event.absenceSignUps"
+                            ng-class="{'active': ctrl.event.currentUserSignedUp}">
+                            <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
+                            <td class="center-td" colspan="3">
+                                <i class="text-danger signUp cursor-default"
+                                   data-url="{{ path('listClaims',
+                                          {'eventId': event.id,
+                                           'accountId': signUp.account.id}) }}">can't come</i>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                   id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                    <i class="fa fa-trash-o fa-1x"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
+                                   href="{{ path('editSignUp', {'id': event.id}) }}">
+                                    <i class="fa fa-pencil fa-1x"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <!-- if the currently logged in user is not signed up yet, invite to do so -->
+                    <div ng-if="!ctrl.event.currentUserSignedUp && ctrl.event.isFuture && !ctrl.event.isCancelled">
+                        <p>You have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
+
+                        <p>
+                            <a class="btn btn-success" href="{{ path('createSignUp', {'eventId': event.id}) }}">sign up</a>
+                            <a class="btn btn-warning" href="{{ path('createAbsence', {'eventId': event.id}) }}">can't come</a>
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- no sign ups, in the future and not cancelled, invite the user to make one or inform about absence -->
+                <div ng-if="ctrl.event.signUps.length == 0 && ctrl.event.isFuture && !ctrl.event.isCancelled">
+                    <p>There are no sign ups yet. Be the first to sign up or inform us of your absence.</p>
+
+                    <p>
+                        <a class="btn btn-success" href="{{ path('createSignUp', {'eventId': event.id}) }}">sign up</a>
+                        <a class="btn btn-warning" href="{{ path('createAbsence', {'eventId': event.id}) }}">can't come</a>
+                    </p>
+                </div>
+
+                <!-- no sign ups, in the future but event has been cancelled -->
+                <div ng-if="ctrl.event.signUps.length == 0 && ctrl.event.isFuture && ctrl.event.isCancelled">
+                    <p>There were no sign ups.</p>
+                </div>
+
+                <!-- no sign ups and in the past -->
+                <div ng-if="ctrl.event.signUps.length == 0 && !ctrl.event.isFuture">
+                    <p>There were no sign ups.</p>
+                </div>
+
+                <!-- if the currently logged in user is the organiser, edit and delete options are shown -->
+                <div ng-if="ctrl.event.currentUserIsOrganiser && (ctrl.event.isPending || ctrl.event.isConfirmed)"
+                        style="margin-top: 50px;">
+                    <h4>Event Management</h4>
+                    <div style="float: left;">
+                        <p>
+                            <a ng-if="ctrl.event.isPending || ctrl.event.isConfirmed"
+                               class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
+                            <a ng-if="ctrl.event.isPending"
+                               class="btn btn-success" href="{{ path('confirmEvent', {'id': event.id}) }}">confirm event</a>
+                            <a ng-if="ctrl.event.isPending"
+                               class="btn btn-warning" href="{{ path('cancelEvent', {'id': event.id}) }}">cancel event</a>
+                        </p>
+                    </div>
+                    <div style="float: right;">
+                        <p>
+                            <a ng-if="ctrl.event.isPending"
+                               id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-5">
+
+                <comment-group comment-group-id="ctrl.event.commentGroupRef.id"></comment-group>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="faq">
+
+        <p class="header">Frequently Asked Questions</p>
+
+        <p class="question">What does 'Pending', 'Confirmed' and 'Cancelled' mean?</p>
+
+        <p class="answer">
+            An event goes through different states to help our members better manage their online time.
+        </p>
+        <p class="answer">
+            When an event is created, it enters the <strong>Pending</strong> state. This means that we allow people
+            time to sign up or inform us of their absence. A short time before the event is supposed to take place,
+            typically 4 - 12 hours up front, the event organiser decides if the event will take place or not.
+            If sufficient people signed up, the event organiser will <strong>Confirm</strong> the event, otherwise
+            (s)he will <strong>Cancel</strong> the event.
+        </p>
+        <p class="answer">
+            This is to avoid having people turn up for an event that will most likely not take place.
+        </p>
+
+        <p class="question">Can I be notified when an event is confirmed or cancelled?</p>
+
+        <p class="answer">
+            Yes, you can receive an email when an event you signed up for is confirmed or cancelled. You can
+            <a href="{{ path('editNotifications') }}">configure your notification settings here</a>.
+        </p>
+
+    </div>
 
 </div>

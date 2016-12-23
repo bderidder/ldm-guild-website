@@ -42,7 +42,7 @@ eventsModule.service(
                         },
                         function (httpRestResponse)
                         {
-                            reject('Failed to get events');
+                            deferred.reject('Failed to get events');
                         }
                     );
             }

@@ -23,25 +23,35 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.eventId = $stateParams.eventId;
 
-    ctrl.eventDto = null;
+    ctrl.event = null;
 
-    var promise = eventService.getEventById(ctrl.eventId);
+    ctrl.init = function()
+    {
+        var promise = eventService.getEventById(ctrl.eventId);
 
-    promise.then(
-        function(eventDto)
-        {
-            try
+        promise.then(
+            function(eventDto)
             {
-                ctrl.eventDto = eventDto;
-            }
-            catch(e)
+                try
+                {
+                    ctrl.setupEvent(eventDto)
+                }
+                catch(e)
+                {
+                    console.log(e);
+                }
+            },
+            function(reason)
             {
-                console.log(e);
+                console.log('Failed to get event - ' + reason);
             }
-        },
-        function(reason)
-        {
-            console.log('Failed to get event - ' + reason);
-        }
-    );
+        );
+    };
+
+    ctrl.setupEvent = function(eventDto)
+    {
+        ctrl.event = new EventModel(eventDto);
+    };
+
+    ctrl.init();
 });

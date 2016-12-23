@@ -32,6 +32,8 @@ commentsModule.controller('CommentEditorCtrl', function ($scope, $rootScope, $ht
 
     $scope.enterPressed = function()
     {
+        console.log("Enter Pressed in Comment Editor");
+
         if (($scope.message.trim().length < 5) || ($scope.message.trim().length > $scope.maxLength) )
         {
             return;

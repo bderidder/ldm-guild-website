@@ -5,8 +5,10 @@ commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http)
     $scope.message = "";
     $scope.visible = true;
 
-    $scope.initAddCommentCtrl = function()
+    $scope.initAddCommentCtrl = function(groupId)
     {
+        $scope.groupId = groupId;
+
         var unbindStarted =
             $rootScope.$on('CommentsApp.EditComment.Started', $scope.showEditor);
         var unbindCancelled =
@@ -41,20 +43,26 @@ commentsModule.controller('AddCommentCtrl', function ($scope, $rootScope, $http)
 
     $scope.saveCommentEditor = function(newValue)
     {
+        console.log("Trying to save new comment");
+
         $http.post(
-            '../services/comment/groups/' + $scope.groupId + "/comments",
+            '/services/comment/groups/' + $scope.groupId + "/comments",
             {
                 message: newValue.trim()
             })
             .then(
-                function()
+                function(httpRestResponse)
                 {
+                    console.log("Succeeded in saving commentt");
+
                     $rootScope.$broadcast('CommentsApp.AddComment.Succeeded');
                     $scope.message = "";
-                    $scope.refreshPosts();
+                    //$scope.refreshPosts();
                 },
-                function()
+                function(httpRestResponse)
                 {
+                    console.log("Failed in saving commentt");
+
                     $rootScope.$broadcast('CommentsApp.AddComment.Failed');
                 }
             );
