@@ -6,6 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Service\GameData\Command;
 
+use Doctrine\ORM\EntityRepository;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity as Entity;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
@@ -152,6 +153,7 @@ class PostGuildCommand extends AbstractCommand
         }
         */
 
+        /** @var EntityRepository $realmRepo */
         $realmRepo = $em->getRepository(Entity\GameData\Realm::REPOSITORY);
 
         $realm = $realmRepo->find($this->getPatchGuild()->getRealmId());
