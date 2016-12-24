@@ -9,17 +9,17 @@
     "packages": [
         {
             "name": "coderspotting/toast-message",
-            "version": "1.0",
+            "version": "1.1",
             "target-dir": "CoderSpotting/Bundle/ToastMessageBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CoderSpotting/toast-message.git",
-                "reference": "06abd857241a84bc26e24509eb9d4cfe44b39afa"
+                "reference": "f851e3639d360f2a90ad7feeeaa23372fc8fe585"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CoderSpotting/toast-message/zipball/06abd857241a84bc26e24509eb9d4cfe44b39afa",
-                "reference": "06abd857241a84bc26e24509eb9d4cfe44b39afa",
+                "url": "https://api.github.com/repos/CoderSpotting/toast-message/zipball/f851e3639d360f2a90ad7feeeaa23372fc8fe585",
+                "reference": "f851e3639d360f2a90ad7feeeaa23372fc8fe585",
                 "shasum": ""
             },
             "require": {
@@ -48,13 +48,13 @@
                     "homepage": "https://github.com/CoderSpotting/toast-message/contributors"
                 }
             ],
-            "description": "Easy integration of alertify.js in Symfony",
+            "description": "Easy integration of AlertifyJS.com in Symfony",
             "keywords": [
                 "alertify",
                 "extra form",
                 "form"
             ],
-            "time": "2016-04-05 19:38:43"
+            "time": "2016-12-24 10:03:21"
         },
         {
             "name": "craue/formflow-bundle",
