@@ -25,6 +25,34 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.event = null;
 
+    ctrl.removeSignUp = function()
+    {
+        alertify.confirm(
+            'Remove Sign Up',
+            'This will remove your sign up, are you sure?',
+            function()
+            {
+                alertify.success('Ok')
+            },
+            function()
+            {
+                alertify.error('Cancel')
+            }
+        );
+    };
+
+    ctrl.accountLinkClicked = function(displayName)
+    {
+        var searchCriteria = new SearchCriteria();
+        searchCriteria.setClaimingMember(displayName);
+
+        var jsonAsString = JSON.stringify(searchCriteria);
+
+        var base64Json = btoa(jsonAsString);
+
+        document.location.href = '/app/roster#/roster?criteria=' + base64Json;
+    }
+
     ctrl.init = function()
     {
         var promise = eventService.getEventById(ctrl.eventId);

@@ -103,7 +103,7 @@
                         <!-- render 'will come' sign ups, if any -->
                         <tr ng-repeat="signUp in ctrl.event.willComeSignUps"
                             ng-class="{'active': ctrl.event.currentUserSignedUp}">
-                            <td>{{ signUp.accountRef.name }}</td>
+                            <td><a ng-click="ctrl.accountLinkClicked(signUp.accountRef.name)" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForTank"
                                    class="signUp fa fa-times fa-1x text-success"
@@ -127,7 +127,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
-                                        id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                   ng-click="ctrl.removeSignUp()" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
                             </td>
@@ -142,7 +142,7 @@
                         <!-- render 'might come' sign ups, if any -->
                         <tr ng-repeat="signUp in ctrl.event.mightComeSignUps"
                             ng-class="{'active': ctrl.event.currentUserSignedUp}">
-                            <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
+                            <td><a ng-click="ctrl.accountLinkClicked(signUp.accountRef.name)" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForTank"
                                    class="signUp fa fa-question fa-1x text-warning"
@@ -166,7 +166,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
-                                   id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                   ng-click="ctrl.removeSignUp()" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
                             </td>
@@ -181,7 +181,7 @@
                         <!-- render 'absence' sign ups, if any -->
                         <tr ng-repeat="signUp in ctrl.event.absenceSignUps"
                             ng-class="{'active': ctrl.event.currentUserSignedUp}">
-                            <td><a onclick="accountLinkClicked('{{ signUp.account.displayName }}')" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
+                            <td><a ng-click="ctrl.accountLinkClicked(signUp.accountRef.name)" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
                             <td class="center-td" colspan="3">
                                 <i class="text-danger signUp cursor-default"
                                    data-url="{{ path('listClaims',
