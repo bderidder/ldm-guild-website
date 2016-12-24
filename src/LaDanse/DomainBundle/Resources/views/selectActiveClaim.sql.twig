@@ -1,7 +1,0 @@
-SELECT cc, ch, r
-FROM LaDanse\DomainBundle\Entity\Claim cc
-	JOIN cc.character ch
-	LEFT JOIN cc.roles r
-WHERE
-	cc.id = :claimId
-ORDER BY ch.name ASC

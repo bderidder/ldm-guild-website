@@ -1,7 +1,0 @@
-SELECT cc, r
-FROM LaDanse\DomainBundle\Entity\Claim cc
-	JOIN cc.roles r
-WHERE
-	cc.endTime IS NULL
-	AND
-	cc.character = :character
