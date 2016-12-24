@@ -53,8 +53,6 @@ rosterModule.directive('rosterView', function()
 
         var restUrl = Routing.generate('getCharactersByCriteria');
 
-        console.log("Starting search on server");
-
         $http.post(restUrl, searchCriteria)
             .then(
                 function(httpRestResponse)
