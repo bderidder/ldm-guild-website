@@ -21,11 +21,6 @@
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
-
     {% stylesheets filter='cssrewrite'
         'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
         'bundles/ladansesite/css/*'
@@ -33,6 +28,11 @@
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}" />
@@ -149,13 +149,23 @@
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <!-- JavaScript -->
-    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
 
     <!--CDN link for the latest TweenMax-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js"></script>
+
+    <script type="text/javascript">
+        alertify.defaults.transition = "zoom";
+
+        alertify.defaults.theme.ok = "btn btn-primary";
+        alertify.defaults.theme.cancel = "btn btn-danger";
+        alertify.defaults.theme.input = "form-control";
+
+        alertify.defaults.notifier.position = "top-right";
+    </script>
 
     <script type="text/javascript">
 
@@ -174,7 +184,6 @@
     </script>
 
 {% javascripts
-    '@CoderSpottingToastMessageBundle/Resources/public/js/*'
     '@LaDanseBootstrapBundle/Resources/public/js/*'
     '@LaDanseSiteBundle/Resources/public/js/*'
 %}
