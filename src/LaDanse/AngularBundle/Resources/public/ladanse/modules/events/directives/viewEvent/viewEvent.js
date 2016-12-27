@@ -25,6 +25,10 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.event = null;
 
+    ctrl.editSignUpClicked = function(signUpId)
+    {
+    };
+
     ctrl.removeSignUpClicked = function(signUpId)
     {
         alertify.confirm(
@@ -59,7 +63,12 @@ eventsModule.directive('viewEvent', function()
         var base64Json = btoa(jsonAsString);
 
         document.location.href = '/app/roster#/roster?criteria=' + base64Json;
-    }
+    };
+
+    ctrl.setupEvent = function(eventDto)
+    {
+        ctrl.event = new EventModel(eventDto);
+    };
 
     ctrl.init = function()
     {
@@ -82,11 +91,6 @@ eventsModule.directive('viewEvent', function()
                 console.log('Failed to get event - ' + reason);
             }
         );
-    };
-
-    ctrl.setupEvent = function(eventDto)
-    {
-        ctrl.event = new EventModel(eventDto);
     };
 
     ctrl.init();
