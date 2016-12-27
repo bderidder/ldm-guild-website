@@ -5,20 +5,41 @@
   "homepage": "https://github.com/CoderSpotting/ladanse-angular",
   "license": "MIT",
   "private": true,
-  "dependencies": {
-    "angular": "~1.5.0",
-    "angular-route": "~1.5.0",
-    "angular-loader": "~1.5.0",
-    "angular-mocks": "~1.5.0",
+
+  "dependencies":
+  {
     "html5-boilerplate": "~5.2.0",
-    "angulargrid": "0.6.0",
-    "jquery": ">=2.2.0",
-    "jquery.scrollbar": "0.2.10",
-    "bootstrap": "^3.3.6",
+
+    "bootstrap":    "^3.3.6",
     "font-awesome": "^4.6.3",
+
+    "base64": "^1.0.0",
+
+    "jquery":           ">=2.2.0",
+    "jquery-ui":        "1.11.0",
+    "jquery.scrollbar": "0.2.10",
+
+    "moment": "2.10.6",
+    "qtip2":  "2.2.1",
+
+    "angular":           "~1.6.1",
+    "angular-route":     "~1.6.1",
+    "angular-resource":  "^1.6.1",
+    "angular-loader":    "~1.6.1",
+    "angular-mocks":     "~1.6.1",
+    "angular-animate":   "^1.6.1",
+    "angular-sanitize":  "^1.6.1",
+    "angular-moment":    "^1.0.0",
     "angular-ui-router": "1.0.0-beta.3",
-    "ng-dialog": "^0.6.4",
-    "angular-ui-select": "^0.19.6",
-    "base64": "^1.0.0"
+    "angular-elastic":   "^2.5.1",
+    "angular-inview":    "^1.5.7",
+    "angulargrid":       "0.6.0",
+    "textAngular":       "^1.5.0",
+    "angular-ui-select": "^0.19.6"
+
   }
 }
+
+
+
+

@@ -133,7 +133,6 @@ sp_bower:
   assetic:
     nest_dependencies: false
   bundles:
-    LaDanseSiteBundle: ~
     LaDanseAngularBundle: ~
 
 nelmio_api_doc: ~
