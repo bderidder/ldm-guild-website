@@ -112,5 +112,32 @@ eventsModule.service(
             return deferred.promise;
         };
 
+        eventServiceInstance.listClaims = function(eventId, accountId)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.get(Routing.generate('listClaims', { eventId: eventId, accountId: accountId }))
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            deferred.resolve(httpRestResponse.data);
+                        },
+                        function(httpRestResponse)
+                        {
+                            deferred.reject('Failed to load claims');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+                deferred.reject('Failed to load claims');
+            }
+
+            return deferred.promise;
+        };
+
         return eventServiceInstance;
     });

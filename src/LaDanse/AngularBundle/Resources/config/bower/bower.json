@@ -15,9 +15,8 @@
 
     "base64": "^1.0.0",
 
-    "jquery":           ">=2.2.0",
-    "jquery-ui":        "1.11.0",
-    "jquery.scrollbar": "0.2.10",
+    "jquery":    ">=2.2.0",
+    "jquery-ui": "1.11.0",
 
     "moment": "2.10.6",
     "qtip2":  "2.2.1",

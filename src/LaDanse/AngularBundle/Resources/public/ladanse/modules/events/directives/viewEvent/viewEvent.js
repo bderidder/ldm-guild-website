@@ -25,6 +25,13 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.event = null;
 
+    ctrl.qtipContent = function(event, api)
+    {
+        console.log("qtipContent")
+
+        return 'Loading...'; // Set some initial text
+    };
+
     ctrl.removeSignUp = function(signUpId)
     {
         console.log("Remove Sign Up - " + signUpId);

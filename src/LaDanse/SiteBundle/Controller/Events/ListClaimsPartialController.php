@@ -43,7 +43,7 @@ class ListClaimsPartialController extends LaDanseController
      *
      * @return Response
      *
-     * @Route("/{eventId}/claims/{accountId}", name="listClaims")
+     * @Route("/{eventId}/claims/{accountId}", name="listClaims", options = { "expose" = true })
      */
     public function listAction($eventId, $accountId)
     {

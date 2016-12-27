@@ -107,23 +107,17 @@
                             <td class="center-td">
                                 <i ng-if="signUp.isForTank"
                                    class="signUp fa fa-times fa-1x text-success"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForHealer"
                                    class="signUp fa fa-times fa-1x text-success"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForDPS"
                                    class="signUp fa fa-times fa-1x text-success"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
@@ -146,23 +140,17 @@
                             <td class="center-td">
                                 <i ng-if="signUp.isForTank"
                                    class="signUp fa fa-question fa-1x text-warning"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForHealer"
                                    class="signUp fa fa-question fa-1x text-warning"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td class="center-td">
                                 <i ng-if="signUp.isForDPS"
                                    class="signUp fa fa-question fa-1x text-warning"
-                                   data-url="{{ path('listClaims',
-			                                    {'eventId': event.id,
-			                                     'accountId': signUp.account.id}) }}"></i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
@@ -184,9 +172,7 @@
                             <td><a ng-click="ctrl.accountLinkClicked(signUp.accountRef.name)" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
                             <td class="center-td" colspan="3">
                                 <i class="text-danger signUp cursor-default"
-                                   data-url="{{ path('listClaims',
-                                          {'eventId': event.id,
-                                           'accountId': signUp.account.id}) }}">can't come</i>
+                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id">can't come</i>
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
