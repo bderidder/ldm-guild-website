@@ -25,19 +25,29 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.event = null;
 
-    ctrl.removeSignUp = function()
+    ctrl.removeSignUp = function(signUpId)
     {
+        console.log("Remove Sign Up - " + signUpId);
+
         alertify.confirm(
             'Remove Sign Up',
             'This will remove your sign up, are you sure?',
             function()
             {
-                alertify.success('Ok')
+                eventService.deleteSignUp(ctrl.eventId, signUpId)
+                    .then(
+                        function(eventDto)
+                        {
+                            ctrl.setupEvent(eventDto);
+                            alertify.success('Sign up deleted')
+                        },
+                        function(eventDto)
+                        {
+                            alertify.error('Failed to delete sign up')
+                        }
+                    );
             },
-            function()
-            {
-                alertify.error('Cancel')
-            }
+            function() {} // do nothing on cancel
         );
     };
 

@@ -17,6 +17,11 @@ DTO.Events.SignUpMapper =
 
     "mapArray": function(signUpObjectArray)
     {
+        if (!signUpObjectArray)
+        {
+            return [];
+        }
+
         var result = [];
 
         var arrayLength = signUpObjectArray.length;

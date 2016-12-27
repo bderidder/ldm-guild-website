@@ -9,8 +9,6 @@ eventsModule.service(
         var eventServiceInstance = {};
 
         /*
-            Get Events (paged)
-
             Post Event
             Put Event
             Put Event State
@@ -42,6 +40,7 @@ eventsModule.service(
                         },
                         function (httpRestResponse)
                         {
+                            console.log(httpRestResponse.data);
                             deferred.reject('Failed to get events');
                         }
                     );
@@ -70,13 +69,44 @@ eventsModule.service(
                         },
                         function(httpRestResponse)
                         {
-                            reject('Failed to get events');
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to get events');
                         }
                     );
             }
             catch (e)
             {
                 console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
+        eventServiceInstance.deleteSignUp = function(eventId, signUpId)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.delete(Routing.generate('deleteSignUp', { eventId: eventId, signUpId: signUpId }))
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to delete given sign up');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+                deferred.reject('Failed to delete given sign up');
             }
 
             return deferred.promise;

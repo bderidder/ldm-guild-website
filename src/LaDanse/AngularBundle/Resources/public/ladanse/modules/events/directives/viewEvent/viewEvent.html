@@ -127,7 +127,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
-                                   ng-click="ctrl.removeSignUp()" href="javascript:void(0);">
+                                   ng-click="ctrl.removeSignUp(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
                             </td>
@@ -166,7 +166,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
-                                   ng-click="ctrl.removeSignUp()" href="javascript:void(0);">
+                                   ng-click="ctrl.removeSignUp(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
                             </td>
@@ -190,7 +190,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
-                                   id="removeWillComeSignUp" href="{{ path('removeSignUp', {'eventId': event.id}) }}">
+                                   ng-click="ctrl.removeSignUp(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
                             </td>
@@ -217,7 +217,7 @@
                 </div>
 
                 <!-- no sign ups, in the future and not cancelled, invite the user to make one or inform about absence -->
-                <div ng-if="ctrl.event.signUps.length == 0 && ctrl.event.isFuture && !ctrl.event.isCancelled">
+                <div ng-if="ctrl.event.signUpCount == 0 && ctrl.event.isFuture && !ctrl.event.isCancelled">
                     <p>There are no sign ups yet. Be the first to sign up or inform us of your absence.</p>
 
                     <p>
@@ -227,12 +227,12 @@
                 </div>
 
                 <!-- no sign ups, in the future but event has been cancelled -->
-                <div ng-if="ctrl.event.signUps.length == 0 && ctrl.event.isFuture && ctrl.event.isCancelled">
+                <div ng-if="ctrl.event.signUpCount == 0 && ctrl.event.isFuture && ctrl.event.isCancelled">
                     <p>There were no sign ups.</p>
                 </div>
 
                 <!-- no sign ups and in the past -->
-                <div ng-if="ctrl.event.signUps.length == 0 && !ctrl.event.isFuture">
+                <div ng-if="ctrl.event.signUpCount == 0 && !ctrl.event.isFuture">
                     <p>There were no sign ups.</p>
                 </div>
 

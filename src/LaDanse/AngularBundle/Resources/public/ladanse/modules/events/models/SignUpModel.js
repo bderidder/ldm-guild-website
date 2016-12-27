@@ -14,6 +14,15 @@ var SignUpModel = (function ()
         this._init();
     }
 
+    Object.defineProperty(SignUpModel.prototype, "id",
+        {
+            get: function ()
+            {
+                return this._signUpDto.id;
+            }
+        }
+    );
+
     Object.defineProperty(SignUpModel.prototype, "accountRef",
         {
             get: function ()
