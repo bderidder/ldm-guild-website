@@ -82,6 +82,33 @@ eventsModule.service(
             return deferred.promise;
         };
 
+        eventServiceInstance.deleteEvent = function(eventId)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.delete(Routing.generate('deleteEvent', { eventId: eventId }))
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            deferred.resolve();
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to delete event');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
         eventServiceInstance.deleteSignUp = function(eventId, signUpId)
         {
             var deferred = $q.defer();

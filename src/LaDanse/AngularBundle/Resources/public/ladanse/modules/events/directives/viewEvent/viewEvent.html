@@ -239,7 +239,8 @@
                     <div style="float: right;">
                         <p>
                             <a ng-if="ctrl.event.isPending"
-                               id="removeEvent" class="btn btn-danger" href="{{ path('removeEvent', {'id': event.id}) }}">delete event</a>
+                               id="removeEvent" class="btn btn-danger"
+                               ng-click="ctrl.removeEventClicked()" href="javascript:void(0);">delete event</a>
                         </p>
                     </div>
                 </div>

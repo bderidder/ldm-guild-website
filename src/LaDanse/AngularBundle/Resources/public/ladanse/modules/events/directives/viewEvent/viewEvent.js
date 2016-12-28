@@ -17,13 +17,38 @@ eventsModule.directive('viewEvent', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/viewEvent/viewEvent.html')
     };
 })
-.controller('ViewEventCtrl', function($scope, $rootScope, $stateParams, eventService)
+.controller('ViewEventCtrl', function($scope, $rootScope, $stateParams, $state, eventService)
 {
     var ctrl = this;
 
     ctrl.eventId = $stateParams.eventId;
 
     ctrl.event = null;
+
+    ctrl.removeEventClicked = function(signUpId)
+    {
+        alertify.confirm(
+            'Delete Event',
+            'This will delete the event, are you sure?',
+            function()
+            {
+                eventService.deleteEvent(ctrl.eventId)
+                    .then(
+                        function(eventDto)
+                        {
+                            alertify.success('Event deleted');
+
+                            $state.go('events.calendar');
+                        },
+                        function(eventDto)
+                        {
+                            alertify.error('Failed to delete event');
+                        }
+                    );
+            },
+            function() {} // do nothing on cancel
+        );
+    };
 
     ctrl.editSignUpClicked = function(signUpId)
     {
