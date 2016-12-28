@@ -1,4 +1,0 @@
-AngularRouting:
-    resource: "@LaDanseAngularBundle/Controller"
-    type:     annotation
-    prefix:   /angular
