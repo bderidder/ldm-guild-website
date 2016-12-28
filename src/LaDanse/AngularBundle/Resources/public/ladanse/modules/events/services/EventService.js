@@ -12,11 +12,9 @@ eventsModule.service(
             Post Event
             Put Event
             Put Event State
-            Delete Event
 
             Post Sign Up
             Put Sign Up
-            Delete Sign Up
          */
 
         eventServiceInstance.getEventsPage = function(startOn)
@@ -98,6 +96,48 @@ eventsModule.service(
                         {
                             console.log(httpRestResponse.data);
                             deferred.reject('Failed to delete event');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
+        eventServiceInstance.confirmEvent = function(eventId)
+        {
+            return this.updateEventState(eventId, "Confirmed");
+        };
+
+        eventServiceInstance.cancelEvent = function(eventId)
+        {
+            return this.updateEventState(eventId, "Cancelled");
+        };
+
+        eventServiceInstance.updateEventState = function(eventId, newState)
+        {
+            var deferred = $q.defer();
+
+            var putEventState = new DTO.Events.PutEventState();
+            putEventState.state = newState;
+
+            try
+            {
+                $http.put(Routing.generate('putEventState', { eventId: eventId }), putEventState)
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to update event state to - ' + newState);
                         }
                     );
             }

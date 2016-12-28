@@ -231,9 +231,11 @@
                             <a ng-if="ctrl.event.isPending || ctrl.event.isConfirmed"
                                class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
                             <a ng-if="ctrl.event.isPending"
-                               class="btn btn-success" href="{{ path('confirmEvent', {'id': event.id}) }}">confirm event</a>
+                               class="btn btn-success"
+                               ng-click="ctrl.confirmEventClicked()" href="javascript:void(0);">confirm event</a>
                             <a ng-if="ctrl.event.isPending"
-                               class="btn btn-warning" href="{{ path('cancelEvent', {'id': event.id}) }}">cancel event</a>
+                               class="btn btn-warning"
+                               ng-click="ctrl.cancelEventClicked()" href="javascript:void(0);">cancel event</a>
                         </p>
                     </div>
                     <div style="float: right;">

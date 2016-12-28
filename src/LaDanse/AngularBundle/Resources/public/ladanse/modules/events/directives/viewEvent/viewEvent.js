@@ -25,6 +25,54 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.event = null;
 
+    ctrl.confirmEventClicked = function()
+    {
+        alertify.confirm(
+            'Confirm Event',
+            'This will confirm the event, are you sure?',
+            function()
+            {
+                eventService.confirmEvent(ctrl.eventId)
+                    .then(
+                        function(eventDto)
+                        {
+                            ctrl.setupEvent(eventDto);
+                            alertify.success('Event confirmed');
+                        },
+                        function(eventDto)
+                        {
+                            alertify.error('Failed to confirm event');
+                        }
+                    );
+            },
+            function() {} // do nothing on cancel
+        );
+    };
+
+    ctrl.cancelEventClicked = function()
+    {
+        alertify.confirm(
+            'Cancel Event',
+            'This will cancel the event, are you sure?',
+            function()
+            {
+                eventService.cancelEvent(ctrl.eventId)
+                    .then(
+                        function(eventDto)
+                        {
+                            ctrl.setupEvent(eventDto);
+                            alertify.success('Event cancelled');
+                        },
+                        function(eventDto)
+                        {
+                            alertify.error('Failed to cancel event');
+                        }
+                    );
+            },
+            function() {} // do nothing on cancel
+        );
+    };
+
     ctrl.removeEventClicked = function(signUpId)
     {
         alertify.confirm(

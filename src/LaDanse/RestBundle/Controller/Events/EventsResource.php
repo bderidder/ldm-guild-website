@@ -48,24 +48,6 @@ class EventsResource extends AbstractRestController
 
             $eventPage = $eventService->getAllEventsPaged($startOnDate);
 
-            /*
-            $pagedResult = [
-                'data'   => $eventPage->getEvents(),
-                'paging' => [
-                    'previous' => $this->generateUrl(
-                        'queryEvents',
-                        ['startOn' => $eventPage->getPreviousTimestamp()->format('Ymd')],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    ),
-                    'next'     => $this->generateUrl(
-                        'queryEvents',
-                        ['startOn' => $eventPage->getNextTimestamp()->format('Ymd')],
-                        UrlGeneratorInterface::ABSOLUTE_URL
-                    )
-                ]
-            ];
-            */
-
             return new JsonResponse($eventPage);
         }
         catch(ServiceException $serviceException)
