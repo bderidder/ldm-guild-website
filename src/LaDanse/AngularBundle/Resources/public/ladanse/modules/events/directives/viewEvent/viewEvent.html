@@ -195,8 +195,8 @@
                         <p>You have forgotten to sign up for this event! Please sign up or inform us of your absence</a>.</p>
 
                         <p>
-                            <a class="btn btn-success" href="{{ path('createSignUp', {'eventId': event.id}) }}">sign up</a>
-                            <a class="btn btn-warning" href="{{ path('createAbsence', {'eventId': event.id}) }}">can't come</a>
+                            <a class="btn btn-success" ui-sref="events.event.signup.create({eventId: ctrl.event.id})">sign up</a>
+                            <a class="btn btn-warning" ng-click="ctrl.cantComeClicked()" href="javascript:void(0);">can't come</a>
                         </p>
                     </div>
 
@@ -207,8 +207,8 @@
                     <p>There are no sign ups yet. Be the first to sign up or inform us of your absence.</p>
 
                     <p>
-                        <a class="btn btn-success" href="{{ path('createSignUp', {'eventId': event.id}) }}">sign up</a>
-                        <a class="btn btn-warning" href="{{ path('createAbsence', {'eventId': event.id}) }}">can't come</a>
+                        <a class="btn btn-success" ui-sref="events.event.signup.create({eventId: ctrl.event.id})">sign up</a>
+                        <a class="btn btn-warning" ng-click="ctrl.cantComeClicked()" href="javascript:void(0);">can't come</a>
                     </p>
                 </div>
 

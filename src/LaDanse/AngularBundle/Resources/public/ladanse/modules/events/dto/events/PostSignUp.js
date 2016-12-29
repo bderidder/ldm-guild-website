@@ -54,7 +54,7 @@ DTO.Events.PostSignUp = (function ()
         return {
             "signUpType": this.type,
             "roles": this.roles,
-            "accountRef": this.accountRef
+            "accountReference": this.accountRef
         }
     };
 

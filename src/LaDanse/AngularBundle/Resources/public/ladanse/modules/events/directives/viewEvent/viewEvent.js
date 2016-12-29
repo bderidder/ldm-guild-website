@@ -98,10 +98,6 @@ eventsModule.directive('viewEvent', function()
         );
     };
 
-    ctrl.editSignUpClicked = function(signUpId)
-    {
-    };
-
     ctrl.removeSignUpClicked = function(signUpId)
     {
         alertify.confirm(
@@ -124,6 +120,33 @@ eventsModule.directive('viewEvent', function()
             },
             function() {} // do nothing on cancel
         );
+    };
+
+    ctrl.cantComeClicked = function()
+    {
+        var postSignUp = new DTO.Events.PostSignUp();
+
+        postSignUp.type = "Absence";
+        postSignUp.roles = [];
+
+        var idReference = new DTO.Shared.IdReference();
+        idReference.id = currentAccount.id;
+
+        postSignUp.accountRef = idReference;
+
+        eventService.postSignUp(ctrl.eventId, postSignUp)
+            .then(
+                function(eventDto)
+                {
+                    ctrl.setupEvent(eventDto);
+
+                    alertify.success('Absence saved');
+                },
+                function(errorMessage)
+                {
+                    alertify.error('Failed to save absence');
+                }
+            );
     };
 
     ctrl.accountLinkClicked = function(displayName)
@@ -152,7 +175,7 @@ eventsModule.directive('viewEvent', function()
             {
                 try
                 {
-                    ctrl.setupEvent(eventDto)
+                    ctrl.setupEvent(eventDto);
                 }
                 catch(e)
                 {

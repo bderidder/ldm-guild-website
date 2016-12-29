@@ -337,9 +337,9 @@ class EventsResource extends AbstractRestController
 
         try
         {
-            $eventService->deleteSignUp(intval($eventId), intval($signUpId));
+            $eventDto = $eventService->deleteSignUp(intval($eventId), intval($signUpId));
 
-            return new Response();
+            return new JsonResponse(ResourceHelper::object($eventDto));
         }
         catch(ServiceException $serviceException)
         {

@@ -7,29 +7,27 @@
 
 var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
 
-eventsModule.directive('editSignUp', function()
+eventsModule.directive('createSignUp', function()
 {
     return {
         restrict: 'E',
-        controller: 'EditSignUpCtrl',
+        controller: 'CreateSignUpCtrl',
         controllerAs: 'ctrl',
         scope: {},
-        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/editSignUp/editSignUp.html')
+        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/createSignUp/createSignUp.html')
     };
 })
-.controller('EditSignUpCtrl', function($scope, $rootScope, $stateParams, $state, eventService)
+.controller('CreateSignUpCtrl', function($scope, $rootScope, $stateParams, $state, eventService)
 {
     var ctrl = this;
 
     ctrl.eventId = $stateParams.eventId;
-    ctrl.signUpId = $stateParams.signUpId;
 
     ctrl.event = null;
-    ctrl.signUp = null;
     ctrl.editorModel = null;
 
     ctrl.callback = {
-        save: function(signUpDto)
+        save: function()
         {
             ctrl.saveSignUp();
         },
@@ -43,42 +41,34 @@ eventsModule.directive('editSignUp', function()
     {
         ctrl.event = eventDto;
 
-        for(var i = 0; i < ctrl.event.signUps.length; i++)
-        {
-            if (ctrl.event.signUps[i].id == ctrl.signUpId)
-            {
-                ctrl.signUp = ctrl.event.signUps[i];
-                ctrl.editorModel = new SignUpEditorModel();
-
-                ctrl.editorModel.type = ctrl.event.signUps[i].type;
-                ctrl.editorModel.roles = ctrl.event.signUps[i].roles.slice(0);
-            }
-        }
+        ctrl.editorModel = new SignUpEditorModel();
+        ctrl.editorModel.type = "WillCome";
+        ctrl.editorModel.roles = [];
     };
 
     ctrl.saveSignUp = function()
     {
-        var putSignUp = new DTO.Events.PutSignUp();
+        var postSignUp = new DTO.Events.PostSignUp();
 
-        putSignUp.type = ctrl.editorModel.type;
-        putSignUp.roles = ctrl.editorModel.roles;
+        postSignUp.type = ctrl.editorModel.type;
+        postSignUp.roles = ctrl.editorModel.roles;
 
         var idReference = new DTO.Shared.IdReference();
-        idReference.id = ctrl.signUp.accountRef.id;
+        idReference.id = currentAccount.id;
 
-        putSignUp.accountRef = idReference;
+        postSignUp.accountRef = idReference;
 
-        eventService.putSignUp(ctrl.eventId, ctrl.signUpId, putSignUp)
+        eventService.postSignUp(ctrl.eventId, postSignUp)
             .then(
-                function(httpRestResponse)
+                function(eventDto)
                 {
-                    alertify.success('Updated sign up');
+                    alertify.success('Created sign up');
 
                     $state.go('events.event.view', { eventId: ctrl.eventId });
                 },
-                function(httpRestResponse)
+                function(errorMessage)
                 {
-                    alertify.error('Failed to update sign up');
+                    alertify.error('Failed to create sign up');
                 }
             );
     };

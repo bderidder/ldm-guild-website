@@ -168,5 +168,7 @@ class DeleteSignUpCommand extends AbstractCommand
                 ]
             )
         );
+
+        return $newEventDto;
     }
 }
