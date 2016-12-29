@@ -17,15 +17,41 @@ eventsModule.config(
                 .state('events', {
                     url: '/events',
                     abstract: true,
-                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/Events.html')
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/abstract.html')
                 })
                 .state('events.calendar', {
                     url: '',
-                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/Calendar.html')
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/calendar/calendar.html')
                 })
                 .state('events.event', {
-                    url: '/:eventId',
-                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/EventsView.html')
+                    url: '/event',
+                    abstract: true,
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/abstract.html')
+                })
+                .state('events.event.view', {
+                    url: '/{eventId:[0-9]+}',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/view.html')
+                })
+                .state('events.event.create', {
+                    url: '/create',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/create.html')
+                })
+                .state('events.event.edit', {
+                    url: '/{eventId:[0-9]+}',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/edit.html')
+                })
+                .state('events.event.signup', {
+                    url: '/{eventId:[0-9]+}/signup',
+                    abstract: true,
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/signup/abstract.html')
+                })
+                .state('events.event.signup.create', {
+                    url: '/create',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/signup/create.html')
+                })
+                .state('events.event.signup.edit', {
+                    url: '/{signUpId:[0-9]+}',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/signup/edit.html')
                 });
         }
     ]

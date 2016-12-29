@@ -13,11 +13,15 @@
         <li>Events
             <ul>
                 <li ng-repeat="event in ctrl.eventsPage.events">
-                    <a ui-sref="events.event({eventId: event.id})">{{ event.name }}</a></li>
+                    <a ui-sref="events.event.view({eventId: event.id})">{{ event.name }}</a></li>
             </ul>
         </li>
         <li>{{ ctrl.eventsPage.previousTimestamp }}</li>
         <li>{{ ctrl.eventsPage.nextTimestamp }}</li>
     </ul>
+
+    <p>
+        <a ui-sref="events.event.create">Create event</a>
+    </p>
 
 </div>

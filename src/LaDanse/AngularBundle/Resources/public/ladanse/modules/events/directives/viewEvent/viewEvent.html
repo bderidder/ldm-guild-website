@@ -127,7 +127,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
-                                   ng-click="ctrl.editSignUpClicked(signUp.id)" href="javascript:void(0);">
+                                   ui-sref="events.event.signup.edit({eventId: ctrl.event.id, signUpId: signUp.id})">
                                     <i class="fa fa-pencil fa-1x"></i>
                                 </a>
                             </td>
@@ -229,7 +229,8 @@
                     <div style="float: left;">
                         <p>
                             <a ng-if="ctrl.event.isPending || ctrl.event.isConfirmed"
-                               class="btn btn-primary" href="{{ path('editEvent', {'id': event.id}) }}">edit event</a>
+                               class="btn btn-primary"
+                               ui-sref="events.event.edit({eventId: ctrl.event.id})">edit event</a>
                             <a ng-if="ctrl.event.isPending"
                                class="btn btn-success"
                                ng-click="ctrl.confirmEventClicked()" href="javascript:void(0);">confirm event</a>
