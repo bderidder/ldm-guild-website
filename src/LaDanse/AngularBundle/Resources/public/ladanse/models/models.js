@@ -6,3 +6,5 @@
 "use strict";
 
 var Models = {};
+
+var Form = {};

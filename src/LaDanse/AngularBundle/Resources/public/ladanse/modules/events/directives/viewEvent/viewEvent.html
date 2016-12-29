@@ -160,7 +160,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
-                                   ng-click="ctrl.editSignUpClicked(signUp.id)" href="javascript:void(0);">
+                                   ui-sref="events.event.signup.edit({eventId: ctrl.event.id, signUpId: signUp.id})">
                                     <i class="fa fa-pencil fa-1x"></i>
                                 </a>
                             </td>
@@ -182,7 +182,7 @@
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
-                                   ng-click="ctrl.editSignUpClicked(signUp.id)" href="javascript:void(0);">
+                                   ui-sref="events.event.signup.edit({eventId: ctrl.event.id, signUpId: signUp.id})">
                                     <i class="fa fa-pencil fa-1x"></i>
                                 </a>
                             </td>

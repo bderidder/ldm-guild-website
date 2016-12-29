@@ -1,0 +1,17 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<waiting-spinner show="!ctrl.event"></waiting-spinner>
+
+<div ng-if="ctrl.event">
+
+    <page-header title="Edit sign up for {{ ctrl.event.name }} on {{ ctrl.event.inviteTime | amDateFormat:'ddd D/M' }}" url="#/events/event/{{ ctrl.event.id }}"></page-header>
+
+    <sign-up-editor
+        event="ctrl.event"
+        editor-model="ctrl.editorModel"
+        callback="ctrl.callback"
+
+</div>

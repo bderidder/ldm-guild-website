@@ -149,6 +149,64 @@ eventsModule.service(
             return deferred.promise;
         };
 
+        eventServiceInstance.postSignUp = function(eventId, postSignUp)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.post(Routing.generate('postSignUp', { eventId: eventId }), postSignUp)
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to post sign up');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
+        eventServiceInstance.putSignUp = function(eventId, signUpId, putSignUp)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.put(Routing.generate('putSignUp', { eventId: eventId, signUpId: signUpId }), putSignUp)
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to put sign up');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
         eventServiceInstance.deleteSignUp = function(eventId, signUpId)
         {
             var deferred = $q.defer();

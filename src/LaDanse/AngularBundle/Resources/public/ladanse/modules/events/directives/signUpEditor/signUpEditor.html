@@ -1,0 +1,47 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<form name="SignUpForm" method="post" class="form-horizontal form-horizontal" novalidate="">
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label col-sm-3 required">Roles</label>
+            <div class="col-sm-9">
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="ctrl.form.forTank.checked" ng-disabled="ctrl.form.forTank.disabled">Tank</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="ctrl.form.forHealer.checked" ng-disabled="ctrl.form.forHealer.disabled">Healer</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" ng-model="ctrl.form.forDPS.checked" ng-disabled="ctrl.form.forDPS.disabled">DPS</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3 required">Type</label>
+            <div class="col-sm-9">
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.signUpType.value" value="WillCome">Will come</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.signUpType.value" value="MightCome">Might come</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.signUpType.value" value="Absence">Can't come</label>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary"
+                ng-disabled="!ctrl.canSave"
+               ng-click="ctrl.saveClicked()" href="javascript:void(0);">save</button>
+            <a class="btn btn-warning"
+               ng-click="ctrl.cancelClicked()" href="javascript:void(0);">cancel</a>
+            <a class="btn btn-success"
+               ng-click="ctrl.resetClicked()" href="javascript:void(0);">reset</a>
+        </div>
+        <input type="hidden" id="SignUpForm__token" name="SignUpForm[_token]" class="form-control" value="fzjB_IsAYfkudnFbtPBwEojnFmZLDuJehzeMx-dA7hU">
+    </fieldset>
+</form>

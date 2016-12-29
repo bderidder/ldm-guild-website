@@ -1,6 +1,7 @@
 DTO.Shared.IdReference = (function ()
 {
-    function IdReference() {
+    function IdReference()
+    {
         this._id = -1;
     }
 
