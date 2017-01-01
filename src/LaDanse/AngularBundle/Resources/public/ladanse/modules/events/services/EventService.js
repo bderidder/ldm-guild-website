@@ -108,6 +108,35 @@ eventsModule.service(
             return deferred.promise;
         };
 
+        eventServiceInstance.putEvent = function(eventId, putEvent)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.put(Routing.generate('putEvent', { eventId: eventId }), putEvent)
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to update event');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
         eventServiceInstance.deleteEvent = function(eventId)
         {
             var deferred = $q.defer();

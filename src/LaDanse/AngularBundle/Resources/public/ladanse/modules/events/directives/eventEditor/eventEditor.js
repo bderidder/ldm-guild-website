@@ -100,7 +100,11 @@ eventsModule.directive('eventEditor', function()
             ctrl.formIsValid &= ctrl.form.startTime <= ctrl.form.endTime;
         }
 
+        var now = new Date();
+
         ctrl.formIsValid &= ctrl.form.eventDate != null;
+
+        ctrl.formIsValid &= ctrl.form.eventDate >= now;
     };
 
     ctrl.saveClicked = function()

@@ -37,7 +37,7 @@ eventsModule.config(
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/create.html')
                 })
                 .state('events.event.edit', {
-                    url: '/{eventId:[0-9]+}',
+                    url: '/{eventId:[0-9]+}/edit',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/edit.html')
                 })
                 .state('events.event.signup', {
