@@ -28,7 +28,8 @@ class PolicyCatalog
             'Create Event Policy Set',
             ActivityType::EVENT_CREATE,
             [
-                new AllowAllRule()
+                new AllCanCreateEventWhenOrganiser(),
+                new OfficerCanCreateEventRule()
             ]
         );
 

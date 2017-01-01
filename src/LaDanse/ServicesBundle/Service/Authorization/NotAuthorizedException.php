@@ -8,7 +8,7 @@ class NotAuthorizedException extends ServiceException
 {
     public function __construct($message, \Exception $previous = null)
     {
-        parent::__construct($message, 404, $previous);
+        parent::__construct($message, 403, $previous);
     }
 
     public function __toString()
