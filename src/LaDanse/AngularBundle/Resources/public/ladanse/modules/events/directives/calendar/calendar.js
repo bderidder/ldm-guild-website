@@ -34,9 +34,6 @@ eventsModule.directive('calendar', function()
 
                 var previousTimestamp = moment(eventsPage.previousTimestamp).format('YYYYMMDD');
                 var nextTimestamp = moment(eventsPage.nextTimestamp).format('YYYYMMDD');
-
-                console.log("ctrl.eventsPage - " + ctrl.eventsPage);
-                console.log(previousTimestamp);
             }
             catch(e)
             {
