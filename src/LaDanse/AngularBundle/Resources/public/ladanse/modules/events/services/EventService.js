@@ -9,7 +9,6 @@ eventsModule.service(
         var eventServiceInstance = {};
 
         /*
-            Post Event
             Put Event
             Put Event State
 
@@ -69,6 +68,35 @@ eventsModule.service(
                         {
                             console.log(httpRestResponse.data);
                             deferred.reject('Failed to get events');
+                        }
+                    );
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+
+            return deferred.promise;
+        };
+
+        eventServiceInstance.postEvent = function(postEvent)
+        {
+            var deferred = $q.defer();
+
+            try
+            {
+                $http.post(Routing.generate('postEvent'), postEvent)
+                    .then(
+                        function(httpRestResponse)
+                        {
+                            var eventDto = DTO.Events.EventMapper.mapSingleObject(httpRestResponse.data);
+
+                            deferred.resolve(eventDto);
+                        },
+                        function(httpRestResponse)
+                        {
+                            console.log(httpRestResponse.data);
+                            deferred.reject('Failed to create event');
                         }
                     );
             }

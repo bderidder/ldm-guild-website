@@ -1,0 +1,111 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<form name="NewEvent" method="post" class="form-horizontal form-horizontal" novalidate="">
+    <fieldset>
+        <div class="form-group" ng-if="!ctrl.simplified">
+            <label for="formEventType" class="control-label col-sm-3 required">Event Type</label>
+            <div class="col-sm-9">
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.eventType.value" value="LegionRaidInstance">Legion Raid Instance</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.eventType.value" value="CustomEvent">Custom event</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!ctrl.showCustomName && !ctrl.simplified">
+            <label for="formRaidInstance" class="control-label col-sm-3 required">Raid Instance</label>
+            <div class="col-sm-9">
+                <ui-select ng-model="ctrl.form.raidInstance"
+                           theme="bootstrap"
+                           required="required">
+                    <ui-select-match placeholder="Select a raid instance ...">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="raidInstance in ctrl.masterData.raidInstances track by $index">
+                        <div ng-bind-html="raidInstance"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!ctrl.showCustomName && !ctrl.simplified">
+            <label for="formInstanceDifficulty" class="control-label col-sm-3 required">Difficulty</label>
+            <div class="col-sm-9">
+                <ui-select ng-model="ctrl.form.instanceDifficulty"
+                           theme="bootstrap"
+                           required="required">
+                    <ui-select-match placeholder="Select a difficulty ...">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="instanceDifficulty in ctrl.masterData.instanceDifficulties track by $index">
+                        <div ng-bind-html="instanceDifficulty"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.showCustomName">
+            <label for="formName" class="control-label col-sm-3 required">Name</label>
+            <div class="col-sm-9">
+                <input type="text" id="formName" name="formName" required="required" class="form-control" ng-model="ctrl.form.eventName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="formDescription" class="control-label col-sm-3 required">Description</label>
+            <div class="col-sm-9">
+                <textarea id="formDescription" name="formDescription" required="required" class="form-control" ng-model="ctrl.form.eventDescription"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="formDate" class="control-label col-sm-3 required">Date</label>
+            <div class="col-sm-9">
+                <div class="input-group date" data-link-field="formDate"
+                     datetime-picker="ctrl.pickerOptions"
+                     ng-model="ctrl.form.eventDate">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    <span class="form-control">{{ ctrl.form.eventDate | amDateFormat:'dddd DD MMMM YYYY' }}</span>
+                    <input type="hidden" id="formDate" class="form-control" />
+                </div>
+                <p class="help-block">click the calendar icon to change the date</p>
+            </div>
+        </div>
+        <div class="form-group" ng-if="!ctrl.simplified">
+            <label for="formHoursType" class="control-label col-sm-3 required">Hours</label>
+            <div class="col-sm-9">
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.hoursType.value" value="NormalHours">Normal hours <i>(invite at 19:15, first pull at 19:30, end at 22:00, realm server time)</i></label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" ng-model="ctrl.form.hoursType.value" value="CustomHours">Custom hours</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.showCustomHours">
+            <label for="formInviteTime" class="control-label col-sm-3 required">Invite time</label>
+            <div class="col-sm-9">
+                <input type="time" id="formInviteTime" name="formInviteTime" required="required" class="form-control" ng-model="ctrl.form.inviteTime">
+            </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.showCustomHours">
+            <label for="formStartTime" class="control-label col-sm-3 required">Start time</label>
+            <div class="col-sm-9">
+                <input type="time" id="formStartTime" name="formStartTime" required="required" class="form-control" ng-model="ctrl.form.startTime">
+            </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.showCustomHours">
+            <label for="formEndTime" class="control-label col-sm-3 required">End time</label>
+            <div class="col-sm-9">
+                <input type="time" id="formEndTime" name="formEndTime" required="required" class="form-control" ng-model="ctrl.form.endTime">
+            </div>
+        </div>
+        <div class="form-group" ng-if="ctrl.showCustomHours">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+                <p class="help-block">Invite, Start and End time must be expressed in realm server time (Paris, Brussels, Gothenburg, Stockholm)</p>
+            </div>
+        </div>
+        <div>
+            <button type="submit" id="formSave" name="formSave" class="btn btn-primary"
+                    ng-disabled="!ctrl.formIsValid"
+                    ng-click="ctrl.saveClicked()">save</button>
+        </div>
+    </fieldset>
+</form>
