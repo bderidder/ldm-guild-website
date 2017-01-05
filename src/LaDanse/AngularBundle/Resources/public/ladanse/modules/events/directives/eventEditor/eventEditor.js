@@ -194,6 +194,7 @@ eventsModule.directive('eventEditor', function()
             ctrl.form.hoursType.value = 'NormalHours';
         }
 
+        ctrl.form.eventDescription = ctrl.editorModel.description;
         ctrl.form.eventDate = new Date(ctrl.editorModel.inviteTime.valueOf());
         ctrl.form.inviteTime = new Date(ctrl.editorModel.inviteTime.valueOf());
         ctrl.form.startTime = new Date(ctrl.editorModel.startTime.valueOf());
