@@ -80,7 +80,7 @@ Calendar.DayModel = (function ()
     DayModel.prototype.addEvent = function(event)
     {
         this._events.push(event);
-    }
+    };
 
     return DayModel;
 })();

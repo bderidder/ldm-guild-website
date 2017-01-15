@@ -23,6 +23,8 @@ eventsModule.directive('calendar', function()
 
     ctrl.eventsPage = null;
 
+    ctrl.raidWeekOne = new Calendar.RaidWeekModel(new Date(2017, 0, 17));
+
     var promise = eventService.getEventsPage();
 
     promise.then(
