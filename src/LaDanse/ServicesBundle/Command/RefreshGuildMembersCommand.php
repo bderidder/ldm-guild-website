@@ -351,6 +351,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         }
         catch(\Exception $exception)
         {
+            $context->error("Exception while updating characters " . $exception);
+            
             $guildSyncSession->addMessage("Caught exception - " . $exception->getMessage());
         }
         finally
