@@ -248,15 +248,9 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                     $patchCharacter
                         ->setName($currentCharacterDto->getName())
                         ->setLevel($currentArmoryObject->getLevel())
-                        ->setGameClassReference(
-                            new StringReference($this->getGameClassFromArmoryId($currentArmoryObject->getClassArmoryId())->getId())
-                        )
-                        ->setGameRaceReference(
-                            new StringReference($this->getGameRaceFromArmoryId($currentArmoryObject->getRaceArmoryId())->getId())
-                        )
-                        ->setRealmReference(
-                            new StringReference($this->getRealmFromName($currentArmoryObject->getRealmName())->getId())
-                        );
+                        ->setGameClassReference($currentCharacterDto->getGameClassReference())
+                        ->setGameRaceReference($currentCharacterDto->getGameRaceReference())
+                        ->setRealmReference($currentCharacterDto->getRealmReference());
 
                     $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
 
@@ -312,7 +306,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                     ->setName($currentCharacterDto->getName())
                     ->setLevel($currentCharacterDto->getLevel())
                     ->setGameClassReference($currentCharacterDto->getGameClassReference())
-                    ->setGameRaceReference($currentCharacterDto->getGameClassReference())
+                    ->setGameRaceReference($currentCharacterDto->getGameRaceReference())
                     ->setRealmReference($currentCharacterDto->getRealmReference());
 
                 $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
@@ -357,6 +351,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         }
         catch(\Exception $exception)
         {
+            $context->error("Exception while updating characters " . $exception);
+            
             $guildSyncSession->addMessage("Caught exception - " . $exception->getMessage());
         }
         finally
