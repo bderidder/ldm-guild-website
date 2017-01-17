@@ -138,14 +138,14 @@ class TrackCharacterCommand extends AbstractCommand
         $qb->select('c')
             ->from(Entity\Character::class, 'c')
             ->join('c.realm', 'realm')
-            ->where('c.name = ?1')
+            ->where('c.name = collate(?1, \'utf8_bin\')')
             ->andWhere('realm.id = ?2')
             ->andWhere('c.fromTime IS NOT NULL')
             ->andWhere('c.endTime IS NULL')
             ->setParameter(1, $this->getPatchCharacter()->getName())
             ->setParameter(
                 2,
-                $em->getReference(Entity\GameData\Realm::class, $this->getPatchCharacter()->getRealmReference()->getId()                )
+                $em->getReference(Entity\GameData\Realm::class, $this->getPatchCharacter()->getRealmReference()->getId())
             );
 
         /* @var $query \Doctrine\ORM\Query */
@@ -257,8 +257,9 @@ class TrackCharacterCommand extends AbstractCommand
 
             $qb->select('t')
                 ->from(Entity\CharacterOrigin\TrackedBy::class, 't')
+                ->join('t.characterSource', 's')
                 ->where('t.character = ?1')
-                ->andWhere('t.characterSource = ?2')
+                ->andWhere('s = ?2')
                 ->andWhere('t.fromTime IS NOT NULL')
                 ->andWhere('t.endTime IS NULL')
                 ->setParameter(1, $character)
@@ -273,7 +274,7 @@ class TrackCharacterCommand extends AbstractCommand
             {
                 throw new ServiceException(
                     sprintf(
-                        "The character %s is already actively tracked by characterSource %s",
+                        "Character %s is already actively tracked by characterSource %s",
                         $character->getId(),
                         $characterSessionImpl->getCharacterSource()->getId()
                     ),
