@@ -249,7 +249,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                         ->setName($currentCharacterDto->getName())
                         ->setLevel($currentArmoryObject->getLevel())
                         ->setGameClassReference($currentCharacterDto->getGameClassReference())
-                        ->setGameRaceReference($currentCharacterDto->getGameClassReference())
+                        ->setGameRaceReference($currentCharacterDto->getGameRaceReference())
                         ->setRealmReference($currentCharacterDto->getRealmReference());
 
                     $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
@@ -306,7 +306,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                     ->setName($currentCharacterDto->getName())
                     ->setLevel($currentCharacterDto->getLevel())
                     ->setGameClassReference($currentCharacterDto->getGameClassReference())
-                    ->setGameRaceReference($currentCharacterDto->getGameClassReference())
+                    ->setGameRaceReference($currentCharacterDto->getGameRaceReference())
                     ->setRealmReference($currentCharacterDto->getRealmReference());
 
                 $characterService->patchCharacter($guildSyncSession, $currentCharacterDto->getId(), $patchCharacter);
