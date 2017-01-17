@@ -65,8 +65,6 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $this->syncGuild($context, 'La Danse Macabre', 'Defias Brotherhood');
         $this->syncGuild($context, 'La Danse Macabre', 'Darkmoon Faire');
-
-        return 0;
     }
 
     private function loadGameData()
@@ -157,7 +155,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             }
         );
 
-        // below we use a classical algoritm that calculates the difference between two sorted lists
+        // below we use a classical algorithm that calculates the difference between two sorted lists
 
         $guildSyncSession = $characterService->createGuildSyncSession(
             new StringReference($guild->getId())
@@ -290,6 +288,8 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 }
             }
 
+            $context->info("Finished comparing database with armory, now processing left overs");
+
             // if we have any left overs, they are characters in the database
             // that are not in the guild anymore, let's end them
             while ($dbIndex < count($characterDtos))
@@ -297,7 +297,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
                 /** @var Character $currentCharacterDto */
                 $currentCharacterDto = $characterDtos[$dbIndex];
 
-                $context->info("Character is not in the guild anymore, ending " . $currentCharacterDto->getName());
+                $context->error("Character is not in the guild anymore, ending " . $currentCharacterDto->getName());
 
                 $guildSyncSession->addMessage("Character is not in the guild anymore, ending " . $currentCharacterDto->getName());
 
@@ -323,7 +323,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
             {
                 $currentArmoryObject = $armoryObjects[$armoryIndex];
 
-                $context->info("Character is not yet in database, importing " . $currentArmoryObject->getName());
+                $context->error("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
                 $guildSyncSession->addMessage("Character is not yet in database, importing " . $currentArmoryObject->getName());
 
@@ -352,6 +352,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         catch(\Exception $exception)
         {
             $context->error("Exception while updating characters " . $exception);
+            $context->error($exception->getTraceAsString());
             
             $guildSyncSession->addMessage("Caught exception - " . $exception->getMessage());
         }
