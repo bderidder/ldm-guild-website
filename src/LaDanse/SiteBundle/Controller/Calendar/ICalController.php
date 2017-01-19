@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Controller\Calendar;
 
 use DateInterval;
 use DateTimeZone;
-use Eluceo\iCal\Component as iCal;
+use Eluceo\iCal as iCal;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\CalendarExport;
@@ -81,10 +81,12 @@ class ICalController extends LaDanseController
             )
         );
 
-        $vCalendar = new iCal\Calendar('www.ladanse.org');
+        $vCalendar = new iCal\Component\Calendar('www.ladanse.org');
 
         // we suggest a refresh every 30 minutes
         $vCalendar->setPublishedTTL('PT30M');
+
+        $this->populateTimezone($vCalendar);
 
         $allEvents = $this->getEvents($account);
 
@@ -94,7 +96,7 @@ class ICalController extends LaDanseController
             if ($event->getSignUps()->getCurrentUserWillCome() || $event->getSignUps()->getCurrentUserMightCome())
             {
                 $vEvent = $this->createICalEvent($event, '(SIGNED) ' . $event->getName());
-                $vEvent->setStatus(iCal\Event::STATUS_CONFIRMED);
+                $vEvent->setStatus(iCal\Component\Event::STATUS_CONFIRMED);
 
                 $vCalendar->addComponent($vEvent);
             }
@@ -102,7 +104,7 @@ class ICalController extends LaDanseController
             if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
             {
                 $vEvent = $this->createICalEvent($event, '(ABSENT) ' . $event->getName());
-                $vEvent->setStatus(iCal\Event::STATUS_TENTATIVE); // CANCELLED is not always shown in some applications
+                $vEvent->setStatus(iCal\Component\Event::STATUS_TENTATIVE); // CANCELLED is not always shown in some applications
 
                 $vCalendar->addComponent($vEvent);
             }
@@ -111,7 +113,7 @@ class ICalController extends LaDanseController
                 && $exportSettings->getExportNew())
             {
                 $vEvent = $this->createICalEvent($event, '(NEW) ' . $event->getName());
-                $vEvent->setStatus(iCal\Event::STATUS_TENTATIVE);
+                $vEvent->setStatus(iCal\Component\Event::STATUS_TENTATIVE);
 
                 $vCalendar->addComponent($vEvent);
             }
@@ -175,11 +177,11 @@ class ICalController extends LaDanseController
      * @param $event \LaDanse\SiteBundle\Model\EventModel
      * @param $description string
      *
-     * @return iCal\Event
+     * @return iCal\Component\Event
      */
     protected function createICalEvent($event, $description)
     {
-        $vEvent = new iCal\Event();
+        $vEvent = new iCal\Component\Event();
         $vEvent->setSequence(floor(microtime(true)));
         $vEvent->setUniqueId($event->getId());
         $vEvent->setDtStart($this->fixTimezone($event->getInviteTime()));
@@ -216,7 +218,7 @@ class ICalController extends LaDanseController
             $comments,
             function ($a, $b) {
                 /** @var $a \LaDanse\DomainBundle\Entity\Comments\Comment */
-                /** @var $b \LaDanse\DomainBundle\Entity\Comments\COmment */
+                /** @var $b \LaDanse\DomainBundle\Entity\Comments\Comment */
 
                 return $a->getPostDate() < $b->getPostDate();
             }
@@ -272,5 +274,45 @@ class ICalController extends LaDanseController
         //now dispatch the login event
         $event = new InteractiveLoginEvent($request, $token);
         $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+    }
+
+    /**
+     * @param iCal\Component\Calendar $vCalendar
+     */
+    private function populateTimezone(iCal\Component\Calendar $vCalendar)
+    {
+        $tz = 'Europe/Brussels';
+        $dtz = new \DateTimeZone($tz);
+
+        // Create timezone rule object for Daylight Saving Time
+        $vTimezoneRuleDst = new iCal\Component\TimezoneRule(iCal\Component\TimezoneRule::TYPE_DAYLIGHT);
+        $vTimezoneRuleDst->setTzName('CEST');
+        $vTimezoneRuleDst->setDtStart(new \DateTime('1981-03-29 02:00:00', $dtz));
+        $vTimezoneRuleDst->setTzOffsetFrom('+0100');
+        $vTimezoneRuleDst->setTzOffsetTo('+0200');
+        $dstRecurrenceRule = new iCal\Property\Event\RecurrenceRule();
+        $dstRecurrenceRule->setFreq(iCal\Property\Event\RecurrenceRule::FREQ_YEARLY);
+        $dstRecurrenceRule->setByMonth(3);
+        $dstRecurrenceRule->setByDay('-1SU');
+        $vTimezoneRuleDst->setRecurrenceRule($dstRecurrenceRule);
+
+        // Create timezone rule object for Standard Time
+        $vTimezoneRuleStd = new iCal\Component\TimezoneRule(iCal\Component\TimezoneRule::TYPE_STANDARD);
+        $vTimezoneRuleStd->setTzName('CET');
+        $vTimezoneRuleStd->setDtStart(new \DateTime('1996-10-27 03:00:00', $dtz));
+        $vTimezoneRuleStd->setTzOffsetFrom('+0200');
+        $vTimezoneRuleStd->setTzOffsetTo('+0100');
+        $stdRecurrenceRule = new iCal\Property\Event\RecurrenceRule();
+        $stdRecurrenceRule->setFreq(iCal\Property\Event\RecurrenceRule::FREQ_YEARLY);
+        $stdRecurrenceRule->setByMonth(10);
+        $stdRecurrenceRule->setByDay('-1SU');
+        $vTimezoneRuleStd->setRecurrenceRule($stdRecurrenceRule);
+
+        // Create timezone definition and add rules
+        $vTimezone = new iCal\Component\Timezone($tz);
+        $vTimezone->addComponent($vTimezoneRuleDst);
+        $vTimezone->addComponent($vTimezoneRuleStd);
+
+        $vCalendar->setTimezone($vTimezone);
     }
 }
