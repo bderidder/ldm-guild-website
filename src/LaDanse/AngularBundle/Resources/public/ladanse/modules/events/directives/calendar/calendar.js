@@ -17,34 +17,47 @@ eventsModule.directive('calendar', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/calendar/calendar.html')
     };
 })
-.controller('CalendarCtrl', function($scope, $rootScope, eventService)
+.controller('CalendarCtrl', function($scope, $rootScope, $stateParams, eventService)
 {
+    var SHOW_DATE_FORMAT = 'YYYYMMDD';
+
     var ctrl = this;
 
     ctrl.eventsPage = null;
 
-    ctrl.raidWeekOne = new Calendar.RaidWeekModel(new Date(2017, 0, 17));
+    ctrl._init = function()
+    {
+        var currentRaidWeek = new Calendar.RaidWeekModel(new Date());
 
-    var promise = eventService.getEventsPage();
+        var showDate = moment($stateParams.showDate, SHOW_DATE_FORMAT);
 
-    promise.then(
-        function(eventsPage)
-        {
-            try
+        if (!showDate.isValid()) showDate = new Date();
+
+        ctrl.calendarMonth = new Calendar.MonthModel(showDate, currentRaidWeek);
+
+        var promise = eventService.getEventsPage(ctrl.calendarMonth.firstDate);
+
+        promise.then(
+            function(eventsPage)
             {
-                ctrl.eventsPage = eventsPage;
+                try
+                {
+                    ctrl.olderTimestamp = moment(eventsPage.previousTimestamp).format(SHOW_DATE_FORMAT);
+                    ctrl.newerTimestamp = moment(eventsPage.nextTimestamp).format(SHOW_DATE_FORMAT);
 
-                var previousTimestamp = moment(eventsPage.previousTimestamp).format('YYYYMMDD');
-                var nextTimestamp = moment(eventsPage.nextTimestamp).format('YYYYMMDD');
-            }
-            catch(e)
+                    ctrl.eventsPage = eventsPage;
+                }
+                catch(e)
+                {
+                    console.log(e);
+                }
+            },
+            function(reason)
             {
-                console.log(e);
+                console.log('Failed to get events - ' + reason);
             }
-        },
-        function(reason)
-        {
-            console.log('Failed to get events - ' + reason);
-        }
-    );
+        );
+    };
+
+    ctrl._init();
 });

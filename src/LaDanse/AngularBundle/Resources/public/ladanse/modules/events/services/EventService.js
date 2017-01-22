@@ -22,6 +22,10 @@ eventsModule.service(
             {
                 startOn = moment().format('YYYYMMDD');
             }
+            else
+            {
+                startOn = moment(startOn).format('YYYYMMDD');
+            }
 
             var deferred = $q.defer();
 

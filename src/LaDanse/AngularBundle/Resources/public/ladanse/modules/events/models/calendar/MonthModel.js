@@ -7,65 +7,47 @@
 
 Calendar.MonthModel = (function ()
 {
-    function MonthModel(showDate)
+    function MonthModel(showDate, raidWeekModel)
     {
-        this._date = date;
-        this._events = [];
-        this._showMonth = false;
+        this._firstDate = this._calculateFirstDay(showDate);
+        this._raidWeekModel = raidWeekModel;
+        this._weeks = [];
+
+        var firstWeekDate = this._firstDate.clone();
+        for(var i = 0; i < 4; i++)
+        {
+            var weekModel = new Calendar.WeekModel(firstWeekDate, this._raidWeekModel);
+
+            this._weeks.push(weekModel);
+
+            firstWeekDate.add(7, 'day');
+        }
+
+        this._weeks[0].days[0].showMonth = true;
     }
 
-    Object.defineProperty(MonthModel.prototype, "date",
+    Object.defineProperty(MonthModel.prototype, "firstDate",
         {
             get: function ()
             {
-                return this._date;
+                return this._firstDate;
             }
         }
     );
 
-    Object.defineProperty(MonthModel.prototype, "events",
+    Object.defineProperty(MonthModel.prototype, "weeks",
         {
             get: function ()
             {
-                return this._events;
+                return this._weeks;
             }
         }
     );
 
-    Object.defineProperty(MonthModel.prototype, "showMonth",
-        {
-            get: function ()
-            {
-                return this._showMonth;
-            },
-            set: function (showMonth)
-            {
-                this._showMonth = showMonth;
-            },
-            enumerable: true
-        }
-    );
-
-    Object.defineProperty(MonthModel.prototype, "display",
-        {
-            get: function ()
-            {
-                if (this.showMonth)
-                {
-                    return moment(this.date).format('MMM DD');
-                }
-                else
-                {
-                    return moment(this.date).format('DD');
-                }
-            }
-        }
-    );
-
-    MonthModel.prototype.addEvent = function(event)
+    MonthModel.prototype._calculateFirstDay = function(showDate)
     {
-        this._events.push(event);
-    }
+        return moment(showDate).clone().isoWeekday(1);
+    };
 
     return MonthModel;
 })();

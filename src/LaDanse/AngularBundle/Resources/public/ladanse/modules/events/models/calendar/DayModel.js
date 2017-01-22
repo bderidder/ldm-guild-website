@@ -7,12 +7,12 @@
 
 Calendar.DayModel = (function ()
 {
-    function DayModel(date)
+    function DayModel(date, raidWeekModel)
     {
-        this._date = date;
+        this._date = moment(date);
+        this._raidWeekModel = raidWeekModel;
         this._events = [];
         this._showMonth = false;
-        this._isInCurrentRaidWeek = false;
     }
 
     Object.defineProperty(DayModel.prototype, "date",
@@ -28,7 +28,16 @@ Calendar.DayModel = (function ()
         {
             get: function ()
             {
-                return this._events;
+                return false;
+            }
+        }
+    );
+
+    Object.defineProperty(DayModel.prototype, "inThePast",
+        {
+            get: function ()
+            {
+                return this._date.isBefore(moment(), 'day');
             }
         }
     );
@@ -47,21 +56,25 @@ Calendar.DayModel = (function ()
         }
     );
 
-    Object.defineProperty(DayModel.prototype, "isInCurrentRaidWeek",
+    Object.defineProperty(DayModel.prototype, "inRaidWeek",
         {
             get: function ()
             {
-                return this._isInCurrentRaidWeek;
-            },
-            set: function (isInCurrentRaidWeek)
-            {
-                this._isInCurrentRaidWeek = isInCurrentRaidWeek;
-            },
-            enumerable: true
+                return this._raidWeekModel.isInRaidWeek(this._date);
+            }
         }
     );
 
-    Object.defineProperty(DayModel.prototype, "display",
+    Object.defineProperty(DayModel.prototype, "isToday",
+        {
+            get: function ()
+            {
+                return this._date.isSame(moment(), 'day');
+            }
+        }
+    );
+
+    Object.defineProperty(DayModel.prototype, "displayString",
         {
             get: function ()
             {

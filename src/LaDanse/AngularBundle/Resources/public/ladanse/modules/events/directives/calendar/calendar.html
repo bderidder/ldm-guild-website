@@ -9,26 +9,79 @@
 
 <div ng-if="ctrl.eventsPage">
 
-    <ul>
-        <li>Events
-            <ul>
-                <li ng-repeat="event in ctrl.eventsPage.events">
-                    <a ui-sref="events.event.view({eventId: event.id})">{{ event.name }}</a></li>
-            </ul>
-        </li>
-        <li>{{ ctrl.eventsPage.previousTimestamp }}</li>
-        <li>{{ ctrl.eventsPage.nextTimestamp }}</li>
+    <p>Can't find the event you were looking for? <a ui-sref="events.event.create">Why not create an event yourself?</a></p>
+    <p>You can <a href="/settings/calExport">subscribe to this calendar</a> in your calendar app.</p>
+
+    <ul class="pager">
+        <li class="previous"><a ui-sref="events.calendar({showDate: ctrl.olderTimestamp})"><i class="fa fa-arrow-left fa-1x"></i> older</a></li>
+        <li><a ui-sref="events.calendar({showDate: ''})">today</a></li>
+        <li class="next"><a ui-sref="events.calendar({showDate: ctrl.newerTimestamp})">newer <i class="fa fa-arrow-right fa-1x"></i></a></li>
     </ul>
 
-    <p>
-        <a ui-sref="events.event.create">Create event</a>
-    </p>
+    <div>
+        <span class="event-container event-willCome">will come</span>
+        <span class="event-container event-mightCome">might come</span>
+        <span class="event-container event-absent">absent</span>
+        <span class="event-container event-notSigned">you haven't signed yet</span>
+        <span class="event-container event-Cancelled">cancelled event</span>
+    </div>
 
-    <p>
-        <ul>
-            <li>{{ ctrl.raidWeekOne.firstDate }}</li>
-            <li>{{ ctrl.raidWeekOne.lastDate }}</li>
-        </ul>
-    </p>
+    <br/>
+
+    <table class="table table-bordered" style="table-layout: fixed; text-overflow: ellipsis;">
+        <thead>
+        <tr>
+            <th>monday</th>
+            <th>tuesday</th>
+            <th>wednesday</th>
+            <th>thursday</th>
+            <th>friday</th>
+            <th>saturday</th>
+            <th>sunday</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="calendarWeek in ctrl.calendarMonth.weeks">
+
+                <td ng-repeat="calendarDay in calendarWeek.days"
+                    class="calendar-cell"
+                    ng-class="{'today-calendar-cell': calendarDay.isToday, 'current-raid-week': calendarDay.inRaidWeek}">
+
+                    <div class="calendar-cell-container">
+
+                        <p class="current-raid-week">{{ calendarDay.displayString }}</p>
+
+                        <div ng-if="!calendarDay.inThePast" class="hover-me-container">
+                            <div class="hover-me">
+                                <small>
+                                    <a ui-sref="events.event.create({onDate: 'fooVal1'})">add an event</a>
+                                </small>
+                            </div>
+                        </div>
+
+                        <a ng-repeat="event in calendarDay.events"
+                           class="event-container-link" href="EVENT DETAIL LINK">
+
+                            <div class="event-container event-signed TODO-event-willCome TODO-event-mightCome TODO-event-absent TODO-event-notSigned TODO-event-Cancelled">
+                                <small>
+                                    {% if event.state == "Pending" %}
+                                    <i class="fa fa-question" aria-hidden="true"></i>
+                                    {% elseif event.state == "Cancelled" %}
+                                    {# nothing for Cancelled state #}
+                                    {% elseif event.state == "Confirmed" %}
+                                    <i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
+                                    {% endif %}
+                                    {{ event.inviteTime|date("H:i") }} {{ event.name }}
+                                </small>
+                            </div>
+                        </a>
+
+                    </div>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
 
 </div>

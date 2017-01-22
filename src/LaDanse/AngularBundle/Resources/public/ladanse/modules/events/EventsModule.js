@@ -20,7 +20,7 @@ eventsModule.config(
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/abstract.html')
                 })
                 .state('events.calendar', {
-                    url: '',
+                    url: '?showDate',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/calendar/calendar.html')
                 })
                 .state('events.event', {
@@ -33,7 +33,7 @@ eventsModule.config(
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/view.html')
                 })
                 .state('events.event.create', {
-                    url: '/create',
+                    url: '/create?onDate',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/create.html')
                 })
                 .state('events.event.edit', {
