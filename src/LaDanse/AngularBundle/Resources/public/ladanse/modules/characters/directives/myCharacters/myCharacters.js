@@ -148,7 +148,15 @@ charactersModule.directive('myCharacters', function()
     };
     ctrl.editCallback.remove = function()
     {
-        ctrl.removeClaim();
+        alertify.confirm(
+            'Confirm Remove Claim',
+            'This will remove your claim on this character, are you sure?',
+            function()
+            {
+                ctrl.removeClaim();
+            },
+            function() {} // do nothing on cancel
+        );
     };
 
     ctrl.fetchData();
