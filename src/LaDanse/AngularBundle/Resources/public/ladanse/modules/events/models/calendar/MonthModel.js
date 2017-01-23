@@ -9,7 +9,7 @@ Calendar.MonthModel = (function ()
 {
     function MonthModel(showDate, raidWeekModel)
     {
-        this._firstDate = this._calculateFirstDay(showDate);
+        this._firstDate = this._calculateFirstDay(showDate, raidWeekModel);
         this._raidWeekModel = raidWeekModel;
         this._weeks = [];
 
@@ -44,9 +44,27 @@ Calendar.MonthModel = (function ()
         }
     );
 
-    MonthModel.prototype._calculateFirstDay = function(showDate)
+    MonthModel.prototype._calculateFirstDay = function(showDate, raidWeekModel)
     {
-        return moment(showDate).clone().isoWeekday(1);
+        var firstDay = moment(showDate).clone().isoWeekday(1);
+
+        if (raidWeekModel.isInRaidWeek(firstDay))
+        {
+            // a monday and it fits in the current raid week, we have to move 7 days back
+
+            return firstDay.subtract(7, 'day');
+        }
+
+        var lastDay = firstDay.clone().add(28, 'day');
+
+        if (raidWeekModel.isInRaidWeek(lastDay))
+        {
+            // a friday and it fits in the current raid week, we have to move 7 days forward
+
+            return firstDay.add(7, 'day');
+        }
+
+        return firstDay;
     };
 
     return MonthModel;
