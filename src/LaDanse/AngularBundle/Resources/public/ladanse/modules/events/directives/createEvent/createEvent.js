@@ -19,6 +19,8 @@ eventsModule.directive('createEvent', function()
 })
 .controller('CreateEventCtrl', function($scope, $rootScope, $stateParams, $state, eventService)
 {
+    var ON_DATE_FORMAT = 'YYYYMMDD';
+
     var ctrl = this;
 
     ctrl.callback = {
@@ -63,14 +65,14 @@ eventsModule.directive('createEvent', function()
             );
     };
 
-    ctrl.createDateForTime = function(hours, minutes)
+    ctrl.createDateForTime = function(onDate, hours, minutes)
     {
-        var now = new Date();
+        var now = moment(onDate);
 
-        now.setHours(hours);
-        now.setMinutes(minutes);
-        now.setSeconds(0);
-        now.setMilliseconds(0);
+        now.hours(hours);
+        now.minutes(minutes);
+        now.seconds(0);
+        now.milliseconds(0);
 
         return now;
     };
@@ -79,9 +81,13 @@ eventsModule.directive('createEvent', function()
     {
         ctrl.editorModel = new EventEditorModel();
 
-        ctrl.editorModel.inviteTime = ctrl.createDateForTime(19, 15);
-        ctrl.editorModel.startTime = ctrl.createDateForTime(19, 30);
-        ctrl.editorModel.endTime = ctrl.createDateForTime(22, 0);
+        var onDate = moment($stateParams.onDate, ON_DATE_FORMAT);
+
+        if (!onDate.isValid()) onDate = new Date();
+
+        ctrl.editorModel.inviteTime = ctrl.createDateForTime(onDate, 19, 15);
+        ctrl.editorModel.startTime = ctrl.createDateForTime(onDate, 19, 30);
+        ctrl.editorModel.endTime = ctrl.createDateForTime(onDate, 22, 0);
     };
 
     ctrl.init();

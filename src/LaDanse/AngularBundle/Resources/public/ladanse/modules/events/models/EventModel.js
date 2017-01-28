@@ -54,7 +54,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return moment(this._eventDto.inviteTime);
+                return this._eventDto.inviteTime;
             }
         }
     );
@@ -63,7 +63,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return moment(this._eventDto.startTime);
+                return this._eventDto.startTime;
             }
         }
     );
@@ -72,7 +72,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return moment(this._eventDto.endTime);
+                return this._eventDto.endTime;
             }
         }
     );

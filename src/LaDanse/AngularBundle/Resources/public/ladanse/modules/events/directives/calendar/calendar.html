@@ -54,7 +54,7 @@
                         <div ng-if="!calendarDay.inThePast" class="hover-me-container">
                             <div class="hover-me">
                                 <small>
-                                    <a ui-sref="events.event.create({onDate: 'fooVal1'})">add an event</a>
+                                    <a ui-sref="events.event.create({onDate: calendarDay.date.format('YYYYMMDD')})">add an event</a>
                                 </small>
                             </div>
                         </div>

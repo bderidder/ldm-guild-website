@@ -6,9 +6,9 @@ DTO.Events.EventsPageMapper =
     {
         var eventsPageDto = new DTO.Events.EventsPage();
 
-        eventsPageDto.events = eventsPageObject.events;
-        eventsPageDto.previousTimestamp = new Date(eventsPageObject.previousTimestamp);
-        eventsPageDto.nextTimestamp = new Date(eventsPageObject.nextTimestamp);
+        eventsPageDto.events = DTO.Events.EventMapper.mapArray(eventsPageObject.events);
+        eventsPageDto.previousTimestamp = moment(eventsPageObject.previousTimestamp);
+        eventsPageDto.nextTimestamp = moment(eventsPageObject.nextTimestamp);
 
         return eventsPageDto;
     },
