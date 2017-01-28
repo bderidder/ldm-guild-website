@@ -223,7 +223,7 @@
                 </div>
 
                 <!-- if the currently logged in user is the organiser, edit and delete options are shown -->
-                <div ng-if="ctrl.event.currentUserIsOrganiser && (ctrl.event.isPending || ctrl.event.isConfirmed)"
+                <div ng-if="ctrl.event.currentUserIsOrganiser && (ctrl.event.isPending || ctrl.event.isConfirmed) && ctrl.event.isFuture"
                         style="margin-top: 50px;">
                     <h4>Event Management</h4>
                     <div style="float: left;">
