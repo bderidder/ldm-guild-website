@@ -44,5 +44,31 @@ Calendar.WeekModel = (function ()
         }
     );
 
+    WeekModel.prototype.isInWeek = function(date)
+    {
+        var dateMoment = moment(date);
+
+        var lastDate = moment(this._firstDate.clone());
+        lastDate.add(6, "day");
+
+        return (this._firstDate.isSame(dateMoment, 'day')
+            || lastDate.isSame(dateMoment, 'day')
+            || dateMoment.isBetween(this._firstDate, lastDate, 'day')
+        );
+    };
+
+    WeekModel.prototype.addEvent = function(event)
+    {
+        for(var j = 0; j < this._days.length; j++)
+        {
+            var currentDay = this._days[j];
+
+            if (event.inviteTime.isSame(currentDay.date, "day"))
+            {
+                currentDay.addEvent(event);
+            }
+        }
+    };
+
     return WeekModel;
 })();

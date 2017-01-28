@@ -28,7 +28,7 @@ Calendar.DayModel = (function ()
         {
             get: function ()
             {
-                return false;
+                return this._events;
             }
         }
     );

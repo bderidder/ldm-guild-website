@@ -44,6 +44,24 @@ Calendar.MonthModel = (function ()
         }
     );
 
+    MonthModel.prototype.populateEvents = function(events)
+    {
+        for (var i = 0; i < events.length; i++)
+        {
+            var currentEvent = events[i];
+
+            for(var j = 0; j < this._weeks.length; j++)
+            {
+                var currentWeek = this._weeks[j];
+
+                if (currentWeek.isInWeek(currentEvent.inviteTime))
+                {
+                    currentWeek.addEvent(currentEvent);
+                }
+            }
+        }
+    };
+
     MonthModel.prototype._calculateFirstDay = function(showDate, raidWeekModel)
     {
         var firstDay = moment(showDate).clone().isoWeekday(1);

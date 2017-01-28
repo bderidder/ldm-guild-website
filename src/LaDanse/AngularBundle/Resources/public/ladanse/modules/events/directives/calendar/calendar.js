@@ -23,7 +23,24 @@ eventsModule.directive('calendar', function()
 
     var ctrl = this;
 
+    ctrl.calendarMonth = null;
     ctrl.eventsPage = null;
+
+    ctrl._populateEvents = function(eventsPage)
+    {
+        ctrl.eventsPage = eventsPage;
+
+        var events = eventsPage.events;
+
+        var eventModels = [];
+
+        for(var i = 0; i < events.length; i++)
+        {
+            eventModels.push(new EventModel(events[i]));
+        }
+
+        ctrl.calendarMonth.populateEvents(eventModels);
+    };
 
     ctrl._init = function()
     {
@@ -45,7 +62,7 @@ eventsModule.directive('calendar', function()
                     ctrl.olderTimestamp = moment(eventsPage.previousTimestamp).format(SHOW_DATE_FORMAT);
                     ctrl.newerTimestamp = moment(eventsPage.nextTimestamp).format(SHOW_DATE_FORMAT);
 
-                    ctrl.eventsPage = eventsPage;
+                    ctrl._populateEvents(eventsPage);
                 }
                 catch(e)
                 {

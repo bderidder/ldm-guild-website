@@ -60,18 +60,21 @@
                         </div>
 
                         <a ng-repeat="event in calendarDay.events"
-                           class="event-container-link" href="EVENT DETAIL LINK">
+                           class="event-container-link"
+                           ui-sref="events.event.view({eventId: event.id})">
 
-                            <div class="event-container event-signed TODO-event-willCome TODO-event-mightCome TODO-event-absent TODO-event-notSigned TODO-event-Cancelled">
+                            <div class="event-container TODO-event-notSigned TODO-event-Cancelled"
+                                 ng-class="{'event-willCome': event.currentUserWillCome,
+                                            'event-mightCome': event.currentUserMightCome,
+                                            'event-absent': event.currentUserAbsent,
+                                            'event-notSigned': !event.currentUserSignedUp,
+                                            'event-Cancelled': event.state == 'Cancelled'}">
                                 <small>
-                                    {% if event.state == "Pending" %}
-                                    <i class="fa fa-question" aria-hidden="true"></i>
-                                    {% elseif event.state == "Cancelled" %}
-                                    {# nothing for Cancelled state #}
-                                    {% elseif event.state == "Confirmed" %}
-                                    <i class="fa fa-check" aria-hidden="true" style="color: green;"></i>
-                                    {% endif %}
-                                    {{ event.inviteTime|date("H:i") }} {{ event.name }}
+                                    <i ng-if="event.state == 'Pending'"
+                                       class="fa fa-question" aria-hidden="true"></i>
+                                    <i ng-if="event.state == 'Confirmed'"
+                                       class="fa fa-check" aria-hidden="true" style="color: green;"></i>
+                                    {{ event.inviteTime | amDateFormat:'HH:mm' }} {{ event.name }}
                                 </small>
                             </div>
                         </a>

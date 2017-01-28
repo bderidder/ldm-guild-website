@@ -54,7 +54,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return this._eventDto.inviteTime;
+                return moment(this._eventDto.inviteTime);
             }
         }
     );
@@ -63,7 +63,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return this._eventDto.startTime;
+                return moment(this._eventDto.startTime);
             }
         }
     );
@@ -72,7 +72,7 @@ var EventModel = (function ()
         {
             get: function ()
             {
-                return this._eventDto.endTime;
+                return moment(this._eventDto.endTime);
             }
         }
     );
@@ -127,9 +127,9 @@ var EventModel = (function ()
         this.currentUserSignedUp = false;
         this.currentUserIsOrganiser = (this.organiserRef.id == currentAccount.id);
 
-        var now = new Date();
+        var now = moment();
 
-        this.isFuture = (this.inviteTime.getTime() > now.getTime());
+        this.isFuture = (this.inviteTime.unix() > now.unix());
 
         this.isPending = (this.state == 'Pending');
         this.isCancelled = (this.state == 'Cancelled');
@@ -161,6 +161,7 @@ var EventModel = (function ()
             if (signUpModel.isWillCome)
             {
                 this.willComeCount++;
+                this.currentUserWillCome = this.currentUserWillCome || signUpModel.isForCurrentUser;
 
                 if (signUpModel.isForTank) this.willComeTankCount++;
                 if (signUpModel.isForHealer) this.willComeHealerCount++;
@@ -172,6 +173,7 @@ var EventModel = (function ()
             if (signUpModel.isMightCome)
             {
                 this.mightComeCount++;
+                this.currentUserMightCome = this.currentUserMightCome || signUpModel.isForCurrentUser;
 
                 if (signUpModel.isForTank) this.mightComeTankCount++;
                 if (signUpModel.isForHealer) this.mightComeHealerCount++;
@@ -183,13 +185,14 @@ var EventModel = (function ()
             if (signUpModel.isAbsence)
             {
                 this.totalAbsence++;
+                this.currentUserAbsent = this.currentUserAbsent || signUpModel.isForCurrentUser;
 
                 this._absenceSignUps.push(signUpModel);
             }
         }
 
         this.signUpCount = this.willComeCount + this.mightComeCount + this.totalAbsence;
-    }
+    };
 
     return EventModel;
 })();
