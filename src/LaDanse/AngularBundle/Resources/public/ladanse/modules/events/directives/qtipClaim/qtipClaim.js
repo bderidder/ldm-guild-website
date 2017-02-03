@@ -4,7 +4,7 @@ var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
 
 eventsModule.directive(
     'qtipClaim',
-    function (eventService)
+    function (claimTooltipService)
     {
         return {
             restrict: 'A',
@@ -14,12 +14,12 @@ eventsModule.directive(
             },
             link: function (scope, element, attrs)
                 {
-                    var qonfig =
+                    var qConfig =
                     {
                         content: {
                             text: function(event, api)
                             {
-                                eventService.listClaims(scope.eventId, scope.accountId)
+                                claimTooltipService.getTooltipHTML(scope, scope.eventId, scope.accountId)
                                     .then(
                                         function(content)
                                         {
@@ -46,7 +46,7 @@ eventsModule.directive(
                         }
                     };
 
-                    jQuery(element).qtip(qonfig);
+                    jQuery(element).qtip(qConfig);
                 }
         };
     });
