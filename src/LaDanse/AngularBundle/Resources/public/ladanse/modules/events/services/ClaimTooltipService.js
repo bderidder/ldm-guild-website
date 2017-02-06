@@ -8,10 +8,28 @@ eventsModule.service(
     {
         var claimTooltipServiceInstance = {};
 
+        var characterClaimsCache = new CharacterClaimsCache();
+        var eventCache = new EventCache();
+
         function getSomeString()
         {
             return 'Hello World';
         }
+
+        /*
+
+            GET event details (CACHE)
+                if not in cache, download and store in cache
+            GET character Claims (CACHE)
+                if not in cache, download and store in cache
+
+            Find signUp for accountId and corresponding roles
+
+            Find claims that have at least one role, add found claim to model
+
+            Combine template and model into tooltip HTML
+
+         */
 
         claimTooltipServiceInstance.getTooltipHTML = function(scope, eventId, accountId)
         {
