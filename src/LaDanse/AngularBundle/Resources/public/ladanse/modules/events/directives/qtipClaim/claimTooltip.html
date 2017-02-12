@@ -1,2 +1,59 @@
-<p>This is a test</p>
-<p>{{ name }}</p>
+<div ng-if="error">
+    <p>{{ error }}</p>
+</div>
+
+<div ng-if="!error">
+
+    <style>
+        div.claimsContainer
+        {
+            width: 100%;
+        }
+    </style>
+
+    <p ng-if="claims.length == 0">There are no claimed characters for this account matching the criteria.</p>
+
+    <table ng-if="claims.length != 0"
+           style="background-color: white;">
+
+        <tr>
+            <td style="padding: 0 8px 0 8px;"></td>
+            <td style="padding: 0 8px 0 8px;">Tank</td>
+            <td style="padding: 0 8px 0 8px;">Healer</td>
+            <td style="padding: 0 8px 0 8px;">DPS</td>
+        </tr>
+
+        <tbody ng-repeat="claim in claims">
+            <tr>
+                <td><a target="_blank" href="/redirect/http://eu.battle.net/wow/en/character/{{ claim.realm }}/{{ claim.name }}/simple">{{ claim.name }}</a></td>
+                <td class="center-td">
+                    <i ng-if="claim.isForTank()"
+                       class="signUp fa fa-times fa-1x"
+                       ng-class="{'text-success': claim.raider, 'text-muted': !claim.raider}"></i>
+                </td>
+                <td class="center-td">
+                    <i ng-if="claim.isForHealer()" class="signUp fa fa-times fa-1x"
+                       ng-class="{'text-success': claim.raider, 'text-muted': !claim.raider}"></i>
+                </td>
+                <td class="center-td">
+                    <i ng-if="claim.isForDPS()" class="signUp fa fa-times fa-1x"
+                       ng-class="{'text-success': claim.raider, 'text-muted': !claim.raider}"></i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><i style="padding-left: 8px;">{{ claim.level }} {{ claim.class }} ({{ claim.race }})</i></td>
+            </tr>
+        </tbody>
+
+        <tbody>
+            <tr>
+                <td colspan="4" style="font-size: 0.85em;">
+                    <i class="signUp fa fa-times fa-1x text-success"></i> = role as raider<br/>
+                    <i class="signUp fa fa-times fa-1x text-muted"></i> = role as non-raider
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
