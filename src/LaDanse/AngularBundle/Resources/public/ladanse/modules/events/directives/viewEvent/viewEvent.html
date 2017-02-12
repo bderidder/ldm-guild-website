@@ -120,7 +120,7 @@
                                    qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td>
-                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
                                    ng-click="ctrl.removeSignUpClicked(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
@@ -153,7 +153,7 @@
                                    qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id"></i>
                             </td>
                             <td>
-                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
                                    ng-click="ctrl.removeSignUpClicked(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
@@ -174,7 +174,7 @@
                                 <i class="text-danger signUp cursor-default">can't come</i>
                             </td>
                             <td>
-                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
+                                <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser && ctrl.event.isFuture"
                                    ng-click="ctrl.removeSignUpClicked(signUp.id)" href="javascript:void(0);">
                                     <i class="fa fa-trash-o fa-1x"></i>
                                 </a>
