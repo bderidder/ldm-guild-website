@@ -171,8 +171,7 @@
                             ng-class="{'active': signUp.isForCurrentUser}">
                             <td><a ng-click="ctrl.accountLinkClicked(signUp.accountRef.name)" href="javascript:void(0);">{{ signUp.accountRef.name }}</a></td>
                             <td class="center-td" colspan="3">
-                                <i class="text-danger signUp cursor-default"
-                                   qtip-claim event-id="ctrl.event.id" account-id="signUp.accountRef.id">can't come</i>
+                                <i class="text-danger signUp cursor-default">can't come</i>
                             </td>
                             <td>
                                 <a ng-if="!ctrl.event.isCancelled && signUp.isForCurrentUser"
