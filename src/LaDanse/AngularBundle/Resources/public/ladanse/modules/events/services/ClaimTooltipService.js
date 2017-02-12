@@ -18,13 +18,13 @@ eventsModule.service(
             {
                 $q.all([
                     this._getTemplate(),
-                    eventService.getEventById(eventId),
-                    characterService.getCharactersClaimedByAccount(accountId),
+                    this._getEventById(eventId),
+                    this._getCharactersClaimedByAccount(accountId),
                     gameDataService.getGameData()
                 ]).then(
                     function(data)
                     {
-                        var template  = data[0].data;
+                        var template  = data[0];
                         var eventDto  = data[1];
                         var claimsDto = data[2];
                         var gameData  = data[3];
@@ -38,7 +38,7 @@ eventsModule.service(
                 ).catch(
                     function(data)
                     {
-                        console.log("getTooltipHTML - $q.all catch");
+                        console.log("Failed to get all data for claim tooltip");
                         console.log(data);
                         deferred.reject('Failed to get events');
                     }
@@ -100,7 +100,90 @@ eventsModule.service(
         {
             var templateUrl = Assetic.generate('/ladanseangular/ladanse/modules/events/directives/qtipClaim/claimTooltip.html');
 
-            return $http.get(templateUrl);
+            return this._getCachedOrFetch(
+                templateUrl,
+                this._templateCache,
+                60 * 60,
+                function()
+                {
+                    return $http.get(templateUrl);
+                },
+                function(httpResponse)
+                {
+                    return httpResponse.data;
+                }
+            );
+        };
+
+        claimTooltipServiceInstance._getEventById = function(eventId)
+        {
+            return this._getCachedOrFetch(
+                eventId,
+                this._eventsCache,
+                60,
+                function()
+                {
+                    return eventService.getEventById(eventId);
+                }
+            );
+        };
+
+        claimTooltipServiceInstance._getCharactersClaimedByAccount = function(accountId)
+        {
+            return this._getCachedOrFetch(
+                accountId,
+                this._claimsCache,
+                60,
+                function()
+                {
+                    return characterService.getCharactersClaimedByAccount(accountId);
+                }
+            );
+        };
+
+        claimTooltipServiceInstance._getCachedOrFetch = function(cacheKey, cache, cacheTTL, fetcherFunction, extractorFunction)
+        {
+            var deferred = $q.defer();
+
+            var cachedObject = cache.get(cacheKey);
+
+            if (cachedObject != null)
+            {
+                deferred.resolve(cachedObject);
+            }
+            else
+            {
+                try
+                {
+                    fetcherFunction()
+                        .then(
+                            function(fetchedObject)
+                            {
+                                var objectToCache = fetchedObject;
+
+                                if (extractorFunction)
+                                {
+                                    objectToCache = extractorFunction(fetchedObject);
+                                }
+
+                                cache.set(cacheKey, objectToCache, cacheTTL);
+
+                                deferred.resolve(objectToCache);
+                            },
+                            function(error)
+                            {
+                                console.log(error);
+                                deferred.reject('Failed to fetch object');
+                            }
+                        );
+                }
+                catch (e)
+                {
+                    console.log(e);
+                }
+            }
+
+            return deferred.promise;
         };
 
         claimTooltipServiceInstance._getSignUpForAccountId = function(eventDto, accountId)
@@ -128,6 +211,15 @@ eventsModule.service(
 
             return commonRoles.length > 0;
         };
+
+        claimTooltipServiceInstance._init = function()
+        {
+            this._templateCache = BoomerangCache.create('templateCache');
+            this._eventsCache = BoomerangCache.create('eventsCache');
+            this._claimsCache = BoomerangCache.create('claimsCache');
+        };
+
+        claimTooltipServiceInstance._init();
 
         return claimTooltipServiceInstance;
     });
