@@ -14,6 +14,8 @@ eventsModule.directive(
             },
             link: function (scope, element, attrs)
                 {
+                    $('div.qtip:visible').qtip('hide');
+
                     var qConfig =
                     {
                         content: {
@@ -41,8 +43,10 @@ eventsModule.directive(
                         },
                         style: 'qtip-bootstrap',
                         hide: {
-                            event: 'unfocus',
-                            inactive: false
+                            event: 'unfocus mouseleave',
+                            inactive: false,
+                            fixed: true,
+                            delay: 1000
                         }
                     };
 
