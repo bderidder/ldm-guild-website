@@ -8,11 +8,6 @@ CalendarRouting:
     type:     annotation
     prefix:   /calendar
 
-EventsRouting:
-    resource: "@LaDanseSiteBundle/Controller/Events"
-    type:     annotation
-    prefix:   /events
-
 SettingsRouting:
     resource: "@LaDanseSiteBundle/Controller/Settings"
     type:     annotation
