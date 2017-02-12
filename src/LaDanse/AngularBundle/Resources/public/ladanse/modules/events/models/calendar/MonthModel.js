@@ -75,12 +75,15 @@ Calendar.MonthModel = (function ()
 
         var lastDay = firstDay.clone().add(28, 'day');
 
+        /* we comment this out as not showing the entire raid week at the end of the months is not really an issue
+           and it fixes a "back button" issue
         if (raidWeekModel.isInRaidWeek(lastDay))
         {
             // a friday and it fits in the current raid week, we have to move 7 days forward
 
             return firstDay.add(7, 'day');
         }
+         */
 
         return firstDay;
     };
