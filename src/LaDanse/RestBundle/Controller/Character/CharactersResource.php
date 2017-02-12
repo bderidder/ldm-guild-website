@@ -67,7 +67,7 @@ class CharactersResource extends AbstractRestController
      * @Route("/{characterId}/claim", name="postClaim", options = { "expose" = true })
      * @Method({"POST"})
      */
-    public function postClaimActionAction(Request $request, $characterId)
+    public function postClaimAction(Request $request, $characterId)
     {
         try
         {
