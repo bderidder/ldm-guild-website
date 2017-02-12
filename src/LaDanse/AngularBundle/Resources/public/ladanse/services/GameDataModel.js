@@ -14,7 +14,7 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
     this.getGuilds = function()
     {
         return this.guilds;
-    }
+    };
 
     this.getGuild = function(guildId)
     {
@@ -27,12 +27,12 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
         }
 
         return null;
-    }
+    };
 
     this.getRealms = function()
     {
         return this.realms;
-    }
+    };
 
     this.getRealm = function(realmId)
     {
@@ -45,12 +45,12 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
         }
 
         return null;
-    }
+    };
 
     this.getGameClasses = function()
     {
         return this.gameClasses;
-    }
+    };
 
     this.getGameClass = function(gameClassId)
     {
@@ -63,12 +63,12 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
         }
 
         return null;
-    }
+    };
 
     this.getGameRaces = function()
     {
         return this.gameRaces;
-    }
+    };
 
     this.getGameRace = function(gameRaceId)
     {
@@ -81,12 +81,12 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
         }
 
         return null;
-    }
+    };
 
     this.getGameFactions = function()
     {
         return this.gameFactions;
-    }
+    };
 
     this.getGameFaction = function(gameFactionId)
     {
@@ -99,5 +99,5 @@ function GameDataModel(guilds, realms, gameRaces, gameClasses, gameFactions)
         }
 
         return null;
-    }
+    };
 }
