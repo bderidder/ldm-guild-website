@@ -7,7 +7,7 @@
 
 <div ng-if="ctrl.event">
 
-    <page-header title="{{ ctrl.event.name }}" url="#/calendar?showDate={{ ctrl.event.inviteTime.format('YYYYMMDD') }}"></page-header>
+    <page-header title="{{ ctrl.event.name }}" url="#/events?showDate={{ ctrl.event.inviteTime.format('YYYYMMDD') }}"></page-header>
 
     <!-- EVENT IN THE PAST -->
     <div ng-if="!ctrl.event.isFuture && !ctrl.event.isCancelled"
