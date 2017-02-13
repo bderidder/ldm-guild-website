@@ -37,8 +37,8 @@ eventsModule.directive(
                             }
                         },
                         position: {
-                            my: "left center",
-                            at: "right center",
+                            my: "top left",
+                            at: "bottom right",
                             target: element
                         },
                         style: 'qtip-bootstrap',
@@ -46,7 +46,10 @@ eventsModule.directive(
                             event: 'unfocus mouseleave',
                             inactive: false,
                             fixed: true,
-                            delay: 1000
+                            delay: 750
+                        },
+                        show: {
+                            solo: 'i.signUp'
                         }
                     };
 
