@@ -69,7 +69,7 @@ class ForumController extends LaDanseController
         $unreadPosts = $statsService->getUnreadPostsForAccount($account);
 
         return $this->render(
-            "LaDanseSiteBundle:forum:menuPartial.html.twig",
+            "LaDanseSiteBundle:menu:forumPartial.html.twig",
             [
                 'unreadPosts' => $unreadPosts
             ]

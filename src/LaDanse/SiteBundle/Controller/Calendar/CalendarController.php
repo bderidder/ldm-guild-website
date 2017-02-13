@@ -33,7 +33,7 @@ class CalendarController extends LaDanseController
         $startDate = new \DateTime('now');
         $events = $this->getEvents($startDate, $this->getAuthenticationService()->getCurrentContext()->getAccount());
 
-        return $this->render('LaDanseSiteBundle:calendar:calendarTilePartial.html.twig',
+        return $this->render('LaDanseSiteBundle:menu:calendarPartial.html.twig',
                     ['events' => $events]
                 );
     }
