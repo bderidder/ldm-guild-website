@@ -255,7 +255,7 @@ class ICalController extends LaDanseController
             ($commentGroup->getComments()->count() > 0))
         {
             $description = $description . "\n\n";
-            $description = $description . $this->generateUrl('viewEvent', ['id' => $event->getId()], true);
+            $description = $description . $this->generateUrl('eventsIndex', null, true) . "#/events/event/" . $event->getId();
         }
 
         return $description;

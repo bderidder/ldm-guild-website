@@ -23,7 +23,7 @@ End Time: {{ data.activityData.newEvent.endTime|date("H:i") }}
 
 {{ data.activityData.newEvent.description }}
 
-{{ url('viewEvent', {'id': data.activityData.newEvent.id} ) }}
+{{ url('eventsIndex') }}#/events/event/{{ data.activityData.newEvent.id }}
 
 
 

@@ -58,7 +58,7 @@
 
 {% block notificationActions %}
 
-    <a href="{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}">
+    <a href="{{ url('eventsIndex') }}#/events/event/{{ data.activityData.event.id }}">
         <div class="button btn-lightGreen">
             manage my signup
         </div>

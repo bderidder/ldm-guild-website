@@ -11,7 +11,7 @@ End Time: {{ data.activityData.event.endTime|date("H:i") }}
 
 Make sure to properly prepare yourself. Read up on tactics and bring flasks, pots and runes with you!
 
-{{ url('viewEvent', {'id': data.activityData.event.eventId} ) }}
+{{ url('eventsIndex') }}#/events/event/{{ data.activityData.event.id }}
 
 
 

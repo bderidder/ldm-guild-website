@@ -19,7 +19,7 @@ Roles:
     {{ role }}
 {% endfor %}
 
-{{ url('viewEvent', {'id': data.activityData.newEvent.id} ) }}
+{{ url('eventsIndex') }}#/events/event/{{ data.activityData.newEvent.id }}
 
 
 

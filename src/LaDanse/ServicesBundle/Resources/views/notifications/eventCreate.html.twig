@@ -53,7 +53,7 @@
 
 {% block notificationActions %}
 
-    <a href="{{ url('viewEvent', {'id': data.activityData.event.id} ) }}">
+    <a href="{{ url('eventsIndex') }}#/events/event/{{ data.activityData.event.id }}">
         <div class="button btn-lightGreen">
             view event
         </div>
