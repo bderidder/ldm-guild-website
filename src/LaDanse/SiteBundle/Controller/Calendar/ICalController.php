@@ -189,7 +189,7 @@ class ICalController extends LaDanseController
         $vEvent->setSummary($description);
         $vEvent->setDescription($this->createDescription($event));
 
-        $vEvent->setUrl($this->generateUrl('viewEvent', ['id' => $event->getId()], true));
+        $vEvent->setUrl($this->generateUrl('eventsIndex', null, true) . "#/events/event/" . $event->getId());
 
         $vEvent->setUseTimezone(true);
 
