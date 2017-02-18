@@ -104,7 +104,7 @@ eventsModule.directive('eventEditor', function()
 
         ctrl.formIsValid &= ctrl.form.eventDate != null;
 
-        ctrl.formIsValid &= ctrl.form.eventDate >= now;
+        ctrl.formIsValid &= this.getInviteTime() >= now;
     };
 
     ctrl.saveClicked = function()
@@ -128,19 +128,23 @@ eventsModule.directive('eventEditor', function()
             ctrl.editorModel.name = eventName;
         }
 
+        var inviteTime;
+        var startTime;
+        var endTime;
+
+        var baseDate = ctrl.form.eventDate;
+
         if (ctrl.form.hoursType.value == 'CustomHours')
         {
-            var baseDate = ctrl.form.eventDate;
-
-            var inviteTime = new Date(baseDate.valueOf());
+            inviteTime = new Date(baseDate.valueOf());
             inviteTime.setHours(ctrl.form.inviteTime.getHours());
             inviteTime.setMinutes(ctrl.form.inviteTime.getMinutes());
 
-            var startTime = new Date(baseDate.valueOf());
+            startTime = new Date(baseDate.valueOf());
             startTime.setHours(ctrl.form.startTime.getHours());
             startTime.setMinutes(ctrl.form.startTime.getMinutes());
 
-            var endTime = new Date(baseDate.valueOf());
+            endTime = new Date(baseDate.valueOf());
             endTime.setHours(ctrl.form.endTime.getHours());
             endTime.setMinutes(ctrl.form.endTime.getMinutes());
 
@@ -150,17 +154,15 @@ eventsModule.directive('eventEditor', function()
         }
         else
         {
-            var baseDate = ctrl.form.eventDate;
-
-            var inviteTime = new Date(baseDate.valueOf());
+            inviteTime = new Date(baseDate.valueOf());
             inviteTime.setHours(19);
             inviteTime.setMinutes(15);
 
-            var startTime = new Date(baseDate.valueOf());
+            startTime = new Date(baseDate.valueOf());
             startTime.setHours(19);
             startTime.setMinutes(30);
 
-            var endTime = new Date(baseDate.valueOf());
+            endTime = new Date(baseDate.valueOf());
             endTime.setHours(22);
             endTime.setMinutes(0);
 
@@ -172,6 +174,27 @@ eventsModule.directive('eventEditor', function()
         ctrl.editorModel.description = ctrl.form.eventDescription;
 
         ctrl.callback.save();
+    };
+
+    ctrl.getInviteTime = function()
+    {
+        var inviteTime;
+        var baseDate = ctrl.form.eventDate;
+
+        if (ctrl.form.hoursType.value == 'CustomHours')
+        {
+            inviteTime = new Date(baseDate.valueOf());
+            inviteTime.setHours(ctrl.form.inviteTime.getHours());
+            inviteTime.setMinutes(ctrl.form.inviteTime.getMinutes());
+        }
+        else
+        {
+            inviteTime = new Date(baseDate.valueOf());
+            inviteTime.setHours(19);
+            inviteTime.setMinutes(15);
+        }
+
+        return inviteTime;
     };
 
     ctrl.initForm = function()
