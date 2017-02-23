@@ -31,14 +31,15 @@ parameters:
         # random secret for protecting resources like the remember_me cookie
         secret: ThisIsNotSoSecret
 
-        # nodejs binary and module paths
-        nodejs_binary_path: /full/path/to/node
+        # nodejs binary, replace with full path if needed
+        nodejs_binary_path: node
+        # nodejs module paths
         nodejs_module_path:
             - /usr/local/lib/node_modules
             - /home/user/node_modules
 
-        # full path to bower binary
-        bower_binary_path: /full/path/to/bower
+        # bower binary, replace with full path if needed
+        bower_binary_path: bower
 
         # battlenet API key and secret for calls to the Armory and OAuth
         battlenet_key: key
