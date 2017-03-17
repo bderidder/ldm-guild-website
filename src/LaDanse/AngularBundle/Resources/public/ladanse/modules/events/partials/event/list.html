@@ -1,0 +1,38 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<div ng-controller="EventListController" style="width: 350px; height: 150px;">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Instance</th>
+                <th>Date</th>
+                <th>Signed</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="event in eventList"
+                ng-class="{'event-willCome': event.currentUserWillCome,
+                           'event-mightCome': event.currentUserMightCome,
+                           'event-absent': event.currentUserAbsent,
+                           'event-notSigned': !event.currentUserSignedUp,
+                           'event-Cancelled': event.state == 'Cancelled'}">
+                <td style="padding: 5px; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <span popover="{{ event.name }}"
+                          popover-trigger="mouseenter"
+                          popover-append-to-body="true"
+                          popover-placement="top-left">{{ event.name }}</span>
+                </td>
+                <td style="padding: 5px">{{ event.inviteTime | amDateFormat:'YY-MM-DD ddd'  }}</td>
+                <td style="padding: 5px">{{ event.willComeCount }}({{ event.mightComeCount }}) / {{ event.totalAbsence }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+

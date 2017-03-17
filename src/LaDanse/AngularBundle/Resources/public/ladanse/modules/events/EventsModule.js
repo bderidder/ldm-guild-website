@@ -19,6 +19,10 @@ eventsModule.config(
                     abstract: true,
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/abstract.html')
                 })
+                .state('events.eventList', {
+                    url: '/list',
+                    templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/event/list.html')
+                })
                 .state('events.calendar', {
                     url: '?showDate',
                     templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/partials/calendar/calendar.html')
