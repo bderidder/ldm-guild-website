@@ -1,0 +1,65 @@
+<!--
+  ~ @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+  ~ @link     https://github.com/bderidder/ldm-guild-website
+  -->
+
+<div class="EventListTileContainer">
+
+
+    <div class="EventListContent">
+
+        <div ng-if="ctrl.eventList.length == 0">
+
+            <div class="tile-content">
+                <div style="padding: 15px;">
+                    <p style="font-size: 1.3em;">There are no raids scheduled!</p>
+                </div>
+                <div style="width: 100%; text-align: center;">
+                    <p style="font-size: 1.6em;">Why not schedule one?</p>
+                </div>
+            </div>
+            <div class="tile-content">
+               <div style="padding: 15px;">
+                    <p style="font-size: 1.3em;">Why not schedule one?</p>
+                </div>
+            </div>
+
+        </div>
+
+        <table style="width: 100%;" ng-if="ctrl.eventList.length > 0">
+            <tbody>
+                <tr ng-repeat="event in ctrl.eventList" ng-class="{ 'event-cancelled': event.isCancelled}">
+                    <td style="padding: 5px;">
+                        <!-- will come or might come -->
+                        <i ng-if="(event.currentUserWillCome || event.currentUserMightCome) && !event.isCancelled"
+                           class="fa fa-check fa-1x text-success"></i>
+                        <!-- absent -->
+                        <i ng-if="event.currentUserAbsent && !event.isCancelled"
+                           class="fa fa-ban fa-1x text-danger"></i>
+                        <!-- not signed -->
+                        <i ng-if="!event.currentUserSignedUp && !event.isCancelled"
+                                class="fa fa-question fa-1x text-muted"></i>
+                    </td>
+                    <td class="EventCell EventNameCell">
+                        <span popover="{{ event.name }}"
+                              popover-trigger="mouseenter"
+                              popover-append-to-body="true"
+                              popover-placement="top-left">
+                            <a href="/app/events#/events/event/{{ event.id }}" class="event-list-link">{{ event.name }}</a>
+                        </span>
+                    </td>
+                    <td class="EventCell TextAlignRight">{{ event.inviteTime | amDateFormat:'ddd DD'  }}</td>
+                    <td class="EventCell">{{ event.inviteTime | amDateFormat:'HH:mm'  }}</td>
+                    <td class="EventCell">{{ event.willComeCount }}({{ event.mightComeCount }}) / {{ event.totalAbsence }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
+
+</div>
+
+
+

@@ -8,12 +8,24 @@
     "use strict";
 
     GetAngularModule('Events')
+        .directive('eventListTile', function()
+        {
+            return {
+                restrict: 'E',
+                controller: 'EventListController',
+                controllerAs: 'ctrl',
+                scope: {},
+                templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/eventListTile/EventListTile.html')
+            };
+        })
         .controller('EventListController', EventListController);
 
-    EventListController.$inject = ['$scope', 'eventService'];
+    EventListController.$inject = ['eventService'];
 
-    function EventListController($scope, eventService)
+    function EventListController(eventService)
     {
+        var ctrl = this;
+
         eventService.getEventsPage(moment())
             .then(
                 function(eventsPageDto)
@@ -29,7 +41,7 @@
                         eventList.push(new EventModel(events[i]));
                     }
 
-                    $scope.eventList = eventList;
+                    ctrl.eventList = eventList;
                 },
                 function(errStr)
                 {
