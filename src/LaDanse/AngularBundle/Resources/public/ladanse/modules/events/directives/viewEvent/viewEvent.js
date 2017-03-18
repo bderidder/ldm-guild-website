@@ -23,6 +23,8 @@ eventsModule.directive('viewEvent', function()
 
     ctrl.eventId = $stateParams.eventId;
 
+    $scope.showServerTime = true;
+
     ctrl.event = null;
 
     ctrl.confirmEventClicked = function()

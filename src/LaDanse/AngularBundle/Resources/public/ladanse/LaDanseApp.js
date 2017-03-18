@@ -93,13 +93,13 @@ ladanseApp.config(
                     return '/events';
                 }
 
-                return "/ShouldNeverHappen";
+                return "/menu";
             });
 
             $stateProvider.state(
-                "ShouldNeverHappen",
+                "menu",
                 {
-                    url: "/ShouldNeverHappen",
+                    url: "/menu",
                     templateUrl: BUNDLE_BASEPATH + '/ladanseangular/ladanse/route/ShouldNeverHappen.html'
                 }
             )
