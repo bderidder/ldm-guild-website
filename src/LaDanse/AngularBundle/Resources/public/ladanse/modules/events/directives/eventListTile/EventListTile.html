@@ -5,7 +5,6 @@
 
 <div class="EventListTileContainer">
 
-
     <div class="EventListContent">
 
         <div ng-if="ctrl.eventList.length == 0">
@@ -29,7 +28,7 @@
         <table style="width: 100%;" ng-if="ctrl.eventList.length > 0">
             <tbody>
                 <tr ng-repeat="event in ctrl.eventList" ng-class="{ 'event-cancelled': event.isCancelled}">
-                    <td style="padding: 5px;">
+                    <td style="padding: 5px;" style="width: 12px;">
                         <!-- will come or might come -->
                         <i ng-if="(event.currentUserWillCome || event.currentUserMightCome) && !event.isCancelled"
                            class="fa fa-check fa-1x text-success"></i>
@@ -40,7 +39,7 @@
                         <i ng-if="!event.currentUserSignedUp && !event.isCancelled"
                                 class="fa fa-question fa-1x text-muted"></i>
                     </td>
-                    <td class="EventCell EventNameCell">
+                    <td class="EventCell EventNameCell" style="width: 132px;">
                         <span popover="{{ event.name }}"
                               popover-trigger="mouseenter"
                               popover-append-to-body="true"
@@ -48,9 +47,9 @@
                             <a href="/app/events#/events/event/{{ event.id }}" class="event-list-link">{{ event.name }}</a>
                         </span>
                     </td>
-                    <td class="EventCell TextAlignRight">{{ event.inviteTime | amDateFormat:'ddd DD'  }}</td>
-                    <td class="EventCell">{{ event.inviteTime | amDateFormat:'HH:mm'  }}</td>
-                    <td class="EventCell">{{ event.willComeCount }}({{ event.mightComeCount }}) / {{ event.totalAbsence }}</td>
+                    <td class="EventCell TextAlignRight" style="width: 42px;">{{ event.inviteTime | amDateFormat:'ddd DD'  }}</td>
+                    <td class="EventCell" style="width: 30px;">{{ event.inviteTime | amDateFormat:'HH:mm'  }}</td>
+                    <td class="EventCell" style="width: 39px;">{{ event.willComeCount }}({{ event.mightComeCount }}) / {{ event.totalAbsence }}</td>
                 </tr>
             </tbody>
         </table>
