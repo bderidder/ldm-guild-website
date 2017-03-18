@@ -49,9 +49,8 @@
                         <div class="menu-column menu-column-tiles masonry-column-normal">
 
                             <a class="masonry-item" href="{{ path('eventsIndex') }}">
-                                <div class="tile double">
-                                    {{ render(controller('LaDanseSiteBundle:Calendar/Calendar:tilePartial')) }}
-                                    <div class="label"><i class="fa fa-calendar fa-2x"></i></div>
+                                <div class="tile double" ng-app="LaDanseApp">
+                                    <event-list-tile></event-list-tile>
                                 </div>
                             </a>
 
@@ -271,6 +270,18 @@
 
 {% endblock %}
 
+{% block stylesheet %}
+
+    {{ parent() }}
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/ladanseangular/css/ladanse.less'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+{% endblock %}
+
 {% block javascript %}
 
     {# make sure that any other content of this tag is rendered as well #}
@@ -432,5 +443,7 @@
         });
 
     </script>
+
+    {{ include('LaDanseAngularBundle::javascript.html.twig') }}
 
 {% endblock %}

@@ -25,7 +25,7 @@ forumsModule.directive('waitingSpinner', function()
     this.checkShowSpinner = function()
     {
         this.showSpinner = this.waitTimePassed && $scope.show;
-    }
+    };
 
     this.showUpdated = function()
     {
@@ -42,7 +42,7 @@ forumsModule.directive('waitingSpinner', function()
     setTimeout(
         function ()
         {
-            this.waitTimePassed = true;
+            myThis.waitTimePassed = true;
 
             myThis.checkShowSpinner();
         },
