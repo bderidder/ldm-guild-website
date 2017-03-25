@@ -3,56 +3,50 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-"use strict";
+(function() {
 
-var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
+    "use strict";
 
-eventsModule.directive('ladanseTime', function()
-{
-    return {
-        restrict: 'E',
-        controller: 'LaDanseCtrl',
-        controllerAs: 'ctrl',
-        scope: {
-            time: '=',
-            format: '=',
-            showServerTime: '='
-        },
-        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/ladanseTime/ladanseTime.html')
-    };
-})
-.controller('LaDanseCtrl', function($scope, $rootScope)
-{
-    var ctrl = this;
+    var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
 
-    ctrl.format = $scope.format;
+    eventsModule
+        .directive('ladanseTime', function () {
+            return {
+                restrict: 'E',
+                controller: 'LaDanseTimeCtrl',
+                controllerAs: 'ctrl',
+                scope: {
+                    time: '='
+                },
+                templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/ladanseTime/ladanseTime.html')
+            };
+        })
+        .controller('LaDanseTimeCtrl', LaDanseTimeCtrl);
 
-    $scope.$watch(
-        'showServerTime',
-        function ()
-        {
-            ctrl.updateTimeZone();
-        }
-    );
+    LaDanseTimeCtrl.$inject = ['$scope'];
 
-    ctrl.toggleTimeZoneShown = function()
+    function LaDanseTimeCtrl($scope)
     {
-        $scope.showServerTime = !$scope.showServerTime;
+        var ctrl = this;
 
-        ctrl.updateTimeZone();
-    };
+        var localTimeZone = moment.tz.guess();
+        //var localTimeZone = "Africa/Johannesburg";
 
-    ctrl.updateTimeZone = function()
-    {
-        if ($scope.showServerTime)
-        {
-            ctrl.time = moment($scope.time);
-        }
-        else
-        {
-            ctrl.time = moment($scope.time).tz("Africa/Johannesburg");
-        }
-    };
+        ctrl.format = 'HH:mm';
 
-    ctrl.updateTimeZone();
-});
+        ctrl.times = [
+            {
+                'label': 'Server Realm Time',
+                'time': moment($scope.time).tz(Constants.REALM_SERVER_TIMEZONE).format(ctrl.format),
+                'timeZone': Constants.REALM_SERVER_TIMEZONE
+            },
+            {
+                'label': 'Local Time',
+                'time': moment($scope.time).tz(localTimeZone).format(ctrl.format),
+                'timeZone': localTimeZone
+            }
+        ];
+
+        ctrl.time = moment($scope.time).tz(Constants.REALM_SERVER_TIMEZONE);
+    }
+})();

@@ -21,7 +21,7 @@ eventsModule.directive('eventEditor', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/eventEditor/eventEditor.html')
     };
 })
-.controller('EventEditorCtrl', function($scope, $rootScope)
+.controller('EventEditorCtrl', function($scope)
 {
     var ctrl = this;
 
@@ -67,44 +67,74 @@ eventsModule.directive('eventEditor', function()
 
     ctrl.updateShowExtended = function()
     {
-        ctrl.showCustomName = ctrl.form.eventType.value == 'CustomEvent';
-        ctrl.showCustomHours = ctrl.form.hoursType.value == 'CustomHours';
+        ctrl.showCustomName = ctrl.form.eventType.value === 'CustomEvent';
+        ctrl.showCustomHours = ctrl.form.hoursType.value === 'CustomHours';
     };
 
     ctrl.verifyForm = function()
     {
+        console.log("START - eventEditor form validation");
+
         ctrl.formIsValid = true;
 
-        if (ctrl.form.eventType.value == 'CustomEvent')
+        if (ctrl.form.eventType.value === 'CustomEvent')
         {
-            ctrl.formIsValid &= (ctrl.form.eventName != null && ctrl.form.eventName.length > 1)
+            if (ctrl.form.eventName === null || ctrl.form.eventName.length <= 1)
+            {
+                console.log("eventEditor form invalid because event name is empty or too short in custom mode");
+                ctrl.formIsValid = false;
+            }
         }
         else
         {
-            ctrl.formIsValid &=
-                (ctrl.form.raidInstance != null && ctrl.form.raidInstance.length > 1)
-                &&
-                (ctrl.form.instanceDifficulty != null && ctrl.form.instanceDifficulty.length > 1);
+            if (ctrl.form.raidInstance === null
+                || ctrl.form.raidInstance.length <= 1
+                || ctrl.form.instanceDifficulty === null
+                || ctrl.form.instanceDifficulty.length <= 1)
+            {
+                console.log("eventEditor form invalid because raid instance or instance difficulty not given in Legion mode");
+                ctrl.formIsValid = false;
+            }
         }
 
-        if (ctrl.form.hoursType.value == 'CustomHours')
+        if (ctrl.form.hoursType.value === 'CustomHours')
         {
-            ctrl.formIsValid &=
-                ctrl.form.inviteTime != null
-                &&
-                ctrl.form.startTime != null
-                &&
-                ctrl.form.endTime != null;
+            if (ctrl.form.inviteTime === null
+                || ctrl.form.startTime === null
+                || ctrl.form.endTime === null)
+            {
+                console.log("eventEditor form invalid because invite, start or end time is not supplied in custom hours mode");
+                ctrl.formIsValid = false;
+            }
 
-            ctrl.formIsValid &= ctrl.form.inviteTime <= ctrl.form.startTime;
-            ctrl.formIsValid &= ctrl.form.startTime <= ctrl.form.endTime;
+            if (ctrl.form.inviteTime > ctrl.form.startTime)
+            {
+                console.log("eventEditor form invalid because invite is not before or equal to start time in custom hours mode");
+                ctrl.formIsValid = false;
+            }
+
+            if (ctrl.form.startTime > ctrl.form.endTime)
+            {
+                console.log("eventEditor form invalid because start is not before or equal to end time in custom hours mode");
+                ctrl.formIsValid = false;
+            }
+        }
+
+        if (ctrl.form.eventDate === null)
+        {
+            console.log("eventEditor form invalid because event date is not given");
+            ctrl.formIsValid = false;
         }
 
         var now = new Date();
 
-        ctrl.formIsValid &= ctrl.form.eventDate != null;
+        if (this.getInviteTime() < now)
+        {
+            console.log("eventEditor form invalid because invite time is before now");
+            ctrl.formIsValid = false;
+        }
 
-        ctrl.formIsValid &= this.getInviteTime() >= now;
+        console.log("END - eventEditor form validation");
     };
 
     ctrl.saveClicked = function()
@@ -112,7 +142,7 @@ eventsModule.directive('eventEditor', function()
         ctrl.verifyForm();
         if (!ctrl.formIsValid) return;
 
-        if (ctrl.form.eventType.value == 'CustomEvent')
+        if (ctrl.form.eventType.value === 'CustomEvent')
         {
             ctrl.editorModel.name = ctrl.form.eventName;
         }
@@ -120,7 +150,7 @@ eventsModule.directive('eventEditor', function()
         {
             var eventName = ctrl.form.raidInstance;
 
-            if (ctrl.form.instanceDifficulty != "To be decided")
+            if (ctrl.form.instanceDifficulty !== "To be decided")
             {
                 eventName = eventName + " (" + ctrl.form.instanceDifficulty + ")";
             }
@@ -128,25 +158,30 @@ eventsModule.directive('eventEditor', function()
             ctrl.editorModel.name = eventName;
         }
 
-        var inviteTime;
-        var startTime;
-        var endTime;
-
         var baseDate = ctrl.form.eventDate;
 
-        if (ctrl.form.hoursType.value == 'CustomHours')
+        if (ctrl.form.hoursType.value === 'CustomHours')
         {
-            inviteTime = new Date(baseDate.valueOf());
-            inviteTime.setHours(ctrl.form.inviteTime.getHours());
-            inviteTime.setMinutes(ctrl.form.inviteTime.getMinutes());
+            var inviteTime = TimeUtils.createMoment(
+                baseDate,
+                ctrl.form.inviteTime.getHours(),
+                ctrl.form.inviteTime.getMinutes(),
+                Constants.REALM_SERVER_TIMEZONE
+            );
 
-            startTime = new Date(baseDate.valueOf());
-            startTime.setHours(ctrl.form.startTime.getHours());
-            startTime.setMinutes(ctrl.form.startTime.getMinutes());
+            var startTime = TimeUtils.createMoment(
+                baseDate,
+                ctrl.form.startTime.getHours(),
+                ctrl.form.startTime.getMinutes(),
+                Constants.REALM_SERVER_TIMEZONE
+            );
 
-            endTime = new Date(baseDate.valueOf());
-            endTime.setHours(ctrl.form.endTime.getHours());
-            endTime.setMinutes(ctrl.form.endTime.getMinutes());
+            var endTime = TimeUtils.createMoment(
+                baseDate,
+                ctrl.form.endTime.getHours(),
+                ctrl.form.endTime.getMinutes(),
+                Constants.REALM_SERVER_TIMEZONE
+            );
 
             ctrl.editorModel.inviteTime = inviteTime;
             ctrl.editorModel.startTime = startTime;
@@ -154,21 +189,9 @@ eventsModule.directive('eventEditor', function()
         }
         else
         {
-            inviteTime = new Date(baseDate.valueOf());
-            inviteTime.setHours(19);
-            inviteTime.setMinutes(15);
-
-            startTime = new Date(baseDate.valueOf());
-            startTime.setHours(19);
-            startTime.setMinutes(30);
-
-            endTime = new Date(baseDate.valueOf());
-            endTime.setHours(22);
-            endTime.setMinutes(0);
-
-            ctrl.editorModel.inviteTime = inviteTime;
-            ctrl.editorModel.startTime = startTime;
-            ctrl.editorModel.endTime = endTime;
+            ctrl.editorModel.inviteTime = TimeUtils.createDefaultInviteTime(baseDate);
+            ctrl.editorModel.startTime = TimeUtils.createDefaultStartTime(baseDate);
+            ctrl.editorModel.endTime = TimeUtils.createDefaultEndTime(baseDate);
         }
 
         ctrl.editorModel.description = ctrl.form.eventDescription;
@@ -181,17 +204,18 @@ eventsModule.directive('eventEditor', function()
         var inviteTime;
         var baseDate = ctrl.form.eventDate;
 
-        if (ctrl.form.hoursType.value == 'CustomHours')
+        if (ctrl.form.hoursType.value === 'CustomHours')
         {
-            inviteTime = new Date(baseDate.valueOf());
-            inviteTime.setHours(ctrl.form.inviteTime.getHours());
-            inviteTime.setMinutes(ctrl.form.inviteTime.getMinutes());
+            inviteTime = TimeUtils.createMoment(
+                baseDate,
+                ctrl.form.inviteTime.getHours(),
+                ctrl.form.inviteTime.getMinutes(),
+                Constants.REALM_SERVER_TIMEZONE
+            ).toDate();
         }
         else
         {
-            inviteTime = new Date(baseDate.valueOf());
-            inviteTime.setHours(19);
-            inviteTime.setMinutes(15);
+            inviteTime = TimeUtils.createDefaultInviteTime(baseDate).toDate();
         }
 
         return inviteTime;
@@ -200,7 +224,7 @@ eventsModule.directive('eventEditor', function()
     ctrl.initForm = function()
     {
         // if an event name is already given, we force the simplified view
-        if (ctrl.editorModel.name != null && ctrl.editorModel.name.length > 0)
+        if (ctrl.editorModel.name !== null && ctrl.editorModel.name.length > 0)
         {
             ctrl.simplified = true;
             ctrl.form.eventName = ctrl.editorModel.name;
@@ -218,10 +242,10 @@ eventsModule.directive('eventEditor', function()
         }
 
         ctrl.form.eventDescription = ctrl.editorModel.description;
-        ctrl.form.eventDate = new Date(ctrl.editorModel.inviteTime.valueOf());
-        ctrl.form.inviteTime = new Date(ctrl.editorModel.inviteTime.valueOf());
-        ctrl.form.startTime = new Date(ctrl.editorModel.startTime.valueOf());
-        ctrl.form.endTime = new Date(ctrl.editorModel.endTime.valueOf());
+        ctrl.form.eventDate = moment(ctrl.editorModel.inviteTime).tz(Constants.REALM_SERVER_TIMEZONE);
+        ctrl.form.inviteTime = moment(ctrl.editorModel.inviteTime).tz(Constants.REALM_SERVER_TIMEZONE).toDate();
+        ctrl.form.startTime = moment(ctrl.editorModel.startTime).tz(Constants.REALM_SERVER_TIMEZONE).toDate();
+        ctrl.form.endTime = moment(ctrl.editorModel.endTime).tz(Constants.REALM_SERVER_TIMEZONE).toDate();
 
         $scope.$watch(
             'ctrl.form',
