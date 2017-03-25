@@ -27,6 +27,13 @@
 
     function LaDanseTimeCtrl($scope)
     {
+        // an ugly hack to make sure no tooltips remain lingering
+        // around when a ui-route state change is made
+        $scope.$on("$destroy", function handler()
+        {
+            $('span.ladanse-time-tooltip').qtip('hide');
+        });
+
         var ctrl = this;
 
         var localTimeZone = moment.tz.guess();
