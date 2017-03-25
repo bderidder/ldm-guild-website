@@ -24,9 +24,9 @@ class EventMapper
             ->setId($event->getId())
             ->setName($event->getName())
             ->setDescription($event->getDescription())
-            ->setInviteTime(EventMapper::fixTimeZone($event->getInviteTime()))
-            ->setStartTime(EventMapper::fixTimeZone($event->getStartTime()))
-            ->setEndTime(EventMapper::fixTimeZone($event->getEndTime()))
+            ->setInviteTime($event->getInviteTime())
+            ->setStartTime($event->getStartTime())
+            ->setEndTime($event->getEndTime())
             ->setState($event->getFiniteState())
             ->setOrganiser(
                 new DTO\Reference\AccountReference(
