@@ -35,7 +35,7 @@ eventsModule.directive('eventEditor', function()
     ctrl.formIsValid = false;
 
     ctrl.masterData = {
-        raidInstances: ['The Emerald Nightmare', 'Trial of Valor', 'Nighthold'],
+        raidInstances: ['The Emerald Nightmare', 'Trial of Valor', 'The Nighthold', 'Tomb of Sargeras'],
         instanceDifficulties: ['To be decided', 'Normal', 'Heroic', 'Mythic']
     };
 
