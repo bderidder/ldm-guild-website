@@ -20,7 +20,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 {
     const WOWHEAD_RSS_URL = "http://www.wowhead.com/news&rss";
 
-    const GET_TIMEOUT = 20; // seconds of timeout
+    const GET_TIMEOUT = 60; // seconds of timeout
 
     /**
      * @return void
