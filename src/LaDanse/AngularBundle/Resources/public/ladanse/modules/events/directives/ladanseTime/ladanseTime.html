@@ -3,9 +3,8 @@
   ~ @link     https://github.com/bderidder/ldm-guild-website
   -->
 
-<span ng-click="ctrl.toggleTimeZoneShown()" style="cursor: pointer">
-    <i ng-if="showServerTime" class="fa fa-globe" aria-hidden="true"></i>
-    <i ng-if="!showServerTime" class="fa fa-home" aria-hidden="true"></i>
+<span style="cursor: pointer" class="ladanse-time-tooltip"
+      qtip-time times="ctrl.times">
     {{ ctrl.time | amDateFormat:ctrl.format }}
 </span>
 

@@ -60,34 +60,27 @@ eventsModule.directive('createEvent', function()
                 },
                 function(errorMessage)
                 {
-                    alertify.error('Failed to create event');
+                    alertify.error('Failed to create event - ' + errorMessage);
                 }
             );
-    };
-
-    ctrl.createDateForTime = function(onDate, hours, minutes)
-    {
-        var now = moment(onDate);
-
-        now.hours(hours);
-        now.minutes(minutes);
-        now.seconds(0);
-        now.milliseconds(0);
-
-        return now;
     };
 
     ctrl.init = function()
     {
         ctrl.editorModel = new EventEditorModel();
 
-        var onDate = moment($stateParams.onDate, ON_DATE_FORMAT);
+        // Create a new moment based on the given date.
+        // We don't really care about the timezone set, we will update it immediately.
+        var baseDate = moment($stateParams.onDate, ON_DATE_FORMAT);
 
-        if (!onDate.isValid()) onDate = new Date();
+        if (!baseDate.isValid())
+        {
+            $state.go('events.calendar');
+        }
 
-        ctrl.editorModel.inviteTime = ctrl.createDateForTime(onDate, 19, 15);
-        ctrl.editorModel.startTime = ctrl.createDateForTime(onDate, 19, 30);
-        ctrl.editorModel.endTime = ctrl.createDateForTime(onDate, 22, 0);
+        ctrl.editorModel.inviteTime = TimeUtils.createDefaultInviteTime(baseDate);
+        ctrl.editorModel.startTime = TimeUtils.createDefaultStartTime(baseDate);
+        ctrl.editorModel.endTime = TimeUtils.createDefaultEndTime(baseDate);
     };
 
     ctrl.init();

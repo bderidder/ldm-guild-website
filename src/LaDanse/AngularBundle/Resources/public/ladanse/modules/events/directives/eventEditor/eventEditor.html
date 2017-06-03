@@ -71,7 +71,7 @@
             <label for="formHoursType" class="control-label col-sm-3 required">Hours</label>
             <div class="col-sm-9">
                 <div class="radio">
-                    <label><input type="radio" ng-model="ctrl.form.hoursType.value" value="NormalHours">Normal hours <i>(invite at 19:15, first pull at 19:30, end at 22:00, realm server time)</i></label>
+                    <label><input type="radio" ng-model="ctrl.form.hoursType.value" value="NormalHours">Normal hours <i>(invite at 19:15, first pull at 19:30, end at 22:00, <span style="color: red">expressed in realm server time</span>)</i></label>
                 </div>
                 <div class="radio">
                     <label><input type="radio" ng-model="ctrl.form.hoursType.value" value="CustomHours">Custom hours</label>
@@ -99,7 +99,7 @@
         <div class="form-group" ng-if="ctrl.showCustomHours">
             <div class="col-sm-3"></div>
             <div class="col-sm-9">
-                <p class="help-block">Invite, Start and End time must be expressed in realm server time (Paris, Brussels, Gothenburg, Stockholm)</p>
+                <p class="help-block"><span style="color: red">Invite, Start and End time are expressed in realm server time (Paris, Brussels, Gothenburg, Stockholm)</span></p>
             </div>
         </div>
         <div>
