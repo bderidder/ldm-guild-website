@@ -3,56 +3,62 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-"use strict";
+(function() {
 
-var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
+    "use strict";
 
-eventsModule.directive('ladanseTime', function()
-{
-    return {
-        restrict: 'E',
-        controller: 'LaDanseCtrl',
-        controllerAs: 'ctrl',
-        scope: {
-            time: '=',
-            format: '=',
-            showServerTime: '='
-        },
-        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/ladanseTime/ladanseTime.html')
-    };
-})
-.controller('LaDanseCtrl', function($scope, $rootScope)
-{
-    var ctrl = this;
+    var eventsModule = GetAngularModule(EVENTS_MODULE_NAME);
 
-    ctrl.format = $scope.format;
+    eventsModule
+        .directive('ladanseTime', function () {
+            return {
+                restrict: 'E',
+                controller: 'LaDanseTimeCtrl',
+                controllerAs: 'ctrl',
+                scope: {
+                    time: '='
+                },
+                templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/events/directives/ladanseTime/ladanseTime.html')
+            };
+        })
+        .controller('LaDanseTimeCtrl', LaDanseTimeCtrl);
 
-    $scope.$watch(
-        'showServerTime',
-        function ()
-        {
-            ctrl.updateTimeZone();
-        }
-    );
+    LaDanseTimeCtrl.$inject = ['$scope'];
 
-    ctrl.toggleTimeZoneShown = function()
+    function LaDanseTimeCtrl($scope)
     {
-        $scope.showServerTime = !$scope.showServerTime;
-
-        ctrl.updateTimeZone();
-    };
-
-    ctrl.updateTimeZone = function()
-    {
-        if ($scope.showServerTime)
+        // an ugly hack to make sure no tooltips remain lingering
+        // around when a ui-route state change is made
+        $scope.$on("$destroy", function handler()
         {
-            ctrl.time = moment($scope.time);
-        }
-        else
-        {
-            ctrl.time = moment($scope.time).tz("Africa/Johannesburg");
-        }
-    };
+            $('span.ladanse-time-tooltip').qtip('hide');
+        });
 
-    ctrl.updateTimeZone();
-});
+        var ctrl = this;
+
+        var localTimeZone = moment.tz.guess();
+        //var localTimeZone = "Africa/Johannesburg";
+
+        ctrl.format = 'HH:mm';
+
+        ctrl.times = [
+            {
+                'label': 'Realm Server Time',
+                'time': moment($scope.time).tz(Constants.REALM_SERVER_TIMEZONE).format(ctrl.format),
+                'timeZone': Constants.REALM_SERVER_TIMEZONE
+            },
+            {
+                'label': 'Your Local Time',
+                'time': moment($scope.time).tz(localTimeZone).format(ctrl.format),
+                'timeZone': localTimeZone
+            },
+            {
+                'label': 'UTC Time',
+                'time': moment($scope.time).tz('UTC').format(ctrl.format),
+                'timeZone': 'UTC'
+            }
+        ];
+
+        ctrl.time = moment($scope.time).tz(Constants.REALM_SERVER_TIMEZONE);
+    }
+})();

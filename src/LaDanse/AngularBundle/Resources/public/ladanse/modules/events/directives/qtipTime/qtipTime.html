@@ -1,0 +1,7 @@
+<table style="font-size: 0.9em; padding: 5px;">
+    <tr ng-repeat="timeEntry in viewModel">
+        <td style="text-align: right;">{{ timeEntry.label }}:</td>
+        <td>{{ timeEntry.time }}</td>
+        <td style="font-size: 0.8em;">({{ timeEntry.timeZone }})</td>
+    </tr>
+</table>

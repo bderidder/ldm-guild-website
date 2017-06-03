@@ -74,7 +74,7 @@
                                        class="fa fa-question" aria-hidden="true"></i>
                                     <i ng-if="event.state == 'Confirmed'"
                                        class="fa fa-check" aria-hidden="true" style="color: green;"></i>
-                                    {{ event.inviteTime | amDateFormat:'HH:mm' }} {{ event.name }}
+                                    <ladanse-time time="event.inviteTime"></ladanse-time> {{ event.name }}
                                 </small>
                             </div>
                         </a>

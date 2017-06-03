@@ -41,21 +41,21 @@ class Event implements StatefulInterface
     /**
      * @var $inviteTime \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="utc_datetime", nullable=false)
      */
     protected $inviteTime;
 
     /**
      * @var $startTime \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="utc_datetime", nullable=false)
      */
     protected $startTime;
 
     /**
      * @var $endTime \DateTime
      *
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="utc_datetime", nullable=false)
      */
     protected $endTime;
 

@@ -55,19 +55,19 @@
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">Invite Time</p>
-                    <p>{{ ctrl.event.inviteTime | amDateFormat:'HH:mm' }}</p>
+                    <p><ladanse-time time="ctrl.event.inviteTime"></ladanse-time></p>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">Start Time</p>
-                    <p>{{ ctrl.event.startTime | amDateFormat:'HH:mm' }}</p>
+                    <p><ladanse-time time="ctrl.event.startTime"></ladanse-time></p>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="event-label-container">
                     <p class="event-label">End Time</p>
-                    <p>{{ ctrl.event.endTime | amDateFormat:'HH:mm' }}</p>
+                    <p><ladanse-time time="ctrl.event.endTime"></ladanse-time></p>
                 </div>
             </div>
         </div>
