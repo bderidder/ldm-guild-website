@@ -24,9 +24,9 @@ class EventMapper
             ->setId($event->getId())
             ->setName($event->getName())
             ->setDescription($event->getDescription())
-            ->setInviteTime($event->getInviteTime())
-            ->setStartTime($event->getStartTime())
-            ->setEndTime($event->getEndTime())
+            ->setInviteTime(EventMapper::toRealmServerTime($event->getInviteTime()))
+            ->setStartTime(EventMapper::toRealmServerTime($event->getStartTime()))
+            ->setEndTime(EventMapper::toRealmServerTime($event->getEndTime()))
             ->setState($event->getFiniteState())
             ->setOrganiser(
                 new DTO\Reference\AccountReference(
@@ -91,8 +91,15 @@ class EventMapper
         return $dtoArray;
     }
 
-    private static function fixTimeZone(\DateTime $date)
+    private static function toRealmServerTime(\DateTime $date) : \DateTime
     {
-        return new \DateTime($date->format("Y-m-d H:i"), new DateTimeZone('Europe/Brussels'));
+        if ((new DateTimeZone('UTC'))->getOffset($date) == 0)
+        {
+            return $date->setTimezone(new DateTimeZone('Europe/Paris'));
+        }
+        else
+        {
+            throw new \Exception("The DateTime return from the database was not in UTC");
+        }
     }
 }
