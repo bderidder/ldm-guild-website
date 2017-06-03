@@ -43,14 +43,19 @@
 
         ctrl.times = [
             {
-                'label': 'Server Realm Time',
+                'label': 'Realm Server Time',
                 'time': moment($scope.time).tz(Constants.REALM_SERVER_TIMEZONE).format(ctrl.format),
                 'timeZone': Constants.REALM_SERVER_TIMEZONE
             },
             {
-                'label': 'Local Time',
+                'label': 'Your Local Time',
                 'time': moment($scope.time).tz(localTimeZone).format(ctrl.format),
                 'timeZone': localTimeZone
+            },
+            {
+                'label': 'UTC Time',
+                'time': moment($scope.time).tz('UTC').format(ctrl.format),
+                'timeZone': 'UTC'
             }
         ];
 
