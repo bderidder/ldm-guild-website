@@ -1,11 +1,11 @@
 Don't forget, the event '{{ data.activityData.event.name }}' you signed up for is TODAY!
 
-When: {{ data.activityData.event.inviteTime|date("d/m (D)") }}
+When: {{ data.activityData.event.inviteTime|date("d/m (D)", "Europe/Paris") }}
 
-Invite Time: {{ data.activityData.event.inviteTime|date("H:i") }}
-Start Time: {{ data.activityData.event.startTime|date("H:i") }}
+Invite Time: {{ data.activityData.event.inviteTime|date("H:i", "Europe/Paris") }}
+Start Time: {{ data.activityData.event.startTime|date("H:i", "Europe/Paris") }}
 
-End Time: {{ data.activityData.event.endTime|date("H:i") }}
+End Time: {{ data.activityData.event.endTime|date("H:i", "Europe/Paris") }}
 
 {{ data.activityData.event.description }}
 
