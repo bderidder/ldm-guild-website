@@ -1,25 +1,25 @@
 {{ data.account.displayName }}</b> updated the event '{{ data.activityData.oldEvent.name }}'
-{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i") }}
+{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("h:i", "Europe/Paris") }}
 
 BEFORE
 
-When: {{ data.activityData.oldEvent.inviteTime|date("d/m (D)") }}
+When: {{ data.activityData.oldEvent.inviteTime|date("d/m (D)", "Europe/Paris") }}
 
-Invite Time: {{ data.activityData.oldEvent.inviteTime|date("H:i") }}
-Start Time: {{ data.activityData.oldEvent.startTime|date("H:i") }}
+Invite Time: {{ data.activityData.oldEvent.inviteTime|date("H:i", "Europe/Paris") }}
+Start Time: {{ data.activityData.oldEvent.startTime|date("H:i", "Europe/Paris") }}
 
-End Time: {{ data.activityData.oldEvent.endTime|date("H:i") }}
+End Time: {{ data.activityData.oldEvent.endTime|date("H:i", "Europe/Paris") }}
 
 {{ data.activityData.oldEvent.description }}
 
 AFTER
 
-When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
+When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)", "Europe/Paris") }}
 
-Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i") }}
-Start Time: {{ data.activityData.newEvent.startTime|date("H:i") }}
+Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i", "Europe/Paris") }}
+Start Time: {{ data.activityData.newEvent.startTime|date("H:i", "Europe/Paris") }}
 
-End Time: {{ data.activityData.newEvent.endTime|date("H:i") }}
+End Time: {{ data.activityData.newEvent.endTime|date("H:i", "Europe/Paris") }}
 
 {{ data.activityData.newEvent.description }}
 

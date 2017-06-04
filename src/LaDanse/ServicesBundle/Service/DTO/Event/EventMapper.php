@@ -95,7 +95,7 @@ class EventMapper
     {
         if ((new DateTimeZone('UTC'))->getOffset($date) == 0)
         {
-            return $date->setTimezone(new DateTimeZone('Europe/Paris'));
+            return (clone $date)->setTimezone(new DateTimeZone('Europe/Paris'));
         }
         else
         {

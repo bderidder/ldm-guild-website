@@ -17,7 +17,7 @@
 
     <b>{{ data.account.displayName }}</b> <font color="red">deleted</font> the event '{{ data.activityData.event.name }}'
     <br/>
-    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i", "Europe/Paris") }}</span>
 
     <div class="PostContent">
 
@@ -25,19 +25,19 @@
             <tr>
                 <td align="center">
                     <p class="event-label">When</p>
-                    <p>{{ data.activityData.event.inviteTime|date("d/m (D)") }}</p>
+                    <p>{{ data.activityData.event.inviteTime|date("d/m (D)", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Invite Time</p>
-                    <p>{{ data.activityData.event.inviteTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.event.inviteTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Start Time</p>
-                    <p>{{ data.activityData.event.startTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.event.startTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">End Time</p>
-                    <p>{{ data.activityData.event.endTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.event.endTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
             </tr>
         </table>

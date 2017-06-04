@@ -2,12 +2,12 @@ Confirmed!
 
 The organiser of the event '{{ data.activityData.newEvent.name }}' you signed up for, confirmed the event!
 
-When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}
+When: {{ data.activityData.newEvent.inviteTime|date("d/m (D)", "Europe/Paris") }}
 
-Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i") }}
-Start Time: {{ data.activityData.newEvent.startTime|date("H:i") }}
+Invite Time: {{ data.activityData.newEvent.inviteTime|date("H:i", "Europe/Paris") }}
+Start Time: {{ data.activityData.newEvent.startTime|date("H:i", "Europe/Paris") }}
 
-End Time: {{ data.activityData.newEvent.endTime|date("H:i") }}
+End Time: {{ data.activityData.newEvent.endTime|date("H:i", "Europe/Paris") }}
 
 {{ data.activityData.newEvent.description }}
 

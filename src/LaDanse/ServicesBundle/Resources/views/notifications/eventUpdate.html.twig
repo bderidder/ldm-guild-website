@@ -17,7 +17,7 @@
 
     <b>{{ data.account.displayName }}</b> updated the event '{{ data.activityData.oldEvent.name }}'
     <br/>
-    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i") }}</span>
+    <span class="activityHour">{{ notificationItem.activityOn|date("j F") }} at {{ notificationItem.activityOn|date("H:i", "Europe/Paris") }}</span>
 
     <div class="PostContent">
 
@@ -35,19 +35,19 @@
                 </td>
                 <td align="center">
                     <p class="event-label">When</p>
-                    <p>{{ data.activityData.oldEvent.inviteTime|date("d/m (D)") }}</p>
+                    <p>{{ data.activityData.oldEvent.inviteTime|date("d/m (D)", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Invite Time</p>
-                    <p>{{ data.activityData.oldEvent.inviteTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.oldEvent.inviteTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Start Time</p>
-                    <p>{{ data.activityData.oldEvent.startTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.oldEvent.startTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">End Time</p>
-                    <p>{{ data.activityData.oldEvent.endTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.oldEvent.endTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
             </tr>
             <tr>
@@ -63,19 +63,19 @@
                 </td>
                 <td align="center">
                     <p class="event-label">When</p>
-                    <p>{{ data.activityData.newEvent.inviteTime|date("d/m (D)") }}</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("d/m (D)", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Invite Time</p>
-                    <p>{{ data.activityData.newEvent.inviteTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.inviteTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">Start Time</p>
-                    <p>{{ data.activityData.newEvent.startTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.startTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
                 <td align="center">
                     <p class="event-label">End Time</p>
-                    <p>{{ data.activityData.newEvent.endTime|date("H:i") }}</p>
+                    <p>{{ data.activityData.newEvent.endTime|date("H:i", "Europe/Paris") }}</p>
                 </td>
             </tr>
         </table>
