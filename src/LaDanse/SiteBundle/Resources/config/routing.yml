@@ -13,10 +13,10 @@ SettingsRouting:
     type:     annotation
     prefix:   /settings
 
-TeamSpeakRouting:
-    resource: "@LaDanseSiteBundle/Controller/TeamSpeak"
+ChatVoiceRouting:
+    resource: "@LaDanseSiteBundle/Controller/ChatVoice"
     type:     annotation
-    prefix:   /teamspeak
+    prefix:   /chatvoice
 
 RegistrationRouting:
     resource: "@LaDanseSiteBundle/Controller/Registration"

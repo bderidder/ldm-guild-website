@@ -1,0 +1,39 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Guild Chat & Voice - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Guild Chat & Voice') }}
+
+    <p>Test</p>
+
+    <div style="float: right;">
+
+    <iframe src="https://discordapp.com/widget?id=196163827824459776&theme=dark"
+            width="300"
+            height="500"
+            allowtransparency="true"
+            frameborder="0"></iframe>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+
+    </style>
+
+{% endblock %}

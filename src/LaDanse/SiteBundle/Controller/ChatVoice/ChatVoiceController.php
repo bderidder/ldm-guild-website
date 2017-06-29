@@ -1,6 +1,6 @@
 <?php
 
-namespace LaDanse\SiteBundle\Controller\TeamSpeak;
+namespace LaDanse\SiteBundle\Controller\ChatVoice;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class TeamSpeakController extends LaDanseController
+class ChatVoiceController extends LaDanseController
 {
     /**
      * @var $logger \Monolog\Logger
@@ -29,7 +29,7 @@ class TeamSpeakController extends LaDanseController
 	/**
      * @return Response
      *
-     * @Route("/", name="teamSpeakIndex")
+     * @Route("/", name="chatVoiceIndex")
      */
     public function indexAction()
     {
@@ -49,6 +49,6 @@ class TeamSpeakController extends LaDanseController
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
-        return $this->render('LaDanseSiteBundle:teamspeak:index.html.twig');
+        return $this->render('LaDanseSiteBundle:chatvoice:index.html.twig');
     }
 }
