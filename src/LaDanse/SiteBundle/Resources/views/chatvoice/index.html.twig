@@ -86,6 +86,27 @@
     {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
     {{ parent() }}
 
+    <script>
+
+        $(function()
+        {
+            $(window).scroll(function()
+            {
+                var scrollTop = $(this).scrollTop();
+
+                var topPosition = 85 - scrollTop;
+
+                if (topPosition < 20)
+                {
+                    topPosition = 20;
+                }
+
+                $("#DiscordWidget").css('top', topPosition + 'px');
+            });
+        });
+
+    </script>
+
 {% endblock %}
 
 {% block stylesheet %}
