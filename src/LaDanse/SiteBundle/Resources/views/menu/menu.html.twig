@@ -65,14 +65,14 @@
                                 </div>
                             </a>
 
-                            <a class="masonry-item"
-                                    {% if auth.currentContext.authenticated %}
-                                        href="{{ path('teamSpeakIndex') }}"
-                                    {% else %}
-                                        href="{{ path('welcomeIndex') }}"
-                                    {% endif %} >
-                                <div id="teamspeakTile" class="tile default" data-delay="2000" data-direction="horizontal">
-                                    <div class="label"><i class="fa fa-headphones fa-2x"></i></div>
+                            <a class="masonry-item" href="{{ path('chatVoiceIndex') }}">
+                                <div class="tile default" data-direction="vertical" data-delay="8000">
+                                    <div class="tile-content">
+                                        <div class="image">
+                                            <i class="fa fa-headphones fa-5x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="label"><span>Discord Chat &amp; Voice</span></div>
                                 </div>
                             </a>
 
@@ -286,39 +286,6 @@
 
     {# make sure that any other content of this tag is rendered as well #}
     {{ parent() }}
-
-    <script>
-
-        function refreshTeamSpeakTile()
-        {
-            var clientsServiceURL = '../teamspeak/clients';
-
-            $.when($.ajax({
-                type: "GET",
-                url: clientsServiceURL,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json"
-            })).then(tsClientsSuccessFunc, tsClientsErrorFunc);
-        }
-
-        $(document).ready(function()
-        {
-            refreshTeamSpeakTile();
-            setInterval(refreshTeamSpeakTile, 30 * 1000);
-        });
-
-        $(document).ready(function()
-        {
-            var viewportWidth = $( document ).width();
-            var tileContainer = $( '#top-tile-container' );
-
-            var margin = Math.round((viewportWidth - tileContainer.width()) / 2 - 1);
-
-            tileContainer.css('margin-left', margin + 'px');
-            tileContainer.css('visibility', 'visible');
-        });
-
-    </script>
 
     <script>
 

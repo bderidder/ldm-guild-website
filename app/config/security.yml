@@ -63,7 +63,7 @@ security:
         - { path: ^/events,         role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/settings,       role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/claims,         role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/teamspeak,      role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/chatvoice,      role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/gallery,        role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/help,           role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/menu,           role: IS_AUTHENTICATED_REMEMBERED }
