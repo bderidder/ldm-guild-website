@@ -9,6 +9,7 @@ use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\CalendarExport;
 use LaDanse\DomainBundle\Entity\Comments\Comment;
+use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Activity\ActivityEvent;
 
 use LaDanse\ServicesBundle\Activity\ActivityType;
@@ -93,26 +94,29 @@ class ICalController extends LaDanseController
         /** @var \LaDanse\SiteBundle\Model\EventModel $event */
         foreach($allEvents as $event)
         {
+            // user is signed (will come or might come) so we add the event regardless of settings
             if ($event->getSignUps()->getCurrentUserWillCome() || $event->getSignUps()->getCurrentUserMightCome())
             {
-                $vEvent = $this->createICalEvent($event, '(SIGNED) ' . $event->getName());
+                $vEvent = $this->createICalEvent($event,$this->getEventDescription($event,'(SIGNED)') . ' ' . $event->getName());
                 $vEvent->setStatus(iCal\Component\Event::STATUS_CONFIRMED);
 
                 $vCalendar->addComponent($vEvent);
             }
 
+            // user signed absent and wants to see absent events in calendar
             if ($event->getSignUps()->getCurrentUserAbsent() && $exportSettings->getExportAbsence())
             {
-                $vEvent = $this->createICalEvent($event, '(ABSENT) ' . $event->getName());
+                $vEvent = $this->createICalEvent($event, $this->getEventDescription($event,'(ABSENT)') . ' ' . $event->getName());
                 $vEvent->setStatus(iCal\Component\Event::STATUS_TENTATIVE); // CANCELLED is not always shown in some applications
 
                 $vCalendar->addComponent($vEvent);
             }
 
+            // the event is new for the user and the user wants to see new events
             if (!($event->getSignUps()->getCurrentUserSignedUp() || $event->getSignUps()->getCurrentUserAbsent())
                 && $exportSettings->getExportNew())
             {
-                $vEvent = $this->createICalEvent($event, '(NEW) ' . $event->getName());
+                $vEvent = $this->createICalEvent($event, $this->getEventDescription($event,'(NEW)') . ' ' . $event->getName());
                 $vEvent->setStatus(iCal\Component\Event::STATUS_TENTATIVE);
 
                 $vCalendar->addComponent($vEvent);
@@ -189,7 +193,7 @@ class ICalController extends LaDanseController
         $vEvent->setSummary($description);
         $vEvent->setDescription($this->createDescription($event));
 
-        $vEvent->setUrl($this->generateUrl('eventsIndex', null, true) . "#/events/event/" . $event->getId());
+        $vEvent->setUrl($this->generateUrl('eventsIndex') . "#/events/event/" . $event->getId());
 
         $vEvent->setUseTimezone(true);
 
@@ -255,7 +259,7 @@ class ICalController extends LaDanseController
             ($commentGroup->getComments()->count() > 0))
         {
             $description = $description . "\n\n";
-            $description = $description . $this->generateUrl('eventsIndex', null, true) . "#/events/event/" . $event->getId();
+            $description = $description . $this->generateUrl('eventsIndex') . "#/events/event/" . $event->getId();
         }
 
         return $description;
@@ -264,6 +268,19 @@ class ICalController extends LaDanseController
     private function fixTimezone(\DateTime $date)
     {
         return new \DateTime($date->format("Y-m-d H:i"), new DateTimeZone('Europe/Brussels'));
+    }
+
+    private function getEventDescription(EventModel $event, string $defaultDescription)
+    {
+        if ($event->getState() == EventStateMachine::CANCELLED)
+        {
+            return "(CANCELLED)";
+        }
+        else
+        {
+            return $defaultDescription;
+        }
+
     }
 
     private function loginAccount(Request $request, Account $account)
