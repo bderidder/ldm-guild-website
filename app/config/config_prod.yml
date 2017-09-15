@@ -28,7 +28,7 @@ monolog:
             from_email: "noreply@ladanse.org"
             to_email:   "%admin_email%"
             subject:    "An Error Occurred on La Danse website!"
-            level:      error
+            level:      critical
         ladanse:
             type:     stream
             path:     "%kernel.logs_dir%/ladanse.log"
