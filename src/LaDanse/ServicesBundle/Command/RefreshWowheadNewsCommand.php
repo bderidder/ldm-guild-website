@@ -48,7 +48,7 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
         $xmlString = $this->getXMLFromUrl($context, RefreshWowheadNewsCommand::WOWHEAD_RSS_URL);
 
-        $xml = simplexml_load_string($xmlString);
+        $xml = simplexml_load_string($xmlString, null, LIBXML_NOERROR);
 
         if ($xml === false)
         {
@@ -72,11 +72,11 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
         {
             $pubTime = strtotime((string)$itemXML->pubDate);
 
-            $item = (object) [
+            $item = (object) array(
                 'title'   => (string) $itemXML->title,
                 'link'    => (string) $itemXML->link,
                 'pubDate' => date('D, d M, H:i', $pubTime)
-            ];
+            );
 
             $count++;
 
