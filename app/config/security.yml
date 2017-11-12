@@ -73,5 +73,6 @@ security:
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/app,            role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/discord/api,    role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 
