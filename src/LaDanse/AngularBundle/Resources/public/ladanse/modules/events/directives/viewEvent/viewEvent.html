@@ -38,6 +38,13 @@
         <div class="state-text">This event has been cancelled. You can only comment.</div>
     </div>
 
+    <!-- EVENT CANCELLED and in THE PAST -->
+    <div ng-if="ctrl.event.isCancelled && !ctrl.event.isFuture"
+         class="alert alert-danger event-state-container">
+        <div class="state-icon"><i class="fa fa-times fa-2x" aria-hidden="true"></i></div>
+        <div class="state-text">This event was cancelled. You can only comment.</div>
+    </div>
+
     <!-- Render description, invite time ... in a horizontal table -->
     <div class="container-fluid" style="padding-top: 15px;">
         <div class="row">
