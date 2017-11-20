@@ -56,6 +56,9 @@ parameters:
         # boolean flag stating if cookies can only be send over HTTPS (when true) or also over HTTP (when false)
         secure_cookies: false
 
+        # secret that is used for authentication for the Discord bot requests
+        discord.bot.secret: SomeSecret
+
         # describe the type of deployment
         deployment_name: '[master] local development'
         deployment_type: 'dev'
