@@ -132,6 +132,12 @@ services:
   cache:
       class: Doctrine\Common\Cache\FilesystemCache
       arguments: [ "%kernel.cache_dir%" ]
+  app.security.ladanse_guard_authenticator:
+      class: LaDanse\SiteBundle\Security\LaDanseGuardAuthenticator
+      autowire: true
+  app.security.ladanse_api_guard_authenticator:
+      class: LaDanse\SiteBundle\Security\LaDanseAPIGuardAuthenticator
+      autowire: true
 
 sp_bower:
   bin: "%bower_binary_path%"

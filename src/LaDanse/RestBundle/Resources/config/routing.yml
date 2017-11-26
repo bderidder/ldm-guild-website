@@ -38,7 +38,3 @@ CallbackRouting:
     type:     annotation
     prefix:   /api/callback
 
-DiscordRouting:
-    resource: "@LaDanseRestBundle/Controller/Discord"
-    type:     annotation
-    prefix:   /discord/api
