@@ -3,8 +3,10 @@
 namespace LaDanse\SiteBundle\Security;
 
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
 use LaDanse\DomainBundle\Entity\Account;
+use LaDanse\DomainBundle\Entity\Discord\DiscordAccessToken;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -189,8 +191,22 @@ class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
         {
             if ($credentials['impersonation'])
             {
-                return $this->em->getRepository(Account::REPOSITORY)
-                    ->findOneBy(['id' => $credentials['impersonation']]);
+                /* @var \Doctrine\ORM\EntityRepository $accessTokenRepo */
+                $accessTokenRepo = $this->em->getRepository(DiscordAccessToken::REPOSITORY);
+
+                $discordAccessTokens = $accessTokenRepo->matching(
+                    Criteria::create()->where(Criteria::expr()->eq("accessToken", $credentials['impersonation'])));
+
+                if (count($discordAccessTokens) != 1)
+                    return null;
+
+                /** @var DiscordAccessToken $discordAccessToken */
+                $discordAccessToken = $discordAccessTokens[0];
+
+                if ($discordAccessToken->getState() != DiscordAccessToken::STATE_ACTIVE)
+                    return null;
+
+                return $discordAccessToken->getAccount();
             }
             else
             {
