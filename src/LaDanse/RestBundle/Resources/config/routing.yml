@@ -33,6 +33,11 @@ DiscordGrantRouting:
     type:     annotation
     prefix:   /api/discord
 
+ProfileRouting:
+    resource: "@LaDanseRestBundle/Controller/Profile"
+    type:     annotation
+    prefix:   /api/profile
+
 QueriesRestRouting:
     resource: "@LaDanseRestBundle/Controller/Queries"
     type:     annotation
