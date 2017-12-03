@@ -1,0 +1,130 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Guild Chat & Voice - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Discord Bot Gnomie Help') }}
+
+    <div class="BotHelpContainer">
+
+        <p>
+            If you mark your sign up as "Will Come" it means that you intend to be there at invite time and you
+            currently have no reason to believe you won't be able to come.
+        </p>
+
+        <p class="BotCommandHeader">!help</p>
+
+        <p>
+            Use this command to get a URL to this help page.
+        </p>
+
+        <p class="BotCommandHeader">!raids</p>
+
+        <p>
+            Show the list of raids for the next 4 weeks. For each raid the bot lists the name, the day of the week
+            and the invite time. It also gives details on the number of people signed up in the form of "(x/y - z)".
+            "x" is the number of people who signed as "Will Come", y is the number of people who signed "Might Come"
+            and "z" is the number of people who informed us of their absence.
+        </p>
+
+        <p>
+            Each raid is followed by a link going straight to the sign up page for this event.
+        </p>
+
+        <div class="BotExample">
+            <p class="UserTag">Leto/Tanidia</p>
+            <p>!raids</p>
+            <br/>
+            <p class="UserTag">Gnomie</p>
+            <p>Upcoming raids from https://www.ladanse.org/</p>
+            <br/>
+            <p>Antorus, the Burning Throne (Normal) on Fri 8/12 19:15 - (12/2 - 3)</p>
+            <p>https://www.ladanse.org/app/events#/events/event/123</p>
+        </div>
+
+        <p class="BotCommandHeader">!hello</p>
+
+        <p>
+            For some commands (e.g. see !sign) the bot needs to be able to act in your name on the website. You
+            can use this command to initiate a process that will allow you to authorize the bot. If you don't do
+            this, it will be initiated when you issue a command for which the bot needs to be able to act
+            in your name on the website.
+        </p>
+
+        <p>
+            Note that part of this process continues in a private chat between you and the bot. So make sure to
+            check your private messages in your Discord client!
+        </p>
+
+        <p class="BotCommandHeader">!sign</p>
+
+        <p>
+            With this command you can sign up for a raid. Form a sentence like the one below:
+        </p>
+
+        <div class="BotExample">
+            <p class="UserTag">Leto/Tanidia</p>
+            <p>!sign will come for 17/02 as healer and dps</p>
+        </div>
+
+        <p>
+            The sentence always starts with the command "!sign", next comes either "will come", "might come"
+            or "absent", followed by a date and, optionally, a list of roles you want to sign up for.
+        </p>
+
+        <p>
+            If you haven't signed up for the raid on the given, the bot will sign you up. If you had already signed
+            up the bot will update your sign up to reflect what you wrote in the command.
+        </p>
+
+        <p>
+            You currently can't remove your sign up (but you can change it to "Absent".
+        </p>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+
+        div.BotHelpContainer
+        {
+        }
+
+        div.BotHelpContainer p.BotCommandHeader
+        {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        div.BotHelpContainer div.BotExample
+        {
+            background-color: rgb(100, 100, 100);
+            color: whitesmoke;
+            padding: 10px 10px 10px 15px;
+            margin: 20px 20px 20px 20px;
+            max-width: 600px;
+            border-radius: 15px;
+        }
+
+        div.BotHelpContainer div.BotExample p
+        {
+            padding: 0;
+            margin: 0;
+        }
+
+        div.BotHelpContainer div.BotExample p.UserTag
+        {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+    </style>
+
+{% endblock %}

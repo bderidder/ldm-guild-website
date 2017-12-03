@@ -45,10 +45,27 @@ class ChatVoiceController extends LaDanseController
         $this->eventDispatcher->dispatch(
             ActivityEvent::EVENT_NAME,
             new ActivityEvent(
-                ActivityType::TEAMSPEAK_VIEW,
+                ActivityType::CHATVOICE_VIEW,
                 $this->getAuthenticationService()->getCurrentContext()->getAccount())
         );
 
         return $this->render('LaDanseSiteBundle:chatvoice:index.html.twig');
+    }
+
+    /**
+     * @return Response
+     *
+     * @Route("/bothelp", name="botHelpIndex")
+     */
+    public function botHelpAction()
+    {
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHATVOICE_BOTHELP,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
+
+        return $this->render('LaDanseSiteBundle:chatvoice:bothelp.html.twig');
     }
 }
