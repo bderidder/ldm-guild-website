@@ -37,6 +37,9 @@ eventsModule.service(
                     .then(
                         function (httpRestResponse)
                         {
+                            console.log("Got HTTP Response for queryEvents");
+                            console.log(httpRestResponse);
+
                             var eventsPageDto = DTO.Events.EventsPageMapper.mapSingleObject(httpRestResponse.data);
 
                             console.log("Got events page DTO");
