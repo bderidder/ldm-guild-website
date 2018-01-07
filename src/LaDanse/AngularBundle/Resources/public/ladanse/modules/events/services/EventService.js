@@ -18,7 +18,7 @@ eventsModule.service(
 
         eventServiceInstance.getEventsPage = function(startOn)
         {
-            if (startOn == undefined || startOn == null)
+            if (!startOn || startOn == null)
             {
                 startOn = moment().format('YYYYMMDD');
             }
@@ -26,6 +26,8 @@ eventsModule.service(
             {
                 startOn = moment(startOn).format('YYYYMMDD');
             }
+
+            console.log("Fetching events page for " + startOn);
 
             var deferred = $q.defer();
 
@@ -36,6 +38,9 @@ eventsModule.service(
                         function (httpRestResponse)
                         {
                             var eventsPageDto = DTO.Events.EventsPageMapper.mapSingleObject(httpRestResponse.data);
+
+                            console.log("Got events page DTO");
+                            console.log(eventsPageDto);
 
                             deferred.resolve(eventsPageDto);
                         },

@@ -17,6 +17,13 @@ DTO.Events.EventsPageMapper =
     {
         var result = [];
 
+        if (!eventsPageObjectArray)
+        {
+            console.log("eventsPageObjectArray was null, that should not happen");
+
+            return result;
+        }
+
         var arrayLength = eventsPageObjectArray.length;
         for (var i = 0; i < arrayLength; i++)
         {
