@@ -12,7 +12,6 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\GameData\PatchGuild;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,10 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 class GuildsResource extends AbstractRestController
 {
     /**
-     * @ApiDoc(
-     *  description="Get all guilds known to the system"
-     * )
-     *
      * @param Request $request
      *
      * @return Response
@@ -43,10 +38,6 @@ class GuildsResource extends AbstractRestController
     }
 
     /**
-     * @ApiDoc(
-     *  description="Create a new guild"
-     * )
-     *
      * @param Request $request
      * @return Response
      * @Route("/", name="postGuild")

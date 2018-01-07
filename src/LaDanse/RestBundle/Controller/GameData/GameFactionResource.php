@@ -9,7 +9,6 @@ namespace LaDanse\RestBundle\Controller\GameData;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 class GameFactionResource extends AbstractRestController
 {
     /**
-     * @ApiDoc(
-     *  description="Get all known game factions"
-     * )
-     *
      * @return Response
      *
      * @Route("/", name="getAllGameFactions", options = { "expose" = true })

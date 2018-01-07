@@ -27,9 +27,15 @@ security:
 #                secure: "%secure_cookies%"
         main:
             pattern: ^/
-            guard:
-                authenticators:
-                    - app.security.ladanse_guard_authenticator
+#            guard:
+#                authenticators:
+#                    - app.security.ladanse_guard_authenticator
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                always_use_default_target_path: false
+                default_target_path:            /menu
+            logout_on_user_change: true
             logout:       true
             anonymous:    true
             remember_me:

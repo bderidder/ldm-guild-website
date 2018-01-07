@@ -16,12 +16,10 @@ use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutSignUp;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/")
@@ -91,11 +89,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Create a new event"
-     * )
-     *
      * @param Request $request
      *
      * @return Response
@@ -128,11 +121,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Update an existing event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      *
@@ -166,11 +154,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Change the state of an event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      *
@@ -204,11 +187,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Delete an event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      *
@@ -239,11 +217,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Create a new sign up for the given event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      *
@@ -277,11 +250,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Update an existing sign up for the given event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      * @param string $signUpId
@@ -316,11 +284,6 @@ class EventsResource extends AbstractRestController
     }
 
     /**
-     *
-     * @ApiDoc(
-     *  description="Delete an event"
-     * )
-     *
      * @param Request $request
      * @param string $eventId
      * @param string $signUpId

@@ -12,7 +12,6 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\GameData\PatchRealm;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 class RealmResource extends AbstractRestController
 {
     /**
-     * @ApiDoc(
-     *  description="Get all realms known to the system"
-     * )
-     *
      * @return Response
      *
      * @Route("/", name="getAllRealms", options = { "expose" = true })
@@ -44,10 +39,6 @@ class RealmResource extends AbstractRestController
     }
 
     /**
-     * @ApiDoc(
-     *  description="Create a new realm"
-     * )
-     *
      * @param Request $request
      * @return Response
      * @Route("/", name="postRealm")

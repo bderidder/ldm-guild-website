@@ -19,7 +19,6 @@ framework:
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
         handler_id:  ~
@@ -138,12 +137,3 @@ services:
   app.security.ladanse_api_guard_authenticator:
       class: LaDanse\SiteBundle\Security\LaDanseAPIGuardAuthenticator
       autowire: true
-
-sp_bower:
-  bin: "%bower_binary_path%"
-  assetic:
-    nest_dependencies: false
-  bundles:
-    LaDanseAngularBundle: ~
-
-nelmio_api_doc: ~
