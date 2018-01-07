@@ -1,0 +1,36 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Discord Bot 'Gnomie' Authorization - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Discord Bot \'Gnomie\' Authorization') }}
+
+    <div class="staticText">
+
+        <p>La Danse uses a bot named 'Gnomie' on our Discord server. You can interact with this bot using commands.
+           For some commands the bot has to perform actions in your name (e.g. signing you up for a raid).</p>
+
+        <p>If you click the button labeled 'Yes, authorize Gnomie' you will give Gnomie the permission to act in your
+           name when you issue certain commands. If you don't want this, select another page on the navigation bar on
+           the left and ignore this request for authorization.</p>
+
+        <p>If you don't authorize Gnomie to act in your name on this website, you will still be able to use all
+           commands where such authorization is not required (e.g. asking for a list of raids) but you won't
+           be able to run commands that have to be run in your name (e.g signing you up for a raids).</p>
+
+        <p>If you authorize Gnomie, you will not give this website or the bot the ability to act in your name on
+           Discord. You only allow the bot to act in your name on this website.</p>
+
+        <p>You can retract this authoriation at any moment in your account settings.</p>
+
+        <br/>
+
+        <p style="text-align: center">
+            <a href="{{ path('startDiscordAuth', { 'nonce': nonce, 'redirect': redirectUrl }) }}"
+               class="btn btn-primary">Yes, authorize Gnomie</a>
+        </p>
+
+    </div>
+
+{% endblock %}

@@ -28,6 +28,16 @@ CharacterRestRouting:
     type:     annotation
     prefix:   /api/characters
 
+DiscordGrantRouting:
+    resource: "@LaDanseRestBundle/Controller/DiscordAuth"
+    type:     annotation
+    prefix:   /api/discord
+
+ProfileRouting:
+    resource: "@LaDanseRestBundle/Controller/Profile"
+    type:     annotation
+    prefix:   /api/profile
+
 QueriesRestRouting:
     resource: "@LaDanseRestBundle/Controller/Queries"
     type:     annotation
@@ -38,7 +48,3 @@ CallbackRouting:
     type:     annotation
     prefix:   /api/callback
 
-DiscordRouting:
-    resource: "@LaDanseRestBundle/Controller/Discord"
-    type:     annotation
-    prefix:   /discord/api

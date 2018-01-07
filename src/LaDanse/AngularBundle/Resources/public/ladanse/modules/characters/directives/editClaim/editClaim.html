@@ -20,13 +20,15 @@
                 <div style="float: right;" ng-if="ctrl.character.level >= 10">
                     <a target="_blank"
                        class="battleNetLink"
-                       href="/redirect/http://eu.battle.net/wow/en/character/{{ ctrl.character.realm.getNormalizedName() }}/{{ ctrl.character.name }}/simple">Battle.net
-                        <img width="25" src="/bundles/ladansesite/images/BattleNet.png" />
-                    </a>
+                       href="/redirect/http://eu.battle.net/wow/en/character/{{ ctrl.character.realm.getNormalizedName() }}/{{ ctrl.character.name }}/simple">Battle.net Profile</a>
                     |
                     <a target="_blank"
                        class="battleNetLink"
                        href="/redirect/http://www.wowhead.com/flying#eu-{{ ctrl.character.realm.getNormalizedName() }}-{{ ctrl.character.name }}">Broken Isles Pathfinder</a>
+                    |
+                    <a target="_blank"
+                       class="battleNetLink"
+                       href="/redirect/http://www.wowhead.com/attunement#eu-{{ ctrl.character.realm.getNormalizedName() }}-{{ ctrl.character.name }}">Legion Attunements</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,117 @@
+{% extends 'LaDanseSiteBundle:settings:layout.html.twig' %}
+
+{% block settingsPanel %}
+
+	<h1>Discord Account Connect</h1>
+
+    <br/>
+
+{% if (not isConnected) %}
+
+    <div class="well">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <i class="fa fa-chain-broken fa-5x"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <p>You have not connected your Discord account to this website.</p>
+
+                    <p>Simply talk to Gnomie and say "!hello", it will give you instructions on how to
+                        connect your account.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% else %}
+
+    <div class="well">
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <i class="fa fa-chain fa-5x"></i>
+                </div>
+
+                <div class="col-md-10">
+                    <p>Your Discord account is connected to this website.</p>
+
+                    <a href="{{ path('disconnectDiscord') }}"
+                       class="btn btn-warning">Disconnect from Discord</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+    <div class="faq">
+
+    <p class="header">Frequently Asked Questions</p>
+
+    <p class="question">Is this secure? Will you be able to pretend to be me on Discord?</p>
+
+    <p class="answer">
+        This is secure. When you connect your Discord account to this site, we will not be able to pretend to
+        be you on Discord.
+    </p>
+
+    <p class="question">When I connect my Discord account, what will you do with it?</p>
+
+    <p class="answer">
+        When you connect your Discord account to this website, our bot 'Gnomie' will be able to perform
+        actions on this site in your name. A good example is Gnomie signing you up for a raid after you
+        asked it to do so in Discord.
+    </p>
+
+    <p class="question">I connected my Discord account and now I changed my mind, can I disconnect again?</p>
+
+    <p class="answer">
+        You can easily disconnect your Discord account by either selecting "Disconnect" above.
+    </p>
+
+    <p class="question">What will happen if I don't connect my Discord account? Can I still chat on Discord?</p>
+
+    <p class="answer">
+        If you do not connect your Discord account on this site, Gnomie will still help you as much as it can.
+        It will only not be able to perform personalized actions on this site for you. It has no influence on your
+        ability to join text and voice chats.
+    </p>
+
+    <p class="question">How can I connect my Discord account to this site?</p>
+
+    <p class="answer">
+        You can connect your Discord account to this site by talking to Gnomie on our Discord server. Simply say
+        "!hello" and Gnomie will given you instructions in a private message.
+    </p>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+        #discordConnectLink
+        {
+            background-color: #99b433;
+        }
+    </style>
+
+{% endblock %}

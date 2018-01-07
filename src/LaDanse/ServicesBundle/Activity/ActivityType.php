@@ -73,7 +73,8 @@ class ActivityType
     const SETTINGS_CALEXPORT_RESET  = 'Settings.CalExport.Reset';      // State Change
     const SETTINGS_NOTIF_UPDATE     = 'Settings.Notifications.Update'; // State Change
 
-    const TEAMSPEAK_VIEW = 'TeamSpeak.View'; // Read Only
+    const CHATVOICE_VIEW    = 'ChatVoice.View';    // Read Only
+    const CHATVOICE_BOTHELP = 'ChatVoice.BotHelp'; // Read Only
 
     const FEEDBACK_VIEW  = 'Feedback.View';  // Read Only
     const FEEDBACK_POST  = 'Feedback.Post';  // State Change
@@ -87,9 +88,15 @@ class ActivityType
     const REALM_CREATE = "Realm.Create"; // State Change
     const GUILD_CREATE = "Guild.Create"; // State Change
 
-    const QUERY_CHARACTERS_BY_CRITERIA        = "Query.CharactersByCriteriaQuery"; // Read Only
-    const QUERY_GET_CHARACTER_BY_ID           = "Query.GetCharacterByIdQuery"; // Read Only
+    const QUERY_CHARACTERS_BY_CRITERIA        = "Query.CharactersByCriteriaQuery";       // Read Only
+    const QUERY_GET_CHARACTER_BY_ID           = "Query.GetCharacterByIdQuery";           // Read Only
     const QUERY_CHARACTERS_CLAIMED_BY_ACCOUNT = "Query.CharactersClaimedByAccountQuery"; // Read Only
-    const QUERY_GET_ALL_CHARACTERS_IN_GUILD   = "Query.GetAllCharactersInGuildQuery"; // Read Only
-    const QUERY_CHARACTERS_BY_KEYWORDS        = "Query.CharactersByKeywordsQuery"; // Read Only
+    const QUERY_GET_ALL_CHARACTERS_IN_GUILD   = "Query.GetAllCharactersInGuildQuery";    // Read Only
+    const QUERY_CHARACTERS_BY_KEYWORDS        = "Query.CharactersByKeywordsQuery";       // Read Only
+
+    const AUTHZ_DISCORD_INFORM           = "Authorization.Discord.Inform";          // Read Only
+    const AUTHZ_DISCORD_REQUEST_AUTHCODE = "Authorization.Discord.RequestAuthCode"; // State Change
+    const AUTHZ_DISCORD_GRANT_TOKEN      = "Authorization.Discord.GrantToken";      // State Change
+    const AUTHZ_DISCORD_DISCONNECT       = "Authorization.Discord.GrantToken";      // State Change
+    const AUTHZ_DISCORD_CONNECT_STATUS   = "Authorization.Discord.ConnectStatus";   // Read Only
 }

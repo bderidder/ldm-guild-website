@@ -132,5 +132,26 @@ class PolicyCatalog
                 new ClaimerCanEditClaimRule()
             ]
         );
+
+        $this->topPolicies[] = new PolicySet(
+        'Discord Access - Auth Code',
+        ActivityType::AUTHZ_DISCORD_REQUEST_AUTHCODE,
+        [
+            new SelfCanRequestAuthCode()
+        ]);
+
+        $this->topPolicies[] = new PolicySet(
+        'Discord Access - Connect Status',
+        ActivityType::AUTHZ_DISCORD_CONNECT_STATUS,
+        [
+            new SelfCanRequestDiscordConnectStatus()
+        ]);
+
+        $this->topPolicies[] = new PolicySet(
+        'Discord Access - Disconnect',
+        ActivityType::AUTHZ_DISCORD_DISCONNECT,
+        [
+            new SelfCanDisconnectDiscord()
+        ]);
     }
 }

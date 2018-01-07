@@ -53,6 +53,11 @@ RedirectRouting:
     type:     annotation
     prefix:   /redirect
 
+DiscordAuthRouting:
+    resource: "@LaDanseSiteBundle/Controller/DiscordAuth"
+    type:     annotation
+    prefix:   /authorization/discord
+
 GuildMeet:
     path: /guildmeet
     defaults:

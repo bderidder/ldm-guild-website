@@ -11,17 +11,29 @@ security:
             id: fos_user.user_provider.username_email
 
     firewalls:
+        api:
+            pattern: ^/api
+            guard:
+                authenticators:
+                    - app.security.ladanse_api_guard_authenticator
+            logout:       true
+            anonymous:    true
+            stateless:    true
+            remember_me:
+                secret:   "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+                secure: "%secure_cookies%"
         main:
             pattern: ^/
-            form_login:
-                provider: fos_userbundle
-                csrf_token_generator: security.csrf.token_manager
-                always_use_default_target_path: false
-                default_target_path:            /menu
+            guard:
+                authenticators:
+                    - app.security.ladanse_guard_authenticator
             logout:       true
             anonymous:    true
             remember_me:
-                secret:      "%secret%"
+                secret:   "%secret%"
                 lifetime: 31536000 # 365 days in seconds
                 path:     /
                 domain:   ~ # Defaults to the current domain from $_SERVER
@@ -73,6 +85,6 @@ security:
         - { path: ^/activitystream, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/app,            role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/oauth,          role: IS_AUTHENTICATED_REMEMBERED }
-        - { path: ^/discord/api,    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/authorization,  role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/,               role: ROLE_NO_ACCESS }
 
