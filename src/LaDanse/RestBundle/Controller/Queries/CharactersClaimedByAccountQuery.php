@@ -11,7 +11,6 @@ use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CharactersClaimedByAccountQuery extends AbstractRestController
 {
     /**
-     * @ApiDoc(
-     *  description="Find all characters claimed by the given account"
-     * )
-     *
      * @param Request $request
      *
      * @return Response

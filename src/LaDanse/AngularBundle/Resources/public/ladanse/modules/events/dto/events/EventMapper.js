@@ -24,6 +24,13 @@ DTO.Events.EventMapper =
     {
         var result = [];
 
+        if (!eventObjectArray)
+        {
+            console.log("eventObjectArray was null, that should not happen");
+
+            return result;
+        }
+
         var arrayLength = eventObjectArray.length;
         for (var i = 0; i < arrayLength; i++)
         {

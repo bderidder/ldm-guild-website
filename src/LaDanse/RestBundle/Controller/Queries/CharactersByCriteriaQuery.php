@@ -12,7 +12,6 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\SearchCriteria;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,16 +23,14 @@ use Symfony\Component\HttpFoundation\Response;
 class CharactersByCriteriaQuery extends AbstractRestController
 {
     /**
-     * @ApiDoc(
-     *  description="Find characters based on search criteria (the search result is always limited to 50)"
-     * )
-     *
      * @param Request $request
      *
      * @return Response
      *
      * @Route("/charactersByCriteria", name="getCharactersByCriteria", options = { "expose" = true })
      * @Method({"POST"})
+     *
+     * @throws ServiceException
      */
     public function getCharactersByCriteriaAction(Request $request)
     {

@@ -40,7 +40,13 @@
             });
 
             setLeftMenuDimensions();
-            $('#left-menu-container').fadeIn(400);
+
+            var viewportWidth = $(window).width();
+
+            if (viewportWidth > 1100)
+            {
+                $('#left-menu-container').fadeIn(400);
+            }
         });
 
         function setLeftMenuDimensions()

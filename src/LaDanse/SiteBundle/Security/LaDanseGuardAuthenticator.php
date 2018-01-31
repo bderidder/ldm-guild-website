@@ -4,7 +4,7 @@ namespace LaDanse\SiteBundle\Security;
 
 
 use Doctrine\Common\Collections\Criteria;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use LaDanse\DomainBundle\Entity\Account;
 use LaDanse\DomainBundle\Entity\Discord\DiscordAccessToken;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -22,9 +22,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Guard\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
+class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator implements AuthenticatorInterface
 {
     use TargetPathTrait;
 
@@ -44,9 +45,9 @@ class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
 
     public function __construct(
         ContainerInterface $container,
-        EntityManager $em,
+        EntityManagerInterface $em,
         RouterInterface $router,
-        UserPasswordEncoder $passwordEncoder,
+        UserPasswordEncoderInterface $passwordEncoder,
         CsrfTokenManagerInterface $csrfTokenManager)
     {
         $this->container = $container;
@@ -55,6 +56,22 @@ class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
         $this->csrfTokenManager = $csrfTokenManager;
+    }
+
+    /**
+     * Does the authenticator support the given Request?
+     *
+     * If this returns false, the authenticator will be skipped.
+     *
+     * @param Request $request
+     *
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        // TODO: Implement supports() method.
+
+        return true;
     }
 
     /**
@@ -91,8 +108,7 @@ class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Get the authentication credentials from the request and return them
-     * as any type (e.g. an associate array). If you return null, authentication
-     * will be skipped.
+     * as any type (e.g. an associate array).
      *
      * Whatever value you return here will be passed to getUser() and checkCredentials()
      *
@@ -149,10 +165,8 @@ class LaDanseGuardAuthenticator extends AbstractGuardAuthenticator
                 'impersonation' => $request->headers->get(LaDanseGuardAuthenticator::DISCORD_IMPERSONATION_HEADER, null),
             ];
         }
-        else
-        {
-            return null;
-        }
+
+        throw new AuthenticationException("getCredentials was called with credentials that are not supported");
     }
 
     /**

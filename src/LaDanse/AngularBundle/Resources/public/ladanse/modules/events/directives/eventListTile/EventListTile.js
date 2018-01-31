@@ -26,6 +26,8 @@
     {
         var ctrl = this;
 
+        console.log("EventListTile.js - calling getEventsPage");
+
         eventService.getEventsPage(moment())
             .then(
                 function(eventsPageDto)
