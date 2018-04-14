@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Trt\SwiftCssInlinerBundle\TrtSwiftCssInlinerBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
             new LaDanse\DomainBundle\LaDanseDomainBundle(),
             new LaDanse\SiteBundle\LaDanseSiteBundle(),
             new LaDanse\ServicesBundle\LaDanseServicesBundle(),
