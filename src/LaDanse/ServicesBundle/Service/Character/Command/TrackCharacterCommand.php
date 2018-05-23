@@ -138,7 +138,7 @@ class TrackCharacterCommand extends AbstractCommand
         $qb->select('c')
             ->from(Entity\Character::class, 'c')
             ->join('c.realm', 'realm')
-            ->where('c.name = collate(?1, \'utf8_bin\')')
+            ->where('c.name = collate(?1, utf8_bin)')
             ->andWhere('realm.id = ?2')
             ->andWhere('c.fromTime IS NOT NULL')
             ->andWhere('c.endTime IS NULL')

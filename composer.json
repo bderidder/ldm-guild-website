@@ -37,7 +37,10 @@
     "hwi/oauth-bundle": "~0.5",
     "guzzlehttp/guzzle": "^6.2",
     "friendsofsymfony/jsrouting-bundle": "^2.0",
-    "symfony/thanks": "^1.0"
+    "symfony/thanks": "^1.0",
+    "php-http/httplug-bundle": "^1.10",
+    "php-http/curl-client": "^1.7",
+    "guzzlehttp/psr7": "^1.4"
   },
   "require-dev": {
     "phpunit/phpunit": "@stable",
