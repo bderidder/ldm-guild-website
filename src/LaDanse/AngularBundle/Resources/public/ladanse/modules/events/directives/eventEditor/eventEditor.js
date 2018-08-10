@@ -237,7 +237,7 @@ eventsModule.directive('eventEditor', function()
         }
         else
         {
-            ctrl.form.eventType.value = 'LegionRaidInstance';
+            ctrl.form.eventType.value = 'RaidInstance';
             ctrl.form.hoursType.value = 'NormalHours';
         }
 
