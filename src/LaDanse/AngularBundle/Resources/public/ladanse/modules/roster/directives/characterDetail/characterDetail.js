@@ -41,7 +41,7 @@ rosterModule.directive('characterDetail', function()
             ctrl.form.comment = ctrl.character.claim.getComment();
             ctrl.form.raider = ctrl.character.claim.getRaider();
 
-            if (ctrl.character.getLevel() != 110)
+            if (ctrl.character.getLevel() != 120)
             {
                 ctrl.form.raider = false;
             }

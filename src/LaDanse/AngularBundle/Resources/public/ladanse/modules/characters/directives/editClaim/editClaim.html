@@ -58,13 +58,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Raiding</label>
-                                <div class="checkbox" ng-if="ctrl.character.level == 110">
+                                <div class="checkbox" ng-if="ctrl.character.level == 120">
                                     <label>
-                                        <input type="checkbox" ng-model="ctrl.form.raider" ng-disabled="ctrl.character.level < 110"> I want to raid with this character
+                                        <input type="checkbox" ng-model="ctrl.form.raider" ng-disabled="ctrl.character.level < 120"> I want to raid with this character
                                     </label>
                                 </div>
-                                <div ng-if="ctrl.character.level < 110">
-                                    <p><i>Character must be level 110 to marked as a raider.</i></p>
+                                <div ng-if="ctrl.character.level < 120">
+                                    <p><i>Character must be level 120 to marked as a raider.</i></p>
                                 </div>
                             </div>
                         </div>
