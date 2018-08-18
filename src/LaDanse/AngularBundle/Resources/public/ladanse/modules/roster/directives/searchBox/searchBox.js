@@ -122,8 +122,8 @@ rosterModule.directive('characterSearchBox', function()
 
         ctrl.levelCap = function()
         {
-            ctrl.minLevel = 110;
-            ctrl.maxLevel = 110;
+            ctrl.minLevel = 120;
+            ctrl.maxLevel = 120;
         };
 
         ctrl.toggleSearchScope = function()
