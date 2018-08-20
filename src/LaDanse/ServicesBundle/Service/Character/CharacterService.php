@@ -9,6 +9,7 @@ use LaDanse\ServicesBundle\Service\Character\Command\PostClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Command\PutClaimCommand;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersByCriteriaQuery;
 use LaDanse\ServicesBundle\Service\Character\Query\CharactersClaimedByAccountQuery;
+use LaDanse\ServicesBundle\Service\Character\Query\GetAllClaimedCharactersQuery;
 use LaDanse\ServicesBundle\Service\DTO\Character\Character;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchCharacter;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
@@ -112,6 +113,26 @@ class CharacterService extends LaDanseService
         $query = $this->get(CharactersClaimedByAccountQuery::SERVICE_NAME);
 
         $query->setAccountId($accountId);
+        $query->setOnDateTime($onDateTime);
+
+        return $query->run();
+    }
+
+    /**
+     * @param \DateTime $onDateTime
+     *
+     * @return array
+     */
+    public function getAllClaimedCharacters(\DateTime $onDateTime = null) : array
+    {
+        if ($onDateTime == null)
+        {
+            $onDateTime = new \DateTime();
+        }
+
+        /** @var GetAllClaimedCharactersQuery $query */
+        $query = $this->get(GetAllClaimedCharactersQuery::SERVICE_NAME);
+
         $query->setOnDateTime($onDateTime);
 
         return $query->run();
