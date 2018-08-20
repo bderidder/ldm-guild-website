@@ -121,7 +121,8 @@ class PolicyCatalog
             'Character Set - Claim',
             ActivityType::CLAIM_EDIT,
             [
-                new ClaimerCanEditClaimRule()
+                new ClaimerCanEditClaimRule(),
+                new AllowCommandRule()
             ]
         );
 

@@ -124,6 +124,9 @@ class PutClaimCommand extends AbstractCommand
     /**
      * @return DTO\Character\Character|null
      * @throws ServiceException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \LaDanse\ServicesBundle\Service\Authorization\CannotEvaluateException
      */
     protected function runCommand()
     {
