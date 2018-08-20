@@ -51,7 +51,7 @@ class PatchClaim
      * @param string $comment
      * @return PatchClaim
      */
-    public function setComment(string $comment): PatchClaim
+    public function setComment($comment): PatchClaim
     {
         $this->comment = $comment;
         return $this;
