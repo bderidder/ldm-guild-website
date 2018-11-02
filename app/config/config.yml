@@ -70,6 +70,7 @@ doctrine:
         dbname:   "%database_name%"
         user:     "%database_user%"
         password: "%database_password%"
+        server_version: "%database_server_version%"
         charset:  UTF8
         types:
             utc_datetime:  LaDanse\DomainBundle\Doctrine\UTCDateTimeType
