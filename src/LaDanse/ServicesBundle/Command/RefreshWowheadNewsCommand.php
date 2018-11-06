@@ -48,11 +48,13 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
         $xmlString = $this->getXMLFromUrl($context, RefreshWowheadNewsCommand::WOWHEAD_RSS_URL);
 
-        $xml = simplexml_load_string($xmlString, null, LIBXML_NOERROR);
+        // LIBXML_NOERROR
+
+        $xml = simplexml_load_string($xmlString, null);
 
         if ($xml === false)
         {
-            echo "Failed loading XML: ";
+            $context->error("Failed loading XML: ");
 
             foreach(libxml_get_errors() as $error)
             {
@@ -99,13 +101,15 @@ class RefreshWowheadNewsCommand extends ContainerAwareCommand
 
             if ($response->getStatusCode() != 200)
             {
-                $context->error("Statuscode was not 200 but " . $response->getStatusCode());
+                $context->error("Status code was not 200 but " . $response->getStatusCode());
 
                 return null;
             }
             else
             {
-                return $response->getBody();
+                $xmlBody = $response->getBody();
+
+                return $xmlBody;
             }
         }
         catch(\Exception $e)

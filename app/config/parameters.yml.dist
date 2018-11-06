@@ -9,6 +9,8 @@ parameters:
         database_user: username
         database_password: password
 
+        database_server_version: 5.7
+
         # test database connection parameters (note that it must be a MySQL database)
         test_database_driver: pdo_mysql
         test_database_host: 127.0.0.1
