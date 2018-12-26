@@ -21,6 +21,7 @@ use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use GuzzleHttp\Client;
 
 /**
  * Class RefreshGuildMembersCommand
@@ -28,8 +29,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RefreshGuildMembersCommand extends ContainerAwareCommand
 {
-    const BATTLENET_API_URL =
-        "https://eu.api.battle.net/wow/guild/Defias%20Brotherhood/La%20Danse%20Macabre?fields=members&locale=en_GB&apikey=";
+    const GET_TIMEOUT = 60; // seconds of timeout
 
     private $gameRaces;
     private $gameClasses;
@@ -412,30 +412,24 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
      */
     protected function getArmoryObjects(CommandExecutionContext $context, Guild $guild, Realm $realm)
     {
-        $armoryUrl = "https://eu.api.battle.net/wow/guild/"
-            . rawurlencode($realm->getName())
-            . "/"
-            . rawurlencode($guild->getName())
-            . "?fields=members&locale=en_GB&apikey="
-            . $this->getContainer()->getParameter("battlenet_key");
-
         try
         {
-            $context->info("Fetching guild members from the Armory");
-            $context->info("Armory URL " . $armoryUrl);
+            $context->info("Fetching guild members from the Armory for guild " . $guild->getName() . " on realm " . $realm->getName());
 
-            $json = file_get_contents($armoryUrl);
+            $guildMembers = $this->getBlizzardGuildMembers($context, $guild, $realm);
+
+            $json = json_encode($guildMembers);
 
             $context->debug("Armory returned " . $json);
 
-            if (is_null($json))
+            if (is_null($guildMembers))
             {
                 $context->error("Armory URL returned empty content");
 
                 return null;
             }
 
-            $armoryGuild = json_decode($json);
+            $armoryGuild = $guildMembers;
 
             if (is_null($armoryGuild))
             {
@@ -457,6 +451,107 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
         catch(\Exception $e)
         {
             $context->error("Exception while fetching Armory data " . $e);
+
+            return null;
+        }
+    }
+
+    protected function getBlizzardGuildMembers(CommandExecutionContext $context, Guild $guild, Realm $realm)
+    {
+        $accessToken = $accessToken = $this->getBlizzardAccessToken($context);
+
+        $endpointUrl = "https://eu.api.blizzard.com/wow/guild/" . $realm->getName() . "/" . $guild->getName();
+
+        $client = new Client();
+
+        try
+        {
+            $response = $client->request(
+                'GET',
+                $endpointUrl,
+                [
+                    'timeout' => RefreshGuildMembersCommand::GET_TIMEOUT,
+                    'query' =>
+                        [
+                            'fields' => 'members',
+                            'locale' => 'en_US',
+                            'access_token' => $accessToken
+                        ]
+                ]
+            );
+
+            if ($response->getStatusCode() != 200)
+            {
+                $context->error("Status code was not 200 but " . $response->getStatusCode());
+
+                return null;
+            }
+            else
+            {
+                /** @var \GuzzleHttp\Psr7\Stream $jsonBody */
+                $jsonBodyStream = $response->getBody();
+
+                $jsonBody = $jsonBodyStream->getContents();
+
+                $response = json_decode($jsonBody);
+
+                return $response;
+            }
+        }
+        catch(\Exception $e)
+        {
+            $context->error("Got exception while retrieving guild members " . $e->getMessage());
+
+            return null;
+        }
+    }
+
+    protected function getBlizzardAccessToken(CommandExecutionContext $context)
+    {
+        $tokenEndpointUrl = "https://eu.battle.net/oauth/token";
+
+        $client = new Client();
+
+        try
+        {
+            $response = $client->request(
+                'GET',
+                $tokenEndpointUrl,
+                [
+                    'timeout' => RefreshGuildMembersCommand::GET_TIMEOUT,
+                    'auth' => [
+                        $this->getContainer()->getParameter("battlenet_key"),
+                        $this->getContainer()->getParameter("battlenet_secret")],
+                    'query' =>
+                        [
+                            'grant_type' => 'client_credentials'
+                        ]
+                ]
+            );
+
+            if ($response->getStatusCode() != 200)
+            {
+                $context->error("Status code was not 200 but " . $response->getStatusCode());
+
+                return null;
+            }
+            else
+            {
+                /** @var \GuzzleHttp\Psr7\Stream $jsonBody */
+                $jsonBodyStream = $response->getBody();
+
+                $jsonBody = $jsonBodyStream->getContents();
+
+                $tokenResponse = json_decode($jsonBody);
+
+                $accessToken = $tokenResponse->access_token;
+
+                return $accessToken;
+            }
+        }
+        catch(\Exception $e)
+        {
+            $context->error("Got exception while retrieving Access Token " . $e->getMessage());
 
             return null;
         }
