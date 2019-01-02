@@ -47,8 +47,6 @@ class RegistrationController extends LaDanseController
             {
                 $this->registerUser($formModel, $request, new Response());
 
-                $this->addToast('Registration saved, you are logged in now');
-
                 return $this->redirect($this->generateUrl('menuIndex'));
             }
             else

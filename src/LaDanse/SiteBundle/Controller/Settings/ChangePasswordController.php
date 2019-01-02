@@ -60,8 +60,6 @@ class ChangePasswordController extends LaDanseController
 
                 $accountService->updatePassword($authContext->getAccount()->getUsername(), $formModel->getPasswordOne());
 
-                $this->addToast('Password changed');
-
                 return $this->redirect($this->generateUrl('menuIndex'));
             }
             else

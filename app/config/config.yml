@@ -51,7 +51,6 @@ assetic:
         - LaDanseSiteBundle
         - LaDanseBootstrapBundle
         - LaDanseAngularBundle
-        - CoderSpottingToastMessageBundle
         - FOSUserBundle
     #java: /usr/bin/java
     filters:

@@ -62,8 +62,6 @@ class EditProfileController extends LaDanseController
                $this->updateProfile($authContext->getAccount()->getId(),
                    $formModel->getDisplayName(), $formModel->getEmail());
 
-               $this->addToast('Profile updated');
-
                return $this->redirect($this->generateUrl('editProfile'));
             }
             else

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "898773d967366bf0b24316294f6a9ef6",
+    "content-hash": "a2c3ae8c3215e6e48e0edf2cfec9f5dd",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -57,55 +57,6 @@
                 "stream_filter_register"
             ],
             "time": "2017-08-18T09:54:01+00:00"
-        },
-        {
-            "name": "coderspotting/toast-message",
-            "version": "1.2",
-            "target-dir": "CoderSpotting/Bundle/ToastMessageBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/coderspotting/toast-message.git",
-                "reference": "d059126bf1f978499a0ff3c4f4791d033cc83478"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/coderspotting/toast-message/zipball/d059126bf1f978499a0ff3c4f4791d033cc83478",
-                "reference": "d059126bf1f978499a0ff3c4f4791d033cc83478",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/console": "~2.7 || ^3",
-                "symfony/form": "~2.7 || ^3",
-                "symfony/framework-bundle": "~2.7 || ^3",
-                "symfony/twig-bundle": "~2.7 || ^3"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "CoderSpotting\\Bundle\\ToastMessageBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bavo De Ridder",
-                    "email": "bavo@coderspotting.org"
-                },
-                {
-                    "name": "Community contributions",
-                    "homepage": "https://github.com/CoderSpotting/toast-message/contributors"
-                }
-            ],
-            "description": "Easy integration of AlertifyJS.com in Symfony",
-            "keywords": [
-                "alertify",
-                "extra form",
-                "form"
-            ],
-            "time": "2017-07-28T16:27:00+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -7301,7 +7252,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.0"
+        "php": "~7.0",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

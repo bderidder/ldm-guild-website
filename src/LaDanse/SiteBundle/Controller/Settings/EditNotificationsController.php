@@ -61,8 +61,6 @@ class EditNotificationsController extends LaDanseController
             {
                 $this->saveSettings($formModel, $authContext->getAccount());
 
-                $this->addToast('Notifications updated');
-
                 $this->eventDispatcher->dispatch(
                     ActivityEvent::EVENT_NAME,
                     new ActivityEvent(
