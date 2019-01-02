@@ -12,8 +12,8 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\GameData\PatchRealm;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,8 +25,7 @@ class RealmResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("/", name="getAllRealms", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("/", name="getAllRealms", options = { "expose" = true }, methods={"GET"})
      */
     public function getAllRealmsAction()
     {
@@ -41,8 +40,7 @@ class RealmResource extends AbstractRestController
     /**
      * @param Request $request
      * @return Response
-     * @Route("/", name="postRealm")
-     * @Method({"POST"})
+     * @Route("/", name="postRealm", methods={"POST"})
      */
     public function postRealmAction(Request $request)
     {

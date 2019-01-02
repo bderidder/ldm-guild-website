@@ -8,7 +8,7 @@ use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -46,8 +46,6 @@ class RegistrationController extends LaDanseController
             if ($form->isValid() && $formModel->isValid($errors, $form, $this->getAccountService()))
             {
                 $this->registerUser($formModel, $request, new Response());
-
-                $this->addToast('Registration saved, you are logged in now');
 
                 return $this->redirect($this->generateUrl('menuIndex'));
             }

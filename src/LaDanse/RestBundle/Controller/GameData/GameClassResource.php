@@ -9,8 +9,8 @@ namespace LaDanse\RestBundle\Controller\GameData;
 use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -21,8 +21,7 @@ class GameClassResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("/", name="getAllGameClasses", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("/", name="getAllGameClasses", options = { "expose" = true }, methods={"GET"})
      */
     public function getAllGameClassesAction()
     {

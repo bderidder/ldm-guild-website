@@ -11,8 +11,8 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\ServiceException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +33,7 @@ class VersionRequest extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("", name="currentVersionAction", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("", name="currentVersionAction", options = { "expose" = true }, methods={"GET"})
      */
     public function currentVersionAction(Request $request)
     {

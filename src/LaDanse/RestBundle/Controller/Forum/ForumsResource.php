@@ -11,8 +11,8 @@ use LaDanse\ServicesBundle\Service\Forum\ForumDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,8 +36,7 @@ class ForumsResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("/", name="getForumList")
-     * @Method({"GET"})
+     * @Route("/", name="getForumList", methods={"GET"})
      */
     public function getForumListAction()
     {
@@ -56,8 +55,7 @@ class ForumsResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("/activity", name="getActivityForForums")
-     * @Method({"GET"})
+     * @Route("/activity", name="getActivityForForums", methods={"GET"})
      */
     public function getActivityForForumsAction()
     {
@@ -84,8 +82,7 @@ class ForumsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{forumId}", name="getForum")
-     * @Method({"GET"})
+     * @Route("/{forumId}", name="getForum", methods={"GET"})
      */
     public function getForumForIdAction(Request $request, $forumId)
     {
@@ -119,8 +116,7 @@ class ForumsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{forumId}/activity", name="getActivityForForum")
-     * @Method({"GET"})
+     * @Route("/{forumId}/activity", name="getActivityForForum", methods={"GET"})
      */
     public function getActivityForForumAction(Request $request, $forumId)
     {
@@ -161,8 +157,7 @@ class ForumsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{forumId}/topics", name="createTopic")
-     * @Method({"POST", "PUT"})
+     * @Route("/{forumId}/topics", name="createTopic", methods={"POST", "PUT"})
      */
     public function createTopicAction(Request $request, $forumId)
     {

@@ -11,8 +11,8 @@ use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,8 +26,7 @@ class CharactersClaimedByAccountQuery extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/charactersClaimedByAccount", name="getCharactersClaimedByAccount", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("/charactersClaimedByAccount", name="getCharactersClaimedByAccount", options = { "expose" = true }, methods={"GET"})
      */
     public function getCharactersClaimedByAccountAction(Request $request)
     {

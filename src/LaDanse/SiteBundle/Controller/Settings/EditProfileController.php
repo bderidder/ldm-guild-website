@@ -9,7 +9,7 @@ use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\ProfileFormModel;
 use LaDanse\SiteBundle\Form\Type\ProfileFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,8 +61,6 @@ class EditProfileController extends LaDanseController
             {
                $this->updateProfile($authContext->getAccount()->getId(),
                    $formModel->getDisplayName(), $formModel->getEmail());
-
-               $this->addToast('Profile updated');
 
                return $this->redirect($this->generateUrl('editProfile'));
             }

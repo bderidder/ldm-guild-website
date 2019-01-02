@@ -12,8 +12,8 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\SearchCriteria;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,8 +27,7 @@ class CharactersByCriteriaQuery extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/charactersByCriteria", name="getCharactersByCriteria", options = { "expose" = true })
-     * @Method({"POST"})
+     * @Route("/charactersByCriteria", name="getCharactersByCriteria", options = { "expose" = true }, methods={"POST"})
      *
      * @throws ServiceException
      */

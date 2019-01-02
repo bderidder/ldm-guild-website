@@ -22,7 +22,7 @@ use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 
 use LaDanse\SiteBundle\Model\EventModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

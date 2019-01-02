@@ -12,7 +12,7 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 
 use LaDanse\SiteBundle\Common\LaDanseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

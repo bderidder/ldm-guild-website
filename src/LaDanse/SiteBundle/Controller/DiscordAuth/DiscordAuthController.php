@@ -8,7 +8,7 @@ use LaDanse\ServicesBundle\Activity\ActivityType;
 use LaDanse\ServicesBundle\Service\Discord\DiscordConnectService;
 use LaDanse\ServicesBundle\Service\Discord\DiscordRedirectValidator;
 use LaDanse\SiteBundle\Common\LaDanseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

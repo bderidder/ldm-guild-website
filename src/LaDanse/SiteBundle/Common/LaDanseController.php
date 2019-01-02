@@ -105,16 +105,4 @@ class LaDanseController extends Controller
 
         return $featureToggleService->hasAccountFeatureToggled($account, $featureName, $default);
     }
-
-    /**
-     * Convenience method to add a toast message to the request/session
-     *
-     * @param $message string
-     */
-    protected function addToast($message)
-    {
-        $toastService = $this->container->get('CoderSpotting.ToastMessage');
-
-        $toastService->addSuccessToast($message);
-    }
 }
