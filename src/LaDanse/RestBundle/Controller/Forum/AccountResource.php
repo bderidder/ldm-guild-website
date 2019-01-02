@@ -10,8 +10,8 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\DiExtraBundle\Annotation as DI;
@@ -30,8 +30,7 @@ class AccountResource extends AbstractRestController
     /**
      * @return Response
      *
-     * @Route("/unread", name="getUnreadForAccount")
-     * @Method({"GET"})
+     * @Route("/unread", name="getUnreadForAccount", methods={"GET"})
      */
     public function getUnreadForAccountAction()
     {

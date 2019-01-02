@@ -9,8 +9,8 @@ use LaDanse\RestBundle\Common\JsonResponse;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Discord\DiscordConnectService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,8 +49,7 @@ class DiscordGrantController extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/grant", name="discordGrant", options = { "expose" = true })
-     * @Method({"GET","HEAD"})
+     * @Route("/grant", name="discordGrant", options = { "expose" = true }, methods={"GET", "HEAD"})
      */
     public function discordGrantAction(Request $request)
     {

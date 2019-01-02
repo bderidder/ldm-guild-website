@@ -12,7 +12,7 @@ use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\NotificationsFormModel;
 use LaDanse\SiteBundle\Form\Type\NotificationsFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

@@ -11,8 +11,8 @@ use LaDanse\RestBundle\Common\AbstractRestController;
 use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Service\DTO as DTO;
 use LaDanse\ServicesBundle\Common\ServiceException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,8 +32,7 @@ class LogCallback extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("", name="logCallbackAction", options = { "expose" = true })
-     * @Method({"POST"})
+     * @Route("", name="logCallbackAction", options = { "expose" = true }, methods={"POST"})
      */
     public function logCallbackAction(Request $request)
     {

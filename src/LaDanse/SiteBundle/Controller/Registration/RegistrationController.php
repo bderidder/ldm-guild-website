@@ -8,7 +8,7 @@ use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\RegistrationFormModel;
 use LaDanse\SiteBundle\Form\Type\RegistrationFormType;
 use LaDanse\SiteBundle\Model\ErrorModel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;

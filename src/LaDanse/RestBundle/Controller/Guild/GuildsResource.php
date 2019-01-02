@@ -12,8 +12,8 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\DTO\GameData\PatchGuild;
 use LaDanse\ServicesBundle\Service\GameData\GameDataService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,8 +24,7 @@ class GuildsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="getAllGuilds", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("/", name="getAllGuilds", options = { "expose" = true }, methods={"GET"})
      */
     public function getAllGuildsAction(Request $request)
     {
@@ -40,8 +39,7 @@ class GuildsResource extends AbstractRestController
     /**
      * @param Request $request
      * @return Response
-     * @Route("/", name="postGuild")
-     * @Method({"POST"})
+     * @Route("/", name="postGuild", methods={"POST"})
      */
     public function postGuildAction(Request $request)
     {

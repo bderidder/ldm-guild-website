@@ -12,8 +12,8 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Character\CharacterService;
 use LaDanse\ServicesBundle\Service\DTO\Character\PatchClaim;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,8 +28,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}", name="getCharacter", options = { "expose" = true })
-     * @Method({"GET"})
+     * @Route("/{characterId}", name="getCharacter", options = { "expose" = true }, methods={"GET"})
      */
     public function getCharacterAction(Request $request, $characterId)
     {
@@ -58,8 +57,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="postClaim", options = { "expose" = true })
-     * @Method({"POST"})
+     * @Route("/{characterId}/claim", name="postClaim", options = { "expose" = true }, methods={"POST"})
      */
     public function postClaimAction(Request $request, $characterId)
     {
@@ -92,8 +90,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="putClaim", options = { "expose" = true })
-     * @Method({"PUT"})
+     * @Route("/{characterId}/claim", name="putClaim", options = { "expose" = true }, methods={"PUT"})
      */
     public function putClaimAction(Request $request, $characterId)
     {
@@ -124,8 +121,7 @@ class CharactersResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{characterId}/claim", name="deleteClaim", options = { "expose" = true })
-     * @Method({"DELETE"})
+     * @Route("/{characterId}/claim", name="deleteClaim", options = { "expose" = true }, methods={"DELETE"})
      */
     public function deleteClaimAction(Request $request, $characterId)
     {

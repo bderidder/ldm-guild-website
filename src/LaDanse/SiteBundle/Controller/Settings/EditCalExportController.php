@@ -9,7 +9,7 @@ use LaDanse\ServicesBundle\Service\Settings\SettingsService;
 use LaDanse\SiteBundle\Common\LaDanseController;
 use LaDanse\SiteBundle\Form\Model\CalExportFormModel;
 use LaDanse\SiteBundle\Form\Type\CalExportFormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;

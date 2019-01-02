@@ -12,8 +12,8 @@ use LaDanse\ServicesBundle\Service\Forum\ForumStatsService;
 use LaDanse\ServicesBundle\Service\Forum\PostDoesNotExistException;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,8 +36,7 @@ class PostsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{postId}", name="getPost")
-     * @Method({"GET"})
+     * @Route("/{postId}", name="getPost", methods={"GET"})
      */
     public function getPostAction(Request $request, $postId)
     {
@@ -71,8 +70,7 @@ class PostsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{postId}", name="updatePost")
-     * @Method({"POST", "PUT"})
+     * @Route("/{postId}", name="updatePost", methods={"POST", "PUT"})
      */
     public function updatePostAction(Request $request, $postId)
     {
@@ -130,8 +128,7 @@ class PostsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{postId}/markRead", name="markPostAsRead")
-     * @Method({"GET", "POST", "PUT"})
+     * @Route("/{postId}/markRead", name="markPostAsRead", methods={"GET", "POST", "PUT"})
      */
     public function markPostAsReadAction($postId)
     {

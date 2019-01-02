@@ -16,8 +16,8 @@ use LaDanse\ServicesBundle\Service\DTO\Event\PutEvent;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutEventState;
 use LaDanse\ServicesBundle\Service\DTO\Event\PutSignUp;
 use LaDanse\ServicesBundle\Service\Event\EventService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,8 +31,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="queryEvents", options = { "expose" = true })
-     * @Method({"GET","HEAD"})
+     * @Route("/", name="queryEvents", options = { "expose" = true }, methods={"GET", "HEAD"})
      */
     public function queryEventsAction(Request $request)
     {
@@ -64,8 +63,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}", name="queryEventById", options = { "expose" = true })
-     * @Method({"GET","HEAD"})
+     * @Route("/{eventId}", name="queryEventById", options = { "expose" = true }, methods={"GET", "HEAD"})
      */
     public function queryEventByIdAction(Request $request, $eventId)
     {
@@ -93,8 +91,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/", name="postEvent", options = { "expose" = true })
-     * @Method({"POST"})
+     * @Route("/", name="postEvent", options = { "expose" = true }, methods={"POST"})
      */
     public function postEventAction(Request $request)
     {
@@ -126,8 +123,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}", name="putEvent", options = { "expose" = true })
-     * @Method({"PUT"})
+     * @Route("/{eventId}", name="putEvent", options = { "expose" = true }, methods={"PUT"})
      */
     public function putEventAction(Request $request, $eventId)
     {
@@ -159,8 +155,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}/state", name="putEventState", options = { "expose" = true })
-     * @Method({"PUT"})
+     * @Route("/{eventId}/state", name="putEventState", options = { "expose" = true }, methods={"PUT"})
      */
     public function putEventStateAction(Request $request, $eventId)
     {
@@ -192,8 +187,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}", name="deleteEvent", options = { "expose" = true })
-     * @Method({"DELETE"})
+     * @Route("/{eventId}", name="deleteEvent", options = { "expose" = true }, methods={"DELETE"})
      */
     public function deleteEventAction(Request $request, $eventId)
     {
@@ -222,8 +216,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}/signUps", name="postSignUp", options = { "expose" = true })
-     * @Method({"POST"})
+     * @Route("/{eventId}/signUps", name="postSignUp", options = { "expose" = true }, methods={"POST"})
      */
     public function postSignUpAction(Request $request, $eventId)
     {
@@ -256,8 +249,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}/signUps/{signUpId}", name="putSignUp", options = { "expose" = true })
-     * @Method({"PUT"})
+     * @Route("/{eventId}/signUps/{signUpId}", name="putSignUp", options = { "expose" = true }, methods={"PUT"})
      */
     public function putSignUpAction(Request $request, $eventId, $signUpId)
     {
@@ -290,8 +282,7 @@ class EventsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{eventId}/signUps/{signUpId}", name="deleteSignUp", options = { "expose" = true })
-     * @Method({"DELETE"})
+     * @Route("/{eventId}/signUps/{signUpId}", name="deleteSignUp", options = { "expose" = true }, methods={"DELETE"})
      */
     public function deleteSignUpAction(Request $request, $eventId, $signUpId)
     {

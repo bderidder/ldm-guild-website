@@ -11,8 +11,8 @@ use LaDanse\ServicesBundle\Service\Forum\ForumService;
 use LaDanse\ServicesBundle\Service\Forum\TopicDoesNotExistException;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,8 +35,7 @@ class TopicsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{topicId}", name="getPostsInTopic")
-     * @Method({"GET"})
+     * @Route("/{topicId}", name="getPostsInTopic", methods={"GET"})
      */
     public function getTopicAction(Request $request, $topicId)
     {
@@ -70,8 +69,7 @@ class TopicsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{topicId}/posts", name="createPostInTopic")
-     * @Method({"POST", "PUT"})
+     * @Route("/{topicId}/posts", name="createPostInTopic", methods={"POST", "PUT"})
      */
     public function createPostInTopicAction(Request $request, $topicId)
     {
@@ -127,8 +125,7 @@ class TopicsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/{topicId}", name="updateTopic")
-     * @Method({"POST", "PUT"})
+     * @Route("/{topicId}", name="updateTopic", methods={"POST", "PUT"})
      */
     public function updateTopicAction(Request $request, $topicId)
     {

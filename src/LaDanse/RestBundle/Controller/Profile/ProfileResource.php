@@ -11,8 +11,8 @@ use LaDanse\RestBundle\Common\ResourceHelper;
 use LaDanse\ServicesBundle\Common\ServiceException;
 use LaDanse\ServicesBundle\Service\Discord\DiscordConnectService;
 use LaDanse\ServicesBundle\Service\DTO\Profile\Profile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +33,7 @@ class ProfileResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("", name="profile", options = { "expose" = true })
-     * @Method({"GET","HEAD"})
+     * @Route("", name="profile", options = { "expose" = true }, methods={"GET", "HEAD"})
      */
     public function profileAction(Request $request)
     {

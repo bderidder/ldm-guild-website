@@ -13,8 +13,8 @@ use LaDanse\ServicesBundle\Service\Comments\CommentGroupDoesNotExistException;
 use LaDanse\ServicesBundle\Service\Comments\CommentService;
 use LaDanse\SiteBundle\Security\AuthenticationService;
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,8 +37,7 @@ class CommentsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/groups/{groupId}", name="getCommentsInGroup")
-     * @Method({"GET"})
+     * @Route("/groups/{groupId}", name="getCommentsInGroup", methods={"GET"})
      */
     public function getCommentsInGroupAction(Request $request, $groupId)
     {
@@ -72,8 +71,7 @@ class CommentsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/groups/{groupId}/comments", name="createComment")
-     * @Method({"POST", "PUT"})
+     * @Route("/groups/{groupId}/comments", name="createComment", methods={"POST", "PUT"})
      */
     public function createCommentAction(Request $request, $groupId)
     {
@@ -126,8 +124,7 @@ class CommentsResource extends AbstractRestController
      *
      * @return Response
      *
-     * @Route("/comments/{commentId}", name="updateComment")
-     * @Method({"POST", "PUT"})
+     * @Route("/comments/{commentId}", name="updateComment", methods={"POST", "PUT"})
      */
     public function updateCommentAction(Request $request, $commentId)
     {
