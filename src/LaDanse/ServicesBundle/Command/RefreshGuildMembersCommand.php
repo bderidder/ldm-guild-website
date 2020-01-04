@@ -65,6 +65,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
 
         $this->syncGuild($context, 'La Danse Macabre', 'Defias Brotherhood');
         $this->syncGuild($context, 'La Danse Macabre', 'Darkmoon Faire');
+        $this->syncGuild($context, 'La Danse Macabré', 'Defias Brotherhood');
     }
 
     private function loadGameData()

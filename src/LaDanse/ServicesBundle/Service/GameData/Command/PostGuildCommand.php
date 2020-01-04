@@ -106,7 +106,7 @@ class PostGuildCommand extends AbstractCommand
         $qb->select('g', 'r')
             ->from(Entity\GameData\Guild::class, 'g')
             ->leftJoin('g.realm', 'r')
-            ->where('g.name = ?1')
+            ->where('g.name = collate(?1, utf8_bin)')
             ->andWhere('r.id = ?2')
             ->setParameter(1, $this->getPatchGuild()->getName())
             ->setParameter(2, $this->getPatchGuild()->getRealmId());
