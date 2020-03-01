@@ -14,6 +14,7 @@ var ladanseApp = angular.module(LADANSE_APP_NAME,
         'LaDanseApp.Comments',
         'LaDanseApp.Roster',
         'LaDanseApp.Events',
+        'LaDanseApp.StaticPages',
         'ngResource',
         'ui.bootstrap',
         'ngSanitize',
@@ -91,6 +92,10 @@ ladanseApp.config(
                 else if (fullUrl.includes('/events'))
                 {
                     return '/events';
+                }
+                else if (fullUrl.includes('/static'))
+                {
+                    return '/static';
                 }
 
                 return "/menu";
