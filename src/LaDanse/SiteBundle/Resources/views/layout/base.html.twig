@@ -12,6 +12,7 @@
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/eggplant/jquery-ui.css"
           rel="stylesheet">
 
+    <!-- Third party stylesheets -->
     {% stylesheets filter='cssrewrite'
         "bundles/ladanseangular/components/textAngular/dist/textAngular.css"
         "bundles/ladanseangular/components/font-awesome/css/font-awesome.min.css"
@@ -21,16 +22,24 @@
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+          integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Local stylesheets -->
     {% stylesheets filter='cssrewrite'
-        'bundles/ladansebootstrap/less/themes/default/custom-bootstrap.less'
         'bundles/ladansesite/css/*'
-        'bundles/ladansesite/less/ladanse.less'
+        'bundles/ladansesite/less/ladanse.css'
         "bundles/ladanseangular/components/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
     {% endstylesheets %}
 
-    <!-- CSS -->
+    <!-- Alterify CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css"/>
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/themes/bootstrap.min.css"/>

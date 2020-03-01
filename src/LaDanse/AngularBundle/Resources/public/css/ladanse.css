@@ -1,0 +1,186 @@
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+[ng\:cloak],
+[ng-cloak],
+.ng-cloak {
+  display: none !important;
+}
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+div.MyCharactersContainer {
+  cursor: default;
+}
+div.MyCharactersContainer th.roleColumn {
+  width: 75px;
+}
+div.MyCharactersContainer i.raiderIcon {
+  color: red;
+}
+div.MyCharactersContainer span.characterRealmSmall {
+  font-size: 0.85em;
+}
+.circle-avatar {
+  width: 70px;
+  border-radius: 50%;
+}
+div.EditClaimContainer {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  padding: 10px;
+}
+div.EditClaimContainer span.characterName {
+  font-size: 2em;
+  font-weight: bold;
+  color: darkolivegreen;
+}
+div.EditClaimContainer span.characterRealm {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: darkolivegreen;
+}
+div.EditClaimContainer span.characterRaceClass {
+  font-size: 0.9em;
+  color: darkolivegreen;
+}
+div.EditClaimContainer span.characterGuild {
+  font-size: 0.9em;
+  color: darkolivegreen;
+}
+div.EditClaimContainer a.battleNetLink {
+  font-size: 0.8em;
+}
+div.EditClaimContainer form.editClaimForm {
+  padding: 10px 0 0 0;
+}
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+#searchContainer {
+  border: 1px solid darkgrey;
+  padding: 20px 0 20px 0;
+}
+#searchContainer div.toggleContainer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+}
+#searchContainer div.toggleContainer div.searchToggle {
+  cursor: pointer;
+  width: 150px;
+  height: 25px;
+  line-height: 25px;
+  color: white;
+  margin: 0 auto 0 auto;
+  padding: 0;
+  background-color: grey;
+  border-radius: 15px 15px 0 0;
+  text-align: center;
+}
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+div.CharacterDetailContainer {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  padding: 10px;
+}
+div.CharacterDetailContainer span.characterName {
+  font-size: 2em;
+  font-weight: bold;
+}
+div.CharacterDetailContainer span.characterRealm {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+div.CharacterDetailContainer span.characterRaceClass {
+  font-size: 0.9em;
+}
+div.CharacterDetailContainer span.characterGuild {
+  font-size: 0.9em;
+}
+div.CharacterDetailContainer div.characterlevel {
+  float: right;
+  font-size: 0.8em;
+}
+div.CharacterDetailContainer div.ClaimDetail {
+  padding: 20px 0 20px 0;
+}
+div.SearchResultsTableContainer i.sortingSelector {
+  color: grey;
+  display: none;
+}
+div.SearchResultsTableContainer i.sortingABCAsc {
+  display: none;
+}
+div.SearchResultsTableContainer i.sortingABCDesc {
+  display: none;
+}
+div.SearchResultsTableContainer i.sortingNumAsc {
+  display: none;
+}
+div.SearchResultsTableContainer i.sortingNumDesc {
+  display: none;
+}
+div.SearchResultsTableContainer i.claimedIcon {
+  color: darkolivegreen;
+}
+div.SearchResultsTableContainer span.characterName {
+  font-weight: bold;
+}
+div.SearchResultsTableContainer span.characterRealm {
+  font-size: 0.85em;
+}
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+div.RosterViewContainer div.SearchResultsContainer {
+  margin-top: 20px;
+}
+/*
+ * @license  http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @link     https://github.com/bderidder/ldm-guild-website
+ */
+div.EventListTileContainer {
+  padding: 5px;
+  font-size: 0.85em;
+  height: 115px;
+}
+div.EventListTileContainer div.EventListContent {
+  margin: 0 auto 0 auto;
+  height: 115px;
+  display: flex;
+  align-items: center;
+}
+div.EventListTileContainer td.EventCell {
+  padding: 5px;
+}
+div.EventListTileContainer td.EventNameCell {
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.EventListTileContainer .TextAlignRight {
+  text-align: right;
+}
+div.EventListTileContainer a.event-list-link,
+div.EventListTileContainer a.event-list-link:hover,
+div.EventListTileContainer a.event-list-link:active,
+div.EventListTileContainer a.event-list-link:visited {
+  color: white;
+}
+div.EventListTileContainer .event-cancelled {
+  text-decoration: line-through;
+}

@@ -1,0 +1,57 @@
+a.characterAndClaimsWell {
+  color: black;
+}
+a.characterAndClaimsWell:hover {
+  text-decoration: none;
+}
+div.characterAndClaimsWell p.accountDisplayName {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+div.characterAndClaimsWell p.claimsList span:after {
+  content: ", ";
+}
+div.characterAndClaimsWell p.claimsList span:last-child:after {
+  content: "";
+}
+#DeploymentTypeContainer {
+  position: fixed;
+  height: 50px;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: red;
+  z-index: 100;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  padding: 0 20px 0 20px;
+  display: none;
+}
+#DeploymentTypeContainer span.inner-text {
+  line-height: 50px;
+  color: whitesmoke;
+}
+#NewVersionReminderContainer {
+  display: none;
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  padding: 10px;
+  background-color: rgba(0, 100, 0, 0.7);
+  border-radius: 5px;
+  color: whitesmoke;
+  z-index: 2055;
+  text-align: center;
+}
+#NewVersionReminderContainer div.button {
+  margin: 8px 0 5px 0;
+}
+#qltalk-banner {
+  margin-top: 30px;
+  padding: 0 34px 0 34px;
+  text-align: center;
+}
+#qltalk-banner .header {
+  font-size: 1.8em;
+  font-weight: bold;
+}
