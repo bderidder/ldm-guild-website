@@ -461,7 +461,7 @@ class RefreshGuildMembersCommand extends ContainerAwareCommand
     {
         $accessToken = $accessToken = $this->getBlizzardAccessToken($context);
 
-        $endpointUrl = "https://eu.api.blizzard.com/wow/guild/" . $realm->getName() . "/" . $guild->getName();
+        $endpointUrl = "https://eu.api.blizzard.com/data/wow/guild/" . $realm->getName() . "/" . $guild->getName();
 
         $client = new Client();
 
