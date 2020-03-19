@@ -11,7 +11,7 @@
     "psr-4": { "Tests\\": "tests/" }
   },
   "require": {
-    "php": "~7.0",
+    "php": "~7.1",
     "ext-json": "*",
     "symfony/symfony": "3.4.*",
     "doctrine/orm": "~2.5",
