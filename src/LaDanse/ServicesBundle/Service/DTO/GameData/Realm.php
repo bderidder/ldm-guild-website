@@ -26,6 +26,13 @@ class Realm
     private $name;
 
     /**
+     * @var int
+     * @Type("integer")
+     * @SerializedName("gameId")
+     */
+    private $gameId;
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -57,5 +64,23 @@ class Realm
     public function setName(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * @param int|null $gameId
+     * @return Realm
+     */
+    public function setGameId(?int $gameId): Realm
+    {
+        $this->gameId = $gameId;
+        return $this;
     }
 }

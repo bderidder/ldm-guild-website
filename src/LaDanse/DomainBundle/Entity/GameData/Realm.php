@@ -25,6 +25,13 @@ class Realm
     protected $name;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var int
+     */
+    protected $gameId;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -57,6 +64,24 @@ class Realm
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * @param int|null $gameId
+     * @return Realm
+     */
+    public function setGameId(?int $gameId): Realm
+    {
+        $this->gameId = $gameId;
         return $this;
     }
 }

@@ -18,6 +18,7 @@ class GuildMapper
 
         $dtoGuild->setId($guild->getId());
         $dtoGuild->setName($guild->getName());
+        $dtoGuild->setGameId($guild->getGameId());
         $dtoGuild->setRealmReference(
             new StringReference($guild->getRealm()->getId())
         );
