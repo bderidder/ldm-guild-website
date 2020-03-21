@@ -27,6 +27,13 @@ class Guild
     private $name;
 
     /**
+     * @var int
+     * @Type("integer")
+     * @SerializedName("gameId")
+     */
+    private $gameId;
+
+    /**
      * @var StringReference
      * @Type(StringReference::class)
      * @SerializedName("realmReference")
@@ -66,6 +73,24 @@ class Guild
     public function setName(string $name): Guild
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * @param int|null $gameId
+     * @return Guild
+     */
+    public function setGameId(?int $gameId): Guild
+    {
+        $this->gameId = $gameId;
         return $this;
     }
 

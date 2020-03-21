@@ -25,6 +25,13 @@ class Guild
     protected $name;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     *
+     * @var int
+     */
+    protected $gameId;
+
+    /**
      * @var Realm $realm The realm this guild was created on
      *
      * @ORM\ManyToOne(targetEntity="Realm")
@@ -65,6 +72,24 @@ class Guild
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * @param int|null $gameId
+     * @return Guild
+     */
+    public function setGameId(?int $gameId): Guild
+    {
+        $this->gameId = $gameId;
         return $this;
     }
 

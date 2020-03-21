@@ -4,7 +4,7 @@
  * @link     https://github.com/bderidder/ldm-guild-website
  */
 
-namespace LaDanse\ServicesBundle\Command;
+namespace LaDanse\ServicesBundle\Command\Armory;
 
 class ArmoryObject
 {
@@ -20,11 +20,8 @@ class ArmoryObject
     /** @var int */
     private $raceArmoryId;
 
-    /** @var string */
-    private $guildName;
-
-    /** @var string */
-    private $realmName;
+    /** @var int */
+    private $realmId;
 
     /**
      * @return string
@@ -99,38 +96,20 @@ class ArmoryObject
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getGuildName(): string
+    public function getRealmId(): int
     {
-        return $this->guildName;
+        return $this->realmId;
     }
 
     /**
-     * @param string $guildName
+     * @param int $realmId
      * @return ArmoryObject
      */
-    public function setGuildName(string $guildName): ArmoryObject
+    public function setRealmId(int $realmId): ArmoryObject
     {
-        $this->guildName = $guildName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRealmName(): string
-    {
-        return $this->realmName;
-    }
-
-    /**
-     * @param string $realmName
-     * @return ArmoryObject
-     */
-    public function setRealmName(string $realmName): ArmoryObject
-    {
-        $this->realmName = $realmName;
+        $this->realmId = $realmId;
         return $this;
     }
 }
