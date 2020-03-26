@@ -26,9 +26,3 @@ staticPagesModule.config(
         }
     ]
 );
-
-staticPagesModule.directive('commentEditorTemplate', function() {
-    return {
-        templateUrl: Assetic.generate('/ladanseangular/ladanse/modules/comments/partials/CommentEditor.html'),
-    };
-});
