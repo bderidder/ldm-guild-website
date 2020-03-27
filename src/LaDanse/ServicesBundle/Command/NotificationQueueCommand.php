@@ -6,6 +6,7 @@
 
 namespace LaDanse\ServicesBundle\Command;
 
+use Exception;
 use LaDanse\ServicesBundle\Notification\NotificationQueue;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,17 +63,25 @@ class NotificationQueueCommand extends ContainerAwareCommand
         /* @var NotificationQueue $notificationQueue */
         $notificationQueue = $this->getContainer()->get(NotificationQueue::SERVICE_NAME);
 
-        if ($input->getOption(NotificationQueueCommand::OPTION_PROCESS))
+        try
         {
-            $notificationQueue->processQueue();
+            if ($input->getOption(NotificationQueueCommand::OPTION_PROCESS))
+            {
+                $notificationQueue->processQueue();
+            }
+            else if ($input->getOption(NotificationQueueCommand::OPTION_PURGE))
+            {
+                $notificationQueue->cleanQueue();
+            }
+            else if ($input->getOption(NotificationQueueCommand::OPTION_LIST))
+            {
+                $notificationQueue->listQueue($output);
+            }
         }
-        else if ($input->getOption(NotificationQueueCommand::OPTION_PURGE))
+        catch(Exception $e)
         {
-            $notificationQueue->cleanQueue();
-        }
-        else if ($input->getOption(NotificationQueueCommand::OPTION_LIST))
-        {
-            $notificationQueue->listQueue($output);
+            $output->writeln($e->getMessage());
+            $output->writeln($e->getTraceAsString());
         }
     }
 }
