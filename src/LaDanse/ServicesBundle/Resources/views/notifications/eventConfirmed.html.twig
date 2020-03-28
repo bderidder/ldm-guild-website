@@ -43,9 +43,12 @@
         </table>
 
         <br/>
-        <div>
-            {{ data.activityData.newEvent.description }}
-        </div>
+
+        {% if data.activityData.newEvent.description is defined %}
+            <div>
+                {{ data.activityData.newEvent.description }}
+            </div>
+        {% endif %}
 
         <br/>
         <div style="color: bold; font-weight: bold;">

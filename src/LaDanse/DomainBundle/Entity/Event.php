@@ -105,8 +105,7 @@ class Event implements StatefulInterface
 
     private function initStateMachine()
     {
-        $this->stateMachine = EventStateMachine::create();
-        $this->stateMachine->setObject($this);
+        $this->stateMachine = EventStateMachine::create($this);
         $this->stateMachine->initialize();
     }
 

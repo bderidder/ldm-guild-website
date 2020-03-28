@@ -29,9 +29,11 @@
             </tr>
             <tr>
                 <td align="left">
-                    <div>
-                        {{ data.activityData.oldEvent.description }}
-                    </div>
+                    {% if data.activityData.oldvent.description is defined %}
+                        <div>
+                            {{ data.activityData.oldEvent.description }}
+                        </div>
+                    {% endif %}
                 </td>
                 <td align="center">
                     <p class="event-label">When</p>
@@ -57,9 +59,11 @@
             </tr>
             <tr>
                 <td align="left">
-                    <div>
-                        {{ data.activityData.newEvent.description }}
-                    </div>
+                    {% if data.activityData.newEvent.description is defined %}
+                        <div>
+                            {{ data.activityData.newEvent.description }}
+                        </div>
+                    {% endif %}
                 </td>
                 <td align="center">
                     <p class="event-label">When</p>

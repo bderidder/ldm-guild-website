@@ -10,7 +10,9 @@ Start Time: {{ data.activityData.oldEvent.startTime|date("H:i", "Europe/Paris") 
 
 End Time: {{ data.activityData.oldEvent.endTime|date("H:i", "Europe/Paris") }}
 
+{% if data.activityData.oldEvent.description is defined %}
 {{ data.activityData.oldEvent.description }}
+{% endif %}
 
 AFTER
 
@@ -21,7 +23,9 @@ Start Time: {{ data.activityData.newEvent.startTime|date("H:i", "Europe/Paris") 
 
 End Time: {{ data.activityData.newEvent.endTime|date("H:i", "Europe/Paris") }}
 
+{% if data.activityData.newEvent.description is defined %}
 {{ data.activityData.newEvent.description }}
+{% endif %}
 
 {{ url('eventsIndex') }}#/events/event/{{ data.activityData.newEvent.id }}
 

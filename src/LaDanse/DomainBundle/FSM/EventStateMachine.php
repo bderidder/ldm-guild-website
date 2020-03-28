@@ -26,9 +26,9 @@ class EventStateMachine
     /**
      * @return StateMachine
      */
-    public static function create()
+    public static function create($object)
     {
-        $sm = new StateMachine();
+        $sm = new StateMachine($object);
 
         // Define states
         $sm->addState(new State(EventStateMachine::PENDING, StateInterface::TYPE_INITIAL));
