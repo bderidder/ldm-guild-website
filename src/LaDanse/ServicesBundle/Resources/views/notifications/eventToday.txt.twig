@@ -7,7 +7,9 @@ Start Time: {{ data.activityData.event.startTime|date("H:i", "Europe/Paris") }}
 
 End Time: {{ data.activityData.event.endTime|date("H:i", "Europe/Paris") }}
 
+{% if data.activityData.event.description is defined %}
 {{ data.activityData.event.description }}
+{% endif %}
 
 Make sure to properly prepare yourself. Read up on tactics and bring flasks, pots and runes with you!
 

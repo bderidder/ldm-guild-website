@@ -8,7 +8,9 @@ Start Time: {{ data.activityData.event.startTime|date("H:i", "Europe/Paris") }}
 
 End Time: {{ data.activityData.event.endTime|date("H:i", "Europe/Paris") }}
 
+{% if data.activityData.event.description is defined %}
 {{ data.activityData.event.description }}
+{% endif %}
 
 {{ url('eventsIndex') }}#/events/event/{{ data.activityData.event.id }}
 
