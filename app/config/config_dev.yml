@@ -37,6 +37,7 @@ swiftmailer:
     port:       "%mailer_port%"
     username:   "%mailer_user%"
     password:   "%mailer_password%"
+    delivery_addresses: ["%admin_email%"]
     spool:
         type: file
         path: "%kernel.root_dir%/spool"
