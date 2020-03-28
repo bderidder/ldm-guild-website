@@ -132,6 +132,29 @@ class NotificationQueue
 
     public function listQueue(OutputInterface $output)
     {
+        $em = $this->doctrine->getManager();
 
+        /** @var QueryBuilder $qb */
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('q')
+            ->from('LaDanseDomainBundle:NotificationQueueItem', 'q')
+            ->where($qb->expr()->isNull('q.processedOn'));
+
+        $query = $qb->getQuery();
+
+        /* @var array $items */
+        $items = $query->getResult();
+
+        /* @var NotificationQueueItem $item */
+        foreach($items as $item)
+        {
+            $output->writeln(
+                sprintf("Notification '%s' on %s",
+                    $item->getActivityType(),
+                    $item->getActivityOn()->format("d/m/Y h:i:s")
+                )
+            );
+        }
     }
 }
