@@ -5,8 +5,10 @@ namespace LaDanse\ServicesBundle\Notification\Notificators;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\DiExtraBundle\Annotation as DI;
 use LaDanse\DomainBundle\Entity\Event;
+use LaDanse\DomainBundle\Entity\ForRole;
 use LaDanse\DomainBundle\Entity\NotificationQueueItem;
 use LaDanse\DomainBundle\Entity\SignUp;
+use LaDanse\DomainBundle\Entity\SignUpType;
 use LaDanse\DomainBundle\FSM\EventStateMachine;
 use LaDanse\ServicesBundle\Notification\AbstractNotificator;
 use LaDanse\ServicesBundle\Notification\ListFunctions;
@@ -69,7 +71,12 @@ class EventStateChangeNotificator extends AbstractNotificator
 
         $mailsSignUps = $this->getEmailsFromSignUps($data->newEvent->id);
 
-        $sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
+        /*
+         * Mails will be sent if you have signed up (will or might come), regardless of other settings.
+         */
+
+        //$sharedMails = ListFunctions::getIntersection($mailsSignUps, $mailsSettings);
+        $sharedMails = $mailsSignUps;
 
         /** @var mixed $setting */
         foreach($sharedMails as $mail)
@@ -109,7 +116,16 @@ class EventStateChangeNotificator extends AbstractNotificator
         /** @var SignUp $signUp */
         foreach($event->getSignUps() as $signUp)
         {
-            $mails[] = $signUp->getAccount()->getEmail();
+            /*
+             * Only include people who have said they would or might come.
+             *
+             * People who have already signed absent should not be actively notified that the
+             * event has been cancelled or confirmed.
+             */
+            if ($signUp->getType() != SignUpType::ABSENCE)
+            {
+                $mails[] = $signUp->getAccount()->getEmail();
+            }
         }
 
         return ListFunctions::sortList($mails);
