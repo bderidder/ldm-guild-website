@@ -17,10 +17,34 @@ forumsModule.directive('pageHeader', function()
         templateUrl: Assetic.generate('/ladanseangular/ladanse/directives/pageHeader/pageHeader.html')
     };
 })
-.controller('PageHeaderCtrl', function($scope, $rootScope)
+.controller('PageHeaderCtrl', function($scope, $rootScope, $state)
 {
     $scope.hasUrl = function()
     {
         return !(angular.isUndefined($scope.url) || $scope.url === null || $scope.url.length == 0);
+    }
+
+    $scope.backClicked = function($event)
+    {
+        console.log("Back clicked!");
+
+        $event.stopPropagation();
+        $event.preventDefault();
+
+        if (currentAccount.id == 5)
+        {
+            if (document.referrer == "" || window.history.length < 2)
+            {
+                window.location.assign('/menu/');
+            }
+            else
+            {
+                window.history.back();
+            }
+        }
+        else
+        {
+            window.location.assign($scope.url);
+        }
     }
 });
