@@ -14,6 +14,10 @@
                 frameborder="0"></iframe>
     </div>
 
+    <div class="MicrophoneGuideBlock">
+        Having microphone issues? <a href="{{ path('microphoneIndex') }}">Check out this guide</a>!
+    </div>
+
     <div id="DiscordTutorial">
 
         <p><i>This guide is based on screenshots and text provided by Mr.G/Quartiz.</i></p>
@@ -115,6 +119,13 @@
     {{ parent() }}
 
     <style>
+
+        div.MicrophoneGuideBlock
+        {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-size: 1.6em;
+        }
 
         #DiscordWidget
         {
