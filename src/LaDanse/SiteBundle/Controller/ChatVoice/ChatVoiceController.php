@@ -68,4 +68,21 @@ class ChatVoiceController extends LaDanseController
 
         return $this->render('LaDanseSiteBundle:chatvoice:bothelp.html.twig');
     }
+
+    /**
+     * @return Response
+     *
+     * @Route("/microphone", name="microphoneIndex")
+     */
+    public function microphoneSettingsAction()
+    {
+        $this->eventDispatcher->dispatch(
+            ActivityEvent::EVENT_NAME,
+            new ActivityEvent(
+                ActivityType::CHATVOICE_MICROPHONE,
+                $this->getAuthenticationService()->getCurrentContext()->getAccount())
+        );
+
+        return $this->render('LaDanseSiteBundle:chatvoice:microphone.html.twig');
+    }
 }
