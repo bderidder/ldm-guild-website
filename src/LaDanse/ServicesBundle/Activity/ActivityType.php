@@ -73,9 +73,11 @@ class ActivityType
     const SETTINGS_CALEXPORT_RESET  = 'Settings.CalExport.Reset';      // State Change
     const SETTINGS_NOTIF_UPDATE     = 'Settings.Notifications.Update'; // State Change
 
-    const CHATVOICE_VIEW       = 'ChatVoice.View';    // Read Only
-    const CHATVOICE_BOTHELP    = 'ChatVoice.BotHelp'; // Read Only
-    const CHATVOICE_MICROPHONE = 'ChatVoice.Microphone'; // Read Only
+    const CHATVOICE_VIEW            = 'ChatVoice.View';         // Read Only
+    const CHATVOICE_DISCORD_GUIDE   = 'ChatVoice.DiscordGuide'; // Read Only
+    const CHATVOICE_INGAME_GUIDE    = 'ChatVoice.InGameGuide';  // Read Only
+    const CHATVOICE_DISCORD_BOTHELP = 'ChatVoice.BotHelp';      // Read Only
+    const CHATVOICE_MICROPHONE      = 'ChatVoice.Microphone';   // Read Only
 
     const FEEDBACK_VIEW  = 'Feedback.View';  // Read Only
     const FEEDBACK_POST  = 'Feedback.Post';  // State Change

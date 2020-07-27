@@ -1,0 +1,176 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Guild Chat & Voice - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('In-game Voice Chat Guide') }}
+
+    <div id="DiscordTutorial">
+
+        <div class="MicrophoneGuideBlock">
+            Having microphone issues? <a href="{{ path('microphoneIndex') }}">Check out this guide</a>!
+        </div>
+
+        <p><i>This guide is based on screenshots and text provided by Mr.G/Quartiz.</i></p>
+
+        <p>The in-game voice chat of World of Warcraft is significantly better than you might think. I would say
+            that it easily rivals Discord or even surpass it sometimes.</p>
+
+        <p>But how do you set it up?</p>
+
+        <p>Well let’s go through it step by step but first a small notice ...</p>
+
+        <p>
+            <i style="color: red;">
+            At some point during this configuration you’ll get a windows question asking you to give special
+            permissions to blizzard voice chat in your local firewall. You must give it permission otherwise
+            this will not work.
+            </i>
+        </p>
+
+        <p>First off press escape (inside the game) until you get to the Game Menu and press the “System” alternative.</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image1.png') }}" />
+
+        <p>When you get up the system screen hop to “Voice Chat” on the left of the window. It should look like this:</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image2.png') }}" />
+
+        <p>From there we need to configure the voice chat to work as you want it to:</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image3.png') }}" />
+
+        <p>Unless you have special equipment connected to your computer you should always keep the first (topmost) item on “System Default”. I won’t go into detail on why or how that works cause if you have special equipment connected, you’ll know how to fix it yourself. :D</p>
+
+        <p>Under that is the volume of the output of voice chatting. That means how high the sound of the voices is. If you have trouble hearing people, increase it, if it’s already at 100% then you need to raise your speaker volume.</p>
+
+        <p>Then we have the <span class="jump-out jump-out-red">Voice Chat Ducking (red text)</span> which will lower the volume of WoW while someone is talking. As you can see, I have this at 90% cause I don’t want the WoW combat sound to drown out important information.</p>
+
+        <p>Next we have the Microphone Device, same as above, always keep this on “System Default” unless you know what you’re doing :D</p>
+
+        <p>Next line is “Microphone Volume” and that regulates how high YOUR voice is to everyone else. If people complain that you’re very high, lower this and vice versa if you’re very low, lower it.</p>
+
+        <p>Next we have <span class="jump-out jump-out-green">Microphone Sensitivity (green text)</span> and that’s how easy it is for the microphone to pick up your voice. This setting is especially important when you use “Open Mic” on “Voice Chat Mode” (option on the bottom of the page).</p>
+
+        <p>Try using 50-60 and if you use “Open Mic” and people complain that they can hear your key tapping you’ll need to lower this setting to a lower value. </p>
+
+        <p>You can also test your microphone, but BEFORE YOU DO THAT LOWER YOUR SPEAKER VOLUME. What will happen when you press that button is that the game will pick up what you say from your microphone and send that to your speakers. But what’s important is the green bar to the right of the play button. That bar should go between 10-70% if it goes any higher (or lower) people will have trouble hearing you. You can adjust this by lowering or raising the Microphone Volume. If you go over 70% peoples head will probably explode when you start talking (it’ll be very very loud).</p>
+
+        <p>Finally, we have <span class="jump-out jump-out-blue">“Voice Chat Mode” (blue text)</span> which is how your voice will be transmitted.</p>
+
+        <p>Please try to use “Push to Talk” as much as possible, it’s hysterically annoying to hear people breathing, chewing, key tapping or fiddling with papers or drinks during the raid. If you absolutely cannot have it on push to talk (shame on you) then you can switch over to “Open Mic” which means that it’ll transmit when you talk. Then you have to set the Microphone Sensitivity lower if people complain about hearing your breath/key tapping e.tc.</p>
+
+        <p>Don’t forget to press “Okay” in the bottom right corner.</p>
+
+        <p>Phew. That was a handful. Now that it’s finally configured, how the heck to you use it?</p>
+
+        <p>Well, first of all press the small speaker icon to the left of your chat window (this is how it looks in the default UI).</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image4.png') }}" />
+
+        <p>When you press that button, you’ll get the following window up:</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image5.png') }}" />
+
+        <p>Here you can see if you’re in a party and you can connect to different channels. When you want to connect to a specific channel (like for instance the party I’m in in the above picture) you press the headset on the right hand side. After a short while you’ll be connected.</p>
+
+        <p>This is probably the time when the firewall will ask you for permissions as described earlier.</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image6.png') }}" />
+
+        <p>Now you’re connected to the voice chat and you can see who talks by looking just above the chat windows (this is how it looks in the default UI).</p>
+
+        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/ingame-voicechat/image7.png') }}" />
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {# make sure that any content of the 'javascript' block in parent templates is rendered as well #}
+    {{ parent() }}
+
+    <script>
+
+        $(function()
+        {
+            $(window).scroll(function()
+            {
+                var scrollTop = $(this).scrollTop();
+
+                var topPosition = 85 - scrollTop;
+
+                if (topPosition < 20)
+                {
+                    topPosition = 20;
+                }
+
+                $("#DiscordWidget").css('top', topPosition + 'px');
+            });
+        });
+
+    </script>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+
+        div.MicrophoneGuideBlock
+        {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-size: 1.6em;
+        }
+
+        #DiscordWidget
+        {
+            position: fixed;
+            top: 85px;
+            right: 20px;
+        }
+
+        #DiscordTutorial
+        {
+            font-size: 1.1em;
+            line-height: 1.8;
+            width: 85%;
+        }
+
+        #DiscordTutorial img.screenshot
+        {
+            max-width: 550px;
+            margin: 10px 0 20px 75px;
+            max-height: 600px;
+        }
+
+        span.jump-out
+        {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        span.jump-out-red
+        {
+            color: red;
+        }
+
+        span.jump-out-green
+        {
+            color: green;
+        }
+
+        span.jump-out-blue
+        {
+            color: blue;
+        }
+
+    </style>
+
+{% endblock %}
