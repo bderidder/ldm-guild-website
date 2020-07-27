@@ -4,7 +4,7 @@
 
 {% block memberPageCenteredBody %}
 
-    {{ renderHeader('Discord Chat & Voice') }}
+    {{ renderHeader('Guild Chat & Voice') }}
 
     <div id="DiscordWidget">
         <iframe src="https://discordapp.com/widget?id=196163827824459776&theme=dark"
@@ -14,69 +14,19 @@
                 frameborder="0"></iframe>
     </div>
 
-    <div id="DiscordTutorial">
+    <div class="MicrophoneGuideBlock">
+        Having microphone issues? <a href="{{ path('microphoneIndex') }}">Check out this guide</a>!
+    </div>
 
-        <p><i>This guide is based on screenshots and text provided by Mr.G/Quartiz.</i></p>
+    <div class="staticText">
+        The guild uses both Discord and the in-game voice chat. Below you can find guides to configure each of them.
+    </div>
 
-        <p>Download from <a href="https://discordapp.com/" target="_blank">https://discordapp.com/</a></p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/1.png') }}" />
-
-        <p>It should show your operating system, Windows, Mac or Linux.</p>
-        <p>Create an account on DiscordApp.com (you need an account to log into
-            the application when downloaded).</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/2.png') }}" />
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/3.png') }}" />
-
-        <p>When the program is downloaded and you have installed you log in and then you need to connect to the LDM server.</p>
-        <p>On the left side of the application you’ll see a + sign in a small circle (sorry, I have already joined
-            a lot of groups when I took this screenshot, yours will only have the + sign, nothing else):</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/4.png') }}" />
-
-        <p>When you press that you get a window that asks you if you wish to join or create a server.
-            You want to JOIN a server.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/5.png') }}" />
-
-        <p>Now you need to enter LDMs server name which is: <b>https://discord.gg/ncGN2E</b></p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/6.png') }}" />
-
-        <p>And press join.</p>
-        <p>Now you are connected and can text talk to people on the LDM channel. On the left side of the
-            screen you can now see the text and voice channels that are available and on the right you can
-            see who is online (in the screenshot you can also see Q complaining about writing this document).</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/7.png') }}" />
-
-        <p>By double clicking any text or voice channel you’ll swap to, and join that channel.</p>
-
-        <p>To leave a voice channel you can click the "hang up" icon as show in the screenshot below.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/8.png') }}" />
-
-        <p>To change your settings, you’ll have to press the cogwheel to the right of your name.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/9.png') }}" />
-
-        <p>When you get into setting there is a number of things you need to change. First, enable push to talk.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/10.png') }}" />
-
-        <p>Second, you might want to turn off the beeps that indicate that you start or stop to send
-            voice chat, you’ll have to scroll down to find it.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/11.png') }}" />
-
-        <p>One last thing that might be great to enable is that Discord can tune down all the other sound on
-            your computer (WoW, music, etc.)  when you or someone else is talking. This is a really nice feature,
-            again, you’ll have to scroll down a bit.</p>
-
-        <img class="screenshot" src="{{ asset('bundles/ladansesite/images/discord/12.png') }}" />
-
+    <div class="buttonContainer">
+        <a type="button" class="btn btn-primary guide-button"
+           href="{{ path('discordGuideIndex') }}">Discord Guide</a>
+        <a type="button" class="btn btn-success guide-button"
+           href="{{ path('inGameGuideIndex') }}">In-game Voice Chat Guide</a>
     </div>
 
 {% endblock %}
@@ -116,6 +66,13 @@
 
     <style>
 
+        div.MicrophoneGuideBlock
+        {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            font-size: 1.6em;
+        }
+
         #DiscordWidget
         {
             position: fixed;
@@ -123,15 +80,24 @@
             right: 20px;
         }
 
-        #DiscordTutorial
+        div.staticText
         {
+            font-size: 1.1em;
+            line-height: 1.8;
             width: 85%;
         }
 
-        #DiscordTutorial img.screenshot
+        div.buttonContainer
         {
-            width: 550px;
-            margin: 10px 0 20px 75px;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+        a.guide-button
+        {
+            font-size: 1.5em;
         }
 
     </style>

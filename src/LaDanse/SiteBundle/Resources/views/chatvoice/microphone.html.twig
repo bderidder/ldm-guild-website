@@ -1,0 +1,342 @@
+{% extends 'LaDanseSiteBundle:layout:page-centered.html.twig' %}
+
+{% block title %}Discord Microphone Help - La Danse Macabre{% endblock %}
+
+{% block memberPageCenteredBody %}
+
+    {{ renderHeader('Discord Microphone Help') }}
+
+    <div class="MicrophoneHelpContainer">
+
+        <p>
+            If you encounter these issues while talking on our Discord voice channels, this guide is for you!
+        </p>
+
+        <ul>
+            <li>Your volume is very low, people can barely hear you.</li>
+            <li>Some people complain that you sound muffled or not very clear even when volume is good.</li>
+        </ul>
+
+        <p>
+            This guide will help you navigate to the different settings in Windows and Discord that could be
+            the cause of your problems.
+        </p>
+
+        <p class="MicrophoneHeader">First things first ...</p>
+
+        <p>
+            No amount of configuration in Windows or Discord can help you out if your microphone is of bad quality or
+            isn't placed properly relative to your mouth. Try to use the tips below to optimally position your microphone.
+        </p>
+
+        <ul>
+            <li><strong>Distance.</strong>
+                Try to minimize the distance between the microphone and your mouth. Less is more in this case.
+                Ideally the microphone is 15 to 20 cm away from your mouth but for a lot of people this is
+                not achievable. Your microphone may be embedded in your webcam or is mounted on a separate stand
+                on your desk. In any case, minimize the distance. The closer, the better: 1 meter is better than 2 meters.
+            </li>
+            <li><strong>Angle.</strong>
+                Position the microphone in front of you. The more it is to your side, the less sound it will pick up.
+                Ideally the microphone is between you and your screen. If that is not possible, try to make the angle
+                as small as you can.
+            </li>
+            <li><strong>Quality.</strong>
+                Most microphones are of decent or better quality these days. Even with
+                cheaper microphone it should be possible to join us on Discord. The tips above on positioning your
+                microphone are much more important. A high quality microphone positioned poorly will perform less than a
+                medium quality microphone positioned optimally. If you are in doubt about the quality of your microphone
+                just ask us in guild chat or on Discord. Don't go out and buy a new (expensive) microphone just yet!
+            </li>
+        </ul>
+
+        <p class="MicrophoneHeader">About Microphone Configuration Options</p>
+
+        <p>
+            In this guide we will look at two microphone configuration options: volume and sampling.
+        </p>
+
+        <ul>
+            <li><strong>Microphone volume.</strong>
+                The microphone volume dictates how much of the sound that is picked up by the microphone itself is
+                going to be made available to applications like Discord. You may wonder why you would want to adjust the volume
+                of your microphone. Remember that earlier we talked about microphone positioning? If your microphone is at
+                20 cm of your mouth it is going to pick up a lot more of your voice than if that same microphone is at
+                1 meter of your mouth. To compensate for this, you may want to adjust the microphone volume a bit.
+            </li>
+            <li><strong>Microphone sampling.</strong>
+                Computers are digital, they work with 0's and 1's. Your voice, as recorded by the microphone needs to
+                be translated into 0's and 1's. This process is called <i>sampling</i>. The higher the sampling rate,
+                the better the quality of the sampling will be and the better and more natural your voice will sound.
+                But a higher sampling rate also results in more data being transmitted to the Discord servers. Most people
+                have computers and internet connections that can easily handle a higher sampling rate.
+            </li>
+        </ul>
+
+        <p class="MicrophoneHeader">Configuration in Discord</p>
+
+        <p>
+            There are various things we can configure in Discord. The most importand of these is the microphone volume.
+            If people complain they can barely hear you, this is where you want to check that volume is set as high as possible.
+        </p>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/01. Discord Settings.png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>Click on the gear icon in the lower right corner of Discord</p>
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotExplanationBlock">
+                <p>In the menu that appears on the left, click on "Voice & Video"</p>
+            </div>
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/02. Discord Voice and Video.png') }}" />
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/03. Microphone Settings Discord.png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>The slider circled in red is your microphone or input volume. Adjust it, possibly to a 100%, to make yourself
+                more audible in the channel.</p>
+            </div>
+        </div>
+
+        <p>
+            Later we will see that Windows has its own microphone volume setting. If you find that people still can't
+            hear you properly after you have already set the Discord microphone volume to 100% don't despair and read on.
+        </p>
+
+        <p>Discord has some other settings thay may effect the quality of your voice.</p>
+
+        <ul>
+            <li><strong>Echo Cancellation.</strong>
+                Your microphone obviously will also pick up some of the sound coming out of your speakers. This may result
+                in an echo. You say something, someone else's speaker will play that, which is picked up by the microphone
+                of that person, which is then transmitted to Discord and eventually your speakers ... resulting in you
+                hearing yourself speak with a little bit of delay: an echo. In fact, everyone hears this echo!
+                This settings adds some intelligent processing to reduce or even eliminate this effect.
+            </li>
+            <li><strong>Noise Reduction.</strong>
+                Your microphone doesn't only pick up your voice, it picks up everything it can hear.
+                You breathing, tapping away on your keyboard, coughing, the dog barking, your children or significant other singing along
+                the radio in the next room ... Discord has some idea on how to differentiate between your voice and everything
+                else. This setting enables Discord to try to filter out as much of that background noise it can so
+                that only your voice remains.
+            </li>
+        </ul>
+
+        <p>
+            Each of the above settings will, when enabled, add more processing to your voice and may, but not always, result in
+            poorer quality of how you sound to others. Our advise is that if nobody complains about an echo or background
+            noise to not enable these settings. Only enable them if you need them.
+        </p>
+
+        <p>
+            This will vary wildly from person to person. Some people may have background noise that is easily
+            filtered away by Discord without a negative effect on your voice quality, for others Discord may have a
+            hard time filtering the noise out without negatively affecting your voice quality. In those siutations
+            Discord may go a bit overboard and it may start filtering out some of your own voice thinking it is noise.
+            That may result in a drop in quality on how you sound to others.
+        </p>
+
+        <p class="MicrophoneHeader">Microphone Volume in Windows</p>
+
+        <p>
+            Windows itself also has a setting to manage the microphone volume.
+        </p>
+
+        <p>The series of screenshots below will guide you through several dialog to set the Windows microphone volume.</p>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/11. Search Sound Settings.png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>In the Settings application of Windows, search for "Sound Settings" and select it.</p>
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotExplanationBlock">
+                <p>Your microphone settings can be found below the speaker settings. See the red rectangle. Make sure
+                the correct microphone is select in case you have multiple microphones. Next, click on "Device properties".</p>
+            </div>
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/12. Overview Sound Settings.png') }}" />
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/13. Microphone Device Settings.png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>Here you will find another microphone or input volume. We suggest to set this slider to 100% and manage the microphone
+                volume from within Discord. Both slides are not in sync. You can have one set to 50% and the other to 800%.</p>
+                <p>The arrow starting from "2" points to the link you have to click in the next step when we will have a look
+                at the sampling rate setting.</p>
+            </div>
+        </div>
+
+        <p>
+            The microphone volume setting of Discord and the microphone volume setting of Windows work on top of each other.
+            If you have one of these set at 100% and the other to 50% .. the end result is that only 50% of the volume
+            the microphone picks up is transmitted to others. So make sure to check both. We suggest to leave one at 100%
+            and tune the other to the desired volume. Since while you play it is easier to access the Discord setting we
+            suggest to set the Windows microphone volume to 100% and tune the Discord microphone volume.
+        </p>
+
+        <p class="MicrophoneHeader">Microphone Sampling in Windows</p>
+
+        <p>
+            Finding this particular configuration setting isn't easy. The following series of screenshot will guide you through the different
+            dialogs and settings.
+        </p>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/14. Microphone Properties.png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>If you clicked "Additional device properties" in the previous screenshot, this dialog appears. Click on the
+                "Advanced" tab.</p>
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotExplanationBlock">
+                <p>In the menu that appears on the left, click on "Voice & Video"</p>
+            </div>
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/15. Advanced Microphone Properties.png') }}" />
+            </div>
+        </div>
+
+        <div class="ScreenshotRow">
+            <div class="ScreenshotBlock">
+                <img class="Screenshot" src="{{ asset('bundles/ladansesite/images/discord/microphone/16. Advanced Microphone Properties (opened).png') }}" />
+            </div>
+            <div class="ScreenshotExplanationBlock">
+                <p>Have a look at the setting shown in the red rectangle. If it is set to 22050 Hz or lower, you will sound muffled or otherwise not very
+                clear. Set it to CD or DVD Quality. It may already be at this setting.</p>
+            </div>
+        </div>
+
+        <p>
+            It is known that some Windows updates reset this particular configuration to a lower sampling rate. If you hook
+            up a new microphone it may also by default be set to a lower sampling rate. It is therefore not bad to
+            occasionally verify this setting is still set the way it should be. If people start complaining
+            about your sound quality, even when nothing has changed since last time, this setting may have
+            mysteriously changed. Just so you know ...
+        </p>
+
+        <p class="MicrophoneHeader">Conclusion</p>
+
+        <p>
+            The above guide has shown you 3 settings that are often at fault when people complain about how you sound in
+            Discord.
+        </p>
+
+        <p>
+            If after setting both volume sliders to 100% and the sampling rate to CD or DVD Quality, people are still
+            complaining about how low volume or muffled you sound, you should look into the distance between the microphone
+            and your mouth or the relative angle it is positioned at.
+        </p>
+
+        <p>
+            Finally it could be that your microphone is of low quality or broken and is perhaps in need of replacement.
+            We do suggest to reach out on guild chat or the Discord channel for more help before you head out and
+            buy a new (and possibly expensive) microphone.
+        </p>
+
+    </div>
+
+{% endblock %}
+
+{% block stylesheet %}
+
+    {# make sure that any other content of this tag is rendered as well #}
+    {{ parent() }}
+
+    <style>
+
+        div.MicrophoneHelpContainer
+        {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        div.MicrophoneHelpContainer p.MicrophoneHeader
+        {
+            margin-top: 20px;
+
+            font-weight: bold;
+            font-size: 1.4em;
+
+            display:inline-block;
+            width:100%; height:100%;
+            border-bottom:1px solid #000;
+        }
+
+        div.MicrophoneHelpContainer div.ScreenshotRow
+        {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        div.MicrophoneHelpContainer div.ScreenshotBlock
+        {
+            width: 59%;
+            max-width: 59%;
+        }
+
+        div.MicrophoneHelpContainer div.ScreenshotExplanationBlock
+        {
+            width: 39%;
+            max-width: 39%;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        div.MicrophoneHelpContainer img.Screenshot
+        {
+            max-width: 100%;
+            display:block;
+            margin: auto;
+        }
+
+        div.MicrophoneHelpContainer div.BotExample
+        {
+            background-color: rgb(100, 100, 100);
+            color: whitesmoke;
+            padding: 10px 10px 10px 15px;
+            margin: 20px 20px 20px 20px;
+            max-width: 600px;
+            border-radius: 15px;
+        }
+
+        div.MicrophoneHelpContainer div.BotExample p
+        {
+            padding: 0;
+            margin: 0;
+        }
+
+        div.MicrophoneHelpContainer div.BotExample p.UserTag
+        {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+    </style>
+
+{% endblock %}

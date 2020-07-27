@@ -176,37 +176,40 @@ class Version20160828075255 extends AbstractMigration implements ContainerAwareI
         $stmt = $conn->query("SELECT id FROM Guild WHERE name = 'La Danse Macabre'");
         $row = $stmt->fetch();
 
-        $ldmGuildId = $row['id'];
-
-        $stmt = $conn->query("SELECT id, fromTime, endTime FROM GuildCharacter");
-
-        $guildCharacters = [];
-
-        $row = $stmt->fetch();
-        while ($row)
+        // if there is no row found, false is returned)
+        if ($row)
         {
-            $guildCharacters[(string)$row['id']] = [
-                'fromTime' => $row['fromTime'],
-                'endTime' => $row['endTime']
-            ];
+            $ldmGuildId = $row['id'];
+
+            $stmt = $conn->query("SELECT id, fromTime, endTime FROM GuildCharacter");
+
+            $guildCharacters = [];
 
             $row = $stmt->fetch();
+            while ($row)
+            {
+                $guildCharacters[(string)$row['id']] = [
+                    'fromTime' => $row['fromTime'],
+                    'endTime' => $row['endTime']
+                ];
+
+                $row = $stmt->fetch();
+            }
+
+            $stmt->closeCursor();
+
+            foreach($guildCharacters as $characterId => $times)
+            {
+                $insertStmt = $conn->prepare(
+                    'INSERT INTO InGuild (`id`, `guild`, `character`, `fromTime`, `endTime`) ' .
+                    'VALUES (UUID(), :guildId, :characterId, :fromTime, :endTime)');
+                $insertStmt->bindValue("guildId", $ldmGuildId);
+                $insertStmt->bindValue("characterId", $characterId);
+                $insertStmt->bindValue("fromTime", $times['fromTime']);
+                $insertStmt->bindValue("endTime", $times['endTime']);
+                $insertStmt->execute();
+            }
         }
-
-        $stmt->closeCursor();
-
-        foreach($guildCharacters as $characterId => $times)
-        {
-            $insertStmt = $conn->prepare(
-                'INSERT INTO InGuild (`id`, `guild`, `character`, `fromTime`, `endTime`) ' .
-                'VALUES (UUID(), :guildId, :characterId, :fromTime, :endTime)');
-            $insertStmt->bindValue("guildId", $ldmGuildId);
-            $insertStmt->bindValue("characterId", $characterId);
-            $insertStmt->bindValue("fromTime", $times['fromTime']);
-            $insertStmt->bindValue("endTime", $times['endTime']);
-            $insertStmt->execute();
-        }
-
         // set all columns that are intended to be a foreign key to not null, added indexes and foreign keys
 
         $conn->executeUpdate("ALTER TABLE GuildCharacter CHANGE realm realm CHAR(36) NOT NULL COMMENT '(DC2Type:guid)'");
