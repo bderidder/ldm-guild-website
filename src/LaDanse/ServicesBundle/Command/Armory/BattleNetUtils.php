@@ -30,7 +30,7 @@ final class BattleNetUtils
         try
         {
             $response = $client->request(
-                'GET',
+                'POST',
                 $tokenEndpointUrl,
                 [
                     'timeout' => BattleNetUtils::GET_TIMEOUT,
