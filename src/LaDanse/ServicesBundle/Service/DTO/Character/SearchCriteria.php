@@ -34,7 +34,7 @@ class SearchCriteria
      * @Type("integer")
      * @SerializedName("maxLevel")
      */
-    protected $maxLevel = 120;
+    protected $maxLevel = 50;
 
     /**
      * @var integer
