@@ -30,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class FixRaiderMaxLevelCommand extends ContainerAwareCommand
 {
     /** @var int */
-    const MAX_LEVEL = 120;
+    const MAX_LEVEL = 50;
 
     /**
      * @return void
@@ -66,12 +66,11 @@ class FixRaiderMaxLevelCommand extends ContainerAwareCommand
 
         $allClaimedCharacters = $characterService->getAllClaimedCharacters(new \DateTime());
 
-        for($i = 0; $i < count($allClaimedCharacters); $i++)
+        foreach ($allClaimedCharacters as $claimedCharacter)
         {
             /** @var Character $claimedCharacter */
-            $claimedCharacter = $allClaimedCharacters[$i];
 
-            if ($claimedCharacter->getClaim()->isRaider() && $claimedCharacter->getLevel() != FixRaiderMaxLevelCommand::MAX_LEVEL)
+            if ($claimedCharacter->getLevel() !== self::MAX_LEVEL && $claimedCharacter->getClaim()->isRaider())
             {
                 $context->info("Character "
                     . $claimedCharacter->getName()

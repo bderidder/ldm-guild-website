@@ -49,7 +49,7 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.claimed = 1;
             ctrl.claimingMember = "";
             ctrl.minLevel = 1;
-            ctrl.maxLevel = 120;
+            ctrl.maxLevel = 50;
             ctrl.guild = null;
             ctrl.race = null;
             ctrl.class = null;
@@ -122,8 +122,8 @@ rosterModule.directive('characterSearchBox', function()
 
         ctrl.levelCap = function()
         {
-            ctrl.minLevel = 120;
-            ctrl.maxLevel = 120;
+            ctrl.minLevel = 50;
+            ctrl.maxLevel = 50;
         };
 
         ctrl.toggleSearchScope = function()
@@ -175,7 +175,7 @@ rosterModule.directive('characterSearchBox', function()
             else
             {
                 searchCriteria.setMinLevel(1);
-                searchCriteria.setMaxLevel(120);
+                searchCriteria.setMaxLevel(50);
                 searchCriteria.setGuild(null);
                 searchCriteria.setGameClass(null);
                 searchCriteria.setGameRace(null);
