@@ -25,9 +25,9 @@ class PatchCharacter
      * @var int
      * @Assert\Range(
      *      min = 1,
-     *      max = 120,
-     *      minMessage = "The level of a character must be between 1 and 120",
-     *      maxMessage = "The level of a character must be between 1 and 120"
+     *      max = 50,
+     *      minMessage = "The level of a character must be between 1 and 50",
+     *      maxMessage = "The level of a character must be between 1 and 50"
      * )
      */
     protected $level;

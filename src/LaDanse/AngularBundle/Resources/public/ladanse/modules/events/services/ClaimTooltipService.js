@@ -74,7 +74,7 @@ eventsModule.service(
             {
                 var currentClaimDto = claimsDto[i];
 
-                if (currentClaimDto.level != 120)
+                if (currentClaimDto.level != 50)
                     continue;
 
                 if (!this._atLeastOneRoleMatches(signUpDto.roles, currentClaimDto.claim.roles))

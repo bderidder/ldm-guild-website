@@ -39,7 +39,7 @@ charactersModule.directive('editClaim', function()
             ctrl.form.comment = ctrl.character.claim.getComment();
             ctrl.form.raider = ctrl.character.claim.getRaider();
 
-            if (ctrl.character.getLevel() != 120)
+            if (ctrl.character.getLevel() != 50)
             {
                 ctrl.form.raider = false;
             }
