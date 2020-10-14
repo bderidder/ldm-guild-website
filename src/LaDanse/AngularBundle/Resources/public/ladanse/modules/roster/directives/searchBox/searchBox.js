@@ -49,7 +49,7 @@ rosterModule.directive('characterSearchBox', function()
             ctrl.claimed = 1;
             ctrl.claimingMember = "";
             ctrl.minLevel = 1;
-            ctrl.maxLevel = 120;
+            ctrl.maxLevel = 60;
             ctrl.guild = null;
             ctrl.race = null;
             ctrl.class = null;
