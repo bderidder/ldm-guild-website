@@ -30,7 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class FixRaiderMaxLevelCommand extends ContainerAwareCommand
 {
     /** @var int */
-    const MAX_LEVEL = 60;
+    const MAX_LEVEL = 50;
 
     /**
      * @return void
