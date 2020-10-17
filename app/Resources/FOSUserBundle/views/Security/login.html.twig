@@ -25,7 +25,13 @@
 	    background-position: top;
         background-size: cover;
         transition: background-image 2s ease-in-out;
-        background-image: url("{{ asset('bundles/ladansesite/images/wallpaper-illidan-00.jpg') }}");
+        background-image: linear-gradient(
+                rgba(255, 255, 255, 0.40),
+                rgba(255, 255, 255, 0.40)
+        ),
+        /* actual background image beneath */
+        url('{{ asset('bundles/ladansesite/images/wallpaper-shadowlands.jpg') }}');
+        bbackground-image: url("{{ asset('bundles/ladansesite/images/wallpaper-illidan-00.jpg') }}");
 	}
 
 	#right-login-container
@@ -66,9 +72,7 @@
 		</div>
 		<div id="text-container">
 			<h2 style="font-weight: normal; text-shadow: none;">Sign In</h2>
-
-            <p>Your account from the old La Danse site will not work here!</p>
-
+            
             {% if error %}
                 <p>Could not log you in with these credentials.</p>
             {% endif %}

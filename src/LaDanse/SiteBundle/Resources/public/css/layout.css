@@ -5,7 +5,13 @@ html, body
 
 .wow-bg-image
 {
-    background-image:url('../images/wallpaper-battleforazeroth-85.jpg');
+    background-image: linear-gradient(
+            rgba(255, 255, 255, 0.75),
+            rgba(255, 255, 255, 0.75)
+    ),
+        /* actual background image beneath */
+    url('../images/wallpaper-shadowlands.jpg');
+
     background-color: rgb(56, 0, 0);
     background-repeat: no-repeat;
     background-attachment: fixed;

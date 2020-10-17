@@ -51,7 +51,12 @@
 
         body
         {
-            background-image: url('{{ asset('bundles/ladansesite/images/wallpaper-battleforazeroth-85.jpg') }}');
+            background-image: linear-gradient(
+                    rgba(255, 255, 255, 0.70),
+                    rgba(255, 255, 255, 0.70)
+            ),
+            /* actual background image beneath */
+            url('{{ asset('bundles/ladansesite/images/wallpaper-shadowlands.jpg') }}');
         }
 
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
