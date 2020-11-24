@@ -23,7 +23,7 @@ function SearchCriteria(criteriaValues)
     {
         this.name = "";
         this.minLevel = 1;
-        this.maxLevel = 50;
+        this.maxLevel = 60;
         this.raider = 1;
         this.claimed = 1;
         this.claimingMember = "";
