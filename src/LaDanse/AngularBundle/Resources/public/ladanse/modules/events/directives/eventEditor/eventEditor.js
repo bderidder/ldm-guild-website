@@ -35,7 +35,7 @@ eventsModule.directive('eventEditor', function()
     ctrl.formIsValid = false;
 
     ctrl.masterData = {
-        raidInstances: ['Uldir', 'Battle of Dazar\'Alor', 'Crucible of Storms', 'The Eternal Palace', 'Ny’alotha, the Waking City'],
+        raidInstances: ['Castle Nathria'],
         instanceDifficulties: ['To be decided', 'Normal', 'Heroic', 'Mythic']
     };
 
